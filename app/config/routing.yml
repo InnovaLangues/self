@@ -2,4 +2,3 @@ innova_self:
     resource: "@InnovaSelfBundle/Controller/"
     type:     annotation
     prefix:   /
-

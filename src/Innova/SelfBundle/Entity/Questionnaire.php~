@@ -21,6 +21,24 @@ class Questionnaire
      */
     private $id;
 
+    /**
+    * @ORM\ManyToMany(targetEntity="Test")
+    */
+    private $tests;
+
+    public function __construct() {
+        $this->sessions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+    * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"remove", "persist"})
+    */
+    protected $questions;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Trace", mappedBy="questionnaire", cascade={"remove", "persist"})
+    */
+    protected $traces;
 
     
 
@@ -37,6 +55,13 @@ class Questionnaire
      * @ORM\Column(name="source", type="string", length=255)
      */
     private $source;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="duration", type="integer")
+     */
+    private $duration;
 
     /**
      * @var string
@@ -171,28 +196,6 @@ class Questionnaire
      */
     private $audioItem;
 
-    /**
-    * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"remove", "persist"})
-    */
-    protected $questions;
-
-    /**
-    * @ORM\OneToMany(targetEntity="Trace", mappedBy="questionnaire", cascade={"remove", "persist"})
-    */
-    protected $traces;
-
-    /**
-    * @ORM\ManyToMany(targetEntity="Test")
-    */
-    private $tests;
-
-    public function __construct() {
-        $this->sessions = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function __toString(){
-        return $this->theme;
-    }
 
     /**
      * Get id
@@ -250,6 +253,28 @@ class Questionnaire
         return $this->source;
     }
 
+    /**
+     * Set duration
+     *
+     * @param integer $duration
+     * @return Questionnaire
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+    
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return integer 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
 
     /**
      * Set supportType
@@ -818,28 +843,5 @@ class Questionnaire
     public function getTests()
     {
         return $this->tests;
-    }
-
-    /**
-     * Set audioConsigne
-     *
-     * @param string $audioConsigne
-     * @return Questionnaire
-     */
-    public function setAudioConsigne($audioConsigne)
-    {
-        $this->audioConsigne = $audioConsigne;
-    
-        return $this;
-    }
-
-    /**
-     * Get audioConsigne
-     *
-     * @return string 
-     */
-    public function getAudioConsigne()
-    {
-        return $this->audioConsigne;
     }
 }
