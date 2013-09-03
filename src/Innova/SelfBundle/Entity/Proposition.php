@@ -35,14 +35,14 @@ class Proposition
     /**
      * @var string
      *
-     * @ORM\Column(name="audioUrl", type="string", length=255)
+     * @ORM\Column(name="audioUrl", type="string", length=255, nullable=true)
      */
     private $audioUrl;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
 
@@ -196,5 +196,28 @@ class Proposition
     public function getQuestion()
     {
         return $this->question;
+    }
+
+    /**
+     * Set subquestion
+     *
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestion
+     * @return Proposition
+     */
+    public function setSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestion = null)
+    {
+        $this->subquestion = $subquestion;
+    
+        return $this;
+    }
+
+    /**
+     * Get subquestion
+     *
+     * @return \Innova\SelfBundle\Entity\Subquestion 
+     */
+    public function getSubquestion()
+    {
+        return $this->subquestion;
     }
 }

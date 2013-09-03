@@ -9,6 +9,7 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Proposition;
 
 class LoadFixturesData implements FixtureInterface
 {
@@ -96,6 +97,25 @@ class LoadFixturesData implements FixtureInterface
         $subquestion1->setTypology("QRU");
         $manager->persist($subquestion1);
 
+        $proposition1_1 = new Proposition();
+        $proposition1_1->setSubquestion($subquestion1);
+        $proposition1_1->setRightAnswer(1);
+        $proposition1_1->setAudioUrl("");
+        $manager->persist($proposition1_1);
+
+        $proposition1_2 = new Proposition();
+        $proposition1_2->setSubquestion($subquestion1);
+        $proposition1_2->setRightAnswer(0);
+        $proposition1_2->setAudioUrl("");
+        $manager->persist($proposition1_2);
+
+        $proposition1_3 = new Proposition();
+        $proposition1_3->setSubquestion($subquestion1);
+        $proposition1_3->setRightAnswer(0);
+        $proposition1_3->setAudioUrl("");
+        $manager->persist($proposition1_3);
+
+
      // ITEM 2
         $questionnaire2->addTest($test);
         $questionnaire2->setLevel("A2");
@@ -130,6 +150,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion2->setQuestion($question2);
         $subquestion2->setTypology("QRU");
         $manager->persist($subquestion2);
+
+        $proposition2_1 = new Proposition();
+        $proposition2_1->setSubquestion($subquestion2);
+        $proposition2_1->setRightAnswer(1);
+        $proposition2_1->setAudioUrl("");
+        $manager->persist($proposition2_1);
+
+        $proposition2_2 = new Proposition();
+        $proposition2_2->setSubquestion($subquestion2);
+        $proposition2_2->setRightAnswer(0);
+        $proposition2_2->setAudioUrl("");
+        $manager->persist($proposition2_2);
+
+        $proposition2_3 = new Proposition();
+        $proposition2_3->setSubquestion($subquestion2);
+        $proposition2_3->setRightAnswer(0);
+        $proposition2_3->setAudioUrl("");
+        $manager->persist($proposition2_3);
 
     // ITEM 3
         $questionnaire3->addTest($test);
