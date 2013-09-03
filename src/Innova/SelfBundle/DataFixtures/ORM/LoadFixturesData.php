@@ -4,8 +4,10 @@ namespace Innova\SelfBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Question;
 
 class LoadUserData implements FixtureInterface
 {
@@ -57,6 +59,8 @@ class LoadUserData implements FixtureInterface
         $questionnaire38 = new Questionnaire();
         $questionnaire39 = new Questionnaire();
 
+
+    // ITEM 1
         $questionnaire1->addTest($test);
         $questionnaire1->setLevel("A2");
         $questionnaire1->setConsigne('');
@@ -81,6 +85,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire1->setAudioItem('');
         $manager->persist($questionnaire1);
 
+        $question1 = new Question();
+        $question1->setQuestionnaire($questionnaire1);
+        $manager->persist($question1);
+
+     // ITEM 2
         $questionnaire2->addTest($test);
         $questionnaire2->setLevel("A2");
         $questionnaire2->setConsigne('');
@@ -105,6 +114,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire2->setAudioItem('');
         $manager->persist($questionnaire2);
 
+        $question2 = new Question();
+        $question2->setQuestionnaire($questionnaire2);
+        $manager->persist($question2);
+
+    // ITEM 3
         $questionnaire3->addTest($test);
         $questionnaire3->setLevel("A2");
         $questionnaire3->setConsigne('');
@@ -129,6 +143,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire3->setAudioItem('');
         $manager->persist($questionnaire3);
 
+        $question3 = new Question();
+        $question3->setQuestionnaire($questionnaire3);
+        $manager->persist($question3);
+
+    // ITEM 4
         $questionnaire4->addTest($test);
         $questionnaire4->setLevel("A2");
         $questionnaire4->setConsigne('');
@@ -153,6 +172,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire4->setAudioItem('');
         $manager->persist($questionnaire4);
 
+        $question4 = new Question();
+        $question4->setQuestionnaire($questionnaire4);
+        $manager->persist($question4);
+
+    // ITEM 5    
         $questionnaire5->addTest($test);
         $questionnaire5->setLevel("A2");
         $questionnaire5->setConsigne('');
@@ -177,6 +201,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire5->setAudioItem('');
         $manager->persist($questionnaire5);
 
+        $question5 = new Question();
+        $question5->setQuestionnaire($questionnaire5);
+        $manager->persist($question5);
+
+    // ITEM 6
         $questionnaire6->addTest($test);
         $questionnaire6->setLevel("A2");
         $questionnaire6->setConsigne('');
@@ -201,6 +230,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire6->setAudioItem('');
         $manager->persist($questionnaire6);
 
+        $question6 = new Question();
+        $question6->setQuestionnaire($questionnaire6);
+        $manager->persist($question6);
+
+    // ITEM 7   
         $questionnaire7->addTest($test);
         $questionnaire7->setLevel("A2");
         $questionnaire7->setConsigne('');
@@ -225,6 +259,12 @@ class LoadUserData implements FixtureInterface
         $questionnaire7->setAudioItem('');
         $manager->persist($questionnaire7);
 
+        $question7 = new Question();
+        $question7->setQuestionnaire($questionnaire7);
+        $manager->persist($question7);
+
+
+    // ITEM 8   
         $questionnaire8->addTest($test);
         $questionnaire8->setLevel("A2");
         $questionnaire8->setConsigne('');
@@ -249,6 +289,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire8->setAudioItem('');
         $manager->persist($questionnaire8);
 
+        $question8 = new Question();
+        $question8->setQuestionnaire($questionnaire8);
+        $manager->persist($question8);
+
+    // ITEM 9   
         $questionnaire9->addTest($test);
         $questionnaire9->setLevel("A2");
         $questionnaire9->setConsigne('');
@@ -273,6 +318,20 @@ class LoadUserData implements FixtureInterface
         $questionnaire9->setAudioItem('');
         $manager->persist($questionnaire9);
 
+        $question9_1 = new Question();
+        $question9_1->setQuestionnaire($questionnaire9);
+        $manager->persist($question9_1);
+
+        $question9_2 = new Question();
+        $question9_2->setQuestionnaire($questionnaire9);
+        $manager->persist($question9_2);
+
+        $question9_3 = new Question();
+        $question9_3->setQuestionnaire($questionnaire9);
+        $manager->persist($question9_3);
+
+
+    // ITEM 10   
         $questionnaire10->addTest($test);
         $questionnaire10->setLevel("A2");
         $questionnaire10->setConsigne('');
@@ -297,6 +356,23 @@ class LoadUserData implements FixtureInterface
         $questionnaire10->setAudioItem('');
         $manager->persist($questionnaire10);
 
+        $question10_1 = new Question();
+        $question10_1->setQuestionnaire($questionnaire10);
+        $manager->persist($question10_1);
+
+        $question10_2 = new Question();
+        $question10_2->setQuestionnaire($questionnaire10);
+        $manager->persist($question10_2);
+
+        $question10_3 = new Question();
+        $question10_3->setQuestionnaire($questionnaire10);
+        $manager->persist($question10_3);
+
+        $question10_4 = new Question();
+        $question10_4->setQuestionnaire($questionnaire10);
+        $manager->persist($question10_4);
+
+    // ITEM 11   
         $questionnaire11->addTest($test);
         $questionnaire11->setLevel("A2");
         $questionnaire11->setConsigne('');
@@ -321,6 +397,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire11->setAudioItem('');
         $manager->persist($questionnaire11);
 
+        $question11 = new Question();
+        $question11->setQuestionnaire($questionnaire11);
+        $manager->persist($question11);
+
+    // ITEM 12
         $questionnaire12->addTest($test);
         $questionnaire12->setLevel("A2");
         $questionnaire12->setConsigne('');
@@ -345,6 +426,12 @@ class LoadUserData implements FixtureInterface
         $questionnaire12->setAudioItem('');
         $manager->persist($questionnaire12);
 
+        $question12 = new Question();
+        $question12->setQuestionnaire($questionnaire12);
+        $manager->persist($question12);
+
+
+    // ITEM 13
         $questionnaire13 = new Questionnaire();
         $questionnaire13->addTest($test);
         $questionnaire13->setLevel("A2");
@@ -370,6 +457,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire13->setAudioItem('');
         $manager->persist($questionnaire13);
 
+        $question13 = new Question();
+        $question13->setQuestionnaire($questionnaire13);
+        $manager->persist($question13);
+
+    // ITEM 14
         $questionnaire14->addTest($test);
         $questionnaire14->setLevel("A2");
         $questionnaire14->setConsigne('');
@@ -394,6 +486,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire14->setAudioItem('');
         $manager->persist($questionnaire14);
 
+        $question14 = new Question();
+        $question14->setQuestionnaire($questionnaire14);
+        $manager->persist($question14);
+
+    // ITEM 15
         $questionnaire15->addTest($test);
         $questionnaire15->setLevel("A2");
         $questionnaire15->setConsigne('');
@@ -418,6 +515,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire15->setAudioItem('');
         $manager->persist($questionnaire15);
 
+        $question15 = new Question();
+        $question15->setQuestionnaire($questionnaire15);
+        $manager->persist($question15);
+
+    // ITEM 16
         $questionnaire16->addTest($test);
         $questionnaire16->setLevel("A2");
         $questionnaire16->setConsigne('');
@@ -442,6 +544,12 @@ class LoadUserData implements FixtureInterface
         $questionnaire16->setAudioItem('');
         $manager->persist($questionnaire16);
 
+        $question16 = new Question();
+        $question16->setQuestionnaire($questionnaire16);
+        $manager->persist($question16);
+
+
+    // ITEM 17
         $questionnaire17->addTest($test);
         $questionnaire17->setLevel("A2");
         $questionnaire17->setConsigne('');
@@ -466,6 +574,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire17->setAudioItem('');
         $manager->persist($questionnaire17);
 
+        $question17 = new Question();
+        $question17->setQuestionnaire($questionnaire17);
+        $manager->persist($question17);
+
+    // ITEM 18
         $questionnaire18->addTest($test);
         $questionnaire18->setLevel("A2");
         $questionnaire18->setConsigne('');
@@ -490,6 +603,12 @@ class LoadUserData implements FixtureInterface
         $questionnaire18->setAudioItem('');
         $manager->persist($questionnaire18);
 
+        $question18 = new Question();
+        $question18->setQuestionnaire($questionnaire18);
+        $manager->persist($question18);
+
+
+    // ITEM 19
         $questionnaire19->addTest($test);
         $questionnaire19->setLevel("A2");
         $questionnaire19->setConsigne('');
@@ -514,6 +633,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire19->setAudioItem('');
         $manager->persist($questionnaire19);
 
+        $question19 = new Question();
+        $question19->setQuestionnaire($questionnaire19);
+        $manager->persist($question19);
+
+    // ITEM 20
         $questionnaire20->addTest($test);
         $questionnaire20->setLevel("A2");
         $questionnaire20->setConsigne('');
@@ -538,6 +662,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire20->setAudioItem('');
         $manager->persist($questionnaire20);
 
+        $question20 = new Question();
+        $question20->setQuestionnaire($questionnaire20);
+        $manager->persist($question20);
+
+    // ITEM 21
         $questionnaire21->addTest($test);
         $questionnaire21->setLevel("A2");
         $questionnaire21->setConsigne('');
@@ -562,6 +691,23 @@ class LoadUserData implements FixtureInterface
         $questionnaire21->setAudioItem('');
         $manager->persist($questionnaire21);
 
+        $question21_1 = new Question();
+        $question21_1->setQuestionnaire($questionnaire21);
+        $manager->persist($question21_1);
+
+        $question21_2 = new Question();
+        $question21_2->setQuestionnaire($questionnaire21);
+        $manager->persist($question21_2);
+
+        $question21_3 = new Question();
+        $question21_3->setQuestionnaire($questionnaire21);
+        $manager->persist($question21_3);
+
+        $question21_4 = new Question();
+        $question21_4->setQuestionnaire($questionnaire21);
+        $manager->persist($question21_4);
+
+    // ITEM 22
         $questionnaire22->addTest($test);
         $questionnaire22->setLevel("A2");
         $questionnaire22->setConsigne('');
@@ -586,6 +732,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire22->setAudioItem('');
         $manager->persist($questionnaire22);
 
+        $question22 = new Question();
+        $question22->setQuestionnaire($questionnaire22);
+        $manager->persist($question22);
+
+    // ITEM 23
         $questionnaire23->addTest($test);
         $questionnaire23->setLevel("A2");
         $questionnaire23->setConsigne('');
@@ -610,6 +761,12 @@ class LoadUserData implements FixtureInterface
         $questionnaire23->setAudioItem('');
         $manager->persist($questionnaire23);
 
+        $question23 = new Question();
+        $question23->setQuestionnaire($questionnaire23);
+        $manager->persist($question23);
+
+
+    // ITEM 24
         $questionnaire24->addTest($test);
         $questionnaire24->setLevel("A2");
         $questionnaire24->setConsigne('');
@@ -634,6 +791,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire24->setAudioItem('');
         $manager->persist($questionnaire24);
 
+        $question24 = new Question();
+        $question24->setQuestionnaire($questionnaire24);
+        $manager->persist($question24);
+
+    // ITEM 25
         $questionnaire25->addTest($test);
         $questionnaire25->setLevel("A2");
         $questionnaire25->setConsigne('');
@@ -658,6 +820,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire25->setAudioItem('');
         $manager->persist($questionnaire25);
 
+        $question25 = new Question();
+        $question25->setQuestionnaire($questionnaire25);
+        $manager->persist($question25);
+
+    // ITEM 26
         $questionnaire26->addTest($test);
         $questionnaire26->setLevel("A2");
         $questionnaire26->setConsigne('');
@@ -682,6 +849,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire26->setAudioItem('');
         $manager->persist($questionnaire26);
 
+        $question26 = new Question();
+        $question26->setQuestionnaire($questionnaire26);
+        $manager->persist($question26);
+
+    // ITEM 27
         $questionnaire27->addTest($test);
         $questionnaire27->setLevel("A2");
         $questionnaire27->setConsigne('');
@@ -706,6 +878,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire27->setAudioItem('');
         $manager->persist($questionnaire27);
 
+        $question27 = new Question();
+        $question27->setQuestionnaire($questionnaire27);
+        $manager->persist($question27);
+
+    // ITEM 28
         $questionnaire28->addTest($test);
         $questionnaire28->setLevel("A2");
         $questionnaire28->setConsigne('');
@@ -730,6 +907,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire28->setAudioItem('');
         $manager->persist($questionnaire28);
 
+        $question28 = new Question();
+        $question28->setQuestionnaire($questionnaire28);
+        $manager->persist($question28);
+
+    // ITEM 29
         $questionnaire29->addTest($test);
         $questionnaire29->setLevel("A2");
         $questionnaire29->setConsigne('');
@@ -754,6 +936,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire29->setAudioItem('');
         $manager->persist($questionnaire29);
 
+        $question29 = new Question();
+        $question29->setQuestionnaire($questionnaire29);
+        $manager->persist($question29);
+
+    // ITEM 30
         $questionnaire30->addTest($test);
         $questionnaire30->setLevel("A2");
         $questionnaire30->setConsigne('');
@@ -778,6 +965,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire30->setAudioItem('');
         $manager->persist($questionnaire30);
 
+        $question30 = new Question();
+        $question30->setQuestionnaire($questionnaire30);
+        $manager->persist($question30);
+
+    // ITEM 31
         $questionnaire31->addTest($test);
         $questionnaire31->setLevel("A2");
         $questionnaire31->setConsigne('');
@@ -802,6 +994,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire31->setAudioItem('');
         $manager->persist($questionnaire31);
 
+        $question31 = new Question();
+        $question31->setQuestionnaire($questionnaire31);
+        $manager->persist($question31);
+
+    // ITEM 32
         $questionnaire32->addTest($test);
         $questionnaire32->setLevel("A2");
         $questionnaire32->setConsigne('');
@@ -826,6 +1023,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire32->setAudioItem('');
         $manager->persist($questionnaire32);
 
+        $question32 = new Question();
+        $question32->setQuestionnaire($questionnaire32);
+        $manager->persist($question32);
+
+    // ITEM 33
         $questionnaire33->addTest($test);
         $questionnaire33->setLevel("A2");
         $questionnaire33->setConsigne('');
@@ -850,6 +1052,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire33->setAudioItem('');
         $manager->persist($questionnaire33);
 
+        $question33 = new Question();
+        $question33->setQuestionnaire($questionnaire33);
+        $manager->persist($question33);
+
+    // ITEM 34
         $questionnaire34->addTest($test);
         $questionnaire34->setLevel("A2");
         $questionnaire34->setConsigne('');
@@ -874,6 +1081,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire34->setAudioItem('');
         $manager->persist($questionnaire34);
 
+        $question34 = new Question();
+        $question34->setQuestionnaire($questionnaire34);
+        $manager->persist($question34);
+
+    // ITEM 35
         $questionnaire35->addTest($test);
         $questionnaire35->setLevel("A2");
         $questionnaire35->setConsigne('');
@@ -898,6 +1110,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire35->setAudioItem('');
         $manager->persist($questionnaire35);
 
+        $question35 = new Question();
+        $question35->setQuestionnaire($questionnaire35);
+        $manager->persist($question35);
+
+    // ITEM 36
         $questionnaire36->addTest($test);
         $questionnaire36->setLevel("A2");
         $questionnaire36->setConsigne('');
@@ -922,6 +1139,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire36->setAudioItem('');
         $manager->persist($questionnaire36);
 
+        $question36 = new Question();
+        $question36->setQuestionnaire($questionnaire36);
+        $manager->persist($question36);
+
+    // ITEM 37
         $questionnaire37->addTest($test);
         $questionnaire37->setLevel("A2");
         $questionnaire37->setConsigne('');
@@ -946,6 +1168,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire37->setAudioItem('');
         $manager->persist($questionnaire37);
 
+        $question37 = new Question();
+        $question37->setQuestionnaire($questionnaire37);
+        $manager->persist($question37);
+
+    // ITEM 38
         $questionnaire38->addTest($test);
         $questionnaire38->setLevel("A2");
         $questionnaire38->setConsigne('');
@@ -970,6 +1197,11 @@ class LoadUserData implements FixtureInterface
         $questionnaire38->setAudioItem('');
         $manager->persist($questionnaire38);
 
+        $question38 = new Question();
+        $question38->setQuestionnaire($questionnaire38);
+        $manager->persist($question38);
+
+    // ITEM 39
         $questionnaire39->addTest($test);
         $questionnaire39->setLevel("A2");
         $questionnaire39->setConsigne('');
@@ -994,6 +1226,9 @@ class LoadUserData implements FixtureInterface
         $questionnaire39->setAudioItem('');
         $manager->persist($questionnaire39);
 
+        $question39 = new Question();
+        $question39->setQuestionnaire($questionnaire39);
+        $manager->persist($question39);
 
         $manager->flush();
     }
