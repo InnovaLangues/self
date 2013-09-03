@@ -8,6 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
+use Innova\SelfBundle\Entity\Subquestion;
 
 class LoadUserData implements FixtureInterface
 {
@@ -87,7 +88,14 @@ class LoadUserData implements FixtureInterface
 
         $question1 = new Question();
         $question1->setQuestionnaire($questionnaire1);
+        $question1->setTypology("QRU");
+        $question1->setConsigne("");
         $manager->persist($question1);
+
+        $subquestion1 = new Subquestion();
+        $subquestion1->setQuestion($question1);
+        $subquestion1->setTypology("QRU");
+        $manager->persist($subquestion1);
 
      // ITEM 2
         $questionnaire2->addTest($test);
@@ -116,7 +124,14 @@ class LoadUserData implements FixtureInterface
 
         $question2 = new Question();
         $question2->setQuestionnaire($questionnaire2);
+        $question2->setTypology("QRU");
+        $question2->setConsigne("");
         $manager->persist($question2);
+
+        $subquestion2 = new Subquestion();
+        $subquestion2->setQuestion($question2);
+        $subquestion2->setTypology("QRU");
+        $manager->persist($subquestion2);
 
     // ITEM 3
         $questionnaire3->addTest($test);
@@ -145,7 +160,14 @@ class LoadUserData implements FixtureInterface
 
         $question3 = new Question();
         $question3->setQuestionnaire($questionnaire3);
+        $question3->setTypology("QRU");
+        $question3->setConsigne("");
         $manager->persist($question3);
+
+        $subquestion3 = new Subquestion();
+        $subquestion3->setQuestion($question3);
+        $subquestion3->setTypology("QRU");
+        $manager->persist($subquestion3);
 
     // ITEM 4
         $questionnaire4->addTest($test);
@@ -174,7 +196,14 @@ class LoadUserData implements FixtureInterface
 
         $question4 = new Question();
         $question4->setQuestionnaire($questionnaire4);
+        $question4->setTypology("QRU");
+        $question4->setConsigne("");
         $manager->persist($question4);
+
+        $subquestion4 = new Subquestion();
+        $subquestion4->setQuestion($question4);
+        $subquestion4->setTypology("QRU");
+        $manager->persist($subquestion4);
 
     // ITEM 5    
         $questionnaire5->addTest($test);
@@ -203,7 +232,14 @@ class LoadUserData implements FixtureInterface
 
         $question5 = new Question();
         $question5->setQuestionnaire($questionnaire5);
+        $question5->setTypology("QRU");
+        $question5->setConsigne("");
         $manager->persist($question5);
+
+        $subquestion5 = new Subquestion();
+        $subquestion5->setQuestion($question5);
+        $subquestion5->setTypology("QRU");
+        $manager->persist($subquestion5);
 
     // ITEM 6
         $questionnaire6->addTest($test);
@@ -232,7 +268,14 @@ class LoadUserData implements FixtureInterface
 
         $question6 = new Question();
         $question6->setQuestionnaire($questionnaire6);
+        $question6->setTypology("QRU");
+        $question6->setConsigne("");
         $manager->persist($question6);
+
+        $subquestion6 = new Subquestion();
+        $subquestion6->setQuestion($question6);
+        $subquestion6->setTypology("QRU");
+        $manager->persist($subquestion6);
 
     // ITEM 7   
         $questionnaire7->addTest($test);
@@ -261,7 +304,14 @@ class LoadUserData implements FixtureInterface
 
         $question7 = new Question();
         $question7->setQuestionnaire($questionnaire7);
+        $question7->setTypology("QRU");
+        $question7->setConsigne("");
         $manager->persist($question7);
+
+        $subquestion7 = new Subquestion();
+        $subquestion7->setQuestion($question7);
+        $subquestion7->setTypology("QRU");
+        $manager->persist($subquestion7);
 
 
     // ITEM 8   
@@ -291,7 +341,14 @@ class LoadUserData implements FixtureInterface
 
         $question8 = new Question();
         $question8->setQuestionnaire($questionnaire8);
+        $question8->setTypology("QRU");
+        $question8->setConsigne("");
         $manager->persist($question8);
+
+        $subquestion8 = new Subquestion();
+        $subquestion8->setQuestion($question8);
+        $subquestion8->setTypology("QRU");
+        $manager->persist($subquestion8);
 
     // ITEM 9   
         $questionnaire9->addTest($test);
@@ -318,17 +375,26 @@ class LoadUserData implements FixtureInterface
         $questionnaire9->setAudioItem('');
         $manager->persist($questionnaire9);
 
-        $question9_1 = new Question();
-        $question9_1->setQuestionnaire($questionnaire9);
-        $manager->persist($question9_1);
+        $question9 = new Question();
+        $question9->setQuestionnaire($questionnaire9);
+        $question9->setTypology("TVF");
+        $question9->setConsigne("");
+        $manager->persist($question9);
 
-        $question9_2 = new Question();
-        $question9_2->setQuestionnaire($questionnaire9);
-        $manager->persist($question9_2);
+        $subquestion9_1 = new Subquestion();
+        $subquestion9_1->setQuestion($question9);
+        $subquestion9_1->setTypology("VF");
+        $manager->persist($subquestion9_1);
 
-        $question9_3 = new Question();
-        $question9_3->setQuestionnaire($questionnaire9);
-        $manager->persist($question9_3);
+        $subquestion9_2 = new Subquestion();
+        $subquestion9_2->setQuestion($question9);
+        $subquestion9_2->setTypology("VF");
+        $manager->persist($subquestion9_2);
+
+        $subquestion9_3 = new Subquestion();
+        $subquestion9_3->setQuestion($question9);
+        $subquestion9_3->setTypology("VF");
+        $manager->persist($subquestion9_3);
 
 
     // ITEM 10   
@@ -356,21 +422,31 @@ class LoadUserData implements FixtureInterface
         $questionnaire10->setAudioItem('');
         $manager->persist($questionnaire10);
 
-        $question10_1 = new Question();
-        $question10_1->setQuestionnaire($questionnaire10);
-        $manager->persist($question10_1);
+        $question10 = new Question();
+        $question10->setQuestionnaire($questionnaire10);
+        $question10->setTypology("TVF");
+        $question10->setConsigne("");
+        $manager->persist($question10);
 
-        $question10_2 = new Question();
-        $question10_2->setQuestionnaire($questionnaire10);
-        $manager->persist($question10_2);
+        $subquestion10_1 = new Subquestion();
+        $subquestion10_1->setQuestion($question10);
+        $subquestion10_1->setTypology("VF");
+        $manager->persist($subquestion10_1);
 
-        $question10_3 = new Question();
-        $question10_3->setQuestionnaire($questionnaire10);
-        $manager->persist($question10_3);
+        $subquestion10_2 = new Subquestion();
+        $subquestion10_2->setQuestion($question10);
+        $subquestion10_2->setTypology("VF");
+        $manager->persist($subquestion10_2);
 
-        $question10_4 = new Question();
-        $question10_4->setQuestionnaire($questionnaire10);
-        $manager->persist($question10_4);
+        $subquestion10_3 = new Subquestion();
+        $subquestion10_3->setQuestion($question10);
+        $subquestion10_3->setTypology("VF");
+        $manager->persist($subquestion10_3);
+
+        $subquestion10_4 = new Subquestion();
+        $subquestion10_4->setQuestion($question10);
+        $subquestion10_4->setTypology("VF");
+        $manager->persist($subquestion10_4);
 
     // ITEM 11   
         $questionnaire11->addTest($test);
@@ -397,9 +473,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire11->setAudioItem('');
         $manager->persist($questionnaire11);
 
-        $question11 = new Question();
-        $question11->setQuestionnaire($questionnaire11);
-        $manager->persist($question11);
+        
 
     // ITEM 12
         $questionnaire12->addTest($test);
@@ -426,11 +500,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire12->setAudioItem('');
         $manager->persist($questionnaire12);
 
-        $question12 = new Question();
-        $question12->setQuestionnaire($questionnaire12);
-        $manager->persist($question12);
-
-
+      
     // ITEM 13
         $questionnaire13 = new Questionnaire();
         $questionnaire13->addTest($test);
@@ -457,10 +527,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire13->setAudioItem('');
         $manager->persist($questionnaire13);
 
-        $question13 = new Question();
-        $question13->setQuestionnaire($questionnaire13);
-        $manager->persist($question13);
-
+        
     // ITEM 14
         $questionnaire14->addTest($test);
         $questionnaire14->setLevel("A2");
@@ -486,10 +553,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire14->setAudioItem('');
         $manager->persist($questionnaire14);
 
-        $question14 = new Question();
-        $question14->setQuestionnaire($questionnaire14);
-        $manager->persist($question14);
-
+      
     // ITEM 15
         $questionnaire15->addTest($test);
         $questionnaire15->setLevel("A2");
@@ -515,9 +579,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire15->setAudioItem('');
         $manager->persist($questionnaire15);
 
-        $question15 = new Question();
-        $question15->setQuestionnaire($questionnaire15);
-        $manager->persist($question15);
+      
 
     // ITEM 16
         $questionnaire16->addTest($test);
@@ -543,10 +605,6 @@ class LoadUserData implements FixtureInterface
         $questionnaire16->setAudioContexte('');
         $questionnaire16->setAudioItem('');
         $manager->persist($questionnaire16);
-
-        $question16 = new Question();
-        $question16->setQuestionnaire($questionnaire16);
-        $manager->persist($question16);
 
 
     // ITEM 17
@@ -574,9 +632,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire17->setAudioItem('');
         $manager->persist($questionnaire17);
 
-        $question17 = new Question();
-        $question17->setQuestionnaire($questionnaire17);
-        $manager->persist($question17);
+    
 
     // ITEM 18
         $questionnaire18->addTest($test);
@@ -603,10 +659,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire18->setAudioItem('');
         $manager->persist($questionnaire18);
 
-        $question18 = new Question();
-        $question18->setQuestionnaire($questionnaire18);
-        $manager->persist($question18);
-
+      
 
     // ITEM 19
         $questionnaire19->addTest($test);
@@ -633,10 +686,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire19->setAudioItem('');
         $manager->persist($questionnaire19);
 
-        $question19 = new Question();
-        $question19->setQuestionnaire($questionnaire19);
-        $manager->persist($question19);
-
+       
     // ITEM 20
         $questionnaire20->addTest($test);
         $questionnaire20->setLevel("A2");
@@ -662,9 +712,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire20->setAudioItem('');
         $manager->persist($questionnaire20);
 
-        $question20 = new Question();
-        $question20->setQuestionnaire($questionnaire20);
-        $manager->persist($question20);
+        
 
     // ITEM 21
         $questionnaire21->addTest($test);
@@ -691,21 +739,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire21->setAudioItem('');
         $manager->persist($questionnaire21);
 
-        $question21_1 = new Question();
-        $question21_1->setQuestionnaire($questionnaire21);
-        $manager->persist($question21_1);
-
-        $question21_2 = new Question();
-        $question21_2->setQuestionnaire($questionnaire21);
-        $manager->persist($question21_2);
-
-        $question21_3 = new Question();
-        $question21_3->setQuestionnaire($questionnaire21);
-        $manager->persist($question21_3);
-
-        $question21_4 = new Question();
-        $question21_4->setQuestionnaire($questionnaire21);
-        $manager->persist($question21_4);
+       
 
     // ITEM 22
         $questionnaire22->addTest($test);
@@ -732,9 +766,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire22->setAudioItem('');
         $manager->persist($questionnaire22);
 
-        $question22 = new Question();
-        $question22->setQuestionnaire($questionnaire22);
-        $manager->persist($question22);
+       
 
     // ITEM 23
         $questionnaire23->addTest($test);
@@ -761,9 +793,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire23->setAudioItem('');
         $manager->persist($questionnaire23);
 
-        $question23 = new Question();
-        $question23->setQuestionnaire($questionnaire23);
-        $manager->persist($question23);
+        
 
 
     // ITEM 24
@@ -791,10 +821,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire24->setAudioItem('');
         $manager->persist($questionnaire24);
 
-        $question24 = new Question();
-        $question24->setQuestionnaire($questionnaire24);
-        $manager->persist($question24);
-
+       
     // ITEM 25
         $questionnaire25->addTest($test);
         $questionnaire25->setLevel("A2");
@@ -819,26 +846,6 @@ class LoadUserData implements FixtureInterface
         $questionnaire25->setAudioContexte('');
         $questionnaire25->setAudioItem('');
         $manager->persist($questionnaire25);
-
-        $question25_1 = new Question();
-        $question25_1->setQuestionnaire($questionnaire25);
-        $manager->persist($question25_1);
-
-        $question25_2 = new Question();
-        $question25_2->setQuestionnaire($questionnaire25);
-        $manager->persist($question25_2);
-
-        $question25_3 = new Question();
-        $question25_3->setQuestionnaire($questionnaire25);
-        $manager->persist($question25_3);
-
-        $question25_4 = new Question();
-        $question25_4->setQuestionnaire($questionnaire25);
-        $manager->persist($question25_4);
-
-        $question25_5 = new Question();
-        $question25_5->setQuestionnaire($questionnaire25);
-        $manager->persist($question25_5);
 
 
     // ITEM 26
@@ -866,9 +873,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire26->setAudioItem('');
         $manager->persist($questionnaire26);
 
-        $question26 = new Question();
-        $question26->setQuestionnaire($questionnaire26);
-        $manager->persist($question26);
+        
 
     // ITEM 27
         $questionnaire27->addTest($test);
@@ -895,9 +900,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire27->setAudioItem('');
         $manager->persist($questionnaire27);
 
-        $question27 = new Question();
-        $question27->setQuestionnaire($questionnaire27);
-        $manager->persist($question27);
+       
 
     // ITEM 28
         $questionnaire28->addTest($test);
@@ -924,9 +927,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire28->setAudioItem('');
         $manager->persist($questionnaire28);
 
-        $question28 = new Question();
-        $question28->setQuestionnaire($questionnaire28);
-        $manager->persist($question28);
+        
 
     // ITEM 29
         $questionnaire29->addTest($test);
@@ -953,9 +954,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire29->setAudioItem('');
         $manager->persist($questionnaire29);
 
-        $question29 = new Question();
-        $question29->setQuestionnaire($questionnaire29);
-        $manager->persist($question29);
+      
 
     // ITEM 30
         $questionnaire30->addTest($test);
@@ -982,10 +981,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire30->setAudioItem('');
         $manager->persist($questionnaire30);
 
-        $question30 = new Question();
-        $question30->setQuestionnaire($questionnaire30);
-        $manager->persist($question30);
-
+        
     // ITEM 31
         $questionnaire31->addTest($test);
         $questionnaire31->setLevel("A2");
@@ -1011,9 +1007,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire31->setAudioItem('');
         $manager->persist($questionnaire31);
 
-        $question31 = new Question();
-        $question31->setQuestionnaire($questionnaire31);
-        $manager->persist($question31);
+        
 
     // ITEM 32
         $questionnaire32->addTest($test);
@@ -1040,9 +1034,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire32->setAudioItem('');
         $manager->persist($questionnaire32);
 
-        $question32 = new Question();
-        $question32->setQuestionnaire($questionnaire32);
-        $manager->persist($question32);
+      
 
     // ITEM 33
         $questionnaire33->addTest($test);
@@ -1069,9 +1061,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire33->setAudioItem('');
         $manager->persist($questionnaire33);
 
-        $question33 = new Question();
-        $question33->setQuestionnaire($questionnaire33);
-        $manager->persist($question33);
+      
 
     // ITEM 34
         $questionnaire34->addTest($test);
@@ -1098,9 +1088,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire34->setAudioItem('');
         $manager->persist($questionnaire34);
 
-        $question34 = new Question();
-        $question34->setQuestionnaire($questionnaire34);
-        $manager->persist($question34);
+      
 
     // ITEM 35
         $questionnaire35->addTest($test);
@@ -1127,10 +1115,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire35->setAudioItem('');
         $manager->persist($questionnaire35);
 
-        $question35 = new Question();
-        $question35->setQuestionnaire($questionnaire35);
-        $manager->persist($question35);
-
+       
     // ITEM 36
         $questionnaire36->addTest($test);
         $questionnaire36->setLevel("A2");
@@ -1156,9 +1141,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire36->setAudioItem('');
         $manager->persist($questionnaire36);
 
-        $question36 = new Question();
-        $question36->setQuestionnaire($questionnaire36);
-        $manager->persist($question36);
+        
 
     // ITEM 37
         $questionnaire37->addTest($test);
@@ -1185,9 +1168,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire37->setAudioItem('');
         $manager->persist($questionnaire37);
 
-        $question37 = new Question();
-        $question37->setQuestionnaire($questionnaire37);
-        $manager->persist($question37);
+        
 
     // ITEM 38
         $questionnaire38->addTest($test);
@@ -1214,9 +1195,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire38->setAudioItem('');
         $manager->persist($questionnaire38);
 
-        $question38 = new Question();
-        $question38->setQuestionnaire($questionnaire38);
-        $manager->persist($question38);
+        
 
     // ITEM 39
         $questionnaire39->addTest($test);
@@ -1243,9 +1222,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire39->setAudioItem('');
         $manager->persist($questionnaire39);
 
-        $question39 = new Question();
-        $question39->setQuestionnaire($questionnaire39);
-        $manager->persist($question39);
+       
 
         $manager->flush();
     }
