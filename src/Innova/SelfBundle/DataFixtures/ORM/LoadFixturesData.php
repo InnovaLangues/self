@@ -66,7 +66,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire1->setLevel("A2");
         $questionnaire1->setConsigne('');
         $questionnaire1->setTheme('à la boulangerie');
-        $questionnaire1->setTypology('QRU');
         $questionnaire1->setSource('Conçu en interne');
         $questionnaire1->setSupportType("enregistrement local (MLC)");
         $questionnaire1->setFocus('');
@@ -102,7 +101,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire2->setLevel("A2");
         $questionnaire2->setConsigne('');
         $questionnaire2->setTheme('achat d’un CD');
-        $questionnaire2->setTypology('QRU');
         $questionnaire2->setSource('Conçu en interne');
         $questionnaire2->setSupportType("enregistrement local (MLC)");
         $questionnaire2->setFocus('');
@@ -138,7 +136,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire3->setLevel("A2");
         $questionnaire3->setConsigne('');
         $questionnaire3->setTheme('bureau');
-        $questionnaire3->setTypology('QRU');
         $questionnaire3->setSource('Conçu en interne');
         $questionnaire3->setSupportType("enregistrement local (MLC)");
         $questionnaire3->setFocus('');
@@ -174,7 +171,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire4->setLevel("A2");
         $questionnaire4->setConsigne('');
         $questionnaire4->setTheme('dialogue maman-fils');
-        $questionnaire4->setTypology('QRU');
         $questionnaire4->setSource('Conçu en interne');
         $questionnaire4->setSupportType("enregistrement local (MLC)");
         $questionnaire4->setFocus('');
@@ -210,7 +206,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire5->setLevel("A2");
         $questionnaire5->setConsigne('');
         $questionnaire5->setTheme('dialogue week-end');
-        $questionnaire5->setTypology('QRU');
         $questionnaire5->setSource('Conçu en interne');
         $questionnaire5->setSupportType("enregistrement local (MLC)");
         $questionnaire5->setFocus('');
@@ -246,7 +241,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire6->setLevel("A2");
         $questionnaire6->setConsigne('');
         $questionnaire6->setTheme('la valise');
-        $questionnaire6->setTypology('QRU');
         $questionnaire6->setSource('Conçu en interne');
         $questionnaire6->setSupportType("enregistrement local (MLC)");
         $questionnaire6->setFocus('');
@@ -282,7 +276,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire7->setLevel("A2");
         $questionnaire7->setConsigne('');
         $questionnaire7->setTheme('moment de relax');
-        $questionnaire7->setTypology('QRU');
         $questionnaire7->setSource('Conçu en interne');
         $questionnaire7->setSupportType("enregistrement local (MLC)");
         $questionnaire7->setFocus('');
@@ -319,7 +312,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire8->setLevel("A2");
         $questionnaire8->setConsigne('');
         $questionnaire8->setTheme('réserver des billets au théâtre');
-        $questionnaire8->setTypology('QRU');
         $questionnaire8->setSource('Conçu en interne');
         $questionnaire8->setSupportType("enregistrement local (MLC)");
         $questionnaire8->setFocus('');
@@ -355,7 +347,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire9->setLevel("A2");
         $questionnaire9->setConsigne('');
         $questionnaire9->setTheme('dialogue entre amies');
-        $questionnaire9->setTypology('TVF');
         $questionnaire9->setSource('Conçu en interne');
         $questionnaire9->setSupportType("enregistrement local (MLC)");
         $questionnaire9->setFocus('');
@@ -402,7 +393,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire10->setLevel("A2");
         $questionnaire10->setConsigne('');
         $questionnaire10->setTheme('expression d’une inquiétude');
-        $questionnaire10->setTypology('TVF');
         $questionnaire10->setSource('certification/test validé (CELI) / modifié');
         $questionnaire10->setSupportType("enregistrement local (MLC)");
         $questionnaire10->setFocus('');
@@ -453,7 +443,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire11->setLevel("A2");
         $questionnaire11->setConsigne('');
         $questionnaire11->setTheme('motiver son choix 01/10');
-        $questionnaire11->setTypology('VF');
         $questionnaire11->setSource('certification/test validé (CELI) / modifié');
         $questionnaire11->setSupportType("enregistrement local (MLC)");
         $questionnaire11->setFocus('');
@@ -489,7 +478,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire12->setLevel("A2");
         $questionnaire12->setConsigne('');
         $questionnaire12->setTheme('motiver son choix 02/10');
-        $questionnaire12->setTypology('VF');
         $questionnaire12->setSource('certification/test validé (CELI) / modifié');
         $questionnaire12->setSupportType("enregistrement local (MLC)");
         $questionnaire12->setFocus('');
@@ -527,7 +515,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire13->setLevel("A2");
         $questionnaire13->setConsigne('');
         $questionnaire13->setTheme('motiver son choix 03/10');
-        $questionnaire13->setTypology('VF');
         $questionnaire13->setSource('certification/test validé (CELI) / modifié');
         $questionnaire13->setSupportType("enregistrement local (MLC)");
         $questionnaire13->setFocus('');
@@ -564,7 +551,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire14->setLevel("A2");
         $questionnaire14->setConsigne('');
         $questionnaire14->setTheme('motiver son choix 04/10');
-        $questionnaire14->setTypology('VF');
         $questionnaire14->setSource('certification/test validé (CELI) / modifié');
         $questionnaire14->setSupportType("enregistrement local (MLC)");
         $questionnaire14->setFocus('');
@@ -601,7 +587,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire15->setLevel("A2");
         $questionnaire15->setConsigne('');
         $questionnaire15->setTheme('motiver son choix 05/10');
-        $questionnaire15->setTypology('VF');
         $questionnaire15->setSource('certification/test validé (CELI) / modifié');
         $questionnaire15->setSupportType("enregistrement local (MLC)");
         $questionnaire15->setFocus('');
@@ -639,7 +624,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire16->setLevel("A2");
         $questionnaire16->setConsigne('');
         $questionnaire16->setTheme('motiver son choix 06/10');
-        $questionnaire16->setTypology('VF');
         $questionnaire16->setSource('certification/test validé (CELI) / modifié');
         $questionnaire16->setSupportType("enregistrement local (MLC)");
         $questionnaire16->setFocus('');
@@ -676,7 +660,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire17->setLevel("A2");
         $questionnaire17->setConsigne('');
         $questionnaire17->setTheme('motiver son choix 07/10');
-        $questionnaire17->setTypology('VF');
         $questionnaire17->setSource('certification/test validé (CELI) / modifié');
         $questionnaire17->setSupportType("enregistrement local (MLC)");
         $questionnaire17->setFocus('');
@@ -714,7 +697,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire18->setLevel("A2");
         $questionnaire18->setConsigne('');
         $questionnaire18->setTheme('motiver son choix 08/10');
-        $questionnaire18->setTypology('VF');
         $questionnaire18->setSource('certification/test validé (CELI) / modifié');
         $questionnaire18->setSupportType("enregistrement local (MLC)");
         $questionnaire18->setFocus('');
@@ -752,7 +734,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire19->setLevel("A2");
         $questionnaire19->setConsigne('');
         $questionnaire19->setTheme('motiver son choix 09/10');
-        $questionnaire19->setTypology('VF');
         $questionnaire19->setSource('certification/test validé (CELI) / modifié');
         $questionnaire19->setSupportType("enregistrement local (MLC)");
         $questionnaire19->setFocus('');
@@ -789,7 +770,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire20->setLevel("A2");
         $questionnaire20->setConsigne('');
         $questionnaire20->setTheme('motiver son choix 10/10');
-        $questionnaire20->setTypology('VF');
         $questionnaire20->setSource('certification/test validé (CELI) / modifié');
         $questionnaire20->setSupportType("enregistrement local (MLC)");
         $questionnaire20->setFocus('');
@@ -827,7 +807,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire21->setLevel("A2");
         $questionnaire21->setConsigne('');
         $questionnaire21->setTheme('ameublement');
-        $questionnaire21->setTypology('QRU');
         $questionnaire21->setSource('méthodes et manuels (Allegro 2, Edilingua, p. 22, unità 2) / modifié');
         $questionnaire21->setSupportType("enregistrement local (MLC)");
         $questionnaire21->setFocus('');
@@ -878,7 +857,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire22->setLevel("A2");
         $questionnaire22->setConsigne('');
         $questionnaire22->setTheme('au secrétariat');
-        $questionnaire22->setTypology('QRU');
         $questionnaire22->setSource('certification/test validé (CILS)');
         $questionnaire22->setSupportType("enregistrement local (MLC)");
         $questionnaire22->setFocus('');
@@ -914,7 +892,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire23->setLevel("A2");
         $questionnaire23->setConsigne('');
         $questionnaire23->setTheme('location voiture');
-        $questionnaire23->setTypology('QRU');
         $questionnaire23->setSource('certification/test validé (CILS) / modifié ');
         $questionnaire23->setSupportType("enregistrement local (MLC)");
         $questionnaire23->setFocus('');
@@ -951,7 +928,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire24->setLevel("A2");
         $questionnaire24->setConsigne('');
         $questionnaire24->setTheme('billetterie théatre');
-        $questionnaire24->setTypology('QRU');
         $questionnaire24->setSource('Conçu en interne');
         $questionnaire24->setSupportType("enregistrement local (MLC)");
         $questionnaire24->setFocus('');
@@ -988,7 +964,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire25->setLevel("A2");
         $questionnaire25->setConsigne('');
         $questionnaire25->setTheme('invitations');
-        $questionnaire25->setTypology('TVF');
         $questionnaire25->setSource('méthodes et manuels (Allegro 2, Edilingua, p. 14, piste n° 5)');
         $questionnaire25->setSupportType("enregistrement local (MLC)");
         $questionnaire25->setFocus('');
@@ -1046,7 +1021,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire26->setLevel("A2");
         $questionnaire26->setConsigne('');
         $questionnaire26->setTheme('recette tiramisù');
-        $questionnaire26->setTypology('TVF');
         $questionnaire26->setSource('méthodes et manuels (Se ascoltando..., Livello A1 - A2, Guerra Edizioni, p. 35 piste n° 29) / modifié');
         $questionnaire26->setSupportType("enregistrement local (MLC)");
         $questionnaire26->setFocus('');
@@ -1118,7 +1092,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire27->setLevel("A2");
         $questionnaire27->setConsigne('');
         $questionnaire27->setTheme('présentation travail 1/5');
-        $questionnaire27->setTypology('TVF');
         $questionnaire27->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire27->setSupportType("enregistrement local (MLC)");
         $questionnaire27->setFocus('');
@@ -1164,7 +1137,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire28->setLevel("A2");
         $questionnaire28->setConsigne('');
         $questionnaire28->setTheme('présentation travail 2/5');
-        $questionnaire28->setTypology('TVF');
         $questionnaire28->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire28->setSupportType("enregistrement local (MLC)");
         $questionnaire28->setFocus('');
@@ -1217,7 +1189,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire29->setLevel("A2");
         $questionnaire29->setConsigne('');
         $questionnaire29->setTheme('présentation travail 3/5');
-        $questionnaire29->setTypology('TVF');
         $questionnaire29->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire29->setSupportType("enregistrement local (MLC)");
         $questionnaire29->setFocus('');
@@ -1270,7 +1241,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire30->setLevel("A2");
         $questionnaire30->setConsigne('');
         $questionnaire30->setTheme('présentation travail 4/5');
-        $questionnaire30->setTypology('TVF');
         $questionnaire30->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire30->setSupportType("enregistrement local (MLC)");
         $questionnaire30->setFocus('');
@@ -1317,7 +1287,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire31->setLevel("A2");
         $questionnaire31->setConsigne('');
         $questionnaire31->setTheme('présentation travail 5/5');
-        $questionnaire31->setTypology('TVF');
         $questionnaire31->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire31->setSupportType("enregistrement local (MLC)");
         $questionnaire31->setFocus('');
@@ -1370,7 +1339,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire32->setLevel("A2");
         $questionnaire32->setConsigne('');
         $questionnaire32->setTheme('Absence à l\'entraînement');
-        $questionnaire32->setTypology('QRU');
         $questionnaire32->setSource('Conçu en interne');
         $questionnaire32->setSupportType("enregistrement local (MLC)");
         $questionnaire32->setFocus('');
@@ -1408,7 +1376,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire33->setLevel("A2");
         $questionnaire33->setConsigne('');
         $questionnaire33->setTheme('Avant le départ');
-        $questionnaire33->setTypology('QRU');
         $questionnaire33->setSource('Conçu en interne');
         $questionnaire33->setSupportType("enregistrement local (MLC)");
         $questionnaire33->setFocus('');
@@ -1447,7 +1414,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire34->setLevel("A2");
         $questionnaire34->setConsigne('');
         $questionnaire34->setTheme('Examen');
-        $questionnaire34->setTypology('TVF');
         $questionnaire34->setSource('Conçu en interne');
         $questionnaire34->setSupportType("enregistrement local (MLC)");
         $questionnaire34->setFocus('');
@@ -1485,7 +1451,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire35->setLevel("A2");
         $questionnaire35->setConsigne('');
         $questionnaire35->setTheme('Faire les courses');
-        $questionnaire35->setTypology('TVF');
         $questionnaire35->setSource('Conçu en interne');
         $questionnaire35->setSupportType("enregistrement local (MLC)");
         $questionnaire35->setFocus('');
@@ -1522,7 +1487,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire36->setLevel("A2");
         $questionnaire36->setConsigne('');
         $questionnaire36->setTheme('Nouvelle télévisée');
-        $questionnaire36->setTypology('TVF');
         $questionnaire36->setSource('Conçu en interne');
         $questionnaire36->setSupportType("enregistrement local (MLC)");
         $questionnaire36->setFocus('');
@@ -1560,7 +1524,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire37->setLevel("A2");
         $questionnaire37->setConsigne('');
         $questionnaire37->setTheme('Rendre CD');
-        $questionnaire37->setTypology('TVF');
         $questionnaire37->setSource('Conçu en interne');
         $questionnaire37->setSupportType("enregistrement local (MLC)");
         $questionnaire37->setFocus('');
@@ -1598,7 +1561,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire38->setLevel("A2");
         $questionnaire38->setConsigne('');
         $questionnaire38->setTheme('Souvenirs');
-        $questionnaire38->setTypology('TVF');
         $questionnaire38->setSource('Conçu en interne');
         $questionnaire38->setSupportType("enregistrement local (MLC)");
         $questionnaire38->setFocus('');
@@ -1636,7 +1598,6 @@ class LoadFixturesData implements FixtureInterface
         $questionnaire39->setLevel("A2");
         $questionnaire39->setConsigne('');
         $questionnaire39->setTheme('Dans la cuisine');
-        $questionnaire39->setTypology('TVF');
         $questionnaire39->setSource('Conçu en interne');
         $questionnaire39->setSupportType("enregistrement local (MLC)");
         $questionnaire39->setFocus('');
