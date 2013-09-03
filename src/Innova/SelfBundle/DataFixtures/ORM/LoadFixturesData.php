@@ -257,6 +257,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion4->setTypology("QRU");
         $manager->persist($subquestion4);
 
+        $proposition4_1 = new Proposition();
+        $proposition4_1->setSubquestion($subquestion4);
+        $proposition4_1->setRightAnswer(1);
+        $proposition4_1->setAudioUrl("");
+        $manager->persist($proposition4_1);
+
+        $proposition4_2 = new Proposition();
+        $proposition4_2->setSubquestion($subquestion4);
+        $proposition4_2->setRightAnswer(0);
+        $proposition4_2->setAudioUrl("");
+        $manager->persist($proposition4_2);
+
+        $proposition4_3 = new Proposition();
+        $proposition4_3->setSubquestion($subquestion4);
+        $proposition4_3->setRightAnswer(0);
+        $proposition4_3->setAudioUrl("");
+        $manager->persist($proposition4_3);
+
     // ITEM 5    
         $questionnaire5->addTest($test);
         $questionnaire5->setLevel("A2");
