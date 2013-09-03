@@ -187,7 +187,7 @@ class Questionnaire
     private $tests;
 
     public function __construct() {
-        $this->sessions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString(){
@@ -686,39 +686,6 @@ class Questionnaire
     public function getAudioItem()
     {
         return $this->audioItem;
-    }
-
-    /**
-     * Add sessions
-     *
-     * @param \Innova\SelfBundle\Entity\Session $sessions
-     * @return Questionnaire
-     */
-    public function addSession(\Innova\SelfBundle\Entity\Session $sessions)
-    {
-        $this->sessions[] = $sessions;
-    
-        return $this;
-    }
-
-    /**
-     * Remove sessions
-     *
-     * @param \Innova\SelfBundle\Entity\Session $sessions
-     */
-    public function removeSession(\Innova\SelfBundle\Entity\Session $sessions)
-    {
-        $this->sessions->removeElement($sessions);
-    }
-
-    /**
-     * Get sessions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSessions()
-    {
-        return $this->sessions;
     }
 
     /**
