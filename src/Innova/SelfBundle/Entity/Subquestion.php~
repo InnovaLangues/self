@@ -29,6 +29,13 @@ class Subquestion
     private $typology;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="audioUrl", type="string", length=255)
+     */
+    private $audioUrl;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Question", inversedBy="subquestions")
     */
     protected $question;

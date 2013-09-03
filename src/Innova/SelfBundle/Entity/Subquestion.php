@@ -29,6 +29,13 @@ class Subquestion
     private $typology;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="audioUrl", type="string", length=255, nullable=true)
+     */
+    private $audioUrl;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Question", inversedBy="subquestions")
     */
     protected $question;
@@ -132,5 +139,28 @@ class Subquestion
     public function getPropositions()
     {
         return $this->propositions;
+    }
+
+    /**
+     * Set audioUrl
+     *
+     * @param string $audioUrl
+     * @return Subquestion
+     */
+    public function setAudioUrl($audioUrl)
+    {
+        $this->audioUrl = $audioUrl;
+    
+        return $this;
+    }
+
+    /**
+     * Get audioUrl
+     *
+     * @return string 
+     */
+    public function getAudioUrl()
+    {
+        return $this->audioUrl;
     }
 }
