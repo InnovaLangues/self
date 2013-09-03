@@ -153,13 +153,13 @@ class LoadFixturesData implements FixtureInterface
 
         $proposition2_1 = new Proposition();
         $proposition2_1->setSubquestion($subquestion2);
-        $proposition2_1->setRightAnswer(1);
+        $proposition2_1->setRightAnswer(0);
         $proposition2_1->setAudioUrl("");
         $manager->persist($proposition2_1);
 
         $proposition2_2 = new Proposition();
         $proposition2_2->setSubquestion($subquestion2);
-        $proposition2_2->setRightAnswer(0);
+        $proposition2_2->setRightAnswer(1);
         $proposition2_2->setAudioUrl("");
         $manager->persist($proposition2_2);
 
@@ -203,6 +203,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion3->setQuestion($question3);
         $subquestion3->setTypology("QRU");
         $manager->persist($subquestion3);
+
+        $proposition3_1 = new Proposition();
+        $proposition3_1->setSubquestion($subquestion3);
+        $proposition3_1->setRightAnswer(1);
+        $proposition3_1->setAudioUrl("");
+        $manager->persist($proposition3_1);
+
+        $proposition3_2 = new Proposition();
+        $proposition3_2->setSubquestion($subquestion3);
+        $proposition3_2->setRightAnswer(0);
+        $proposition3_2->setAudioUrl("");
+        $manager->persist($proposition3_2);
+
+        $proposition3_3 = new Proposition();
+        $proposition3_3->setSubquestion($subquestion3);
+        $proposition3_3->setRightAnswer(0);
+        $proposition3_3->setAudioUrl("");
+        $manager->persist($proposition3_3);
 
     // ITEM 4
         $questionnaire4->addTest($test);
