@@ -10,7 +10,7 @@ use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\Subquestion;
 
-class LoadUserData implements FixtureInterface
+class LoadFixturesData implements FixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -473,7 +473,16 @@ class LoadUserData implements FixtureInterface
         $questionnaire11->setAudioItem('');
         $manager->persist($questionnaire11);
 
-        
+        $question11 = new Question();
+        $question11->setQuestionnaire($questionnaire11);
+        $question11->setTypology("VF");
+        $question11->setConsigne("");
+        $manager->persist($question11);
+
+        $subquestion11 = new Subquestion();
+        $subquestion11->setQuestion($question11);
+        $subquestion11->setTypology("VF");
+        $manager->persist($subquestion11);
 
     // ITEM 12
         $questionnaire12->addTest($test);
@@ -499,6 +508,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire12->setAudioContexte('');
         $questionnaire12->setAudioItem('');
         $manager->persist($questionnaire12);
+
+        $question12 = new Question();
+        $question12->setQuestionnaire($questionnaire12);
+        $question12->setTypology("VF");
+        $question12->setConsigne("");
+        $manager->persist($question12);
+
+        $subquestion12 = new Subquestion();
+        $subquestion12->setQuestion($question12);
+        $subquestion12->setTypology("VF");
+        $manager->persist($subquestion12);
 
       
     // ITEM 13
@@ -527,6 +547,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire13->setAudioItem('');
         $manager->persist($questionnaire13);
 
+        $question13 = new Question();
+        $question13->setQuestionnaire($questionnaire13);
+        $question13->setTypology("VF");
+        $question13->setConsigne("");
+        $manager->persist($question13);
+
+        $subquestion13 = new Subquestion();
+        $subquestion13->setQuestion($question13);
+        $subquestion13->setTypology("VF");
+        $manager->persist($subquestion13);
+
         
     // ITEM 14
         $questionnaire14->addTest($test);
@@ -553,6 +584,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire14->setAudioItem('');
         $manager->persist($questionnaire14);
 
+        $question14 = new Question();
+        $question14->setQuestionnaire($questionnaire14);
+        $question14->setTypology("VF");
+        $question14->setConsigne("");
+        $manager->persist($question14);
+
+        $subquestion14 = new Subquestion();
+        $subquestion14->setQuestion($question14);
+        $subquestion14->setTypology("VF");
+        $manager->persist($subquestion14);
+
       
     // ITEM 15
         $questionnaire15->addTest($test);
@@ -578,6 +620,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire15->setAudioContexte('');
         $questionnaire15->setAudioItem('');
         $manager->persist($questionnaire15);
+
+        $question15 = new Question();
+        $question15->setQuestionnaire($questionnaire15);
+        $question15->setTypology("VF");
+        $question15->setConsigne("");
+        $manager->persist($question15);
+
+        $subquestion15 = new Subquestion();
+        $subquestion15->setQuestion($question15);
+        $subquestion15->setTypology("VF");
+        $manager->persist($subquestion15);
 
       
 
@@ -606,6 +659,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire16->setAudioItem('');
         $manager->persist($questionnaire16);
 
+        $question16 = new Question();
+        $question16->setQuestionnaire($questionnaire16);
+        $question16->setTypology("VF");
+        $question16->setConsigne("");
+        $manager->persist($question16);
+
+        $subquestion16 = new Subquestion();
+        $subquestion16->setQuestion($question16);
+        $subquestion16->setTypology("VF");
+        $manager->persist($subquestion16);
+
 
     // ITEM 17
         $questionnaire17->addTest($test);
@@ -631,6 +695,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire17->setAudioContexte('');
         $questionnaire17->setAudioItem('');
         $manager->persist($questionnaire17);
+
+        $question17 = new Question();
+        $question17->setQuestionnaire($questionnaire17);
+        $question17->setTypology("VF");
+        $question17->setConsigne("");
+        $manager->persist($question17);
+
+        $subquestion17 = new Subquestion();
+        $subquestion17->setQuestion($question17);
+        $subquestion17->setTypology("VF");
+        $manager->persist($subquestion17);
 
     
 
@@ -659,6 +734,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire18->setAudioItem('');
         $manager->persist($questionnaire18);
 
+        $question18 = new Question();
+        $question18->setQuestionnaire($questionnaire18);
+        $question18->setTypology("VF");
+        $question18->setConsigne("");
+        $manager->persist($question18);
+
+        $subquestion18 = new Subquestion();
+        $subquestion18->setQuestion($question18);
+        $subquestion18->setTypology("VF");
+        $manager->persist($subquestion18);
+
       
 
     // ITEM 19
@@ -686,6 +772,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire19->setAudioItem('');
         $manager->persist($questionnaire19);
 
+        $question19 = new Question();
+        $question19->setQuestionnaire($questionnaire19);
+        $question19->setTypology("VF");
+        $question19->setConsigne("");
+        $manager->persist($question19);
+
+        $subquestion19 = new Subquestion();
+        $subquestion19->setQuestion($question19);
+        $subquestion19->setTypology("VF");
+        $manager->persist($subquestion19);
+
        
     // ITEM 20
         $questionnaire20->addTest($test);
@@ -711,6 +808,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire20->setAudioContexte('');
         $questionnaire20->setAudioItem('');
         $manager->persist($questionnaire20);
+
+        $question20 = new Question();
+        $question20->setQuestionnaire($questionnaire20);
+        $question20->setTypology("VF");
+        $question20->setConsigne("");
+        $manager->persist($question20);
+
+        $subquestion20 = new Subquestion();
+        $subquestion20->setQuestion($question20);
+        $subquestion20->setTypology("VF");
+        $manager->persist($subquestion20);
 
         
 
@@ -739,7 +847,31 @@ class LoadUserData implements FixtureInterface
         $questionnaire21->setAudioItem('');
         $manager->persist($questionnaire21);
 
-       
+        $question21 = new Question();
+        $question21->setQuestionnaire($questionnaire21);
+        $question21->setTypology("QRU");
+        $question21->setConsigne("");
+        $manager->persist($question21);
+
+        $subquestion21_1 = new Subquestion();
+        $subquestion21_1->setQuestion($question21);
+        $subquestion21_1->setTypology("QRU");
+        $manager->persist($subquestion21_1);
+
+        $subquestion21_2 = new Subquestion();
+        $subquestion21_2->setQuestion($question21);
+        $subquestion21_2->setTypology("QRU");
+        $manager->persist($subquestion21_2);
+
+        $subquestion21_3 = new Subquestion();
+        $subquestion21_3->setQuestion($question21);
+        $subquestion21_3->setTypology("QRU");
+        $manager->persist($subquestion21_3);
+
+        $subquestion21_4 = new Subquestion();
+        $subquestion21_4->setQuestion($question21);
+        $subquestion21_4->setTypology("QRU");
+        $manager->persist($subquestion21_4);
 
     // ITEM 22
         $questionnaire22->addTest($test);
@@ -766,7 +898,16 @@ class LoadUserData implements FixtureInterface
         $questionnaire22->setAudioItem('');
         $manager->persist($questionnaire22);
 
-       
+        $question22 = new Question();
+        $question22->setQuestionnaire($questionnaire22);
+        $question22->setTypology("QRU");
+        $question22->setConsigne("");
+        $manager->persist($question22);
+
+        $subquestion22 = new Subquestion();
+        $subquestion22->setQuestion($question22);
+        $subquestion22->setTypology("QRU");
+        $manager->persist($subquestion22);
 
     // ITEM 23
         $questionnaire23->addTest($test);
@@ -793,7 +934,16 @@ class LoadUserData implements FixtureInterface
         $questionnaire23->setAudioItem('');
         $manager->persist($questionnaire23);
 
-        
+        $question23 = new Question();
+        $question23->setQuestionnaire($questionnaire23);
+        $question23->setTypology("QRU");
+        $question23->setConsigne("");
+        $manager->persist($question23);
+
+        $subquestion23 = new Subquestion();
+        $subquestion23->setQuestion($question23);
+        $subquestion23->setTypology("QRU");
+        $manager->persist($subquestion23);
 
 
     // ITEM 24
@@ -821,6 +971,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire24->setAudioItem('');
         $manager->persist($questionnaire24);
 
+        $question24 = new Question();
+        $question24->setQuestionnaire($questionnaire24);
+        $question24->setTypology("QRU");
+        $question24->setConsigne("");
+        $manager->persist($question24);
+
+        $subquestion24 = new Subquestion();
+        $subquestion24->setQuestion($question24);
+        $subquestion24->setTypology("QRU");
+        $manager->persist($subquestion24);
+
        
     // ITEM 25
         $questionnaire25->addTest($test);
@@ -846,6 +1007,38 @@ class LoadUserData implements FixtureInterface
         $questionnaire25->setAudioContexte('');
         $questionnaire25->setAudioItem('');
         $manager->persist($questionnaire25);
+
+        $question25 = new Question();
+        $question25->setQuestionnaire($questionnaire25);
+        $question25->setTypology("TVF");
+        $question25->setConsigne("");
+        $manager->persist($question25);
+
+        $subquestion25_1 = new Subquestion();
+        $subquestion25_1->setQuestion($question25);
+        $subquestion25_1->setTypology("VF");
+        $manager->persist($subquestion25_1);
+
+        $subquestion25_2 = new Subquestion();
+        $subquestion25_2->setQuestion($question25);
+        $subquestion25_2->setTypology("VF");
+        $manager->persist($subquestion25_2);
+
+        $subquestion25_3 = new Subquestion();
+        $subquestion25_3->setQuestion($question25);
+        $subquestion25_3->setTypology("VF");
+        $manager->persist($subquestion25_3);
+
+        $subquestion25_4 = new Subquestion();
+        $subquestion25_4->setQuestion($question25);
+        $subquestion25_4->setTypology("VF");
+        $manager->persist($subquestion25_4);
+
+        $subquestion25_5 = new Subquestion();
+        $subquestion25_5->setQuestion($question25);
+        $subquestion25_5->setTypology("VF");
+        $manager->persist($subquestion25_5);
+
 
 
     // ITEM 26
@@ -873,7 +1066,52 @@ class LoadUserData implements FixtureInterface
         $questionnaire26->setAudioItem('');
         $manager->persist($questionnaire26);
 
-        
+        $question26_1 = new Question();
+        $question26_1->setQuestionnaire($questionnaire26);
+        $question26_1->setTypology("TVF");
+        $question26_1->setConsigne("");
+        $manager->persist($question26_1);
+
+        $subquestion26_1_1 = new Subquestion();
+        $subquestion26_1_1->setQuestion($question26_1);
+        $subquestion26_1_1->setTypology("VF");
+        $manager->persist($subquestion26_1_1);
+
+        $subquestion26_1_2 = new Subquestion();
+        $subquestion26_1_2->setQuestion($question26_1);
+        $subquestion26_1_2->setTypology("VF");
+        $manager->persist($subquestion26_1_2);
+
+        $subquestion26_1_3 = new Subquestion();
+        $subquestion26_1_3->setQuestion($question26_1);
+        $subquestion26_1_3->setTypology("VF");
+        $manager->persist($subquestion26_1_3);
+
+        $subquestion26_1_4 = new Subquestion();
+        $subquestion26_1_4->setQuestion($question26_1);
+        $subquestion26_1_4->setTypology("VF");
+        $manager->persist($subquestion26_1_4);
+
+        $question26_2 = new Question();
+        $question26_2->setQuestionnaire($questionnaire26);
+        $question26_2->setTypology("TVF");
+        $question26_2->setConsigne("");
+        $manager->persist($question26_2);
+
+        $subquestion26_2_1 = new Subquestion();
+        $subquestion26_2_1->setQuestion($question26_2);
+        $subquestion26_2_1->setTypology("VF");
+        $manager->persist($subquestion26_2_1);
+
+        $subquestion26_2_2 = new Subquestion();
+        $subquestion26_2_2->setQuestion($question26_2);
+        $subquestion26_2_2->setTypology("VF");
+        $manager->persist($subquestion26_2_2);
+
+        $subquestion26_2_3 = new Subquestion();
+        $subquestion26_2_3->setQuestion($question26_2);
+        $subquestion26_2_3->setTypology("VF");
+        $manager->persist($subquestion26_2_3); 
 
     // ITEM 27
         $questionnaire27->addTest($test);
@@ -900,7 +1138,26 @@ class LoadUserData implements FixtureInterface
         $questionnaire27->setAudioItem('');
         $manager->persist($questionnaire27);
 
-       
+        $question27 = new Question();
+        $question27->setQuestionnaire($questionnaire27);
+        $question27->setTypology("TVF");
+        $question27->setConsigne("");
+        $manager->persist($question27);
+
+        $subquestion27_1 = new Subquestion();
+        $subquestion27_1->setQuestion($question27);
+        $subquestion27_1->setTypology("VF");
+        $manager->persist($subquestion27_1);
+
+        $subquestion27_2 = new Subquestion();
+        $subquestion27_2->setQuestion($question27);
+        $subquestion27_2->setTypology("VF");
+        $manager->persist($subquestion27_2);
+
+        $subquestion27_3 = new Subquestion();
+        $subquestion27_3->setQuestion($question27);
+        $subquestion27_3->setTypology("VF");
+        $manager->persist($subquestion27_3);
 
     // ITEM 28
         $questionnaire28->addTest($test);
@@ -926,6 +1183,32 @@ class LoadUserData implements FixtureInterface
         $questionnaire28->setAudioContexte('');
         $questionnaire28->setAudioItem('');
         $manager->persist($questionnaire28);
+
+        $question28 = new Question();
+        $question28->setQuestionnaire($questionnaire28);
+        $question28->setTypology("TVF");
+        $question28->setConsigne("");
+        $manager->persist($question28);
+
+        $subquestion28_1 = new Subquestion();
+        $subquestion28_1->setQuestion($question28);
+        $subquestion28_1->setTypology("VF");
+        $manager->persist($subquestion28_1);
+
+        $subquestion28_2 = new Subquestion();
+        $subquestion28_2->setQuestion($question28);
+        $subquestion28_2->setTypology("VF");
+        $manager->persist($subquestion28_2);
+
+        $subquestion28_3 = new Subquestion();
+        $subquestion28_3->setQuestion($question28);
+        $subquestion28_3->setTypology("VF");
+        $manager->persist($subquestion28_3);
+
+        $subquestion28_4 = new Subquestion();
+        $subquestion28_4->setQuestion($question28);
+        $subquestion28_4->setTypology("VF");
+        $manager->persist($subquestion28_4);
 
         
 
@@ -954,6 +1237,32 @@ class LoadUserData implements FixtureInterface
         $questionnaire29->setAudioItem('');
         $manager->persist($questionnaire29);
 
+        $question29 = new Question();
+        $question29->setQuestionnaire($questionnaire29);
+        $question29->setTypology("TVF");
+        $question29->setConsigne("");
+        $manager->persist($question29);
+
+        $subquestion29_1 = new Subquestion();
+        $subquestion29_1->setQuestion($question29);
+        $subquestion29_1->setTypology("VF");
+        $manager->persist($subquestion29_1);
+
+        $subquestion29_2 = new Subquestion();
+        $subquestion29_2->setQuestion($question29);
+        $subquestion29_2->setTypology("VF");
+        $manager->persist($subquestion29_2);
+
+        $subquestion29_3 = new Subquestion();
+        $subquestion29_3->setQuestion($question29);
+        $subquestion29_3->setTypology("VF");
+        $manager->persist($subquestion29_3);
+
+        $subquestion29_4 = new Subquestion();
+        $subquestion29_4->setQuestion($question29);
+        $subquestion29_4->setTypology("VF");
+        $manager->persist($subquestion29_4);
+
       
 
     // ITEM 30
@@ -981,6 +1290,27 @@ class LoadUserData implements FixtureInterface
         $questionnaire30->setAudioItem('');
         $manager->persist($questionnaire30);
 
+        $question30 = new Question();
+        $question30->setQuestionnaire($questionnaire30);
+        $question30->setTypology("TVF");
+        $question30->setConsigne("");
+        $manager->persist($question30);
+
+        $subquestion30_1 = new Subquestion();
+        $subquestion30_1->setQuestion($question30);
+        $subquestion30_1->setTypology("VF");
+        $manager->persist($subquestion30_1);
+
+        $subquestion30_2 = new Subquestion();
+        $subquestion30_2->setQuestion($question30);
+        $subquestion30_2->setTypology("VF");
+        $manager->persist($subquestion30_2);
+
+        $subquestion30_3 = new Subquestion();
+        $subquestion30_3->setQuestion($question30);
+        $subquestion30_3->setTypology("VF");
+        $manager->persist($subquestion30_3);
+
         
     // ITEM 31
         $questionnaire31->addTest($test);
@@ -1007,6 +1337,32 @@ class LoadUserData implements FixtureInterface
         $questionnaire31->setAudioItem('');
         $manager->persist($questionnaire31);
 
+        $question31 = new Question();
+        $question31->setQuestionnaire($questionnaire31);
+        $question31->setTypology("TVF");
+        $question31->setConsigne("");
+        $manager->persist($question31);
+
+        $subquestion31_1 = new Subquestion();
+        $subquestion31_1->setQuestion($question31);
+        $subquestion31_1->setTypology("VF");
+        $manager->persist($subquestion31_1);
+
+        $subquestion31_2 = new Subquestion();
+        $subquestion31_2->setQuestion($question31);
+        $subquestion31_2->setTypology("VF");
+        $manager->persist($subquestion31_2);
+
+        $subquestion31_3 = new Subquestion();
+        $subquestion31_3->setQuestion($question31);
+        $subquestion31_3->setTypology("VF");
+        $manager->persist($subquestion31_3);
+
+        $subquestion31_4 = new Subquestion();
+        $subquestion31_4->setQuestion($question31);
+        $subquestion31_4->setTypology("VF");
+        $manager->persist($subquestion31_4);
+
         
 
     // ITEM 32
@@ -1014,7 +1370,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire32->setLevel("A2");
         $questionnaire32->setConsigne('');
         $questionnaire32->setTheme('Absence à l\'entraînement');
-        $questionnaire32->setTypology('TVF');
+        $questionnaire32->setTypology('QRU');
         $questionnaire32->setSource('Conçu en interne');
         $questionnaire32->setSupportType("enregistrement local (MLC)");
         $questionnaire32->setFocus('');
@@ -1034,6 +1390,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire32->setAudioItem('');
         $manager->persist($questionnaire32);
 
+        $question32 = new Question();
+        $question32->setQuestionnaire($questionnaire32);
+        $question32->setTypology("QRU");
+        $question32->setConsigne("");
+        $manager->persist($question32);
+
+        $subquestion32 = new Subquestion();
+        $subquestion32->setQuestion($question32);
+        $subquestion32->setTypology("QRU");
+        $manager->persist($subquestion32);
+
       
 
     // ITEM 33
@@ -1041,7 +1408,7 @@ class LoadUserData implements FixtureInterface
         $questionnaire33->setLevel("A2");
         $questionnaire33->setConsigne('');
         $questionnaire33->setTheme('Avant le départ');
-        $questionnaire33->setTypology('TVF');
+        $questionnaire33->setTypology('QRU');
         $questionnaire33->setSource('Conçu en interne');
         $questionnaire33->setSupportType("enregistrement local (MLC)");
         $questionnaire33->setFocus('');
@@ -1060,6 +1427,18 @@ class LoadUserData implements FixtureInterface
         $questionnaire33->setAudioContexte('');
         $questionnaire33->setAudioItem('');
         $manager->persist($questionnaire33);
+
+        $question33 = new Question();
+        $question33->setQuestionnaire($questionnaire33);
+        $question33->setTypology("QRU");
+        $question33->setConsigne("");
+        $manager->persist($question33);
+
+        $subquestion33 = new Subquestion();
+        $subquestion33->setQuestion($question33);
+        $subquestion33->setTypology("QRU");
+        $manager->persist($subquestion33);
+
 
       
 
@@ -1088,6 +1467,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire34->setAudioItem('');
         $manager->persist($questionnaire34);
 
+        $question34 = new Question();
+        $question34->setQuestionnaire($questionnaire34);
+        $question34->setTypology("QRU");
+        $question34->setConsigne("");
+        $manager->persist($question34);
+
+        $subquestion34 = new Subquestion();
+        $subquestion34->setQuestion($question34);
+        $subquestion34->setTypology("QRU");
+        $manager->persist($subquestion34);
+
       
 
     // ITEM 35
@@ -1115,6 +1505,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire35->setAudioItem('');
         $manager->persist($questionnaire35);
 
+        $question35 = new Question();
+        $question35->setQuestionnaire($questionnaire35);
+        $question35->setTypology("QRU");
+        $question35->setConsigne("");
+        $manager->persist($question35);
+
+        $subquestion35 = new Subquestion();
+        $subquestion35->setQuestion($question35);
+        $subquestion35->setTypology("QRU");
+        $manager->persist($subquestion35);
+
        
     // ITEM 36
         $questionnaire36->addTest($test);
@@ -1140,6 +1541,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire36->setAudioContexte('');
         $questionnaire36->setAudioItem('');
         $manager->persist($questionnaire36);
+
+        $question36 = new Question();
+        $question36->setQuestionnaire($questionnaire36);
+        $question36->setTypology("QRU");
+        $question36->setConsigne("");
+        $manager->persist($question36);
+
+        $subquestion36 = new Subquestion();
+        $subquestion36->setQuestion($question36);
+        $subquestion36->setTypology("QRU");
+        $manager->persist($subquestion36);
 
         
 
@@ -1168,6 +1580,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire37->setAudioItem('');
         $manager->persist($questionnaire37);
 
+        $question37 = new Question();
+        $question37->setQuestionnaire($questionnaire37);
+        $question37->setTypology("QRU");
+        $question37->setConsigne("");
+        $manager->persist($question37);
+
+        $subquestion37 = new Subquestion();
+        $subquestion37->setQuestion($question37);
+        $subquestion37->setTypology("QRU");
+        $manager->persist($subquestion37);
+
         
 
     // ITEM 38
@@ -1194,6 +1617,17 @@ class LoadUserData implements FixtureInterface
         $questionnaire38->setAudioContexte('');
         $questionnaire38->setAudioItem('');
         $manager->persist($questionnaire38);
+
+        $question38 = new Question();
+        $question38->setQuestionnaire($questionnaire38);
+        $question38->setTypology("QRU");
+        $question38->setConsigne("");
+        $manager->persist($question38);
+
+        $subquestion38 = new Subquestion();
+        $subquestion38->setQuestion($question38);
+        $subquestion38->setTypology("QRU");
+        $manager->persist($subquestion38);
 
         
 
@@ -1222,7 +1656,16 @@ class LoadUserData implements FixtureInterface
         $questionnaire39->setAudioItem('');
         $manager->persist($questionnaire39);
 
-       
+        $question39 = new Question();
+        $question39->setQuestionnaire($questionnaire39);
+        $question39->setTypology("QRU");
+        $question39->setConsigne("");
+        $manager->persist($question39);
+
+        $subquestion39 = new Subquestion();
+        $subquestion39->setQuestion($question39);
+        $subquestion39->setTypology("QRU");
+        $manager->persist($subquestion39);
 
         $manager->flush();
     }
