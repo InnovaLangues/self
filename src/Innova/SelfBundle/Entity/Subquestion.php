@@ -31,6 +31,13 @@ class Subquestion
     /**
      * @var string
      *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="audioUrl", type="string", length=255, nullable=true)
      */
     private $audioUrl;
@@ -162,5 +169,28 @@ class Subquestion
     public function getAudioUrl()
     {
         return $this->audioUrl;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Subquestion
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }
