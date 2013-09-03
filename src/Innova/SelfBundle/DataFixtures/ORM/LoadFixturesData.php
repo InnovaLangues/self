@@ -708,7 +708,7 @@ class LoadFixturesData implements FixtureInterface
 
         $question11 = new Question();
         $question11->setQuestionnaire($questionnaire11);
-        $question11->setTypology("VF");
+        $question11->setTypology("TVF");
         $question11->setConsigne("");
         $manager->persist($question11);
 
@@ -716,6 +716,23 @@ class LoadFixturesData implements FixtureInterface
         $subquestion11->setQuestion($question11);
         $subquestion11->setTypology("VF");
         $manager->persist($subquestion11);
+
+        $proposition11_1 = new Proposition();
+        $proposition11_1->setSubquestion($subquestion11);
+        $proposition11_1->setRightAnswer(1);
+        $proposition11_1->setTitle("Dà la spiegazione");
+        $proposition11_1->setAudioUrl("");
+        $manager->persist($proposition11_1);
+
+        $proposition11_2 = new Proposition();
+        $proposition11_2->setSubquestion($subquestion11);
+        $proposition11_2->setRightAnswer(0);
+        $proposition11_2->setTitle("Non dà la spiegazione");
+        $proposition11_2->setAudioUrl("");
+        $manager->persist($proposition11_2);
+
+        
+        
 
     // ITEM 12
         $questionnaire12->addTest($test);
@@ -751,6 +768,20 @@ class LoadFixturesData implements FixtureInterface
         $subquestion12->setQuestion($question12);
         $subquestion12->setTypology("VF");
         $manager->persist($subquestion12);
+
+        $proposition12_1 = new Proposition();
+        $proposition12_1->setSubquestion($subquestion12);
+        $proposition12_1->setRightAnswer(1);
+        $proposition12_1->setTitle("Dà la spiegazione");
+        $proposition12_1->setAudioUrl("");
+        $manager->persist($proposition12_1);
+
+        $proposition12_2 = new Proposition();
+        $proposition12_2->setSubquestion($subquestion12);
+        $proposition12_2->setRightAnswer(0);
+        $proposition12_2->setTitle("Non dà la spiegazione");
+        $proposition12_2->setAudioUrl("");
+        $manager->persist($proposition12_2);
 
       
     // ITEM 13
@@ -788,6 +819,20 @@ class LoadFixturesData implements FixtureInterface
         $subquestion13->setQuestion($question13);
         $subquestion13->setTypology("VF");
         $manager->persist($subquestion13);
+
+        $proposition13_1 = new Proposition();
+        $proposition13_1->setSubquestion($subquestion13);
+        $proposition13_1->setRightAnswer(0);
+        $proposition13_1->setTitle("Dà la spiegazione");
+        $proposition13_1->setAudioUrl("");
+        $manager->persist($proposition13_1);
+
+        $proposition13_2 = new Proposition();
+        $proposition13_2->setSubquestion($subquestion13);
+        $proposition13_2->setRightAnswer(1);
+        $proposition13_2->setTitle("Non dà la spiegazione");
+        $proposition13_2->setAudioUrl("");
+        $manager->persist($proposition13_2);
 
         
     // ITEM 14
