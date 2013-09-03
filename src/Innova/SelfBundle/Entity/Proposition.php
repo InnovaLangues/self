@@ -22,9 +22,9 @@ class Proposition
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Question", inversedBy="propositions", cascade={"remove"})
+    * @ORM\ManyToOne(targetEntity="Subquestion", inversedBy="propositions")
     */
-    protected $question;
+    protected $subquestion;
 
     /**
     * @ORM\OneToMany(targetEntity="Answer", mappedBy="proposition")
@@ -141,29 +141,7 @@ class Proposition
         $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
-    /**
-     * Set question
-     *
-     * @param \Innova\SelfBundle\Entity\Question $question
-     * @return Proposition
-     */
-    public function setQuestion(\Innova\SelfBundle\Entity\Question $question = null)
-    {
-        $this->question = $question;
     
-        return $this;
-    }
-
-    /**
-     * Get question
-     *
-     * @return \Innova\SelfBundle\Entity\Question 
-     */
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-
     /**
      * Add answers
      *
@@ -195,5 +173,28 @@ class Proposition
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    /**
+     * Set question
+     *
+     * @param \Innova\SelfBundle\Entity\Subquestion $question
+     * @return Proposition
+     */
+    public function setQuestion(\Innova\SelfBundle\Entity\Subquestion $question = null)
+    {
+        $this->question = $question;
+    
+        return $this;
+    }
+
+    /**
+     * Get question
+     *
+     * @return \Innova\SelfBundle\Entity\Subquestion 
+     */
+    public function getQuestion()
+    {
+        return $this->question;
     }
 }

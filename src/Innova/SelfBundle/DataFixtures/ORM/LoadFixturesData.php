@@ -820,9 +820,26 @@ class LoadUserData implements FixtureInterface
         $questionnaire25->setAudioItem('');
         $manager->persist($questionnaire25);
 
-        $question25 = new Question();
-        $question25->setQuestionnaire($questionnaire25);
-        $manager->persist($question25);
+        $question25_1 = new Question();
+        $question25_1->setQuestionnaire($questionnaire25);
+        $manager->persist($question25_1);
+
+        $question25_2 = new Question();
+        $question25_2->setQuestionnaire($questionnaire25);
+        $manager->persist($question25_2);
+
+        $question25_3 = new Question();
+        $question25_3->setQuestionnaire($questionnaire25);
+        $manager->persist($question25_3);
+
+        $question25_4 = new Question();
+        $question25_4->setQuestionnaire($questionnaire25);
+        $manager->persist($question25_4);
+
+        $question25_5 = new Question();
+        $question25_5->setQuestionnaire($questionnaire25);
+        $manager->persist($question25_5);
+
 
     // ITEM 26
         $questionnaire26->addTest($test);

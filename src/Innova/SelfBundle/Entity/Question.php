@@ -27,11 +27,25 @@ class Question
     protected $questionnaire;
 
     /**
-    * @ORM\OneToMany(targetEntity="Proposition", mappedBy="question", cascade={"remove", "persist"})
+     * @var string
+     *
+     * @ORM\Column(name="typology", type="string", length=255)
+     */
+    private $typology;
+
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Subquestion", mappedBy="question", cascade={"remove", "persist"})
     */
-    protected $propositions;
+    protected $subquestions;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="consigne", type="string", length=255)
+     */
+    private $consigne;
+    
     /**
      * Get id
      *
@@ -48,7 +62,7 @@ class Question
      */
     public function __construct()
     {
-        $this->propositions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subquestions = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -74,36 +88,84 @@ class Question
         return $this->questionnaire;
     }
 
+   
+
     /**
-     * Add propositions
+     * Add subquestions
      *
-     * @param \Innova\SelfBundle\Entity\Proposition $propositions
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestions
      * @return Question
      */
-    public function addProposition(\Innova\SelfBundle\Entity\Proposition $propositions)
+    public function addSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestions)
     {
-        $this->propositions[] = $propositions;
+        $this->subquestions[] = $subquestions;
     
         return $this;
     }
 
     /**
-     * Remove propositions
+     * Remove subquestions
      *
-     * @param \Innova\SelfBundle\Entity\Proposition $propositions
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestions
      */
-    public function removeProposition(\Innova\SelfBundle\Entity\Proposition $propositions)
+    public function removeSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestions)
     {
-        $this->propositions->removeElement($propositions);
+        $this->subquestions->removeElement($subquestions);
     }
 
     /**
-     * Get propositions
+     * Get subquestions
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPropositions()
+    public function getSubquestions()
     {
-        return $this->propositions;
+        return $this->subquestions;
+    }
+
+    /**
+     * Set consigne
+     *
+     * @param string $consigne
+     * @return Question
+     */
+    public function setConsigne($consigne)
+    {
+        $this->consigne = $consigne;
+    
+        return $this;
+    }
+
+    /**
+     * Get consigne
+     *
+     * @return string 
+     */
+    public function getConsigne()
+    {
+        return $this->consigne;
+    }
+
+    /**
+     * Set typology
+     *
+     * @param string $typology
+     * @return Question
+     */
+    public function setTypology($typology)
+    {
+        $this->typology = $typology;
+    
+        return $this;
+    }
+
+    /**
+     * Get typology
+     *
+     * @return string 
+     */
+    public function getTypology()
+    {
+        return $this->typology;
     }
 }
