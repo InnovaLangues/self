@@ -12,15 +12,11 @@
         <tbody>
         {% for test in tests %}
             <tr>
-                <td><a href="{{ path('test_show', { 'id': test.id }) }}">{{ test.id }}</a></td>
-                <td class="text-right">
-                    <a href="{{ path('test_edit', { 'id': test.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
-                </td>
+                <td><a href="{{ path('test_show', { 'id': test.id }) }}">{{ test.name }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('test_new') }}" class="btn btn-primary">Create a new entry</a>
 
     {% endblock %}
