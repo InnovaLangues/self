@@ -30,13 +30,11 @@ class Test
 
     /**
     * @ORM\ManyToMany(targetEntity="Questionnaire", inversedBy="tests")
-    * @ORM\JoinTable(name="questionnaires_tests")
     */
     private $questionnaires;
 
     /**
     * @ORM\ManyToMany(targetEntity="User", inversedBy="tests")
-    * @ORM\JoinTable(name="users_tests")
     */
     private $users;
 
@@ -68,6 +66,7 @@ class Test
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
+        $questionnaires->addTest($this);
 
         return $this;
     }
@@ -124,6 +123,7 @@ class Test
     public function addUser(\Innova\SelfBundle\Entity\User $users)
     {
         $this->users[] = $users;
+        $users->addTest($this);
 
         return $this;
     }

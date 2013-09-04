@@ -730,6 +730,7 @@ class Questionnaire
     public function addTest(\Innova\SelfBundle\Entity\Test $tests)
     {
         $this->tests[] = $tests;
+        $tests->addQuestionnaire($this);
 
         return $this;
     }
