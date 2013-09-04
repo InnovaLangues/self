@@ -29,12 +29,14 @@ class Test
     private $name;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Questionnaire")
+    * @ORM\ManyToMany(targetEntity="Questionnaire", inversedBy="tests")
+    * @ORM\JoinTable(name="questionnaires_tests")
     */
     private $questionnaires;
 
     /**
     * @ORM\ManyToMany(targetEntity="User", inversedBy="tests")
+    * @ORM\JoinTable(name="users_tests")
     */
     private $users;
 
@@ -45,19 +47,17 @@ class Test
 
     public function __toString(){
         return $this->name;
-     }
-
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-
 
     /**
      * Add questionnaires
@@ -68,7 +68,7 @@ class Test
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-    
+
         return $this;
     }
 
@@ -85,7 +85,7 @@ class Test
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestionnaires()
     {
@@ -101,14 +101,14 @@ class Test
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -124,7 +124,7 @@ class Test
     public function addUser(\Innova\SelfBundle\Entity\User $users)
     {
         $this->users[] = $users;
-    
+
         return $this;
     }
 
@@ -141,7 +141,7 @@ class Test
     /**
      * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {

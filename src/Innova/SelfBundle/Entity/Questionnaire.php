@@ -172,7 +172,7 @@ class Questionnaire
     protected $traces;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Test")
+    * @ORM\ManyToMany(targetEntity="Test", mappedBy="questionnaires")
     */
     private $tests;
 
@@ -187,7 +187,7 @@ class Questionnaire
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -203,14 +203,14 @@ class Questionnaire
     public function setLevel($level)
     {
         $this->level = $level;
-    
+
         return $this;
     }
 
     /**
      * Get level
      *
-     * @return string 
+     * @return string
      */
     public function getLevel()
     {
@@ -226,14 +226,14 @@ class Questionnaire
     public function setSource($source)
     {
         $this->source = $source;
-    
+
         return $this;
     }
 
     /**
      * Get source
      *
-     * @return string 
+     * @return string
      */
     public function getSource()
     {
@@ -250,14 +250,14 @@ class Questionnaire
     public function setSupportType($supportType)
     {
         $this->supportType = $supportType;
-    
+
         return $this;
     }
 
     /**
      * Get supportType
      *
-     * @return string 
+     * @return string
      */
     public function getSupportType()
     {
@@ -273,14 +273,14 @@ class Questionnaire
     public function setFocus($focus)
     {
         $this->focus = $focus;
-    
+
         return $this;
     }
 
     /**
      * Get focus
      *
-     * @return string 
+     * @return string
      */
     public function getFocus()
     {
@@ -296,14 +296,14 @@ class Questionnaire
     public function setCognitiveOperation($cognitiveOperation)
     {
         $this->cognitiveOperation = $cognitiveOperation;
-    
+
         return $this;
     }
 
     /**
      * Get cognitiveOperation
      *
-     * @return string 
+     * @return string
      */
     public function getCognitiveOperation()
     {
@@ -319,14 +319,14 @@ class Questionnaire
     public function setFunction($function)
     {
         $this->function = $function;
-    
+
         return $this;
     }
 
     /**
      * Get function
      *
-     * @return string 
+     * @return string
      */
     public function getFunction()
     {
@@ -342,14 +342,14 @@ class Questionnaire
     public function setReceptionType($receptionType)
     {
         $this->receptionType = $receptionType;
-    
+
         return $this;
     }
 
     /**
      * Get receptionType
      *
-     * @return string 
+     * @return string
      */
     public function getReceptionType()
     {
@@ -365,14 +365,14 @@ class Questionnaire
     public function setDomain($domain)
     {
         $this->domain = $domain;
-    
+
         return $this;
     }
 
     /**
      * Get domain
      *
-     * @return string 
+     * @return string
      */
     public function getDomain()
     {
@@ -388,14 +388,14 @@ class Questionnaire
     public function setType($type)
     {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -411,14 +411,14 @@ class Questionnaire
     public function setSourceType($sourceType)
     {
         $this->sourceType = $sourceType;
-    
+
         return $this;
     }
 
     /**
      * Get sourceType
      *
-     * @return string 
+     * @return string
      */
     public function getSourceType()
     {
@@ -434,14 +434,14 @@ class Questionnaire
     public function setLanguageLevel($languageLevel)
     {
         $this->languageLevel = $languageLevel;
-    
+
         return $this;
     }
 
     /**
      * Get languageLevel
      *
-     * @return string 
+     * @return string
      */
     public function getLanguageLevel()
     {
@@ -457,14 +457,14 @@ class Questionnaire
     public function setDurationGroup($durationGroup)
     {
         $this->durationGroup = $durationGroup;
-    
+
         return $this;
     }
 
     /**
      * Get durationGroup
      *
-     * @return string 
+     * @return string
      */
     public function getDurationGroup()
     {
@@ -480,14 +480,14 @@ class Questionnaire
     public function setFlow($flow)
     {
         $this->flow = $flow;
-    
+
         return $this;
     }
 
     /**
      * Get flow
      *
-     * @return string 
+     * @return string
      */
     public function getFlow()
     {
@@ -503,14 +503,14 @@ class Questionnaire
     public function setWordCount($wordCount)
     {
         $this->wordCount = $wordCount;
-    
+
         return $this;
     }
 
     /**
      * Get wordCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getWordCount()
     {
@@ -526,14 +526,14 @@ class Questionnaire
     public function setTheme($theme)
     {
         $this->theme = $theme;
-    
+
         return $this;
     }
 
     /**
      * Get theme
      *
-     * @return string 
+     * @return string
      */
     public function getTheme()
     {
@@ -549,14 +549,14 @@ class Questionnaire
     public function setAuthor($author)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return string 
+     * @return string
      */
     public function getAuthor()
     {
@@ -572,14 +572,14 @@ class Questionnaire
     public function setInstruction($instruction)
     {
         $this->instruction = $instruction;
-    
+
         return $this;
     }
 
     /**
      * Get instruction
      *
-     * @return string 
+     * @return string
      */
     public function getInstruction()
     {
@@ -595,14 +595,14 @@ class Questionnaire
     public function setAudioInstruction($audioInstruction)
     {
         $this->audioInstruction = $audioInstruction;
-    
+
         return $this;
     }
 
     /**
      * Get audioInstruction
      *
-     * @return string 
+     * @return string
      */
     public function getAudioInstruction()
     {
@@ -618,14 +618,14 @@ class Questionnaire
     public function setAudioContext($audioContext)
     {
         $this->audioContext = $audioContext;
-    
+
         return $this;
     }
 
     /**
      * Get audioContext
      *
-     * @return string 
+     * @return string
      */
     public function getAudioContext()
     {
@@ -641,14 +641,14 @@ class Questionnaire
     public function setAudioItem($audioItem)
     {
         $this->audioItem = $audioItem;
-    
+
         return $this;
     }
 
     /**
      * Get audioItem
      *
-     * @return string 
+     * @return string
      */
     public function getAudioItem()
     {
@@ -664,7 +664,7 @@ class Questionnaire
     public function addQuestion(\Innova\SelfBundle\Entity\Question $questions)
     {
         $this->questions[] = $questions;
-    
+
         return $this;
     }
 
@@ -681,7 +681,7 @@ class Questionnaire
     /**
      * Get questions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestions()
     {
@@ -697,7 +697,7 @@ class Questionnaire
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
     {
         $this->traces[] = $traces;
-    
+
         return $this;
     }
 
@@ -714,7 +714,7 @@ class Questionnaire
     /**
      * Get traces
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTraces()
     {
@@ -730,7 +730,7 @@ class Questionnaire
     public function addTest(\Innova\SelfBundle\Entity\Test $tests)
     {
         $this->tests[] = $tests;
-    
+
         return $this;
     }
 
@@ -747,7 +747,7 @@ class Questionnaire
     /**
      * Get tests
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTests()
     {
