@@ -1239,6 +1239,90 @@ class LoadFixturesData implements FixtureInterface
         $subquestion21_4->setTypology("QRU");
         $manager->persist($subquestion21_4);
 
+        $proposition21_1_1 = new Proposition();
+        $proposition21_1_1->setSubquestion($subquestion21_1);
+        $proposition21_1_1->setRightAnswer(1);
+        $proposition21_1_1->setTitle("");
+        $proposition21_1_1->setAudioUrl("");
+        $manager->persist($proposition21_1_1);
+
+        $proposition21_1_2 = new Proposition();
+        $proposition21_1_2->setSubquestion($subquestion21_1);
+        $proposition21_1_2->setRightAnswer(0);
+        $proposition21_1_2->setTitle("");
+        $proposition21_1_2->setAudioUrl("");
+        $manager->persist($proposition21_1_2);
+
+        $proposition21_1_3 = new Proposition();
+        $proposition21_1_3->setSubquestion($subquestion21_1);
+        $proposition21_1_3->setRightAnswer(0);
+        $proposition21_1_3->setTitle("");
+        $proposition21_1_3->setAudioUrl("");
+        $manager->persist($proposition21_1_3);
+
+        $proposition21_2_1 = new Proposition();
+        $proposition21_2_1->setSubquestion($subquestion21_2);
+        $proposition21_2_1->setRightAnswer(0);
+        $proposition21_2_1->setTitle("");
+        $proposition21_2_1->setAudioUrl("");
+        $manager->persist($proposition21_2_1);
+
+        $proposition21_2_2 = new Proposition();
+        $proposition21_2_2->setSubquestion($subquestion21_2);
+        $proposition21_2_2->setRightAnswer(1);
+        $proposition21_2_2->setTitle("");
+        $proposition21_2_2->setAudioUrl("");
+        $manager->persist($proposition21_2_2);
+
+        $proposition21_2_3 = new Proposition();
+        $proposition21_2_3->setSubquestion($subquestion21_2);
+        $proposition21_2_3->setRightAnswer(0);
+        $proposition21_2_3->setTitle("");
+        $proposition21_2_3->setAudioUrl("");
+        $manager->persist($proposition21_2_3);
+
+        $proposition21_3_1 = new Proposition();
+        $proposition21_3_1->setSubquestion($subquestion21_3);
+        $proposition21_3_1->setRightAnswer(1);
+        $proposition21_3_1->setTitle("");
+        $proposition21_3_1->setAudioUrl("");
+        $manager->persist($proposition21_3_1);
+
+        $proposition21_3_2 = new Proposition();
+        $proposition21_3_2->setSubquestion($subquestion21_3);
+        $proposition21_3_2->setRightAnswer(0);
+        $proposition21_3_2->setTitle("");
+        $proposition21_3_2->setAudioUrl("");
+        $manager->persist($proposition21_3_2);
+
+        $proposition21_3_3 = new Proposition();
+        $proposition21_3_3->setSubquestion($subquestion21_3);
+        $proposition21_3_3->setRightAnswer(0);
+        $proposition21_3_3->setTitle("");
+        $proposition21_3_3->setAudioUrl("");
+        $manager->persist($proposition21_3_3);
+
+        $proposition21_4_1 = new Proposition();
+        $proposition21_4_1->setSubquestion($subquestion21_4);
+        $proposition21_4_1->setRightAnswer(0);
+        $proposition21_4_1->setTitle("");
+        $proposition21_4_1->setAudioUrl("");
+        $manager->persist($proposition21_4_1);
+
+        $proposition21_4_2 = new Proposition();
+        $proposition21_4_2->setSubquestion($subquestion21_4);
+        $proposition21_4_2->setRightAnswer(1);
+        $proposition21_4_2->setTitle("");
+        $proposition21_4_2->setAudioUrl("");
+        $manager->persist($proposition21_4_2);
+
+        $proposition21_4_3 = new Proposition();
+        $proposition21_4_3->setSubquestion($subquestion21_4);
+        $proposition21_4_3->setRightAnswer(0);
+        $proposition21_4_3->setTitle("");
+        $proposition21_4_3->setAudioUrl("");
+        $manager->persist($proposition21_4_3);
+
     // ITEM 22
         $questionnaire22->addTest($test);
         $questionnaire22->setLevel("A2");
@@ -1273,6 +1357,27 @@ class LoadFixturesData implements FixtureInterface
         $subquestion22->setQuestion($question22);
         $subquestion22->setTypology("QRU");
         $manager->persist($subquestion22);
+
+        $proposition22_1 = new Proposition();
+        $proposition22_1->setSubquestion($subquestion22);
+        $proposition22_1->setRightAnswer(1);
+        $proposition22_1->setTitle("");
+        $proposition22_1->setAudioUrl("");
+        $manager->persist($proposition22_1);
+
+        $proposition22_2 = new Proposition();
+        $proposition22_2->setSubquestion($subquestion22);
+        $proposition22_2->setRightAnswer(0);
+        $proposition22_2->setTitle("");
+        $proposition22_2->setAudioUrl("");
+        $manager->persist($proposition22_2);
+
+        $proposition22_3 = new Proposition();
+        $proposition22_3->setSubquestion($subquestion22);
+        $proposition22_3->setRightAnswer(0);
+        $proposition22_3->setTitle("");
+        $proposition22_3->setAudioUrl("");
+        $manager->persist($proposition22_3);
 
     // ITEM 23
         $questionnaire23->addTest($test);
@@ -1309,6 +1414,26 @@ class LoadFixturesData implements FixtureInterface
         $subquestion23->setTypology("QRU");
         $manager->persist($subquestion23);
 
+        $proposition23_1 = new Proposition();
+        $proposition23_1->setSubquestion($subquestion23);
+        $proposition23_1->setRightAnswer(0);
+        $proposition23_1->setTitle("");
+        $proposition23_1->setAudioUrl("");
+        $manager->persist($proposition23_1);
+
+        $proposition23_2 = new Proposition();
+        $proposition23_2->setSubquestion($subquestion23);
+        $proposition23_2->setRightAnswer(1);
+        $proposition23_2->setTitle("");
+        $proposition23_2->setAudioUrl("");
+        $manager->persist($proposition23_2);
+
+        $proposition23_3 = new Proposition();
+        $proposition23_3->setSubquestion($subquestion23);
+        $proposition23_3->setRightAnswer(0);
+        $proposition23_3->setTitle("");
+        $proposition23_3->setAudioUrl("");
+        $manager->persist($proposition23_3);
 
     // ITEM 24
         $questionnaire24->addTest($test);
@@ -1345,7 +1470,26 @@ class LoadFixturesData implements FixtureInterface
         $subquestion24->setTypology("QRU");
         $manager->persist($subquestion24);
 
-       
+        $proposition24_1 = new Proposition();
+        $proposition24_1->setSubquestion($subquestion24);
+        $proposition24_1->setRightAnswer(0);
+        $proposition24_1->setTitle("");
+        $proposition24_1->setAudioUrl("");
+        $manager->persist($proposition24_1);
+
+        $proposition24_2 = new Proposition();
+        $proposition24_2->setSubquestion($subquestion24);
+        $proposition24_2->setRightAnswer(1);
+        $proposition24_2->setTitle("");
+        $proposition24_2->setAudioUrl("");
+        $manager->persist($proposition24_2);
+
+        $proposition24_3 = new Proposition();
+        $proposition24_3->setSubquestion($subquestion24);
+        $proposition24_3->setRightAnswer(0);
+        $proposition24_3->setTitle("");
+        $proposition24_3->setAudioUrl("");
+        $manager->persist($proposition24_3);
     // ITEM 25
         $questionnaire25->addTest($test);
         $questionnaire25->setLevel("A2");
@@ -1401,7 +1545,75 @@ class LoadFixturesData implements FixtureInterface
         $subquestion25_5->setTypology("VF");
         $manager->persist($subquestion25_5);
 
+        $proposition25_1_1 = new Proposition();
+        $proposition25_1_1->setSubquestion($subquestion25_1);
+        $proposition25_1_1->setRightAnswer(0);
+        $proposition25_1_1->setTitle("Vrai");
+        $proposition25_1_1->setAudioUrl("");
+        $manager->persist($proposition25_1_1);
 
+        $proposition25_1_2 = new Proposition();
+        $proposition25_1_2->setSubquestion($subquestion25_1);
+        $proposition25_1_2->setRightAnswer(1);
+        $proposition25_1_2->setTitle("Faux");
+        $proposition25_1_2->setAudioUrl("");
+        $manager->persist($proposition25_1_2);
+
+        $proposition25_2_1 = new Proposition();
+        $proposition25_2_1->setSubquestion($subquestion25_2);
+        $proposition25_2_1->setRightAnswer(1);
+        $proposition25_2_1->setTitle("Vrai");
+        $proposition25_2_1->setAudioUrl("");
+        $manager->persist($proposition25_2_1);
+
+        $proposition25_2_2 = new Proposition();
+        $proposition25_2_2->setSubquestion($subquestion25_2);
+        $proposition25_2_2->setRightAnswer(0);
+        $proposition25_2_2->setTitle("Faux");
+        $proposition25_2_2->setAudioUrl("");
+        $manager->persist($proposition25_2_2);
+
+        $proposition25_3_1 = new Proposition();
+        $proposition25_3_1->setSubquestion($subquestion25_3);
+        $proposition25_3_1->setRightAnswer(1);
+        $proposition25_3_1->setTitle("Vrai");
+        $proposition25_3_1->setAudioUrl("");
+        $manager->persist($proposition25_3_1);
+
+        $proposition25_3_2 = new Proposition();
+        $proposition25_3_2->setSubquestion($subquestion25_3);
+        $proposition25_3_2->setRightAnswer(0);
+        $proposition25_3_2->setTitle("Faux");
+        $proposition25_3_2->setAudioUrl("");
+        $manager->persist($proposition25_3_2);
+
+        $proposition25_4_1 = new Proposition();
+        $proposition25_4_1->setSubquestion($subquestion25_4);
+        $proposition25_4_1->setRightAnswer(0);
+        $proposition25_4_1->setTitle("Vrai");
+        $proposition25_4_1->setAudioUrl("");
+        $manager->persist($proposition25_4_1);
+
+        $proposition25_4_2 = new Proposition();
+        $proposition25_4_2->setSubquestion($subquestion25_4);
+        $proposition25_4_2->setRightAnswer(1);
+        $proposition25_4_2->setTitle("Faux");
+        $proposition25_4_2->setAudioUrl("");
+        $manager->persist($proposition25_4_2);
+
+        $proposition25_5_1 = new Proposition();
+        $proposition25_5_1->setSubquestion($subquestion25_5);
+        $proposition25_5_1->setRightAnswer(0);
+        $proposition25_5_1->setTitle("Vrai");
+        $proposition25_5_1->setAudioUrl("");
+        $manager->persist($proposition25_5_1);
+
+        $proposition25_5_2 = new Proposition();
+        $proposition25_5_2->setSubquestion($subquestion25_5);
+        $proposition25_5_2->setRightAnswer(1);
+        $proposition25_5_2->setTitle("Faux");
+        $proposition25_5_2->setAudioUrl("");
+        $manager->persist($proposition25_5_2);
 
     // ITEM 26
         $questionnaire26->addTest($test);
@@ -1438,20 +1650,78 @@ class LoadFixturesData implements FixtureInterface
         $subquestion26_1_1->setTypology("VF");
         $manager->persist($subquestion26_1_1);
 
+        $proposition26_1_1_1 = new Proposition();
+        $proposition26_1_1_1->setSubquestion($subquestion26_1_1);
+        $proposition26_1_1_1->setRightAnswer(0);
+        $proposition26_1_1_1->setTitle("Vrai");
+        $proposition26_1_1_1->setAudioUrl("");
+        $manager->persist($proposition26_1_1_1);
+
+        $proposition26_1_1_2 = new Proposition();
+        $proposition26_1_1_2->setSubquestion($subquestion26_1_1);
+        $proposition26_1_1_2->setRightAnswer(1);
+        $proposition26_1_1_2->setTitle("Faux");
+        $proposition26_1_1_2->setAudioUrl("");
+        $manager->persist($proposition26_1_1_2);
+
+
         $subquestion26_1_2 = new Subquestion();
         $subquestion26_1_2->setQuestion($question26_1);
         $subquestion26_1_2->setTypology("VF");
         $manager->persist($subquestion26_1_2);
+
+        $proposition26_1_2_1 = new Proposition();
+        $proposition26_1_2_1->setSubquestion($subquestion26_1_2);
+        $proposition26_1_2_1->setRightAnswer(1);
+        $proposition26_1_2_1->setTitle("Vrai");
+        $proposition26_1_2_1->setAudioUrl("");
+        $manager->persist($proposition26_1_2_1);
+
+        $proposition26_1_2_2 = new Proposition();
+        $proposition26_1_2_2->setSubquestion($subquestion26_1_2);
+        $proposition26_1_2_2->setRightAnswer(0);
+        $proposition26_1_2_2->setTitle("Faux");
+        $proposition26_1_2_2->setAudioUrl("");
+        $manager->persist($proposition26_1_2_2);
+
 
         $subquestion26_1_3 = new Subquestion();
         $subquestion26_1_3->setQuestion($question26_1);
         $subquestion26_1_3->setTypology("VF");
         $manager->persist($subquestion26_1_3);
 
+        $proposition26_1_3_1 = new Proposition();
+        $proposition26_1_3_1->setSubquestion($subquestion26_1_3);
+        $proposition26_1_3_1->setRightAnswer(1);
+        $proposition26_1_3_1->setTitle("Vrai");
+        $proposition26_1_3_1->setAudioUrl("");
+        $manager->persist($proposition26_1_3_1);
+
+        $proposition26_1_3_2 = new Proposition();
+        $proposition26_1_3_2->setSubquestion($subquestion26_1_3);
+        $proposition26_1_3_2->setRightAnswer(0);
+        $proposition26_1_3_2->setTitle("Faux");
+        $proposition26_1_3_2->setAudioUrl("");
+        $manager->persist($proposition26_1_3_2);
+
         $subquestion26_1_4 = new Subquestion();
         $subquestion26_1_4->setQuestion($question26_1);
         $subquestion26_1_4->setTypology("VF");
         $manager->persist($subquestion26_1_4);
+
+        $proposition26_1_4_1 = new Proposition();
+        $proposition26_1_4_1->setSubquestion($subquestion26_1_4);
+        $proposition26_1_4_1->setRightAnswer(0);
+        $proposition26_1_4_1->setTitle("Vrai");
+        $proposition26_1_4_1->setAudioUrl("");
+        $manager->persist($proposition26_1_4_1);
+
+        $proposition26_1_4_2 = new Proposition();
+        $proposition26_1_4_2->setSubquestion($subquestion26_1_4);
+        $proposition26_1_4_2->setRightAnswer(1);
+        $proposition26_1_4_2->setTitle("Faux");
+        $proposition26_1_4_2->setAudioUrl("");
+        $manager->persist($proposition26_1_4_2);
 
         $question26_2 = new Question();
         $question26_2->setQuestionnaire($questionnaire26);
@@ -1464,15 +1734,59 @@ class LoadFixturesData implements FixtureInterface
         $subquestion26_2_1->setTypology("VF");
         $manager->persist($subquestion26_2_1);
 
+        $proposition26_2_1_1 = new Proposition();
+        $proposition26_2_1_1->setSubquestion($subquestion26_2_1);
+        $proposition26_2_1_1->setRightAnswer(1);
+        $proposition26_2_1_1->setTitle("Vrai");
+        $proposition26_2_1_1->setAudioUrl("");
+        $manager->persist($proposition26_2_1_1);
+
+        $proposition26_2_1_2 = new Proposition();
+        $proposition26_2_1_2->setSubquestion($subquestion26_2_1);
+        $proposition26_2_1_2->setRightAnswer(0);
+        $proposition26_2_1_2->setTitle("Faux");
+        $proposition26_2_1_2->setAudioUrl("");
+        $manager->persist($proposition26_2_1_2);
+
         $subquestion26_2_2 = new Subquestion();
         $subquestion26_2_2->setQuestion($question26_2);
         $subquestion26_2_2->setTypology("VF");
         $manager->persist($subquestion26_2_2);
 
+        $proposition26_2_2_1 = new Proposition();
+        $proposition26_2_2_1->setSubquestion($subquestion26_2_2);
+        $proposition26_2_2_1->setRightAnswer(0);
+        $proposition26_2_2_1->setTitle("Vrai");
+        $proposition26_2_2_1->setAudioUrl("");
+        $manager->persist($proposition26_2_2_1);
+
+        $proposition26_2_2_2 = new Proposition();
+        $proposition26_2_2_2->setSubquestion($subquestion26_2_2);
+        $proposition26_2_2_2->setRightAnswer(1);
+        $proposition26_2_2_2->setTitle("Faux");
+        $proposition26_2_2_2->setAudioUrl("");
+        $manager->persist($proposition26_2_2_2);
+
         $subquestion26_2_3 = new Subquestion();
         $subquestion26_2_3->setQuestion($question26_2);
         $subquestion26_2_3->setTypology("VF");
         $manager->persist($subquestion26_2_3); 
+
+        $proposition26_2_3_1 = new Proposition();
+        $proposition26_2_3_1->setSubquestion($subquestion26_2_3);
+        $proposition26_2_3_1->setRightAnswer(0);
+        $proposition26_2_3_1->setTitle("Vrai");
+        $proposition26_2_3_1->setAudioUrl("");
+        $manager->persist($proposition26_2_3_1);
+
+        $proposition26_2_3_2 = new Proposition();
+        $proposition26_2_3_2->setSubquestion($subquestion26_2_3);
+        $proposition26_2_3_2->setRightAnswer(1);
+        $proposition26_2_3_2->setTitle("Faux");
+        $proposition26_2_3_2->setAudioUrl("");
+        $manager->persist($proposition26_2_3_2);
+
+
 
     // ITEM 27
         $questionnaire27->addTest($test);
@@ -1518,6 +1832,48 @@ class LoadFixturesData implements FixtureInterface
         $subquestion27_3->setQuestion($question27);
         $subquestion27_3->setTypology("VF");
         $manager->persist($subquestion27_3);
+
+        $proposition27_1_1 = new Proposition();
+        $proposition27_1_1->setSubquestion($subquestion27_1);
+        $proposition27_1_1->setRightAnswer(1);
+        $proposition27_1_1->setTitle("Vrai");
+        $proposition27_1_1->setAudioUrl("");
+        $manager->persist($proposition27_1_1);
+
+        $proposition27_1_2 = new Proposition();
+        $proposition27_1_2->setSubquestion($subquestion27_1);
+        $proposition27_1_2->setRightAnswer(0);
+        $proposition27_1_2->setTitle("Faux");
+        $proposition27_1_2->setAudioUrl("");
+        $manager->persist($proposition27_1_2);
+
+        $proposition27_2_1 = new Proposition();
+        $proposition27_2_1->setSubquestion($subquestion27_2);
+        $proposition27_2_1->setRightAnswer(1);
+        $proposition27_2_1->setTitle("Vrai");
+        $proposition27_2_1->setAudioUrl("");
+        $manager->persist($proposition27_2_1);
+
+        $proposition27_2_2 = new Proposition();
+        $proposition27_2_2->setSubquestion($subquestion27_2);
+        $proposition27_2_2->setRightAnswer(0);
+        $proposition27_2_2->setTitle("Faux");
+        $proposition27_2_2->setAudioUrl("");
+        $manager->persist($proposition27_2_2);
+
+        $proposition27_3_1 = new Proposition();
+        $proposition27_3_1->setSubquestion($subquestion27_3);
+        $proposition27_3_1->setRightAnswer(0);
+        $proposition27_3_1->setTitle("Vrai");
+        $proposition27_3_1->setAudioUrl("");
+        $manager->persist($proposition27_3_1);
+
+        $proposition27_3_2 = new Proposition();
+        $proposition27_3_2->setSubquestion($subquestion27_3);
+        $proposition27_3_2->setRightAnswer(1);
+        $proposition27_3_2->setTitle("Faux");
+        $proposition27_3_2->setAudioUrl("");
+        $manager->persist($proposition27_3_2);
 
     // ITEM 28
         $questionnaire28->addTest($test);
@@ -1569,7 +1925,61 @@ class LoadFixturesData implements FixtureInterface
         $subquestion28_4->setTypology("VF");
         $manager->persist($subquestion28_4);
 
-        
+        $proposition28_1_1 = new Proposition();
+        $proposition28_1_1->setSubquestion($subquestion28_1);
+        $proposition28_1_1->setRightAnswer(0);
+        $proposition28_1_1->setTitle("Vrai");
+        $proposition28_1_1->setAudioUrl("");
+        $manager->persist($proposition28_1_1);
+
+        $proposition28_1_2 = new Proposition();
+        $proposition28_1_2->setSubquestion($subquestion28_1);
+        $proposition28_1_2->setRightAnswer(1);
+        $proposition28_1_2->setTitle("Faux");
+        $proposition28_1_2->setAudioUrl("");
+        $manager->persist($proposition28_1_2);
+
+        $proposition28_2_1 = new Proposition();
+        $proposition28_2_1->setSubquestion($subquestion28_2);
+        $proposition28_2_1->setRightAnswer(1);
+        $proposition28_2_1->setTitle("Vrai");
+        $proposition28_2_1->setAudioUrl("");
+        $manager->persist($proposition28_2_1);
+
+        $proposition28_2_2 = new Proposition();
+        $proposition28_2_2->setSubquestion($subquestion28_2);
+        $proposition28_2_2->setRightAnswer(0);
+        $proposition28_2_2->setTitle("Faux");
+        $proposition28_2_2->setAudioUrl("");
+        $manager->persist($proposition28_2_2);
+
+        $proposition28_3_1 = new Proposition();
+        $proposition28_3_1->setSubquestion($subquestion28_3);
+        $proposition28_3_1->setRightAnswer(1);
+        $proposition28_3_1->setTitle("Vrai");
+        $proposition28_3_1->setAudioUrl("");
+        $manager->persist($proposition28_3_1);
+
+        $proposition28_3_2 = new Proposition();
+        $proposition28_3_2->setSubquestion($subquestion28_3);
+        $proposition28_3_2->setRightAnswer(0);
+        $proposition28_3_2->setTitle("Faux");
+        $proposition28_3_2->setAudioUrl("");
+        $manager->persist($proposition28_3_2);
+
+        $proposition28_4_1 = new Proposition();
+        $proposition28_4_1->setSubquestion($subquestion28_4);
+        $proposition28_4_1->setRightAnswer(1);
+        $proposition28_4_1->setTitle("Vrai");
+        $proposition28_4_1->setAudioUrl("");
+        $manager->persist($proposition28_4_1);
+
+        $proposition28_4_2 = new Proposition();
+        $proposition28_4_2->setSubquestion($subquestion28_4);
+        $proposition28_4_2->setRightAnswer(0);
+        $proposition28_4_2->setTitle("Faux");
+        $proposition28_4_2->setAudioUrl("");
+        $manager->persist($proposition28_4_2);
 
     // ITEM 29
         $questionnaire29->addTest($test);
@@ -1621,6 +2031,63 @@ class LoadFixturesData implements FixtureInterface
         $subquestion29_4->setTypology("VF");
         $manager->persist($subquestion29_4);
 
+        $proposition29_1_1 = new Proposition();
+        $proposition29_1_1->setSubquestion($subquestion29_1);
+        $proposition29_1_1->setRightAnswer(0);
+        $proposition29_1_1->setTitle("Vrai");
+        $proposition29_1_1->setAudioUrl("");
+        $manager->persist($proposition29_1_1);
+
+        $proposition29_1_2 = new Proposition();
+        $proposition29_1_2->setSubquestion($subquestion29_1);
+        $proposition29_1_2->setRightAnswer(1);
+        $proposition29_1_2->setTitle("Faux");
+        $proposition29_1_2->setAudioUrl("");
+        $manager->persist($proposition29_1_2);
+
+        $proposition29_2_1 = new Proposition();
+        $proposition29_2_1->setSubquestion($subquestion29_2);
+        $proposition29_2_1->setRightAnswer(1);
+        $proposition29_2_1->setTitle("Vrai");
+        $proposition29_2_1->setAudioUrl("");
+        $manager->persist($proposition29_2_1);
+
+        $proposition29_2_2 = new Proposition();
+        $proposition29_2_2->setSubquestion($subquestion29_2);
+        $proposition29_2_2->setRightAnswer(0);
+        $proposition29_2_2->setTitle("Faux");
+        $proposition29_2_2->setAudioUrl("");
+        $manager->persist($proposition29_2_2);
+
+        $proposition29_3_1 = new Proposition();
+        $proposition29_3_1->setSubquestion($subquestion29_3);
+        $proposition29_3_1->setRightAnswer(0);
+        $proposition29_3_1->setTitle("Vrai");
+        $proposition29_3_1->setAudioUrl("");
+        $manager->persist($proposition29_3_1);
+
+        $proposition29_3_2 = new Proposition();
+        $proposition29_3_2->setSubquestion($subquestion29_3);
+        $proposition29_3_2->setRightAnswer(1);
+        $proposition29_3_2->setTitle("Faux");
+        $proposition29_3_2->setAudioUrl("");
+        $manager->persist($proposition29_3_2);
+
+        $proposition29_4_1 = new Proposition();
+        $proposition29_4_1->setSubquestion($subquestion29_4);
+        $proposition29_4_1->setRightAnswer(0);
+        $proposition29_4_1->setTitle("Vrai");
+        $proposition29_4_1->setAudioUrl("");
+        $manager->persist($proposition29_4_1);
+
+        $proposition29_4_2 = new Proposition();
+        $proposition29_4_2->setSubquestion($subquestion29_4);
+        $proposition29_4_2->setRightAnswer(1);
+        $proposition29_4_2->setTitle("Faux");
+        $proposition29_4_2->setAudioUrl("");
+        $manager->persist($proposition29_4_2);
+
+
       
 
     // ITEM 30
@@ -1667,6 +2134,48 @@ class LoadFixturesData implements FixtureInterface
         $subquestion30_3->setQuestion($question30);
         $subquestion30_3->setTypology("VF");
         $manager->persist($subquestion30_3);
+
+        $proposition30_1_1 = new Proposition();
+        $proposition30_1_1->setSubquestion($subquestion30_1);
+        $proposition30_1_1->setRightAnswer(1);
+        $proposition30_1_1->setTitle("Vrai");
+        $proposition30_1_1->setAudioUrl("");
+        $manager->persist($proposition30_1_1);
+
+        $proposition30_1_2 = new Proposition();
+        $proposition30_1_2->setSubquestion($subquestion30_1);
+        $proposition30_1_2->setRightAnswer(0);
+        $proposition30_1_2->setTitle("Faux");
+        $proposition30_1_2->setAudioUrl("");
+        $manager->persist($proposition30_1_2);
+
+        $proposition30_2_1 = new Proposition();
+        $proposition30_2_1->setSubquestion($subquestion30_2);
+        $proposition30_2_1->setRightAnswer(0);
+        $proposition30_2_1->setTitle("Vrai");
+        $proposition30_2_1->setAudioUrl("");
+        $manager->persist($proposition30_2_1);
+
+        $proposition30_2_2 = new Proposition();
+        $proposition30_2_2->setSubquestion($subquestion30_2);
+        $proposition30_2_2->setRightAnswer(1);
+        $proposition30_2_2->setTitle("Faux");
+        $proposition30_2_2->setAudioUrl("");
+        $manager->persist($proposition30_2_2);
+
+        $proposition30_3_1 = new Proposition();
+        $proposition30_3_1->setSubquestion($subquestion30_3);
+        $proposition30_3_1->setRightAnswer(1);
+        $proposition30_3_1->setTitle("Vrai");
+        $proposition30_3_1->setAudioUrl("");
+        $manager->persist($proposition30_3_1);
+
+        $proposition30_3_2 = new Proposition();
+        $proposition30_3_2->setSubquestion($subquestion30_3);
+        $proposition30_3_2->setRightAnswer(0);
+        $proposition30_3_2->setTitle("Faux");
+        $proposition30_3_2->setAudioUrl("");
+        $manager->persist($proposition30_3_2);
 
         
     // ITEM 31
@@ -1718,6 +2227,62 @@ class LoadFixturesData implements FixtureInterface
         $subquestion31_4->setQuestion($question31);
         $subquestion31_4->setTypology("VF");
         $manager->persist($subquestion31_4);
+
+        $proposition31_1_1 = new Proposition();
+        $proposition31_1_1->setSubquestion($subquestion31_1);
+        $proposition31_1_1->setRightAnswer(0);
+        $proposition31_1_1->setTitle("Vrai");
+        $proposition31_1_1->setAudioUrl("");
+        $manager->persist($proposition31_1_1);
+
+        $proposition31_1_2 = new Proposition();
+        $proposition31_1_2->setSubquestion($subquestion31_1);
+        $proposition31_1_2->setRightAnswer(1);
+        $proposition31_1_2->setTitle("Faux");
+        $proposition31_1_2->setAudioUrl("");
+        $manager->persist($proposition31_1_2);
+
+        $proposition31_2_1 = new Proposition();
+        $proposition31_2_1->setSubquestion($subquestion31_2);
+        $proposition31_2_1->setRightAnswer(0);
+        $proposition31_2_1->setTitle("Vrai");
+        $proposition31_2_1->setAudioUrl("");
+        $manager->persist($proposition31_2_1);
+
+        $proposition31_2_2 = new Proposition();
+        $proposition31_2_2->setSubquestion($subquestion31_2);
+        $proposition31_2_2->setRightAnswer(1);
+        $proposition31_2_2->setTitle("Faux");
+        $proposition31_2_2->setAudioUrl("");
+        $manager->persist($proposition31_2_2);
+
+        $proposition31_3_1 = new Proposition();
+        $proposition31_3_1->setSubquestion($subquestion31_3);
+        $proposition31_3_1->setRightAnswer(1);
+        $proposition31_3_1->setTitle("Vrai");
+        $proposition31_3_1->setAudioUrl("");
+        $manager->persist($proposition31_3_1);
+
+        $proposition31_3_2 = new Proposition();
+        $proposition31_3_2->setSubquestion($subquestion31_3);
+        $proposition31_3_2->setRightAnswer(0);
+        $proposition31_3_2->setTitle("Faux");
+        $proposition31_3_2->setAudioUrl("");
+        $manager->persist($proposition31_3_2);
+
+        $proposition31_4_1 = new Proposition();
+        $proposition31_4_1->setSubquestion($subquestion31_4);
+        $proposition31_4_1->setRightAnswer(0);
+        $proposition31_4_1->setTitle("Vrai");
+        $proposition31_4_1->setAudioUrl("");
+        $manager->persist($proposition31_4_1);
+
+        $proposition31_4_2 = new Proposition();
+        $proposition31_4_2->setSubquestion($subquestion31_4);
+        $proposition31_4_2->setRightAnswer(1);
+        $proposition31_4_2->setTitle("Faux");
+        $proposition31_4_2->setAudioUrl("");
+        $manager->persist($proposition31_4_2);
 
         
 
