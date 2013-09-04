@@ -60,7 +60,7 @@ class User extends BaseUser
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,14 +76,14 @@ class User extends BaseUser
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-    
+
         return $this;
     }
 
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
@@ -99,14 +99,14 @@ class User extends BaseUser
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-    
+
         return $this;
     }
 
     /**
      * Get prenom
      *
-     * @return string 
+     * @return string
      */
     public function getPrenom()
     {
@@ -122,14 +122,14 @@ class User extends BaseUser
     public function setLogin($login)
     {
         $this->login = $login;
-    
+
         return $this;
     }
 
     /**
      * Get login
      *
-     * @return string 
+     * @return string
      */
     public function getLogin()
     {
@@ -145,20 +145,20 @@ class User extends BaseUser
     public function setPassword($password)
     {
         $this->password = $password;
-    
+
         return $this;
     }
 
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
         return $this->password;
     }
-    
+
     /**
      * Add traces
      *
@@ -168,7 +168,7 @@ class User extends BaseUser
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
     {
         $this->traces[] = $traces;
-    
+
         return $this;
     }
 
@@ -185,7 +185,7 @@ class User extends BaseUser
     /**
      * Get traces
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTraces()
     {
@@ -195,7 +195,7 @@ class User extends BaseUser
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -211,7 +211,8 @@ class User extends BaseUser
     public function addTest(\Innova\SelfBundle\Entity\Test $tests)
     {
         $this->tests[] = $tests;
-    
+        $tests->addUser($this);
+
         return $this;
     }
 
@@ -228,7 +229,7 @@ class User extends BaseUser
     /**
      * Get tests
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTests()
     {

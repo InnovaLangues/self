@@ -41,11 +41,16 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $userAdmin->setEnabled(1);
         $userAdmin->setEmail('system@example.com');
 
-        $userAdmin->setPassword($encoder
-            ->encodePassword('admin', $userAdmin->getSalt()));
+        $userAdmin->setPassword(
+            $encoder->encodePassword(
+                'admin', $userAdmin->getSalt()
+            )
+        );
 
         $userAdmin->setRoles(array('ROLE_SUPER_ADMIN'));
+
         $userAdmin->addTest($test);
+
         $manager->persist($userAdmin);
 
         $questionnaire1 = new Questionnaire();
@@ -301,7 +306,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition4_3->setAudioUrl("");
         $manager->persist($proposition4_3);
 
-    // ITEM 5    
+    // ITEM 5
         $questionnaire5->addTest($test);
         $questionnaire5->setLevel("A2");
         $questionnaire5->setInstruction('');
@@ -407,7 +412,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition6_3->setAudioUrl("");
         $manager->persist($proposition6_3);
 
-    // ITEM 7   
+    // ITEM 7
         $questionnaire7->addTest($test);
         $questionnaire7->setLevel("A2");
         $questionnaire7->setInstruction('');
@@ -461,7 +466,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($proposition7_3);
 
 
-    // ITEM 8   
+    // ITEM 8
         $questionnaire8->addTest($test);
         $questionnaire8->setLevel("A2");
         $questionnaire8->setInstruction('');
@@ -602,7 +607,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition9_3_2->setAudioUrl("");
         $manager->persist($proposition9_3_2);
 
-    // ITEM 10   
+    // ITEM 10
         $questionnaire10->addTest($test);
         $questionnaire10->setLevel("A2");
         $questionnaire10->setInstruction('');
@@ -708,7 +713,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition10_4_2->setAudioUrl("");
         $manager->persist($proposition10_4_2);
 
-    // ITEM 11   
+    // ITEM 11
         $questionnaire11->addTest($test);
         $questionnaire11->setLevel("A2");
         $questionnaire11->setInstruction('');
@@ -757,8 +762,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition11_2->setAudioUrl("");
         $manager->persist($proposition11_2);
 
-        
-        
+
+
 
     // ITEM 12
         $questionnaire12->addTest($test);
@@ -809,7 +814,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition12_2->setAudioUrl("");
         $manager->persist($proposition12_2);
 
-      
+
     // ITEM 13
         $questionnaire13 = new Questionnaire();
         $questionnaire13->addTest($test);
@@ -860,7 +865,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition13_2->setAudioUrl("");
         $manager->persist($proposition13_2);
 
-        
+
     // ITEM 14
         $questionnaire14->addTest($test);
         $questionnaire14->setLevel("A2");
@@ -910,7 +915,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition14_2->setAudioUrl("");
         $manager->persist($proposition14_2);
 
-      
+
     // ITEM 15
         $questionnaire15->addTest($test);
         $questionnaire15->setLevel("A2");
@@ -1059,7 +1064,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition17_2->setAudioUrl("");
         $manager->persist($proposition17_2);
 
-    
+
 
     // ITEM 18
         $questionnaire18->addTest($test);
@@ -1110,7 +1115,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition18_2->setAudioUrl("");
         $manager->persist($proposition18_2);
 
-      
+
 
     // ITEM 19
         $questionnaire19->addTest($test);
@@ -1162,7 +1167,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($proposition19_2);
 
 
-       
+
     // ITEM 20
         $questionnaire20->addTest($test);
         $questionnaire20->setLevel("A2");
@@ -1213,7 +1218,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($proposition20_2);
 
 
-        
+
 
     // ITEM 21
         $questionnaire21->addTest($test);
@@ -1796,7 +1801,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $subquestion26_2_3 = new Subquestion();
         $subquestion26_2_3->setQuestion($question26_2);
         $subquestion26_2_3->setTypology("VF");
-        $manager->persist($subquestion26_2_3); 
+        $manager->persist($subquestion26_2_3);
 
         $proposition26_2_3_1 = new Proposition();
         $proposition26_2_3_1->setSubquestion($subquestion26_2_3);
@@ -2114,7 +2119,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($proposition29_4_2);
 
 
-      
+
 
     // ITEM 30
         $questionnaire30->addTest($test);
@@ -2203,7 +2208,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition30_3_2->setAudioUrl("");
         $manager->persist($proposition30_3_2);
 
-        
+
     // ITEM 31
         $questionnaire31->addTest($test);
         $questionnaire31->setLevel("A2");
@@ -2310,7 +2315,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition31_4_2->setAudioUrl("");
         $manager->persist($proposition31_4_2);
 
-        
+
 
     // ITEM 32
         $questionnaire32->addTest($test);
@@ -2365,7 +2370,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition32_3->setAudioUrl("");
         $manager->persist($proposition32_3);
 
-      
+
 
     // ITEM 33
         $questionnaire33->addTest($test);
@@ -2421,7 +2426,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($proposition33_3);
 
 
-      
+
 
     // ITEM 34
         $questionnaire34->addTest($test);
@@ -2476,7 +2481,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition34_3->setAudioUrl("");
         $manager->persist($proposition34_3);
 
-      
+
 
     // ITEM 35
         $questionnaire35->addTest($test);
@@ -2531,7 +2536,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition35_3->setAudioUrl("");
         $manager->persist($proposition35_3);
 
-       
+
     // ITEM 36
         $questionnaire36->addTest($test);
         $questionnaire36->setLevel("A2");
@@ -2585,7 +2590,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition36_3->setAudioUrl("");
         $manager->persist($proposition36_3);
 
-        
+
 
     // ITEM 37
         $questionnaire37->addTest($test);
@@ -2640,7 +2645,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition37_3->setAudioUrl("");
         $manager->persist($proposition37_3);
 
-        
+
 
     // ITEM 38
         $questionnaire38->addTest($test);
@@ -2695,7 +2700,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition38_3->setAudioUrl("");
         $manager->persist($proposition38_3);
 
-        
+
 
     // ITEM 39
         $questionnaire39->addTest($test);
