@@ -2321,6 +2321,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion32->setTypology("QRU");
         $manager->persist($subquestion32);
 
+        $proposition32_1 = new Proposition();
+        $proposition32_1->setSubquestion($subquestion32);
+        $proposition32_1->setRightAnswer(0);
+        $proposition32_1->setAudioUrl("");
+        $manager->persist($proposition32_1);
+
+        $proposition32_2 = new Proposition();
+        $proposition32_2->setSubquestion($subquestion32);
+        $proposition32_2->setRightAnswer(1);
+        $proposition32_2->setAudioUrl("");
+        $manager->persist($proposition32_2);
+
+        $proposition32_3 = new Proposition();
+        $proposition32_3->setSubquestion($subquestion32);
+        $proposition32_3->setRightAnswer(0);
+        $proposition32_3->setAudioUrl("");
+        $manager->persist($proposition32_3);
+
       
 
     // ITEM 33
@@ -2357,6 +2375,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion33->setQuestion($question33);
         $subquestion33->setTypology("QRU");
         $manager->persist($subquestion33);
+
+        $proposition33_1 = new Proposition();
+        $proposition33_1->setSubquestion($subquestion33);
+        $proposition33_1->setRightAnswer(0);
+        $proposition33_1->setAudioUrl("");
+        $manager->persist($proposition33_1);
+
+        $proposition33_2 = new Proposition();
+        $proposition33_2->setSubquestion($subquestion33);
+        $proposition33_2->setRightAnswer(1);
+        $proposition33_2->setAudioUrl("");
+        $manager->persist($proposition33_2);
+
+        $proposition33_3 = new Proposition();
+        $proposition33_3->setSubquestion($subquestion33);
+        $proposition33_3->setRightAnswer(0);
+        $proposition33_3->setAudioUrl("");
+        $manager->persist($proposition33_3);
 
 
       
@@ -2396,6 +2432,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion34->setTypology("QRU");
         $manager->persist($subquestion34);
 
+        $proposition34_1 = new Proposition();
+        $proposition34_1->setSubquestion($subquestion34);
+        $proposition34_1->setRightAnswer(1);
+        $proposition34_1->setAudioUrl("");
+        $manager->persist($proposition34_1);
+
+        $proposition34_2 = new Proposition();
+        $proposition34_2->setSubquestion($subquestion34);
+        $proposition34_2->setRightAnswer(0);
+        $proposition34_2->setAudioUrl("");
+        $manager->persist($proposition34_2);
+
+        $proposition34_3 = new Proposition();
+        $proposition34_3->setSubquestion($subquestion34);
+        $proposition34_3->setRightAnswer(0);
+        $proposition34_3->setAudioUrl("");
+        $manager->persist($proposition34_3);
+
       
 
     // ITEM 35
@@ -2433,6 +2487,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion35->setTypology("QRU");
         $manager->persist($subquestion35);
 
+        $proposition35_1 = new Proposition();
+        $proposition35_1->setSubquestion($subquestion35);
+        $proposition35_1->setRightAnswer(1);
+        $proposition35_1->setAudioUrl("");
+        $manager->persist($proposition35_1);
+
+        $proposition35_2 = new Proposition();
+        $proposition35_2->setSubquestion($subquestion35);
+        $proposition35_2->setRightAnswer(0);
+        $proposition35_2->setAudioUrl("");
+        $manager->persist($proposition35_2);
+
+        $proposition35_3 = new Proposition();
+        $proposition35_3->setSubquestion($subquestion35);
+        $proposition35_3->setRightAnswer(0);
+        $proposition35_3->setAudioUrl("");
+        $manager->persist($proposition35_3);
+
        
     // ITEM 36
         $questionnaire36->addTest($test);
@@ -2468,6 +2540,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion36->setQuestion($question36);
         $subquestion36->setTypology("QRU");
         $manager->persist($subquestion36);
+
+        $proposition36_1 = new Proposition();
+        $proposition36_1->setSubquestion($subquestion36);
+        $proposition36_1->setRightAnswer(1);
+        $proposition36_1->setAudioUrl("");
+        $manager->persist($proposition36_1);
+
+        $proposition36_2 = new Proposition();
+        $proposition36_2->setSubquestion($subquestion36);
+        $proposition36_2->setRightAnswer(0);
+        $proposition36_2->setAudioUrl("");
+        $manager->persist($proposition36_2);
+
+        $proposition36_3 = new Proposition();
+        $proposition36_3->setSubquestion($subquestion36);
+        $proposition36_3->setRightAnswer(0);
+        $proposition36_3->setAudioUrl("");
+        $manager->persist($proposition36_3);
 
         
 
@@ -2506,6 +2596,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion37->setTypology("QRU");
         $manager->persist($subquestion37);
 
+        $proposition37_1 = new Proposition();
+        $proposition37_1->setSubquestion($subquestion37);
+        $proposition37_1->setRightAnswer(0);
+        $proposition37_1->setAudioUrl("");
+        $manager->persist($proposition37_1);
+
+        $proposition37_2 = new Proposition();
+        $proposition37_2->setSubquestion($subquestion37);
+        $proposition37_2->setRightAnswer(0);
+        $proposition37_2->setAudioUrl("");
+        $manager->persist($proposition37_2);
+
+        $proposition37_3 = new Proposition();
+        $proposition37_3->setSubquestion($subquestion37);
+        $proposition37_3->setRightAnswer(1);
+        $proposition37_3->setAudioUrl("");
+        $manager->persist($proposition37_3);
+
         
 
     // ITEM 38
@@ -2543,6 +2651,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion38->setTypology("QRU");
         $manager->persist($subquestion38);
 
+        $proposition38_1 = new Proposition();
+        $proposition38_1->setSubquestion($subquestion38);
+        $proposition38_1->setRightAnswer(1);
+        $proposition38_1->setAudioUrl("");
+        $manager->persist($proposition38_1);
+
+        $proposition38_2 = new Proposition();
+        $proposition38_2->setSubquestion($subquestion38);
+        $proposition38_2->setRightAnswer(0);
+        $proposition38_2->setAudioUrl("");
+        $manager->persist($proposition38_2);
+
+        $proposition38_3 = new Proposition();
+        $proposition38_3->setSubquestion($subquestion38);
+        $proposition38_3->setRightAnswer(0);
+        $proposition38_3->setAudioUrl("");
+        $manager->persist($proposition38_3);
+
         
 
     // ITEM 39
@@ -2579,6 +2705,24 @@ class LoadFixturesData implements FixtureInterface
         $subquestion39->setQuestion($question39);
         $subquestion39->setTypology("QRU");
         $manager->persist($subquestion39);
+
+        $proposition39_1 = new Proposition();
+        $proposition39_1->setSubquestion($subquestion39);
+        $proposition39_1->setRightAnswer(1);
+        $proposition39_1->setAudioUrl("");
+        $manager->persist($proposition39_1);
+
+        $proposition39_2 = new Proposition();
+        $proposition39_2->setSubquestion($subquestion39);
+        $proposition39_2->setRightAnswer(0);
+        $proposition39_2->setAudioUrl("");
+        $manager->persist($proposition39_2);
+
+        $proposition39_3 = new Proposition();
+        $proposition39_3->setSubquestion($subquestion39);
+        $proposition39_3->setRightAnswer(0);
+        $proposition39_3->setAudioUrl("");
+        $manager->persist($proposition39_3);
 
         $manager->flush();
     }
