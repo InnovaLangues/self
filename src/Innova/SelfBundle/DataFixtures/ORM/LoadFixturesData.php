@@ -3,16 +3,26 @@
 namespace Innova\SelfBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
 
-class LoadFixturesData implements FixtureInterface
+class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 {
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -21,6 +31,22 @@ class LoadFixturesData implements FixtureInterface
         $test = new Test();
         $test->setNom('Test 1 - A2 italien');
         $manager->persist($test);
+
+        $userAdmin = new User();
+        $encoder = $this->container
+            ->get('security.encoder_factory')
+            ->getEncoder($userAdmin);
+
+        $userAdmin->setUsername('admin');
+        $userAdmin->setEnabled(1);
+        $userAdmin->setEmail('system@example.com');
+
+        $userAdmin->setPassword($encoder
+            ->encodePassword('admin', $userAdmin->getSalt()));
+
+        $userAdmin->setRoles(array('ROLE_SUPER_ADMIN'));
+        $userAdmin->addTest($test);
+        $manager->persist($userAdmin);
 
         $questionnaire1 = new Questionnaire();
         $questionnaire2 = new Questionnaire();

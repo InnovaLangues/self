@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+
 
 /**
  * User
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="self_user")
  * @ORM\Entity
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var integer
@@ -19,7 +21,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
     * @ORM\OneToMany(targetEntity="Trace", mappedBy="user")
@@ -29,31 +31,34 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      */
     private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=255)
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
      */
     private $prenom;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="login", type="string", length=255)
-     */
-    private $login;
+
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
+     * @ORM\ManyToMany(targetEntity="Test", mappedBy="users")
      */
-    private $password;
+    private $tests;
 
+
+	/**
+	 * Constructor
+	 */
+    public function __construct()
+    {
+    	parent::__construct();
+        $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -156,13 +161,7 @@ class User
     {
         return $this->password;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
     
     /**
      * Add traces
@@ -195,5 +194,38 @@ class User
     public function getTraces()
     {
         return $this->traces;
+    }
+
+    /**
+     * Add tests
+     *
+     * @param \Innova\SelfBundle\Entity\Test $tests
+     * @return User
+     */
+    public function addTest(\Innova\SelfBundle\Entity\Test $tests)
+    {
+        $this->tests[] = $tests;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tests
+     *
+     * @param \Innova\SelfBundle\Entity\Test $tests
+     */
+    public function removeTest(\Innova\SelfBundle\Entity\Test $tests)
+    {
+        $this->tests->removeElement($tests);
+    }
+
+    /**
+     * Get tests
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTests()
+    {
+        return $this->tests;
     }
 }

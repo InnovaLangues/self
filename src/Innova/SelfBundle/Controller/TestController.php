@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Form\TestType;
 
 /**
@@ -27,6 +28,8 @@ class TestController extends Controller
      */
     public function indexAction()
     {
+        
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('InnovaSelfBundle:Test')->findAll();
@@ -35,6 +38,25 @@ class TestController extends Controller
             'entities' => $entities,
         );
     }
+
+    /**
+     * Lists all Test entities.
+     *
+     * @Route("/user", name="user_test")
+     * @Method("GET")
+     * @Template()
+     */
+    public function userIndexAction()
+    {
+        
+        $user = $this->get('security.context')->getToken()->getUser();
+        $tests = $user->getTests();
+       
+        return array(
+            'tests' => $tests,
+        );
+    }
+
     /**
      * Creates a new Test entity.
      *

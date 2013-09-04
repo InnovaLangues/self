@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Test
  *
  * @ORM\Table("test")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\TestRepository")
  */
 class Test
 {
@@ -33,8 +33,14 @@ class Test
     */
     private $questionnaires;
 
+    /**
+    * @ORM\ManyToMany(targetEntity="User", inversedBy="tests")
+    */
+    private $users;
+
     public function __construct() {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString(){
@@ -107,5 +113,38 @@ class Test
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \Innova\SelfBundle\Entity\User $users
+     * @return Test
+     */
+    public function addUser(\Innova\SelfBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+    
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Innova\SelfBundle\Entity\User $users
+     */
+    public function removeUser(\Innova\SelfBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }
