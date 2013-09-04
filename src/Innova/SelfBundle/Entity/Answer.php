@@ -34,9 +34,9 @@ class Answer
     /**
      * @var integer
      *
-     * @ORM\Column(name="idQuestion", type="integer")
+     * @ORM\Column(name="question", type="integer")
      */
-    private $idQuestion;
+    private $question;
 
 
     /**
@@ -51,26 +51,26 @@ class Answer
 
 
     /**
-     * Set idQuestion
+     * Set question
      *
-     * @param integer $idQuestion
+     * @param integer $question
      * @return Answer
      */
-    public function setIdQuestion($idQuestion)
+    public function setQuestion($question)
     {
-        $this->idQuestion = $idQuestion;
+        $this->question = $question;
     
         return $this;
     }
 
     /**
-     * Get idQuestion
+     * Get question
      *
      * @return integer 
      */
-    public function getIdQuestion()
+    public function getQuestion()
     {
-        return $this->idQuestion;
+        return $this->question;
     }
 
     /**
