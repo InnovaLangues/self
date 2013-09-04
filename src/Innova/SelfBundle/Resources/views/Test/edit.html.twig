@@ -6,8 +6,8 @@
 	{{ form_start(edit_form) }}
     	{{ form_errors(edit_form) }}
 	  	<div class="form-group">
-	    	<label for="name">{{ form_label(edit_form.nom) }}</label>
-			{{ form_widget(edit_form.nom, { 'attr': {'class': 'form-control'} }) }}
+	    	<label for="name">{{ form_label(edit_form.name) }}</label>
+			{{ form_widget(edit_form.name, { 'attr': {'class': 'form-control'} }) }}
 	  	</div>
 
 	  	{% do edit_form.submit.setRendered %}

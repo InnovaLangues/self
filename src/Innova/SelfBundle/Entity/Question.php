@@ -42,9 +42,9 @@ class Question
     /**
      * @var string
      *
-     * @ORM\Column(name="consigne", type="string", length=255)
+     * @ORM\Column(name="instruction", type="string", length=255)
      */
-    private $consigne;
+    private $instruction;
     
     /**
      * Get id
@@ -124,26 +124,26 @@ class Question
     }
 
     /**
-     * Set consigne
+     * Set instruction
      *
-     * @param string $consigne
+     * @param string $instruction
      * @return Question
      */
-    public function setConsigne($consigne)
+    public function setInstruction($instruction)
     {
-        $this->consigne = $consigne;
+        $this->instruction = $instruction;
     
         return $this;
     }
 
     /**
-     * Get consigne
+     * Get instruction
      *
      * @return string 
      */
-    public function getConsigne()
+    public function getInstruction()
     {
-        return $this->consigne;
+        return $this->instruction;
     }
 
     /**

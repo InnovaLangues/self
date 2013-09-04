@@ -3,8 +3,6 @@
 namespace Innova\SelfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
-
 
 /**
  * User
@@ -12,7 +10,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Table(name="self_user")
  * @ORM\Entity
  */
-class User extends BaseUser
+class User
 {
     /**
      * @var integer
@@ -31,20 +29,18 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
+     * @ORM\Column(name="lastName", type="string", length=255, nullable=true)
      */
-    private $nom;
+    private $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
+     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
      */
-    private $prenom;
+    private $firstName;
 
-
-
-    /**
+	/**
      * @ORM\ManyToMany(targetEntity="Test", mappedBy="users")
      */
     private $tests;
@@ -71,37 +67,37 @@ class User extends BaseUser
     }
 
     /**
-     * Set nom
+     * Set lastName
      *
-     * @param string $nom
+     * @param string $lastName
      * @return User
      */
-    public function setNom($nom)
+    public function setLastName($lastName)
     {
-        $this->nom = $nom;
+        $this->lastName = $lastName;
     
         return $this;
     }
 
     /**
-     * Get nom
+     * Get lastName
      *
      * @return string 
      */
-    public function getNom()
+    public function getLastName()
     {
-        return $this->nom;
+        return $this->lastName;
     }
 
     /**
-     * Set prenom
+     * Set firstName
      *
-     * @param string $prenom
+     * @param string $firstName
      * @return User
      */
-    public function setPrenom($prenom)
+    public function setFirstName($firstName)
     {
-        $this->prenom = $prenom;
+        $this->firstName = $firstName;
     
         return $this;
     }
@@ -161,7 +157,6 @@ class User extends BaseUser
     {
         return $this->password;
     }
-
     
     /**
      * Add traces
@@ -194,38 +189,5 @@ class User extends BaseUser
     public function getTraces()
     {
         return $this->traces;
-    }
-
-    /**
-     * Add tests
-     *
-     * @param \Innova\SelfBundle\Entity\Test $tests
-     * @return User
-     */
-    public function addTest(\Innova\SelfBundle\Entity\Test $tests)
-    {
-        $this->tests[] = $tests;
-    
-        return $this;
-    }
-
-    /**
-     * Remove tests
-     *
-     * @param \Innova\SelfBundle\Entity\Test $tests
-     */
-    public function removeTest(\Innova\SelfBundle\Entity\Test $tests)
-    {
-        $this->tests->removeElement($tests);
-    }
-
-    /**
-     * Get tests
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTests()
-    {
-        return $this->tests;
     }
 }
