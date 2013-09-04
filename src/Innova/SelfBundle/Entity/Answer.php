@@ -32,14 +32,6 @@ class Answer
     protected $proposition;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idQuestion", type="integer")
-     */
-    private $idQuestion;
-
-
-    /**
      * Get id
      *
      * @return integer 
@@ -47,30 +39,6 @@ class Answer
     public function getId()
     {
         return $this->id;
-    }
-
-
-    /**
-     * Set idQuestion
-     *
-     * @param integer $idQuestion
-     * @return Answer
-     */
-    public function setIdQuestion($idQuestion)
-    {
-        $this->idQuestion = $idQuestion;
-    
-        return $this;
-    }
-
-    /**
-     * Get idQuestion
-     *
-     * @return integer 
-     */
-    public function getIdQuestion()
-    {
-        return $this->idQuestion;
     }
 
     /**
