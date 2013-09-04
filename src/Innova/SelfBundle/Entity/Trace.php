@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Trace
  *
- * @ORM\Table()
+ * @ORM\Table("trace")
  * @ORM\Entity
  */
 class Trace
