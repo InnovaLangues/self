@@ -3,12 +3,8 @@
 {% block body -%}
     <h1>Test</h1>
 
-    <table class="record_properties">
+    <table class="record_properties table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
             <tr>
                 <th>Nom</th>
                 <td>{{ entity.nom }}</td>
@@ -18,12 +14,12 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('test') }}">
+        <a href="{{ path('test') }}" class="btn btn-default">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('test_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('test_edit', { 'id': entity.id }) }}" class="btn btn-primary">
             Edit
         </a>
     </li>
