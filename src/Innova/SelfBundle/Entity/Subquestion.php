@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Subquestion
  *
- * @ORM\Table()
+ * @ORM\Table("subquestion")
  * @ORM\Entity
  */
 class Subquestion
