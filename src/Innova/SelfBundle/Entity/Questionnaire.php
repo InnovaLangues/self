@@ -80,9 +80,9 @@ class Questionnaire
     /**
      * @var string
      *
-     * @ORM\Column(name="genre", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255)
      */
-    private $genre;
+    private $type;
 
     /**
      * @var string
@@ -136,23 +136,23 @@ class Questionnaire
     /**
      * @var string
      *
-     * @ORM\Column(name="consigne", type="string", length=255)
+     * @ORM\Column(name="instruction", type="string", length=255)
      */
-    private $consigne;
+    private $instruction;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="audioConsigne", type="string", length=255)
+     * @ORM\Column(name="audioInstruction", type="string", length=255)
      */
-    private $audioConsigne;
+    private $audioInstruction;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="audioContexte", type="string", length=255)
+     * @ORM\Column(name="audioContext", type="string", length=255)
      */
-    private $audioContexte;
+    private $audioContext;
 
     /**
      * @var string
@@ -380,26 +380,26 @@ class Questionnaire
     }
 
     /**
-     * Set genre
+     * Set type
      *
-     * @param string $genre
+     * @param string $type
      * @return Questionnaire
      */
-    public function setGenre($genre)
+    public function setType($type)
     {
-        $this->genre = $genre;
+        $this->type = $type;
     
         return $this;
     }
 
     /**
-     * Get genre
+     * Get type
      *
      * @return string 
      */
-    public function getGenre()
+    public function getType()
     {
-        return $this->genre;
+        return $this->type;
     }
 
     /**
@@ -564,72 +564,72 @@ class Questionnaire
     }
 
     /**
-     * Set consigne
+     * Set instruction
      *
-     * @param string $consigne
+     * @param string $instruction
      * @return Questionnaire
      */
-    public function setConsigne($consigne)
+    public function setInstruction($instruction)
     {
-        $this->consigne = $consigne;
+        $this->instruction = $instruction;
     
         return $this;
     }
 
     /**
-     * Get consigne
+     * Get instruction
      *
      * @return string 
      */
-    public function getConsigne()
+    public function getInstruction()
     {
-        return $this->consigne;
+        return $this->instruction;
     }
 
     /**
-     * Set audioioConsigne
+     * Set audioInstruction
      *
-     * @param string $audioioConsigne
+     * @param string $audioInstruction
      * @return Questionnaire
      */
-    public function setAudioioConsigne($audioioConsigne)
+    public function setAudioInstruction($audioInstruction)
     {
-        $this->audioioConsigne = $audioioConsigne;
+        $this->audioInstruction = $audioInstruction;
     
         return $this;
     }
 
     /**
-     * Get audioioConsigne
+     * Get audioInstruction
      *
      * @return string 
      */
-    public function getAudioioConsigne()
+    public function getAudioInstruction()
     {
-        return $this->audioioConsigne;
+        return $this->audioInstruction;
     }
 
     /**
-     * Set audioContexte
+     * Set audioContext
      *
-     * @param string $audioContexte
+     * @param string $audioContext
      * @return Questionnaire
      */
-    public function setAudioContexte($audioContexte)
+    public function setAudioContext($audioContext)
     {
-        $this->audioContexte = $audioContexte;
+        $this->audioContext = $audioContext;
     
         return $this;
     }
 
     /**
-     * Get audioContexte
+     * Get audioContext
      *
      * @return string 
      */
-    public function getAudioContexte()
+    public function getAudioContext()
     {
-        return $this->audioContexte;
+        return $this->audioContext;
     }
 
     /**
@@ -754,26 +754,4 @@ class Questionnaire
         return $this->tests;
     }
 
-    /**
-     * Set audioConsigne
-     *
-     * @param string $audioConsigne
-     * @return Questionnaire
-     */
-    public function setAudioConsigne($audioConsigne)
-    {
-        $this->audioConsigne = $audioConsigne;
-    
-        return $this;
-    }
-
-    /**
-     * Get audioConsigne
-     *
-     * @return string 
-     */
-    public function getAudioConsigne()
-    {
-        return $this->audioConsigne;
-    }
 }
