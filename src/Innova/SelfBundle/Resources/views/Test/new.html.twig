@@ -4,8 +4,10 @@
     <h1>Test creation</h1>
 
     {{ form(form) }}
+    	{{ form_rest(form) }}
+    {{ form_end(form) }}
 
-        <ul class="record_actions">
+    <ul class="record_actions">
     <li>
         <a href="{{ path('test') }}">
             Back to the list
