@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="self_user")
  * @ORM\Entity
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var integer
@@ -189,5 +190,48 @@ class User
     public function getTraces()
     {
         return $this->traces;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string 
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Add tests
+     *
+     * @param \Innova\SelfBundle\Entity\Test $tests
+     * @return User
+     */
+    public function addTest(\Innova\SelfBundle\Entity\Test $tests)
+    {
+        $this->tests[] = $tests;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tests
+     *
+     * @param \Innova\SelfBundle\Entity\Test $tests
+     */
+    public function removeTest(\Innova\SelfBundle\Entity\Test $tests)
+    {
+        $this->tests->removeElement($tests);
+    }
+
+    /**
+     * Get tests
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTests()
+    {
+        return $this->tests;
     }
 }
