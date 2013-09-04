@@ -12,9 +12,8 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td>{{ entity.nom }}</td>
+                <td><a href="{{ path('test_show', { 'id': entity.id }) }}">{{ entity.nom }}</a></td>
                 <td class="text-right">
-                    <a href="{{ path('test_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
                     <a href="{{ path('test_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
             </tr>
