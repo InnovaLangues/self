@@ -5,8 +5,8 @@
 
     {{ form_start(form) }}
     	<div class="form-group">
-	    	<label for="name">{{ form_label(form.nom) }}</label>
-    		{{ form_widget(form.nom, { 'attr': {'class': 'form-control'} }) }}
+	    	<label for="name">{{ form_label(form.name) }}</label>
+    		{{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
     	</div>
 
     	{% do form.submit.setRendered %}

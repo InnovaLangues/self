@@ -24,9 +24,9 @@ class Test
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $lastName;
+    private $name;
 
     /**
     * @ORM\ManyToMany(targetEntity="Questionnaire")
@@ -44,7 +44,7 @@ class Test
     }
 
     public function __toString(){
-        return $this->lastName;
+        return $this->name;
      }
 
 
@@ -93,26 +93,26 @@ class Test
     }
 
     /**
-     * Set lastName
+     * Set name
      *
-     * @param string $lastName
+     * @param string $name
      * @return Session
      */
-    public function setLastName($lastName)
+    public function setName($name)
     {
-        $this->lastName = $lastName;
+        $this->name = $name;
     
         return $this;
     }
 
     /**
-     * Get lastName
+     * Get name
      *
      * @return string 
      */
-    public function getLastName()
+    public function getName()
     {
-        return $this->lastName;
+        return $this->name;
     }
 
     /**
