@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Proposition
  *
- * @ORM\Table()
+ * @ORM\Table("proposition")
  * @ORM\Entity
  */
 class Proposition
