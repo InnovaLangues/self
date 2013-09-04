@@ -3,8 +3,6 @@
 namespace Innova\SelfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
-
 
 /**
  * User
@@ -12,7 +10,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Table(name="self_user")
  * @ORM\Entity
  */
-class User extends BaseUser
+class User
 {
     /**
      * @var integer
@@ -105,13 +103,13 @@ class User extends BaseUser
     }
 
     /**
-     * Get firstName
+     * Get prenom
      *
      * @return string 
      */
-    public function getFirstName()
+    public function getPrenom()
     {
-        return $this->firstName;
+        return $this->prenom;
     }
 
     /**
