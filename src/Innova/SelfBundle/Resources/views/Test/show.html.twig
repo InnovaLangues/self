@@ -12,17 +12,15 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('test') }}" class="btn btn-default">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('test_edit', { 'id': entity.id }) }}" class="btn btn-primary">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <a href="{{ path('test_edit', { 'id': entity.id }) }}" class="btn btn-primary">Edit</a>
+
+    <hr>
+
+    {{ form_start(delete_form) }}
+        {{ form_errors(delete_form) }}
+        <a href="{{ path('test') }}" class="btn btn-default">Back to the list</a>
+        {{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
+        {{ form_rest(delete_form) }}
+    {{ form_start(delete_form) }}
+
 {% endblock %}
