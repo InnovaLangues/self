@@ -29,16 +29,16 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="lastName", type="string", length=255)
      */
-    private $nom;
+    private $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=255)
+     * @ORM\Column(name="firstName", type="string", length=255)
      */
-    private $prenom;
+    private $firstName;
 
     /**
      * @var string
@@ -66,49 +66,49 @@ class User
     }
 
     /**
-     * Set nom
+     * Set lastName
      *
-     * @param string $nom
+     * @param string $lastName
      * @return User
      */
-    public function setNom($nom)
+    public function setLastName($lastName)
     {
-        $this->nom = $nom;
+        $this->lastName = $lastName;
     
         return $this;
     }
 
     /**
-     * Get nom
+     * Get lastName
      *
      * @return string 
      */
-    public function getNom()
+    public function getLastName()
     {
-        return $this->nom;
+        return $this->lastName;
     }
 
     /**
-     * Set prenom
+     * Set firstName
      *
-     * @param string $prenom
+     * @param string $firstName
      * @return User
      */
-    public function setPrenom($prenom)
+    public function setFirstName($firstName)
     {
-        $this->prenom = $prenom;
+        $this->firstName = $firstName;
     
         return $this;
     }
 
     /**
-     * Get prenom
+     * Get firstName
      *
      * @return string 
      */
-    public function getPrenom()
+    public function getFirstName()
     {
-        return $this->prenom;
+        return $this->firstName;
     }
 
     /**
