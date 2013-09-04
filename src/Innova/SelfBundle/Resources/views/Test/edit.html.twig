@@ -15,13 +15,13 @@
 	  	{{ form_rest(edit_form) }}
 
 	  	<button type="submit" class="btn btn-primary">Update</button>
-	  	<a href="{{ path('test') }}" type="submit" class="btn btn-default">Back to the list</a>
 	{{ form_end(edit_form) }}
 
 	<hr>
 
   	{{ form_start(delete_form) }}
   		{{ form_errors(delete_form) }}
+	  	<a href="{{ path('test') }}" type="submit" class="btn btn-default">Back to the list</a>
   		{{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
   		{{ form_rest(delete_form) }}
   	{{ form_start(delete_form) }}

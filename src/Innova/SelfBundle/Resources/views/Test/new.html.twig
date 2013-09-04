@@ -3,15 +3,19 @@
 {% block body -%}
     <h1>Test creation</h1>
 
-    {{ form(form) }}
+    {{ form_start(form) }}
+    	<div class="form-group">
+	    	<label for="name">{{ form_label(form.nom) }}</label>
+    		{{ form_widget(form.nom, { 'attr': {'class': 'form-control'} }) }}
+    	</div>
+
+    	{% do form.submit.setRendered %}
+
     	{{ form_rest(form) }}
+
+		<button type="submit" class="btn btn-primary">Create</button>
+    	<a href="{{ path('test') }}" class="btn btn-default">Back to the list</a>
     {{ form_end(form) }}
 
-    <ul class="record_actions">
-    <li>
-        <a href="{{ path('test') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+
 {% endblock %}
