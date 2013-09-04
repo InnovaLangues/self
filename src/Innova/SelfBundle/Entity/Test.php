@@ -66,7 +66,6 @@ class Test
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-        $questionnaires->addTest($this);
 
         return $this;
     }
@@ -123,7 +122,6 @@ class Test
     public function addUser(\Innova\SelfBundle\Entity\User $users)
     {
         $this->users[] = $users;
-        $users->addTest($this);
 
         return $this;
     }
