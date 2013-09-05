@@ -1,0 +1,77 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1> Item n° {{ questionnaire.id}} </h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Contexte</h3>
+            <div>
+                <audio preload="auto" id="context" class="item_audio">
+                    <source src="{{ questionnaire.audioContext }}.ogg" type="audio/ogg">
+                    <source src="{{ questionnaire.audioContext }}.mp3" type="audio/mp3">
+                    Votre navigateur est trop ancien.
+                </audio>
+                <span son="context" statut="pause" class="item_audio_button glyphicon glyphicon-play">Play</span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h3>Item</h3>
+            <div>
+               <audio preload="auto" id="context" class="item_audio">
+                    <source src="{{ questionnaire.audioItem }}.ogg" type="audio/ogg">
+                    <source src="{{ questionnaire.audioItem }}.mp3" type="audio/mp3">
+                    Votre navigateur est trop ancien.
+                </audio>
+                <span son="context" statut="pause" class="item_audio_button glyphicon glyphicon-play">Play</span>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Consigne</h3>
+            <div>
+                 <audio preload="auto" id="context" class="item_audio">
+                    <source src="{{ questionnaire.audioInstruction }}.ogg" type="audio/ogg">
+                    <source src="{{ questionnaire.audioInstruction }}.mp3" type="audio/mp3">
+                    Votre navigateur est trop ancien.
+                </audio>
+                <span son="context" statut="pause" class="item_audio_button glyphicon glyphicon-play">Play</span>
+            </div>
+        </div>
+        <div class="col-md-8">
+            {% for question in questionnaire.questions %}
+            <h3>Question {{ question.id }} {{ question.instruction }}</h3>
+            <ul>
+            {% for subquestion in question.subquestions %}
+                <li> Subquestion {{ subquestion.id }}
+                    <ul>
+                    {% if subquestion.typology == "VF" %}
+                            <audio preload="auto" id="context" class="item_audio">
+                                <source src="{{ subquestion.audioUrl }}.ogg" type="audio/ogg">
+                                <source src="{{ subquestion.audioUrl }}.mp3" type="audio/mp3">
+                                Votre navigateur est trop ancien.
+                            </audio>
+                            <span son="context" statut="pause" class="item_audio_button glyphicon glyphicon-play"></span>
+                    {% endif %}   
+                    {% for proposition in subquestion.propositions %}
+                        {% if subquestion.typology == "QRU" %}
+                            QRU
+                        {% elseif subquestion.typology == "QRM" %}
+                            QRM
+                        {% elseif subquestion.typology == "VF" %}
+                            <label class="radio-inline">
+                                <input type="radio" id="inlineCheckbox1" value="{{proposition.id}}"> {{ proposition.title }}
+                            </label>
+                        {% endif %}
+                     {% endfor %}
+                     </ul> 
+                 </li>
+             {% endfor %}
+            </ul>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -35,6 +35,7 @@ class QuestionnaireController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Questionnaire entity.
      *

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Questionnaire
  *
  * @ORM\Table("questionnaire")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\QuestionnaireRepository")
  */
 class Questionnaire
 {

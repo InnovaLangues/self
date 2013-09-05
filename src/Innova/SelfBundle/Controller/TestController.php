@@ -20,6 +20,35 @@ class TestController extends Controller
 {
 
     /**
+     * Pick a random questionnaire entity for a given test.
+     *
+     * @Route("/start/{id}", name="test_start")
+     * @Method("GET")
+     * @Template()
+     */
+    public function startAction(Test $test)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllbyTest($test->getId());
+        $questionnaire = $this->getRandom($questionnaires);
+        return array(
+            'questionnaire' => $questionnaire,
+        );
+    }
+
+
+
+    private function getRandom($questionnaires){
+        $nb_questionnaire = count($questionnaires) -1;
+
+        $rnd = rand(0,$nb_questionnaire);
+
+        return $questionnaires[$rnd];
+    }
+
+
+    /**
      * Lists all Test entities.
      *
      * @Route("/", name="test")
@@ -28,8 +57,6 @@ class TestController extends Controller
      */
     public function indexAction()
     {
-        
-
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('InnovaSelfBundle:Test')->findAll();

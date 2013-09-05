@@ -12,7 +12,7 @@
         <tbody>
         {% for test in tests %}
             <tr>
-                <td><a href="{{ path('test_show', { 'id': test.id }) }}">{{ test.name }}</a></td>
+                <td><a href="{{ path('test_start', { 'id': test.id }) }}">{{ test.name }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
