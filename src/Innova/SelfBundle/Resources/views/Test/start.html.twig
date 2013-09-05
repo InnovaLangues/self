@@ -1,77 +1,79 @@
+{% macro audio(id, src) %}
+        <audio preload="auto" id="{{ id }}" class="item_audio">
+            <source src="{{ src }}.ogg" type="audio/ogg">
+            <source src="{{ src }}.mp3" type="audio/mp3">
+            Votre navigateur est trop ancien.
+        </audio>
+        <span sound="{{ id }}" statut="pause" class="item_audio_button glyphicon glyphicon-play"></span>
+{% endmacro %}
+
+{% macro inputs(type, subquestionId, propositionId, text) %}
+    <label class="{{ type }}-inline">
+        <input type="{{ type }}" name="subquestion{{ subquestionId }}" id="proposition{{ propositionId }}" value="{{ propositionId }}"> 
+        {{ text }}
+    </label>
+{% endmacro %}
+
+{% import _self as audio %}
+{% import _self as inputs %}
+
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1> Item n° {{ questionnaire.id}} </h1>
-
     <div class="row">
-        <div class="col-md-6">
-            <h3>Contexte</h3>
-            <div>
-                <audio preload="auto" id="context" class="item_audio">
-                    <source src="{{ questionnaire.audioContext }}.ogg" type="audio/ogg">
-                    <source src="{{ questionnaire.audioContext }}.mp3" type="audio/mp3">
-                    Votre navigateur est trop ancien.
-                </audio>
-                <span son="context" statut="pause" class="item_audio_button glyphicon glyphicon-play">Play</span>
-            </div>
+        <div class="col-md-4">
+            <h4>
+                <span class="badge pull-left"> 1 </span>&nbsp;Contexte
+            </h4>
+            {{ audio("context", questionnaire.audioContext) }}
         </div>
 
-        <div class="col-md-6">
-            <h3>Item</h3>
-            <div>
-               <audio preload="auto" id="context" class="item_audio">
-                    <source src="{{ questionnaire.audioItem }}.ogg" type="audio/ogg">
-                    <source src="{{ questionnaire.audioItem }}.mp3" type="audio/mp3">
-                    Votre navigateur est trop ancien.
-                </audio>
-                <span son="context" statut="pause" class="item_audio_button glyphicon glyphicon-play">Play</span>
-            </div>
+        <div class="col-md-4">
+            <h4>
+                <span class="badge pull-left"> 2 </span>&nbsp;Situation
+            </h4>
+            {{ audio("situtation", questionnaire.audioItem) }}
         </div>
     </div>
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <h3>Consigne</h3>
-            <div>
-                 <audio preload="auto" id="context" class="item_audio">
-                    <source src="{{ questionnaire.audioInstruction }}.ogg" type="audio/ogg">
-                    <source src="{{ questionnaire.audioInstruction }}.mp3" type="audio/mp3">
-                    Votre navigateur est trop ancien.
-                </audio>
-                <span son="context" statut="pause" class="item_audio_button glyphicon glyphicon-play">Play</span>
-            </div>
+             <h4>
+                <span class="badge pull-left"> 3 </span>&nbsp;Consigne
+            </h4>
+            {{ audio("instruction", questionnaire.audioInstruction) }}
         </div>
         <div class="col-md-8">
+            <form>
             {% for question in questionnaire.questions %}
-            <h3>Question {{ question.id }} {{ question.instruction }}</h3>
-            <ul>
-            {% for subquestion in question.subquestions %}
-                <li> Subquestion {{ subquestion.id }}
-                    <ul>
+                <h4><span class="badge pull-left"> 4 </span>&nbsp;Question {{ question.id }} {{ question.instruction }}</h4>
+                {% for subquestion in question.subquestions %}
+                    <h4> {{ subquestion.title }}</h4>
+                    <p>
                     {% if subquestion.typology == "VF" %}
-                            <audio preload="auto" id="context" class="item_audio">
-                                <source src="{{ subquestion.audioUrl }}.ogg" type="audio/ogg">
-                                <source src="{{ subquestion.audioUrl }}.mp3" type="audio/mp3">
-                                Votre navigateur est trop ancien.
-                            </audio>
-                            <span son="context" statut="pause" class="item_audio_button glyphicon glyphicon-play"></span>
-                    {% endif %}   
+                        {{ audio("subquestion"+subquestion.id, subquestion.audioUrl) }}
+                    {% endif %}
+
                     {% for proposition in subquestion.propositions %}
                         {% if subquestion.typology == "QRU" %}
-                            QRU
+                            <p>
+                                {{ audio("proposition"+proposition.id, proposition.audioUrl) }}
+                                {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
+                            </p>
                         {% elseif subquestion.typology == "QRM" %}
-                            QRM
+                            <p>
+                                {{ audio("proposition"+proposition.id, proposition.audioUrl) }}
+                                {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
+                            </p>
                         {% elseif subquestion.typology == "VF" %}
-                            <label class="radio-inline">
-                                <input type="radio" id="inlineCheckbox1" value="{{proposition.id}}"> {{ proposition.title }}
-                            </label>
+                            {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
                         {% endif %}
-                     {% endfor %}
-                     </ul> 
-                 </li>
-             {% endfor %}
-            </ul>
-        {% endfor %}
+                    {% endfor %}
+
+                    </p>
+                {% endfor %}
+            {% endfor %}
+            </form>
         </div>
     </div>
 {% endblock %}
