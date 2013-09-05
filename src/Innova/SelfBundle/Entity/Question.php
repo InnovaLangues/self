@@ -45,6 +45,13 @@ class Question
      * @ORM\Column(name="instruction", type="string", length=255)
      */
     private $instruction;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="audioUrl", type="string", length=255, nullable=true)
+     */
+    private $audioUrl;
     
     /**
      * Get id
@@ -167,5 +174,28 @@ class Question
     public function getTypology()
     {
         return $this->typology;
+    }
+
+    /**
+     * Set audioUrl
+     *
+     * @param string $audioUrl
+     * @return Question
+     */
+    public function setAudioUrl($audioUrl)
+    {
+        $this->audioUrl = $audioUrl;
+    
+        return $this;
+    }
+
+    /**
+     * Get audioUrl
+     *
+     * @return string 
+     */
+    public function getAudioUrl()
+    {
+        return $this->audioUrl;
     }
 }

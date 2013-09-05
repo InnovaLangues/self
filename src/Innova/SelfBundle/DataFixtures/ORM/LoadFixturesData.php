@@ -96,7 +96,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 1
         $questionnaire1->addTest($test);
         $questionnaire1->setLevel("A2");
-        $questionnaire1->setInstruction('');
+        $questionnaire1->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire1->setTheme('à la boulangerie');
         $questionnaire1->setSource('Conçu en interne');
         $questionnaire1->setSupportType("enregistrement local (MLC)");
@@ -150,7 +150,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
      // ITEM 2
         $questionnaire2->addTest($test);
         $questionnaire2->setLevel("A2");
-        $questionnaire2->setInstruction('');
+        $questionnaire2->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire2->setTheme('achat d’un CD');
         $questionnaire2->setSource('Conçu en interne');
         $questionnaire2->setSupportType("enregistrement local (MLC)");
@@ -203,7 +203,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 3
         $questionnaire3->addTest($test);
         $questionnaire3->setLevel("A2");
-        $questionnaire3->setInstruction('');
+        $questionnaire3->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire3->setTheme('bureau');
         $questionnaire3->setSource('Conçu en interne');
         $questionnaire3->setSupportType("enregistrement local (MLC)");
@@ -256,7 +256,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 4
         $questionnaire4->addTest($test);
         $questionnaire4->setLevel("A2");
-        $questionnaire4->setInstruction('');
+        $questionnaire4->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire4->setTheme('dialogue maman-fils');
         $questionnaire4->setSource('Conçu en interne');
         $questionnaire4->setSupportType("enregistrement local (MLC)");
@@ -309,7 +309,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 5
         $questionnaire5->addTest($test);
         $questionnaire5->setLevel("A2");
-        $questionnaire5->setInstruction('');
+        $questionnaire5->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire5->setTheme('dialogue week-end');
         $questionnaire5->setSource('Conçu en interne');
         $questionnaire5->setSupportType("enregistrement local (MLC)");
@@ -362,7 +362,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 6
         $questionnaire6->addTest($test);
         $questionnaire6->setLevel("A2");
-        $questionnaire6->setInstruction('');
+        $questionnaire6->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire6->setTheme('la valise');
         $questionnaire6->setSource('Conçu en interne');
         $questionnaire6->setSupportType("enregistrement local (MLC)");
@@ -415,7 +415,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 7
         $questionnaire7->addTest($test);
         $questionnaire7->setLevel("A2");
-        $questionnaire7->setInstruction('');
+        $questionnaire7->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire7->setTheme('moment de relax');
         $questionnaire7->setSource('Conçu en interne');
         $questionnaire7->setSupportType("enregistrement local (MLC)");
@@ -469,7 +469,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 8
         $questionnaire8->addTest($test);
         $questionnaire8->setLevel("A2");
-        $questionnaire8->setInstruction('');
+        $questionnaire8->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire8->setTheme('réserver des billets au théâtre');
         $questionnaire8->setSource('Conçu en interne');
         $questionnaire8->setSupportType("enregistrement local (MLC)");
@@ -523,7 +523,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 9
         $questionnaire9->addTest($test);
         $questionnaire9->setLevel("A2");
-        $questionnaire9->setInstruction('');
+        $questionnaire9->setInstruction('Indiquez si les affirmations sont vraies ou fausses.');
         $questionnaire9->setTheme('dialogue entre amies');
         $questionnaire9->setSource('Conçu en interne');
         $questionnaire9->setSupportType("enregistrement local (MLC)");
@@ -568,49 +568,49 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition9_1_1 = new Proposition();
         $proposition9_1_1->setSubquestion($subquestion9_1);
         $proposition9_1_1->setRightAnswer(0);
-        $proposition9_1_1->setTitle("Vrai");
+        $proposition9_1_1->setTitle("Vero");
         $proposition9_1_1->setAudioUrl("");
         $manager->persist($proposition9_1_1);
 
         $proposition9_1_2 = new Proposition();
         $proposition9_1_2->setSubquestion($subquestion9_1);
         $proposition9_1_2->setRightAnswer(1);
-        $proposition9_1_2->setTitle("Faux");
+        $proposition9_1_2->setTitle("Falso");
         $proposition9_1_2->setAudioUrl("");
         $manager->persist($proposition9_1_2);
 
         $proposition9_2_1 = new Proposition();
         $proposition9_2_1->setSubquestion($subquestion9_2);
         $proposition9_2_1->setRightAnswer(0);
-        $proposition9_2_1->setTitle("Vrai");
+        $proposition9_2_1->setTitle("Vero");
         $proposition9_2_1->setAudioUrl("");
         $manager->persist($proposition9_2_1);
 
         $proposition9_2_2 = new Proposition();
         $proposition9_2_2->setSubquestion($subquestion9_2);
         $proposition9_2_2->setRightAnswer(1);
-        $proposition9_2_2->setTitle("Faux");
+        $proposition9_2_2->setTitle("Falso");
         $proposition9_2_2->setAudioUrl("");
         $manager->persist($proposition9_2_2);
 
         $proposition9_3_1 = new Proposition();
         $proposition9_3_1->setSubquestion($subquestion9_3);
         $proposition9_3_1->setRightAnswer(1);
-        $proposition9_3_1->setTitle("Vrai");
+        $proposition9_3_1->setTitle("Vero");
         $proposition9_3_1->setAudioUrl("");
         $manager->persist($proposition9_3_1);
 
         $proposition9_3_2 = new Proposition();
         $proposition9_3_2->setSubquestion($subquestion9_3);
         $proposition9_3_2->setRightAnswer(0);
-        $proposition9_3_2->setTitle("Faux");
+        $proposition9_3_2->setTitle("Falso");
         $proposition9_3_2->setAudioUrl("");
         $manager->persist($proposition9_3_2);
 
     // ITEM 10
         $questionnaire10->addTest($test);
         $questionnaire10->setLevel("A2");
-        $questionnaire10->setInstruction('');
+        $questionnaire10->setInstruction('Indiquez si les affirmations sont vraies ou fausses.');
         $questionnaire10->setTheme('expression d’une inquiétude');
         $questionnaire10->setSource('certification/test validé (CELI) / modifié');
         $questionnaire10->setSupportType("enregistrement local (MLC)");
@@ -660,63 +660,63 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition10_1_1 = new Proposition();
         $proposition10_1_1->setSubquestion($subquestion10_1);
         $proposition10_1_1->setRightAnswer(1);
-        $proposition10_1_1->setTitle("Vrai");
+        $proposition10_1_1->setTitle("Vero");
         $proposition10_1_1->setAudioUrl("");
         $manager->persist($proposition10_1_1);
 
         $proposition10_1_2 = new Proposition();
         $proposition10_1_2->setSubquestion($subquestion10_1);
         $proposition10_1_2->setRightAnswer(0);
-        $proposition10_1_2->setTitle("Faux");
+        $proposition10_1_2->setTitle("Falso");
         $proposition10_1_2->setAudioUrl("");
         $manager->persist($proposition10_1_2);
 
         $proposition10_2_1 = new Proposition();
         $proposition10_2_1->setSubquestion($subquestion10_2);
         $proposition10_2_1->setRightAnswer(0);
-        $proposition10_2_1->setTitle("Vrai");
+        $proposition10_2_1->setTitle("Vero");
         $proposition10_2_1->setAudioUrl("");
         $manager->persist($proposition10_2_1);
 
         $proposition10_2_2 = new Proposition();
         $proposition10_2_2->setSubquestion($subquestion10_2);
         $proposition10_2_2->setRightAnswer(1);
-        $proposition10_2_2->setTitle("Faux");
+        $proposition10_2_2->setTitle("Falso");
         $proposition10_2_2->setAudioUrl("");
         $manager->persist($proposition10_2_2);
 
         $proposition10_3_1 = new Proposition();
         $proposition10_3_1->setSubquestion($subquestion10_3);
         $proposition10_3_1->setRightAnswer(1);
-        $proposition10_3_1->setTitle("Vrai");
+        $proposition10_3_1->setTitle("Vero");
         $proposition10_3_1->setAudioUrl("");
         $manager->persist($proposition10_3_1);
 
         $proposition10_3_2 = new Proposition();
         $proposition10_3_2->setSubquestion($subquestion10_3);
         $proposition10_3_2->setRightAnswer(0);
-        $proposition10_3_2->setTitle("Faux");
+        $proposition10_3_2->setTitle("Falso");
         $proposition10_3_2->setAudioUrl("");
         $manager->persist($proposition10_3_2);
 
         $proposition10_4_1 = new Proposition();
         $proposition10_4_1->setSubquestion($subquestion10_4);
         $proposition10_4_1->setRightAnswer(0);
-        $proposition10_4_1->setTitle("Vrai");
+        $proposition10_4_1->setTitle("Vero");
         $proposition10_4_1->setAudioUrl("");
         $manager->persist($proposition10_4_1);
 
         $proposition10_4_2 = new Proposition();
         $proposition10_4_2->setSubquestion($subquestion10_4);
         $proposition10_4_2->setRightAnswer(1);
-        $proposition10_4_2->setTitle("Faux");
+        $proposition10_4_2->setTitle("Falso");
         $proposition10_4_2->setAudioUrl("");
         $manager->persist($proposition10_4_2);
 
     // ITEM 11
         $questionnaire11->addTest($test);
         $questionnaire11->setLevel("A2");
-        $questionnaire11->setInstruction('');
+        $questionnaire11->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire11->setTheme('motiver son choix 01/10');
         $questionnaire11->setSource('certification/test validé (CELI) / modifié');
         $questionnaire11->setSupportType("enregistrement local (MLC)");
@@ -768,7 +768,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 12
         $questionnaire12->addTest($test);
         $questionnaire12->setLevel("A2");
-        $questionnaire12->setInstruction('');
+        $questionnaire12->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire12->setTheme('motiver son choix 02/10');
         $questionnaire12->setSource('certification/test validé (CELI) / modifié');
         $questionnaire12->setSupportType("enregistrement local (MLC)");
@@ -819,7 +819,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire13 = new Questionnaire();
         $questionnaire13->addTest($test);
         $questionnaire13->setLevel("A2");
-        $questionnaire13->setInstruction('');
+        $questionnaire13->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire13->setTheme('motiver son choix 03/10');
         $questionnaire13->setSource('certification/test validé (CELI) / modifié');
         $questionnaire13->setSupportType("enregistrement local (MLC)");
@@ -869,7 +869,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 14
         $questionnaire14->addTest($test);
         $questionnaire14->setLevel("A2");
-        $questionnaire14->setInstruction('');
+        $questionnaire14->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire14->setTheme('motiver son choix 04/10');
         $questionnaire14->setSource('certification/test validé (CELI) / modifié');
         $questionnaire14->setSupportType("enregistrement local (MLC)");
@@ -919,7 +919,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 15
         $questionnaire15->addTest($test);
         $questionnaire15->setLevel("A2");
-        $questionnaire15->setInstruction('');
+        $questionnaire15->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire15->setTheme('motiver son choix 05/10');
         $questionnaire15->setSource('certification/test validé (CELI) / modifié');
         $questionnaire15->setSupportType("enregistrement local (MLC)");
@@ -968,7 +968,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 16
         $questionnaire16->addTest($test);
         $questionnaire16->setLevel("A2");
-        $questionnaire16->setInstruction('');
+        $questionnaire16->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire16->setTheme('motiver son choix 06/10');
         $questionnaire16->setSource('certification/test validé (CELI) / modifié');
         $questionnaire16->setSupportType("enregistrement local (MLC)");
@@ -1018,7 +1018,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 17
         $questionnaire17->addTest($test);
         $questionnaire17->setLevel("A2");
-        $questionnaire17->setInstruction('');
+        $questionnaire17->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire17->setTheme('motiver son choix 07/10');
         $questionnaire17->setSource('certification/test validé (CELI) / modifié');
         $questionnaire17->setSupportType("enregistrement local (MLC)");
@@ -1069,7 +1069,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 18
         $questionnaire18->addTest($test);
         $questionnaire18->setLevel("A2");
-        $questionnaire18->setInstruction('');
+        $questionnaire18->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire18->setTheme('motiver son choix 08/10');
         $questionnaire18->setSource('certification/test validé (CELI) / modifié');
         $questionnaire18->setSupportType("enregistrement local (MLC)");
@@ -1120,7 +1120,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 19
         $questionnaire19->addTest($test);
         $questionnaire19->setLevel("A2");
-        $questionnaire19->setInstruction('');
+        $questionnaire19->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire19->setTheme('motiver son choix 09/10');
         $questionnaire19->setSource('certification/test validé (CELI) / modifié');
         $questionnaire19->setSupportType("enregistrement local (MLC)");
@@ -1171,7 +1171,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 20
         $questionnaire20->addTest($test);
         $questionnaire20->setLevel("A2");
-        $questionnaire20->setInstruction('');
+        $questionnaire20->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire20->setTheme('motiver son choix 10/10');
         $questionnaire20->setSource('certification/test validé (CELI) / modifié');
         $questionnaire20->setSupportType("enregistrement local (MLC)");
@@ -1223,7 +1223,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 21
         $questionnaire21->addTest($test);
         $questionnaire21->setLevel("A2");
-        $questionnaire21->setInstruction('');
+        $questionnaire21->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire21->setTheme('ameublement');
         $questionnaire21->setSource('méthodes et manuels (Allegro 2, Edilingua, p. 22, unità 2) / modifié');
         $questionnaire21->setSupportType("enregistrement local (MLC)");
@@ -1244,29 +1244,47 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire21->setAudioItem('');
         $manager->persist($questionnaire21);
 
-        $question21 = new Question();
-        $question21->setQuestionnaire($questionnaire21);
-        $question21->setTypology("QRU");
-        $question21->setInstruction("");
-        $manager->persist($question21);
+        $question21_1 = new Question();
+        $question21_1->setQuestionnaire($questionnaire21);
+        $question21_1->setTypology("QRU");
+        $question21_1->setInstruction("");
+        $manager->persist($question21_1);
+
+        $question21_2 = new Question();
+        $question21_2->setQuestionnaire($questionnaire21);
+        $question21_2->setTypology("QRU");
+        $question21_2->setInstruction("");
+        $manager->persist($question21_2);
+
+        $question21_3 = new Question();
+        $question21_3->setQuestionnaire($questionnaire21);
+        $question21_3->setTypology("QRU");
+        $question21_3->setInstruction("");
+        $manager->persist($question21_3);
+
+        $question21_4 = new Question();
+        $question21_4->setQuestionnaire($questionnaire21);
+        $question21_4->setTypology("QRU");
+        $question21_4->setInstruction("");
+        $manager->persist($question21_4);
 
         $subquestion21_1 = new Subquestion();
-        $subquestion21_1->setQuestion($question21);
+        $subquestion21_1->setQuestion($question21_1);
         $subquestion21_1->setTypology("QRU");
         $manager->persist($subquestion21_1);
 
         $subquestion21_2 = new Subquestion();
-        $subquestion21_2->setQuestion($question21);
+        $subquestion21_2->setQuestion($question21_2);
         $subquestion21_2->setTypology("QRU");
         $manager->persist($subquestion21_2);
 
         $subquestion21_3 = new Subquestion();
-        $subquestion21_3->setQuestion($question21);
+        $subquestion21_3->setQuestion($question21_3);
         $subquestion21_3->setTypology("QRU");
         $manager->persist($subquestion21_3);
 
         $subquestion21_4 = new Subquestion();
-        $subquestion21_4->setQuestion($question21);
+        $subquestion21_4->setQuestion($question21_4);
         $subquestion21_4->setTypology("QRU");
         $manager->persist($subquestion21_4);
 
@@ -1357,7 +1375,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 22
         $questionnaire22->addTest($test);
         $questionnaire22->setLevel("A2");
-        $questionnaire22->setInstruction('');
+        $questionnaire22->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire22->setTheme('au secrétariat');
         $questionnaire22->setSource('certification/test validé (CILS)');
         $questionnaire22->setSupportType("enregistrement local (MLC)");
@@ -1413,7 +1431,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 23
         $questionnaire23->addTest($test);
         $questionnaire23->setLevel("A2");
-        $questionnaire23->setInstruction('');
+        $questionnaire23->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire23->setTheme('location voiture');
         $questionnaire23->setSource('certification/test validé (CILS) / modifié ');
         $questionnaire23->setSupportType("enregistrement local (MLC)");
@@ -1469,7 +1487,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 24
         $questionnaire24->addTest($test);
         $questionnaire24->setLevel("A2");
-        $questionnaire24->setInstruction('');
+        $questionnaire24->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire24->setTheme('billetterie théatre');
         $questionnaire24->setSource('Conçu en interne');
         $questionnaire24->setSupportType("enregistrement local (MLC)");
@@ -1524,7 +1542,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 25
         $questionnaire25->addTest($test);
         $questionnaire25->setLevel("A2");
-        $questionnaire25->setInstruction('');
+        $questionnaire25->setInstruction('Indiquez si les affirmations sont vraies ou fausses.');
         $questionnaire25->setTheme('invitations');
         $questionnaire25->setSource('méthodes et manuels (Allegro 2, Edilingua, p. 14, piste n° 5)');
         $questionnaire25->setSupportType("enregistrement local (MLC)");
@@ -1579,77 +1597,77 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition25_1_1 = new Proposition();
         $proposition25_1_1->setSubquestion($subquestion25_1);
         $proposition25_1_1->setRightAnswer(0);
-        $proposition25_1_1->setTitle("Vrai");
+        $proposition25_1_1->setTitle("Vero");
         $proposition25_1_1->setAudioUrl("");
         $manager->persist($proposition25_1_1);
 
         $proposition25_1_2 = new Proposition();
         $proposition25_1_2->setSubquestion($subquestion25_1);
         $proposition25_1_2->setRightAnswer(1);
-        $proposition25_1_2->setTitle("Faux");
+        $proposition25_1_2->setTitle("Falso");
         $proposition25_1_2->setAudioUrl("");
         $manager->persist($proposition25_1_2);
 
         $proposition25_2_1 = new Proposition();
         $proposition25_2_1->setSubquestion($subquestion25_2);
         $proposition25_2_1->setRightAnswer(1);
-        $proposition25_2_1->setTitle("Vrai");
+        $proposition25_2_1->setTitle("Vero");
         $proposition25_2_1->setAudioUrl("");
         $manager->persist($proposition25_2_1);
 
         $proposition25_2_2 = new Proposition();
         $proposition25_2_2->setSubquestion($subquestion25_2);
         $proposition25_2_2->setRightAnswer(0);
-        $proposition25_2_2->setTitle("Faux");
+        $proposition25_2_2->setTitle("Falso");
         $proposition25_2_2->setAudioUrl("");
         $manager->persist($proposition25_2_2);
 
         $proposition25_3_1 = new Proposition();
         $proposition25_3_1->setSubquestion($subquestion25_3);
         $proposition25_3_1->setRightAnswer(1);
-        $proposition25_3_1->setTitle("Vrai");
+        $proposition25_3_1->setTitle("Vero");
         $proposition25_3_1->setAudioUrl("");
         $manager->persist($proposition25_3_1);
 
         $proposition25_3_2 = new Proposition();
         $proposition25_3_2->setSubquestion($subquestion25_3);
         $proposition25_3_2->setRightAnswer(0);
-        $proposition25_3_2->setTitle("Faux");
+        $proposition25_3_2->setTitle("Falso");
         $proposition25_3_2->setAudioUrl("");
         $manager->persist($proposition25_3_2);
 
         $proposition25_4_1 = new Proposition();
         $proposition25_4_1->setSubquestion($subquestion25_4);
         $proposition25_4_1->setRightAnswer(0);
-        $proposition25_4_1->setTitle("Vrai");
+        $proposition25_4_1->setTitle("Vero");
         $proposition25_4_1->setAudioUrl("");
         $manager->persist($proposition25_4_1);
 
         $proposition25_4_2 = new Proposition();
         $proposition25_4_2->setSubquestion($subquestion25_4);
         $proposition25_4_2->setRightAnswer(1);
-        $proposition25_4_2->setTitle("Faux");
+        $proposition25_4_2->setTitle("Falso");
         $proposition25_4_2->setAudioUrl("");
         $manager->persist($proposition25_4_2);
 
         $proposition25_5_1 = new Proposition();
         $proposition25_5_1->setSubquestion($subquestion25_5);
         $proposition25_5_1->setRightAnswer(0);
-        $proposition25_5_1->setTitle("Vrai");
+        $proposition25_5_1->setTitle("Vero");
         $proposition25_5_1->setAudioUrl("");
         $manager->persist($proposition25_5_1);
 
         $proposition25_5_2 = new Proposition();
         $proposition25_5_2->setSubquestion($subquestion25_5);
         $proposition25_5_2->setRightAnswer(1);
-        $proposition25_5_2->setTitle("Faux");
+        $proposition25_5_2->setTitle("Falso");
         $proposition25_5_2->setAudioUrl("");
         $manager->persist($proposition25_5_2);
 
     // ITEM 26
         $questionnaire26->addTest($test);
         $questionnaire26->setLevel("A2");
-        $questionnaire26->setInstruction('');
+        $questionnaire26->setInstruction('Indiquez si les affirmations sont vraies ou fausses.');
         $questionnaire26->setTheme('recette tiramisù');
         $questionnaire26->setSource('méthodes et manuels (Se ascoltando..., Livello A1 - A2, Guerra Edizioni, p. 35 piste n° 29) / modifié');
         $questionnaire26->setSupportType("enregistrement local (MLC)");
@@ -1684,14 +1702,14 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition26_1_1_1 = new Proposition();
         $proposition26_1_1_1->setSubquestion($subquestion26_1_1);
         $proposition26_1_1_1->setRightAnswer(0);
-        $proposition26_1_1_1->setTitle("Vrai");
+        $proposition26_1_1_1->setTitle("Vero");
         $proposition26_1_1_1->setAudioUrl("");
         $manager->persist($proposition26_1_1_1);
 
         $proposition26_1_1_2 = new Proposition();
         $proposition26_1_1_2->setSubquestion($subquestion26_1_1);
         $proposition26_1_1_2->setRightAnswer(1);
-        $proposition26_1_1_2->setTitle("Faux");
+        $proposition26_1_1_2->setTitle("Falso");
         $proposition26_1_1_2->setAudioUrl("");
         $manager->persist($proposition26_1_1_2);
 
@@ -1704,14 +1722,14 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition26_1_2_1 = new Proposition();
         $proposition26_1_2_1->setSubquestion($subquestion26_1_2);
         $proposition26_1_2_1->setRightAnswer(1);
-        $proposition26_1_2_1->setTitle("Vrai");
+        $proposition26_1_2_1->setTitle("Vero");
         $proposition26_1_2_1->setAudioUrl("");
         $manager->persist($proposition26_1_2_1);
 
         $proposition26_1_2_2 = new Proposition();
         $proposition26_1_2_2->setSubquestion($subquestion26_1_2);
         $proposition26_1_2_2->setRightAnswer(0);
-        $proposition26_1_2_2->setTitle("Faux");
+        $proposition26_1_2_2->setTitle("Falso");
         $proposition26_1_2_2->setAudioUrl("");
         $manager->persist($proposition26_1_2_2);
 
@@ -1724,14 +1742,14 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition26_1_3_1 = new Proposition();
         $proposition26_1_3_1->setSubquestion($subquestion26_1_3);
         $proposition26_1_3_1->setRightAnswer(1);
-        $proposition26_1_3_1->setTitle("Vrai");
+        $proposition26_1_3_1->setTitle("Vero");
         $proposition26_1_3_1->setAudioUrl("");
         $manager->persist($proposition26_1_3_1);
 
         $proposition26_1_3_2 = new Proposition();
         $proposition26_1_3_2->setSubquestion($subquestion26_1_3);
         $proposition26_1_3_2->setRightAnswer(0);
-        $proposition26_1_3_2->setTitle("Faux");
+        $proposition26_1_3_2->setTitle("Falso");
         $proposition26_1_3_2->setAudioUrl("");
         $manager->persist($proposition26_1_3_2);
 
@@ -1743,14 +1761,14 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition26_1_4_1 = new Proposition();
         $proposition26_1_4_1->setSubquestion($subquestion26_1_4);
         $proposition26_1_4_1->setRightAnswer(0);
-        $proposition26_1_4_1->setTitle("Vrai");
+        $proposition26_1_4_1->setTitle("Vero");
         $proposition26_1_4_1->setAudioUrl("");
         $manager->persist($proposition26_1_4_1);
 
         $proposition26_1_4_2 = new Proposition();
         $proposition26_1_4_2->setSubquestion($subquestion26_1_4);
         $proposition26_1_4_2->setRightAnswer(1);
-        $proposition26_1_4_2->setTitle("Faux");
+        $proposition26_1_4_2->setTitle("Falso");
         $proposition26_1_4_2->setAudioUrl("");
         $manager->persist($proposition26_1_4_2);
 
@@ -1768,14 +1786,14 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition26_2_1_1 = new Proposition();
         $proposition26_2_1_1->setSubquestion($subquestion26_2_1);
         $proposition26_2_1_1->setRightAnswer(1);
-        $proposition26_2_1_1->setTitle("Vrai");
+        $proposition26_2_1_1->setTitle("Vero");
         $proposition26_2_1_1->setAudioUrl("");
         $manager->persist($proposition26_2_1_1);
 
         $proposition26_2_1_2 = new Proposition();
         $proposition26_2_1_2->setSubquestion($subquestion26_2_1);
         $proposition26_2_1_2->setRightAnswer(0);
-        $proposition26_2_1_2->setTitle("Faux");
+        $proposition26_2_1_2->setTitle("Falso");
         $proposition26_2_1_2->setAudioUrl("");
         $manager->persist($proposition26_2_1_2);
 
@@ -1787,14 +1805,14 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition26_2_2_1 = new Proposition();
         $proposition26_2_2_1->setSubquestion($subquestion26_2_2);
         $proposition26_2_2_1->setRightAnswer(0);
-        $proposition26_2_2_1->setTitle("Vrai");
+        $proposition26_2_2_1->setTitle("Vero");
         $proposition26_2_2_1->setAudioUrl("");
         $manager->persist($proposition26_2_2_1);
 
         $proposition26_2_2_2 = new Proposition();
         $proposition26_2_2_2->setSubquestion($subquestion26_2_2);
         $proposition26_2_2_2->setRightAnswer(1);
-        $proposition26_2_2_2->setTitle("Faux");
+        $proposition26_2_2_2->setTitle("Falso");
         $proposition26_2_2_2->setAudioUrl("");
         $manager->persist($proposition26_2_2_2);
 
@@ -1806,14 +1824,14 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition26_2_3_1 = new Proposition();
         $proposition26_2_3_1->setSubquestion($subquestion26_2_3);
         $proposition26_2_3_1->setRightAnswer(0);
-        $proposition26_2_3_1->setTitle("Vrai");
+        $proposition26_2_3_1->setTitle("Vero");
         $proposition26_2_3_1->setAudioUrl("");
         $manager->persist($proposition26_2_3_1);
 
         $proposition26_2_3_2 = new Proposition();
         $proposition26_2_3_2->setSubquestion($subquestion26_2_3);
         $proposition26_2_3_2->setRightAnswer(1);
-        $proposition26_2_3_2->setTitle("Faux");
+        $proposition26_2_3_2->setTitle("Falso");
         $proposition26_2_3_2->setAudioUrl("");
         $manager->persist($proposition26_2_3_2);
 
@@ -1822,7 +1840,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 27
         $questionnaire27->addTest($test);
         $questionnaire27->setLevel("A2");
-        $questionnaire27->setInstruction('');
+        $questionnaire27->setInstruction('Indiquez si les affirmations sont vraies ou fausses.');
         $questionnaire27->setTheme('présentation travail 1/5');
         $questionnaire27->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire27->setSupportType("enregistrement local (MLC)");
@@ -1867,49 +1885,49 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition27_1_1 = new Proposition();
         $proposition27_1_1->setSubquestion($subquestion27_1);
         $proposition27_1_1->setRightAnswer(1);
-        $proposition27_1_1->setTitle("Vrai");
+        $proposition27_1_1->setTitle("Vero");
         $proposition27_1_1->setAudioUrl("");
         $manager->persist($proposition27_1_1);
 
         $proposition27_1_2 = new Proposition();
         $proposition27_1_2->setSubquestion($subquestion27_1);
         $proposition27_1_2->setRightAnswer(0);
-        $proposition27_1_2->setTitle("Faux");
+        $proposition27_1_2->setTitle("Falso");
         $proposition27_1_2->setAudioUrl("");
         $manager->persist($proposition27_1_2);
 
         $proposition27_2_1 = new Proposition();
         $proposition27_2_1->setSubquestion($subquestion27_2);
         $proposition27_2_1->setRightAnswer(1);
-        $proposition27_2_1->setTitle("Vrai");
+        $proposition27_2_1->setTitle("Vero");
         $proposition27_2_1->setAudioUrl("");
         $manager->persist($proposition27_2_1);
 
         $proposition27_2_2 = new Proposition();
         $proposition27_2_2->setSubquestion($subquestion27_2);
         $proposition27_2_2->setRightAnswer(0);
-        $proposition27_2_2->setTitle("Faux");
+        $proposition27_2_2->setTitle("Falso");
         $proposition27_2_2->setAudioUrl("");
         $manager->persist($proposition27_2_2);
 
         $proposition27_3_1 = new Proposition();
         $proposition27_3_1->setSubquestion($subquestion27_3);
         $proposition27_3_1->setRightAnswer(0);
-        $proposition27_3_1->setTitle("Vrai");
+        $proposition27_3_1->setTitle("Vero");
         $proposition27_3_1->setAudioUrl("");
         $manager->persist($proposition27_3_1);
 
         $proposition27_3_2 = new Proposition();
         $proposition27_3_2->setSubquestion($subquestion27_3);
         $proposition27_3_2->setRightAnswer(1);
-        $proposition27_3_2->setTitle("Faux");
+        $proposition27_3_2->setTitle("Falso");
         $proposition27_3_2->setAudioUrl("");
         $manager->persist($proposition27_3_2);
 
     // ITEM 28
         $questionnaire28->addTest($test);
         $questionnaire28->setLevel("A2");
-        $questionnaire28->setInstruction('');
+        $questionnaire28->setInstruction('Indiquez si les affirmations sont vraies ou fausses.');
         $questionnaire28->setTheme('présentation travail 2/5');
         $questionnaire28->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire28->setSupportType("enregistrement local (MLC)");
@@ -1959,63 +1977,63 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition28_1_1 = new Proposition();
         $proposition28_1_1->setSubquestion($subquestion28_1);
         $proposition28_1_1->setRightAnswer(0);
-        $proposition28_1_1->setTitle("Vrai");
+        $proposition28_1_1->setTitle("Vero");
         $proposition28_1_1->setAudioUrl("");
         $manager->persist($proposition28_1_1);
 
         $proposition28_1_2 = new Proposition();
         $proposition28_1_2->setSubquestion($subquestion28_1);
         $proposition28_1_2->setRightAnswer(1);
-        $proposition28_1_2->setTitle("Faux");
+        $proposition28_1_2->setTitle("Falso");
         $proposition28_1_2->setAudioUrl("");
         $manager->persist($proposition28_1_2);
 
         $proposition28_2_1 = new Proposition();
         $proposition28_2_1->setSubquestion($subquestion28_2);
         $proposition28_2_1->setRightAnswer(1);
-        $proposition28_2_1->setTitle("Vrai");
+        $proposition28_2_1->setTitle("Vero");
         $proposition28_2_1->setAudioUrl("");
         $manager->persist($proposition28_2_1);
 
         $proposition28_2_2 = new Proposition();
         $proposition28_2_2->setSubquestion($subquestion28_2);
         $proposition28_2_2->setRightAnswer(0);
-        $proposition28_2_2->setTitle("Faux");
+        $proposition28_2_2->setTitle("Falso");
         $proposition28_2_2->setAudioUrl("");
         $manager->persist($proposition28_2_2);
 
         $proposition28_3_1 = new Proposition();
         $proposition28_3_1->setSubquestion($subquestion28_3);
         $proposition28_3_1->setRightAnswer(1);
-        $proposition28_3_1->setTitle("Vrai");
+        $proposition28_3_1->setTitle("Vero");
         $proposition28_3_1->setAudioUrl("");
         $manager->persist($proposition28_3_1);
 
         $proposition28_3_2 = new Proposition();
         $proposition28_3_2->setSubquestion($subquestion28_3);
         $proposition28_3_2->setRightAnswer(0);
-        $proposition28_3_2->setTitle("Faux");
+        $proposition28_3_2->setTitle("Falso");
         $proposition28_3_2->setAudioUrl("");
         $manager->persist($proposition28_3_2);
 
         $proposition28_4_1 = new Proposition();
         $proposition28_4_1->setSubquestion($subquestion28_4);
         $proposition28_4_1->setRightAnswer(1);
-        $proposition28_4_1->setTitle("Vrai");
+        $proposition28_4_1->setTitle("Vero");
         $proposition28_4_1->setAudioUrl("");
         $manager->persist($proposition28_4_1);
 
         $proposition28_4_2 = new Proposition();
         $proposition28_4_2->setSubquestion($subquestion28_4);
         $proposition28_4_2->setRightAnswer(0);
-        $proposition28_4_2->setTitle("Faux");
+        $proposition28_4_2->setTitle("Falso");
         $proposition28_4_2->setAudioUrl("");
         $manager->persist($proposition28_4_2);
 
     // ITEM 29
         $questionnaire29->addTest($test);
         $questionnaire29->setLevel("A2");
-        $questionnaire29->setInstruction('');
+        $questionnaire29->setInstruction('Indiquez si les affirmations sont vraies ou fausses.');
         $questionnaire29->setTheme('présentation travail 3/5');
         $questionnaire29->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire29->setSupportType("enregistrement local (MLC)");
@@ -2065,56 +2083,56 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition29_1_1 = new Proposition();
         $proposition29_1_1->setSubquestion($subquestion29_1);
         $proposition29_1_1->setRightAnswer(0);
-        $proposition29_1_1->setTitle("Vrai");
+        $proposition29_1_1->setTitle("Vero");
         $proposition29_1_1->setAudioUrl("");
         $manager->persist($proposition29_1_1);
 
         $proposition29_1_2 = new Proposition();
         $proposition29_1_2->setSubquestion($subquestion29_1);
         $proposition29_1_2->setRightAnswer(1);
-        $proposition29_1_2->setTitle("Faux");
+        $proposition29_1_2->setTitle("Falso");
         $proposition29_1_2->setAudioUrl("");
         $manager->persist($proposition29_1_2);
 
         $proposition29_2_1 = new Proposition();
         $proposition29_2_1->setSubquestion($subquestion29_2);
         $proposition29_2_1->setRightAnswer(1);
-        $proposition29_2_1->setTitle("Vrai");
+        $proposition29_2_1->setTitle("Vero");
         $proposition29_2_1->setAudioUrl("");
         $manager->persist($proposition29_2_1);
 
         $proposition29_2_2 = new Proposition();
         $proposition29_2_2->setSubquestion($subquestion29_2);
         $proposition29_2_2->setRightAnswer(0);
-        $proposition29_2_2->setTitle("Faux");
+        $proposition29_2_2->setTitle("Falso");
         $proposition29_2_2->setAudioUrl("");
         $manager->persist($proposition29_2_2);
 
         $proposition29_3_1 = new Proposition();
         $proposition29_3_1->setSubquestion($subquestion29_3);
         $proposition29_3_1->setRightAnswer(0);
-        $proposition29_3_1->setTitle("Vrai");
+        $proposition29_3_1->setTitle("Vero");
         $proposition29_3_1->setAudioUrl("");
         $manager->persist($proposition29_3_1);
 
         $proposition29_3_2 = new Proposition();
         $proposition29_3_2->setSubquestion($subquestion29_3);
         $proposition29_3_2->setRightAnswer(1);
-        $proposition29_3_2->setTitle("Faux");
+        $proposition29_3_2->setTitle("Falso");
         $proposition29_3_2->setAudioUrl("");
         $manager->persist($proposition29_3_2);
 
         $proposition29_4_1 = new Proposition();
         $proposition29_4_1->setSubquestion($subquestion29_4);
         $proposition29_4_1->setRightAnswer(0);
-        $proposition29_4_1->setTitle("Vrai");
+        $proposition29_4_1->setTitle("Vero");
         $proposition29_4_1->setAudioUrl("");
         $manager->persist($proposition29_4_1);
 
         $proposition29_4_2 = new Proposition();
         $proposition29_4_2->setSubquestion($subquestion29_4);
         $proposition29_4_2->setRightAnswer(1);
-        $proposition29_4_2->setTitle("Faux");
+        $proposition29_4_2->setTitle("Falso");
         $proposition29_4_2->setAudioUrl("");
         $manager->persist($proposition29_4_2);
 
@@ -2124,7 +2142,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 30
         $questionnaire30->addTest($test);
         $questionnaire30->setLevel("A2");
-        $questionnaire30->setInstruction('');
+        $questionnaire30->setInstruction('Indiquez si les affirmations sont vraies ou fausses.');
         $questionnaire30->setTheme('présentation travail 4/5');
         $questionnaire30->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire30->setSupportType("enregistrement local (MLC)");
@@ -2169,42 +2187,42 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition30_1_1 = new Proposition();
         $proposition30_1_1->setSubquestion($subquestion30_1);
         $proposition30_1_1->setRightAnswer(1);
-        $proposition30_1_1->setTitle("Vrai");
+        $proposition30_1_1->setTitle("Vero");
         $proposition30_1_1->setAudioUrl("");
         $manager->persist($proposition30_1_1);
 
         $proposition30_1_2 = new Proposition();
         $proposition30_1_2->setSubquestion($subquestion30_1);
         $proposition30_1_2->setRightAnswer(0);
-        $proposition30_1_2->setTitle("Faux");
+        $proposition30_1_2->setTitle("Falso");
         $proposition30_1_2->setAudioUrl("");
         $manager->persist($proposition30_1_2);
 
         $proposition30_2_1 = new Proposition();
         $proposition30_2_1->setSubquestion($subquestion30_2);
         $proposition30_2_1->setRightAnswer(0);
-        $proposition30_2_1->setTitle("Vrai");
+        $proposition30_2_1->setTitle("Vero");
         $proposition30_2_1->setAudioUrl("");
         $manager->persist($proposition30_2_1);
 
         $proposition30_2_2 = new Proposition();
         $proposition30_2_2->setSubquestion($subquestion30_2);
         $proposition30_2_2->setRightAnswer(1);
-        $proposition30_2_2->setTitle("Faux");
+        $proposition30_2_2->setTitle("Falso");
         $proposition30_2_2->setAudioUrl("");
         $manager->persist($proposition30_2_2);
 
         $proposition30_3_1 = new Proposition();
         $proposition30_3_1->setSubquestion($subquestion30_3);
         $proposition30_3_1->setRightAnswer(1);
-        $proposition30_3_1->setTitle("Vrai");
+        $proposition30_3_1->setTitle("Vero");
         $proposition30_3_1->setAudioUrl("");
         $manager->persist($proposition30_3_1);
 
         $proposition30_3_2 = new Proposition();
         $proposition30_3_2->setSubquestion($subquestion30_3);
         $proposition30_3_2->setRightAnswer(0);
-        $proposition30_3_2->setTitle("Faux");
+        $proposition30_3_2->setTitle("Falso");
         $proposition30_3_2->setAudioUrl("");
         $manager->persist($proposition30_3_2);
 
@@ -2212,7 +2230,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 31
         $questionnaire31->addTest($test);
         $questionnaire31->setLevel("A2");
-        $questionnaire31->setInstruction('');
+        $questionnaire31->setInstruction('Indiquez si les affirmations sont vraies ou fausses.');
         $questionnaire31->setTheme('présentation travail 5/5');
         $questionnaire31->setSource('certification/test validé (Prove CELI, sessione giugno 2007_CO_A2 http://www.cvcl.it/Mediacenter/FE/CategoriaMedia.aspx?idc=214&explicit=SIhtt) / modifié');
         $questionnaire31->setSupportType("enregistrement local (MLC)");
@@ -2262,56 +2280,56 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition31_1_1 = new Proposition();
         $proposition31_1_1->setSubquestion($subquestion31_1);
         $proposition31_1_1->setRightAnswer(0);
-        $proposition31_1_1->setTitle("Vrai");
+        $proposition31_1_1->setTitle("Vero");
         $proposition31_1_1->setAudioUrl("");
         $manager->persist($proposition31_1_1);
 
         $proposition31_1_2 = new Proposition();
         $proposition31_1_2->setSubquestion($subquestion31_1);
         $proposition31_1_2->setRightAnswer(1);
-        $proposition31_1_2->setTitle("Faux");
+        $proposition31_1_2->setTitle("Falso");
         $proposition31_1_2->setAudioUrl("");
         $manager->persist($proposition31_1_2);
 
         $proposition31_2_1 = new Proposition();
         $proposition31_2_1->setSubquestion($subquestion31_2);
         $proposition31_2_1->setRightAnswer(0);
-        $proposition31_2_1->setTitle("Vrai");
+        $proposition31_2_1->setTitle("Vero");
         $proposition31_2_1->setAudioUrl("");
         $manager->persist($proposition31_2_1);
 
         $proposition31_2_2 = new Proposition();
         $proposition31_2_2->setSubquestion($subquestion31_2);
         $proposition31_2_2->setRightAnswer(1);
-        $proposition31_2_2->setTitle("Faux");
+        $proposition31_2_2->setTitle("Falso");
         $proposition31_2_2->setAudioUrl("");
         $manager->persist($proposition31_2_2);
 
         $proposition31_3_1 = new Proposition();
         $proposition31_3_1->setSubquestion($subquestion31_3);
         $proposition31_3_1->setRightAnswer(1);
-        $proposition31_3_1->setTitle("Vrai");
+        $proposition31_3_1->setTitle("Vero");
         $proposition31_3_1->setAudioUrl("");
         $manager->persist($proposition31_3_1);
 
         $proposition31_3_2 = new Proposition();
         $proposition31_3_2->setSubquestion($subquestion31_3);
         $proposition31_3_2->setRightAnswer(0);
-        $proposition31_3_2->setTitle("Faux");
+        $proposition31_3_2->setTitle("Falso");
         $proposition31_3_2->setAudioUrl("");
         $manager->persist($proposition31_3_2);
 
         $proposition31_4_1 = new Proposition();
         $proposition31_4_1->setSubquestion($subquestion31_4);
         $proposition31_4_1->setRightAnswer(0);
-        $proposition31_4_1->setTitle("Vrai");
+        $proposition31_4_1->setTitle("Vero");
         $proposition31_4_1->setAudioUrl("");
         $manager->persist($proposition31_4_1);
 
         $proposition31_4_2 = new Proposition();
         $proposition31_4_2->setSubquestion($subquestion31_4);
         $proposition31_4_2->setRightAnswer(1);
-        $proposition31_4_2->setTitle("Faux");
+        $proposition31_4_2->setTitle("Falso");
         $proposition31_4_2->setAudioUrl("");
         $manager->persist($proposition31_4_2);
 
@@ -2320,7 +2338,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 32
         $questionnaire32->addTest($test);
         $questionnaire32->setLevel("A2");
-        $questionnaire32->setInstruction('');
+        $questionnaire32->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire32->setTheme('Absence à l\'entraînement');
         $questionnaire32->setSource('Conçu en interne');
         $questionnaire32->setSupportType("enregistrement local (MLC)");
@@ -2375,7 +2393,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 33
         $questionnaire33->addTest($test);
         $questionnaire33->setLevel("A2");
-        $questionnaire33->setInstruction('');
+        $questionnaire33->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire33->setTheme('Avant le départ');
         $questionnaire33->setSource('Conçu en interne');
         $questionnaire33->setSupportType("enregistrement local (MLC)");
@@ -2431,7 +2449,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 34
         $questionnaire34->addTest($test);
         $questionnaire34->setLevel("A2");
-        $questionnaire34->setInstruction('');
+        $questionnaire34->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire34->setTheme('Examen');
         $questionnaire34->setSource('Conçu en interne');
         $questionnaire34->setSupportType("enregistrement local (MLC)");
@@ -2486,7 +2504,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 35
         $questionnaire35->addTest($test);
         $questionnaire35->setLevel("A2");
-        $questionnaire35->setInstruction('');
+        $questionnaire35->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire35->setTheme('Faire les courses');
         $questionnaire35->setSource('Conçu en interne');
         $questionnaire35->setSupportType("enregistrement local (MLC)");
@@ -2540,7 +2558,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 36
         $questionnaire36->addTest($test);
         $questionnaire36->setLevel("A2");
-        $questionnaire36->setInstruction('');
+        $questionnaire36->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire36->setTheme('Nouvelle télévisée');
         $questionnaire36->setSource('Conçu en interne');
         $questionnaire36->setSupportType("enregistrement local (MLC)");
@@ -2595,7 +2613,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 37
         $questionnaire37->addTest($test);
         $questionnaire37->setLevel("A2");
-        $questionnaire37->setInstruction('');
+        $questionnaire37->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire37->setTheme('Rendre CD');
         $questionnaire37->setSource('Conçu en interne');
         $questionnaire37->setSupportType("enregistrement local (MLC)");
@@ -2650,7 +2668,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 38
         $questionnaire38->addTest($test);
         $questionnaire38->setLevel("A2");
-        $questionnaire38->setInstruction('');
+        $questionnaire38->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire38->setTheme('Souvenirs');
         $questionnaire38->setSource('Conçu en interne');
         $questionnaire38->setSupportType("enregistrement local (MLC)");
@@ -2705,7 +2723,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 39
         $questionnaire39->addTest($test);
         $questionnaire39->setLevel("A2");
-        $questionnaire39->setInstruction('');
+        $questionnaire39->setInstruction('Choisissez la réponse qui vous semble correcte.');
         $questionnaire39->setTheme('Dans la cuisine');
         $questionnaire39->setSource('Conçu en interne');
         $questionnaire39->setSupportType("enregistrement local (MLC)");
