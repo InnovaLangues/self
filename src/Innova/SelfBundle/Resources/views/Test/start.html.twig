@@ -53,9 +53,9 @@
                     <div class="panel-heading"><h4><span class="badge pull-left"> 4 </span>&nbsp;{{ questionnaire.instruction }}</h4></div>
                     <div class="panel-body">
                         {% for question in questionnaire.questions %}
-                            
+                            {% if questionnaire.questions|length > 1 %}
                             <h4>Question {{ question.id }} {{ question.instruction }} {{ audio("question"+question.id, question.audioUrl) }}</h4>
-                            
+                            {% endif %}
                             {% for subquestion in question.subquestions %}
                             <h4> {{ subquestion.title }}</h4>
                             <p>
