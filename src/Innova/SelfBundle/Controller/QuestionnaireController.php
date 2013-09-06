@@ -13,7 +13,7 @@ use Innova\SelfBundle\Form\QuestionnaireType;
 /**
  * Questionnaire controller.
  *
- * @Route("/questionnaire")
+ * @Route("admin/questionnaire")
  */
 class QuestionnaireController extends Controller
 {
