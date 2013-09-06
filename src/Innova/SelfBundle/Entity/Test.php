@@ -34,6 +34,11 @@ class Test
     private $questionnaires;
 
     /**
+    * @ORM\OneToMany(targetEntity="Trace", mappedBy="test")
+    */
+    private $traces;
+
+    /**
     * @ORM\ManyToMany(targetEntity="User", inversedBy="tests")
     */
     private $users;
@@ -144,5 +149,38 @@ class Test
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add traces
+     *
+     * @param \Innova\SelfBundle\Entity\Trace $traces
+     * @return Test
+     */
+    public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
+    {
+        $this->traces[] = $traces;
+    
+        return $this;
+    }
+
+    /**
+     * Remove traces
+     *
+     * @param \Innova\SelfBundle\Entity\Trace $traces
+     */
+    public function removeTrace(\Innova\SelfBundle\Entity\Trace $traces)
+    {
+        $this->traces->removeElement($traces);
+    }
+
+    /**
+     * Get traces
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTraces()
+    {
+        return $this->traces;
     }
 }

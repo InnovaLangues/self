@@ -20,7 +20,7 @@ class TestController extends Controller
 {
 
     /**
-     * Pick a random questionnaire entity for a given test.
+     * Pick a questionnaire entity for a given test not done yet by the user.
      *
      * @Route("/start/{id}", name="test_start")
      * @Method("GET")
@@ -29,24 +29,26 @@ class TestController extends Controller
     public function startAction(Test $test)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
 
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllbyTest($test->getId());
-        $questionnaire = $this->getRandom($questionnaires);
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                            ->findOneNotDoneYetByUserByTest($test->getId(), $user->getId());
+       // $questionnaire = $this->getRandom($questionnaires);
         return array(
             'questionnaire' => $questionnaire,
         );
     }
 
 
-
-    private function getRandom($questionnaires){
+    /*
+    private function getRandom($questionnaires)
+    {
         $nb_questionnaire = count($questionnaires) -1;
-
         $rnd = rand(0,$nb_questionnaire);
 
         return $questionnaires[$rnd];
     }
-
+    */
 
     /**
      * Lists all Test entities.

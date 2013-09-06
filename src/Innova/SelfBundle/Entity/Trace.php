@@ -27,6 +27,11 @@ class Trace
     protected $questionnaire;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Test", inversedBy="traces")
+    */
+    protected $test;
+
+    /**
     * @ORM\OneToMany(targetEntity="Answer", mappedBy="trace", cascade={"remove", "persist"})
     */
     protected $answers;
@@ -372,5 +377,28 @@ class Trace
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set test
+     *
+     * @param \Innova\SelfBundle\Entity\Test $test
+     * @return Trace
+     */
+    public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
+    {
+        $this->test = $test;
+    
+        return $this;
+    }
+
+    /**
+     * Get test
+     *
+     * @return \Innova\SelfBundle\Entity\Test 
+     */
+    public function getTest()
+    {
+        return $this->test;
     }
 }
