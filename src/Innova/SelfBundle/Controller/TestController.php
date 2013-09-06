@@ -11,18 +11,14 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Form\TestType;
 
-/**
- * Test controller.
- *
- * @Route("/test")
- */
+
 class TestController extends Controller
 {
 
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.
      *
-     * @Route("/start/{id}", name="test_start")
+     * @Route("student/test/start/{id}", name="test_start")
      * @Method("GET")
      * @Template()
      */
@@ -53,7 +49,7 @@ class TestController extends Controller
     /**
      * Lists all Test entities.
      *
-     * @Route("/", name="test")
+     * @Route("student/test/", name="test")
      * @Method("GET")
      * @Template()
      */
@@ -71,7 +67,7 @@ class TestController extends Controller
     /**
      * Lists all Test entities.
      *
-     * @Route("/user", name="user_test")
+     * @Route("student/test/user", name="user_test")
      * @Method("GET")
      * @Template()
      */
@@ -89,7 +85,7 @@ class TestController extends Controller
     /**
      * Creates a new Test entity.
      *
-     * @Route("/", name="test_create")
+     * @Route("admin/test/", name="test_create")
      * @Method("POST")
      * @Template("InnovaSelfBundle:Test:new.html.twig")
      */
@@ -135,7 +131,7 @@ class TestController extends Controller
     /**
      * Displays a form to create a new Test entity.
      *
-     * @Route("/new", name="test_new")
+     * @Route("admin/test/new", name="test_new")
      * @Method("GET")
      * @Template()
      */
@@ -153,7 +149,7 @@ class TestController extends Controller
     /**
      * Finds and displays a Test entity.
      *
-     * @Route("/{id}", name="test_show")
+     * @Route("admin/test/{id}", name="test_show")
      * @Method("GET")
      * @Template()
      */
@@ -178,7 +174,7 @@ class TestController extends Controller
     /**
      * Displays a form to edit an existing Test entity.
      *
-     * @Route("/{id}/edit", name="test_edit")
+     * @Route("admin/test/{id}/edit", name="test_edit")
      * @Method("GET")
      * @Template()
      */
@@ -223,7 +219,7 @@ class TestController extends Controller
     /**
      * Edits an existing Test entity.
      *
-     * @Route("/{id}", name="test_update")
+     * @Route("admin/test/{id}", name="test_update")
      * @Method("PUT")
      * @Template("InnovaSelfBundle:Test:edit.html.twig")
      */
@@ -256,7 +252,7 @@ class TestController extends Controller
     /**
      * Deletes a Test entity.
      *
-     * @Route("/{id}", name="test_delete")
+     * @Route("admin/test/{id}", name="test_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
