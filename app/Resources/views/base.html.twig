@@ -6,7 +6,6 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-
     </head>
     <body>
 		<nav class="navbar navbar-inverse navbar-static-top">
@@ -21,6 +20,7 @@
                     <li><a href="#">Statistiques</a></li>
                     <li><a href="#">Inscription</a></li>
                     <li><a href="#">CRUD</a></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
                 </ul>
             </div>
         </nav>
