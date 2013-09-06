@@ -1,8 +1,7 @@
 {% extends '::base.html.twig' %}
 
-
 {% block body -%}
-    <h1>Test list</h1>
+    <h1>Users list</h1>
     <table class="records_list table">
         <thead>
             <tr>
@@ -13,15 +12,17 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('test_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                <td><a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
                 <td class="text-right">
-                    <a href="{{ path('test_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('test_new') }}" class="btn btn-primary">Create a new entry</a>
+
+    <a href="{{ path('admin_user_new') }}" class="btn btn-primary">Create a new entry</a>
+                
 
     {% endblock %}
