@@ -7,23 +7,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Innova\SelfBundle\Entity\Test;
 
 
 /**
  * Main controller.
- *
- * @Route("/student")
  */
-class MainController extends Controller
+class AnonymousController extends Controller
 {
 
     /**
-     * @Route("/", name="show_help")
+     * @Route("/", name="show_start")
      * @Template()
      */
-    public function showHelpAction()
+    public function startAction()
     {
+        $securityContext = $this->container->get('security.context');
+
+		if( $securityContext->isGranted('IS_AUTHENTICATED_FULLY') ){
+		    return $this->redirect($this->generateUrl('show_help'));
+		}
+
         return array();
     }
    
