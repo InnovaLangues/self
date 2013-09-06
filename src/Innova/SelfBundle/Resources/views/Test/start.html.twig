@@ -21,68 +21,80 @@
 
 {% block body -%}
     <div class="row">
+
+
         <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h4><span class="badge pull-left"> 1 </span>&nbsp;Écoutez le contexte</h4></div>
-                <div class="panel-body text-center">
-                {{ audio("context", questionnaire.audioContext) }}
-                </div>
-            </div>
+            
         </div>
         <div class="col-md-4">
-             <div class="panel panel-default">
-                <div class="panel-heading"><h4><span class="badge pull-left"> 2 </span>&nbsp;Écoutez la situation</h4></div>
-                <div class="panel-body text-center">
-                {{ audio("situtation", questionnaire.audioItem) }}
+             
+        </div>
+    </div>
+    <div class="row">
+         <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h4><span class="badge pull-left"> 3 </span>&nbsp;Écoutez la situation</h4></div>
+                    <div class="panel-body text-center">
+                    {{ audio("situtation", questionnaire.audioItem) }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h4><span class="badge pull-left"> 3 </span>&nbsp;Écoutez la consigne</h4></div>
-                <div class="panel-body text-center">
-                {{ audio("instruction", questionnaire.audioInstruction) }}
-                </div>
-            </div> 
-        </div>
-        <div class="col-md-8">
-            <form>
+        <div class="col-md-12">
+            <div class="col-md-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h4><span class="badge pull-left"> 4 </span>&nbsp;{{ questionnaire.instruction }}</h4></div>
-                    <div class="panel-body">
-                        {% for question in questionnaire.questions %}
-                            {% if questionnaire.questions|length > 1 %}
-                            <h4>Question {{ question.id }} {{ question.instruction }} {{ audio("question"+question.id, question.audioUrl) }}</h4>
-                            {% endif %}
-                            {% for subquestion in question.subquestions %}
-                            <h4> {{ subquestion.title }}</h4>
-                            <p>
-                                {% if subquestion.typology == "VF" %}
-                                {{ audio("subquestion"+subquestion.id, subquestion.audioUrl) }}
-                                {% endif %}
-                                {% for proposition in subquestion.propositions %}
-                                    {% if subquestion.typology == "QRU" %}
-                                    <p>
-                                        {{ audio("proposition"+proposition.id, proposition.audioUrl) }}
-                                        {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
-                                    </p>
-                                    {% elseif subquestion.typology == "QRM" %}
-                                    <p>
-                                        {{ audio("proposition"+proposition.id, proposition.audioUrl) }}
-                                        {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
-                                    </p>
-                                    {% elseif subquestion.typology == "VF" %}
-                                        {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
-                                    {% endif %}
-                                {% endfor %}
-                            </p>
-                            {% endfor %}
-                        {% endfor %}
+                    <div class="panel-heading"><h4><span class="badge pull-left"> 1 </span>&nbsp;Écoutez le contexte</h4></div>
+                    <div class="panel-body text-center">
+                    {{ audio("context", questionnaire.audioContext) }}
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4><span class="badge pull-left"> 2 </span>&nbsp;Écoutez la consigne</h4></div>
+                    <div class="panel-body text-center">
+                    {{ audio("instruction", questionnaire.audioInstruction) }}
                     </div>
                 </div> 
-            </form>
+            </div>
+            <div class="col-md-8">
+                <form>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"><h4><span class="badge pull-left"> 4 </span>&nbsp;{{ questionnaire.instruction }}</h4></div>
+                        <div class="panel-body">
+                            {% for question in questionnaire.questions %}
+                                {#{% if questionnaire.questions|length > 1 %}#}
+                                <h4>Question {{ question.id }} {{ question.instruction }} {{ audio("question"+question.id, question.audioUrl) }}</h4>
+                                {#{% endif %}#}
+                                {% for subquestion in question.subquestions %}
+                                <h4> {{ subquestion.title }}</h4>
+                                <p>
+                                    {% if subquestion.typology == "VF" %}
+                                    {{ audio("subquestion"+subquestion.id, subquestion.audioUrl) }}
+                                    {% endif %}
+                                    {% for proposition in subquestion.propositions %}
+                                        {% if subquestion.typology == "QRU" %}
+                                        <p>
+                                            {{ audio("proposition"+proposition.id, proposition.audioUrl) }}
+                                            {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
+                                        </p>
+                                        {% elseif subquestion.typology == "QRM" %}
+                                        <p>
+                                            {{ audio("proposition"+proposition.id, proposition.audioUrl) }}
+                                            {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
+                                        </p>
+                                        {% elseif subquestion.typology == "VF" %}
+                                            {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div> 
+                </form>
+            </div>
         </div>
     </div>
     <button type="button" class="pull-right btn btn-default">Valider</button>
