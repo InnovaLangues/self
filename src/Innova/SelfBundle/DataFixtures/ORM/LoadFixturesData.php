@@ -96,7 +96,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 1
         $questionnaire1->addTest($test);
         $questionnaire1->setLevel("A2");
-        $questionnaire1->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire1->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire1->setTheme('à la boulangerie');
         $questionnaire1->setSource('Conçu en interne');
         $questionnaire1->setSupportType("enregistrement local (MLC)");
@@ -112,9 +112,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire1->setFlow('');
         $questionnaire1->setWordCount('');
         $questionnaire1->setAuthor('');
-        $questionnaire1->setAudioInstruction('');
-        $questionnaire1->setAudioContext('');
-        $questionnaire1->setAudioItem('');
+        $questionnaire1->setAudioInstruction('1_consigne');
+        $questionnaire1->setAudioContext('1_contexte');
+        $questionnaire1->setAudioItem('1_item');
         $manager->persist($questionnaire1);
 
         $question1 = new Question();
@@ -150,7 +150,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
      // ITEM 2
         $questionnaire2->addTest($test);
         $questionnaire2->setLevel("A2");
-        $questionnaire2->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire2->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire2->setTheme('achat d’un CD');
         $questionnaire2->setSource('Conçu en interne');
         $questionnaire2->setSupportType("enregistrement local (MLC)");
@@ -166,9 +166,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire2->setFlow('');
         $questionnaire2->setWordCount('');
         $questionnaire2->setAuthor('');
-        $questionnaire2->setAudioInstruction('');
-        $questionnaire2->setAudioContext('');
-        $questionnaire2->setAudioItem('');
+        $questionnaire2->setAudioInstruction('2_consigne');
+        $questionnaire2->setAudioContext('2_contexte');
+        $questionnaire2->setAudioItem('2_item');
         $manager->persist($questionnaire2);
 
         $question2 = new Question();
@@ -203,7 +203,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 3
         $questionnaire3->addTest($test);
         $questionnaire3->setLevel("A2");
-        $questionnaire3->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire3->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire3->setTheme('bureau');
         $questionnaire3->setSource('Conçu en interne');
         $questionnaire3->setSupportType("enregistrement local (MLC)");
@@ -219,9 +219,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire3->setFlow('');
         $questionnaire3->setWordCount('');
         $questionnaire3->setAuthor('');
-        $questionnaire3->setAudioInstruction('');
-        $questionnaire3->setAudioContext('');
-        $questionnaire3->setAudioItem('');
+        $questionnaire3->setAudioInstruction('3_consigne');
+        $questionnaire3->setAudioContext('3_contexte');
+        $questionnaire3->setAudioItem('3_item');
         $manager->persist($questionnaire3);
 
         $question3 = new Question();
@@ -256,7 +256,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 4
         $questionnaire4->addTest($test);
         $questionnaire4->setLevel("A2");
-        $questionnaire4->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire4->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire4->setTheme('dialogue maman-fils');
         $questionnaire4->setSource('Conçu en interne');
         $questionnaire4->setSupportType("enregistrement local (MLC)");
@@ -272,9 +272,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire4->setFlow('');
         $questionnaire4->setWordCount('');
         $questionnaire4->setAuthor('');
-        $questionnaire4->setAudioInstruction('');
-        $questionnaire4->setAudioContext('');
-        $questionnaire4->setAudioItem('');
+        $questionnaire4->setAudioInstruction('4_consigne');
+        $questionnaire4->setAudioContext('4_contexte');
+        $questionnaire4->setAudioItem('4_item');
         $manager->persist($questionnaire4);
 
         $question4 = new Question();
@@ -309,7 +309,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 5
         $questionnaire5->addTest($test);
         $questionnaire5->setLevel("A2");
-        $questionnaire5->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire5->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire5->setTheme('dialogue week-end');
         $questionnaire5->setSource('Conçu en interne');
         $questionnaire5->setSupportType("enregistrement local (MLC)");
@@ -325,9 +325,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire5->setFlow('');
         $questionnaire5->setWordCount('');
         $questionnaire5->setAuthor('');
-        $questionnaire5->setAudioInstruction('');
-        $questionnaire5->setAudioContext('');
-        $questionnaire5->setAudioItem('');
+        $questionnaire5->setAudioInstruction('5_consigne');
+        $questionnaire5->setAudioContext('5_contexte');
+        $questionnaire5->setAudioItem('5_item');
         $manager->persist($questionnaire5);
 
         $question5 = new Question();
@@ -362,7 +362,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 6
         $questionnaire6->addTest($test);
         $questionnaire6->setLevel("A2");
-        $questionnaire6->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire6->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire6->setTheme('la valise');
         $questionnaire6->setSource('Conçu en interne');
         $questionnaire6->setSupportType("enregistrement local (MLC)");
@@ -378,9 +378,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire6->setFlow('');
         $questionnaire6->setWordCount('');
         $questionnaire6->setAuthor('');
-        $questionnaire6->setAudioInstruction('');
-        $questionnaire6->setAudioContext('');
-        $questionnaire6->setAudioItem('');
+        $questionnaire6->setAudioInstruction('6_consigne');
+        $questionnaire6->setAudioContext('6_contexte');
+        $questionnaire6->setAudioItem('6_item');
         $manager->persist($questionnaire6);
 
         $question6 = new Question();
@@ -415,7 +415,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 7
         $questionnaire7->addTest($test);
         $questionnaire7->setLevel("A2");
-        $questionnaire7->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire7->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire7->setTheme('moment de relax');
         $questionnaire7->setSource('Conçu en interne');
         $questionnaire7->setSupportType("enregistrement local (MLC)");
@@ -431,9 +431,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire7->setFlow('');
         $questionnaire7->setWordCount('');
         $questionnaire7->setAuthor('');
-        $questionnaire7->setAudioInstruction('');
-        $questionnaire7->setAudioContext('');
-        $questionnaire7->setAudioItem('');
+        $questionnaire7->setAudioInstruction('7_consigne');
+        $questionnaire7->setAudioContext('7_contexte');
+        $questionnaire7->setAudioItem('7_item');
         $manager->persist($questionnaire7);
 
         $question7 = new Question();
@@ -469,7 +469,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 8
         $questionnaire8->addTest($test);
         $questionnaire8->setLevel("A2");
-        $questionnaire8->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire8->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire8->setTheme('réserver des billets au théâtre');
         $questionnaire8->setSource('Conçu en interne');
         $questionnaire8->setSupportType("enregistrement local (MLC)");
@@ -485,9 +485,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire8->setFlow('');
         $questionnaire8->setWordCount('');
         $questionnaire8->setAuthor('');
-        $questionnaire8->setAudioInstruction('');
-        $questionnaire8->setAudioContext('');
-        $questionnaire8->setAudioItem('');
+        $questionnaire8->setAudioInstruction('8_consigne');
+        $questionnaire8->setAudioContext('8_contexte');
+        $questionnaire8->setAudioItem('8_item');
         $manager->persist($questionnaire8);
 
         $question8 = new Question();
@@ -539,9 +539,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire9->setFlow('');
         $questionnaire9->setWordCount('');
         $questionnaire9->setAuthor('');
-        $questionnaire9->setAudioInstruction('');
-        $questionnaire9->setAudioContext('');
-        $questionnaire9->setAudioItem('');
+        $questionnaire9->setAudioInstruction('9_consigne');
+        $questionnaire9->setAudioContext('9_contexte');
+        $questionnaire9->setAudioItem('9_item');
         $manager->persist($questionnaire9);
 
         $question9 = new Question();
@@ -626,9 +626,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire10->setFlow('');
         $questionnaire10->setWordCount('');
         $questionnaire10->setAuthor('');
-        $questionnaire10->setAudioInstruction('');
-        $questionnaire10->setAudioContext('');
-        $questionnaire10->setAudioItem('');
+        $questionnaire10->setAudioInstruction('10_consigne');
+        $questionnaire10->setAudioContext('10_contexte');
+        $questionnaire10->setAudioItem('10_item');
         $manager->persist($questionnaire10);
 
         $question10 = new Question();
@@ -716,7 +716,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 11
         $questionnaire11->addTest($test);
         $questionnaire11->setLevel("A2");
-        $questionnaire11->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire11->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire11->setTheme('motiver son choix 01/10');
         $questionnaire11->setSource('certification/test validé (CELI) / modifié');
         $questionnaire11->setSupportType("enregistrement local (MLC)");
@@ -732,9 +732,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire11->setFlow('');
         $questionnaire11->setWordCount('');
         $questionnaire11->setAuthor('');
-        $questionnaire11->setAudioInstruction('');
-        $questionnaire11->setAudioContext('');
-        $questionnaire11->setAudioItem('');
+        $questionnaire11->setAudioInstruction('11_consigne');
+        $questionnaire11->setAudioContext('11_contexte');
+        $questionnaire11->setAudioItem('11_item');
         $manager->persist($questionnaire11);
 
         $question11 = new Question();
@@ -768,7 +768,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 12
         $questionnaire12->addTest($test);
         $questionnaire12->setLevel("A2");
-        $questionnaire12->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire12->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire12->setTheme('motiver son choix 02/10');
         $questionnaire12->setSource('certification/test validé (CELI) / modifié');
         $questionnaire12->setSupportType("enregistrement local (MLC)");
@@ -784,9 +784,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire12->setFlow('');
         $questionnaire12->setWordCount('');
         $questionnaire12->setAuthor('');
-        $questionnaire12->setAudioInstruction('');
-        $questionnaire12->setAudioContext('');
-        $questionnaire12->setAudioItem('');
+        $questionnaire12->setAudioInstruction('12_consigne');
+        $questionnaire12->setAudioContext('12_contexte');
+        $questionnaire12->setAudioItem('12_item');
         $manager->persist($questionnaire12);
 
         $question12 = new Question();
@@ -819,7 +819,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire13 = new Questionnaire();
         $questionnaire13->addTest($test);
         $questionnaire13->setLevel("A2");
-        $questionnaire13->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire13->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire13->setTheme('motiver son choix 03/10');
         $questionnaire13->setSource('certification/test validé (CELI) / modifié');
         $questionnaire13->setSupportType("enregistrement local (MLC)");
@@ -835,9 +835,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire13->setFlow('');
         $questionnaire13->setWordCount('');
         $questionnaire13->setAuthor('');
-        $questionnaire13->setAudioInstruction('');
-        $questionnaire13->setAudioContext('');
-        $questionnaire13->setAudioItem('');
+        $questionnaire13->setAudioInstruction('13_consigne');
+        $questionnaire13->setAudioContext('13_contexte');
+        $questionnaire13->setAudioItem('13_item');
         $manager->persist($questionnaire13);
 
         $question13 = new Question();
@@ -869,7 +869,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 14
         $questionnaire14->addTest($test);
         $questionnaire14->setLevel("A2");
-        $questionnaire14->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire14->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire14->setTheme('motiver son choix 04/10');
         $questionnaire14->setSource('certification/test validé (CELI) / modifié');
         $questionnaire14->setSupportType("enregistrement local (MLC)");
@@ -885,9 +885,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire14->setFlow('');
         $questionnaire14->setWordCount('');
         $questionnaire14->setAuthor('');
-        $questionnaire14->setAudioInstruction('');
-        $questionnaire14->setAudioContext('');
-        $questionnaire14->setAudioItem('');
+        $questionnaire14->setAudioInstruction('14_consigne');
+        $questionnaire14->setAudioContext('14_contexte');
+        $questionnaire14->setAudioItem('14_item');
         $manager->persist($questionnaire14);
 
         $question14 = new Question();
@@ -919,7 +919,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 15
         $questionnaire15->addTest($test);
         $questionnaire15->setLevel("A2");
-        $questionnaire15->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire15->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire15->setTheme('motiver son choix 05/10');
         $questionnaire15->setSource('certification/test validé (CELI) / modifié');
         $questionnaire15->setSupportType("enregistrement local (MLC)");
@@ -935,9 +935,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire15->setFlow('');
         $questionnaire15->setWordCount('');
         $questionnaire15->setAuthor('');
-        $questionnaire15->setAudioInstruction('');
-        $questionnaire15->setAudioContext('');
-        $questionnaire15->setAudioItem('');
+        $questionnaire15->setAudioInstruction('15_consigne');
+        $questionnaire15->setAudioContext('15_contexte');
+        $questionnaire15->setAudioItem('15_item');
         $manager->persist($questionnaire15);
 
         $question15 = new Question();
@@ -968,7 +968,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 16
         $questionnaire16->addTest($test);
         $questionnaire16->setLevel("A2");
-        $questionnaire16->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire16->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire16->setTheme('motiver son choix 06/10');
         $questionnaire16->setSource('certification/test validé (CELI) / modifié');
         $questionnaire16->setSupportType("enregistrement local (MLC)");
@@ -984,9 +984,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire16->setFlow('');
         $questionnaire16->setWordCount('');
         $questionnaire16->setAuthor('');
-        $questionnaire16->setAudioInstruction('');
-        $questionnaire16->setAudioContext('');
-        $questionnaire16->setAudioItem('');
+        $questionnaire16->setAudioInstruction('16_consigne');
+        $questionnaire16->setAudioContext('16_contexte');
+        $questionnaire16->setAudioItem('16_item');
         $manager->persist($questionnaire16);
 
         $question16 = new Question();
@@ -1018,7 +1018,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 17
         $questionnaire17->addTest($test);
         $questionnaire17->setLevel("A2");
-        $questionnaire17->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire17->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire17->setTheme('motiver son choix 07/10');
         $questionnaire17->setSource('certification/test validé (CELI) / modifié');
         $questionnaire17->setSupportType("enregistrement local (MLC)");
@@ -1034,9 +1034,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire17->setFlow('');
         $questionnaire17->setWordCount('');
         $questionnaire17->setAuthor('');
-        $questionnaire17->setAudioInstruction('');
-        $questionnaire17->setAudioContext('');
-        $questionnaire17->setAudioItem('');
+        $questionnaire17->setAudioInstruction('17_consigne');
+        $questionnaire17->setAudioContext('17_contexte');
+        $questionnaire17->setAudioItem('17_item');
         $manager->persist($questionnaire17);
 
         $question17 = new Question();
@@ -1069,7 +1069,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 18
         $questionnaire18->addTest($test);
         $questionnaire18->setLevel("A2");
-        $questionnaire18->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire18->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire18->setTheme('motiver son choix 08/10');
         $questionnaire18->setSource('certification/test validé (CELI) / modifié');
         $questionnaire18->setSupportType("enregistrement local (MLC)");
@@ -1085,9 +1085,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire18->setFlow('');
         $questionnaire18->setWordCount('');
         $questionnaire18->setAuthor('');
-        $questionnaire18->setAudioInstruction('');
-        $questionnaire18->setAudioContext('');
-        $questionnaire18->setAudioItem('');
+        $questionnaire18->setAudioInstruction('18_consigne');
+        $questionnaire18->setAudioContext('18_contexte');
+        $questionnaire18->setAudioItem('18_item');
         $manager->persist($questionnaire18);
 
         $question18 = new Question();
@@ -1120,7 +1120,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 19
         $questionnaire19->addTest($test);
         $questionnaire19->setLevel("A2");
-        $questionnaire19->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire19->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire19->setTheme('motiver son choix 09/10');
         $questionnaire19->setSource('certification/test validé (CELI) / modifié');
         $questionnaire19->setSupportType("enregistrement local (MLC)");
@@ -1136,9 +1136,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire19->setFlow('');
         $questionnaire19->setWordCount('');
         $questionnaire19->setAuthor('');
-        $questionnaire19->setAudioInstruction('');
-        $questionnaire19->setAudioContext('');
-        $questionnaire19->setAudioItem('');
+        $questionnaire19->setAudioInstruction('19_consigne');
+        $questionnaire19->setAudioContext('19_contexte');
+        $questionnaire19->setAudioItem('19_item');
         $manager->persist($questionnaire19);
 
         $question19 = new Question();
@@ -1171,7 +1171,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 20
         $questionnaire20->addTest($test);
         $questionnaire20->setLevel("A2");
-        $questionnaire20->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire20->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire20->setTheme('motiver son choix 10/10');
         $questionnaire20->setSource('certification/test validé (CELI) / modifié');
         $questionnaire20->setSupportType("enregistrement local (MLC)");
@@ -1187,9 +1187,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire20->setFlow('');
         $questionnaire20->setWordCount('');
         $questionnaire20->setAuthor('');
-        $questionnaire20->setAudioInstruction('');
-        $questionnaire20->setAudioContext('');
-        $questionnaire20->setAudioItem('');
+        $questionnaire20->setAudioInstruction('20_consigne');
+        $questionnaire20->setAudioContext('20_contexte');
+        $questionnaire20->setAudioItem('20_item');
         $manager->persist($questionnaire20);
 
         $question20 = new Question();
@@ -1219,11 +1219,11 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
 
 
-
+    /*
     // ITEM 21
         $questionnaire21->addTest($test);
         $questionnaire21->setLevel("A2");
-        $questionnaire21->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire21->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire21->setTheme('ameublement');
         $questionnaire21->setSource('méthodes et manuels (Allegro 2, Edilingua, p. 22, unità 2) / modifié');
         $questionnaire21->setSupportType("enregistrement local (MLC)");
@@ -1371,11 +1371,12 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition21_4_3->setTitle("");
         $proposition21_4_3->setAudioUrl("");
         $manager->persist($proposition21_4_3);
-
+    */
+        
     // ITEM 22
         $questionnaire22->addTest($test);
         $questionnaire22->setLevel("A2");
-        $questionnaire22->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire22->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire22->setTheme('au secrétariat');
         $questionnaire22->setSource('certification/test validé (CILS)');
         $questionnaire22->setSupportType("enregistrement local (MLC)");
@@ -1431,7 +1432,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 23
         $questionnaire23->addTest($test);
         $questionnaire23->setLevel("A2");
-        $questionnaire23->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire23->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire23->setTheme('location voiture');
         $questionnaire23->setSource('certification/test validé (CILS) / modifié ');
         $questionnaire23->setSupportType("enregistrement local (MLC)");
@@ -1487,7 +1488,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 24
         $questionnaire24->addTest($test);
         $questionnaire24->setLevel("A2");
-        $questionnaire24->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire24->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire24->setTheme('billetterie théatre');
         $questionnaire24->setSource('Conçu en interne');
         $questionnaire24->setSupportType("enregistrement local (MLC)");
@@ -1664,6 +1665,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition25_5_2->setAudioUrl("");
         $manager->persist($proposition25_5_2);
 
+    /*
     // ITEM 26
         $questionnaire26->addTest($test);
         $questionnaire26->setLevel("A2");
@@ -1834,7 +1836,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition26_2_3_2->setTitle("Falso");
         $proposition26_2_3_2->setAudioUrl("");
         $manager->persist($proposition26_2_3_2);
-
+    */
 
 
     // ITEM 27
@@ -2338,7 +2340,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 32
         $questionnaire32->addTest($test);
         $questionnaire32->setLevel("A2");
-        $questionnaire32->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire32->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire32->setTheme('Absence à l\'entraînement');
         $questionnaire32->setSource('Conçu en interne');
         $questionnaire32->setSupportType("enregistrement local (MLC)");
@@ -2393,7 +2395,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 33
         $questionnaire33->addTest($test);
         $questionnaire33->setLevel("A2");
-        $questionnaire33->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire33->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire33->setTheme('Avant le départ');
         $questionnaire33->setSource('Conçu en interne');
         $questionnaire33->setSupportType("enregistrement local (MLC)");
@@ -2449,7 +2451,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 34
         $questionnaire34->addTest($test);
         $questionnaire34->setLevel("A2");
-        $questionnaire34->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire34->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire34->setTheme('Examen');
         $questionnaire34->setSource('Conçu en interne');
         $questionnaire34->setSupportType("enregistrement local (MLC)");
@@ -2504,7 +2506,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 35
         $questionnaire35->addTest($test);
         $questionnaire35->setLevel("A2");
-        $questionnaire35->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire35->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire35->setTheme('Faire les courses');
         $questionnaire35->setSource('Conçu en interne');
         $questionnaire35->setSupportType("enregistrement local (MLC)");
@@ -2558,7 +2560,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 36
         $questionnaire36->addTest($test);
         $questionnaire36->setLevel("A2");
-        $questionnaire36->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire36->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire36->setTheme('Nouvelle télévisée');
         $questionnaire36->setSource('Conçu en interne');
         $questionnaire36->setSupportType("enregistrement local (MLC)");
@@ -2613,7 +2615,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 37
         $questionnaire37->addTest($test);
         $questionnaire37->setLevel("A2");
-        $questionnaire37->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire37->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire37->setTheme('Rendre CD');
         $questionnaire37->setSource('Conçu en interne');
         $questionnaire37->setSupportType("enregistrement local (MLC)");
@@ -2668,7 +2670,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 38
         $questionnaire38->addTest($test);
         $questionnaire38->setLevel("A2");
-        $questionnaire38->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire38->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire38->setTheme('Souvenirs');
         $questionnaire38->setSource('Conçu en interne');
         $questionnaire38->setSupportType("enregistrement local (MLC)");
@@ -2723,7 +2725,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 39
         $questionnaire39->addTest($test);
         $questionnaire39->setLevel("A2");
-        $questionnaire39->setInstruction('Choisissez la réponse qui vous semble correcte.');
+        $questionnaire39->setInstruction('Sélectionnez la réponse correcte');
         $questionnaire39->setTheme('Dans la cuisine');
         $questionnaire39->setSource('Conçu en interne');
         $questionnaire39->setSupportType("enregistrement local (MLC)");
