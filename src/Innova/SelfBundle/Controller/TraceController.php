@@ -38,7 +38,7 @@ class TraceController extends Controller
         $trace->setTest($test);
         $trace->setUser($user);
         $trace->setTotalTime("");
-        $trace->setListeningTime("");
+        $trace->setListeningTime($post["totalTime"]);
         $trace->setListeningAfterAnswer("");
         $trace->setClickCorrectif("");
         $trace->setIp("");

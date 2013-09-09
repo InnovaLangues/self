@@ -6,7 +6,7 @@
             <source src="{{ asset('upload/audio/') ~ src }}.mp3" type="audio/mp3">
             Votre navigateur est trop ancien.
         </audio>
-        <span sound="{{ id }}" statut="pause" class="btn btn-default glyphicon glyphicon-play"></span>
+        <span sound="{{ id }}" statut="pause" class="item_audio_button btn btn-default glyphicon glyphicon-play"></span>
 {% endmacro %}
 
 {% macro inputs(type, subquestionId, propositionId, text) %}
@@ -27,42 +27,42 @@
 {% endif %}
 
 {% block body -%}
+
+    
     <div class="row">
         <div class="col-md-4">
-        {% if consigne != "" %}
-            {% set elementCount =  elementCount + 1 %}
-            <div class="panel panel-default">
-                <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;Écoutez la consigne</h4></div>
-                <div class="panel-body text-center">
-                {{ audio("instruction", consigne) }}
+            {% if consigne != "" %}
+                {% set elementCount =  elementCount + 1 %}
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;Écoutez la consigne</h4></div>
+                    <div class="panel-body text-center">
+                    {{ audio("instruction", consigne) }}
+                    </div>
+                </div> 
+            {% endif %}
+
+            {% if questionnaire.audioContext != "" %}
+                {% set elementCount =  elementCount + 1 %}
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;Écoutez le contexte</h4></div>
+                    <div class="panel-body text-center">
+                    {{ audio("context", questionnaire.audioContext) }}
+                    </div>
                 </div>
-            </div> 
-        {% endif %}
+            {% endif %}
         </div>
-        <div class="col-md-4">
-        {% if questionnaire.audioContext != "" %}
+
+         <div class="col-md-8">
             {% set elementCount =  elementCount + 1 %}
-            <div class="panel panel-default">
-                <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;Écoutez le contexte</h4></div>
-                <div class="panel-body text-center">
-                {{ audio("context", questionnaire.audioContext) }}
-                </div>
-            </div>
-        {% endif %}
-        </div>
-        <div class="col-md-4">
-            {% set elementCount =  elementCount + 1 %}
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;Écoutez le dialogue</h4></div>
                 <div class="panel-body text-center">
                 {{ audio("situtation", questionnaire.audioItem) }}
                 </div>
             </div>
-        </div>   
-    </div>
-     <div class="row">
-        <div class="col-md-12">
-            <form action="{{ path('trace_submit') }}" method="post">
+
+
+            <form id="form" action="{{ path('trace_submit') }}" method="post">
                 <div class="panel panel-primary">
                 {% set elementCount =  elementCount + 1 %}
                     <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;{{ questionnaire.instruction }}</h4></div>
@@ -98,10 +98,17 @@
                     </div>
                 </div> 
                 <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>
+                <input type="hidden" id="totalTime" name="totalTime" value=""/>
                 <input type="hidden" name="testId" value="{{ testId }}"/>
 
-                <input type="submit" class="pull-right btn btn-primary" value="Valider"/>
+                <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
             </form>
         </div>
-    </div> 
+
+    </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/main.js") }}"></script>
+{% endblock %}
+
