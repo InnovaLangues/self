@@ -32,6 +32,7 @@ class TestController extends Controller
        // $questionnaire = $this->getRandom($questionnaires);
         return array(
             'questionnaire' => $questionnaire,
+            'testId' => $test->getId()
         );
     }
 
