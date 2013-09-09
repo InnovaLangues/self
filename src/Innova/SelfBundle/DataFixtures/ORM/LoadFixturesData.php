@@ -716,7 +716,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 11
         $questionnaire11->addTest($test);
         $questionnaire11->setLevel("A2");
-        $questionnaire11->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire11->setInstruction('Cochez la réponse correcte');
         $questionnaire11->setTheme('motiver son choix 01/10');
         $questionnaire11->setSource('certification/test validé (CELI) / modifié');
         $questionnaire11->setSupportType("enregistrement local (MLC)");
@@ -768,7 +768,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 12
         $questionnaire12->addTest($test);
         $questionnaire12->setLevel("A2");
-        $questionnaire12->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire12->setInstruction('Cochez la réponse correcte la réponse correcte');
         $questionnaire12->setTheme('motiver son choix 02/10');
         $questionnaire12->setSource('certification/test validé (CELI) / modifié');
         $questionnaire12->setSupportType("enregistrement local (MLC)");
@@ -819,7 +819,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire13 = new Questionnaire();
         $questionnaire13->addTest($test);
         $questionnaire13->setLevel("A2");
-        $questionnaire13->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire13->setInstruction('Cochez la réponse correcte');
         $questionnaire13->setTheme('motiver son choix 03/10');
         $questionnaire13->setSource('certification/test validé (CELI) / modifié');
         $questionnaire13->setSupportType("enregistrement local (MLC)");
@@ -869,7 +869,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 14
         $questionnaire14->addTest($test);
         $questionnaire14->setLevel("A2");
-        $questionnaire14->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire14->setInstruction('Cochez la réponse correcte');
         $questionnaire14->setTheme('motiver son choix 04/10');
         $questionnaire14->setSource('certification/test validé (CELI) / modifié');
         $questionnaire14->setSupportType("enregistrement local (MLC)");
@@ -919,7 +919,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 15
         $questionnaire15->addTest($test);
         $questionnaire15->setLevel("A2");
-        $questionnaire15->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire15->setInstruction('Cochez la réponse correcte');
         $questionnaire15->setTheme('motiver son choix 05/10');
         $questionnaire15->setSource('certification/test validé (CELI) / modifié');
         $questionnaire15->setSupportType("enregistrement local (MLC)");
@@ -968,7 +968,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 16
         $questionnaire16->addTest($test);
         $questionnaire16->setLevel("A2");
-        $questionnaire16->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire16->setInstruction('Cochez la réponse correcte');
         $questionnaire16->setTheme('motiver son choix 06/10');
         $questionnaire16->setSource('certification/test validé (CELI) / modifié');
         $questionnaire16->setSupportType("enregistrement local (MLC)");
@@ -1018,7 +1018,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 17
         $questionnaire17->addTest($test);
         $questionnaire17->setLevel("A2");
-        $questionnaire17->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire17->setInstruction('Cochez la réponse correcte');
         $questionnaire17->setTheme('motiver son choix 07/10');
         $questionnaire17->setSource('certification/test validé (CELI) / modifié');
         $questionnaire17->setSupportType("enregistrement local (MLC)");
@@ -1069,7 +1069,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 18
         $questionnaire18->addTest($test);
         $questionnaire18->setLevel("A2");
-        $questionnaire18->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire18->setInstruction('Cochez la réponse correcte');
         $questionnaire18->setTheme('motiver son choix 08/10');
         $questionnaire18->setSource('certification/test validé (CELI) / modifié');
         $questionnaire18->setSupportType("enregistrement local (MLC)");
@@ -1120,7 +1120,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 19
         $questionnaire19->addTest($test);
         $questionnaire19->setLevel("A2");
-        $questionnaire19->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire19->setInstruction('Cochez la réponse correcte');
         $questionnaire19->setTheme('motiver son choix 09/10');
         $questionnaire19->setSource('certification/test validé (CELI) / modifié');
         $questionnaire19->setSupportType("enregistrement local (MLC)");
@@ -1171,7 +1171,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
     // ITEM 20
         $questionnaire20->addTest($test);
         $questionnaire20->setLevel("A2");
-        $questionnaire20->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire20->setInstruction('Cochez la réponse correcte');
         $questionnaire20->setTheme('motiver son choix 10/10');
         $questionnaire20->setSource('certification/test validé (CELI) / modifié');
         $questionnaire20->setSupportType("enregistrement local (MLC)");

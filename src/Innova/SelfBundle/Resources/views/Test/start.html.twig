@@ -1,12 +1,19 @@
 {% extends '::base.html.twig' %}
-
-{% macro audio(id, src) %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("bundles/innovaself/css/main.css") }}" />
+{% endblock %}
+{% macro audio(id, src, icon) %}
         <audio preload="auto" id="{{ id }}" class="item_audio">
             <source src="{{ asset('upload/audio/') ~ src }}.ogg" type="audio/ogg">
             <source src="{{ asset('upload/audio/') ~ src }}.mp3" type="audio/mp3">
             Votre navigateur est trop ancien.
         </audio>
+        {% if icon == "default" %}
         <span sound="{{ id }}" statut="pause" class="item_audio_button btn btn-default glyphicon glyphicon-play"></span>
+        {% else %}
+        <img sound="{{ id }}" statut="pause" class="item_audio_button" height="80px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+        {% endif %}
+
 {% endmacro %}
 
 {% macro inputs(type, subquestionId, propositionId, text) %}
@@ -30,82 +37,80 @@
 
     
     <div class="row">
-        <div class="col-md-4">
-            {% if consigne != "" %}
-                {% set elementCount =  elementCount + 1 %}
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;Écoutez la consigne</h4></div>
-                    <div class="panel-body text-center">
-                    {{ audio("instruction", consigne) }}
-                    </div>
-                </div> 
-            {% endif %}
+        <div class="col-md-3">
 
             {% if questionnaire.audioContext != "" %}
                 {% set elementCount =  elementCount + 1 %}
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;Écoutez le contexte</h4></div>
+                    <div class="panel-heading text-center"><h4>Contexte</h4></div>
                     <div class="panel-body text-center">
-                    {{ audio("context", questionnaire.audioContext) }}
+                    {{ audio("context", questionnaire.audioContext, "bulles4.png") }}
                     </div>
                 </div>
             {% endif %}
-        </div>
-
-         <div class="col-md-8">
-            {% set elementCount =  elementCount + 1 %}
-            <div class="panel panel-primary">
-                <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;Écoutez le dialogue</h4></div>
-                <div class="panel-body text-center">
-                {{ audio("situtation", questionnaire.audioItem) }}
-                </div>
-            </div>
 
 
-            <form id="form" action="{{ path('trace_submit') }}" method="post">
-                <div class="panel panel-primary">
+            {% if consigne != "" %}
                 {% set elementCount =  elementCount + 1 %}
-                    <div class="panel-heading"><h4><span class="badge pull-left">{{ elementCount }}</span>&nbsp;{{ questionnaire.instruction }}</h4></div>
-                    <div class="panel-body">
-                        {% for question in questionnaire.questions %}
-                            {% if questionnaire.questions|length > 1 %}
-                                <h4>Question {{ question.id }} {{ question.instruction }} {{ audio("question"+question.id, question.audioUrl) }}</h4>
-                            {% endif %}
-                            {% for subquestion in question.subquestions %}
-                            <h4> {{ subquestion.title }}</h4>
-                            <p>
-                                {% if subquestion.typology == "VF" %}
-                                {{ audio("subquestion"+subquestion.id, subquestion.audioUrl) }}
-                                {% endif %}
-                                {% for proposition in subquestion.propositions %}
-                                    {% if subquestion.typology == "QRU" %}
-                                    <p>
-                                        {{ audio("proposition"+proposition.id, proposition.audioUrl) }}
-                                        {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
-                                    </p>
-                                    {% elseif subquestion.typology == "QRM" %}
-                                    <p>
-                                        {{ audio("proposition"+proposition.id, proposition.audioUrl) }}
-                                        {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
-                                    </p>
-                                    {% elseif subquestion.typology == "VF" %}
-                                        {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
-                                    {% endif %}
-                                {% endfor %}
-                            </p>
-                            {% endfor %}
-                        {% endfor %}
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center"><h4>Consigne</h4></div>
+                    <div class="panel-body text-center">
+                    {{ audio("instruction", consigne, "bulles3.png") }}
                     </div>
                 </div> 
-                <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>
-                <input type="hidden" id="totalTime" name="totalTime" value=""/>
-                <input type="hidden" name="testId" value="{{ testId }}"/>
-
-                <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
-            </form>
+            {% endif %}
         </div>
 
+        <div id="main-block" class="col-md-9 primary">
+            <div class="col-md-4">
+                <div id="situation" class="text-center">
+                    <h4>Dialogue <br/>(X écoutes possibles)</h4>
+                    {{ audio("situtation", questionnaire.audioItem, "bulles2.png") }}
+                </div>
+            </div>
+            <div class="col-md-6 pull-right">
+                <form id="form" action="{{ path('trace_submit') }}" method="post">
+                    <h4>{{ questionnaire.instruction }}</h4>
+                    {% for question in questionnaire.questions %}
+                        {% if questionnaire.questions|length > 1 %}
+                            <h4>Question {{ question.id }} {{ question.instruction }} {{ audio("question"+question.id, question.audioUrl, "default") }}</h4>
+                        {% endif %}
+                        {% for subquestion in question.subquestions %}
+                        <h4> {{ subquestion.title }}</h4>
+                        <p>
+                            {% if subquestion.typology == "VF" %}
+                            {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulles6.png") }}
+                            {% endif %}
+                            {% for proposition in subquestion.propositions %}
+                                {% if subquestion.typology == "QRU" %}
+                                <p>
+                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png") }}
+                                    {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
+                                </p>
+                                {% elseif subquestion.typology == "QRM" %}
+                                <p>
+                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png") }}
+                                    {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
+                                </p>
+                                {% elseif subquestion.typology == "VF" %}
+                                    {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                        {% endfor %}
+                    {% endfor %}
+                       
+                    
+                    <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>
+                    <input type="hidden" id="totalTime" name="totalTime" value=""/>
+                    <input type="hidden" name="testId" value="{{ testId }}"/>
+            
+                    <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
+                 </form>
+            </div>               
+        </div>
     </div>
+
 {% endblock %}
 
 {% block javascripts %}
