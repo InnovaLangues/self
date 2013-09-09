@@ -39,8 +39,8 @@ class Test
     private $traces;
 
     /**
-    * @ORM\ManyToMany(targetEntity="User", inversedBy="tests")
-    */
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="tests")
+     */
     private $users;
 
     public function __construct() {

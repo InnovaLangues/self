@@ -41,9 +41,9 @@ class User extends BaseUser
      */
     private $firstName;
 
-	/**
-     * @ORM\ManyToMany(targetEntity="Test", mappedBy="users")
-     */
+    /**
+    * @ORM\ManyToMany(targetEntity="Test", inversedBy="users")
+    */
     private $tests;
 
 
@@ -211,7 +211,6 @@ class User extends BaseUser
     public function addTest(\Innova\SelfBundle\Entity\Test $tests)
     {
         $this->tests[] = $tests;
-        $tests->addUser($this);
 
         return $this;
     }
