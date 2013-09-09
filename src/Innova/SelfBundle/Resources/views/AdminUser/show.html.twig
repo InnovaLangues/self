@@ -15,14 +15,34 @@
             </tr>
         </tbody>
     </table>
-{#
-    <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}" class="btn btn-primary">Edit</a>
-#}
     <hr>
+    {# List of tests #}
+    <form action="{{ path('admin_user_affect_tests', { 'id': entity.id }) }}" method="post"}}>
+        <input type="hidden" name="_method" value="PUT" />
+        <table>
+            <tbody>
+            {% for test in tests %}
+                <tr>
+                    <td class="text-left">
+                        {# TODO afficher en checked=checked si le test est affecté #}
+                        {# TODO sinon ne pas afficher #}
+                        <input type="checkbox" name="test[{{ test.id }}]" checked="checked">
+                    </td>
+                    <td>{{ test.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" value="Affecter" class="btn btn-default" />
+    </form>
 
+    <hr>
     {{ form_start(delete_form) }}
         {{ form_errors(delete_form) }}
         <a href="{{ path('admin_user') }}" class="btn btn-default">Back to the list</a>
+{#
+        <a href="{{ path('test_affectation', { 'id': entity.id }) }}" class="btn btn-default">Affectation to this user</a>
+#}
         {{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
         {{ form_rest(delete_form) }}
     {{ form_start(delete_form) }}

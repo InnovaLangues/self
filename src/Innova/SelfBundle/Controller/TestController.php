@@ -50,14 +50,14 @@ class TestController extends Controller
     /**
      * Lists all Test entities.
      *
-     * @Route("student/test/", name="test")
+     * @Route("admin/test", name="test")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entities = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
         return array(
@@ -73,20 +73,40 @@ class TestController extends Controller
      * @Template()
      */
     public function userIndexAction()
-    {
-        
+    {        
+        $em = $this->getDoctrine()->getManager();
+
+        // Par défaut pour la V1, on crée le premier test quand un utilisateur est nouveau
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+        $test = $tests[0];
+
+        if (!$test) {
+            throw $this->createNotFoundException('Unable to find Test entity.');
+        }
+
         $user = $this->get('security.context')->getToken()->getUser();
-        $tests = $user->getTests();
-       
-        return array(
-            'tests' => $tests,
+
+        $user->addTest($test);
+
+        $em->persist($user);
+
+        $em->flush();
+
+        // Redirection vers la page de démarrage du test.
+        return $this->redirect(
+            $this->generateUrl('
+                    test_start', 
+                    array('id' => $test->getId()
+                )
+            )
         );
+
     }
 
     /**
      * Creates a new Test entity.
      *
-     * @Route("admin/test/", name="test_create")
+     * @Route("admin/test", name="test_create")
      * @Method("POST")
      * @Template("InnovaSelfBundle:Test:new.html.twig")
      */
@@ -101,7 +121,14 @@ class TestController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('test_show', array('id' => $entity->getId())));
+            return $this->redirect(
+                $this->generateUrl(
+                    'test_show', 
+                    array(
+                        'id' => $entity->getId()
+                    )
+                )
+            );
         }
 
         return array(
@@ -124,7 +151,10 @@ class TestController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add(
+            'submit', 
+            array('label' => 'Create')
+        );
 
         return $form;
     }

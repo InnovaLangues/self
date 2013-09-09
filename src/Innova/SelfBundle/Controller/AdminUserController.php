@@ -8,8 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Form\UserType;
-
-
+use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Form\TestType;
 
 
 /**
@@ -29,8 +29,6 @@ class AdminUserController extends Controller
      */
     public function indexAction()
     {
-        
-
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('InnovaSelfBundle:User')->findAll();
@@ -166,6 +164,7 @@ class AdminUserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('InnovaSelfBundle:User')->find($id);
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -174,6 +173,7 @@ class AdminUserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
+            'tests'       => $tests,
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         );
@@ -260,5 +260,59 @@ class AdminUserController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
-    }    
+    }   
+
+    /**
+     * Edits an existing Test entity.
+     *
+     * @Route("/affect/tests/{id}", name="admin_user_affect_tests")
+     * @Method("PUT")
+     */
+    public function affectTestsAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+
+        // Suppression des affectations, table test_user
+        foreach ($user->getTests() as $test) {
+            $user->removeTest($test);
+            $em->persist($user);
+        }
+
+        // Insertion en base de données;
+        $em->flush();
+
+
+        $put = $request->request;
+
+        // Boucle pour remplir ce tableau
+        foreach ($put as $key => $value) {
+            if ($key == 'test') {
+                foreach ($value as $testId => $testValue) {
+                    $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+
+                    if (!$test) {
+                        throw $this->createNotFoundException('Unable to find Test entity.');
+                    }
+                    $user->addTest($test);
+                    $em->persist($user);
+                }
+            }
+        }
+
+        // Insertion en base de données;
+        $em->flush();
+      
+        //TODO:  gestion d'un flash message SUCCESS
+
+        // Redirection
+        return $this->redirect($this->generateUrl('admin_user'));
+    }     
+
+
 }
