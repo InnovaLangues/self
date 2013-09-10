@@ -6,6 +6,19 @@ generic:
     delete: Supprimer
     login: Connexion
     logout: Déconnexion
+    start: Commencer le test
+    instruction: Consigne
+    context: Contexte
+    dialogue: Dialogue (X écoutes possibles)
+    validate: Valider
+    answer: Sélectionner la réponse correcte
+    evaluate: Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
+    difficulty:
+        veryEasy: Très facile 
+        easy: Facile 
+        normal: Normal
+        difficult: Difficile 
+        veryDifficult: Très difficile 
 
 user:
     singular: Utilisateur

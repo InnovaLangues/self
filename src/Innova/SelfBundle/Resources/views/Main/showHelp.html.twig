@@ -2,5 +2,5 @@
 
 {% block body -%}
   {% include 'InnovaSelfBundle::Main/help.html.twig' %}
-   <a href="{{ path('user_test') }}" class="btn btn-primary">Commencer le test</a>
+   <a href="{{ path('user_test') }}" class="btn btn-primary">{{ 'generic.start' | trans }}</a>
 {% endblock %}
