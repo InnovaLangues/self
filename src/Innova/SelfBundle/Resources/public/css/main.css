@@ -1,9 +1,21 @@
-#main-block{
-	border:2px solid #D9EDF7;
+
+.item_audio_button{
 	border-radius:5px;
-	padding:50px 75px 25px;
+}
+
+#main-block{
+	background-color:#D9EDF7;
+	border-radius:5px;
+	padding:20px;
+	min-height: 250px;
 }
 
 #situation{
-	padding-top:35%;
+	padding-top:20px;
+}
+
+#submit{
+	position:absolute;
+	bottom:15px;
+	right:15px;
 }

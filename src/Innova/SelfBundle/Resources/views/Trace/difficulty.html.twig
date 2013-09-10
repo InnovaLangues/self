@@ -1,26 +1,30 @@
 {% extends '::base.html.twig' %}
 {% block body -%}
-<form action="{{ path('trace_setDifficulty') }}" method="post">
+<form id="difficulty_form" action="{{ path('trace_setDifficulty') }}" method="post">
     Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
 
     <label class="radio">
-        <input type="radio" name="difficulty" value=1> Très facile
+        <input type="radio" name="difficulty" value=1 required> Très facile
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=2> Facile
+        <input type="radio" name="difficulty" value=2 required> Facile
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=3> Normal
+        <input type="radio" name="difficulty" value=3 required> Normal
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=4> Difficile
+        <input type="radio" name="difficulty" value=4 required> Difficile
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=5> Très difficile
+        <input type="radio" name="difficulty" value=5 required> Très difficile
     </label>
 
     <input type="hidden" name="traceId" value="{{ traceId }}"/>
     <input type="hidden" name="testId" value="{{ testId }}"/>
     <input type="submit" class="btn btn-primary" value="Valider"/>
 </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/jquery-validation-1.11.1/dist/jquery.validate.js") }}"></script>
 {% endblock %}

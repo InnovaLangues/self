@@ -2,7 +2,7 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset("bundles/innovaself/css/main.css") }}" />
 {% endblock %}
-{% macro audio(id, src, icon) %}
+{% macro audio(id, src, icon, height) %}
         <audio preload="auto" id="{{ id }}" class="item_audio">
             <source src="{{ asset('upload/audio/') ~ src }}.ogg" type="audio/ogg">
             <source src="{{ asset('upload/audio/') ~ src }}.mp3" type="audio/mp3">
@@ -11,14 +11,13 @@
         {% if icon == "default" %}
         <span sound="{{ id }}" statut="pause" class="item_audio_button btn btn-default glyphicon glyphicon-play"></span>
         {% else %}
-        <img sound="{{ id }}" statut="pause" class="item_audio_button" height="80px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+        <img sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
         {% endif %}
-
 {% endmacro %}
 
 {% macro inputs(type, subquestionId, propositionId, text) %}
     <label class="{{ type }}-inline">
-        <input type="{{ type }}" name="subquestion{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}"> 
+        <input type="{{ type }}" name="subquestion{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required> 
         {{ text }}
     </label>
 {% endmacro %}
@@ -34,42 +33,29 @@
 {% endif %}
 
 {% block body -%}
-
-    
     <div class="row">
-        <div class="col-md-3">
-
+        <div class="col-md-3 text-center">
             {% if questionnaire.audioContext != "" %}
-                {% set elementCount =  elementCount + 1 %}
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center"><h4>Contexte</h4></div>
-                    <div class="panel-body text-center">
-                    {{ audio("context", questionnaire.audioContext, "bulles4.png") }}
-                    </div>
-                </div>
+                <h4>Contexte</h4>
+                {{ audio("context", questionnaire.audioContext, "bulles4.png", 60) }}
             {% endif %}
 
 
             {% if consigne != "" %}
-                {% set elementCount =  elementCount + 1 %}
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center"><h4>Consigne</h4></div>
-                    <div class="panel-body text-center">
-                    {{ audio("instruction", consigne, "bulles3.png") }}
-                    </div>
-                </div> 
+                <h4>Consigne</h4>
+                {{ audio("instruction", consigne, "bulles3.png", 60) }}
             {% endif %}
         </div>
 
         <div id="main-block" class="col-md-9 primary">
-            <div class="col-md-4">
+            <form id="main_form" action="{{ path('trace_submit') }}" method="post">
+            <div class="col-md-3">
                 <div id="situation" class="text-center">
                     <h4>Dialogue <br/>(X écoutes possibles)</h4>
-                    {{ audio("situtation", questionnaire.audioItem, "bulles2.png") }}
+                    {{ audio("situtation", questionnaire.audioItem, "bulles2.png", 100) }}
                 </div>
             </div>
-            <div class="col-md-6 pull-right">
-                <form id="form" action="{{ path('trace_submit') }}" method="post">
+            <div class="col-md-7 pull-right">
                     <h4>{{ questionnaire.instruction }}</h4>
                     {% for question in questionnaire.questions %}
                         {% if questionnaire.questions|length > 1 %}
@@ -78,42 +64,40 @@
                         {% for subquestion in question.subquestions %}
                         <h4> {{ subquestion.title }}</h4>
                         <p>
-                            {% if subquestion.typology == "VF" %}
-                            {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulles6.png") }}
+                            {% if subquestion.typology == "VF" and subquestion.audioUrl!= "" %}
+                            {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulles6.png", 50) }}
                             {% endif %}
                             {% for proposition in subquestion.propositions %}
                                 {% if subquestion.typology == "QRU" %}
                                 <p>
-                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png") }}
+                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50) }}
                                     {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
                                 </p>
                                 {% elseif subquestion.typology == "QRM" %}
                                 <p>
-                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png") }}
+                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50) }}
                                     {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
                                 </p>
                                 {% elseif subquestion.typology == "VF" %}
-                                    {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
+                                    {{ inputs("radio", subquestion.id, proposition.id, proposition.title, 50) }}
                                 {% endif %}
                             {% endfor %}
                         </p>
                         {% endfor %}
                     {% endfor %}
-                       
-                    
                     <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>
                     <input type="hidden" id="totalTime" name="totalTime" value=""/>
                     <input type="hidden" name="testId" value="{{ testId }}"/>
-            
-                    <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
-                 </form>
-            </div>               
+                    
+            </div>    
+            <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
+            </form>           
         </div>
     </div>
-
 {% endblock %}
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/main.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/jquery-validation-1.11.1/dist/jquery.validate.js") }}"></script>
 {% endblock %}
 

@@ -30,6 +30,7 @@ $(document).ready(function() {
 		}
 	});
 
+
 	$("form").submit(function(){
 		totalTime = timestamp() - timestampIn;
 		$("#totalTime").val(totalTime);
