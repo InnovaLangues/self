@@ -1,9 +1,6 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, quis est provident ipsam incidunt non impedit culpa quo tempora iure fugiat quos officiis nostrum magni delectus pariatur iusto doloribus deserunt.</p>
-   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, quis est provident ipsam incidunt non impedit culpa quo tempora iure fugiat quos officiis nostrum magni delectus pariatur iusto doloribus deserunt.</p>
-   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, quis est provident ipsam incidunt non impedit culpa quo tempora iure fugiat quos officiis nostrum magni delectus pariatur iusto doloribus deserunt.</p>
-   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, quis est provident ipsam incidunt non impedit culpa quo tempora iure fugiat quos officiis nostrum magni delectus pariatur iusto doloribus deserunt.</p>
-   <a href="{{ path('user_test') }}" class="btn btn-primary">Start test</a>
+  {% include 'InnovaSelfBundle::Main/help.html.twig' %}
+   <a href="{{ path('user_test') }}" class="btn btn-primary">Commencer le test</a>
 {% endblock %}
