@@ -74,6 +74,9 @@ class TestController extends Controller
      */
     public function userIndexAction()
     {        
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
         $em = $this->getDoctrine()->getManager();
 
         // Par défaut pour la V1, on crée le premier test quand un utilisateur est nouveau
@@ -84,23 +87,20 @@ class TestController extends Controller
             throw $this->createNotFoundException('Unable to find Test entity.');
         }
 
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $user->addTest($test);
-
-        $em->persist($user);
-
-        $em->flush();
+        if (count($user->getTests()) === 0) {
+            $user->addTest($test);
+            $em->persist($user);
+            $em->flush();
+        }
 
         // Redirection vers la page de démarrage du test.
         return $this->redirect(
-            $this->generateUrl('
-                    test_start', 
+            $this->generateUrl(
+                    'test_start', 
                     array('id' => $test->getId()
                 )
             )
         );
-
     }
 
     /**

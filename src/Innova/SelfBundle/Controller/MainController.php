@@ -24,7 +24,11 @@ class MainController extends Controller
      */
     public function showHelpAction()
     {
-        return array();
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        return array(
+        	'user' => $user,
+        );
     }
    
 }
