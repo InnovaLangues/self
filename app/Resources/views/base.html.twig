@@ -18,12 +18,14 @@
                 <ul class="nav navbar-nav">
                 {% if is_granted('ROLE_ADMIN') %}          
                     <li><a href="{{ path('admin_user') }}">Users</a></li>
+                    <!-- Comment for V1
                     <li><a href="#">Statistiques</a></li>
                     <li><a href="#">Export CSV</a></li>
+                     -->
                 {% endif %}
                   <!-- Help with Modal Bootstrap : http://getbootstrap.com/javascript/#modals -->
                     <li><a data-toggle="modal" href="#helpModal">Aide</a></li>
-                    <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}">{{ 'generic.logout' | trans }}</a></li>
                 </ul>
             </div>
         </nav>
