@@ -14,7 +14,7 @@ $(document).ready(function() {
 	$("audio").bind("ended", function(){
 		play_in_progress = false;
 		sound = $(this).attr('id');
-		//$(".item_audio_button").css("background-color","transparent");
+		$(".item_audio_button").css("background-color","transparent");
 		// if(listening_count[sound] > 1){$('.item_audio_button[sound="'+sound+'"]').css("background-color","transparent");}
 	});
 
@@ -27,9 +27,10 @@ $(document).ready(function() {
 			play_in_progress = true;
 			sound = $(this).attr("sound");
 			audio = document.getElementById(sound);
-			
+
 			listened++;
 			$(this).attr("data-listened", listened);
+			$(this).css("background-color","green");
 
 			if (sound == "situtation"){
 				$("#limit_listening").html($(this).attr("data-listened"));
