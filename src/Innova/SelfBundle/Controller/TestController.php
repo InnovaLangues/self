@@ -29,11 +29,32 @@ class TestController extends Controller
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')
                             ->findOneNotDoneYetByUserByTest($test->getId(), $user->getId());
+
+        if(is_null($questionnaire)){
+            return $this->redirect(
+                $this->generateUrl(
+                        'test_end', 
+                        array()
+                )
+            );
+        }
+        
        // $questionnaire = $this->getRandom($questionnaires);
         return array(
             'questionnaire' => $questionnaire,
             'testId' => $test->getId()
         );
+    }
+
+     /**
+     * Pick a questionnaire entity for a given test not done yet by the user.
+     *
+     * @Route("/test_end", name="test_end")
+     * @Template()
+     */
+    public function endAction()
+    {
+         return array();
     }
 
 

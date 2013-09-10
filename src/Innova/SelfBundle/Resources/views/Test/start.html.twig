@@ -43,8 +43,8 @@
 {% endif %}
 
 {% block body -%}
-    <div class="row">
-        <div class="col-md-3 text-center">
+    <div class="row test-container">
+        <div class="text-center left-buttons">
             {% if questionnaire.audioContext != "" %}
                 <h4>Contexte</h4>
                 {{ audio("context", questionnaire.audioContext, "bulles4.png", 60, 0) }}
@@ -57,16 +57,16 @@
             {% endif %}
         </div>
 
-        <div id="main-block" class="col-md-9 primary">
+        <div id="main-block" class="col-md-12 primary">
             <form id="main_form" action="{{ path('trace_submit') }}" method="post">
-            <div class="col-md-3">
+            <div class="col-md-3 col-md-offset-2">
                 <div id="situation" class="text-center">
                     <h4>Dialogue</h4>
-                    {{ audio("situtation", questionnaire.audioItem, "bulles2.png", 100, limit_listening) }}
-                    <p>({{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }})</p>
+                    <div class="dialogue">{{ audio("situtation", questionnaire.audioItem, "bulles2.png", 100, limit_listening) }}</div>
+                    <div class="alert alert-danger">{{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }}</div>
                 </div>
             </div>
-            <div class="col-md-7 pull-right">
+            <div class="col-md-6 pull-right col-md-offset-1">
                     <h4>{{ questionnaire.instruction }}</h4>
                     {% for question in questionnaire.questions %}
                         {% if questionnaire.questions|length > 1 %}
