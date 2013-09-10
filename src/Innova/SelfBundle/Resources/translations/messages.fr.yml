@@ -1,0 +1,28 @@
+generic:
+    index: Lister
+    create: Ajouter
+    show: Afficher
+    edit: Mettre à jour
+    delete: Supprimer
+    login: Connexion
+    logout: Déconnexion
+
+user:
+    singular: Utilisateur
+    plural: Utilisateurs
+    action:
+        index: Lister les utilisateurs
+        create: Ajouter un utilisateur
+        show: Afficher l'utilisateur
+        edit: Modifier cet utilisateur
+        delete: Supprimer cet utilisateur
+    message:
+        create: 
+            success: Votre utilisateur a bien été ajouté
+            error: Votre utilisateur n'a pas été ajouté
+        edit: 
+            success: Votre utilisateur a bien été modifié
+            error: Votre utilisateur n'a pas été modifié
+        delete:
+            success: Votre utilisateur a bien été supprimé
+            error: Votre utilisateur n'a pas été supprimé
