@@ -87,6 +87,7 @@ class TestController extends Controller
             throw $this->createNotFoundException('Unable to find Test entity.');
         }
 
+        // If the user doesn't have any test, then I add one test in 'user_test 'table.
         if (count($user->getTests()) === 0) {
             $user->addTest($test);
             $em->persist($user);
