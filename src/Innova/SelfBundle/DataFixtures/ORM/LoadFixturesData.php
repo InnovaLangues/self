@@ -108,7 +108,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire1->setType('');
         $questionnaire1->setSourceType('construit');
         $questionnaire1->setLanguageLevel('');
-        $questionnaire1->setDurationGroup('');
+        $questionnaire1->setDurationGroup('brève');
         $questionnaire1->setFlow('');
         $questionnaire1->setWordCount('');
         $questionnaire1->setAuthor('');
@@ -162,7 +162,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire2->setType('');
         $questionnaire2->setSourceType('');
         $questionnaire2->setLanguageLevel('');
-        $questionnaire2->setDurationGroup('');
+        $questionnaire2->setDurationGroup('brève');
         $questionnaire2->setFlow('');
         $questionnaire2->setWordCount('');
         $questionnaire2->setAuthor('');
@@ -215,7 +215,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire3->setType('');
         $questionnaire3->setSourceType('');
         $questionnaire3->setLanguageLevel('');
-        $questionnaire3->setDurationGroup('');
+        $questionnaire3->setDurationGroup('brève');
         $questionnaire3->setFlow('');
         $questionnaire3->setWordCount('');
         $questionnaire3->setAuthor('');
@@ -268,7 +268,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire4->setType('');
         $questionnaire4->setSourceType('');
         $questionnaire4->setLanguageLevel('');
-        $questionnaire4->setDurationGroup('');
+        $questionnaire4->setDurationGroup('moyenne');
         $questionnaire4->setFlow('');
         $questionnaire4->setWordCount('');
         $questionnaire4->setAuthor('');
@@ -321,7 +321,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire5->setType('');
         $questionnaire5->setSourceType('');
         $questionnaire5->setLanguageLevel('');
-        $questionnaire5->setDurationGroup('');
+        $questionnaire5->setDurationGroup('brève');
         $questionnaire5->setFlow('');
         $questionnaire5->setWordCount('');
         $questionnaire5->setAuthor('');
@@ -374,7 +374,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire6->setType('');
         $questionnaire6->setSourceType('');
         $questionnaire6->setLanguageLevel('');
-        $questionnaire6->setDurationGroup('');
+        $questionnaire6->setDurationGroup('brève');
         $questionnaire6->setFlow('');
         $questionnaire6->setWordCount('');
         $questionnaire6->setAuthor('');
@@ -427,7 +427,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire7->setType('');
         $questionnaire7->setSourceType('');
         $questionnaire7->setLanguageLevel('');
-        $questionnaire7->setDurationGroup('');
+        $questionnaire7->setDurationGroup('brève');
         $questionnaire7->setFlow('');
         $questionnaire7->setWordCount('');
         $questionnaire7->setAuthor('');
@@ -481,7 +481,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire8->setType('');
         $questionnaire8->setSourceType('');
         $questionnaire8->setLanguageLevel('');
-        $questionnaire8->setDurationGroup('');
+        $questionnaire8->setDurationGroup('brève');
         $questionnaire8->setFlow('');
         $questionnaire8->setWordCount('');
         $questionnaire8->setAuthor('');
@@ -535,7 +535,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire9->setType('');
         $questionnaire9->setSourceType('');
         $questionnaire9->setLanguageLevel('');
-        $questionnaire9->setDurationGroup('');
+        $questionnaire9->setDurationGroup('brève');
         $questionnaire9->setFlow('');
         $questionnaire9->setWordCount('');
         $questionnaire9->setAuthor('');
@@ -625,7 +625,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire10->setType('');
         $questionnaire10->setSourceType('');
         $questionnaire10->setLanguageLevel('');
-        $questionnaire10->setDurationGroup('');
+        $questionnaire10->setDurationGroup('moyenne');
         $questionnaire10->setFlow('');
         $questionnaire10->setWordCount('');
         $questionnaire10->setAuthor('');
@@ -735,7 +735,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire11->setType('');
         $questionnaire11->setSourceType('');
         $questionnaire11->setLanguageLevel('');
-        $questionnaire11->setDurationGroup('');
+        $questionnaire11->setDurationGroup('brève');
         $questionnaire11->setFlow('');
         $questionnaire11->setWordCount('');
         $questionnaire11->setAuthor('');
@@ -788,7 +788,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire12->setType('');
         $questionnaire12->setSourceType('');
         $questionnaire12->setLanguageLevel('');
-        $questionnaire12->setDurationGroup('');
+        $questionnaire12->setDurationGroup('brève');
         $questionnaire12->setFlow('');
         $questionnaire12->setWordCount('');
         $questionnaire12->setAuthor('');
@@ -839,7 +839,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire13->setType('');
         $questionnaire13->setSourceType('');
         $questionnaire13->setLanguageLevel('');
-        $questionnaire13->setDurationGroup('');
+        $questionnaire13->setDurationGroup('brève');
         $questionnaire13->setFlow('');
         $questionnaire13->setWordCount('');
         $questionnaire13->setAuthor('');
@@ -889,7 +889,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire14->setType('');
         $questionnaire14->setSourceType('');
         $questionnaire14->setLanguageLevel('');
-        $questionnaire14->setDurationGroup('');
+        $questionnaire14->setDurationGroup('brève');
         $questionnaire14->setFlow('');
         $questionnaire14->setWordCount('');
         $questionnaire14->setAuthor('');
@@ -939,7 +939,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire15->setType('');
         $questionnaire15->setSourceType('');
         $questionnaire15->setLanguageLevel('');
-        $questionnaire15->setDurationGroup('');
+        $questionnaire15->setDurationGroup('brève');
         $questionnaire15->setFlow('');
         $questionnaire15->setWordCount('');
         $questionnaire15->setAuthor('');
@@ -988,7 +988,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire16->setType('');
         $questionnaire16->setSourceType('');
         $questionnaire16->setLanguageLevel('');
-        $questionnaire16->setDurationGroup('');
+        $questionnaire16->setDurationGroup('brève');
         $questionnaire16->setFlow('');
         $questionnaire16->setWordCount('');
         $questionnaire16->setAuthor('');
@@ -1038,7 +1038,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire17->setType('');
         $questionnaire17->setSourceType('');
         $questionnaire17->setLanguageLevel('');
-        $questionnaire17->setDurationGroup('');
+        $questionnaire17->setDurationGroup('brève');
         $questionnaire17->setFlow('');
         $questionnaire17->setWordCount('');
         $questionnaire17->setAuthor('');
@@ -1089,7 +1089,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire18->setType('');
         $questionnaire18->setSourceType('');
         $questionnaire18->setLanguageLevel('');
-        $questionnaire18->setDurationGroup('');
+        $questionnaire18->setDurationGroup('brève');
         $questionnaire18->setFlow('');
         $questionnaire18->setWordCount('');
         $questionnaire18->setAuthor('');
@@ -1140,7 +1140,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire19->setType('');
         $questionnaire19->setSourceType('');
         $questionnaire19->setLanguageLevel('');
-        $questionnaire19->setDurationGroup('');
+        $questionnaire19->setDurationGroup('brève');
         $questionnaire19->setFlow('');
         $questionnaire19->setWordCount('');
         $questionnaire19->setAuthor('');
@@ -1191,7 +1191,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire20->setType('');
         $questionnaire20->setSourceType('');
         $questionnaire20->setLanguageLevel('');
-        $questionnaire20->setDurationGroup('');
+        $questionnaire20->setDurationGroup('brève');
         $questionnaire20->setFlow('');
         $questionnaire20->setWordCount('');
         $questionnaire20->setAuthor('');
@@ -1243,7 +1243,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire21->setType('');
         $questionnaire21->setSourceType('');
         $questionnaire21->setLanguageLevel('');
-        $questionnaire21->setDurationGroup('');
+        $questionnaire21->setDurationGroup('brève');
         $questionnaire21->setFlow('');
         $questionnaire21->setWordCount('');
         $questionnaire21->setAuthor('');
@@ -1396,7 +1396,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire22->setType('');
         $questionnaire22->setSourceType('');
         $questionnaire22->setLanguageLevel('');
-        $questionnaire22->setDurationGroup('');
+        $questionnaire22->setDurationGroup('brève');
         $questionnaire22->setFlow('');
         $questionnaire22->setWordCount('');
         $questionnaire22->setAuthor('');
@@ -1452,7 +1452,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire23->setType('');
         $questionnaire23->setSourceType('');
         $questionnaire23->setLanguageLevel('');
-        $questionnaire23->setDurationGroup('');
+        $questionnaire23->setDurationGroup('brève');
         $questionnaire23->setFlow('');
         $questionnaire23->setWordCount('');
         $questionnaire23->setAuthor('');
@@ -1508,7 +1508,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire24->setType('');
         $questionnaire24->setSourceType('');
         $questionnaire24->setLanguageLevel('');
-        $questionnaire24->setDurationGroup('');
+        $questionnaire24->setDurationGroup('brève');
         $questionnaire24->setFlow('');
         $questionnaire24->setWordCount('');
         $questionnaire24->setAuthor('');
@@ -1563,7 +1563,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire25->setType('');
         $questionnaire25->setSourceType('');
         $questionnaire25->setLanguageLevel('');
-        $questionnaire25->setDurationGroup('');
+        $questionnaire25->setDurationGroup('moyenne');
         $questionnaire25->setFlow('');
         $questionnaire25->setWordCount('');
         $questionnaire25->setAuthor('');
@@ -1694,7 +1694,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire26->setType('');
         $questionnaire26->setSourceType('');
         $questionnaire26->setLanguageLevel('');
-        $questionnaire26->setDurationGroup('');
+        $questionnaire26->setDurationGroup('brève');
         $questionnaire26->setFlow('');
         $questionnaire26->setWordCount('');
         $questionnaire26->setAuthor('');
@@ -1867,7 +1867,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire27->setType('');
         $questionnaire27->setSourceType('');
         $questionnaire27->setLanguageLevel('');
-        $questionnaire27->setDurationGroup('');
+        $questionnaire27->setDurationGroup('moyenne');
         $questionnaire27->setFlow('');
         $questionnaire27->setWordCount('');
         $questionnaire27->setAuthor('');
@@ -1957,7 +1957,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire28->setType('');
         $questionnaire28->setSourceType('');
         $questionnaire28->setLanguageLevel('');
-        $questionnaire28->setDurationGroup('');
+        $questionnaire28->setDurationGroup('moyenne');
         $questionnaire28->setFlow('');
         $questionnaire28->setWordCount('');
         $questionnaire28->setAuthor('');
@@ -2067,7 +2067,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire29->setType('');
         $questionnaire29->setSourceType('');
         $questionnaire29->setLanguageLevel('');
-        $questionnaire29->setDurationGroup('');
+        $questionnaire29->setDurationGroup('moyenne');
         $questionnaire29->setFlow('');
         $questionnaire29->setWordCount('');
         $questionnaire29->setAuthor('');
@@ -2178,7 +2178,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire30->setType('');
         $questionnaire30->setSourceType('');
         $questionnaire30->setLanguageLevel('');
-        $questionnaire30->setDurationGroup('');
+        $questionnaire30->setDurationGroup('moyenne');
         $questionnaire30->setFlow('');
         $questionnaire30->setWordCount('');
         $questionnaire30->setAuthor('');
@@ -2269,7 +2269,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire31->setType('');
         $questionnaire31->setSourceType('');
         $questionnaire31->setLanguageLevel('');
-        $questionnaire31->setDurationGroup('');
+        $questionnaire31->setDurationGroup('moyenne');
         $questionnaire31->setFlow('');
         $questionnaire31->setWordCount('');
         $questionnaire31->setAuthor('');
@@ -2381,7 +2381,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire32->setType('');
         $questionnaire32->setSourceType('');
         $questionnaire32->setLanguageLevel('');
-        $questionnaire32->setDurationGroup('');
+        $questionnaire32->setDurationGroup('brève');
         $questionnaire32->setFlow('');
         $questionnaire32->setWordCount('');
         $questionnaire32->setAuthor('');
@@ -2436,7 +2436,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire33->setType('');
         $questionnaire33->setSourceType('');
         $questionnaire33->setLanguageLevel('');
-        $questionnaire33->setDurationGroup('');
+        $questionnaire33->setDurationGroup('brève');
         $questionnaire33->setFlow('');
         $questionnaire33->setWordCount('');
         $questionnaire33->setAuthor('');
@@ -2492,7 +2492,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire34->setType('');
         $questionnaire34->setSourceType('');
         $questionnaire34->setLanguageLevel('');
-        $questionnaire34->setDurationGroup('');
+        $questionnaire34->setDurationGroup('brève');
         $questionnaire34->setFlow('');
         $questionnaire34->setWordCount('');
         $questionnaire34->setAuthor('');
@@ -2547,7 +2547,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire35->setType('');
         $questionnaire35->setSourceType('');
         $questionnaire35->setLanguageLevel('');
-        $questionnaire35->setDurationGroup('');
+        $questionnaire35->setDurationGroup('brève');
         $questionnaire35->setFlow('');
         $questionnaire35->setWordCount('');
         $questionnaire35->setAuthor('');
@@ -2601,7 +2601,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire36->setType('');
         $questionnaire36->setSourceType('');
         $questionnaire36->setLanguageLevel('');
-        $questionnaire36->setDurationGroup('');
+        $questionnaire36->setDurationGroup('brève');
         $questionnaire36->setFlow('');
         $questionnaire36->setWordCount('');
         $questionnaire36->setAuthor('');
@@ -2656,7 +2656,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire37->setType('');
         $questionnaire37->setSourceType('');
         $questionnaire37->setLanguageLevel('');
-        $questionnaire37->setDurationGroup('');
+        $questionnaire37->setDurationGroup('brève');
         $questionnaire37->setFlow('');
         $questionnaire37->setWordCount('');
         $questionnaire37->setAuthor('');
@@ -2711,7 +2711,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire38->setType('');
         $questionnaire38->setSourceType('');
         $questionnaire38->setLanguageLevel('');
-        $questionnaire38->setDurationGroup('');
+        $questionnaire38->setDurationGroup('brève');
         $questionnaire38->setFlow('');
         $questionnaire38->setWordCount('');
         $questionnaire38->setAuthor('');
@@ -2766,7 +2766,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire39->setType('');
         $questionnaire39->setSourceType('');
         $questionnaire39->setLanguageLevel('');
-        $questionnaire39->setDurationGroup('');
+        $questionnaire39->setDurationGroup('brève');
         $questionnaire39->setFlow('');
         $questionnaire39->setWordCount('');
         $questionnaire39->setAuthor('');

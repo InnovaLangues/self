@@ -1,8 +1,11 @@
 {% extends '::base.html.twig' %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset("bundles/innovaself/css/main.css") }}" />
 {% endblock %}
-{% macro audio(id, src, icon, height) %}
+
+
+{% macro audio(id, src, icon, height, limit) %}
         <audio preload="auto" id="{{ id }}" class="item_audio">
             <source src="{{ asset('upload/audio/') ~ src }}.ogg" type="audio/ogg">
             <source src="{{ asset('upload/audio/') ~ src }}.mp3" type="audio/mp3">
@@ -11,7 +14,7 @@
         {% if icon == "default" %}
         <span sound="{{ id }}" statut="pause" class="item_audio_button btn btn-default glyphicon glyphicon-play"></span>
         {% else %}
-        <img sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+        <img data-listened=0 data-limit={{ limit }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
         {% endif %}
 {% endmacro %}
 
@@ -25,11 +28,18 @@
 {% import _self as audio %}
 {% import _self as inputs %}
 
-{% set elementCount = 0 %}
 {% if (questionnaire.questions|length == 1) and (questionnaire.audioInstruction == "") %}
     {% set consigne = questionnaire.questions[0].audioUrl %}
 {% else %}
     {% set consigne = questionnaire.audioInstruction %}
+{% endif %}
+
+{% if questionnaire.durationGroup == "brève" %}
+    {% set limit_listening_text = "1 écoute possible" %}
+    {% set limit_listening = 1 %}
+{% else %}
+    {% set limit_listening_text = "2 écoutes possibles" %}
+    {% set limit_listening = 2 %}
 {% endif %}
 
 {% block body -%}
@@ -37,13 +47,13 @@
         <div class="col-md-3 text-center">
             {% if questionnaire.audioContext != "" %}
                 <h4>Contexte</h4>
-                {{ audio("context", questionnaire.audioContext, "bulles4.png", 60) }}
+                {{ audio("context", questionnaire.audioContext, "bulles4.png", 60, 0) }}
             {% endif %}
 
 
             {% if consigne != "" %}
                 <h4>Consigne</h4>
-                {{ audio("instruction", consigne, "bulles3.png", 60) }}
+                {{ audio("instruction", consigne, "bulles3.png", 60, 0) }}
             {% endif %}
         </div>
 
@@ -51,8 +61,9 @@
             <form id="main_form" action="{{ path('trace_submit') }}" method="post">
             <div class="col-md-3">
                 <div id="situation" class="text-center">
-                    <h4>Dialogue <br/>(X écoutes possibles)</h4>
-                    {{ audio("situtation", questionnaire.audioItem, "bulles2.png", 100) }}
+                    <h4>Dialogue</h4>
+                    {{ audio("situtation", questionnaire.audioItem, "bulles2.png", 100, limit_listening) }}
+                    <p>({{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }})</p>
                 </div>
             </div>
             <div class="col-md-7 pull-right">
@@ -65,21 +76,21 @@
                         <h4> {{ subquestion.title }}</h4>
                         <p>
                             {% if subquestion.typology == "VF" and subquestion.audioUrl!= "" %}
-                            {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulles6.png", 50) }}
+                            {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulles6.png", 50, 0) }}
                             {% endif %}
                             {% for proposition in subquestion.propositions %}
                                 {% if subquestion.typology == "QRU" %}
                                 <p>
-                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50) }}
+                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50, 0) }}
                                     {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
                                 </p>
                                 {% elseif subquestion.typology == "QRM" %}
                                 <p>
-                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50) }}
+                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50, 0) }}
                                     {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
                                 </p>
                                 {% elseif subquestion.typology == "VF" %}
-                                    {{ inputs("radio", subquestion.id, proposition.id, proposition.title, 50) }}
+                                    {{ inputs("radio", subquestion.id, proposition.id, proposition.title, 50, 0) }}
                                 {% endif %}
                             {% endfor %}
                         </p>

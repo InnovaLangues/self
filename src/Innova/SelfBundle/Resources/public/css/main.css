@@ -1,6 +1,7 @@
 
 .item_audio_button{
 	border-radius:5px;
+	cursor: pointer;
 }
 
 #main-block{
@@ -19,3 +20,7 @@
 	bottom:15px;
 	right:15px;
 }
+
+input[type="checkbox"], input[type="radio"], label{
+	cursor: pointer;
+}	

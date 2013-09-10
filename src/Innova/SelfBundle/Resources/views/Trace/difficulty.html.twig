@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 {% block body -%}
 <form id="difficulty_form" action="{{ path('trace_setDifficulty') }}" method="post">
-    Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
+   <h4>Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :</h4>
 
     <label class="radio">
         <input type="radio" name="difficulty" value=1 required> Très facile
