@@ -49,13 +49,13 @@
     <div class="row test-container">
         <div class="text-center left-buttons">
             {% if questionnaire.audioContext != "" %}
-                <h4>Contexte</h4>
+                <h4>{{ 'test.field.context' | trans }}</h4>
                 {{ audio("context", questionnaire.audioContext, "bulles4.png", 60, 0) }}
             {% endif %}
 
 
             {% if consigne != "" %}
-                <h4>Consigne</h4>
+                <h4>{{ 'test.field.instruction' | trans }}</h4>
                 {{ audio("instruction", consigne, "bulles3.png", 60, 0) }}
             {% endif %}
         </div>
@@ -64,7 +64,7 @@
             <form id="main_form" action="{{ path('trace_submit') }}" method="post">
             <div class="col-md-3 col-md-offset-2">
                 <div id="situation" class="text-center">
-                    <h4>Dialogue</h4>
+                    <h4>{{ 'test.field.dialogue' | trans }}</h4>
                     <div class="dialogue">{{ audio("situtation", questionnaire.audioItem, "bulles2.png", 100, limit_listening) }}</div>
                     <!--<div class="alert alert-danger">{{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }}</div>-->
                 </div>
@@ -106,7 +106,7 @@
                     <input type="hidden" name="testId" value="{{ test.id }}"/>
                     
             </div>    
-            <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
+            <input id="submit" type="submit" class="pull-right btn btn-primary" value="{{ 'generic.validate' | trans }}"/>
             </form>           
         </div>
     </div>
