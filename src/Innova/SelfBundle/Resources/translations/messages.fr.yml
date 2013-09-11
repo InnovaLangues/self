@@ -2,6 +2,8 @@ generic:
     index: Lister
     create: Ajouter
     show: Afficher
+    help: Aide
+    ok: OK
     edit: Mettre à jour
     delete: Supprimer
     login: Connexion
