@@ -48,6 +48,8 @@ class TraceController extends Controller
         $em->persist($trace);
         $em->flush();
 
+        $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été prise en compte.');
+
         $traceId = $trace->getId();
 
         foreach ($post as $postVar){

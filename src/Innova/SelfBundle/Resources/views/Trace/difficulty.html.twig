@@ -1,8 +1,11 @@
 {% extends '::base.html.twig' %}
 {% block body -%}
 <form action="{{ path('trace_setDifficulty') }}" method="post">
-    {{ 'trace.action.evaluate' | trans }}
 
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ flashMessage }}</div>
+    {% endfor %}
+    {{ 'trace.action.evaluate' | trans }}
     <label class="radio">
         <input type="radio" name="difficulty" value=1 required> {{ 'trace.field.difficulty.veryEasy' | trans }}
     </label>
