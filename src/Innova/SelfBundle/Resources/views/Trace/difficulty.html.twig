@@ -4,19 +4,19 @@
     {{ 'trace.action.evaluate' | trans }}
 
     <label class="radio">
-        <input type="radio" name="difficulty" value=1> {{ 'trace.field.difficulty.veryEasy' | trans }}
+        <input type="radio" name="difficulty" value=1 required> {{ 'trace.field.difficulty.veryEasy' | trans }}
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=2> {{ 'trace.field.difficulty.easy' | trans }}
+        <input type="radio" name="difficulty" value=2 required> {{ 'trace.field.difficulty.easy' | trans }}
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=3> {{ 'trace.field.difficulty.normal' | trans }}
+        <input type="radio" name="difficulty" value=3 required> {{ 'trace.field.difficulty.normal' | trans }}
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=4> {{ 'trace.field.difficulty.difficult' | trans }}
+        <input type="radio" name="difficulty" value=4 required> {{ 'trace.field.difficulty.difficult' | trans }}
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=5> {{ 'trace.field.difficulty.veryDifficult' | trans }}
+        <input type="radio" name="difficulty" value=5 required> {{ 'trace.field.difficulty.veryDifficult' | trans }}
     </label>
 
     <input type="hidden" name="traceId" value="{{ traceId }}"/>
