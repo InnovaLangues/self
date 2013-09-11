@@ -1,3 +1,5 @@
+# Installation
+
 ``` bash
 git clone https://github.com/InnovaLangues/self.git
 cd self
@@ -23,3 +25,9 @@ Create a new admin user :
 php app/console fos:user:create admin2 --super-admin
 
 ```
+
+# Basic update 
+
+git pull
+git checkout master
+php app/console cache:clear --env=prod --no-debug
