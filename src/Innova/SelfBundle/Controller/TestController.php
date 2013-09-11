@@ -34,8 +34,6 @@ class TestController extends Controller
                             ->CountDoneYetByUserByTest($test->getId(), $user->getId());
 
         $countQuestionnaire = count($test->getQuestionnaires());
-        echo $countQuestionnaire;
-
 
         if(is_null($questionnaire)){
             return $this->redirect(

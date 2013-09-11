@@ -22,103 +22,77 @@ class Questionnaire
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="level", type="string", length=255)
-     */
-    private $level;
+    * @ORM\ManyToOne(targetEntity="Level", inversedBy="questionnaires")
+    */
+    protected $level;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="source", type="string", length=255)
-     */
-    private $source;
+    * @ORM\ManyToOne(targetEntity="SourceType", inversedBy="questionnaires")
+    */
+    protected $sourceType;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="supportType", type="string", length=255)
-     */
-    private $supportType;
+    * @ORM\ManyToOne(targetEntity="User", inversedBy="questionnaires")
+    */
+    protected $author;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="focus", type="string", length=255)
-     */
-    private $focus;
+    * @ORM\ManyToOne(targetEntity="Instruction", inversedBy="questionnaires")
+    */
+    protected $instruction;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="cognitiveOperation", type="string", length=255)
-     */
-    private $cognitiveOperation;
+    * @ORM\ManyToOne(targetEntity="ReceptionType", inversedBy="questionnaires")
+    */
+    protected $receptionType;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="function", type="string", length=255)
-     */
-    private $function;
+    * @ORM\ManyToOne(targetEntity="Source", inversedBy="questionnaires")
+    */
+    protected $source;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="receptionType", type="string", length=255)
-     */
-    private $receptionType;
+    * @ORM\ManyToOne(targetEntity="Duration", inversedBy="questionnaires")
+    */
+    protected $duration;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="domain", type="string", length=255)
-     */
-    private $domain;
+    * @ORM\ManyToOne(targetEntity="Domain", inversedBy="questionnaires")
+    */
+    protected $domain;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
-    private $type;
+    * @ORM\ManyToOne(targetEntity="FunctionType", inversedBy="questionnaires")
+    */
+    protected $functionType;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="sourceType", type="string", length=255)
-     */
-    private $sourceType;
+    * @ORM\ManyToOne(targetEntity="CognitiveOperation", inversedBy="questionnaires")
+    */
+    protected $cognitiveOperation;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="languageLevel", type="string", length=255)
-     */
-    private $languageLevel;
+    * @ORM\ManyToOne(targetEntity="Support", inversedBy="questionnaires")
+    */
+    protected $support;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="durationGroup", type="string", length=255)
-     */
-    private $durationGroup;
+    * @ORM\ManyToOne(targetEntity="Flow", inversedBy="questionnaires")
+    */
+    protected $flow;
+
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="flow", type="string", length=255)
-     */
-    private $flow;
+    * @ORM\ManyToOne(targetEntity="Focus", inversedBy="questionnaires")
+    */
+    protected $focus;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="wordCount", type="integer")
-     */
-    private $wordCount;
+    * @ORM\ManyToOne(targetEntity="LanguageLevel", inversedBy="questionnaires")
+    */
+    protected $languageLevel;
 
+   
     /**
      * @var string
      *
@@ -126,19 +100,6 @@ class Questionnaire
      */
     private $theme;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="author", type="string", length=255)
-     */
-    private $author;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="instruction", type="string", length=255)
-     */
-    private $instruction;
 
     /**
      * @var string
@@ -217,306 +178,7 @@ class Questionnaire
         return $this->level;
     }
 
-    /**
-     * Set source
-     *
-     * @param string $source
-     * @return Questionnaire
-     */
-    public function setSource($source)
-    {
-        $this->source = $source;
-
-        return $this;
-    }
-
-    /**
-     * Get source
-     *
-     * @return string
-     */
-    public function getSource()
-    {
-        return $this->source;
-    }
-
-
-    /**
-     * Set supportType
-     *
-     * @param string $supportType
-     * @return Questionnaire
-     */
-    public function setSupportType($supportType)
-    {
-        $this->supportType = $supportType;
-
-        return $this;
-    }
-
-    /**
-     * Get supportType
-     *
-     * @return string
-     */
-    public function getSupportType()
-    {
-        return $this->supportType;
-    }
-
-    /**
-     * Set focus
-     *
-     * @param string $focus
-     * @return Questionnaire
-     */
-    public function setFocus($focus)
-    {
-        $this->focus = $focus;
-
-        return $this;
-    }
-
-    /**
-     * Get focus
-     *
-     * @return string
-     */
-    public function getFocus()
-    {
-        return $this->focus;
-    }
-
-    /**
-     * Set cognitiveOperation
-     *
-     * @param text $cognitiveOperation
-     * @return Questionnaire
-     */
-    public function setCognitiveOperation($cognitiveOperation)
-    {
-        $this->cognitiveOperation = $cognitiveOperation;
-
-        return $this;
-    }
-
-    /**
-     * Get cognitiveOperation
-     *
-     * @return string
-     */
-    public function getCognitiveOperation()
-    {
-        return $this->cognitiveOperation;
-    }
-
-    /**
-     * Set function
-     *
-     * @param string $function
-     * @return Questionnaire
-     */
-    public function setFunction($function)
-    {
-        $this->function = $function;
-
-        return $this;
-    }
-
-    /**
-     * Get function
-     *
-     * @return string
-     */
-    public function getFunction()
-    {
-        return $this->function;
-    }
-
-    /**
-     * Set receptionType
-     *
-     * @param string $receptionType
-     * @return Questionnaire
-     */
-    public function setReceptionType($receptionType)
-    {
-        $this->receptionType = $receptionType;
-
-        return $this;
-    }
-
-    /**
-     * Get receptionType
-     *
-     * @return string
-     */
-    public function getReceptionType()
-    {
-        return $this->receptionType;
-    }
-
-    /**
-     * Set domain
-     *
-     * @param string $domain
-     * @return Questionnaire
-     */
-    public function setDomain($domain)
-    {
-        $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * Get domain
-     *
-     * @return string
-     */
-    public function getDomain()
-    {
-        return $this->domain;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Questionnaire
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set sourceType
-     *
-     * @param string $sourceType
-     * @return Questionnaire
-     */
-    public function setSourceType($sourceType)
-    {
-        $this->sourceType = $sourceType;
-
-        return $this;
-    }
-
-    /**
-     * Get sourceType
-     *
-     * @return string
-     */
-    public function getSourceType()
-    {
-        return $this->sourceType;
-    }
-
-    /**
-     * Set languageLevel
-     *
-     * @param string $languageLevel
-     * @return Questionnaire
-     */
-    public function setLanguageLevel($languageLevel)
-    {
-        $this->languageLevel = $languageLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get languageLevel
-     *
-     * @return string
-     */
-    public function getLanguageLevel()
-    {
-        return $this->languageLevel;
-    }
-
-    /**
-     * Set durationGroup
-     *
-     * @param string $durationGroup
-     * @return Questionnaire
-     */
-    public function setDurationGroup($durationGroup)
-    {
-        $this->durationGroup = $durationGroup;
-
-        return $this;
-    }
-
-    /**
-     * Get durationGroup
-     *
-     * @return string
-     */
-    public function getDurationGroup()
-    {
-        return $this->durationGroup;
-    }
-
-    /**
-     * Set flow
-     *
-     * @param string $flow
-     * @return Questionnaire
-     */
-    public function setFlow($flow)
-    {
-        $this->flow = $flow;
-
-        return $this;
-    }
-
-    /**
-     * Get flow
-     *
-     * @return string
-     */
-    public function getFlow()
-    {
-        return $this->flow;
-    }
-
-    /**
-     * Set wordCount
-     *
-     * @param integer $wordCount
-     * @return Questionnaire
-     */
-    public function setWordCount($wordCount)
-    {
-        $this->wordCount = $wordCount;
-
-        return $this;
-    }
-
-    /**
-     * Get wordCount
-     *
-     * @return integer
-     */
-    public function getWordCount()
-    {
-        return $this->wordCount;
-    }
-
+    
     /**
      * Set theme
      *
@@ -540,51 +202,6 @@ class Questionnaire
         return $this->theme;
     }
 
-    /**
-     * Set author
-     *
-     * @param string $author
-     * @return Questionnaire
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    /**
-     * Get author
-     *
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * Set instruction
-     *
-     * @param string $instruction
-     * @return Questionnaire
-     */
-    public function setInstruction($instruction)
-    {
-        $this->instruction = $instruction;
-
-        return $this;
-    }
-
-    /**
-     * Get instruction
-     *
-     * @return string
-     */
-    public function getInstruction()
-    {
-        return $this->instruction;
-    }
 
     /**
      * Set audioInstruction
@@ -755,4 +372,303 @@ class Questionnaire
         return $this->tests;
     }
 
+
+    /**
+     * Set duration
+     *
+     * @param \Innova\SelfBundle\Entity\Duration $duration
+     * @return Questionnaire
+     */
+    public function setDuration(\Innova\SelfBundle\Entity\Duration $duration = null)
+    {
+        $this->duration = $duration;
+    
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return \Innova\SelfBundle\Entity\Duration 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Set focus
+     *
+     * @param \Innova\SelfBundle\Entity\Focus $focus
+     * @return Questionnaire
+     */
+    public function setFocus(\Innova\SelfBundle\Entity\Focus $focus = null)
+    {
+        $this->focus = $focus;
+    
+        return $this;
+    }
+
+    /**
+     * Get focus
+     *
+     * @return \Innova\SelfBundle\Entity\Focus 
+     */
+    public function getFocus()
+    {
+        return $this->focus;
+    }
+
+    /**
+     * Set support
+     *
+     * @param \Innova\SelfBundle\Entity\Support $support
+     * @return Questionnaire
+     */
+    public function setSupport(\Innova\SelfBundle\Entity\Support $support = null)
+    {
+        $this->support = $support;
+    
+        return $this;
+    }
+
+    /**
+     * Get support
+     *
+     * @return \Innova\SelfBundle\Entity\Support 
+     */
+    public function getSupport()
+    {
+        return $this->support;
+    }
+
+    /**
+     * Set functionType
+     *
+     * @param \Innova\SelfBundle\Entity\FunctionType $functionType
+     * @return Questionnaire
+     */
+    public function setFunctionType(\Innova\SelfBundle\Entity\FunctionType $functionType = null)
+    {
+        $this->functionType = $functionType;
+    
+        return $this;
+    }
+
+    /**
+     * Get functionType
+     *
+     * @return \Innova\SelfBundle\Entity\FunctionType 
+     */
+    public function getFunctionType()
+    {
+        return $this->functionType;
+    }
+
+    /**
+     * Set source
+     *
+     * @param \Innova\SelfBundle\Entity\Source $source
+     * @return Questionnaire
+     */
+    public function setSource(\Innova\SelfBundle\Entity\Source $source = null)
+    {
+        $this->source = $source;
+    
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return \Innova\SelfBundle\Entity\Source 
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * Set cognitiveOperation
+     *
+     * @param \Innova\SelfBundle\Entity\CognitiveOperation $cognitiveOperation
+     * @return Questionnaire
+     */
+    public function setCognitiveOperation(\Innova\SelfBundle\Entity\CognitiveOperation $cognitiveOperation = null)
+    {
+        $this->cognitiveOperation = $cognitiveOperation;
+    
+        return $this;
+    }
+
+    /**
+     * Get cognitiveOperation
+     *
+     * @return \Innova\SelfBundle\Entity\CognitiveOperation 
+     */
+    public function getCognitiveOperation()
+    {
+        return $this->cognitiveOperation;
+    }
+
+    /**
+     * Set languageLevel
+     *
+     * @param \Innova\SelfBundle\Entity\LanguageLevel $languageLevel
+     * @return Questionnaire
+     */
+    public function setLanguageLevel(\Innova\SelfBundle\Entity\LanguageLevel $languageLevel = null)
+    {
+        $this->languageLevel = $languageLevel;
+    
+        return $this;
+    }
+
+    /**
+     * Get languageLevel
+     *
+     * @return \Innova\SelfBundle\Entity\LanguageLevel 
+     */
+    public function getLanguageLevel()
+    {
+        return $this->languageLevel;
+    }
+
+    /**
+     * Set sourceType
+     *
+     * @param \Innova\SelfBundle\Entity\SourceType $sourceType
+     * @return Questionnaire
+     */
+    public function setSourceType(\Innova\SelfBundle\Entity\SourceType $sourceType = null)
+    {
+        $this->sourceType = $sourceType;
+    
+        return $this;
+    }
+
+    /**
+     * Get sourceType
+     *
+     * @return \Innova\SelfBundle\Entity\SourceType 
+     */
+    public function getSourceType()
+    {
+        return $this->sourceType;
+    }
+
+    /**
+     * Set flow
+     *
+     * @param \Innova\SelfBundle\Entity\Flow $flow
+     * @return Questionnaire
+     */
+    public function setFlow(\Innova\SelfBundle\Entity\Flow $flow = null)
+    {
+        $this->flow = $flow;
+    
+        return $this;
+    }
+
+    /**
+     * Get flow
+     *
+     * @return \Innova\SelfBundle\Entity\Flow 
+     */
+    public function getFlow()
+    {
+        return $this->flow;
+    }
+
+    /**
+     * Set domain
+     *
+     * @param \Innova\SelfBundle\Entity\Domain $domain
+     * @return Questionnaire
+     */
+    public function setDomain(\Innova\SelfBundle\Entity\Domain $domain = null)
+    {
+        $this->domain = $domain;
+    
+        return $this;
+    }
+
+    /**
+     * Get domain
+     *
+     * @return \Innova\SelfBundle\Entity\Domain 
+     */
+    public function getDomain()
+    {
+        return $this->domain;
+    }
+
+    /**
+     * Set receptionType
+     *
+     * @param \Innova\SelfBundle\Entity\ReceptionType $receptionType
+     * @return Questionnaire
+     */
+    public function setReceptionType(\Innova\SelfBundle\Entity\ReceptionType $receptionType = null)
+    {
+        $this->receptionType = $receptionType;
+    
+        return $this;
+    }
+
+    /**
+     * Get receptionType
+     *
+     * @return \Innova\SelfBundle\Entity\ReceptionType 
+     */
+    public function getReceptionType()
+    {
+        return $this->receptionType;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \Innova\SelfBundle\Entity\User $author
+     * @return Questionnaire
+     */
+    public function setAuthor(\Innova\SelfBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+    
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \Innova\SelfBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set instruction
+     *
+     * @param \Innova\SelfBundle\Entity\Instruction $instruction
+     * @return Questionnaire
+     */
+    public function setInstruction(\Innova\SelfBundle\Entity\Instruction $instruction = null)
+    {
+        $this->instruction = $instruction;
+    
+        return $this;
+    }
+
+    /**
+     * Get instruction
+     *
+     * @return \Innova\SelfBundle\Entity\Instruction 
+     */
+    public function getInstruction()
+    {
+        return $this->instruction;
+    }
 }

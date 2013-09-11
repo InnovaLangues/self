@@ -56,7 +56,15 @@ input[type="checkbox"], input[type="radio"], label{
 }
 
 #progressbar{
+	position:relative;
 	padding-left:5px;
 	border-left:2px solid black;
 	border-radius:5px;
+	min-height: 20px;
+	background-color:#D9EDF7;
+}
+
+.progressbar-count{
+	position:absolute;
+	min-width:100px;
 }
