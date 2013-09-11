@@ -23,6 +23,7 @@ use Innova\SelfBundle\Entity\Questionnaire;
     use Innova\SelfBundle\Entity\ReceptionType;
     use Innova\SelfBundle\Entity\Author;
     use Innova\SelfBundle\Entity\Instruction;
+    use Innova\SelfBundle\Entity\Typology;
 use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
@@ -115,6 +116,24 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $support = new Support();
         $support->setName("enregistrement local (MLC)");
         $manager->persist($support);
+
+
+    /* Typology */
+        $typology = new Typology();
+        $typology->setName("QRU");
+        $manager->persist($typology);
+
+        $typology2 = new Typology();
+        $typology2->setName("TVF");
+        $manager->persist($typology2);
+
+        $typology3 = new Typology();
+        $typology3->setName("VF");
+        $manager->persist($typology3);
+
+        $typology4 = new Typology();
+        $typology4->setName("QRM");
+        $manager->persist($typology4);
 
     /* SOURCE */
         $source1 = new Source();
@@ -218,13 +237,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question1 = new Question();
         $question1->setQuestionnaire($questionnaire1);
-        $question1->setTypology("QRU");
-        $question1->setInstruction("");
+        $question1->setTypology($typology);
+        $question1->setInstruction();
         $manager->persist($question1);
 
         $subquestion1 = new Subquestion();
         $subquestion1->setQuestion($question1);
-        $subquestion1->setTypology("QRU");
+        $subquestion1->setTypology($typology);
         $manager->persist($subquestion1);
 
         $proposition1_1 = new Proposition();
@@ -270,13 +289,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question2 = new Question();
         $question2->setQuestionnaire($questionnaire2);
-        $question2->setTypology("QRU");
-        $question2->setInstruction("");
+        $question2->setTypology($typology);
+        $question2->setInstruction();
         $manager->persist($question2);
 
         $subquestion2 = new Subquestion();
         $subquestion2->setQuestion($question2);
-        $subquestion2->setTypology("QRU");
+        $subquestion2->setTypology($typology);
         $manager->persist($subquestion2);
 
         $proposition2_1 = new Proposition();
@@ -322,37 +341,37 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question25 = new Question();
         $question25->setQuestionnaire($questionnaire25);
-        $question25->setTypology("TVF");
-        $question25->setInstruction("");
+        $question25->setTypology($typology2);
+        $question25->setInstruction();
         $manager->persist($question25);
 
         $subquestion25_1 = new Subquestion();
         $subquestion25_1->setQuestion($question25);
-        $subquestion25_1->setTypology("VF");
+        $subquestion25_1->setTypology($typology3);
         $subquestion25_1->setAudioUrl('25_option_1_1');
         $manager->persist($subquestion25_1);
 
         $subquestion25_2 = new Subquestion();
         $subquestion25_2->setQuestion($question25);
-        $subquestion25_2->setTypology("VF");
+        $subquestion25_2->setTypology($typology3);
         $subquestion25_2->setAudioUrl('25_option_1_2');
         $manager->persist($subquestion25_2);
 
         $subquestion25_3 = new Subquestion();
         $subquestion25_3->setQuestion($question25);
-        $subquestion25_3->setTypology("VF");
+        $subquestion25_3->setTypology($typology3);
         $subquestion25_3->setAudioUrl('25_option_1_3');
         $manager->persist($subquestion25_3);
 
         $subquestion25_4 = new Subquestion();
         $subquestion25_4->setQuestion($question25);
-        $subquestion25_4->setTypology("VF");
+        $subquestion25_4->setTypology($typology3);
         $subquestion25_4->setAudioUrl('25_option_1_4');
         $manager->persist($subquestion25_4);
 
         $subquestion25_5 = new Subquestion();
         $subquestion25_5->setQuestion($question25);
-        $subquestion25_5->setTypology("VF");
+        $subquestion25_5->setTypology($typology3);
         $subquestion25_5->setAudioUrl('25_option_1_5');
         $manager->persist($subquestion25_5);
 
@@ -450,13 +469,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question32 = new Question();
         $question32->setQuestionnaire($questionnaire32);
-        $question32->setTypology("QRU");
-        $question32->setInstruction("");
+        $question32->setTypology($typology);
+        $question32->setInstruction();
         $manager->persist($question32);
 
         $subquestion32 = new Subquestion();
         $subquestion32->setQuestion($question32);
-        $subquestion32->setTypology("QRU");
+        $subquestion32->setTypology($typology);
         $manager->persist($subquestion32);
 
         $proposition32_1 = new Proposition();
@@ -501,25 +520,25 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question9 = new Question();
         $question9->setQuestionnaire($questionnaire9);
-        $question9->setTypology("TVF");
-        $question9->setInstruction("");
+        $question9->setTypology($typology2);
+        $question9->setInstruction();
         $manager->persist($question9);
 
         $subquestion9_1 = new Subquestion();
         $subquestion9_1->setQuestion($question9);
-        $subquestion9_1->setTypology("VF");
+        $subquestion9_1->setTypology($typology3);
         $subquestion9_1->setAudioUrl("9_option_1_1");
         $manager->persist($subquestion9_1);
 
         $subquestion9_2 = new Subquestion();
         $subquestion9_2->setQuestion($question9);
-        $subquestion9_2->setTypology("VF");
+        $subquestion9_2->setTypology($typology3);
         $subquestion9_2->setAudioUrl("9_option_1_2");
         $manager->persist($subquestion9_2);
 
         $subquestion9_3 = new Subquestion();
         $subquestion9_3->setQuestion($question9);
-        $subquestion9_3->setTypology("VF");
+        $subquestion9_3->setTypology($typology3);
         $subquestion9_3->setAudioUrl("9_option_1_3");
         $manager->persist($subquestion9_3);
 
@@ -589,13 +608,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question3 = new Question();
         $question3->setQuestionnaire($questionnaire3);
-        $question3->setTypology("QRU");
-        $question3->setInstruction("");
+        $question3->setTypology($typology);
+        $question3->setInstruction();
         $manager->persist($question3);
 
         $subquestion3 = new Subquestion();
         $subquestion3->setQuestion($question3);
-        $subquestion3->setTypology("QRU");
+        $subquestion3->setTypology($typology);
         $manager->persist($subquestion3);
 
         $proposition3_1 = new Proposition();
@@ -640,13 +659,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question23 = new Question();
         $question23->setQuestionnaire($questionnaire23);
-        $question23->setTypology("QRU");
-        $question23->setInstruction("");
+        $question23->setTypology($typology);
+        $question23->setInstruction();
         $manager->persist($question23);
 
         $subquestion23 = new Subquestion();
         $subquestion23->setQuestion($question23);
-        $subquestion23->setTypology("QRU");
+        $subquestion23->setTypology($typology);
         $manager->persist($subquestion23);
 
         $proposition23_1 = new Proposition();
@@ -696,13 +715,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question33 = new Question();
         $question33->setQuestionnaire($questionnaire33);
-        $question33->setTypology("QRU");
-        $question33->setInstruction("");
+        $question33->setTypology($typology);
+        $question33->setInstruction();
         $manager->persist($question33);
 
         $subquestion33 = new Subquestion();
         $subquestion33->setQuestion($question33);
-        $subquestion33->setTypology("QRU");
+        $subquestion33->setTypology($typology);
         $manager->persist($subquestion33);
 
         $proposition33_1 = new Proposition();
@@ -747,13 +766,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question11 = new Question();
         $question11->setQuestionnaire($questionnaire11);
-        $question11->setTypology("TVF");
-        $question11->setInstruction("");
+        $question11->setTypology($typology2);
+        $question11->setInstruction();
         $manager->persist($question11);
 
         $subquestion11 = new Subquestion();
         $subquestion11->setQuestion($question11);
-        $subquestion11->setTypology("VF");
+        $subquestion11->setTypology($typology3);
         $subquestion11->setAudioUrl("");
         $manager->persist($subquestion11);
 
@@ -798,13 +817,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question12 = new Question();
         $question12->setQuestionnaire($questionnaire12);
-        $question12->setTypology("TVF");
-        $question12->setInstruction("");
+        $question12->setTypology($typology2);
+        $question12->setInstruction();
         $manager->persist($question12);
 
         $subquestion12 = new Subquestion();
         $subquestion12->setQuestion($question12);
-        $subquestion12->setTypology("VF");
+        $subquestion12->setTypology($typology3);
         $manager->persist($subquestion12);
 
         $proposition12_1 = new Proposition();
@@ -847,13 +866,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question13 = new Question();
         $question13->setQuestionnaire($questionnaire13);
-        $question13->setTypology("TVF");
-        $question13->setInstruction("");
+        $question13->setTypology($typology2);
+        $question13->setInstruction();
         $manager->persist($question13);
 
         $subquestion13 = new Subquestion();
         $subquestion13->setQuestion($question13);
-        $subquestion13->setTypology("VF");
+        $subquestion13->setTypology($typology3);
         $manager->persist($subquestion13);
 
         $proposition13_1 = new Proposition();
@@ -895,13 +914,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question14 = new Question();
         $question14->setQuestionnaire($questionnaire14);
-        $question14->setTypology("TVF");
-        $question14->setInstruction("");
+        $question14->setTypology($typology2);
+        $question14->setInstruction();
         $manager->persist($question14);
 
         $subquestion14 = new Subquestion();
         $subquestion14->setQuestion($question14);
-        $subquestion14->setTypology("VF");
+        $subquestion14->setTypology($typology3);
         $manager->persist($subquestion14);
 
         $proposition14_1 = new Proposition();
@@ -943,13 +962,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question15 = new Question();
         $question15->setQuestionnaire($questionnaire15);
-        $question15->setTypology("TVF");
-        $question15->setInstruction("");
+        $question15->setTypology($typology2);
+        $question15->setInstruction();
         $manager->persist($question15);
 
         $subquestion15 = new Subquestion();
         $subquestion15->setQuestion($question15);
-        $subquestion15->setTypology("VF");
+        $subquestion15->setTypology($typology3);
         $manager->persist($subquestion15);
 
         $proposition15_1 = new Proposition();
@@ -990,13 +1009,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question34 = new Question();
         $question34->setQuestionnaire($questionnaire34);
-        $question34->setTypology("QRU");
-        $question34->setInstruction("");
+        $question34->setTypology($typology);
+        $question34->setInstruction();
         $manager->persist($question34);
 
         $subquestion34 = new Subquestion();
         $subquestion34->setQuestion($question34);
-        $subquestion34->setTypology("QRU");
+        $subquestion34->setTypology($typology);
         $manager->persist($subquestion34);
 
         $proposition34_1 = new Proposition();
@@ -1043,13 +1062,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question35 = new Question();
         $question35->setQuestionnaire($questionnaire35);
-        $question35->setTypology("QRU");
-        $question35->setInstruction("");
+        $question35->setTypology($typology);
+        $question35->setInstruction();
         $manager->persist($question35);
 
         $subquestion35 = new Subquestion();
         $subquestion35->setQuestion($question35);
-        $subquestion35->setTypology("QRU");
+        $subquestion35->setTypology($typology);
         $manager->persist($subquestion35);
 
         $proposition35_1 = new Proposition();
@@ -1094,25 +1113,25 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question27 = new Question();
         $question27->setQuestionnaire($questionnaire27);
-        $question27->setTypology("TVF");
-        $question27->setInstruction("");
+        $question27->setTypology($typology2);
+        $question27->setInstruction();
         $manager->persist($question27);
 
         $subquestion27_1 = new Subquestion();
         $subquestion27_1->setQuestion($question27);
-        $subquestion27_1->setTypology("VF");
+        $subquestion27_1->setTypology($typology3);
         $subquestion27_1->setAudioUrl('27_option_1_1');
         $manager->persist($subquestion27_1);
 
         $subquestion27_2 = new Subquestion();
         $subquestion27_2->setQuestion($question27);
-        $subquestion27_2->setTypology("VF");
+        $subquestion27_2->setTypology($typology3);
         $subquestion27_2->setAudioUrl('27_option_1_2');
         $manager->persist($subquestion27_2);
 
         $subquestion27_3 = new Subquestion();
         $subquestion27_3->setQuestion($question27);
-        $subquestion27_3->setTypology("VF");
+        $subquestion27_3->setTypology($typology3);
         $subquestion27_3->setAudioUrl('27_option_1_3');
         $manager->persist($subquestion27_3);
 
@@ -1182,31 +1201,31 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question28 = new Question();
         $question28->setQuestionnaire($questionnaire28);
-        $question28->setTypology("TVF");
-        $question28->setInstruction("");
+        $question28->setTypology($typology2);
+        $question28->setInstruction();
         $manager->persist($question28);
 
         $subquestion28_1 = new Subquestion();
         $subquestion28_1->setQuestion($question28);
-        $subquestion28_1->setTypology("VF");
+        $subquestion28_1->setTypology($typology3);
         $subquestion28_1->setAudioUrl('28_option_1_1');
         $manager->persist($subquestion28_1);
 
         $subquestion28_2 = new Subquestion();
         $subquestion28_2->setQuestion($question28);
-        $subquestion28_2->setTypology("VF");
+        $subquestion28_2->setTypology($typology3);
         $subquestion28_2->setAudioUrl('28_option_1_2');
         $manager->persist($subquestion28_2);
 
         $subquestion28_3 = new Subquestion();
         $subquestion28_3->setQuestion($question28);
-        $subquestion28_3->setTypology("VF");
+        $subquestion28_3->setTypology($typology3);
         $subquestion28_3->setAudioUrl('28_option_1_3');
         $manager->persist($subquestion28_3);
 
         $subquestion28_4 = new Subquestion();
         $subquestion28_4->setQuestion($question28);
-        $subquestion28_4->setTypology("VF");
+        $subquestion28_4->setTypology($typology3);
         $subquestion28_4->setAudioUrl('28_option_1_4');
         $manager->persist($subquestion28_4);
 
@@ -1290,31 +1309,31 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question29 = new Question();
         $question29->setQuestionnaire($questionnaire29);
-        $question29->setTypology("TVF");
-        $question29->setInstruction("");
+        $question29->setTypology($typology2);
+        $question29->setInstruction();
         $manager->persist($question29);
 
         $subquestion29_1 = new Subquestion();
         $subquestion29_1->setQuestion($question29);
-        $subquestion29_1->setTypology("VF");
+        $subquestion29_1->setTypology($typology3);
         $subquestion29_1->setAudioUrl('29_option_1_1');
         $manager->persist($subquestion29_1);
 
         $subquestion29_2 = new Subquestion();
         $subquestion29_2->setQuestion($question29);
-        $subquestion29_2->setTypology("VF");
+        $subquestion29_2->setTypology($typology3);
         $subquestion29_2->setAudioUrl('29_option_1_2');
         $manager->persist($subquestion29_2);
 
         $subquestion29_3 = new Subquestion();
         $subquestion29_3->setQuestion($question29);
-        $subquestion29_3->setTypology("VF");
+        $subquestion29_3->setTypology($typology3);
         $subquestion29_3->setAudioUrl('29_option_1_3');
         $manager->persist($subquestion29_3);
 
         $subquestion29_4 = new Subquestion();
         $subquestion29_4->setQuestion($question29);
-        $subquestion29_4->setTypology("VF");
+        $subquestion29_4->setTypology($typology3);
         $subquestion29_4->setAudioUrl('29_option_1_4');
         $manager->persist($subquestion29_4);
 
@@ -1399,13 +1418,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question4 = new Question();
         $question4->setQuestionnaire($questionnaire4);
-        $question4->setTypology("QRU");
-        $question4->setInstruction("");
+        $question4->setTypology($typology);
+        $question4->setInstruction();
         $manager->persist($question4);
 
         $subquestion4 = new Subquestion();
         $subquestion4->setQuestion($question4);
-        $subquestion4->setTypology("QRU");
+        $subquestion4->setTypology($typology);
         $manager->persist($subquestion4);
 
         $proposition4_1 = new Proposition();
@@ -1450,13 +1469,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question5 = new Question();
         $question5->setQuestionnaire($questionnaire5);
-        $question5->setTypology("QRU");
-        $question5->setInstruction("");
+        $question5->setTypology($typology);
+        $question5->setInstruction();
         $manager->persist($question5);
 
         $subquestion5 = new Subquestion();
         $subquestion5->setQuestion($question5);
-        $subquestion5->setTypology("QRU");
+        $subquestion5->setTypology($typology);
         $manager->persist($subquestion5);
 
         $proposition5_1 = new Proposition();
@@ -1502,13 +1521,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question36 = new Question();
         $question36->setQuestionnaire($questionnaire36);
-        $question36->setTypology("QRU");
-        $question36->setInstruction("");
+        $question36->setTypology($typology);
+        $question36->setInstruction();
         $manager->persist($question36);
 
         $subquestion36 = new Subquestion();
         $subquestion36->setQuestion($question36);
-        $subquestion36->setTypology("QRU");
+        $subquestion36->setTypology($typology);
         $manager->persist($subquestion36);
 
         $proposition36_1 = new Proposition();
@@ -1555,13 +1574,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question37 = new Question();
         $question37->setQuestionnaire($questionnaire37);
-        $question37->setTypology("QRU");
-        $question37->setInstruction("");
+        $question37->setTypology($typology);
+        $question37->setInstruction();
         $manager->persist($question37);
 
         $subquestion37 = new Subquestion();
         $subquestion37->setQuestion($question37);
-        $subquestion37->setTypology("QRU");
+        $subquestion37->setTypology($typology);
         $manager->persist($subquestion37);
 
         $proposition37_1 = new Proposition();
@@ -1606,31 +1625,31 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question10 = new Question();
         $question10->setQuestionnaire($questionnaire10);
-        $question10->setTypology("TVF");
-        $question10->setInstruction("");
+        $question10->setTypology($typology2);
+        $question10->setInstruction();
         $manager->persist($question10);
 
         $subquestion10_1 = new Subquestion();
         $subquestion10_1->setQuestion($question10);
-        $subquestion10_1->setTypology("VF");
+        $subquestion10_1->setTypology($typology3);
         $subquestion10_1->setAudioUrl("10_option_1_1");
         $manager->persist($subquestion10_1);
 
         $subquestion10_2 = new Subquestion();
         $subquestion10_2->setQuestion($question10);
-        $subquestion10_2->setTypology("VF");
+        $subquestion10_2->setTypology($typology3);
         $subquestion10_2->setAudioUrl("10_option_1_2");
         $manager->persist($subquestion10_2);
 
         $subquestion10_3 = new Subquestion();
         $subquestion10_3->setQuestion($question10);
-        $subquestion10_3->setTypology("VF");
+        $subquestion10_3->setTypology($typology3);
         $subquestion10_3->setAudioUrl("10_option_1_3");
         $manager->persist($subquestion10_3);
 
         $subquestion10_4 = new Subquestion();
         $subquestion10_4->setQuestion($question10);
-        $subquestion10_4->setTypology("VF");
+        $subquestion10_4->setTypology($typology3);
         $subquestion10_4->setAudioUrl("10_option_1_4");
         $manager->persist($subquestion10_4);
 
@@ -1714,13 +1733,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question22 = new Question();
         $question22->setQuestionnaire($questionnaire22);
-        $question22->setTypology("QRU");
-        $question22->setInstruction("");
+        $question22->setTypology($typology);
+        $question22->setInstruction();
         $manager->persist($question22);
 
         $subquestion22 = new Subquestion();
         $subquestion22->setQuestion($question22);
-        $subquestion22->setTypology("QRU");
+        $subquestion22->setTypology($typology);
         $manager->persist($subquestion22);
 
         $proposition22_1 = new Proposition();
@@ -1768,13 +1787,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question38 = new Question();
         $question38->setQuestionnaire($questionnaire38);
-        $question38->setTypology("QRU");
-        $question38->setInstruction("");
+        $question38->setTypology($typology);
+        $question38->setInstruction();
         $manager->persist($question38);
 
         $subquestion38 = new Subquestion();
         $subquestion38->setQuestion($question38);
-        $subquestion38->setTypology("QRU");
+        $subquestion38->setTypology($typology);
         $manager->persist($subquestion38);
 
         $proposition38_1 = new Proposition();
@@ -1819,13 +1838,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question16 = new Question();
         $question16->setQuestionnaire($questionnaire16);
-        $question16->setTypology("TVF");
-        $question16->setInstruction("");
+        $question16->setTypology($typology2);
+        $question16->setInstruction();
         $manager->persist($question16);
 
         $subquestion16 = new Subquestion();
         $subquestion16->setQuestion($question16);
-        $subquestion16->setTypology("VF");
+        $subquestion16->setTypology($typology3);
         $manager->persist($subquestion16);
 
         $proposition16_1 = new Proposition();
@@ -1867,13 +1886,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question17 = new Question();
         $question17->setQuestionnaire($questionnaire17);
-        $question17->setTypology("TVF");
-        $question17->setInstruction("");
+        $question17->setTypology($typology2);
+        $question17->setInstruction();
         $manager->persist($question17);
 
         $subquestion17 = new Subquestion();
         $subquestion17->setQuestion($question17);
-        $subquestion17->setTypology("VF");
+        $subquestion17->setTypology($typology3);
         $manager->persist($subquestion17);
 
         $proposition17_1 = new Proposition();
@@ -1916,13 +1935,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question18 = new Question();
         $question18->setQuestionnaire($questionnaire18);
-        $question18->setTypology("TVF");
-        $question18->setInstruction("");
+        $question18->setTypology($typology2);
+        $question18->setInstruction();
         $manager->persist($question18);
 
         $subquestion18 = new Subquestion();
         $subquestion18->setQuestion($question18);
-        $subquestion18->setTypology("VF");
+        $subquestion18->setTypology($typology3);
         $manager->persist($subquestion18);
 
         $proposition18_1 = new Proposition();
@@ -1965,13 +1984,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question19 = new Question();
         $question19->setQuestionnaire($questionnaire19);
-        $question19->setTypology("TVF");
-        $question19->setInstruction("");
+        $question19->setTypology($typology2);
+        $question19->setInstruction();
         $manager->persist($question19);
 
         $subquestion19 = new Subquestion();
         $subquestion19->setQuestion($question19);
-        $subquestion19->setTypology("VF");
+        $subquestion19->setTypology($typology3);
         $manager->persist($subquestion19);
 
         $proposition19_1 = new Proposition();
@@ -2014,13 +2033,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question20 = new Question();
         $question20->setQuestionnaire($questionnaire20);
-        $question20->setTypology("VF");
-        $question20->setInstruction("");
+        $question20->setTypology($typology3);
+        $question20->setInstruction();
         $manager->persist($question20);
 
         $subquestion20 = new Subquestion();
         $subquestion20->setQuestion($question20);
-        $subquestion20->setTypology("VF");
+        $subquestion20->setTypology($typology3);
         $manager->persist($subquestion20);
 
         $proposition20_1 = new Proposition();
@@ -2061,25 +2080,25 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question30 = new Question();
         $question30->setQuestionnaire($questionnaire30);
-        $question30->setTypology("TVF");
-        $question30->setInstruction("");
+        $question30->setTypology($typology2);
+        $question30->setInstruction();
         $manager->persist($question30);
 
         $subquestion30_1 = new Subquestion();
         $subquestion30_1->setQuestion($question30);
-        $subquestion30_1->setTypology("VF");
+        $subquestion30_1->setTypology($typology3);
         $subquestion30_1->setAudioUrl('30_option_1_1');
         $manager->persist($subquestion30_1);
 
         $subquestion30_2 = new Subquestion();
         $subquestion30_2->setQuestion($question30);
-        $subquestion30_2->setTypology("VF");
+        $subquestion30_2->setTypology($typology3);
         $subquestion30_2->setAudioUrl('30_option_1_2');
         $manager->persist($subquestion30_2);
 
         $subquestion30_3 = new Subquestion();
         $subquestion30_3->setQuestion($question30);
-        $subquestion30_3->setTypology("VF");
+        $subquestion30_3->setTypology($typology3);
         $subquestion30_3->setAudioUrl('30_option_1_3');
         $manager->persist($subquestion30_3);
 
@@ -2150,31 +2169,31 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question31 = new Question();
         $question31->setQuestionnaire($questionnaire31);
-        $question31->setTypology("TVF");
-        $question31->setInstruction("");
+        $question31->setTypology($typology2);
+        $question31->setInstruction();
         $manager->persist($question31);
 
         $subquestion31_1 = new Subquestion();
         $subquestion31_1->setQuestion($question31);
-        $subquestion31_1->setTypology("VF");
+        $subquestion31_1->setTypology($typology3);
         $subquestion31_1->setAudioUrl('31_option_1_1');
         $manager->persist($subquestion31_1);
 
         $subquestion31_2 = new Subquestion();
         $subquestion31_2->setQuestion($question31);
-        $subquestion31_2->setTypology("VF");
+        $subquestion31_2->setTypology($typology3);
         $subquestion31_2->setAudioUrl('31_option_1_2');
         $manager->persist($subquestion31_2);
 
         $subquestion31_3 = new Subquestion();
         $subquestion31_3->setQuestion($question31);
-        $subquestion31_3->setTypology("VF");
+        $subquestion31_3->setTypology($typology3);
         $subquestion31_3->setAudioUrl('31_option_1_3');
         $manager->persist($subquestion31_3);
 
         $subquestion31_4 = new Subquestion();
         $subquestion31_4->setQuestion($question31);
-        $subquestion31_4->setTypology("VF");
+        $subquestion31_4->setTypology($typology3);
         $subquestion31_4->setAudioUrl('31_option_1_4');
         $manager->persist($subquestion31_4);
 
@@ -2259,13 +2278,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question6 = new Question();
         $question6->setQuestionnaire($questionnaire6);
-        $question6->setTypology("QRU");
-        $question6->setInstruction("");
+        $question6->setTypology($typology);
+        $question6->setInstruction();
         $manager->persist($question6);
 
         $subquestion6 = new Subquestion();
         $subquestion6->setQuestion($question6);
-        $subquestion6->setTypology("QRU");
+        $subquestion6->setTypology($typology);
         $manager->persist($subquestion6);
 
         $proposition6_1 = new Proposition();
@@ -2310,13 +2329,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question24 = new Question();
         $question24->setQuestionnaire($questionnaire24);
-        $question24->setTypology("QRU");
-        $question24->setInstruction("");
+        $question24->setTypology($typology);
+        $question24->setInstruction();
         $manager->persist($question24);
 
         $subquestion24 = new Subquestion();
         $subquestion24->setQuestion($question24);
-        $subquestion24->setTypology("QRU");
+        $subquestion24->setTypology($typology);
         $manager->persist($subquestion24);
 
         $proposition24_1 = new Proposition();
@@ -2367,13 +2386,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question39 = new Question();
         $question39->setQuestionnaire($questionnaire39);
-        $question39->setTypology("QRU");
-        $question39->setInstruction("");
+        $question39->setTypology($typology);
+        $question39->setInstruction();
         $manager->persist($question39);
 
         $subquestion39 = new Subquestion();
         $subquestion39->setQuestion($question39);
-        $subquestion39->setTypology("QRU");
+        $subquestion39->setTypology($typology);
         $manager->persist($subquestion39);
 
         $proposition39_1 = new Proposition();
@@ -2418,13 +2437,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question7 = new Question();
         $question7->setQuestionnaire($questionnaire7);
-        $question7->setTypology("QRU");
-        $question7->setInstruction("");
+        $question7->setTypology($typology);
+        $question7->setInstruction();
         $manager->persist($question7);
 
         $subquestion7 = new Subquestion();
         $subquestion7->setQuestion($question7);
-        $subquestion7->setTypology("QRU");
+        $subquestion7->setTypology($typology);
         $manager->persist($subquestion7);
 
         $proposition7_1 = new Proposition();
@@ -2470,13 +2489,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question8 = new Question();
         $question8->setQuestionnaire($questionnaire8);
-        $question8->setTypology("QRU");
-        $question8->setInstruction("");
+        $question8->setTypology($typology);
+        $question8->setInstruction();
         $manager->persist($question8);
 
         $subquestion8 = new Subquestion();
         $subquestion8->setQuestion($question8);
-        $subquestion8->setTypology("QRU");
+        $subquestion8->setTypology($typology);
         $manager->persist($subquestion8);
 
         $proposition8_1 = new Proposition();
@@ -2524,46 +2543,46 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question21_1 = new Question();
         $question21_1->setQuestionnaire($questionnaire21);
-        $question21_1->setTypology("QRU");
-        $question21_1->setInstruction("");
+        $question21_1->setTypology($typology);
+        $question21_1->setInstruction();
         $manager->persist($question21_1);
 
         $question21_2 = new Question();
         $question21_2->setQuestionnaire($questionnaire21);
-        $question21_2->setTypology("QRU");
-        $question21_2->setInstruction("");
+        $question21_2->setTypology($typology);
+        $question21_2->setInstruction();
         $manager->persist($question21_2);
 
         $question21_3 = new Question();
         $question21_3->setQuestionnaire($questionnaire21);
-        $question21_3->setTypology("QRU");
-        $question21_3->setInstruction("");
+        $question21_3->setTypology($typology);
+        $question21_3->setInstruction();
         $manager->persist($question21_3);
 
         $question21_4 = new Question();
         $question21_4->setQuestionnaire($questionnaire21);
-        $question21_4->setTypology("QRU");
-        $question21_4->setInstruction("");
+        $question21_4->setTypology($typology);
+        $question21_4->setInstruction();
         $manager->persist($question21_4);
 
         $subquestion21_1 = new Subquestion();
         $subquestion21_1->setQuestion($question21_1);
-        $subquestion21_1->setTypology("QRU");
+        $subquestion21_1->setTypology($typology);
         $manager->persist($subquestion21_1);
 
         $subquestion21_2 = new Subquestion();
         $subquestion21_2->setQuestion($question21_2);
-        $subquestion21_2->setTypology("QRU");
+        $subquestion21_2->setTypology($typology);
         $manager->persist($subquestion21_2);
 
         $subquestion21_3 = new Subquestion();
         $subquestion21_3->setQuestion($question21_3);
-        $subquestion21_3->setTypology("QRU");
+        $subquestion21_3->setTypology($typology);
         $manager->persist($subquestion21_3);
 
         $subquestion21_4 = new Subquestion();
         $subquestion21_4->setQuestion($question21_4);
-        $subquestion21_4->setTypology("QRU");
+        $subquestion21_4->setTypology($typology);
         $manager->persist($subquestion21_4);
 
         $proposition21_1_1 = new Proposition();
@@ -2684,13 +2703,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question26_1 = new Question();
         $question26_1->setQuestionnaire($questionnaire26);
-        $question26_1->setTypology("TVF");
-        $question26_1->setInstruction("");
+        $question26_1->setTypology($typology2);
+        $question26_1->setInstruction();
         $manager->persist($question26_1);
 
         $subquestion26_1_1 = new Subquestion();
         $subquestion26_1_1->setQuestion($question26_1);
-        $subquestion26_1_1->setTypology("VF");
+        $subquestion26_1_1->setTypology($typology3);
         $manager->persist($subquestion26_1_1);
 
         $proposition26_1_1_1 = new Proposition();
@@ -2710,7 +2729,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $subquestion26_1_2 = new Subquestion();
         $subquestion26_1_2->setQuestion($question26_1);
-        $subquestion26_1_2->setTypology("VF");
+        $subquestion26_1_2->setTypology($typology3);
         $manager->persist($subquestion26_1_2);
 
         $proposition26_1_2_1 = new Proposition();
@@ -2730,7 +2749,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $subquestion26_1_3 = new Subquestion();
         $subquestion26_1_3->setQuestion($question26_1);
-        $subquestion26_1_3->setTypology("VF");
+        $subquestion26_1_3->setTypology($typology3);
         $manager->persist($subquestion26_1_3);
 
         $proposition26_1_3_1 = new Proposition();
@@ -2749,7 +2768,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $subquestion26_1_4 = new Subquestion();
         $subquestion26_1_4->setQuestion($question26_1);
-        $subquestion26_1_4->setTypology("VF");
+        $subquestion26_1_4->setTypology($typology3);
         $manager->persist($subquestion26_1_4);
 
         $proposition26_1_4_1 = new Proposition();
@@ -2768,13 +2787,13 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $question26_2 = new Question();
         $question26_2->setQuestionnaire($questionnaire26);
-        $question26_2->setTypology("TVF");
-        $question26_2->setInstruction("");
+        $question26_2->setTypology($typology2);
+        $question26_2->setInstruction();
         $manager->persist($question26_2);
 
         $subquestion26_2_1 = new Subquestion();
         $subquestion26_2_1->setQuestion($question26_2);
-        $subquestion26_2_1->setTypology("VF");
+        $subquestion26_2_1->setTypology($typology3);
         $manager->persist($subquestion26_2_1);
 
         $proposition26_2_1_1 = new Proposition();
@@ -2793,7 +2812,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $subquestion26_2_2 = new Subquestion();
         $subquestion26_2_2->setQuestion($question26_2);
-        $subquestion26_2_2->setTypology("VF");
+        $subquestion26_2_2->setTypology($typology3);
         $manager->persist($subquestion26_2_2);
 
         $proposition26_2_2_1 = new Proposition();
@@ -2812,7 +2831,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
 
         $subquestion26_2_3 = new Subquestion();
         $subquestion26_2_3->setQuestion($question26_2);
-        $subquestion26_2_3->setTypology("VF");
+        $subquestion26_2_3->setTypology($typology3);
         $manager->persist($subquestion26_2_3);
 
         $proposition26_2_3_1 = new Proposition();

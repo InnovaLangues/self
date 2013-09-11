@@ -49,13 +49,13 @@
     <div class="row test-container">
         <div class="text-center left-buttons">
             {% if questionnaire.audioContext != "" %}
-                <h4>Contexte</h4>
+                <h4>{{ 'test.field.context' | trans }}</h4>
                 {{ audio("context", questionnaire.audioContext, "bulles4.png", 60, 0) }}
             {% endif %}
 
 
             {% if consigne != "" %}
-                <h4>Consigne</h4>
+                <h4>{{ 'test.field.instruction' | trans }}</h4>
                 {{ audio("instruction", consigne, "bulles3.png", 60, 0) }}
             {% endif %}
         </div>
@@ -64,7 +64,7 @@
             <form id="main_form" action="{{ path('trace_submit') }}" method="post">
             <div class="col-md-3 col-md-offset-2">
                 <div id="situation" class="text-center">
-                    <h4>Dialogue</h4>
+                    <h4>{{ 'test.field.dialogue' | trans }}</h4>
                     <div class="dialogue">{{ audio("situtation", questionnaire.audioItem, "bulles2.png", 100, limit_listening) }}</div>
                     <!--<div class="alert alert-danger">{{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }}</div>-->
                 </div>
@@ -73,26 +73,26 @@
                     <h4>{{ questionnaire.instruction.name }}</h4>
                     {% for question in questionnaire.questions %}
                         {% if questionnaire.questions|length > 1 %}
-                            <h4>Question {{ question.id }} {{ question.instruction }} {{ audio("question"+question.id, question.audioUrl, "default") }}</h4>
+                            <h4>{{ question.instruction.name }} {{ audio("question"+question.id, question.audioUrl, "default") }}</h4>
                         {% endif %}
                         {% for subquestion in question.subquestions %}
                         <h4> {{ subquestion.title }}</h4>
                         <p>
-                            {% if subquestion.typology == "VF" and subquestion.audioUrl!= "" %}
+                            {% if subquestion.typology.name == "VF" and subquestion.audioUrl!= "" %}
                             {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulles6.png", 50, 0) }}
                             {% endif %}
                             {% for proposition in subquestion.propositions %}
-                                {% if subquestion.typology == "QRU" %}
+                                {% if subquestion.typology.name == "QRU" %}
                                 <p>
                                     {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50, 0) }}
                                     {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
                                 </p>
-                                {% elseif subquestion.typology == "QRM" %}
+                                {% elseif subquestion.typology.name == "QRM" %}
                                 <p>
                                     {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50, 0) }}
                                     {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
                                 </p>
-                                {% elseif subquestion.typology == "VF" %}
+                                {% elseif subquestion.typology.name == "VF" %}
                                     {{ inputs("radio", subquestion.id, proposition.id, proposition.title, 50, 0) }}
                                 {% endif %}
                             {% endfor %}
@@ -106,7 +106,7 @@
                     <input type="hidden" name="testId" value="{{ test.id }}"/>
                     
             </div>    
-            <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
+            <input id="submit" type="submit" class="pull-right btn btn-primary" value="{{ 'generic.validate' | trans }}"/>
             </form>           
         </div>
     </div>

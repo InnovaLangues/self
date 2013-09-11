@@ -34,6 +34,11 @@ class Instruction
     protected $questionnaires;
 
     /**
+    * @ORM\OneToMany(targetEntity="Question", mappedBy="instruction")
+    */
+    protected $questions;
+
+    /**
      * Get id
      *
      * @return integer 
