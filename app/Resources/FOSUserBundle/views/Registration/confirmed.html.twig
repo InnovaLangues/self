@@ -8,7 +8,7 @@
     {% if app.session is not empty %}
         {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
         {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
-	    <a href="{{ path('user_test') }}" class="btn btn-primary">Start test</a>
+	    <a href="{{ path('user_test') }}" class="btn btn-primary">{{ 'generic.start' | trans }}</a>
     {% endif %}
 
 {% endblock fos_user_content %}

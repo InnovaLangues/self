@@ -1,8 +1,11 @@
 {% extends '::base.html.twig' %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset("bundles/innovaself/css/main.css") }}" />
 {% endblock %}
-{% macro audio(id, src, icon) %}
+
+
+{% macro audio(id, src, icon, height, limit) %}
         <audio preload="auto" id="{{ id }}" class="item_audio">
             <source src="{{ asset('upload/audio/') ~ src }}.ogg" type="audio/ogg">
             <source src="{{ asset('upload/audio/') ~ src }}.mp3" type="audio/mp3">
@@ -11,14 +14,14 @@
         {% if icon == "default" %}
         <span sound="{{ id }}" statut="pause" class="item_audio_button btn btn-default glyphicon glyphicon-play"></span>
         {% else %}
-        <img sound="{{ id }}" statut="pause" class="item_audio_button" height="80px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+        <img data-listened=0 data-limit={{ limit }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
         {% endif %}
 
 {% endmacro %}
 
 {% macro inputs(type, subquestionId, propositionId, text) %}
     <label class="{{ type }}-inline">
-        <input type="{{ type }}" name="subquestion{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}"> 
+        <input type="{{ type }}" name="subquestion{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required> 
         {{ text }}
     </label>
 {% endmacro %}
@@ -33,44 +36,41 @@
     {% set consigne = questionnaire.audioInstruction %}
 {% endif %}
 
+{% if questionnaire.duration.name == "brève" %}
+    {% set limit_listening_text = "1 écoute possible" %}
+    {% set limit_listening = 1 %}
+{% else %}
+    {% set limit_listening_text = "2 écoutes possibles" %}
+    {% set limit_listening = 2 %}
+{% endif %}
+
 {% block body -%}
 
-    
-    <div class="row">
-        <div class="col-md-3">
-
+    <div class="row test-container">
+        <div class="text-center left-buttons">
             {% if questionnaire.audioContext != "" %}
-                {% set elementCount =  elementCount + 1 %}
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center"><h4>{{ 'test.field.context' | trans }}</h4></div>
-                    <div class="panel-body text-center">
-                    {{ audio("context", questionnaire.audioContext, "bulles4.png") }}
-                    </div>
-                </div>
+                <h4>Contexte</h4>
+                {{ audio("context", questionnaire.audioContext, "bulles4.png", 60, 0) }}
             {% endif %}
 
 
             {% if consigne != "" %}
-                {% set elementCount =  elementCount + 1 %}
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center"><h4>{{ 'test.field.instruction' | trans }}</h4></div>
-                    <div class="panel-body text-center">
-                    {{ audio("instruction", consigne, "bulles3.png") }}
-                    </div>
-                </div> 
+                <h4>Consigne</h4>
+                {{ audio("instruction", consigne, "bulles3.png", 60, 0) }}
             {% endif %}
         </div>
 
-        <div id="main-block" class="col-md-9 primary">
-            <div class="col-md-4">
+        <div id="main-block" class="col-md-12 primary">
+            <form id="main_form" action="{{ path('trace_submit') }}" method="post">
+            <div class="col-md-3 col-md-offset-2">
                 <div id="situation" class="text-center">
-                    <h4>{{ 'test.field.dialogue' | trans }} <br/>(X écoutes possibles)</h4>
-                    {{ audio("situtation", questionnaire.audioItem, "bulles2.png") }}
+                    <h4>Dialogue</h4>
+                    <div class="dialogue">{{ audio("situtation", questionnaire.audioItem, "bulles2.png", 100, limit_listening) }}</div>
+                    <!--<div class="alert alert-danger">{{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }}</div>-->
                 </div>
             </div>
-            <div class="col-md-6 pull-right">
-                <form id="form" action="{{ path('trace_submit') }}" method="post">
-                    <h4>{{ questionnaire.instruction }}</h4>
+            <div class="col-md-6 pull-right col-md-offset-1">
+                    <h4>{{ questionnaire.instruction.name }}</h4>
                     {% for question in questionnaire.questions %}
                         {% if questionnaire.questions|length > 1 %}
                             <h4>Question {{ question.id }} {{ question.instruction }} {{ audio("question"+question.id, question.audioUrl, "default") }}</h4>
@@ -78,22 +78,22 @@
                         {% for subquestion in question.subquestions %}
                         <h4> {{ subquestion.title }}</h4>
                         <p>
-                            {% if subquestion.typology == "VF" %}
-                            {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulles6.png") }}
+                            {% if subquestion.typology == "VF" and subquestion.audioUrl!= "" %}
+                            {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulles6.png", 50, 0) }}
                             {% endif %}
                             {% for proposition in subquestion.propositions %}
                                 {% if subquestion.typology == "QRU" %}
                                 <p>
-                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png") }}
+                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50, 0) }}
                                     {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
                                 </p>
                                 {% elseif subquestion.typology == "QRM" %}
                                 <p>
-                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png") }}
+                                    {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulles6.png", 50, 0) }}
                                     {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
                                 </p>
                                 {% elseif subquestion.typology == "VF" %}
-                                    {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
+                                    {{ inputs("radio", subquestion.id, proposition.id, proposition.title, 50, 0) }}
                                 {% endif %}
                             {% endfor %}
                         </p>
@@ -103,14 +103,23 @@
                     
                     <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>
                     <input type="hidden" id="totalTime" name="totalTime" value=""/>
-                    <input type="hidden" name="testId" value="{{ testId }}"/>
-            
-                    <input id="submit" type="submit" class="pull-right btn btn-primary" value="{{ 'generic.validate' | trans }}"/>
-                 </form>
-            </div>               
+                    <input type="hidden" name="testId" value="{{ test.id }}"/>
+                    
+            </div>    
+            <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
+            </form>           
         </div>
     </div>
-
+    <div class="row bottom_items">
+        <div class="col-md-3 text-center">
+            {{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }}
+        </div>
+        <div class="col-md-9">
+            <div id="progressbar" style="width:{{ ((counQuestionnaireDone) / test.questionnaires.count)*100 }}%">
+                <span class="progressbar-count">Item n° {{ counQuestionnaireDone + 1 }}/{{ test.questionnaires.count }}</span>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

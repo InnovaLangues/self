@@ -9,16 +9,23 @@ use Innova\SelfBundle\Entity\Questionnaire;
 class QuestionnaireRepository extends EntityRepository{
 
 	public function findOneNotDoneYetByUserByTest($testId, $userId){
-
-		//$dql = 'SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q WHERE :testId MEMBER OF q.tests';
-
-		$dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q WHERE q NOT IN (SELECT t FROM Innova\SelfBundle\Entity\Trace t WHERE t.user = :userId AND t.test = :testId AND t.questionnaire = q.id)";
+		$dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q WHERE q NOT IN (SELECT tq FROM Innova\SelfBundle\Entity\Trace t LEFT JOIN t.questionnaire tq WHERE t.user = :userId AND t.test = :testId)";
 
 		$query = $this->_em->createQuery($dql)
 				->setParameter('testId', $testId)
 				->setParameter('userId', $userId)
 				->setMaxResults(1);
-		return $query->getSingleResult();
+		return $query->getOneOrNullResult();
+	}
+
+
+	public function CountDoneYetByUserByTest($testId, $userId){
+		$dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t LEFT JOIN t.questionnaire tq WHERE t.user = :userId AND t.test = :testId";
+
+		$query = $this->_em->createQuery($dql)
+				->setParameter('testId', $testId)
+				->setParameter('userId', $userId);
+		return count($query->getResult());
 	}
 
 }
