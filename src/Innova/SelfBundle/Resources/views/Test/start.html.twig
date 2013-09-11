@@ -36,7 +36,7 @@
     {% set consigne = questionnaire.audioInstruction %}
 {% endif %}
 
-{% if questionnaire.duration.name == "brève" %}
+{% if questionnaire.duration.id == 1 %}
     {% set limit_listening_text = "1 écoute possible" %}
     {% set limit_listening = 1 %}
 {% else %}
