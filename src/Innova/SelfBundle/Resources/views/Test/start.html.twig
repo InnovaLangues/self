@@ -43,6 +43,7 @@
 {% endif %}
 
 {% block body -%}
+
     <div class="row test-container">
         <div class="text-center left-buttons">
             {% if questionnaire.audioContext != "" %}
@@ -63,7 +64,7 @@
                 <div id="situation" class="text-center">
                     <h4>Dialogue</h4>
                     <div class="dialogue">{{ audio("situtation", questionnaire.audioItem, "bulles2.png", 100, limit_listening) }}</div>
-                    <div class="alert alert-danger">{{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }}</div>
+                    <!--<div class="alert alert-danger">{{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }}</div>-->
                 </div>
             </div>
             <div class="col-md-6 pull-right col-md-offset-1">
@@ -98,11 +99,19 @@
                     {% endfor %}
                     <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>
                     <input type="hidden" id="totalTime" name="totalTime" value=""/>
-                    <input type="hidden" name="testId" value="{{ testId }}"/>
+                    <input type="hidden" name="testId" value="{{ test.id }}"/>
                     
             </div>    
             <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
             </form>           
+        </div>
+    </div>
+    <div class="row bottom_items">
+        <div class="col-md-3 text-center">
+            {{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }}
+        </div>
+        <div class="col-md-9">
+            <div id="progressbar" style="background-color:#D9EDF7;width:{{ (counQuestionnaireDone / test.questionnaires.count)*100 }}%">{{ counQuestionnaireDone }} / {{ test.questionnaires.count }}</div>
         </div>
     </div>
 {% endblock %}

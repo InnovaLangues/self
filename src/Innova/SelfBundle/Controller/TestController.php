@@ -30,6 +30,13 @@ class TestController extends Controller
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')
                             ->findOneNotDoneYetByUserByTest($test->getId(), $user->getId());
 
+        $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                            ->CountDoneYetByUserByTest($test->getId(), $user->getId());
+
+        $countQuestionnaire = count($test->getQuestionnaires());
+        echo $countQuestionnaire;
+
+
         if(is_null($questionnaire)){
             return $this->redirect(
                 $this->generateUrl(
@@ -38,11 +45,14 @@ class TestController extends Controller
                 )
             );
         }
+
+
         
        // $questionnaire = $this->getRandom($questionnaires);
         return array(
             'questionnaire' => $questionnaire,
-            'testId' => $test->getId()
+            'test' => $test,
+            'counQuestionnaireDone' => $countQuestionnaireDone,
         );
     }
 

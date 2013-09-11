@@ -18,4 +18,14 @@ class QuestionnaireRepository extends EntityRepository{
 		return $query->getOneOrNullResult();
 	}
 
+
+	public function CountDoneYetByUserByTest($testId, $userId){
+		$dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t LEFT JOIN t.questionnaire tq WHERE t.user = :userId AND t.test = :testId";
+
+		$query = $this->_em->createQuery($dql)
+				->setParameter('testId', $testId)
+				->setParameter('userId', $userId);
+		return count($query->getResult());
+	}
+
 }

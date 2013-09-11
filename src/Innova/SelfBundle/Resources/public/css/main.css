@@ -5,7 +5,7 @@
 }
 
 #main-block{
-	background-color:#D9EDF7;
+	
 	border-radius:5px;
 	padding:20px;
 	min-height: 300px;
@@ -30,6 +30,8 @@ input[type="checkbox"], input[type="radio"], label{
 	border:2px solid black;
 	padding:20px;
 	position:relative;
+	background-color:#D9EDF7;
+	margin-bottom:10px;
 }
 
 .left-buttons{
@@ -46,4 +48,15 @@ input[type="checkbox"], input[type="radio"], label{
 
 .dialogue{
 	margin-bottom:20px;
+}
+
+.bottom_items{
+	border-radius:5px;
+	border:2px solid black;
+}
+
+#progressbar{
+	padding-left:5px;
+	border-left:2px solid black;
+	border-radius:5px;
 }
