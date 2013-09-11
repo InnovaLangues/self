@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Typology
  *
- * @ORM\Table()
+ * @ORM\Table("typology")
  * @ORM\Entity
  */
 class Typology
@@ -41,7 +41,7 @@ class Typology
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -57,14 +57,14 @@ class Typology
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -78,7 +78,7 @@ class Typology
         $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subquestions = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add questions
      *
@@ -88,7 +88,7 @@ class Typology
     public function addQuestion(\Innova\SelfBundle\Entity\Question $questions)
     {
         $this->questions[] = $questions;
-    
+
         return $this;
     }
 
@@ -105,7 +105,7 @@ class Typology
     /**
      * Get questions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestions()
     {
@@ -121,7 +121,7 @@ class Typology
     public function addSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestions)
     {
         $this->subquestions[] = $subquestions;
-    
+
         return $this;
     }
 
@@ -138,7 +138,7 @@ class Typology
     /**
      * Get subquestions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubquestions()
     {
