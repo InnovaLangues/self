@@ -27,7 +27,7 @@ class AnonymousController extends Controller
 		    return $this->redirect($this->generateUrl('show_help'));
 		}
 
-        return array();
+        return $this->redirect($this->generateUrl('fos_user_security_login'), 301);
     }
-   
+
 }
