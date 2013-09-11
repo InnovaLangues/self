@@ -6,25 +6,23 @@ generic:
     ok: OK
     edit: Mettre à jour
     delete: Supprimer
+    register: Inscription
     login: Connexion
     logout: Déconnexion
-    start: Commencer le test
-    instruction: Consigne
-    context: Contexte
-    dialogue: Dialogue (X écoutes possibles)
     validate: Valider
-    answer: Sélectionner la réponse correcte
-    evaluate: Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
-    difficulty:
-        veryEasy: Très facile 
-        easy: Facile 
-        normal: Normal
-        difficult: Difficile 
-        veryDifficult: Très difficile 
+    chooseCorrectAnswer: Sélectionner la réponse correcte    
 
 user:
     singular: Utilisateur
     plural: Utilisateurs
+    field:
+        id: Numéro d'identification
+        userName : Nom
+        email : Email
+        password : Mot de passe
+        userName : Nom
+        firstName : Prénom
+        lastName : Nom
     action:
         index: Lister les utilisateurs
         create: Ajouter un utilisateur
@@ -41,3 +39,22 @@ user:
         delete:
             success: Votre utilisateur a bien été supprimé
             error: Votre utilisateur n'a pas été supprimé
+
+test:
+    action:
+        start: Commencer le test
+    field:
+        instruction: Consigne
+        context: Contexte
+        dialogue: Dialogue
+
+trace:
+    action:
+        evaluate: Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
+    field:
+        difficulty:
+            veryEasy: Très facile
+            easy: Facile 
+            normal: Normal
+            difficult: Difficile 
+            veryDifficult: Très difficile 

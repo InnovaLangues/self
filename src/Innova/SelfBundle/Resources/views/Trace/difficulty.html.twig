@@ -1,26 +1,26 @@
 {% extends '::base.html.twig' %}
 {% block body -%}
 <form action="{{ path('trace_setDifficulty') }}" method="post">
-    Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
+    {{ 'trace.action.evaluate' | trans }}
 
     <label class="radio">
-        <input type="radio" name="difficulty" value=1> Très facile
+        <input type="radio" name="difficulty" value=1> {{ 'trace.field.difficulty.veryEasy' | trans }}
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=2> Facile
+        <input type="radio" name="difficulty" value=2> {{ 'trace.field.difficulty.easy' | trans }}
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=3> Normal
+        <input type="radio" name="difficulty" value=3> {{ 'trace.field.difficulty.normal' | trans }}
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=4> Difficile
+        <input type="radio" name="difficulty" value=4> {{ 'trace.field.difficulty.difficult' | trans }}
     </label>
     <label class="radio">
-        <input type="radio" name="difficulty" value=5> Très difficile
+        <input type="radio" name="difficulty" value=5> {{ 'trace.field.difficulty.veryDifficult' | trans }}
     </label>
 
     <input type="hidden" name="traceId" value="{{ traceId }}"/>
     <input type="hidden" name="testId" value="{{ testId }}"/>
-    <input type="submit" class="btn btn-primary" value="Valider"/>
+    <input type="submit" class="btn btn-primary" value="{{ 'generic.validate' | trans }}"/>
 </form>
 {% endblock %}

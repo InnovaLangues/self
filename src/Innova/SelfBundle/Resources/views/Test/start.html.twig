@@ -42,7 +42,7 @@
             {% if questionnaire.audioContext != "" %}
                 {% set elementCount =  elementCount + 1 %}
                 <div class="panel panel-default">
-                    <div class="panel-heading text-center"><h4>Contexte</h4></div>
+                    <div class="panel-heading text-center"><h4>{{ 'test.field.context' | trans }}</h4></div>
                     <div class="panel-body text-center">
                     {{ audio("context", questionnaire.audioContext, "bulles4.png") }}
                     </div>
@@ -53,7 +53,7 @@
             {% if consigne != "" %}
                 {% set elementCount =  elementCount + 1 %}
                 <div class="panel panel-default">
-                    <div class="panel-heading text-center"><h4>Consigne</h4></div>
+                    <div class="panel-heading text-center"><h4>{{ 'test.field.instruction' | trans }}</h4></div>
                     <div class="panel-body text-center">
                     {{ audio("instruction", consigne, "bulles3.png") }}
                     </div>
@@ -64,7 +64,7 @@
         <div id="main-block" class="col-md-9 primary">
             <div class="col-md-4">
                 <div id="situation" class="text-center">
-                    <h4>Dialogue <br/>(X écoutes possibles)</h4>
+                    <h4>{{ 'test.field.dialogue' | trans }} <br/>(X écoutes possibles)</h4>
                     {{ audio("situtation", questionnaire.audioItem, "bulles2.png") }}
                 </div>
             </div>
@@ -105,7 +105,7 @@
                     <input type="hidden" id="totalTime" name="totalTime" value=""/>
                     <input type="hidden" name="testId" value="{{ testId }}"/>
             
-                    <input id="submit" type="submit" class="pull-right btn btn-primary" value="Valider"/>
+                    <input id="submit" type="submit" class="pull-right btn btn-primary" value="{{ 'generic.validate' | trans }}"/>
                  </form>
             </div>               
         </div>
