@@ -200,327 +200,191 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition2_3->setAudioUrl("2_option_1_3");
         $manager->persist($proposition2_3);
 
-    // ITEM 3
-        $questionnaire3->addTest($test);
-        $questionnaire3->setLevel("A2");
-        $questionnaire3->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire3->setTheme('bureau');
-        $questionnaire3->setSource('Conçu en interne');
-        $questionnaire3->setSupportType("enregistrement local (MLC)");
-        $questionnaire3->setFocus('');
-        $questionnaire3->setCognitiveOperation('');
-        $questionnaire3->setFunction('');
-        $questionnaire3->setReceptionType('');
-        $questionnaire3->setDomain('');
-        $questionnaire3->setType('');
-        $questionnaire3->setSourceType('');
-        $questionnaire3->setLanguageLevel('');
-        $questionnaire3->setDurationGroup('brève');
-        $questionnaire3->setFlow('');
-        $questionnaire3->setWordCount('');
-        $questionnaire3->setAuthor('');
-        $questionnaire3->setAudioInstruction('3_consigne');
-        $questionnaire3->setAudioContext('3_contexte');
-        $questionnaire3->setAudioItem('3_item');
-        $manager->persist($questionnaire3);
 
-        $question3 = new Question();
-        $question3->setQuestionnaire($questionnaire3);
-        $question3->setTypology("QRU");
-        $question3->setInstruction("");
-        $manager->persist($question3);
+        // ITEM 25
+        $questionnaire25->addTest($test);
+        $questionnaire25->setLevel("A2");
+        $questionnaire25->setInstruction('Cochez la case vrai (V) ou faux (F)');
+        $questionnaire25->setTheme('invitations');
+        $questionnaire25->setSource('méthodes et manuels (Allegro 2, Edilingua, p. 14, piste n° 5)');
+        $questionnaire25->setSupportType("enregistrement local (MLC)");
+        $questionnaire25->setFocus('');
+        $questionnaire25->setCognitiveOperation('');
+        $questionnaire25->setFunction('');
+        $questionnaire25->setReceptionType('');
+        $questionnaire25->setDomain('');
+        $questionnaire25->setType('');
+        $questionnaire25->setSourceType('');
+        $questionnaire25->setLanguageLevel('');
+        $questionnaire25->setDurationGroup('moyenne');
+        $questionnaire25->setFlow('');
+        $questionnaire25->setWordCount('');
+        $questionnaire25->setAuthor('');
+        $questionnaire25->setAudioInstruction('');
+        $questionnaire25->setAudioContext('');
+        $questionnaire25->setAudioItem('25_item');
+        $manager->persist($questionnaire25);
 
-        $subquestion3 = new Subquestion();
-        $subquestion3->setQuestion($question3);
-        $subquestion3->setTypology("QRU");
-        $manager->persist($subquestion3);
+        $question25 = new Question();
+        $question25->setQuestionnaire($questionnaire25);
+        $question25->setTypology("TVF");
+        $question25->setInstruction("");
+        $manager->persist($question25);
 
-        $proposition3_1 = new Proposition();
-        $proposition3_1->setSubquestion($subquestion3);
-        $proposition3_1->setRightAnswer(1);
-        $proposition3_1->setAudioUrl("3_option_1_1");
-        $manager->persist($proposition3_1);
+        $subquestion25_1 = new Subquestion();
+        $subquestion25_1->setQuestion($question25);
+        $subquestion25_1->setTypology("VF");
+        $subquestion25_1->setAudioUrl('25_option_1_1');
+        $manager->persist($subquestion25_1);
 
-        $proposition3_2 = new Proposition();
-        $proposition3_2->setSubquestion($subquestion3);
-        $proposition3_2->setRightAnswer(0);
-        $proposition3_2->setAudioUrl("3_option_1_2");
-        $manager->persist($proposition3_2);
+        $subquestion25_2 = new Subquestion();
+        $subquestion25_2->setQuestion($question25);
+        $subquestion25_2->setTypology("VF");
+        $subquestion25_2->setAudioUrl('25_option_1_2');
+        $manager->persist($subquestion25_2);
 
-        $proposition3_3 = new Proposition();
-        $proposition3_3->setSubquestion($subquestion3);
-        $proposition3_3->setRightAnswer(0);
-        $proposition3_3->setAudioUrl("3_option_1_3");
-        $manager->persist($proposition3_3);
+        $subquestion25_3 = new Subquestion();
+        $subquestion25_3->setQuestion($question25);
+        $subquestion25_3->setTypology("VF");
+        $subquestion25_3->setAudioUrl('25_option_1_3');
+        $manager->persist($subquestion25_3);
 
-    // ITEM 4
-        $questionnaire4->addTest($test);
-        $questionnaire4->setLevel("A2");
-        $questionnaire4->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire4->setTheme('dialogue maman-fils');
-        $questionnaire4->setSource('Conçu en interne');
-        $questionnaire4->setSupportType("enregistrement local (MLC)");
-        $questionnaire4->setFocus('');
-        $questionnaire4->setCognitiveOperation('');
-        $questionnaire4->setFunction('');
-        $questionnaire4->setReceptionType('');
-        $questionnaire4->setDomain('');
-        $questionnaire4->setType('');
-        $questionnaire4->setSourceType('');
-        $questionnaire4->setLanguageLevel('');
-        $questionnaire4->setDurationGroup('moyenne');
-        $questionnaire4->setFlow('');
-        $questionnaire4->setWordCount('');
-        $questionnaire4->setAuthor('');
-        $questionnaire4->setAudioInstruction('4_consigne');
-        $questionnaire4->setAudioContext('4_contexte');
-        $questionnaire4->setAudioItem('4_item');
-        $manager->persist($questionnaire4);
+        $subquestion25_4 = new Subquestion();
+        $subquestion25_4->setQuestion($question25);
+        $subquestion25_4->setTypology("VF");
+        $subquestion25_4->setAudioUrl('25_option_1_4');
+        $manager->persist($subquestion25_4);
 
-        $question4 = new Question();
-        $question4->setQuestionnaire($questionnaire4);
-        $question4->setTypology("QRU");
-        $question4->setInstruction("");
-        $manager->persist($question4);
+        $subquestion25_5 = new Subquestion();
+        $subquestion25_5->setQuestion($question25);
+        $subquestion25_5->setTypology("VF");
+        $subquestion25_5->setAudioUrl('25_option_1_5');
+        $manager->persist($subquestion25_5);
 
-        $subquestion4 = new Subquestion();
-        $subquestion4->setQuestion($question4);
-        $subquestion4->setTypology("QRU");
-        $manager->persist($subquestion4);
+        $proposition25_1_1 = new Proposition();
+        $proposition25_1_1->setSubquestion($subquestion25_1);
+        $proposition25_1_1->setRightAnswer(0);
+        $proposition25_1_1->setTitle("V");
+        $proposition25_1_1->setAudioUrl("");
+        $manager->persist($proposition25_1_1);
 
-        $proposition4_1 = new Proposition();
-        $proposition4_1->setSubquestion($subquestion4);
-        $proposition4_1->setRightAnswer(1);
-        $proposition4_1->setAudioUrl("4_option_1_1");
-        $manager->persist($proposition4_1);
+        $proposition25_1_2 = new Proposition();
+        $proposition25_1_2->setSubquestion($subquestion25_1);
+        $proposition25_1_2->setRightAnswer(1);
+        $proposition25_1_2->setTitle("F");
+        $proposition25_1_2->setAudioUrl("");
+        $manager->persist($proposition25_1_2);
 
-        $proposition4_2 = new Proposition();
-        $proposition4_2->setSubquestion($subquestion4);
-        $proposition4_2->setRightAnswer(0);
-        $proposition4_2->setAudioUrl("4_option_1_2");
-        $manager->persist($proposition4_2);
+        $proposition25_2_1 = new Proposition();
+        $proposition25_2_1->setSubquestion($subquestion25_2);
+        $proposition25_2_1->setRightAnswer(1);
+        $proposition25_2_1->setTitle("V");
+        $proposition25_2_1->setAudioUrl("");
+        $manager->persist($proposition25_2_1);
 
-        $proposition4_3 = new Proposition();
-        $proposition4_3->setSubquestion($subquestion4);
-        $proposition4_3->setRightAnswer(0);
-        $proposition4_3->setAudioUrl("4_option_1_3");
-        $manager->persist($proposition4_3);
+        $proposition25_2_2 = new Proposition();
+        $proposition25_2_2->setSubquestion($subquestion25_2);
+        $proposition25_2_2->setRightAnswer(0);
+        $proposition25_2_2->setTitle("F");
+        $proposition25_2_2->setAudioUrl("");
+        $manager->persist($proposition25_2_2);
 
-    // ITEM 5
-        $questionnaire5->addTest($test);
-        $questionnaire5->setLevel("A2");
-        $questionnaire5->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire5->setTheme('dialogue week-end');
-        $questionnaire5->setSource('Conçu en interne');
-        $questionnaire5->setSupportType("enregistrement local (MLC)");
-        $questionnaire5->setFocus('');
-        $questionnaire5->setCognitiveOperation('');
-        $questionnaire5->setFunction('');
-        $questionnaire5->setReceptionType('');
-        $questionnaire5->setDomain('');
-        $questionnaire5->setType('');
-        $questionnaire5->setSourceType('');
-        $questionnaire5->setLanguageLevel('');
-        $questionnaire5->setDurationGroup('brève');
-        $questionnaire5->setFlow('');
-        $questionnaire5->setWordCount('');
-        $questionnaire5->setAuthor('');
-        $questionnaire5->setAudioInstruction('5_consigne');
-        $questionnaire5->setAudioContext('5_contexte');
-        $questionnaire5->setAudioItem('5_item');
-        $manager->persist($questionnaire5);
+        $proposition25_3_1 = new Proposition();
+        $proposition25_3_1->setSubquestion($subquestion25_3);
+        $proposition25_3_1->setRightAnswer(1);
+        $proposition25_3_1->setTitle("V");
+        $proposition25_3_1->setAudioUrl("");
+        $manager->persist($proposition25_3_1);
 
-        $question5 = new Question();
-        $question5->setQuestionnaire($questionnaire5);
-        $question5->setTypology("QRU");
-        $question5->setInstruction("");
-        $manager->persist($question5);
+        $proposition25_3_2 = new Proposition();
+        $proposition25_3_2->setSubquestion($subquestion25_3);
+        $proposition25_3_2->setRightAnswer(0);
+        $proposition25_3_2->setTitle("F");
+        $proposition25_3_2->setAudioUrl("");
+        $manager->persist($proposition25_3_2);
 
-        $subquestion5 = new Subquestion();
-        $subquestion5->setQuestion($question5);
-        $subquestion5->setTypology("QRU");
-        $manager->persist($subquestion5);
+        $proposition25_4_1 = new Proposition();
+        $proposition25_4_1->setSubquestion($subquestion25_4);
+        $proposition25_4_1->setRightAnswer(0);
+        $proposition25_4_1->setTitle("V");
+        $proposition25_4_1->setAudioUrl("");
+        $manager->persist($proposition25_4_1);
 
-        $proposition5_1 = new Proposition();
-        $proposition5_1->setSubquestion($subquestion5);
-        $proposition5_1->setRightAnswer(1);
-        $proposition5_1->setAudioUrl("5_option_1_1");
-        $manager->persist($proposition5_1);
+        $proposition25_4_2 = new Proposition();
+        $proposition25_4_2->setSubquestion($subquestion25_4);
+        $proposition25_4_2->setRightAnswer(1);
+        $proposition25_4_2->setTitle("F");
+        $proposition25_4_2->setAudioUrl("");
+        $manager->persist($proposition25_4_2);
 
-        $proposition5_2 = new Proposition();
-        $proposition5_2->setSubquestion($subquestion5);
-        $proposition5_2->setRightAnswer(0);
-        $proposition5_2->setAudioUrl("5_option_1_2");
-        $manager->persist($proposition5_2);
+        $proposition25_5_1 = new Proposition();
+        $proposition25_5_1->setSubquestion($subquestion25_5);
+        $proposition25_5_1->setRightAnswer(0);
+        $proposition25_5_1->setTitle("V");
+        $proposition25_5_1->setAudioUrl("");
+        $manager->persist($proposition25_5_1);
 
-        $proposition5_3 = new Proposition();
-        $proposition5_3->setSubquestion($subquestion5);
-        $proposition5_3->setRightAnswer(0);
-        $proposition5_3->setAudioUrl("5_option_1_3");
-        $manager->persist($proposition5_3);
+        $proposition25_5_2 = new Proposition();
+        $proposition25_5_2->setSubquestion($subquestion25_5);
+        $proposition25_5_2->setRightAnswer(1);
+        $proposition25_5_2->setTitle("F");
+        $proposition25_5_2->setAudioUrl("");
+        $manager->persist($proposition25_5_2);
 
-    // ITEM 6
-        $questionnaire6->addTest($test);
-        $questionnaire6->setLevel("A2");
-        $questionnaire6->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire6->setTheme('la valise');
-        $questionnaire6->setSource('Conçu en interne');
-        $questionnaire6->setSupportType("enregistrement local (MLC)");
-        $questionnaire6->setFocus('');
-        $questionnaire6->setCognitiveOperation('');
-        $questionnaire6->setFunction('');
-        $questionnaire6->setReceptionType('');
-        $questionnaire6->setDomain('');
-        $questionnaire6->setType('');
-        $questionnaire6->setSourceType('');
-        $questionnaire6->setLanguageLevel('');
-        $questionnaire6->setDurationGroup('brève');
-        $questionnaire6->setFlow('');
-        $questionnaire6->setWordCount('');
-        $questionnaire6->setAuthor('');
-        $questionnaire6->setAudioInstruction('6_consigne');
-        $questionnaire6->setAudioContext('6_contexte');
-        $questionnaire6->setAudioItem('6_item');
-        $manager->persist($questionnaire6);
+        // ITEM 32
+        $questionnaire32->addTest($test);
+        $questionnaire32->setLevel("A2");
+        $questionnaire32->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire32->setTheme('Absence à l\'entraînement');
+        $questionnaire32->setSource('Conçu en interne');
+        $questionnaire32->setSupportType("enregistrement local (MLC)");
+        $questionnaire32->setFocus('');
+        $questionnaire32->setCognitiveOperation('');
+        $questionnaire32->setFunction('');
+        $questionnaire32->setReceptionType('');
+        $questionnaire32->setDomain('');
+        $questionnaire32->setType('');
+        $questionnaire32->setSourceType('');
+        $questionnaire32->setLanguageLevel('');
+        $questionnaire32->setDurationGroup('brève');
+        $questionnaire32->setFlow('');
+        $questionnaire32->setWordCount('');
+        $questionnaire32->setAuthor('');
+        $questionnaire32->setAudioInstruction('32_consigne');
+        $questionnaire32->setAudioContext('');
+        $questionnaire32->setAudioItem('32_item');
+        $manager->persist($questionnaire32);
 
-        $question6 = new Question();
-        $question6->setQuestionnaire($questionnaire6);
-        $question6->setTypology("QRU");
-        $question6->setInstruction("");
-        $manager->persist($question6);
+        $question32 = new Question();
+        $question32->setQuestionnaire($questionnaire32);
+        $question32->setTypology("QRU");
+        $question32->setInstruction("");
+        $manager->persist($question32);
 
-        $subquestion6 = new Subquestion();
-        $subquestion6->setQuestion($question6);
-        $subquestion6->setTypology("QRU");
-        $manager->persist($subquestion6);
+        $subquestion32 = new Subquestion();
+        $subquestion32->setQuestion($question32);
+        $subquestion32->setTypology("QRU");
+        $manager->persist($subquestion32);
 
-        $proposition6_1 = new Proposition();
-        $proposition6_1->setSubquestion($subquestion6);
-        $proposition6_1->setRightAnswer(1);
-        $proposition6_1->setAudioUrl("6_option_1_1");
-        $manager->persist($proposition6_1);
+        $proposition32_1 = new Proposition();
+        $proposition32_1->setSubquestion($subquestion32);
+        $proposition32_1->setRightAnswer(0);
+        $proposition32_1->setAudioUrl("32_option_1_1");
+        $manager->persist($proposition32_1);
 
-        $proposition6_2 = new Proposition();
-        $proposition6_2->setSubquestion($subquestion6);
-        $proposition6_2->setRightAnswer(0);
-        $proposition6_2->setAudioUrl("6_option_1_2");
-        $manager->persist($proposition6_2);
+        $proposition32_2 = new Proposition();
+        $proposition32_2->setSubquestion($subquestion32);
+        $proposition32_2->setRightAnswer(1);
+        $proposition32_2->setAudioUrl("32_option_1_2");
+        $manager->persist($proposition32_2);
 
-        $proposition6_3 = new Proposition();
-        $proposition6_3->setSubquestion($subquestion6);
-        $proposition6_3->setRightAnswer(0);
-        $proposition6_3->setAudioUrl("6_option_1_3");
-        $manager->persist($proposition6_3);
+        $proposition32_3 = new Proposition();
+        $proposition32_3->setSubquestion($subquestion32);
+        $proposition32_3->setRightAnswer(0);
+        $proposition32_3->setAudioUrl("32_option_1_3");
+        $manager->persist($proposition32_3);
 
-    // ITEM 7
-        $questionnaire7->addTest($test);
-        $questionnaire7->setLevel("A2");
-        $questionnaire7->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire7->setTheme('moment de relax');
-        $questionnaire7->setSource('Conçu en interne');
-        $questionnaire7->setSupportType("enregistrement local (MLC)");
-        $questionnaire7->setFocus('');
-        $questionnaire7->setCognitiveOperation('');
-        $questionnaire7->setFunction('');
-        $questionnaire7->setReceptionType('');
-        $questionnaire7->setDomain('');
-        $questionnaire7->setType('');
-        $questionnaire7->setSourceType('');
-        $questionnaire7->setLanguageLevel('');
-        $questionnaire7->setDurationGroup('brève');
-        $questionnaire7->setFlow('');
-        $questionnaire7->setWordCount('');
-        $questionnaire7->setAuthor('');
-        $questionnaire7->setAudioInstruction('7_consigne');
-        $questionnaire7->setAudioContext('7_contexte');
-        $questionnaire7->setAudioItem('7_item');
-        $manager->persist($questionnaire7);
-
-        $question7 = new Question();
-        $question7->setQuestionnaire($questionnaire7);
-        $question7->setTypology("QRU");
-        $question7->setInstruction("");
-        $manager->persist($question7);
-
-        $subquestion7 = new Subquestion();
-        $subquestion7->setQuestion($question7);
-        $subquestion7->setTypology("QRU");
-        $manager->persist($subquestion7);
-
-        $proposition7_1 = new Proposition();
-        $proposition7_1->setSubquestion($subquestion7);
-        $proposition7_1->setRightAnswer(1);
-        $proposition7_1->setAudioUrl("7_option_1_1");
-        $manager->persist($proposition7_1);
-
-        $proposition7_2 = new Proposition();
-        $proposition7_2->setSubquestion($subquestion7);
-        $proposition7_2->setRightAnswer(0);
-        $proposition7_2->setAudioUrl("7_option_1_2");
-        $manager->persist($proposition7_2);
-
-        $proposition7_3 = new Proposition();
-        $proposition7_3->setSubquestion($subquestion7);
-        $proposition7_3->setRightAnswer(0);
-        $proposition7_3->setAudioUrl("7_option_1_3");
-        $manager->persist($proposition7_3);
-
-
-    // ITEM 8
-        $questionnaire8->addTest($test);
-        $questionnaire8->setLevel("A2");
-        $questionnaire8->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire8->setTheme('réserver des billets au théâtre');
-        $questionnaire8->setSource('Conçu en interne');
-        $questionnaire8->setSupportType("enregistrement local (MLC)");
-        $questionnaire8->setFocus('');
-        $questionnaire8->setCognitiveOperation('');
-        $questionnaire8->setFunction('');
-        $questionnaire8->setReceptionType('');
-        $questionnaire8->setDomain('');
-        $questionnaire8->setType('');
-        $questionnaire8->setSourceType('');
-        $questionnaire8->setLanguageLevel('');
-        $questionnaire8->setDurationGroup('brève');
-        $questionnaire8->setFlow('');
-        $questionnaire8->setWordCount('');
-        $questionnaire8->setAuthor('');
-        $questionnaire8->setAudioInstruction('8_consigne');
-        $questionnaire8->setAudioContext('8_contexte');
-        $questionnaire8->setAudioItem('8_item');
-        $manager->persist($questionnaire8);
-
-        $question8 = new Question();
-        $question8->setQuestionnaire($questionnaire8);
-        $question8->setTypology("QRU");
-        $question8->setInstruction("");
-        $manager->persist($question8);
-
-        $subquestion8 = new Subquestion();
-        $subquestion8->setQuestion($question8);
-        $subquestion8->setTypology("QRU");
-        $manager->persist($subquestion8);
-
-        $proposition8_1 = new Proposition();
-        $proposition8_1->setSubquestion($subquestion8);
-        $proposition8_1->setRightAnswer(1);
-        $proposition8_1->setAudioUrl("8_option_1_1");
-        $manager->persist($proposition8_1);
-
-        $proposition8_2 = new Proposition();
-        $proposition8_2->setSubquestion($subquestion8);
-        $proposition8_2->setRightAnswer(0);
-        $proposition8_2->setAudioUrl("8_option_1_1");
-        $manager->persist($proposition8_2);
-
-        $proposition8_3 = new Proposition();
-        $proposition8_3->setSubquestion($subquestion8);
-        $proposition8_3->setRightAnswer(0);
-        $proposition8_3->setAudioUrl("8_option_1_1");
-        $manager->persist($proposition8_3);
-
-
-    // ITEM 9
+         // ITEM 9
         $questionnaire9->addTest($test);
         $questionnaire9->setLevel("A2");
         $questionnaire9->setInstruction('Cochez la case vrai (V) ou faux (F)');
@@ -610,117 +474,171 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition9_3_2->setAudioUrl("");
         $manager->persist($proposition9_3_2);
 
-    // ITEM 10
-        $questionnaire10->addTest($test);
-        $questionnaire10->setLevel("A2");
-        $questionnaire10->setInstruction('Cochez la case vrai (V) ou faux (F)');
-        $questionnaire10->setTheme('expression d’une inquiétude');
-        $questionnaire10->setSource('certification/test validé (CELI) / modifié');
-        $questionnaire10->setSupportType("enregistrement local (MLC)");
-        $questionnaire10->setFocus('');
-        $questionnaire10->setCognitiveOperation('');
-        $questionnaire10->setFunction('');
-        $questionnaire10->setReceptionType('');
-        $questionnaire10->setDomain('');
-        $questionnaire10->setType('');
-        $questionnaire10->setSourceType('');
-        $questionnaire10->setLanguageLevel('');
-        $questionnaire10->setDurationGroup('moyenne');
-        $questionnaire10->setFlow('');
-        $questionnaire10->setWordCount('');
-        $questionnaire10->setAuthor('');
-        $questionnaire10->setAudioInstruction('10_consigne');
-        $questionnaire10->setAudioContext('10_contexte');
-        $questionnaire10->setAudioItem('10_item');
-        $manager->persist($questionnaire10);
+    // ITEM 3
+        $questionnaire3->addTest($test);
+        $questionnaire3->setLevel("A2");
+        $questionnaire3->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire3->setTheme('bureau');
+        $questionnaire3->setSource('Conçu en interne');
+        $questionnaire3->setSupportType("enregistrement local (MLC)");
+        $questionnaire3->setFocus('');
+        $questionnaire3->setCognitiveOperation('');
+        $questionnaire3->setFunction('');
+        $questionnaire3->setReceptionType('');
+        $questionnaire3->setDomain('');
+        $questionnaire3->setType('');
+        $questionnaire3->setSourceType('');
+        $questionnaire3->setLanguageLevel('');
+        $questionnaire3->setDurationGroup('brève');
+        $questionnaire3->setFlow('');
+        $questionnaire3->setWordCount('');
+        $questionnaire3->setAuthor('');
+        $questionnaire3->setAudioInstruction('3_consigne');
+        $questionnaire3->setAudioContext('3_contexte');
+        $questionnaire3->setAudioItem('3_item');
+        $manager->persist($questionnaire3);
 
-        $question10 = new Question();
-        $question10->setQuestionnaire($questionnaire10);
-        $question10->setTypology("TVF");
-        $question10->setInstruction("");
-        $manager->persist($question10);
+        $question3 = new Question();
+        $question3->setQuestionnaire($questionnaire3);
+        $question3->setTypology("QRU");
+        $question3->setInstruction("");
+        $manager->persist($question3);
 
-        $subquestion10_1 = new Subquestion();
-        $subquestion10_1->setQuestion($question10);
-        $subquestion10_1->setTypology("VF");
-        $subquestion10_1->setAudioUrl("10_option_1_1");
-        $manager->persist($subquestion10_1);
+        $subquestion3 = new Subquestion();
+        $subquestion3->setQuestion($question3);
+        $subquestion3->setTypology("QRU");
+        $manager->persist($subquestion3);
 
-        $subquestion10_2 = new Subquestion();
-        $subquestion10_2->setQuestion($question10);
-        $subquestion10_2->setTypology("VF");
-        $subquestion10_2->setAudioUrl("10_option_1_2");
-        $manager->persist($subquestion10_2);
+        $proposition3_1 = new Proposition();
+        $proposition3_1->setSubquestion($subquestion3);
+        $proposition3_1->setRightAnswer(1);
+        $proposition3_1->setAudioUrl("3_option_1_1");
+        $manager->persist($proposition3_1);
 
-        $subquestion10_3 = new Subquestion();
-        $subquestion10_3->setQuestion($question10);
-        $subquestion10_3->setTypology("VF");
-        $subquestion10_3->setAudioUrl("10_option_1_3");
-        $manager->persist($subquestion10_3);
+        $proposition3_2 = new Proposition();
+        $proposition3_2->setSubquestion($subquestion3);
+        $proposition3_2->setRightAnswer(0);
+        $proposition3_2->setAudioUrl("3_option_1_2");
+        $manager->persist($proposition3_2);
 
-        $subquestion10_4 = new Subquestion();
-        $subquestion10_4->setQuestion($question10);
-        $subquestion10_4->setTypology("VF");
-        $subquestion10_4->setAudioUrl("10_option_1_4");
-        $manager->persist($subquestion10_4);
+        $proposition3_3 = new Proposition();
+        $proposition3_3->setSubquestion($subquestion3);
+        $proposition3_3->setRightAnswer(0);
+        $proposition3_3->setAudioUrl("3_option_1_3");
+        $manager->persist($proposition3_3);
 
-        $proposition10_1_1 = new Proposition();
-        $proposition10_1_1->setSubquestion($subquestion10_1);
-        $proposition10_1_1->setRightAnswer(1);
-        $proposition10_1_1->setTitle("V");
-        $proposition10_1_1->setAudioUrl("");
-        $manager->persist($proposition10_1_1);
+         // ITEM 23
+        $questionnaire23->addTest($test);
+        $questionnaire23->setLevel("A2");
+        $questionnaire23->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire23->setTheme('location voiture');
+        $questionnaire23->setSource('certification/test validé (CILS) / modifié ');
+        $questionnaire23->setSupportType("enregistrement local (MLC)");
+        $questionnaire23->setFocus('');
+        $questionnaire23->setCognitiveOperation('');
+        $questionnaire23->setFunction('');
+        $questionnaire23->setReceptionType('');
+        $questionnaire23->setDomain('');
+        $questionnaire23->setType('');
+        $questionnaire23->setSourceType('');
+        $questionnaire23->setLanguageLevel('');
+        $questionnaire23->setDurationGroup('brève');
+        $questionnaire23->setFlow('');
+        $questionnaire23->setWordCount('');
+        $questionnaire23->setAuthor('');
+        $questionnaire23->setAudioInstruction('23_consigne');
+        $questionnaire23->setAudioContext('');
+        $questionnaire23->setAudioItem('23_item');
+        $manager->persist($questionnaire23);
 
-        $proposition10_1_2 = new Proposition();
-        $proposition10_1_2->setSubquestion($subquestion10_1);
-        $proposition10_1_2->setRightAnswer(0);
-        $proposition10_1_2->setTitle("F");
-        $proposition10_1_2->setAudioUrl("");
-        $manager->persist($proposition10_1_2);
+        $question23 = new Question();
+        $question23->setQuestionnaire($questionnaire23);
+        $question23->setTypology("QRU");
+        $question23->setInstruction("");
+        $manager->persist($question23);
 
-        $proposition10_2_1 = new Proposition();
-        $proposition10_2_1->setSubquestion($subquestion10_2);
-        $proposition10_2_1->setRightAnswer(0);
-        $proposition10_2_1->setTitle("V");
-        $proposition10_2_1->setAudioUrl("");
-        $manager->persist($proposition10_2_1);
+        $subquestion23 = new Subquestion();
+        $subquestion23->setQuestion($question23);
+        $subquestion23->setTypology("QRU");
+        $manager->persist($subquestion23);
 
-        $proposition10_2_2 = new Proposition();
-        $proposition10_2_2->setSubquestion($subquestion10_2);
-        $proposition10_2_2->setRightAnswer(1);
-        $proposition10_2_2->setTitle("F");
-        $proposition10_2_2->setAudioUrl("");
-        $manager->persist($proposition10_2_2);
+        $proposition23_1 = new Proposition();
+        $proposition23_1->setSubquestion($subquestion23);
+        $proposition23_1->setRightAnswer(0);
+        $proposition23_1->setTitle("");
+        $proposition23_1->setAudioUrl("23_option_1_1");
+        $manager->persist($proposition23_1);
 
-        $proposition10_3_1 = new Proposition();
-        $proposition10_3_1->setSubquestion($subquestion10_3);
-        $proposition10_3_1->setRightAnswer(1);
-        $proposition10_3_1->setTitle("V");
-        $proposition10_3_1->setAudioUrl("");
-        $manager->persist($proposition10_3_1);
+        $proposition23_2 = new Proposition();
+        $proposition23_2->setSubquestion($subquestion23);
+        $proposition23_2->setRightAnswer(1);
+        $proposition23_2->setTitle("");
+        $proposition23_2->setAudioUrl("23_option_1_2");
+        $manager->persist($proposition23_2);
 
-        $proposition10_3_2 = new Proposition();
-        $proposition10_3_2->setSubquestion($subquestion10_3);
-        $proposition10_3_2->setRightAnswer(0);
-        $proposition10_3_2->setTitle("F");
-        $proposition10_3_2->setAudioUrl("");
-        $manager->persist($proposition10_3_2);
+        $proposition23_3 = new Proposition();
+        $proposition23_3->setSubquestion($subquestion23);
+        $proposition23_3->setRightAnswer(0);
+        $proposition23_3->setTitle("");
+        $proposition23_3->setAudioUrl("23_option_1_3");
+        $manager->persist($proposition23_3);
 
-        $proposition10_4_1 = new Proposition();
-        $proposition10_4_1->setSubquestion($subquestion10_4);
-        $proposition10_4_1->setRightAnswer(0);
-        $proposition10_4_1->setTitle("V");
-        $proposition10_4_1->setAudioUrl("");
-        $manager->persist($proposition10_4_1);
 
-        $proposition10_4_2 = new Proposition();
-        $proposition10_4_2->setSubquestion($subquestion10_4);
-        $proposition10_4_2->setRightAnswer(1);
-        $proposition10_4_2->setTitle("F");
-        $proposition10_4_2->setAudioUrl("");
-        $manager->persist($proposition10_4_2);
 
-    // ITEM 11
+        // ITEM 33
+        $questionnaire33->addTest($test);
+        $questionnaire33->setLevel("A2");
+        $questionnaire33->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire33->setTheme('Avant le départ');
+        $questionnaire33->setSource('Conçu en interne');
+        $questionnaire33->setSupportType("enregistrement local (MLC)");
+        $questionnaire33->setFocus('');
+        $questionnaire33->setCognitiveOperation('');
+        $questionnaire33->setFunction('');
+        $questionnaire33->setReceptionType('');
+        $questionnaire33->setDomain('');
+        $questionnaire33->setType('');
+        $questionnaire33->setSourceType('');
+        $questionnaire33->setLanguageLevel('');
+        $questionnaire33->setDurationGroup('brève');
+        $questionnaire33->setFlow('');
+        $questionnaire33->setWordCount('');
+        $questionnaire33->setAuthor('');
+        $questionnaire33->setAudioInstruction('33_consigne');
+        $questionnaire33->setAudioContext('');
+        $questionnaire33->setAudioItem('33_item');
+        $manager->persist($questionnaire33);
+
+        $question33 = new Question();
+        $question33->setQuestionnaire($questionnaire33);
+        $question33->setTypology("QRU");
+        $question33->setInstruction("");
+        $manager->persist($question33);
+
+        $subquestion33 = new Subquestion();
+        $subquestion33->setQuestion($question33);
+        $subquestion33->setTypology("QRU");
+        $manager->persist($subquestion33);
+
+        $proposition33_1 = new Proposition();
+        $proposition33_1->setSubquestion($subquestion33);
+        $proposition33_1->setRightAnswer(0);
+        $proposition33_1->setAudioUrl("33_option_1_1");
+        $manager->persist($proposition33_1);
+
+        $proposition33_2 = new Proposition();
+        $proposition33_2->setSubquestion($subquestion33);
+        $proposition33_2->setRightAnswer(1);
+        $proposition33_2->setAudioUrl("33_option_1_2");
+        $manager->persist($proposition33_2);
+
+        $proposition33_3 = new Proposition();
+        $proposition33_3->setSubquestion($subquestion33);
+        $proposition33_3->setRightAnswer(0);
+        $proposition33_3->setAudioUrl("33_option_1_3");
+        $manager->persist($proposition33_3);
+
+         // ITEM 11
         $questionnaire11->addTest($test);
         $questionnaire11->setLevel("A2");
         $questionnaire11->setInstruction('Cochez la réponse correcte');
@@ -973,886 +891,115 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition15_2->setAudioUrl("");
         $manager->persist($proposition15_2);
 
-    // ITEM 16
-        $questionnaire16->addTest($test);
-        $questionnaire16->setLevel("A2");
-        $questionnaire16->setInstruction('Cochez la réponse correcte');
-        $questionnaire16->setTheme('motiver son choix 06/10');
-        $questionnaire16->setSource('certification/test validé (CELI) / modifié');
-        $questionnaire16->setSupportType("enregistrement local (MLC)");
-        $questionnaire16->setFocus('');
-        $questionnaire16->setCognitiveOperation('');
-        $questionnaire16->setFunction('');
-        $questionnaire16->setReceptionType('');
-        $questionnaire16->setDomain('');
-        $questionnaire16->setType('');
-        $questionnaire16->setSourceType('');
-        $questionnaire16->setLanguageLevel('');
-        $questionnaire16->setDurationGroup('brève');
-        $questionnaire16->setFlow('');
-        $questionnaire16->setWordCount('');
-        $questionnaire16->setAuthor('');
-        $questionnaire16->setAudioInstruction('16_consigne');
-        $questionnaire16->setAudioContext('16_contexte');
-        $questionnaire16->setAudioItem('16_item');
-        $manager->persist($questionnaire16);
-
-        $question16 = new Question();
-        $question16->setQuestionnaire($questionnaire16);
-        $question16->setTypology("TVF");
-        $question16->setInstruction("");
-        $manager->persist($question16);
-
-        $subquestion16 = new Subquestion();
-        $subquestion16->setQuestion($question16);
-        $subquestion16->setTypology("VF");
-        $manager->persist($subquestion16);
-
-        $proposition16_1 = new Proposition();
-        $proposition16_1->setSubquestion($subquestion16);
-        $proposition16_1->setRightAnswer(0);
-        $proposition16_1->setTitle("Dà la spiegazione");
-        $proposition16_1->setAudioUrl("");
-        $manager->persist($proposition16_1);
-
-        $proposition16_2 = new Proposition();
-        $proposition16_2->setSubquestion($subquestion16);
-        $proposition16_2->setRightAnswer(1);
-        $proposition16_2->setTitle("Non dà la spiegazione");
-        $proposition16_2->setAudioUrl("");
-        $manager->persist($proposition16_2);
-
-
-    // ITEM 17
-        $questionnaire17->addTest($test);
-        $questionnaire17->setLevel("A2");
-        $questionnaire17->setInstruction('Cochez la réponse correcte');
-        $questionnaire17->setTheme('motiver son choix 07/10');
-        $questionnaire17->setSource('certification/test validé (CELI) / modifié');
-        $questionnaire17->setSupportType("enregistrement local (MLC)");
-        $questionnaire17->setFocus('');
-        $questionnaire17->setCognitiveOperation('');
-        $questionnaire17->setFunction('');
-        $questionnaire17->setReceptionType('');
-        $questionnaire17->setDomain('');
-        $questionnaire17->setType('');
-        $questionnaire17->setSourceType('');
-        $questionnaire17->setLanguageLevel('');
-        $questionnaire17->setDurationGroup('brève');
-        $questionnaire17->setFlow('');
-        $questionnaire17->setWordCount('');
-        $questionnaire17->setAuthor('');
-        $questionnaire17->setAudioInstruction('17_consigne');
-        $questionnaire17->setAudioContext('17_contexte');
-        $questionnaire17->setAudioItem('17_item');
-        $manager->persist($questionnaire17);
-
-        $question17 = new Question();
-        $question17->setQuestionnaire($questionnaire17);
-        $question17->setTypology("TVF");
-        $question17->setInstruction("");
-        $manager->persist($question17);
-
-        $subquestion17 = new Subquestion();
-        $subquestion17->setQuestion($question17);
-        $subquestion17->setTypology("VF");
-        $manager->persist($subquestion17);
-
-        $proposition17_1 = new Proposition();
-        $proposition17_1->setSubquestion($subquestion17);
-        $proposition17_1->setRightAnswer(1);
-        $proposition17_1->setTitle("Dà la spiegazione");
-        $proposition17_1->setAudioUrl("");
-        $manager->persist($proposition17_1);
-
-        $proposition17_2 = new Proposition();
-        $proposition17_2->setSubquestion($subquestion17);
-        $proposition17_2->setRightAnswer(0);
-        $proposition17_2->setTitle("Non dà la spiegazione");
-        $proposition17_2->setAudioUrl("");
-        $manager->persist($proposition17_2);
-
-
-
-    // ITEM 18
-        $questionnaire18->addTest($test);
-        $questionnaire18->setLevel("A2");
-        $questionnaire18->setInstruction('Cochez la réponse correcte');
-        $questionnaire18->setTheme('motiver son choix 08/10');
-        $questionnaire18->setSource('certification/test validé (CELI) / modifié');
-        $questionnaire18->setSupportType("enregistrement local (MLC)");
-        $questionnaire18->setFocus('');
-        $questionnaire18->setCognitiveOperation('');
-        $questionnaire18->setFunction('');
-        $questionnaire18->setReceptionType('');
-        $questionnaire18->setDomain('');
-        $questionnaire18->setType('');
-        $questionnaire18->setSourceType('');
-        $questionnaire18->setLanguageLevel('');
-        $questionnaire18->setDurationGroup('brève');
-        $questionnaire18->setFlow('');
-        $questionnaire18->setWordCount('');
-        $questionnaire18->setAuthor('');
-        $questionnaire18->setAudioInstruction('18_consigne');
-        $questionnaire18->setAudioContext('18_contexte');
-        $questionnaire18->setAudioItem('18_item');
-        $manager->persist($questionnaire18);
-
-        $question18 = new Question();
-        $question18->setQuestionnaire($questionnaire18);
-        $question18->setTypology("TVF");
-        $question18->setInstruction("");
-        $manager->persist($question18);
-
-        $subquestion18 = new Subquestion();
-        $subquestion18->setQuestion($question18);
-        $subquestion18->setTypology("VF");
-        $manager->persist($subquestion18);
-
-        $proposition18_1 = new Proposition();
-        $proposition18_1->setSubquestion($subquestion18);
-        $proposition18_1->setRightAnswer(0);
-        $proposition18_1->setTitle("Dà la spiegazione");
-        $proposition18_1->setAudioUrl("");
-        $manager->persist($proposition18_1);
-
-        $proposition18_2 = new Proposition();
-        $proposition18_2->setSubquestion($subquestion18);
-        $proposition18_2->setRightAnswer(1);
-        $proposition18_2->setTitle("Non dà la spiegazione");
-        $proposition18_2->setAudioUrl("");
-        $manager->persist($proposition18_2);
-
-
-
-    // ITEM 19
-        $questionnaire19->addTest($test);
-        $questionnaire19->setLevel("A2");
-        $questionnaire19->setInstruction('Cochez la réponse correcte');
-        $questionnaire19->setTheme('motiver son choix 09/10');
-        $questionnaire19->setSource('certification/test validé (CELI) / modifié');
-        $questionnaire19->setSupportType("enregistrement local (MLC)");
-        $questionnaire19->setFocus('');
-        $questionnaire19->setCognitiveOperation('');
-        $questionnaire19->setFunction('');
-        $questionnaire19->setReceptionType('');
-        $questionnaire19->setDomain('');
-        $questionnaire19->setType('');
-        $questionnaire19->setSourceType('');
-        $questionnaire19->setLanguageLevel('');
-        $questionnaire19->setDurationGroup('brève');
-        $questionnaire19->setFlow('');
-        $questionnaire19->setWordCount('');
-        $questionnaire19->setAuthor('');
-        $questionnaire19->setAudioInstruction('19_consigne');
-        $questionnaire19->setAudioContext('19_contexte');
-        $questionnaire19->setAudioItem('19_item');
-        $manager->persist($questionnaire19);
-
-        $question19 = new Question();
-        $question19->setQuestionnaire($questionnaire19);
-        $question19->setTypology("TVF");
-        $question19->setInstruction("");
-        $manager->persist($question19);
-
-        $subquestion19 = new Subquestion();
-        $subquestion19->setQuestion($question19);
-        $subquestion19->setTypology("VF");
-        $manager->persist($subquestion19);
-
-        $proposition19_1 = new Proposition();
-        $proposition19_1->setSubquestion($subquestion19);
-        $proposition19_1->setRightAnswer(0);
-        $proposition19_1->setTitle("Dà la spiegazione");
-        $proposition19_1->setAudioUrl("");
-        $manager->persist($proposition19_1);
-
-        $proposition19_2 = new Proposition();
-        $proposition19_2->setSubquestion($subquestion19);
-        $proposition19_2->setRightAnswer(1);
-        $proposition19_2->setTitle("Non dà la spiegazione");
-        $proposition19_2->setAudioUrl("");
-        $manager->persist($proposition19_2);
-
-
-
-    // ITEM 20
-        $questionnaire20->addTest($test);
-        $questionnaire20->setLevel("A2");
-        $questionnaire20->setInstruction('Cochez la réponse correcte');
-        $questionnaire20->setTheme('motiver son choix 10/10');
-        $questionnaire20->setSource('certification/test validé (CELI) / modifié');
-        $questionnaire20->setSupportType("enregistrement local (MLC)");
-        $questionnaire20->setFocus('');
-        $questionnaire20->setCognitiveOperation('');
-        $questionnaire20->setFunction('');
-        $questionnaire20->setReceptionType('');
-        $questionnaire20->setDomain('');
-        $questionnaire20->setType('');
-        $questionnaire20->setSourceType('');
-        $questionnaire20->setLanguageLevel('');
-        $questionnaire20->setDurationGroup('brève');
-        $questionnaire20->setFlow('');
-        $questionnaire20->setWordCount('');
-        $questionnaire20->setAuthor('');
-        $questionnaire20->setAudioInstruction('20_consigne');
-        $questionnaire20->setAudioContext('20_contexte');
-        $questionnaire20->setAudioItem('20_item');
-        $manager->persist($questionnaire20);
-
-        $question20 = new Question();
-        $question20->setQuestionnaire($questionnaire20);
-        $question20->setTypology("VF");
-        $question20->setInstruction("");
-        $manager->persist($question20);
-
-        $subquestion20 = new Subquestion();
-        $subquestion20->setQuestion($question20);
-        $subquestion20->setTypology("VF");
-        $manager->persist($subquestion20);
-
-        $proposition20_1 = new Proposition();
-        $proposition20_1->setSubquestion($subquestion20);
-        $proposition20_1->setRightAnswer(1);
-        $proposition20_1->setTitle("Dà la spiegazione");
-        $proposition20_1->setAudioUrl("");
-        $manager->persist($proposition20_1);
-
-        $proposition20_2 = new Proposition();
-        $proposition20_2->setSubquestion($subquestion20);
-        $proposition20_2->setRightAnswer(0);
-        $proposition20_2->setTitle("Non dà la spiegazione");
-        $proposition20_2->setAudioUrl("");
-        $manager->persist($proposition20_2);
-
-
-
-    /*
-    // ITEM 21
-        $questionnaire21->addTest($test);
-        $questionnaire21->setLevel("A2");
-        $questionnaire21->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire21->setTheme('ameublement');
-        $questionnaire21->setSource('méthodes et manuels (Allegro 2, Edilingua, p. 22, unità 2) / modifié');
-        $questionnaire21->setSupportType("enregistrement local (MLC)");
-        $questionnaire21->setFocus('');
-        $questionnaire21->setCognitiveOperation('');
-        $questionnaire21->setFunction('');
-        $questionnaire21->setReceptionType('');
-        $questionnaire21->setDomain('');
-        $questionnaire21->setType('');
-        $questionnaire21->setSourceType('');
-        $questionnaire21->setLanguageLevel('');
-        $questionnaire21->setDurationGroup('brève');
-        $questionnaire21->setFlow('');
-        $questionnaire21->setWordCount('');
-        $questionnaire21->setAuthor('');
-        $questionnaire21->setAudioInstruction('');
-        $questionnaire21->setAudioContext('');
-        $questionnaire21->setAudioItem('');
-        $manager->persist($questionnaire21);
-
-        $question21_1 = new Question();
-        $question21_1->setQuestionnaire($questionnaire21);
-        $question21_1->setTypology("QRU");
-        $question21_1->setInstruction("");
-        $manager->persist($question21_1);
-
-        $question21_2 = new Question();
-        $question21_2->setQuestionnaire($questionnaire21);
-        $question21_2->setTypology("QRU");
-        $question21_2->setInstruction("");
-        $manager->persist($question21_2);
-
-        $question21_3 = new Question();
-        $question21_3->setQuestionnaire($questionnaire21);
-        $question21_3->setTypology("QRU");
-        $question21_3->setInstruction("");
-        $manager->persist($question21_3);
-
-        $question21_4 = new Question();
-        $question21_4->setQuestionnaire($questionnaire21);
-        $question21_4->setTypology("QRU");
-        $question21_4->setInstruction("");
-        $manager->persist($question21_4);
-
-        $subquestion21_1 = new Subquestion();
-        $subquestion21_1->setQuestion($question21_1);
-        $subquestion21_1->setTypology("QRU");
-        $manager->persist($subquestion21_1);
-
-        $subquestion21_2 = new Subquestion();
-        $subquestion21_2->setQuestion($question21_2);
-        $subquestion21_2->setTypology("QRU");
-        $manager->persist($subquestion21_2);
-
-        $subquestion21_3 = new Subquestion();
-        $subquestion21_3->setQuestion($question21_3);
-        $subquestion21_3->setTypology("QRU");
-        $manager->persist($subquestion21_3);
-
-        $subquestion21_4 = new Subquestion();
-        $subquestion21_4->setQuestion($question21_4);
-        $subquestion21_4->setTypology("QRU");
-        $manager->persist($subquestion21_4);
-
-        $proposition21_1_1 = new Proposition();
-        $proposition21_1_1->setSubquestion($subquestion21_1);
-        $proposition21_1_1->setRightAnswer(1);
-        $proposition21_1_1->setTitle("");
-        $proposition21_1_1->setAudioUrl("");
-        $manager->persist($proposition21_1_1);
-
-        $proposition21_1_2 = new Proposition();
-        $proposition21_1_2->setSubquestion($subquestion21_1);
-        $proposition21_1_2->setRightAnswer(0);
-        $proposition21_1_2->setTitle("");
-        $proposition21_1_2->setAudioUrl("");
-        $manager->persist($proposition21_1_2);
-
-        $proposition21_1_3 = new Proposition();
-        $proposition21_1_3->setSubquestion($subquestion21_1);
-        $proposition21_1_3->setRightAnswer(0);
-        $proposition21_1_3->setTitle("");
-        $proposition21_1_3->setAudioUrl("");
-        $manager->persist($proposition21_1_3);
-
-        $proposition21_2_1 = new Proposition();
-        $proposition21_2_1->setSubquestion($subquestion21_2);
-        $proposition21_2_1->setRightAnswer(0);
-        $proposition21_2_1->setTitle("");
-        $proposition21_2_1->setAudioUrl("");
-        $manager->persist($proposition21_2_1);
-
-        $proposition21_2_2 = new Proposition();
-        $proposition21_2_2->setSubquestion($subquestion21_2);
-        $proposition21_2_2->setRightAnswer(1);
-        $proposition21_2_2->setTitle("");
-        $proposition21_2_2->setAudioUrl("");
-        $manager->persist($proposition21_2_2);
-
-        $proposition21_2_3 = new Proposition();
-        $proposition21_2_3->setSubquestion($subquestion21_2);
-        $proposition21_2_3->setRightAnswer(0);
-        $proposition21_2_3->setTitle("");
-        $proposition21_2_3->setAudioUrl("");
-        $manager->persist($proposition21_2_3);
-
-        $proposition21_3_1 = new Proposition();
-        $proposition21_3_1->setSubquestion($subquestion21_3);
-        $proposition21_3_1->setRightAnswer(1);
-        $proposition21_3_1->setTitle("");
-        $proposition21_3_1->setAudioUrl("");
-        $manager->persist($proposition21_3_1);
-
-        $proposition21_3_2 = new Proposition();
-        $proposition21_3_2->setSubquestion($subquestion21_3);
-        $proposition21_3_2->setRightAnswer(0);
-        $proposition21_3_2->setTitle("");
-        $proposition21_3_2->setAudioUrl("");
-        $manager->persist($proposition21_3_2);
-
-        $proposition21_3_3 = new Proposition();
-        $proposition21_3_3->setSubquestion($subquestion21_3);
-        $proposition21_3_3->setRightAnswer(0);
-        $proposition21_3_3->setTitle("");
-        $proposition21_3_3->setAudioUrl("");
-        $manager->persist($proposition21_3_3);
-
-        $proposition21_4_1 = new Proposition();
-        $proposition21_4_1->setSubquestion($subquestion21_4);
-        $proposition21_4_1->setRightAnswer(0);
-        $proposition21_4_1->setTitle("");
-        $proposition21_4_1->setAudioUrl("");
-        $manager->persist($proposition21_4_1);
-
-        $proposition21_4_2 = new Proposition();
-        $proposition21_4_2->setSubquestion($subquestion21_4);
-        $proposition21_4_2->setRightAnswer(1);
-        $proposition21_4_2->setTitle("");
-        $proposition21_4_2->setAudioUrl("");
-        $manager->persist($proposition21_4_2);
-
-        $proposition21_4_3 = new Proposition();
-        $proposition21_4_3->setSubquestion($subquestion21_4);
-        $proposition21_4_3->setRightAnswer(0);
-        $proposition21_4_3->setTitle("");
-        $proposition21_4_3->setAudioUrl("");
-        $manager->persist($proposition21_4_3);
-    */
-        
-    // ITEM 22
-        $questionnaire22->addTest($test);
-        $questionnaire22->setLevel("A2");
-        $questionnaire22->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire22->setTheme('au secrétariat');
-        $questionnaire22->setSource('certification/test validé (CILS)');
-        $questionnaire22->setSupportType("enregistrement local (MLC)");
-        $questionnaire22->setFocus('');
-        $questionnaire22->setCognitiveOperation('');
-        $questionnaire22->setFunction('');
-        $questionnaire22->setReceptionType('');
-        $questionnaire22->setDomain('');
-        $questionnaire22->setType('');
-        $questionnaire22->setSourceType('');
-        $questionnaire22->setLanguageLevel('');
-        $questionnaire22->setDurationGroup('brève');
-        $questionnaire22->setFlow('');
-        $questionnaire22->setWordCount('');
-        $questionnaire22->setAuthor('');
-        $questionnaire22->setAudioInstruction('22_consigne');
-        $questionnaire22->setAudioContext('');
-        $questionnaire22->setAudioItem('22_item');
-        $manager->persist($questionnaire22);
-
-        $question22 = new Question();
-        $question22->setQuestionnaire($questionnaire22);
-        $question22->setTypology("QRU");
-        $question22->setInstruction("");
-        $manager->persist($question22);
-
-        $subquestion22 = new Subquestion();
-        $subquestion22->setQuestion($question22);
-        $subquestion22->setTypology("QRU");
-        $manager->persist($subquestion22);
-
-        $proposition22_1 = new Proposition();
-        $proposition22_1->setSubquestion($subquestion22);
-        $proposition22_1->setRightAnswer(1);
-        $proposition22_1->setTitle("");
-        $proposition22_1->setAudioUrl("22_option_1_1");
-        $manager->persist($proposition22_1);
-
-        $proposition22_2 = new Proposition();
-        $proposition22_2->setSubquestion($subquestion22);
-        $proposition22_2->setRightAnswer(0);
-        $proposition22_2->setTitle("");
-        $proposition22_2->setAudioUrl("22_option_1_2");
-        $manager->persist($proposition22_2);
-
-        $proposition22_3 = new Proposition();
-        $proposition22_3->setSubquestion($subquestion22);
-        $proposition22_3->setRightAnswer(0);
-        $proposition22_3->setTitle("");
-        $proposition22_3->setAudioUrl("22_option_1_3");
-        $manager->persist($proposition22_3);
-
-    // ITEM 23
-        $questionnaire23->addTest($test);
-        $questionnaire23->setLevel("A2");
-        $questionnaire23->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire23->setTheme('location voiture');
-        $questionnaire23->setSource('certification/test validé (CILS) / modifié ');
-        $questionnaire23->setSupportType("enregistrement local (MLC)");
-        $questionnaire23->setFocus('');
-        $questionnaire23->setCognitiveOperation('');
-        $questionnaire23->setFunction('');
-        $questionnaire23->setReceptionType('');
-        $questionnaire23->setDomain('');
-        $questionnaire23->setType('');
-        $questionnaire23->setSourceType('');
-        $questionnaire23->setLanguageLevel('');
-        $questionnaire23->setDurationGroup('brève');
-        $questionnaire23->setFlow('');
-        $questionnaire23->setWordCount('');
-        $questionnaire23->setAuthor('');
-        $questionnaire23->setAudioInstruction('23_consigne');
-        $questionnaire23->setAudioContext('');
-        $questionnaire23->setAudioItem('23_item');
-        $manager->persist($questionnaire23);
-
-        $question23 = new Question();
-        $question23->setQuestionnaire($questionnaire23);
-        $question23->setTypology("QRU");
-        $question23->setInstruction("");
-        $manager->persist($question23);
-
-        $subquestion23 = new Subquestion();
-        $subquestion23->setQuestion($question23);
-        $subquestion23->setTypology("QRU");
-        $manager->persist($subquestion23);
-
-        $proposition23_1 = new Proposition();
-        $proposition23_1->setSubquestion($subquestion23);
-        $proposition23_1->setRightAnswer(0);
-        $proposition23_1->setTitle("");
-        $proposition23_1->setAudioUrl("23_option_1_1");
-        $manager->persist($proposition23_1);
-
-        $proposition23_2 = new Proposition();
-        $proposition23_2->setSubquestion($subquestion23);
-        $proposition23_2->setRightAnswer(1);
-        $proposition23_2->setTitle("");
-        $proposition23_2->setAudioUrl("23_option_1_2");
-        $manager->persist($proposition23_2);
-
-        $proposition23_3 = new Proposition();
-        $proposition23_3->setSubquestion($subquestion23);
-        $proposition23_3->setRightAnswer(0);
-        $proposition23_3->setTitle("");
-        $proposition23_3->setAudioUrl("23_option_1_3");
-        $manager->persist($proposition23_3);
-
-    // ITEM 24
-        $questionnaire24->addTest($test);
-        $questionnaire24->setLevel("A2");
-        $questionnaire24->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire24->setTheme('billetterie théatre');
-        $questionnaire24->setSource('Conçu en interne');
-        $questionnaire24->setSupportType("enregistrement local (MLC)");
-        $questionnaire24->setFocus('');
-        $questionnaire24->setCognitiveOperation('');
-        $questionnaire24->setFunction('');
-        $questionnaire24->setReceptionType('');
-        $questionnaire24->setDomain('');
-        $questionnaire24->setType('');
-        $questionnaire24->setSourceType('');
-        $questionnaire24->setLanguageLevel('');
-        $questionnaire24->setDurationGroup('brève');
-        $questionnaire24->setFlow('');
-        $questionnaire24->setWordCount('');
-        $questionnaire24->setAuthor('');
-        $questionnaire24->setAudioInstruction('24_consigne');
-        $questionnaire24->setAudioContext('');
-        $questionnaire24->setAudioItem('24_item');
-        $manager->persist($questionnaire24);
-
-        $question24 = new Question();
-        $question24->setQuestionnaire($questionnaire24);
-        $question24->setTypology("QRU");
-        $question24->setInstruction("");
-        $manager->persist($question24);
-
-        $subquestion24 = new Subquestion();
-        $subquestion24->setQuestion($question24);
-        $subquestion24->setTypology("QRU");
-        $manager->persist($subquestion24);
-
-        $proposition24_1 = new Proposition();
-        $proposition24_1->setSubquestion($subquestion24);
-        $proposition24_1->setRightAnswer(0);
-        $proposition24_1->setTitle("");
-        $proposition24_1->setAudioUrl("24_option_1_1");
-        $manager->persist($proposition24_1);
-
-        $proposition24_2 = new Proposition();
-        $proposition24_2->setSubquestion($subquestion24);
-        $proposition24_2->setRightAnswer(1);
-        $proposition24_2->setTitle("");
-        $proposition24_2->setAudioUrl("24_option_1_2");
-        $manager->persist($proposition24_2);
-
-        $proposition24_3 = new Proposition();
-        $proposition24_3->setSubquestion($subquestion24);
-        $proposition24_3->setRightAnswer(0);
-        $proposition24_3->setTitle("");
-        $proposition24_3->setAudioUrl("24_option_1_3");
-        $manager->persist($proposition24_3);
-    // ITEM 25
-        $questionnaire25->addTest($test);
-        $questionnaire25->setLevel("A2");
-        $questionnaire25->setInstruction('Cochez la case vrai (V) ou faux (F)');
-        $questionnaire25->setTheme('invitations');
-        $questionnaire25->setSource('méthodes et manuels (Allegro 2, Edilingua, p. 14, piste n° 5)');
-        $questionnaire25->setSupportType("enregistrement local (MLC)");
-        $questionnaire25->setFocus('');
-        $questionnaire25->setCognitiveOperation('');
-        $questionnaire25->setFunction('');
-        $questionnaire25->setReceptionType('');
-        $questionnaire25->setDomain('');
-        $questionnaire25->setType('');
-        $questionnaire25->setSourceType('');
-        $questionnaire25->setLanguageLevel('');
-        $questionnaire25->setDurationGroup('moyenne');
-        $questionnaire25->setFlow('');
-        $questionnaire25->setWordCount('');
-        $questionnaire25->setAuthor('');
-        $questionnaire25->setAudioInstruction('');
-        $questionnaire25->setAudioContext('');
-        $questionnaire25->setAudioItem('25_item');
-        $manager->persist($questionnaire25);
-
-        $question25 = new Question();
-        $question25->setQuestionnaire($questionnaire25);
-        $question25->setTypology("TVF");
-        $question25->setInstruction("");
-        $manager->persist($question25);
-
-        $subquestion25_1 = new Subquestion();
-        $subquestion25_1->setQuestion($question25);
-        $subquestion25_1->setTypology("VF");
-        $subquestion25_1->setAudioUrl('25_option_1_1');
-        $manager->persist($subquestion25_1);
-
-        $subquestion25_2 = new Subquestion();
-        $subquestion25_2->setQuestion($question25);
-        $subquestion25_2->setTypology("VF");
-        $subquestion25_2->setAudioUrl('25_option_1_2');
-        $manager->persist($subquestion25_2);
-
-        $subquestion25_3 = new Subquestion();
-        $subquestion25_3->setQuestion($question25);
-        $subquestion25_3->setTypology("VF");
-        $subquestion25_3->setAudioUrl('25_option_1_3');
-        $manager->persist($subquestion25_3);
-
-        $subquestion25_4 = new Subquestion();
-        $subquestion25_4->setQuestion($question25);
-        $subquestion25_4->setTypology("VF");
-        $subquestion25_4->setAudioUrl('25_option_1_4');
-        $manager->persist($subquestion25_4);
-
-        $subquestion25_5 = new Subquestion();
-        $subquestion25_5->setQuestion($question25);
-        $subquestion25_5->setTypology("VF");
-        $subquestion25_5->setAudioUrl('25_option_1_5');
-        $manager->persist($subquestion25_5);
-
-        $proposition25_1_1 = new Proposition();
-        $proposition25_1_1->setSubquestion($subquestion25_1);
-        $proposition25_1_1->setRightAnswer(0);
-        $proposition25_1_1->setTitle("V");
-        $proposition25_1_1->setAudioUrl("");
-        $manager->persist($proposition25_1_1);
-
-        $proposition25_1_2 = new Proposition();
-        $proposition25_1_2->setSubquestion($subquestion25_1);
-        $proposition25_1_2->setRightAnswer(1);
-        $proposition25_1_2->setTitle("F");
-        $proposition25_1_2->setAudioUrl("");
-        $manager->persist($proposition25_1_2);
-
-        $proposition25_2_1 = new Proposition();
-        $proposition25_2_1->setSubquestion($subquestion25_2);
-        $proposition25_2_1->setRightAnswer(1);
-        $proposition25_2_1->setTitle("V");
-        $proposition25_2_1->setAudioUrl("");
-        $manager->persist($proposition25_2_1);
-
-        $proposition25_2_2 = new Proposition();
-        $proposition25_2_2->setSubquestion($subquestion25_2);
-        $proposition25_2_2->setRightAnswer(0);
-        $proposition25_2_2->setTitle("F");
-        $proposition25_2_2->setAudioUrl("");
-        $manager->persist($proposition25_2_2);
-
-        $proposition25_3_1 = new Proposition();
-        $proposition25_3_1->setSubquestion($subquestion25_3);
-        $proposition25_3_1->setRightAnswer(1);
-        $proposition25_3_1->setTitle("V");
-        $proposition25_3_1->setAudioUrl("");
-        $manager->persist($proposition25_3_1);
-
-        $proposition25_3_2 = new Proposition();
-        $proposition25_3_2->setSubquestion($subquestion25_3);
-        $proposition25_3_2->setRightAnswer(0);
-        $proposition25_3_2->setTitle("F");
-        $proposition25_3_2->setAudioUrl("");
-        $manager->persist($proposition25_3_2);
-
-        $proposition25_4_1 = new Proposition();
-        $proposition25_4_1->setSubquestion($subquestion25_4);
-        $proposition25_4_1->setRightAnswer(0);
-        $proposition25_4_1->setTitle("V");
-        $proposition25_4_1->setAudioUrl("");
-        $manager->persist($proposition25_4_1);
-
-        $proposition25_4_2 = new Proposition();
-        $proposition25_4_2->setSubquestion($subquestion25_4);
-        $proposition25_4_2->setRightAnswer(1);
-        $proposition25_4_2->setTitle("F");
-        $proposition25_4_2->setAudioUrl("");
-        $manager->persist($proposition25_4_2);
-
-        $proposition25_5_1 = new Proposition();
-        $proposition25_5_1->setSubquestion($subquestion25_5);
-        $proposition25_5_1->setRightAnswer(0);
-        $proposition25_5_1->setTitle("V");
-        $proposition25_5_1->setAudioUrl("");
-        $manager->persist($proposition25_5_1);
-
-        $proposition25_5_2 = new Proposition();
-        $proposition25_5_2->setSubquestion($subquestion25_5);
-        $proposition25_5_2->setRightAnswer(1);
-        $proposition25_5_2->setTitle("F");
-        $proposition25_5_2->setAudioUrl("");
-        $manager->persist($proposition25_5_2);
-
-    /*
-    // ITEM 26
-        $questionnaire26->addTest($test);
-        $questionnaire26->setLevel("A2");
-        $questionnaire26->setInstruction('Cochez la case vrai (V) ou faux (F)');
-        $questionnaire26->setTheme('recette tiramisù');
-        $questionnaire26->setSource('méthodes et manuels (Se ascoltando..., Livello A1 - A2, Guerra Edizioni, p. 35 piste n° 29) / modifié');
-        $questionnaire26->setSupportType("enregistrement local (MLC)");
-        $questionnaire26->setFocus('');
-        $questionnaire26->setCognitiveOperation('');
-        $questionnaire26->setFunction('');
-        $questionnaire26->setReceptionType('');
-        $questionnaire26->setDomain('');
-        $questionnaire26->setType('');
-        $questionnaire26->setSourceType('');
-        $questionnaire26->setLanguageLevel('');
-        $questionnaire26->setDurationGroup('brève');
-        $questionnaire26->setFlow('');
-        $questionnaire26->setWordCount('');
-        $questionnaire26->setAuthor('');
-        $questionnaire26->setAudioInstruction('');
-        $questionnaire26->setAudioContext('');
-        $questionnaire26->setAudioItem('');
-        $manager->persist($questionnaire26);
-
-        $question26_1 = new Question();
-        $question26_1->setQuestionnaire($questionnaire26);
-        $question26_1->setTypology("TVF");
-        $question26_1->setInstruction("");
-        $manager->persist($question26_1);
-
-        $subquestion26_1_1 = new Subquestion();
-        $subquestion26_1_1->setQuestion($question26_1);
-        $subquestion26_1_1->setTypology("VF");
-        $manager->persist($subquestion26_1_1);
-
-        $proposition26_1_1_1 = new Proposition();
-        $proposition26_1_1_1->setSubquestion($subquestion26_1_1);
-        $proposition26_1_1_1->setRightAnswer(0);
-        $proposition26_1_1_1->setTitle("V");
-        $proposition26_1_1_1->setAudioUrl("");
-        $manager->persist($proposition26_1_1_1);
-
-        $proposition26_1_1_2 = new Proposition();
-        $proposition26_1_1_2->setSubquestion($subquestion26_1_1);
-        $proposition26_1_1_2->setRightAnswer(1);
-        $proposition26_1_1_2->setTitle("F");
-        $proposition26_1_1_2->setAudioUrl("");
-        $manager->persist($proposition26_1_1_2);
-
-
-        $subquestion26_1_2 = new Subquestion();
-        $subquestion26_1_2->setQuestion($question26_1);
-        $subquestion26_1_2->setTypology("VF");
-        $manager->persist($subquestion26_1_2);
-
-        $proposition26_1_2_1 = new Proposition();
-        $proposition26_1_2_1->setSubquestion($subquestion26_1_2);
-        $proposition26_1_2_1->setRightAnswer(1);
-        $proposition26_1_2_1->setTitle("V");
-        $proposition26_1_2_1->setAudioUrl("");
-        $manager->persist($proposition26_1_2_1);
-
-        $proposition26_1_2_2 = new Proposition();
-        $proposition26_1_2_2->setSubquestion($subquestion26_1_2);
-        $proposition26_1_2_2->setRightAnswer(0);
-        $proposition26_1_2_2->setTitle("F");
-        $proposition26_1_2_2->setAudioUrl("");
-        $manager->persist($proposition26_1_2_2);
-
-
-        $subquestion26_1_3 = new Subquestion();
-        $subquestion26_1_3->setQuestion($question26_1);
-        $subquestion26_1_3->setTypology("VF");
-        $manager->persist($subquestion26_1_3);
-
-        $proposition26_1_3_1 = new Proposition();
-        $proposition26_1_3_1->setSubquestion($subquestion26_1_3);
-        $proposition26_1_3_1->setRightAnswer(1);
-        $proposition26_1_3_1->setTitle("V");
-        $proposition26_1_3_1->setAudioUrl("");
-        $manager->persist($proposition26_1_3_1);
-
-        $proposition26_1_3_2 = new Proposition();
-        $proposition26_1_3_2->setSubquestion($subquestion26_1_3);
-        $proposition26_1_3_2->setRightAnswer(0);
-        $proposition26_1_3_2->setTitle("F");
-        $proposition26_1_3_2->setAudioUrl("");
-        $manager->persist($proposition26_1_3_2);
-
-        $subquestion26_1_4 = new Subquestion();
-        $subquestion26_1_4->setQuestion($question26_1);
-        $subquestion26_1_4->setTypology("VF");
-        $manager->persist($subquestion26_1_4);
-
-        $proposition26_1_4_1 = new Proposition();
-        $proposition26_1_4_1->setSubquestion($subquestion26_1_4);
-        $proposition26_1_4_1->setRightAnswer(0);
-        $proposition26_1_4_1->setTitle("V");
-        $proposition26_1_4_1->setAudioUrl("");
-        $manager->persist($proposition26_1_4_1);
-
-        $proposition26_1_4_2 = new Proposition();
-        $proposition26_1_4_2->setSubquestion($subquestion26_1_4);
-        $proposition26_1_4_2->setRightAnswer(1);
-        $proposition26_1_4_2->setTitle("F");
-        $proposition26_1_4_2->setAudioUrl("");
-        $manager->persist($proposition26_1_4_2);
-
-        $question26_2 = new Question();
-        $question26_2->setQuestionnaire($questionnaire26);
-        $question26_2->setTypology("TVF");
-        $question26_2->setInstruction("");
-        $manager->persist($question26_2);
-
-        $subquestion26_2_1 = new Subquestion();
-        $subquestion26_2_1->setQuestion($question26_2);
-        $subquestion26_2_1->setTypology("VF");
-        $manager->persist($subquestion26_2_1);
-
-        $proposition26_2_1_1 = new Proposition();
-        $proposition26_2_1_1->setSubquestion($subquestion26_2_1);
-        $proposition26_2_1_1->setRightAnswer(1);
-        $proposition26_2_1_1->setTitle("V");
-        $proposition26_2_1_1->setAudioUrl("");
-        $manager->persist($proposition26_2_1_1);
-
-        $proposition26_2_1_2 = new Proposition();
-        $proposition26_2_1_2->setSubquestion($subquestion26_2_1);
-        $proposition26_2_1_2->setRightAnswer(0);
-        $proposition26_2_1_2->setTitle("F");
-        $proposition26_2_1_2->setAudioUrl("");
-        $manager->persist($proposition26_2_1_2);
-
-        $subquestion26_2_2 = new Subquestion();
-        $subquestion26_2_2->setQuestion($question26_2);
-        $subquestion26_2_2->setTypology("VF");
-        $manager->persist($subquestion26_2_2);
-
-        $proposition26_2_2_1 = new Proposition();
-        $proposition26_2_2_1->setSubquestion($subquestion26_2_2);
-        $proposition26_2_2_1->setRightAnswer(0);
-        $proposition26_2_2_1->setTitle("V");
-        $proposition26_2_2_1->setAudioUrl("");
-        $manager->persist($proposition26_2_2_1);
-
-        $proposition26_2_2_2 = new Proposition();
-        $proposition26_2_2_2->setSubquestion($subquestion26_2_2);
-        $proposition26_2_2_2->setRightAnswer(1);
-        $proposition26_2_2_2->setTitle("F");
-        $proposition26_2_2_2->setAudioUrl("");
-        $manager->persist($proposition26_2_2_2);
-
-        $subquestion26_2_3 = new Subquestion();
-        $subquestion26_2_3->setQuestion($question26_2);
-        $subquestion26_2_3->setTypology("VF");
-        $manager->persist($subquestion26_2_3);
-
-        $proposition26_2_3_1 = new Proposition();
-        $proposition26_2_3_1->setSubquestion($subquestion26_2_3);
-        $proposition26_2_3_1->setRightAnswer(0);
-        $proposition26_2_3_1->setTitle("V");
-        $proposition26_2_3_1->setAudioUrl("");
-        $manager->persist($proposition26_2_3_1);
-
-        $proposition26_2_3_2 = new Proposition();
-        $proposition26_2_3_2->setSubquestion($subquestion26_2_3);
-        $proposition26_2_3_2->setRightAnswer(1);
-        $proposition26_2_3_2->setTitle("F");
-        $proposition26_2_3_2->setAudioUrl("");
-        $manager->persist($proposition26_2_3_2);
-    */
-
-
-    // ITEM 27
+        // ITEM 34
+        $questionnaire34->addTest($test);
+        $questionnaire34->setLevel("A2");
+        $questionnaire34->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire34->setTheme('Examen');
+        $questionnaire34->setSource('Conçu en interne');
+        $questionnaire34->setSupportType("enregistrement local (MLC)");
+        $questionnaire34->setFocus('');
+        $questionnaire34->setCognitiveOperation('');
+        $questionnaire34->setFunction('');
+        $questionnaire34->setReceptionType('');
+        $questionnaire34->setDomain('');
+        $questionnaire34->setType('');
+        $questionnaire34->setSourceType('');
+        $questionnaire34->setLanguageLevel('');
+        $questionnaire34->setDurationGroup('brève');
+        $questionnaire34->setFlow('');
+        $questionnaire34->setWordCount('');
+        $questionnaire34->setAuthor('');
+        $questionnaire34->setAudioInstruction('34_consigne');
+        $questionnaire34->setAudioContext('');
+        $questionnaire34->setAudioItem('34_item');
+        $manager->persist($questionnaire34);
+
+        $question34 = new Question();
+        $question34->setQuestionnaire($questionnaire34);
+        $question34->setTypology("QRU");
+        $question34->setInstruction("");
+        $manager->persist($question34);
+
+        $subquestion34 = new Subquestion();
+        $subquestion34->setQuestion($question34);
+        $subquestion34->setTypology("QRU");
+        $manager->persist($subquestion34);
+
+        $proposition34_1 = new Proposition();
+        $proposition34_1->setSubquestion($subquestion34);
+        $proposition34_1->setRightAnswer(1);
+        $proposition34_1->setAudioUrl("34_option_1_1");
+        $manager->persist($proposition34_1);
+
+        $proposition34_2 = new Proposition();
+        $proposition34_2->setSubquestion($subquestion34);
+        $proposition34_2->setRightAnswer(0);
+        $proposition34_2->setAudioUrl("34_option_1_2");
+        $manager->persist($proposition34_2);
+
+        $proposition34_3 = new Proposition();
+        $proposition34_3->setSubquestion($subquestion34);
+        $proposition34_3->setRightAnswer(0);
+        $proposition34_3->setAudioUrl("34_option_1_3");
+        $manager->persist($proposition34_3);
+
+
+
+    // ITEM 35
+        $questionnaire35->addTest($test);
+        $questionnaire35->setLevel("A2");
+        $questionnaire35->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire35->setTheme('Faire les courses');
+        $questionnaire35->setSource('Conçu en interne');
+        $questionnaire35->setSupportType("enregistrement local (MLC)");
+        $questionnaire35->setFocus('');
+        $questionnaire35->setCognitiveOperation('');
+        $questionnaire35->setFunction('');
+        $questionnaire35->setReceptionType('');
+        $questionnaire35->setDomain('');
+        $questionnaire35->setType('');
+        $questionnaire35->setSourceType('');
+        $questionnaire35->setLanguageLevel('');
+        $questionnaire35->setDurationGroup('brève');
+        $questionnaire35->setFlow('');
+        $questionnaire35->setWordCount('');
+        $questionnaire35->setAuthor('');
+        $questionnaire35->setAudioInstruction('35_consigne');
+        $questionnaire35->setAudioContext('');
+        $questionnaire35->setAudioItem('35_item');
+        $manager->persist($questionnaire35);
+
+        $question35 = new Question();
+        $question35->setQuestionnaire($questionnaire35);
+        $question35->setTypology("QRU");
+        $question35->setInstruction("");
+        $manager->persist($question35);
+
+        $subquestion35 = new Subquestion();
+        $subquestion35->setQuestion($question35);
+        $subquestion35->setTypology("QRU");
+        $manager->persist($subquestion35);
+
+        $proposition35_1 = new Proposition();
+        $proposition35_1->setSubquestion($subquestion35);
+        $proposition35_1->setRightAnswer(1);
+        $proposition35_1->setAudioUrl("35_option_1_1");
+        $manager->persist($proposition35_1);
+
+        $proposition35_2 = new Proposition();
+        $proposition35_2->setSubquestion($subquestion35);
+        $proposition35_2->setRightAnswer(0);
+        $proposition35_2->setAudioUrl("35_option_1_2");
+        $manager->persist($proposition35_2);
+
+        $proposition35_3 = new Proposition();
+        $proposition35_3->setSubquestion($subquestion35);
+        $proposition35_3->setRightAnswer(0);
+        $proposition35_3->setAudioUrl("35_option_1_3");
+        $manager->persist($proposition35_3);
+
+         // ITEM 27
         $questionnaire27->addTest($test);
         $questionnaire27->setLevel("A2");
         $questionnaire27->setInstruction('Cochez la case vrai (V) ou faux (F)');
@@ -2163,7 +1310,693 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($proposition29_4_2);
 
 
-    // ITEM 30
+    // ITEM 4
+        $questionnaire4->addTest($test);
+        $questionnaire4->setLevel("A2");
+        $questionnaire4->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire4->setTheme('dialogue maman-fils');
+        $questionnaire4->setSource('Conçu en interne');
+        $questionnaire4->setSupportType("enregistrement local (MLC)");
+        $questionnaire4->setFocus('');
+        $questionnaire4->setCognitiveOperation('');
+        $questionnaire4->setFunction('');
+        $questionnaire4->setReceptionType('');
+        $questionnaire4->setDomain('');
+        $questionnaire4->setType('');
+        $questionnaire4->setSourceType('');
+        $questionnaire4->setLanguageLevel('');
+        $questionnaire4->setDurationGroup('moyenne');
+        $questionnaire4->setFlow('');
+        $questionnaire4->setWordCount('');
+        $questionnaire4->setAuthor('');
+        $questionnaire4->setAudioInstruction('4_consigne');
+        $questionnaire4->setAudioContext('4_contexte');
+        $questionnaire4->setAudioItem('4_item');
+        $manager->persist($questionnaire4);
+
+        $question4 = new Question();
+        $question4->setQuestionnaire($questionnaire4);
+        $question4->setTypology("QRU");
+        $question4->setInstruction("");
+        $manager->persist($question4);
+
+        $subquestion4 = new Subquestion();
+        $subquestion4->setQuestion($question4);
+        $subquestion4->setTypology("QRU");
+        $manager->persist($subquestion4);
+
+        $proposition4_1 = new Proposition();
+        $proposition4_1->setSubquestion($subquestion4);
+        $proposition4_1->setRightAnswer(1);
+        $proposition4_1->setAudioUrl("4_option_1_1");
+        $manager->persist($proposition4_1);
+
+        $proposition4_2 = new Proposition();
+        $proposition4_2->setSubquestion($subquestion4);
+        $proposition4_2->setRightAnswer(0);
+        $proposition4_2->setAudioUrl("4_option_1_2");
+        $manager->persist($proposition4_2);
+
+        $proposition4_3 = new Proposition();
+        $proposition4_3->setSubquestion($subquestion4);
+        $proposition4_3->setRightAnswer(0);
+        $proposition4_3->setAudioUrl("4_option_1_3");
+        $manager->persist($proposition4_3);
+
+    // ITEM 5
+        $questionnaire5->addTest($test);
+        $questionnaire5->setLevel("A2");
+        $questionnaire5->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire5->setTheme('dialogue week-end');
+        $questionnaire5->setSource('Conçu en interne');
+        $questionnaire5->setSupportType("enregistrement local (MLC)");
+        $questionnaire5->setFocus('');
+        $questionnaire5->setCognitiveOperation('');
+        $questionnaire5->setFunction('');
+        $questionnaire5->setReceptionType('');
+        $questionnaire5->setDomain('');
+        $questionnaire5->setType('');
+        $questionnaire5->setSourceType('');
+        $questionnaire5->setLanguageLevel('');
+        $questionnaire5->setDurationGroup('brève');
+        $questionnaire5->setFlow('');
+        $questionnaire5->setWordCount('');
+        $questionnaire5->setAuthor('');
+        $questionnaire5->setAudioInstruction('5_consigne');
+        $questionnaire5->setAudioContext('5_contexte');
+        $questionnaire5->setAudioItem('5_item');
+        $manager->persist($questionnaire5);
+
+        $question5 = new Question();
+        $question5->setQuestionnaire($questionnaire5);
+        $question5->setTypology("QRU");
+        $question5->setInstruction("");
+        $manager->persist($question5);
+
+        $subquestion5 = new Subquestion();
+        $subquestion5->setQuestion($question5);
+        $subquestion5->setTypology("QRU");
+        $manager->persist($subquestion5);
+
+        $proposition5_1 = new Proposition();
+        $proposition5_1->setSubquestion($subquestion5);
+        $proposition5_1->setRightAnswer(1);
+        $proposition5_1->setAudioUrl("5_option_1_1");
+        $manager->persist($proposition5_1);
+
+        $proposition5_2 = new Proposition();
+        $proposition5_2->setSubquestion($subquestion5);
+        $proposition5_2->setRightAnswer(0);
+        $proposition5_2->setAudioUrl("5_option_1_2");
+        $manager->persist($proposition5_2);
+
+        $proposition5_3 = new Proposition();
+        $proposition5_3->setSubquestion($subquestion5);
+        $proposition5_3->setRightAnswer(0);
+        $proposition5_3->setAudioUrl("5_option_1_3");
+        $manager->persist($proposition5_3);
+
+
+        // ITEM 36
+        $questionnaire36->addTest($test);
+        $questionnaire36->setLevel("A2");
+        $questionnaire36->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire36->setTheme('Nouvelle télévisée');
+        $questionnaire36->setSource('Conçu en interne');
+        $questionnaire36->setSupportType("enregistrement local (MLC)");
+        $questionnaire36->setFocus('');
+        $questionnaire36->setCognitiveOperation('');
+        $questionnaire36->setFunction('');
+        $questionnaire36->setReceptionType('');
+        $questionnaire36->setDomain('');
+        $questionnaire36->setType('');
+        $questionnaire36->setSourceType('');
+        $questionnaire36->setLanguageLevel('');
+        $questionnaire36->setDurationGroup('brève');
+        $questionnaire36->setFlow('');
+        $questionnaire36->setWordCount('');
+        $questionnaire36->setAuthor('');
+        $questionnaire36->setAudioInstruction('36_consigne');
+        $questionnaire36->setAudioContext('');
+        $questionnaire36->setAudioItem('36_item');
+        $manager->persist($questionnaire36);
+
+        $question36 = new Question();
+        $question36->setQuestionnaire($questionnaire36);
+        $question36->setTypology("QRU");
+        $question36->setInstruction("");
+        $manager->persist($question36);
+
+        $subquestion36 = new Subquestion();
+        $subquestion36->setQuestion($question36);
+        $subquestion36->setTypology("QRU");
+        $manager->persist($subquestion36);
+
+        $proposition36_1 = new Proposition();
+        $proposition36_1->setSubquestion($subquestion36);
+        $proposition36_1->setRightAnswer(1);
+        $proposition36_1->setAudioUrl("36_option_1_1");
+        $manager->persist($proposition36_1);
+
+        $proposition36_2 = new Proposition();
+        $proposition36_2->setSubquestion($subquestion36);
+        $proposition36_2->setRightAnswer(0);
+        $proposition36_2->setAudioUrl("36_option_1_2");
+        $manager->persist($proposition36_2);
+
+        $proposition36_3 = new Proposition();
+        $proposition36_3->setSubquestion($subquestion36);
+        $proposition36_3->setRightAnswer(0);
+        $proposition36_3->setAudioUrl("36_option_1_3");
+        $manager->persist($proposition36_3);
+
+
+
+    // ITEM 37
+        $questionnaire37->addTest($test);
+        $questionnaire37->setLevel("A2");
+        $questionnaire37->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire37->setTheme('Rendre CD');
+        $questionnaire37->setSource('Conçu en interne');
+        $questionnaire37->setSupportType("enregistrement local (MLC)");
+        $questionnaire37->setFocus('');
+        $questionnaire37->setCognitiveOperation('');
+        $questionnaire37->setFunction('');
+        $questionnaire37->setReceptionType('');
+        $questionnaire37->setDomain('');
+        $questionnaire37->setType('');
+        $questionnaire37->setSourceType('');
+        $questionnaire37->setLanguageLevel('');
+        $questionnaire37->setDurationGroup('brève');
+        $questionnaire37->setFlow('');
+        $questionnaire37->setWordCount('');
+        $questionnaire37->setAuthor('');
+        $questionnaire37->setAudioInstruction('37_consigne');
+        $questionnaire37->setAudioContext('');
+        $questionnaire37->setAudioItem('37_item');
+        $manager->persist($questionnaire37);
+
+        $question37 = new Question();
+        $question37->setQuestionnaire($questionnaire37);
+        $question37->setTypology("QRU");
+        $question37->setInstruction("");
+        $manager->persist($question37);
+
+        $subquestion37 = new Subquestion();
+        $subquestion37->setQuestion($question37);
+        $subquestion37->setTypology("QRU");
+        $manager->persist($subquestion37);
+
+        $proposition37_1 = new Proposition();
+        $proposition37_1->setSubquestion($subquestion37);
+        $proposition37_1->setRightAnswer(0);
+        $proposition37_1->setAudioUrl("37_option_1_1");
+        $manager->persist($proposition37_1);
+
+        $proposition37_2 = new Proposition();
+        $proposition37_2->setSubquestion($subquestion37);
+        $proposition37_2->setRightAnswer(0);
+        $proposition37_2->setAudioUrl("37_option_1_2");
+        $manager->persist($proposition37_2);
+
+        $proposition37_3 = new Proposition();
+        $proposition37_3->setSubquestion($subquestion37);
+        $proposition37_3->setRightAnswer(1);
+        $proposition37_3->setAudioUrl("37_option_1_3");
+        $manager->persist($proposition37_3);
+
+        // ITEM 10
+        $questionnaire10->addTest($test);
+        $questionnaire10->setLevel("A2");
+        $questionnaire10->setInstruction('Cochez la case vrai (V) ou faux (F)');
+        $questionnaire10->setTheme('expression d’une inquiétude');
+        $questionnaire10->setSource('certification/test validé (CELI) / modifié');
+        $questionnaire10->setSupportType("enregistrement local (MLC)");
+        $questionnaire10->setFocus('');
+        $questionnaire10->setCognitiveOperation('');
+        $questionnaire10->setFunction('');
+        $questionnaire10->setReceptionType('');
+        $questionnaire10->setDomain('');
+        $questionnaire10->setType('');
+        $questionnaire10->setSourceType('');
+        $questionnaire10->setLanguageLevel('');
+        $questionnaire10->setDurationGroup('moyenne');
+        $questionnaire10->setFlow('');
+        $questionnaire10->setWordCount('');
+        $questionnaire10->setAuthor('');
+        $questionnaire10->setAudioInstruction('10_consigne');
+        $questionnaire10->setAudioContext('10_contexte');
+        $questionnaire10->setAudioItem('10_item');
+        $manager->persist($questionnaire10);
+
+        $question10 = new Question();
+        $question10->setQuestionnaire($questionnaire10);
+        $question10->setTypology("TVF");
+        $question10->setInstruction("");
+        $manager->persist($question10);
+
+        $subquestion10_1 = new Subquestion();
+        $subquestion10_1->setQuestion($question10);
+        $subquestion10_1->setTypology("VF");
+        $subquestion10_1->setAudioUrl("10_option_1_1");
+        $manager->persist($subquestion10_1);
+
+        $subquestion10_2 = new Subquestion();
+        $subquestion10_2->setQuestion($question10);
+        $subquestion10_2->setTypology("VF");
+        $subquestion10_2->setAudioUrl("10_option_1_2");
+        $manager->persist($subquestion10_2);
+
+        $subquestion10_3 = new Subquestion();
+        $subquestion10_3->setQuestion($question10);
+        $subquestion10_3->setTypology("VF");
+        $subquestion10_3->setAudioUrl("10_option_1_3");
+        $manager->persist($subquestion10_3);
+
+        $subquestion10_4 = new Subquestion();
+        $subquestion10_4->setQuestion($question10);
+        $subquestion10_4->setTypology("VF");
+        $subquestion10_4->setAudioUrl("10_option_1_4");
+        $manager->persist($subquestion10_4);
+
+        $proposition10_1_1 = new Proposition();
+        $proposition10_1_1->setSubquestion($subquestion10_1);
+        $proposition10_1_1->setRightAnswer(1);
+        $proposition10_1_1->setTitle("V");
+        $proposition10_1_1->setAudioUrl("");
+        $manager->persist($proposition10_1_1);
+
+        $proposition10_1_2 = new Proposition();
+        $proposition10_1_2->setSubquestion($subquestion10_1);
+        $proposition10_1_2->setRightAnswer(0);
+        $proposition10_1_2->setTitle("F");
+        $proposition10_1_2->setAudioUrl("");
+        $manager->persist($proposition10_1_2);
+
+        $proposition10_2_1 = new Proposition();
+        $proposition10_2_1->setSubquestion($subquestion10_2);
+        $proposition10_2_1->setRightAnswer(0);
+        $proposition10_2_1->setTitle("V");
+        $proposition10_2_1->setAudioUrl("");
+        $manager->persist($proposition10_2_1);
+
+        $proposition10_2_2 = new Proposition();
+        $proposition10_2_2->setSubquestion($subquestion10_2);
+        $proposition10_2_2->setRightAnswer(1);
+        $proposition10_2_2->setTitle("F");
+        $proposition10_2_2->setAudioUrl("");
+        $manager->persist($proposition10_2_2);
+
+        $proposition10_3_1 = new Proposition();
+        $proposition10_3_1->setSubquestion($subquestion10_3);
+        $proposition10_3_1->setRightAnswer(1);
+        $proposition10_3_1->setTitle("V");
+        $proposition10_3_1->setAudioUrl("");
+        $manager->persist($proposition10_3_1);
+
+        $proposition10_3_2 = new Proposition();
+        $proposition10_3_2->setSubquestion($subquestion10_3);
+        $proposition10_3_2->setRightAnswer(0);
+        $proposition10_3_2->setTitle("F");
+        $proposition10_3_2->setAudioUrl("");
+        $manager->persist($proposition10_3_2);
+
+        $proposition10_4_1 = new Proposition();
+        $proposition10_4_1->setSubquestion($subquestion10_4);
+        $proposition10_4_1->setRightAnswer(0);
+        $proposition10_4_1->setTitle("V");
+        $proposition10_4_1->setAudioUrl("");
+        $manager->persist($proposition10_4_1);
+
+        $proposition10_4_2 = new Proposition();
+        $proposition10_4_2->setSubquestion($subquestion10_4);
+        $proposition10_4_2->setRightAnswer(1);
+        $proposition10_4_2->setTitle("F");
+        $proposition10_4_2->setAudioUrl("");
+        $manager->persist($proposition10_4_2);
+
+        // ITEM 22
+        $questionnaire22->addTest($test);
+        $questionnaire22->setLevel("A2");
+        $questionnaire22->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire22->setTheme('au secrétariat');
+        $questionnaire22->setSource('certification/test validé (CILS)');
+        $questionnaire22->setSupportType("enregistrement local (MLC)");
+        $questionnaire22->setFocus('');
+        $questionnaire22->setCognitiveOperation('');
+        $questionnaire22->setFunction('');
+        $questionnaire22->setReceptionType('');
+        $questionnaire22->setDomain('');
+        $questionnaire22->setType('');
+        $questionnaire22->setSourceType('');
+        $questionnaire22->setLanguageLevel('');
+        $questionnaire22->setDurationGroup('brève');
+        $questionnaire22->setFlow('');
+        $questionnaire22->setWordCount('');
+        $questionnaire22->setAuthor('');
+        $questionnaire22->setAudioInstruction('22_consigne');
+        $questionnaire22->setAudioContext('');
+        $questionnaire22->setAudioItem('22_item');
+        $manager->persist($questionnaire22);
+
+        $question22 = new Question();
+        $question22->setQuestionnaire($questionnaire22);
+        $question22->setTypology("QRU");
+        $question22->setInstruction("");
+        $manager->persist($question22);
+
+        $subquestion22 = new Subquestion();
+        $subquestion22->setQuestion($question22);
+        $subquestion22->setTypology("QRU");
+        $manager->persist($subquestion22);
+
+        $proposition22_1 = new Proposition();
+        $proposition22_1->setSubquestion($subquestion22);
+        $proposition22_1->setRightAnswer(1);
+        $proposition22_1->setTitle("");
+        $proposition22_1->setAudioUrl("22_option_1_1");
+        $manager->persist($proposition22_1);
+
+        $proposition22_2 = new Proposition();
+        $proposition22_2->setSubquestion($subquestion22);
+        $proposition22_2->setRightAnswer(0);
+        $proposition22_2->setTitle("");
+        $proposition22_2->setAudioUrl("22_option_1_2");
+        $manager->persist($proposition22_2);
+
+        $proposition22_3 = new Proposition();
+        $proposition22_3->setSubquestion($subquestion22);
+        $proposition22_3->setRightAnswer(0);
+        $proposition22_3->setTitle("");
+        $proposition22_3->setAudioUrl("22_option_1_3");
+        $manager->persist($proposition22_3);
+
+        // ITEM 38
+        $questionnaire38->addTest($test);
+        $questionnaire38->setLevel("A2");
+        $questionnaire38->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire38->setTheme('Souvenirs');
+        $questionnaire38->setSource('Conçu en interne');
+        $questionnaire38->setSupportType("enregistrement local (MLC)");
+        $questionnaire38->setFocus('');
+        $questionnaire38->setCognitiveOperation('');
+        $questionnaire38->setFunction('');
+        $questionnaire38->setReceptionType('');
+        $questionnaire38->setDomain('');
+        $questionnaire38->setType('');
+        $questionnaire38->setSourceType('');
+        $questionnaire38->setLanguageLevel('');
+        $questionnaire38->setDurationGroup('brève');
+        $questionnaire38->setFlow('');
+        $questionnaire38->setWordCount('');
+        $questionnaire38->setAuthor('');
+        $questionnaire38->setAudioInstruction('38_consigne');
+        $questionnaire38->setAudioContext('');
+        $questionnaire38->setAudioItem('38_item');
+        $manager->persist($questionnaire38);
+
+        $question38 = new Question();
+        $question38->setQuestionnaire($questionnaire38);
+        $question38->setTypology("QRU");
+        $question38->setInstruction("");
+        $manager->persist($question38);
+
+        $subquestion38 = new Subquestion();
+        $subquestion38->setQuestion($question38);
+        $subquestion38->setTypology("QRU");
+        $manager->persist($subquestion38);
+
+        $proposition38_1 = new Proposition();
+        $proposition38_1->setSubquestion($subquestion38);
+        $proposition38_1->setRightAnswer(1);
+        $proposition38_1->setAudioUrl("38_option_1_1");
+        $manager->persist($proposition38_1);
+
+        $proposition38_2 = new Proposition();
+        $proposition38_2->setSubquestion($subquestion38);
+        $proposition38_2->setRightAnswer(0);
+        $proposition38_2->setAudioUrl("38_option_1_2");
+        $manager->persist($proposition38_2);
+
+        $proposition38_3 = new Proposition();
+        $proposition38_3->setSubquestion($subquestion38);
+        $proposition38_3->setRightAnswer(0);
+        $proposition38_3->setAudioUrl("38_option_1_3");
+        $manager->persist($proposition38_3);
+
+         // ITEM 16
+        $questionnaire16->addTest($test);
+        $questionnaire16->setLevel("A2");
+        $questionnaire16->setInstruction('Cochez la réponse correcte');
+        $questionnaire16->setTheme('motiver son choix 06/10');
+        $questionnaire16->setSource('certification/test validé (CELI) / modifié');
+        $questionnaire16->setSupportType("enregistrement local (MLC)");
+        $questionnaire16->setFocus('');
+        $questionnaire16->setCognitiveOperation('');
+        $questionnaire16->setFunction('');
+        $questionnaire16->setReceptionType('');
+        $questionnaire16->setDomain('');
+        $questionnaire16->setType('');
+        $questionnaire16->setSourceType('');
+        $questionnaire16->setLanguageLevel('');
+        $questionnaire16->setDurationGroup('brève');
+        $questionnaire16->setFlow('');
+        $questionnaire16->setWordCount('');
+        $questionnaire16->setAuthor('');
+        $questionnaire16->setAudioInstruction('16_consigne');
+        $questionnaire16->setAudioContext('16_contexte');
+        $questionnaire16->setAudioItem('16_item');
+        $manager->persist($questionnaire16);
+
+        $question16 = new Question();
+        $question16->setQuestionnaire($questionnaire16);
+        $question16->setTypology("TVF");
+        $question16->setInstruction("");
+        $manager->persist($question16);
+
+        $subquestion16 = new Subquestion();
+        $subquestion16->setQuestion($question16);
+        $subquestion16->setTypology("VF");
+        $manager->persist($subquestion16);
+
+        $proposition16_1 = new Proposition();
+        $proposition16_1->setSubquestion($subquestion16);
+        $proposition16_1->setRightAnswer(0);
+        $proposition16_1->setTitle("Dà la spiegazione");
+        $proposition16_1->setAudioUrl("");
+        $manager->persist($proposition16_1);
+
+        $proposition16_2 = new Proposition();
+        $proposition16_2->setSubquestion($subquestion16);
+        $proposition16_2->setRightAnswer(1);
+        $proposition16_2->setTitle("Non dà la spiegazione");
+        $proposition16_2->setAudioUrl("");
+        $manager->persist($proposition16_2);
+
+
+    // ITEM 17
+        $questionnaire17->addTest($test);
+        $questionnaire17->setLevel("A2");
+        $questionnaire17->setInstruction('Cochez la réponse correcte');
+        $questionnaire17->setTheme('motiver son choix 07/10');
+        $questionnaire17->setSource('certification/test validé (CELI) / modifié');
+        $questionnaire17->setSupportType("enregistrement local (MLC)");
+        $questionnaire17->setFocus('');
+        $questionnaire17->setCognitiveOperation('');
+        $questionnaire17->setFunction('');
+        $questionnaire17->setReceptionType('');
+        $questionnaire17->setDomain('');
+        $questionnaire17->setType('');
+        $questionnaire17->setSourceType('');
+        $questionnaire17->setLanguageLevel('');
+        $questionnaire17->setDurationGroup('brève');
+        $questionnaire17->setFlow('');
+        $questionnaire17->setWordCount('');
+        $questionnaire17->setAuthor('');
+        $questionnaire17->setAudioInstruction('17_consigne');
+        $questionnaire17->setAudioContext('17_contexte');
+        $questionnaire17->setAudioItem('17_item');
+        $manager->persist($questionnaire17);
+
+        $question17 = new Question();
+        $question17->setQuestionnaire($questionnaire17);
+        $question17->setTypology("TVF");
+        $question17->setInstruction("");
+        $manager->persist($question17);
+
+        $subquestion17 = new Subquestion();
+        $subquestion17->setQuestion($question17);
+        $subquestion17->setTypology("VF");
+        $manager->persist($subquestion17);
+
+        $proposition17_1 = new Proposition();
+        $proposition17_1->setSubquestion($subquestion17);
+        $proposition17_1->setRightAnswer(1);
+        $proposition17_1->setTitle("Dà la spiegazione");
+        $proposition17_1->setAudioUrl("");
+        $manager->persist($proposition17_1);
+
+        $proposition17_2 = new Proposition();
+        $proposition17_2->setSubquestion($subquestion17);
+        $proposition17_2->setRightAnswer(0);
+        $proposition17_2->setTitle("Non dà la spiegazione");
+        $proposition17_2->setAudioUrl("");
+        $manager->persist($proposition17_2);
+
+
+
+    // ITEM 18
+        $questionnaire18->addTest($test);
+        $questionnaire18->setLevel("A2");
+        $questionnaire18->setInstruction('Cochez la réponse correcte');
+        $questionnaire18->setTheme('motiver son choix 08/10');
+        $questionnaire18->setSource('certification/test validé (CELI) / modifié');
+        $questionnaire18->setSupportType("enregistrement local (MLC)");
+        $questionnaire18->setFocus('');
+        $questionnaire18->setCognitiveOperation('');
+        $questionnaire18->setFunction('');
+        $questionnaire18->setReceptionType('');
+        $questionnaire18->setDomain('');
+        $questionnaire18->setType('');
+        $questionnaire18->setSourceType('');
+        $questionnaire18->setLanguageLevel('');
+        $questionnaire18->setDurationGroup('brève');
+        $questionnaire18->setFlow('');
+        $questionnaire18->setWordCount('');
+        $questionnaire18->setAuthor('');
+        $questionnaire18->setAudioInstruction('18_consigne');
+        $questionnaire18->setAudioContext('18_contexte');
+        $questionnaire18->setAudioItem('18_item');
+        $manager->persist($questionnaire18);
+
+        $question18 = new Question();
+        $question18->setQuestionnaire($questionnaire18);
+        $question18->setTypology("TVF");
+        $question18->setInstruction("");
+        $manager->persist($question18);
+
+        $subquestion18 = new Subquestion();
+        $subquestion18->setQuestion($question18);
+        $subquestion18->setTypology("VF");
+        $manager->persist($subquestion18);
+
+        $proposition18_1 = new Proposition();
+        $proposition18_1->setSubquestion($subquestion18);
+        $proposition18_1->setRightAnswer(0);
+        $proposition18_1->setTitle("Dà la spiegazione");
+        $proposition18_1->setAudioUrl("");
+        $manager->persist($proposition18_1);
+
+        $proposition18_2 = new Proposition();
+        $proposition18_2->setSubquestion($subquestion18);
+        $proposition18_2->setRightAnswer(1);
+        $proposition18_2->setTitle("Non dà la spiegazione");
+        $proposition18_2->setAudioUrl("");
+        $manager->persist($proposition18_2);
+
+
+
+    // ITEM 19
+        $questionnaire19->addTest($test);
+        $questionnaire19->setLevel("A2");
+        $questionnaire19->setInstruction('Cochez la réponse correcte');
+        $questionnaire19->setTheme('motiver son choix 09/10');
+        $questionnaire19->setSource('certification/test validé (CELI) / modifié');
+        $questionnaire19->setSupportType("enregistrement local (MLC)");
+        $questionnaire19->setFocus('');
+        $questionnaire19->setCognitiveOperation('');
+        $questionnaire19->setFunction('');
+        $questionnaire19->setReceptionType('');
+        $questionnaire19->setDomain('');
+        $questionnaire19->setType('');
+        $questionnaire19->setSourceType('');
+        $questionnaire19->setLanguageLevel('');
+        $questionnaire19->setDurationGroup('brève');
+        $questionnaire19->setFlow('');
+        $questionnaire19->setWordCount('');
+        $questionnaire19->setAuthor('');
+        $questionnaire19->setAudioInstruction('19_consigne');
+        $questionnaire19->setAudioContext('19_contexte');
+        $questionnaire19->setAudioItem('19_item');
+        $manager->persist($questionnaire19);
+
+        $question19 = new Question();
+        $question19->setQuestionnaire($questionnaire19);
+        $question19->setTypology("TVF");
+        $question19->setInstruction("");
+        $manager->persist($question19);
+
+        $subquestion19 = new Subquestion();
+        $subquestion19->setQuestion($question19);
+        $subquestion19->setTypology("VF");
+        $manager->persist($subquestion19);
+
+        $proposition19_1 = new Proposition();
+        $proposition19_1->setSubquestion($subquestion19);
+        $proposition19_1->setRightAnswer(0);
+        $proposition19_1->setTitle("Dà la spiegazione");
+        $proposition19_1->setAudioUrl("");
+        $manager->persist($proposition19_1);
+
+        $proposition19_2 = new Proposition();
+        $proposition19_2->setSubquestion($subquestion19);
+        $proposition19_2->setRightAnswer(1);
+        $proposition19_2->setTitle("Non dà la spiegazione");
+        $proposition19_2->setAudioUrl("");
+        $manager->persist($proposition19_2);
+
+
+
+    // ITEM 20
+        $questionnaire20->addTest($test);
+        $questionnaire20->setLevel("A2");
+        $questionnaire20->setInstruction('Cochez la réponse correcte');
+        $questionnaire20->setTheme('motiver son choix 10/10');
+        $questionnaire20->setSource('certification/test validé (CELI) / modifié');
+        $questionnaire20->setSupportType("enregistrement local (MLC)");
+        $questionnaire20->setFocus('');
+        $questionnaire20->setCognitiveOperation('');
+        $questionnaire20->setFunction('');
+        $questionnaire20->setReceptionType('');
+        $questionnaire20->setDomain('');
+        $questionnaire20->setType('');
+        $questionnaire20->setSourceType('');
+        $questionnaire20->setLanguageLevel('');
+        $questionnaire20->setDurationGroup('brève');
+        $questionnaire20->setFlow('');
+        $questionnaire20->setWordCount('');
+        $questionnaire20->setAuthor('');
+        $questionnaire20->setAudioInstruction('20_consigne');
+        $questionnaire20->setAudioContext('20_contexte');
+        $questionnaire20->setAudioItem('20_item');
+        $manager->persist($questionnaire20);
+
+        $question20 = new Question();
+        $question20->setQuestionnaire($questionnaire20);
+        $question20->setTypology("VF");
+        $question20->setInstruction("");
+        $manager->persist($question20);
+
+        $subquestion20 = new Subquestion();
+        $subquestion20->setQuestion($question20);
+        $subquestion20->setTypology("VF");
+        $manager->persist($subquestion20);
+
+        $proposition20_1 = new Proposition();
+        $proposition20_1->setSubquestion($subquestion20);
+        $proposition20_1->setRightAnswer(1);
+        $proposition20_1->setTitle("Dà la spiegazione");
+        $proposition20_1->setAudioUrl("");
+        $manager->persist($proposition20_1);
+
+        $proposition20_2 = new Proposition();
+        $proposition20_2->setSubquestion($subquestion20);
+        $proposition20_2->setRightAnswer(0);
+        $proposition20_2->setTitle("Non dà la spiegazione");
+        $proposition20_2->setAudioUrl("");
+        $manager->persist($proposition20_2);
+
+        // ITEM 30
         $questionnaire30->addTest($test);
         $questionnaire30->setLevel("A2");
         $questionnaire30->setInstruction('Cochez la case vrai (V) ou faux (F)');
@@ -2365,393 +2198,119 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($proposition31_4_2);
 
 
+    // ITEM 6
+        $questionnaire6->addTest($test);
+        $questionnaire6->setLevel("A2");
+        $questionnaire6->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire6->setTheme('la valise');
+        $questionnaire6->setSource('Conçu en interne');
+        $questionnaire6->setSupportType("enregistrement local (MLC)");
+        $questionnaire6->setFocus('');
+        $questionnaire6->setCognitiveOperation('');
+        $questionnaire6->setFunction('');
+        $questionnaire6->setReceptionType('');
+        $questionnaire6->setDomain('');
+        $questionnaire6->setType('');
+        $questionnaire6->setSourceType('');
+        $questionnaire6->setLanguageLevel('');
+        $questionnaire6->setDurationGroup('brève');
+        $questionnaire6->setFlow('');
+        $questionnaire6->setWordCount('');
+        $questionnaire6->setAuthor('');
+        $questionnaire6->setAudioInstruction('6_consigne');
+        $questionnaire6->setAudioContext('6_contexte');
+        $questionnaire6->setAudioItem('6_item');
+        $manager->persist($questionnaire6);
 
-    // ITEM 32
-        $questionnaire32->addTest($test);
-        $questionnaire32->setLevel("A2");
-        $questionnaire32->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire32->setTheme('Absence à l\'entraînement');
-        $questionnaire32->setSource('Conçu en interne');
-        $questionnaire32->setSupportType("enregistrement local (MLC)");
-        $questionnaire32->setFocus('');
-        $questionnaire32->setCognitiveOperation('');
-        $questionnaire32->setFunction('');
-        $questionnaire32->setReceptionType('');
-        $questionnaire32->setDomain('');
-        $questionnaire32->setType('');
-        $questionnaire32->setSourceType('');
-        $questionnaire32->setLanguageLevel('');
-        $questionnaire32->setDurationGroup('brève');
-        $questionnaire32->setFlow('');
-        $questionnaire32->setWordCount('');
-        $questionnaire32->setAuthor('');
-        $questionnaire32->setAudioInstruction('32_consigne');
-        $questionnaire32->setAudioContext('');
-        $questionnaire32->setAudioItem('32_item');
-        $manager->persist($questionnaire32);
+        $question6 = new Question();
+        $question6->setQuestionnaire($questionnaire6);
+        $question6->setTypology("QRU");
+        $question6->setInstruction("");
+        $manager->persist($question6);
 
-        $question32 = new Question();
-        $question32->setQuestionnaire($questionnaire32);
-        $question32->setTypology("QRU");
-        $question32->setInstruction("");
-        $manager->persist($question32);
+        $subquestion6 = new Subquestion();
+        $subquestion6->setQuestion($question6);
+        $subquestion6->setTypology("QRU");
+        $manager->persist($subquestion6);
 
-        $subquestion32 = new Subquestion();
-        $subquestion32->setQuestion($question32);
-        $subquestion32->setTypology("QRU");
-        $manager->persist($subquestion32);
+        $proposition6_1 = new Proposition();
+        $proposition6_1->setSubquestion($subquestion6);
+        $proposition6_1->setRightAnswer(1);
+        $proposition6_1->setAudioUrl("6_option_1_1");
+        $manager->persist($proposition6_1);
 
-        $proposition32_1 = new Proposition();
-        $proposition32_1->setSubquestion($subquestion32);
-        $proposition32_1->setRightAnswer(0);
-        $proposition32_1->setAudioUrl("32_option_1_1");
-        $manager->persist($proposition32_1);
+        $proposition6_2 = new Proposition();
+        $proposition6_2->setSubquestion($subquestion6);
+        $proposition6_2->setRightAnswer(0);
+        $proposition6_2->setAudioUrl("6_option_1_2");
+        $manager->persist($proposition6_2);
 
-        $proposition32_2 = new Proposition();
-        $proposition32_2->setSubquestion($subquestion32);
-        $proposition32_2->setRightAnswer(1);
-        $proposition32_2->setAudioUrl("32_option_1_2");
-        $manager->persist($proposition32_2);
+        $proposition6_3 = new Proposition();
+        $proposition6_3->setSubquestion($subquestion6);
+        $proposition6_3->setRightAnswer(0);
+        $proposition6_3->setAudioUrl("6_option_1_3");
+        $manager->persist($proposition6_3);
 
-        $proposition32_3 = new Proposition();
-        $proposition32_3->setSubquestion($subquestion32);
-        $proposition32_3->setRightAnswer(0);
-        $proposition32_3->setAudioUrl("32_option_1_3");
-        $manager->persist($proposition32_3);
+        // ITEM 24
+        $questionnaire24->addTest($test);
+        $questionnaire24->setLevel("A2");
+        $questionnaire24->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire24->setTheme('billetterie théatre');
+        $questionnaire24->setSource('Conçu en interne');
+        $questionnaire24->setSupportType("enregistrement local (MLC)");
+        $questionnaire24->setFocus('');
+        $questionnaire24->setCognitiveOperation('');
+        $questionnaire24->setFunction('');
+        $questionnaire24->setReceptionType('');
+        $questionnaire24->setDomain('');
+        $questionnaire24->setType('');
+        $questionnaire24->setSourceType('');
+        $questionnaire24->setLanguageLevel('');
+        $questionnaire24->setDurationGroup('brève');
+        $questionnaire24->setFlow('');
+        $questionnaire24->setWordCount('');
+        $questionnaire24->setAuthor('');
+        $questionnaire24->setAudioInstruction('24_consigne');
+        $questionnaire24->setAudioContext('');
+        $questionnaire24->setAudioItem('24_item');
+        $manager->persist($questionnaire24);
 
+        $question24 = new Question();
+        $question24->setQuestionnaire($questionnaire24);
+        $question24->setTypology("QRU");
+        $question24->setInstruction("");
+        $manager->persist($question24);
 
+        $subquestion24 = new Subquestion();
+        $subquestion24->setQuestion($question24);
+        $subquestion24->setTypology("QRU");
+        $manager->persist($subquestion24);
 
-    // ITEM 33
-        $questionnaire33->addTest($test);
-        $questionnaire33->setLevel("A2");
-        $questionnaire33->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire33->setTheme('Avant le départ');
-        $questionnaire33->setSource('Conçu en interne');
-        $questionnaire33->setSupportType("enregistrement local (MLC)");
-        $questionnaire33->setFocus('');
-        $questionnaire33->setCognitiveOperation('');
-        $questionnaire33->setFunction('');
-        $questionnaire33->setReceptionType('');
-        $questionnaire33->setDomain('');
-        $questionnaire33->setType('');
-        $questionnaire33->setSourceType('');
-        $questionnaire33->setLanguageLevel('');
-        $questionnaire33->setDurationGroup('brève');
-        $questionnaire33->setFlow('');
-        $questionnaire33->setWordCount('');
-        $questionnaire33->setAuthor('');
-        $questionnaire33->setAudioInstruction('33_consigne');
-        $questionnaire33->setAudioContext('');
-        $questionnaire33->setAudioItem('33_item');
-        $manager->persist($questionnaire33);
+        $proposition24_1 = new Proposition();
+        $proposition24_1->setSubquestion($subquestion24);
+        $proposition24_1->setRightAnswer(0);
+        $proposition24_1->setTitle("");
+        $proposition24_1->setAudioUrl("24_option_1_1");
+        $manager->persist($proposition24_1);
 
-        $question33 = new Question();
-        $question33->setQuestionnaire($questionnaire33);
-        $question33->setTypology("QRU");
-        $question33->setInstruction("");
-        $manager->persist($question33);
+        $proposition24_2 = new Proposition();
+        $proposition24_2->setSubquestion($subquestion24);
+        $proposition24_2->setRightAnswer(1);
+        $proposition24_2->setTitle("");
+        $proposition24_2->setAudioUrl("24_option_1_2");
+        $manager->persist($proposition24_2);
 
-        $subquestion33 = new Subquestion();
-        $subquestion33->setQuestion($question33);
-        $subquestion33->setTypology("QRU");
-        $manager->persist($subquestion33);
-
-        $proposition33_1 = new Proposition();
-        $proposition33_1->setSubquestion($subquestion33);
-        $proposition33_1->setRightAnswer(0);
-        $proposition33_1->setAudioUrl("33_option_1_1");
-        $manager->persist($proposition33_1);
-
-        $proposition33_2 = new Proposition();
-        $proposition33_2->setSubquestion($subquestion33);
-        $proposition33_2->setRightAnswer(1);
-        $proposition33_2->setAudioUrl("33_option_1_2");
-        $manager->persist($proposition33_2);
-
-        $proposition33_3 = new Proposition();
-        $proposition33_3->setSubquestion($subquestion33);
-        $proposition33_3->setRightAnswer(0);
-        $proposition33_3->setAudioUrl("33_option_1_3");
-        $manager->persist($proposition33_3);
-
-
+        $proposition24_3 = new Proposition();
+        $proposition24_3->setSubquestion($subquestion24);
+        $proposition24_3->setRightAnswer(0);
+        $proposition24_3->setTitle("");
+        $proposition24_3->setAudioUrl("24_option_1_3");
+        $manager->persist($proposition24_3);
 
 
-    // ITEM 34
-        $questionnaire34->addTest($test);
-        $questionnaire34->setLevel("A2");
-        $questionnaire34->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire34->setTheme('Examen');
-        $questionnaire34->setSource('Conçu en interne');
-        $questionnaire34->setSupportType("enregistrement local (MLC)");
-        $questionnaire34->setFocus('');
-        $questionnaire34->setCognitiveOperation('');
-        $questionnaire34->setFunction('');
-        $questionnaire34->setReceptionType('');
-        $questionnaire34->setDomain('');
-        $questionnaire34->setType('');
-        $questionnaire34->setSourceType('');
-        $questionnaire34->setLanguageLevel('');
-        $questionnaire34->setDurationGroup('brève');
-        $questionnaire34->setFlow('');
-        $questionnaire34->setWordCount('');
-        $questionnaire34->setAuthor('');
-        $questionnaire34->setAudioInstruction('34_consigne');
-        $questionnaire34->setAudioContext('');
-        $questionnaire34->setAudioItem('34_item');
-        $manager->persist($questionnaire34);
+       
 
-        $question34 = new Question();
-        $question34->setQuestionnaire($questionnaire34);
-        $question34->setTypology("QRU");
-        $question34->setInstruction("");
-        $manager->persist($question34);
-
-        $subquestion34 = new Subquestion();
-        $subquestion34->setQuestion($question34);
-        $subquestion34->setTypology("QRU");
-        $manager->persist($subquestion34);
-
-        $proposition34_1 = new Proposition();
-        $proposition34_1->setSubquestion($subquestion34);
-        $proposition34_1->setRightAnswer(1);
-        $proposition34_1->setAudioUrl("34_option_1_1");
-        $manager->persist($proposition34_1);
-
-        $proposition34_2 = new Proposition();
-        $proposition34_2->setSubquestion($subquestion34);
-        $proposition34_2->setRightAnswer(0);
-        $proposition34_2->setAudioUrl("34_option_1_2");
-        $manager->persist($proposition34_2);
-
-        $proposition34_3 = new Proposition();
-        $proposition34_3->setSubquestion($subquestion34);
-        $proposition34_3->setRightAnswer(0);
-        $proposition34_3->setAudioUrl("34_option_1_3");
-        $manager->persist($proposition34_3);
-
-
-
-    // ITEM 35
-        $questionnaire35->addTest($test);
-        $questionnaire35->setLevel("A2");
-        $questionnaire35->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire35->setTheme('Faire les courses');
-        $questionnaire35->setSource('Conçu en interne');
-        $questionnaire35->setSupportType("enregistrement local (MLC)");
-        $questionnaire35->setFocus('');
-        $questionnaire35->setCognitiveOperation('');
-        $questionnaire35->setFunction('');
-        $questionnaire35->setReceptionType('');
-        $questionnaire35->setDomain('');
-        $questionnaire35->setType('');
-        $questionnaire35->setSourceType('');
-        $questionnaire35->setLanguageLevel('');
-        $questionnaire35->setDurationGroup('brève');
-        $questionnaire35->setFlow('');
-        $questionnaire35->setWordCount('');
-        $questionnaire35->setAuthor('');
-        $questionnaire35->setAudioInstruction('35_consigne');
-        $questionnaire35->setAudioContext('');
-        $questionnaire35->setAudioItem('35_item');
-        $manager->persist($questionnaire35);
-
-        $question35 = new Question();
-        $question35->setQuestionnaire($questionnaire35);
-        $question35->setTypology("QRU");
-        $question35->setInstruction("");
-        $manager->persist($question35);
-
-        $subquestion35 = new Subquestion();
-        $subquestion35->setQuestion($question35);
-        $subquestion35->setTypology("QRU");
-        $manager->persist($subquestion35);
-
-        $proposition35_1 = new Proposition();
-        $proposition35_1->setSubquestion($subquestion35);
-        $proposition35_1->setRightAnswer(1);
-        $proposition35_1->setAudioUrl("35_option_1_1");
-        $manager->persist($proposition35_1);
-
-        $proposition35_2 = new Proposition();
-        $proposition35_2->setSubquestion($subquestion35);
-        $proposition35_2->setRightAnswer(0);
-        $proposition35_2->setAudioUrl("35_option_1_2");
-        $manager->persist($proposition35_2);
-
-        $proposition35_3 = new Proposition();
-        $proposition35_3->setSubquestion($subquestion35);
-        $proposition35_3->setRightAnswer(0);
-        $proposition35_3->setAudioUrl("35_option_1_3");
-        $manager->persist($proposition35_3);
-
-
-    // ITEM 36
-        $questionnaire36->addTest($test);
-        $questionnaire36->setLevel("A2");
-        $questionnaire36->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire36->setTheme('Nouvelle télévisée');
-        $questionnaire36->setSource('Conçu en interne');
-        $questionnaire36->setSupportType("enregistrement local (MLC)");
-        $questionnaire36->setFocus('');
-        $questionnaire36->setCognitiveOperation('');
-        $questionnaire36->setFunction('');
-        $questionnaire36->setReceptionType('');
-        $questionnaire36->setDomain('');
-        $questionnaire36->setType('');
-        $questionnaire36->setSourceType('');
-        $questionnaire36->setLanguageLevel('');
-        $questionnaire36->setDurationGroup('brève');
-        $questionnaire36->setFlow('');
-        $questionnaire36->setWordCount('');
-        $questionnaire36->setAuthor('');
-        $questionnaire36->setAudioInstruction('36_consigne');
-        $questionnaire36->setAudioContext('');
-        $questionnaire36->setAudioItem('36_item');
-        $manager->persist($questionnaire36);
-
-        $question36 = new Question();
-        $question36->setQuestionnaire($questionnaire36);
-        $question36->setTypology("QRU");
-        $question36->setInstruction("");
-        $manager->persist($question36);
-
-        $subquestion36 = new Subquestion();
-        $subquestion36->setQuestion($question36);
-        $subquestion36->setTypology("QRU");
-        $manager->persist($subquestion36);
-
-        $proposition36_1 = new Proposition();
-        $proposition36_1->setSubquestion($subquestion36);
-        $proposition36_1->setRightAnswer(1);
-        $proposition36_1->setAudioUrl("36_option_1_1");
-        $manager->persist($proposition36_1);
-
-        $proposition36_2 = new Proposition();
-        $proposition36_2->setSubquestion($subquestion36);
-        $proposition36_2->setRightAnswer(0);
-        $proposition36_2->setAudioUrl("36_option_1_2");
-        $manager->persist($proposition36_2);
-
-        $proposition36_3 = new Proposition();
-        $proposition36_3->setSubquestion($subquestion36);
-        $proposition36_3->setRightAnswer(0);
-        $proposition36_3->setAudioUrl("36_option_1_3");
-        $manager->persist($proposition36_3);
-
-
-
-    // ITEM 37
-        $questionnaire37->addTest($test);
-        $questionnaire37->setLevel("A2");
-        $questionnaire37->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire37->setTheme('Rendre CD');
-        $questionnaire37->setSource('Conçu en interne');
-        $questionnaire37->setSupportType("enregistrement local (MLC)");
-        $questionnaire37->setFocus('');
-        $questionnaire37->setCognitiveOperation('');
-        $questionnaire37->setFunction('');
-        $questionnaire37->setReceptionType('');
-        $questionnaire37->setDomain('');
-        $questionnaire37->setType('');
-        $questionnaire37->setSourceType('');
-        $questionnaire37->setLanguageLevel('');
-        $questionnaire37->setDurationGroup('brève');
-        $questionnaire37->setFlow('');
-        $questionnaire37->setWordCount('');
-        $questionnaire37->setAuthor('');
-        $questionnaire37->setAudioInstruction('37_consigne');
-        $questionnaire37->setAudioContext('');
-        $questionnaire37->setAudioItem('37_item');
-        $manager->persist($questionnaire37);
-
-        $question37 = new Question();
-        $question37->setQuestionnaire($questionnaire37);
-        $question37->setTypology("QRU");
-        $question37->setInstruction("");
-        $manager->persist($question37);
-
-        $subquestion37 = new Subquestion();
-        $subquestion37->setQuestion($question37);
-        $subquestion37->setTypology("QRU");
-        $manager->persist($subquestion37);
-
-        $proposition37_1 = new Proposition();
-        $proposition37_1->setSubquestion($subquestion37);
-        $proposition37_1->setRightAnswer(0);
-        $proposition37_1->setAudioUrl("37_option_1_1");
-        $manager->persist($proposition37_1);
-
-        $proposition37_2 = new Proposition();
-        $proposition37_2->setSubquestion($subquestion37);
-        $proposition37_2->setRightAnswer(0);
-        $proposition37_2->setAudioUrl("37_option_1_2");
-        $manager->persist($proposition37_2);
-
-        $proposition37_3 = new Proposition();
-        $proposition37_3->setSubquestion($subquestion37);
-        $proposition37_3->setRightAnswer(1);
-        $proposition37_3->setAudioUrl("37_option_1_3");
-        $manager->persist($proposition37_3);
-
-
-
-    // ITEM 38
-        $questionnaire38->addTest($test);
-        $questionnaire38->setLevel("A2");
-        $questionnaire38->setInstruction('Sélectionnez la réponse correcte');
-        $questionnaire38->setTheme('Souvenirs');
-        $questionnaire38->setSource('Conçu en interne');
-        $questionnaire38->setSupportType("enregistrement local (MLC)");
-        $questionnaire38->setFocus('');
-        $questionnaire38->setCognitiveOperation('');
-        $questionnaire38->setFunction('');
-        $questionnaire38->setReceptionType('');
-        $questionnaire38->setDomain('');
-        $questionnaire38->setType('');
-        $questionnaire38->setSourceType('');
-        $questionnaire38->setLanguageLevel('');
-        $questionnaire38->setDurationGroup('brève');
-        $questionnaire38->setFlow('');
-        $questionnaire38->setWordCount('');
-        $questionnaire38->setAuthor('');
-        $questionnaire38->setAudioInstruction('38_consigne');
-        $questionnaire38->setAudioContext('');
-        $questionnaire38->setAudioItem('38_item');
-        $manager->persist($questionnaire38);
-
-        $question38 = new Question();
-        $question38->setQuestionnaire($questionnaire38);
-        $question38->setTypology("QRU");
-        $question38->setInstruction("");
-        $manager->persist($question38);
-
-        $subquestion38 = new Subquestion();
-        $subquestion38->setQuestion($question38);
-        $subquestion38->setTypology("QRU");
-        $manager->persist($subquestion38);
-
-        $proposition38_1 = new Proposition();
-        $proposition38_1->setSubquestion($subquestion38);
-        $proposition38_1->setRightAnswer(1);
-        $proposition38_1->setAudioUrl("38_option_1_1");
-        $manager->persist($proposition38_1);
-
-        $proposition38_2 = new Proposition();
-        $proposition38_2->setSubquestion($subquestion38);
-        $proposition38_2->setRightAnswer(0);
-        $proposition38_2->setAudioUrl("38_option_1_2");
-        $manager->persist($proposition38_2);
-
-        $proposition38_3 = new Proposition();
-        $proposition38_3->setSubquestion($subquestion38);
-        $proposition38_3->setRightAnswer(0);
-        $proposition38_3->setAudioUrl("38_option_1_3");
-        $manager->persist($proposition38_3);
-
-
-
-    // ITEM 39
+        // ITEM 39
         $questionnaire39->addTest($test);
         $questionnaire39->setLevel("A2");
         $questionnaire39->setInstruction('Sélectionnez la réponse correcte');
@@ -2804,6 +2363,452 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $proposition39_3->setAudioUrl("39_option_1_3");
         $manager->persist($proposition39_3);
 
+    // ITEM 7
+        $questionnaire7->addTest($test);
+        $questionnaire7->setLevel("A2");
+        $questionnaire7->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire7->setTheme('moment de relax');
+        $questionnaire7->setSource('Conçu en interne');
+        $questionnaire7->setSupportType("enregistrement local (MLC)");
+        $questionnaire7->setFocus('');
+        $questionnaire7->setCognitiveOperation('');
+        $questionnaire7->setFunction('');
+        $questionnaire7->setReceptionType('');
+        $questionnaire7->setDomain('');
+        $questionnaire7->setType('');
+        $questionnaire7->setSourceType('');
+        $questionnaire7->setLanguageLevel('');
+        $questionnaire7->setDurationGroup('brève');
+        $questionnaire7->setFlow('');
+        $questionnaire7->setWordCount('');
+        $questionnaire7->setAuthor('');
+        $questionnaire7->setAudioInstruction('7_consigne');
+        $questionnaire7->setAudioContext('7_contexte');
+        $questionnaire7->setAudioItem('7_item');
+        $manager->persist($questionnaire7);
+
+        $question7 = new Question();
+        $question7->setQuestionnaire($questionnaire7);
+        $question7->setTypology("QRU");
+        $question7->setInstruction("");
+        $manager->persist($question7);
+
+        $subquestion7 = new Subquestion();
+        $subquestion7->setQuestion($question7);
+        $subquestion7->setTypology("QRU");
+        $manager->persist($subquestion7);
+
+        $proposition7_1 = new Proposition();
+        $proposition7_1->setSubquestion($subquestion7);
+        $proposition7_1->setRightAnswer(1);
+        $proposition7_1->setAudioUrl("7_option_1_1");
+        $manager->persist($proposition7_1);
+
+        $proposition7_2 = new Proposition();
+        $proposition7_2->setSubquestion($subquestion7);
+        $proposition7_2->setRightAnswer(0);
+        $proposition7_2->setAudioUrl("7_option_1_2");
+        $manager->persist($proposition7_2);
+
+        $proposition7_3 = new Proposition();
+        $proposition7_3->setSubquestion($subquestion7);
+        $proposition7_3->setRightAnswer(0);
+        $proposition7_3->setAudioUrl("7_option_1_3");
+        $manager->persist($proposition7_3);
+
+
+         // ITEM 8
+        $questionnaire8->addTest($test);
+        $questionnaire8->setLevel("A2");
+        $questionnaire8->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire8->setTheme('réserver des billets au théâtre');
+        $questionnaire8->setSource('Conçu en interne');
+        $questionnaire8->setSupportType("enregistrement local (MLC)");
+        $questionnaire8->setFocus('');
+        $questionnaire8->setCognitiveOperation('');
+        $questionnaire8->setFunction('');
+        $questionnaire8->setReceptionType('');
+        $questionnaire8->setDomain('');
+        $questionnaire8->setType('');
+        $questionnaire8->setSourceType('');
+        $questionnaire8->setLanguageLevel('');
+        $questionnaire8->setDurationGroup('brève');
+        $questionnaire8->setFlow('');
+        $questionnaire8->setWordCount('');
+        $questionnaire8->setAuthor('');
+        $questionnaire8->setAudioInstruction('8_consigne');
+        $questionnaire8->setAudioContext('8_contexte');
+        $questionnaire8->setAudioItem('8_item');
+        $manager->persist($questionnaire8);
+
+        $question8 = new Question();
+        $question8->setQuestionnaire($questionnaire8);
+        $question8->setTypology("QRU");
+        $question8->setInstruction("");
+        $manager->persist($question8);
+
+        $subquestion8 = new Subquestion();
+        $subquestion8->setQuestion($question8);
+        $subquestion8->setTypology("QRU");
+        $manager->persist($subquestion8);
+
+        $proposition8_1 = new Proposition();
+        $proposition8_1->setSubquestion($subquestion8);
+        $proposition8_1->setRightAnswer(1);
+        $proposition8_1->setAudioUrl("8_option_1_1");
+        $manager->persist($proposition8_1);
+
+        $proposition8_2 = new Proposition();
+        $proposition8_2->setSubquestion($subquestion8);
+        $proposition8_2->setRightAnswer(0);
+        $proposition8_2->setAudioUrl("8_option_1_1");
+        $manager->persist($proposition8_2);
+
+        $proposition8_3 = new Proposition();
+        $proposition8_3->setSubquestion($subquestion8);
+        $proposition8_3->setRightAnswer(0);
+        $proposition8_3->setAudioUrl("8_option_1_1");
+        $manager->persist($proposition8_3);
+
         $manager->flush();
+
+    /*
+    // ITEM 21
+        $questionnaire21->addTest($test);
+        $questionnaire21->setLevel("A2");
+        $questionnaire21->setInstruction('Sélectionnez la réponse correcte');
+        $questionnaire21->setTheme('ameublement');
+        $questionnaire21->setSource('méthodes et manuels (Allegro 2, Edilingua, p. 22, unità 2) / modifié');
+        $questionnaire21->setSupportType("enregistrement local (MLC)");
+        $questionnaire21->setFocus('');
+        $questionnaire21->setCognitiveOperation('');
+        $questionnaire21->setFunction('');
+        $questionnaire21->setReceptionType('');
+        $questionnaire21->setDomain('');
+        $questionnaire21->setType('');
+        $questionnaire21->setSourceType('');
+        $questionnaire21->setLanguageLevel('');
+        $questionnaire21->setDurationGroup('brève');
+        $questionnaire21->setFlow('');
+        $questionnaire21->setWordCount('');
+        $questionnaire21->setAuthor('');
+        $questionnaire21->setAudioInstruction('');
+        $questionnaire21->setAudioContext('');
+        $questionnaire21->setAudioItem('');
+        $manager->persist($questionnaire21);
+
+        $question21_1 = new Question();
+        $question21_1->setQuestionnaire($questionnaire21);
+        $question21_1->setTypology("QRU");
+        $question21_1->setInstruction("");
+        $manager->persist($question21_1);
+
+        $question21_2 = new Question();
+        $question21_2->setQuestionnaire($questionnaire21);
+        $question21_2->setTypology("QRU");
+        $question21_2->setInstruction("");
+        $manager->persist($question21_2);
+
+        $question21_3 = new Question();
+        $question21_3->setQuestionnaire($questionnaire21);
+        $question21_3->setTypology("QRU");
+        $question21_3->setInstruction("");
+        $manager->persist($question21_3);
+
+        $question21_4 = new Question();
+        $question21_4->setQuestionnaire($questionnaire21);
+        $question21_4->setTypology("QRU");
+        $question21_4->setInstruction("");
+        $manager->persist($question21_4);
+
+        $subquestion21_1 = new Subquestion();
+        $subquestion21_1->setQuestion($question21_1);
+        $subquestion21_1->setTypology("QRU");
+        $manager->persist($subquestion21_1);
+
+        $subquestion21_2 = new Subquestion();
+        $subquestion21_2->setQuestion($question21_2);
+        $subquestion21_2->setTypology("QRU");
+        $manager->persist($subquestion21_2);
+
+        $subquestion21_3 = new Subquestion();
+        $subquestion21_3->setQuestion($question21_3);
+        $subquestion21_3->setTypology("QRU");
+        $manager->persist($subquestion21_3);
+
+        $subquestion21_4 = new Subquestion();
+        $subquestion21_4->setQuestion($question21_4);
+        $subquestion21_4->setTypology("QRU");
+        $manager->persist($subquestion21_4);
+
+        $proposition21_1_1 = new Proposition();
+        $proposition21_1_1->setSubquestion($subquestion21_1);
+        $proposition21_1_1->setRightAnswer(1);
+        $proposition21_1_1->setTitle("");
+        $proposition21_1_1->setAudioUrl("");
+        $manager->persist($proposition21_1_1);
+
+        $proposition21_1_2 = new Proposition();
+        $proposition21_1_2->setSubquestion($subquestion21_1);
+        $proposition21_1_2->setRightAnswer(0);
+        $proposition21_1_2->setTitle("");
+        $proposition21_1_2->setAudioUrl("");
+        $manager->persist($proposition21_1_2);
+
+        $proposition21_1_3 = new Proposition();
+        $proposition21_1_3->setSubquestion($subquestion21_1);
+        $proposition21_1_3->setRightAnswer(0);
+        $proposition21_1_3->setTitle("");
+        $proposition21_1_3->setAudioUrl("");
+        $manager->persist($proposition21_1_3);
+
+        $proposition21_2_1 = new Proposition();
+        $proposition21_2_1->setSubquestion($subquestion21_2);
+        $proposition21_2_1->setRightAnswer(0);
+        $proposition21_2_1->setTitle("");
+        $proposition21_2_1->setAudioUrl("");
+        $manager->persist($proposition21_2_1);
+
+        $proposition21_2_2 = new Proposition();
+        $proposition21_2_2->setSubquestion($subquestion21_2);
+        $proposition21_2_2->setRightAnswer(1);
+        $proposition21_2_2->setTitle("");
+        $proposition21_2_2->setAudioUrl("");
+        $manager->persist($proposition21_2_2);
+
+        $proposition21_2_3 = new Proposition();
+        $proposition21_2_3->setSubquestion($subquestion21_2);
+        $proposition21_2_3->setRightAnswer(0);
+        $proposition21_2_3->setTitle("");
+        $proposition21_2_3->setAudioUrl("");
+        $manager->persist($proposition21_2_3);
+
+        $proposition21_3_1 = new Proposition();
+        $proposition21_3_1->setSubquestion($subquestion21_3);
+        $proposition21_3_1->setRightAnswer(1);
+        $proposition21_3_1->setTitle("");
+        $proposition21_3_1->setAudioUrl("");
+        $manager->persist($proposition21_3_1);
+
+        $proposition21_3_2 = new Proposition();
+        $proposition21_3_2->setSubquestion($subquestion21_3);
+        $proposition21_3_2->setRightAnswer(0);
+        $proposition21_3_2->setTitle("");
+        $proposition21_3_2->setAudioUrl("");
+        $manager->persist($proposition21_3_2);
+
+        $proposition21_3_3 = new Proposition();
+        $proposition21_3_3->setSubquestion($subquestion21_3);
+        $proposition21_3_3->setRightAnswer(0);
+        $proposition21_3_3->setTitle("");
+        $proposition21_3_3->setAudioUrl("");
+        $manager->persist($proposition21_3_3);
+
+        $proposition21_4_1 = new Proposition();
+        $proposition21_4_1->setSubquestion($subquestion21_4);
+        $proposition21_4_1->setRightAnswer(0);
+        $proposition21_4_1->setTitle("");
+        $proposition21_4_1->setAudioUrl("");
+        $manager->persist($proposition21_4_1);
+
+        $proposition21_4_2 = new Proposition();
+        $proposition21_4_2->setSubquestion($subquestion21_4);
+        $proposition21_4_2->setRightAnswer(1);
+        $proposition21_4_2->setTitle("");
+        $proposition21_4_2->setAudioUrl("");
+        $manager->persist($proposition21_4_2);
+
+        $proposition21_4_3 = new Proposition();
+        $proposition21_4_3->setSubquestion($subquestion21_4);
+        $proposition21_4_3->setRightAnswer(0);
+        $proposition21_4_3->setTitle("");
+        $proposition21_4_3->setAudioUrl("");
+        $manager->persist($proposition21_4_3);
+    */
+        
+    
+
+   
+
+    
+
+    
+
+    /*
+    // ITEM 26
+        $questionnaire26->addTest($test);
+        $questionnaire26->setLevel("A2");
+        $questionnaire26->setInstruction('Cochez la case vrai (V) ou faux (F)');
+        $questionnaire26->setTheme('recette tiramisù');
+        $questionnaire26->setSource('méthodes et manuels (Se ascoltando..., Livello A1 - A2, Guerra Edizioni, p. 35 piste n° 29) / modifié');
+        $questionnaire26->setSupportType("enregistrement local (MLC)");
+        $questionnaire26->setFocus('');
+        $questionnaire26->setCognitiveOperation('');
+        $questionnaire26->setFunction('');
+        $questionnaire26->setReceptionType('');
+        $questionnaire26->setDomain('');
+        $questionnaire26->setType('');
+        $questionnaire26->setSourceType('');
+        $questionnaire26->setLanguageLevel('');
+        $questionnaire26->setDurationGroup('brève');
+        $questionnaire26->setFlow('');
+        $questionnaire26->setWordCount('');
+        $questionnaire26->setAuthor('');
+        $questionnaire26->setAudioInstruction('');
+        $questionnaire26->setAudioContext('');
+        $questionnaire26->setAudioItem('');
+        $manager->persist($questionnaire26);
+
+        $question26_1 = new Question();
+        $question26_1->setQuestionnaire($questionnaire26);
+        $question26_1->setTypology("TVF");
+        $question26_1->setInstruction("");
+        $manager->persist($question26_1);
+
+        $subquestion26_1_1 = new Subquestion();
+        $subquestion26_1_1->setQuestion($question26_1);
+        $subquestion26_1_1->setTypology("VF");
+        $manager->persist($subquestion26_1_1);
+
+        $proposition26_1_1_1 = new Proposition();
+        $proposition26_1_1_1->setSubquestion($subquestion26_1_1);
+        $proposition26_1_1_1->setRightAnswer(0);
+        $proposition26_1_1_1->setTitle("V");
+        $proposition26_1_1_1->setAudioUrl("");
+        $manager->persist($proposition26_1_1_1);
+
+        $proposition26_1_1_2 = new Proposition();
+        $proposition26_1_1_2->setSubquestion($subquestion26_1_1);
+        $proposition26_1_1_2->setRightAnswer(1);
+        $proposition26_1_1_2->setTitle("F");
+        $proposition26_1_1_2->setAudioUrl("");
+        $manager->persist($proposition26_1_1_2);
+
+
+        $subquestion26_1_2 = new Subquestion();
+        $subquestion26_1_2->setQuestion($question26_1);
+        $subquestion26_1_2->setTypology("VF");
+        $manager->persist($subquestion26_1_2);
+
+        $proposition26_1_2_1 = new Proposition();
+        $proposition26_1_2_1->setSubquestion($subquestion26_1_2);
+        $proposition26_1_2_1->setRightAnswer(1);
+        $proposition26_1_2_1->setTitle("V");
+        $proposition26_1_2_1->setAudioUrl("");
+        $manager->persist($proposition26_1_2_1);
+
+        $proposition26_1_2_2 = new Proposition();
+        $proposition26_1_2_2->setSubquestion($subquestion26_1_2);
+        $proposition26_1_2_2->setRightAnswer(0);
+        $proposition26_1_2_2->setTitle("F");
+        $proposition26_1_2_2->setAudioUrl("");
+        $manager->persist($proposition26_1_2_2);
+
+
+        $subquestion26_1_3 = new Subquestion();
+        $subquestion26_1_3->setQuestion($question26_1);
+        $subquestion26_1_3->setTypology("VF");
+        $manager->persist($subquestion26_1_3);
+
+        $proposition26_1_3_1 = new Proposition();
+        $proposition26_1_3_1->setSubquestion($subquestion26_1_3);
+        $proposition26_1_3_1->setRightAnswer(1);
+        $proposition26_1_3_1->setTitle("V");
+        $proposition26_1_3_1->setAudioUrl("");
+        $manager->persist($proposition26_1_3_1);
+
+        $proposition26_1_3_2 = new Proposition();
+        $proposition26_1_3_2->setSubquestion($subquestion26_1_3);
+        $proposition26_1_3_2->setRightAnswer(0);
+        $proposition26_1_3_2->setTitle("F");
+        $proposition26_1_3_2->setAudioUrl("");
+        $manager->persist($proposition26_1_3_2);
+
+        $subquestion26_1_4 = new Subquestion();
+        $subquestion26_1_4->setQuestion($question26_1);
+        $subquestion26_1_4->setTypology("VF");
+        $manager->persist($subquestion26_1_4);
+
+        $proposition26_1_4_1 = new Proposition();
+        $proposition26_1_4_1->setSubquestion($subquestion26_1_4);
+        $proposition26_1_4_1->setRightAnswer(0);
+        $proposition26_1_4_1->setTitle("V");
+        $proposition26_1_4_1->setAudioUrl("");
+        $manager->persist($proposition26_1_4_1);
+
+        $proposition26_1_4_2 = new Proposition();
+        $proposition26_1_4_2->setSubquestion($subquestion26_1_4);
+        $proposition26_1_4_2->setRightAnswer(1);
+        $proposition26_1_4_2->setTitle("F");
+        $proposition26_1_4_2->setAudioUrl("");
+        $manager->persist($proposition26_1_4_2);
+
+        $question26_2 = new Question();
+        $question26_2->setQuestionnaire($questionnaire26);
+        $question26_2->setTypology("TVF");
+        $question26_2->setInstruction("");
+        $manager->persist($question26_2);
+
+        $subquestion26_2_1 = new Subquestion();
+        $subquestion26_2_1->setQuestion($question26_2);
+        $subquestion26_2_1->setTypology("VF");
+        $manager->persist($subquestion26_2_1);
+
+        $proposition26_2_1_1 = new Proposition();
+        $proposition26_2_1_1->setSubquestion($subquestion26_2_1);
+        $proposition26_2_1_1->setRightAnswer(1);
+        $proposition26_2_1_1->setTitle("V");
+        $proposition26_2_1_1->setAudioUrl("");
+        $manager->persist($proposition26_2_1_1);
+
+        $proposition26_2_1_2 = new Proposition();
+        $proposition26_2_1_2->setSubquestion($subquestion26_2_1);
+        $proposition26_2_1_2->setRightAnswer(0);
+        $proposition26_2_1_2->setTitle("F");
+        $proposition26_2_1_2->setAudioUrl("");
+        $manager->persist($proposition26_2_1_2);
+
+        $subquestion26_2_2 = new Subquestion();
+        $subquestion26_2_2->setQuestion($question26_2);
+        $subquestion26_2_2->setTypology("VF");
+        $manager->persist($subquestion26_2_2);
+
+        $proposition26_2_2_1 = new Proposition();
+        $proposition26_2_2_1->setSubquestion($subquestion26_2_2);
+        $proposition26_2_2_1->setRightAnswer(0);
+        $proposition26_2_2_1->setTitle("V");
+        $proposition26_2_2_1->setAudioUrl("");
+        $manager->persist($proposition26_2_2_1);
+
+        $proposition26_2_2_2 = new Proposition();
+        $proposition26_2_2_2->setSubquestion($subquestion26_2_2);
+        $proposition26_2_2_2->setRightAnswer(1);
+        $proposition26_2_2_2->setTitle("F");
+        $proposition26_2_2_2->setAudioUrl("");
+        $manager->persist($proposition26_2_2_2);
+
+        $subquestion26_2_3 = new Subquestion();
+        $subquestion26_2_3->setQuestion($question26_2);
+        $subquestion26_2_3->setTypology("VF");
+        $manager->persist($subquestion26_2_3);
+
+        $proposition26_2_3_1 = new Proposition();
+        $proposition26_2_3_1->setSubquestion($subquestion26_2_3);
+        $proposition26_2_3_1->setRightAnswer(0);
+        $proposition26_2_3_1->setTitle("V");
+        $proposition26_2_3_1->setAudioUrl("");
+        $manager->persist($proposition26_2_3_1);
+
+        $proposition26_2_3_2 = new Proposition();
+        $proposition26_2_3_2->setSubquestion($subquestion26_2_3);
+        $proposition26_2_3_2->setRightAnswer(1);
+        $proposition26_2_3_2->setTitle("F");
+        $proposition26_2_3_2->setAudioUrl("");
+        $manager->persist($proposition26_2_3_2);
+    */
+
+
+
+       
     }
 }
