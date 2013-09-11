@@ -28,6 +28,8 @@ php app/console fos:user:create admin2 --super-admin
 
 # Basic update 
 
+``` bash
 git pull
 git checkout master
 php app/console cache:clear --env=prod --no-debug
+```
