@@ -100,7 +100,6 @@ class Questionnaire
      */
     private $theme;
 
-
     /**
      * @var string
      *
@@ -201,6 +200,7 @@ class Questionnaire
     {
         return $this->theme;
     }
+
 
 
     /**

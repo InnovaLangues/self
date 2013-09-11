@@ -22,11 +22,10 @@ class Subquestion
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="typology", type="string", length=255)
-     */
-    private $typology;
+    * @ORM\ManyToOne(targetEntity="Typology", inversedBy="subquestions")
+    */
+    protected $typology;
+
 
     /**
      * @var string
@@ -62,28 +61,6 @@ class Subquestion
         return $this->id;
     }
 
-    /**
-     * Set typology
-     *
-     * @param string $typology
-     * @return Subquestion
-     */
-    public function setTypology($typology)
-    {
-        $this->typology = $typology;
-    
-        return $this;
-    }
-
-    /**
-     * Get typology
-     *
-     * @return string 
-     */
-    public function getTypology()
-    {
-        return $this->typology;
-    }
     /**
      * Constructor
      */
@@ -192,5 +169,28 @@ class Subquestion
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set typology
+     *
+     * @param \Innova\SelfBundle\Entity\Typology $typology
+     * @return Subquestion
+     */
+    public function setTypology(\Innova\SelfBundle\Entity\Typology $typology = null)
+    {
+        $this->typology = $typology;
+    
+        return $this;
+    }
+
+    /**
+     * Get typology
+     *
+     * @return \Innova\SelfBundle\Entity\Typology 
+     */
+    public function getTypology()
+    {
+        return $this->typology;
     }
 }

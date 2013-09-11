@@ -26,13 +26,11 @@ class Question
     */
     protected $questionnaire;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="typology", type="string", length=255)
-     */
-    private $typology;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Typology", inversedBy="questions")
+    */
+    protected $typology;
     
     /**
     * @ORM\OneToMany(targetEntity="Subquestion", mappedBy="question", cascade={"remove", "persist"})
@@ -40,11 +38,9 @@ class Question
     protected $subquestions;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="instruction", type="string", length=255)
-     */
-    private $instruction;
+    * @ORM\ManyToOne(targetEntity="Instruction", inversedBy="questions")
+    */
+    protected $instruction;
 
     /**
      * @var string
@@ -130,51 +126,7 @@ class Question
         return $this->subquestions;
     }
 
-    /**
-     * Set instruction
-     *
-     * @param string $instruction
-     * @return Question
-     */
-    public function setInstruction($instruction)
-    {
-        $this->instruction = $instruction;
-    
-        return $this;
-    }
 
-    /**
-     * Get instruction
-     *
-     * @return string 
-     */
-    public function getInstruction()
-    {
-        return $this->instruction;
-    }
-
-    /**
-     * Set typology
-     *
-     * @param string $typology
-     * @return Question
-     */
-    public function setTypology($typology)
-    {
-        $this->typology = $typology;
-    
-        return $this;
-    }
-
-    /**
-     * Get typology
-     *
-     * @return string 
-     */
-    public function getTypology()
-    {
-        return $this->typology;
-    }
 
     /**
      * Set audioUrl
@@ -197,5 +149,51 @@ class Question
     public function getAudioUrl()
     {
         return $this->audioUrl;
+    }
+
+    /**
+     * Set instruction
+     *
+     * @param \Innova\SelfBundle\Entity\Instruction $instruction
+     * @return Question
+     */
+    public function setInstruction(\Innova\SelfBundle\Entity\Instruction $instruction = null)
+    {
+        $this->instruction = $instruction;
+    
+        return $this;
+    }
+
+    /**
+     * Get instruction
+     *
+     * @return \Innova\SelfBundle\Entity\Instruction 
+     */
+    public function getInstruction()
+    {
+        return $this->instruction;
+    }
+
+    /**
+     * Set typology
+     *
+     * @param \Innova\SelfBundle\Entity\Typology $typology
+     * @return Question
+     */
+    public function setTypology(\Innova\SelfBundle\Entity\Typology $typology = null)
+    {
+        $this->typology = $typology;
+    
+        return $this;
+    }
+
+    /**
+     * Get typology
+     *
+     * @return \Innova\SelfBundle\Entity\Typology 
+     */
+    public function getTypology()
+    {
+        return $this->typology;
     }
 }
