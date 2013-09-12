@@ -1,4 +1,5 @@
 {% trans_default_domain 'FOSUserBundle' %}
+
 <br>{# TODO: Berk c'est encore Eric qui à mis des BR! #}
 <div class="well">
 	<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="fos_user_registration_register">
@@ -6,10 +7,33 @@
 	        <div id="legend">
 	            <legend class="">Inscription</legend>{# TODO: i18n #}
 	        </div>
-		    {{ form_widget(form) }}
+		    
+			{{ form_errors(form) }}
+
+			{{ form_label(form.username) }}
+			{{ form_widget(form.username) }}
+			{{ form_errors(form.username) }}
+
+			{{ form_label(form.email) }}
+			{{ form_widget(form.email) }}
+			{{ form_errors(form.email) }}
+
+			{{ form_label(form.plainPassword.first) }}
+			{{ form_widget(form.plainPassword.first) }}
+			{{ form_errors(form.plainPassword.first) }}
+
+			{{ form_label(form.plainPassword.second) }}
+			{{ form_widget(form.plainPassword.second) }}
+
+			{{ form_rest(form) }}
+
 		     <div class="col-lg-offset-2 col-lg-10">
-	            <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary"/>
+	            <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" class="pull-right btn btn-primary"/>
 	        </div>
 		</fieldset>
 	</form>
 </div>
+
+
+
+
