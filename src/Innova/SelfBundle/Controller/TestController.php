@@ -39,7 +39,7 @@ class TestController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                         'test_end', 
-                        array()
+                        array("id"=>$test->getId())
                 )
             );
         }
@@ -57,12 +57,20 @@ class TestController extends Controller
      /**
      * Pick a questionnaire entity for a given test not done yet by the user.
      *
-     * @Route("/test_end", name="test_end")
+     * @Route("/test_end/{id}", name="test_end")
      * @Template()
      */
-    public function endAction()
+    public function endAction(Test $test)
     {
-         return array();
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                            ->CountAnswerByUserByTest($test->getId(), $user->getId());
+
+        $nbRightAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                            ->CountRightAnswerByUserByTest($test->getId(), $user->getId());
+
+        return array("nbRightAnswer" => $nbRightAnswer, "nbAnswer" => $nbAnswer);
     }
 
 
