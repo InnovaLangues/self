@@ -210,7 +210,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire1->setFlow();
         $questionnaire1->setAuthor();
         $questionnaire1->setAudioInstruction('1_consigne');
-        $questionnaire1->setAudioContext('1_contexte');
+        $questionnaire1->setAudioContext('');
         $questionnaire1->setAudioItem('1_item');
         $manager->persist($questionnaire1);
 
@@ -262,7 +262,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire2->setFlow();
         $questionnaire2->setAuthor();
         $questionnaire2->setAudioInstruction('2_consigne');
-        $questionnaire2->setAudioContext('2_contexte');
+        $questionnaire2->setAudioContext('');
         $questionnaire2->setAudioItem('2_item');
         $manager->persist($questionnaire2);
 
