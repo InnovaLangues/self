@@ -1,8 +1,68 @@
+.main{
+	border-radius:5px;
+	border:2px solid black;
+	padding:60px;
+	margin-bottom:20px;
+	position:relative;
+	color:white;
+	font-size:150%;
+}
+
+.central {
+	border-radius:10px;
+	background-color: #717EE3;
+	height:100%;
+}
+
+
+.item-count{
+	border:2px solid black;
+	border-radius:5px;
+}
+
+.contexte{
+	position:absolute;
+	top:30px;
+	left:-30px;
+}
+
+
+.consigne{
+	position:absolute;
+	top:140px;
+	left:-30px;
+}
+
+.contexte, .consigne{
+	border-radius:5px;
+	background-color:white;
+}
+
+.situation{
+	text-align:center;
+	height:100%;
+	padding-top:30px;
+	
+}
+
+
+.proposition{
+	position:relative;
+	padding-top:10px;
+}
+
+#submit{
+	position:absolute;
+	bottom:15px;
+	right:15px;
+}
 
 .item_audio_button{
-	border-radius:5px;
 	cursor: pointer;
 }
+
+
+/*
 
 #main-block{
 	
@@ -68,3 +128,4 @@ input[type="checkbox"], input[type="radio"], label{
 	position:absolute;
 	min-width:100px;
 }
+*/
