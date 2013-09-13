@@ -313,7 +313,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire25->setDuration($duration2);
         $questionnaire25->setFlow();
         $questionnaire25->setAuthor();
-        $questionnaire25->setAudioInstruction('25_consigne');
+        $questionnaire25->setAudioInstruction('');
         $questionnaire25->setAudioContext('25_contexte');
         $questionnaire25->setAudioItem('25_item');
         $manager->persist($questionnaire25);
@@ -684,7 +684,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire33->setDomain();
         $questionnaire33->setSourceType();
         $questionnaire33->setLanguageLevel();
-        $questionnaire33->setDuration($duration1);
+        $questionnaire33->setDuration($duration2);
         $questionnaire33->setFlow();
         $questionnaire33->setAuthor();
         $questionnaire33->setAudioInstruction('33_consigne');
@@ -1085,7 +1085,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire27->setDuration($duration2);
         $questionnaire27->setFlow();
         $questionnaire27->setAuthor();
-        $questionnaire27->setAudioInstruction('27_consigne');
+        $questionnaire27->setAudioInstruction('');
         $questionnaire27->setAudioContext('27_contexte');
         $questionnaire27->setAudioItem('27_item');
         $manager->persist($questionnaire27);
@@ -1173,7 +1173,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire28->setDuration($duration2);
         $questionnaire28->setFlow();
         $questionnaire28->setAuthor();
-        $questionnaire28->setAudioInstruction('28_consigne');
+        $questionnaire28->setAudioInstruction('');
         $questionnaire28->setAudioContext('28_contexte');
         $questionnaire28->setAudioItem('28_item');
         $manager->persist($questionnaire28);
@@ -1281,7 +1281,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire29->setDuration($duration2);
         $questionnaire29->setFlow();
         $questionnaire29->setAuthor();
-        $questionnaire29->setAudioInstruction('29_consigne');
+        $questionnaire29->setAudioInstruction('');
         $questionnaire29->setAudioContext('29_contexte');
         $questionnaire29->setAudioItem('29_item');
         $manager->persist($questionnaire29);
@@ -1491,7 +1491,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire36->setDomain();
         $questionnaire36->setSourceType();
         $questionnaire36->setLanguageLevel();
-        $questionnaire36->setDuration($duration1);
+        $questionnaire36->setDuration($duration2);
         $questionnaire36->setFlow();
         $questionnaire36->setAuthor();
         $questionnaire36->setAudioInstruction('36_consigne');

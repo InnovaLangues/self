@@ -42,7 +42,7 @@ user:
 
 test:
     action:
-        start: Commencer le test
+        start: Démarrer
     field:
         instruction: Consigne
         context: Contexte
