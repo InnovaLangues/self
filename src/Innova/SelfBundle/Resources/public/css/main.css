@@ -1,3 +1,6 @@
+html, body, .test-container. #main_form{
+	min-height:100%;
+}
 .main{
 	border-radius:5px;
 	border:2px solid black;
@@ -6,6 +9,7 @@
 	position:relative;
 	color:white;
 	font-size:130%;
+	min-height:100%;
 }
 
 .central {
@@ -13,6 +17,8 @@
 	background-color: #717EE3;
 	min-height:300px;
 }
+
+
 
 
 .item-count{
@@ -40,17 +46,17 @@
 
 .situation{
 	text-align:center;
-	height:100%;
-	padding-top:20px;
-	padding-bottom:20px;
-	
+	min-height:100%;
+}
+.situation-icon{
+  	margin-top:30%;
+  	margin-bottom:30%;
 }
 
 
-.proposition{
-	position:relative;
-	padding-top:20px;
-	padding-bottom:20px;
+.proposition-icon{
+  	margin-top:15%;
+  	margin-bottom:15%;
 }
 
 #submit{
@@ -63,71 +69,6 @@
 	cursor: pointer;
 }
 
-
-/*
-
-#main-block{
-	
-	border-radius:5px;
-	padding:20px;
-	min-height: 300px;
-}
-
-#situation{
-	padding-top:20px;
-}
-
-#submit{
-	position:absolute;
-	bottom:15px;
-	right:15px;
-}
-
 input[type="checkbox"], input[type="radio"], label{
 	cursor: pointer;
 }	
-
-.test-container{
-	border-radius:5px;
-	border:2px solid black;
-	padding:20px;
-	position:relative;
-	background-color:#D9EDF7;
-	margin-bottom:10px;
-}
-
-.left-buttons{
-	padding:20px 0 20px 0;
-	position:absolute;
-	left:-50px;
-	top:40px;
-	z-index:1000;
-	border-radius:5px;
-	border:2px solid black;
-	background-color:white;
-	min-width:150px;
-}
-
-.dialogue{
-	margin-bottom:20px;
-}
-
-.bottom_items{
-	border-radius:5px;
-	border:2px solid black;
-}
-
-#progressbar{
-	position:relative;
-	padding-left:5px;
-	border-left:2px solid black;
-	border-radius:5px;
-	min-height: 20px;
-	background-color:#D9EDF7;
-}
-
-.progressbar-count{
-	position:absolute;
-	min-width:100px;
-}
-*/
