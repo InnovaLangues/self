@@ -51,13 +51,17 @@
      <div class="row col-md-12 ">
          <div class="row col-md-12 main">
             
+            {% if questionnaire.audioContext != "" %}
             <div class="contexte">
-            {{ audio("context", questionnaire.audioContext, "bulles4.png", 60, 0) }}
+                {{ audio("context", questionnaire.audioContext, "bulles4.png", 60, 0) }}
             </div>
-
+            {% endif %}
+            
+            {% if questionnaire.audioInstruction != "" %}
             <div class="consigne">
-            {{ audio("instruction", questionnaire.audioInstruction, "bulles3.png", 60, 0) }}
+                {{ audio("instruction", questionnaire.audioInstruction, "bulles3.png", 60, 0) }}
             </div>
+            {% endif %}
 
             <div class="row col-md-12 pull-right central">
                 <form id="main_form" action="{{ path('trace_submit') }}" method="post">
