@@ -1,18 +1,61 @@
-
-.item_audio_button{
+html, body, .test-container. #main_form{
+	min-height:100%;
+}
+.main{
 	border-radius:5px;
-	cursor: pointer;
+	border:2px solid black;
+	padding:60px;
+	margin-bottom:20px;
+	position:relative;
+	color:white;
+	font-size:130%;
+	min-height:100%;
 }
 
-#main-block{
-	
-	border-radius:5px;
-	padding:20px;
-	min-height: 300px;
+.central {
+	border-radius:50%;
+	background-color: #717EE3;
+	min-height:300px;
 }
 
-#situation{
-	padding-top:20px;
+
+
+
+.item-count{
+	border:2px solid black;
+	border-radius:5px;
+}
+
+.contexte{
+	position:absolute;
+	top:30px;
+	left:-35px;
+}
+
+
+.consigne{
+	position:absolute;
+	top:140px;
+	left:-35px;
+}
+
+.contexte, .consigne{
+	border-radius:5px;
+	background-color:white;
+}
+
+.situation{
+	text-align:center;
+}
+.situation-icon{
+  	margin-top:30%;
+  	margin-bottom:30%;
+}
+
+
+.proposition-icon{
+  	margin-top:15%;
+  	margin-bottom:15%;
 }
 
 #submit{
@@ -21,50 +64,10 @@
 	right:15px;
 }
 
+.item_audio_button{
+	cursor: pointer;
+}
+
 input[type="checkbox"], input[type="radio"], label{
 	cursor: pointer;
 }	
-
-.test-container{
-	border-radius:5px;
-	border:2px solid black;
-	padding:20px;
-	position:relative;
-	background-color:#D9EDF7;
-	margin-bottom:10px;
-}
-
-.left-buttons{
-	padding:20px 0 20px 0;
-	position:absolute;
-	left:-50px;
-	top:40px;
-	z-index:1000;
-	border-radius:5px;
-	border:2px solid black;
-	background-color:white;
-	min-width:150px;
-}
-
-.dialogue{
-	margin-bottom:20px;
-}
-
-.bottom_items{
-	border-radius:5px;
-	border:2px solid black;
-}
-
-#progressbar{
-	position:relative;
-	padding-left:5px;
-	border-left:2px solid black;
-	border-radius:5px;
-	min-height: 20px;
-	background-color:#D9EDF7;
-}
-
-.progressbar-count{
-	position:absolute;
-	min-width:100px;
-}
