@@ -5,7 +5,6 @@ function timestamp(){
 $(document).ready(function() {
 
 
-
 	play_in_progress = false;
 	timestampIn = timestamp();
 	listening_count = new Array;
@@ -33,16 +32,17 @@ $(document).ready(function() {
 
 			listened++;
 			$(this).attr("data-listened", listened);
-			$(this).css("background-color","lightgrey");
+			//$(this).css("background-color","lightgrey");
 
 			if (sound == "situtation"){
-				$("#limit_listening").html($(this).attr("data-listened"));
+				var reste = limit - $(this).attr("data-listened");
+				$("#limit_listening").html(reste);
+				if(reste < 2){
+					$("#limit_listening_text").html("écoute");
+				}
+
 			}
 			
-
-			if(listened == limit){
-				$(this).css("opacity","0.2");
-			}
 			audio.play();
 		}
 	});

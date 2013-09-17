@@ -33,11 +33,9 @@
 
 
 {% if questionnaire.ListeningLimit == 1 %}
-    {% set limit_listening_text = "1 écoute possible" %}
-    {% set limit_listening = 1 %}
+    {% set limit_listening_text = "écoute" %}
 {% else %}
-    {% set limit_listening_text = "2 écoutes possibles" %}
-    {% set limit_listening = 2 %}
+    {% set limit_listening_text = "écoutes" %}
 {% endif %}
 
 {% block body -%}
@@ -67,12 +65,11 @@
                      <div class="col-md-4 col-md-offset-1 situation vertical-align-center">
                         <div class="situation-icon">
                             {% if questionnaire.dialogue == 1 %}
-                                {{ audio("situtation", questionnaire.audioItem, "situation_dialogue.png", 120, limit_listening, "Ecouter la situation de départ") }}
+                                {{ audio("situtation", questionnaire.audioItem, "situation_dialogue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
                             {% else %}
-                                {{ audio("situtation", questionnaire.audioItem, "situation_monologue.png", 120, limit_listening, "Ecouter la situation de départ") }}
+                                {{ audio("situtation", questionnaire.audioItem, "situation_monologue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
                             {% endif %}
-                            
-                            <div>{{ limit_listening_text }} - <span id="limit_listening">0</span>/{{ limit_listening }}</div>
+                            <div>Reste <span data-limit={{ questionnaire.ListeningLimit }} id="limit_listening">{{ questionnaire.ListeningLimit }}</span> <span id="limit_listening_text">{{ limit_listening_text }}</span> </div>
                         </div>
                     </div>
                      <div class="row col-md-6 col-md-offset-1 proposition">
@@ -87,7 +84,6 @@
                                     {% endif %}
                                     {% for proposition in subquestion.propositions %}
                                         {% set bulleCount = bulleCount + 1 %}
-                                       
                                         {% if subquestion.typology.name == "QRU" %}
                                         <p>
                                             {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
