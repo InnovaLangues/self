@@ -40,9 +40,6 @@ $(document).ready(function() {
 			if(listened == limit){
 				$(this).css("opacity","0.2");
 			}
-
-
-			
 			audio.play();
 		}
 	});
@@ -51,5 +48,5 @@ $(document).ready(function() {
 		totalTime = timestamp() - timestampIn;
 		$("#totalTime").val(totalTime);
 	});
-
 });
+

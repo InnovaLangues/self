@@ -13,7 +13,7 @@ html, body, .test-container. #main_form{
 }
 
 .central {
-	border-radius:10px;
+	border-radius:50%;
 	background-color: #717EE3;
 	min-height:300px;
 }
@@ -29,14 +29,14 @@ html, body, .test-container. #main_form{
 .contexte{
 	position:absolute;
 	top:30px;
-	left:-30px;
+	left:-35px;
 }
 
 
 .consigne{
 	position:absolute;
 	top:140px;
-	left:-30px;
+	left:-35px;
 }
 
 .contexte, .consigne{
@@ -46,7 +46,6 @@ html, body, .test-container. #main_form{
 
 .situation{
 	text-align:center;
-	min-height:100%;
 }
 .situation-icon{
   	margin-top:30%;
