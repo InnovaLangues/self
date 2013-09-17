@@ -100,6 +100,20 @@ class Questionnaire
      */
     private $theme;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="listeningLimit", type="integer")
+     */
+    private $listeningLimit;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="dialogue", type="boolean")
+     */
+    private $dialogue;
+
     /**
      * @var string
      *
@@ -670,5 +684,51 @@ class Questionnaire
     public function getInstruction()
     {
         return $this->instruction;
+    }
+
+    /**
+     * Set listeningLimit
+     *
+     * @param integer $listeningLimit
+     * @return Questionnaire
+     */
+    public function setListeningLimit($listeningLimit)
+    {
+        $this->listeningLimit = $listeningLimit;
+    
+        return $this;
+    }
+
+    /**
+     * Get listeningLimit
+     *
+     * @return integer 
+     */
+    public function getListeningLimit()
+    {
+        return $this->listeningLimit;
+    }
+
+    /**
+     * Set dialogue
+     *
+     * @param boolean $dialogue
+     * @return Questionnaire
+     */
+    public function setDialogue($dialogue)
+    {
+        $this->dialogue = $dialogue;
+    
+        return $this;
+    }
+
+    /**
+     * Get dialogue
+     *
+     * @return boolean 
+     */
+    public function getDialogue()
+    {
+        return $this->dialogue;
     }
 }

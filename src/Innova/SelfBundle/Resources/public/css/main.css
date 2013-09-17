@@ -19,8 +19,6 @@ html, body, .test-container. #main_form{
 }
 
 
-
-
 .item-count{
 	float:right;
 	text-align:center;
@@ -31,14 +29,14 @@ html, body, .test-container. #main_form{
 .contexte{
 	position:absolute;
 	top:30px;
-	left:-35px;
+	left:-45px;
 }
 
 
 .consigne{
 	position:absolute;
-	top:140px;
-	left:-35px;
+	top:150px;
+	left:-45px;
 }
 
 .contexte, .consigne{

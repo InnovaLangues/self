@@ -3,6 +3,9 @@ function timestamp(){
 }
 
 $(document).ready(function() {
+
+
+
 	play_in_progress = false;
 	timestampIn = timestamp();
 	listening_count = new Array;
@@ -44,9 +47,15 @@ $(document).ready(function() {
 		}
 	});
 
+	/* FORM  */
+
 	$("form").submit(function(){
 		totalTime = timestamp() - timestampIn;
 		$("#totalTime").val(totalTime);
 	});
+
+	/* TOOLTIP */
+
+	$('img').tooltip({placement:'top'});
 });
 
