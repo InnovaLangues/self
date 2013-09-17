@@ -30,7 +30,7 @@ $(document).ready(function() {
 
 			listened++;
 			$(this).attr("data-listened", listened);
-			$(this).css("background-color","green");
+			$(this).css("background-color","lightgrey");
 
 			if (sound == "situtation"){
 				$("#limit_listening").html($(this).attr("data-listened"));

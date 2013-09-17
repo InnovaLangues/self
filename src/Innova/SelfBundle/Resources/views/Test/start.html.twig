@@ -81,8 +81,8 @@
                                 <h4> {{ subquestion.title }}</h4>
                                 <p>
                                     {% if subquestion.typology.name == "VF" and subquestion.audioUrl!= "" %}
-                                    {% set bulleCountVf = bulleCountVf + 1 %}
-                                    {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulle"~ bulleCountVf ~".png", 70, 0) }}
+                                        {% set bulleCountVf = bulleCountVf + 1 %}
+                                        {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulle"~ bulleCountVf ~".png", 70, 0) }}
                                     {% endif %}
                                     {% for proposition in subquestion.propositions %}
                                         {% set bulleCount = bulleCount + 1 %}
@@ -99,6 +99,9 @@
                                         </p>
                                         {% elseif subquestion.typology.name == "VF" %}
                                             {{ inputs("radio", subquestion.id, proposition.id, proposition.title, 70, 0) }}
+                                            {% if subquestion.audioUrl == "" %}
+                                                <br/>
+                                            {% endif %}
                                         {% endif %}
                                     {% endfor %}
                                 </p>
@@ -114,10 +117,9 @@
             </div>
         </div>   
         <div class="row col-md-12">
-             <div class="row col-md-3 col-md-offset-9 item-count">
+             <div class="row col-md-2 col-md-offset-10 item-count">
                 Item n° {{ counQuestionnaireDone + 1 }}/{{ test.questionnaires.count }}
             </div>
-          
         </div> 
      </div>    
 

@@ -2,7 +2,7 @@ html, body, .test-container. #main_form{
 	min-height:100%;
 }
 .main{
-	border-radius:5px;
+	border-radius:10px;
 	border:2px solid black;
 	padding:60px;
 	margin-bottom:20px;
@@ -13,7 +13,7 @@ html, body, .test-container. #main_form{
 }
 
 .central {
-	border-radius:50%;
+	border-radius:10px;
 	background-color: #717EE3;
 	min-height:300px;
 }
@@ -22,6 +22,8 @@ html, body, .test-container. #main_form{
 
 
 .item-count{
+	float:right;
+	text-align:center;
 	border:2px solid black;
 	border-radius:5px;
 }
