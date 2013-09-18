@@ -3,12 +3,15 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
+	<div class="row">
+		<div class="col-md-12">	
+		    <div class="alert alert-success">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</div>
+			{% include 'InnovaSelfBundle::Main/help.html.twig' %}
+			<a href="{{ path('user_test') }}" class="btn btn-primary">Démarrer</a>
+		</div>
 
-    <br><div class="alert alert-success">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</div>{# TODO: rmove br #}
-    {% if app.session is not empty %}
-        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
-        {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
-	    <a href="{{ path('user_test') }}" class="btn btn-primary">Commencer le test</a>
-    {% endif %}
+
+	</div>
+	
 
 {% endblock fos_user_content %}

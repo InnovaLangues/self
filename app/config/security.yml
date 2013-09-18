@@ -18,7 +18,7 @@ security:
                 csrf_provider: form.csrf_provider
             logout:
                 path:        /logout
-                target:      /login
+                target:      /
             anonymous:    true
 
     access_control:
