@@ -16,8 +16,7 @@ $(document).ready(function() {
 	$("audio").bind("ended", function(){
 		play_in_progress = false;
 		sound = $(this).attr('id');
-		$(".item_audio_button").css("background-color","transparent");
-		// if(listening_count[sound] > 1){$('.item_audio_button[sound="'+sound+'"]').css("background-color","transparent");}
+		$(".item_audio_button").css("opacity","1");
 	});
 
 	$(".item_audio_button").click(function(){
@@ -32,7 +31,6 @@ $(document).ready(function() {
 
 			listened++;
 			$(this).attr("data-listened", listened);
-			//$(this).css("background-color","lightgrey");
 
 			if (sound == "situtation"){
 				var reste = limit - $(this).attr("data-listened");
@@ -40,9 +38,9 @@ $(document).ready(function() {
 				if(reste < 2){
 					$("#limit_listening_text").html("écoute");
 				}
-
 			}
-			
+			$(".item_audio_button").css("opacity","0.5");
+			$(this).css("opacity","1");
 			audio.play();
 		}
 	});
@@ -55,7 +53,7 @@ $(document).ready(function() {
 	});
 
 	/* TOOLTIP */
-
+	
 	$('img').tooltip({placement:'top'});
 });
 

@@ -16,20 +16,16 @@ php app/console doctrine:schema:update --force
 php app/console doctrine:fixtures:load
 php app/console assets:install --symlink
 php app/console cache:clear --env=prod --no-debug
-
 ```
 
 Create a new admin user :
-
 ``` bash
 php app/console fos:user:create admin2 --super-admin
-
 ```
 
 # Basic update 
 
 ``` bash
 git pull
-git checkout master
 php app/console cache:clear --env=prod --no-debug
 ```
