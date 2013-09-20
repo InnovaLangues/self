@@ -212,7 +212,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire1->setAudioInstruction('1_consigne');
         $questionnaire1->setAudioContext('1_contexte');
         $questionnaire1->setAudioItem('1_item');
-        $questionnaire1->setListeningLimit(1);
+        $questionnaire1->setListeningLimit(2);
         $questionnaire1->setDialogue(1);
         $manager->persist($questionnaire1);
 
@@ -450,7 +450,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire32->setAudioInstruction('32_consigne');
         $questionnaire32->setAudioContext('32_contexte');
         $questionnaire32->setAudioItem('32_item');
-        $questionnaire32->setListeningLimit(1);
+        $questionnaire32->setListeningLimit(2);
         $questionnaire32->setDialogue(1);
         $manager->persist($questionnaire32);
 
@@ -1811,7 +1811,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire38->setAudioInstruction('38_consigne');
         $questionnaire38->setAudioContext('38_contexte');
         $questionnaire38->setAudioItem('38_item');
-        $questionnaire38->setListeningLimit(1);
+        $questionnaire38->setListeningLimit(2);
         $questionnaire38->setDialogue(1);
         $manager->persist($questionnaire38);
 
