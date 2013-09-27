@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+  	{#
+  	<h1>{{ results.name }}</h1>
+ 	{% for questionnaire in results.questionnaires %}
+		<h2>{{ questionnaire.theme }}</h2>
+		{% for trace in questionnaire.traces %}
+			<h3>{{ trace.user }}</h3>
+			{% for answer in trace.answers %}
+				<p>{{ answer.proposition.title }} - {{  answer.proposition.rightAnswer ? 'bonne réponse' : 'mauvaise réponse' }}</p>
+    		{% endfor %}
+    		<br/>
+    	{% endfor %}
+    	<br/>
+    {% endfor %}
+	#}
+{% endblock %}

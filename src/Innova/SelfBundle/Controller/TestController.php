@@ -11,7 +11,6 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Form\TestType;
 
-
 class TestController extends Controller
 {
 
@@ -35,18 +34,19 @@ class TestController extends Controller
 
         $countQuestionnaire = count($test->getQuestionnaires());
 
-        if(is_null($questionnaire)){
+        if (is_null($questionnaire)) {
+
             return $this->redirect(
                 $this->generateUrl(
-                        'test_end', 
-                        array("id"=>$test->getId())
+                    'test_end',
+                    array("id"=>$test->getId())
                 )
             );
         }
 
 
-        
-       // $questionnaire = $this->getRandom($questionnaires);
+
+        // $questionnaire = $this->getRandom($questionnaires);
         return array(
             'questionnaire' => $questionnaire,
             'test' => $test,
@@ -94,7 +94,7 @@ class TestController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         $entities = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
         return array(
@@ -110,7 +110,7 @@ class TestController extends Controller
      * @Template()
      */
     public function userIndexAction()
-    {        
+    {
 
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -134,8 +134,8 @@ class TestController extends Controller
         // Redirection vers la page de démarrage du test.
         return $this->redirect(
             $this->generateUrl(
-                    'test_start', 
-                    array('id' => $test->getId()
+                'test_start',
+                array('id' => $test->getId()
                 )
             )
         );
@@ -161,7 +161,7 @@ class TestController extends Controller
 
             return $this->redirect(
                 $this->generateUrl(
-                    'test_show', 
+                    'test_show',
                     array(
                         'id' => $entity->getId()
                     )
@@ -184,13 +184,17 @@ class TestController extends Controller
     */
     private function createCreateForm(Test $entity)
     {
-        $form = $this->createForm(new TestType(), $entity, array(
+        $form = $this->createForm(
+            new TestType(),
+            $entity,
+            array(
             'action' => $this->generateUrl('test_create'),
             'method' => 'POST',
-        ));
+            )
+        );
 
         $form->add(
-            'submit', 
+            'submit',
             array('label' => 'Create')
         );
 
@@ -276,10 +280,14 @@ class TestController extends Controller
     */
     private function createEditForm(Test $entity)
     {
-        $form = $this->createForm(new TestType(), $entity, array(
+        $form = $this->createForm(
+            new TestType(),
+            $entity,
+            array(
             'action' => $this->generateUrl('test_update', array('id' => $entity->getId())),
             'method' => 'PUT',
-        ));
+           )
+        );
 
         $form->add('submit', 'submit', array('label' => 'Update'));
 
@@ -359,5 +367,82 @@ class TestController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * exportCsvSQL function
+     *
+     * @Route(
+     *     "/csv",
+     *     name = "csv-export",
+     *     options = {"expose"=true}
+     * )
+     *
+     * @Method("GET")
+     * @Template()
+     */
+    public function exportCsvSQLAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Query :
+        /*
+        select test_questionnaire.questionnaire_id,  questionnaire.theme, self_user.username, answer.proposition_id,
+         proposition.rightAnswer, proposition.title
+
+        from test
+
+        join test_questionnaire on test_id = test.id
+        join questionnaire on questionnaire.id =  test_questionnaire.questionnaire_id
+        join trace on trace.questionnaire_id =  questionnaire.id
+        join self_user on self_user.id =  trace.user_id
+        join answer on answer.trace_id =  trace.id
+        join proposition on proposition.id = answer.proposition_id
+
+        where test.id = 1
+
+        order by test_questionnaire.questionnaire_id, trace.user_id
+        */
+
+        $csvPath =__DIR__.'/../../../../web/upload/export.csv';
+
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+
+        $csvh = fopen($csvPath, 'w+');
+        $data = array();
+
+        $d = ','; // this is the default but i like to be explicit
+        $e = '"'; // this is the default but i like to be explicit
+        $csv = '';
+
+        foreach ($tests as $test) {
+            $questionnaires = $test->getQuestionnaires();
+            foreach ($questionnaires as $questionnaire) {
+                $csv .= $questionnaire->getTheme() . ";\n";
+
+                $traces = $questionnaire->getTraces();
+                foreach ($traces as $trace) {
+                    $answers = $trace->getAnswers();
+
+                    $csv .= $trace->getUser() . ";" ;
+
+                    foreach ($answers as $answer) {
+                        echo $test->getName() . " " . $questionnaire->getTheme() . " " . $trace->getUser(). " " .
+                        ($answer->getProposition()->getRightAnswer() ? 'bonne réponse' : 'mauvaise réponse')."<br />";
+
+                        $csv .= ($answer->getProposition()->getRightAnswer() ? '1' : '0') . ";" .
+                        $answer->getProposition()->getId() . "-" .
+                        $answer->getProposition()->getTitle() . ";";
+                    }
+                    $csv .= "\n";
+                }
+                $csv .= "\n";
+            }
+        }
+
+        fwrite($csvh, $csv);
+        fclose($csvh);
+
+        return array();
     }
 }
