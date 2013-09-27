@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 
-
 /**
  * Main controller.
  *
@@ -27,8 +26,7 @@ class MainController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
         return array(
-        	'user' => $user,
+        'user' => $user,
         );
     }
-   
 }
