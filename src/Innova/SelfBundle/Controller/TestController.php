@@ -427,9 +427,6 @@ class TestController extends Controller
                     $csv .= $trace->getUser() . ";" ;
 
                     foreach ($answers as $answer) {
-                        echo $test->getName() . " " . $questionnaire->getTheme() . " " . $trace->getUser(). " " .
-                        ($answer->getProposition()->getRightAnswer() ? 'bonne réponse' : 'mauvaise réponse')."<br />";
-
                         $csv .= ($answer->getProposition()->getRightAnswer() ? '1' : '0') . ";" .
                         $answer->getProposition()->getId() . "-" .
                         $answer->getProposition()->getTitle() . ";";
