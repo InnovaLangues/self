@@ -395,6 +395,8 @@ class TestController extends Controller
         // File export path
         $csvPathExport =__DIR__.'/../../../../web/upload/export/csv/'; // Symfony
 
+        $urlCSVRelativeToWeb = 'upload/export/csv/'; // Symfony
+
         // Path + Name
         $csvPath = $csvPathExport . $csvName;
 
@@ -469,9 +471,10 @@ class TestController extends Controller
         // To view
         //
         return array(
-            "csvName"  => $csvName,
-            "fileList" => $fileList,
-            "nbFile"   => $nbFile
+            "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
+            "csvName"             => $csvName,
+            "fileList"            => $fileList,
+            "nbFile"              => $nbFile
         );
     }
 }
