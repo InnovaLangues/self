@@ -7,7 +7,7 @@ vendor/*
 */cache/*
 web/uploads/*
 web/bundles/*
-web/upload/*.csv
+web/upload/export/csv/*.csv
 
 # Configuration files
 app/config/parameters.ini

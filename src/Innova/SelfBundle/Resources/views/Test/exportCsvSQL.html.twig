@@ -1,18 +1,18 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-  	{#
-  	<h1>{{ results.name }}</h1>
- 	{% for questionnaire in results.questionnaires %}
-		<h2>{{ questionnaire.theme }}</h2>
-		{% for trace in questionnaire.traces %}
-			<h3>{{ trace.user }}</h3>
-			{% for answer in trace.answers %}
-				<p>{{ answer.proposition.title }} - {{  answer.proposition.rightAnswer ? 'bonne réponse' : 'mauvaise réponse' }}</p>
-    		{% endfor %}
-    		<br/>
-    	{% endfor %}
-    	<br/>
+
+  	<h3>Le fichier a été généré</h3>
+
+  	<h3><a href="{{ csvPathWeb }}{{ csvName }}">Télécharger le fichier au format CSV</a></h3>
+
+    <h3>Liste des fichiers générés</h3>
+
+    <h4>{{ nbFile }} fichier(s) dans le dossier</h4>
+
+  	{# Files export CSV list  #}
+		{% for fileList in fileList %}
+			<h5><a href="{{ csvPathWeb }}{{ csvName }}">{{ fileList }}</a></h5>
     {% endfor %}
-	#}
+
 {% endblock %}

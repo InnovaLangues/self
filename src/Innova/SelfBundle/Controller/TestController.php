@@ -27,10 +27,10 @@ class TestController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->findOneNotDoneYetByUserByTest($test->getId(), $user->getId());
+            ->findOneNotDoneYetByUserByTest($test->getId(), $user->getId());
 
         $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->CountDoneYetByUserByTest($test->getId(), $user->getId());
+            ->CountDoneYetByUserByTest($test->getId(), $user->getId());
 
         $countQuestionnaire = count($test->getQuestionnaires());
 
@@ -385,41 +385,36 @@ class TestController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        // Query :
-        /*
-        select test_questionnaire.questionnaire_id,  questionnaire.theme, self_user.username, answer.proposition_id,
-         proposition.rightAnswer, proposition.title
+        //
+        // CSV Export part
+        //
 
-        from test
+        // File export name
+        $csvName = 'export-' . date("Ymd_d-m-Y_H:i:s") . '.csv';
 
-        join test_questionnaire on test_id = test.id
-        join questionnaire on questionnaire.id =  test_questionnaire.questionnaire_id
-        join trace on trace.questionnaire_id =  questionnaire.id
-        join self_user on self_user.id =  trace.user_id
-        join answer on answer.trace_id =  trace.id
-        join proposition on proposition.id = answer.proposition_id
+        // File export path
+        $csvPathExport =__DIR__.'/../../../../web/upload/export/csv/'; // Symfony
+        $csvPathWeb = '/upload/export/csv/'; // Upload directory
 
-        where test.id = 1
+        // Path + Name
+        $csvPath = $csvPathExport . $csvName;
 
-        order by test_questionnaire.questionnaire_id, trace.user_id
-        */
-
-        $csvPath =__DIR__.'/../../../../web/upload/export.csv';
-
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-
+        // Open file
         $csvh = fopen($csvPath, 'w+');
-        $data = array();
 
-        $d = ','; // this is the default but i like to be explicit
-        $e = '"'; // this is the default but i like to be explicit
+        // Init csv write variable
         $csv = '';
+
+        // Loop for test
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
         foreach ($tests as $test) {
             $questionnaires = $test->getQuestionnaires();
+            // For THE test, loop on the Questionnaire
             foreach ($questionnaires as $questionnaire) {
                 $csv .= $questionnaire->getTheme() . ";\n";
 
+                // For THE questionnaire, loop on the Trace
                 $traces = $questionnaire->getTraces();
                 foreach ($traces as $trace) {
                     $answers = $trace->getAnswers();
@@ -427,12 +422,26 @@ class TestController extends Controller
                     $csv .= $trace->getUser() . ";" ;
 
                     foreach ($answers as $answer) {
-                        $csv .= ($answer->getProposition()->getRightAnswer() ? '1' : '0') . ";" .
-                        $answer->getProposition()->getId() . "-" .
-                        $answer->getProposition()->getTitle() . ";";
+                        $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
+                        $cptProposition = 0;
+                        foreach ($propositions as $proposition) {
+                            $cptProposition++;
+                            if ($proposition->getId() === $answer->getProposition()->getId()) {
+                                $propositionRank = $cptProposition;
+                            }
+                        }
+                        $csv .= ($answer->getProposition()->getRightAnswer() ? '1' : '0') . ";";
+
+                        if ($answer->getProposition()->getTitle() != "") {
+                            $csv .= $answer->getProposition()->getTitle() . ";";
+                        } else {
+                            $csv .= "proposition " . $propositionRank . ";";
+                        }
                     }
+                    // CR
                     $csv .= "\n";
                 }
+                // CR
                 $csv .= "\n";
             }
         }
@@ -440,6 +449,26 @@ class TestController extends Controller
         fwrite($csvh, $csv);
         fclose($csvh);
 
-        return array();
+        //
+        // Export file list
+        //
+        $fileList = array();
+        $nbFile = 0;
+        if ($dossier = opendir($csvPathExport)) {
+            while (false !== ($fichier = readdir($dossier))) {
+                if ($fichier != '.' && $fichier != '..') {
+                    $nbFile++; // Number of files + 1
+                    $fileList[$nbFile] = $fichier;
+                }
+
+            }
+        }
+
+        closedir($dossier); // Directory close
+
+        //
+        // To view
+        //
+        return array("csvPathWeb" => $csvPathWeb, "csvName" => $csvName, "fileList" => $fileList, "nbFile" => $nbFile);
     }
 }
