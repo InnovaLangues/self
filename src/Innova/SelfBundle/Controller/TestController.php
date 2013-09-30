@@ -394,7 +394,6 @@ class TestController extends Controller
 
         // File export path
         $csvPathExport =__DIR__.'/../../../../web/upload/export/csv/'; // Symfony
-        $csvPathWeb = '/upload/export/csv/'; // Upload directory
 
         // Path + Name
         $csvPath = $csvPathExport . $csvName;
@@ -452,7 +451,7 @@ class TestController extends Controller
         //
         // Export file list
         //
-        $fileList = array();
+        /*$fileList = array();
         $nbFile = 0;
         if ($dossier = opendir($csvPathExport)) {
             while (false !== ($fichier = readdir($dossier))) {
@@ -464,11 +463,16 @@ class TestController extends Controller
             }
         }
 
-        closedir($dossier); // Directory close
+        closedir($dossier); // Directory close*/
 
         //
         // To view
         //
-        return array("csvPathWeb" => $csvPathWeb, "csvName" => $csvName, "fileList" => $fileList, "nbFile" => $nbFile);
+        return array(
+            //"csvPathWeb" => $csvPathWeb,
+            "csvName"  => $csvName,
+            //"fileList" => $fileList,
+            //"nbFile"   => $nbFile
+        );
     }
 }
