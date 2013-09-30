@@ -8,11 +8,11 @@
 
     <h3>Liste des fichiers générés</h3>
 
-    <h4>{# nbFile #} fichier(s) dans le dossier</h4>
+    <h4>{{ nbFile }} fichier(s) dans le dossier</h4>
 
   	{# Files export CSV list  #}
-		{# for fileList in fileList %}
+		{% for fileList in fileList %}
 			<h5><a href="{{ asset('upload/export/csv/') ~ csvName }}">{{ fileList }}</a></h5>
-    {% endfor #}
+    {% endfor %}
 
 {% endblock %}

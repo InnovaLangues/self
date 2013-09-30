@@ -451,7 +451,7 @@ class TestController extends Controller
         //
         // Export file list
         //
-        /*$fileList = array();
+        $fileList = array();
         $nbFile = 0;
         if ($dossier = opendir($csvPathExport)) {
             while (false !== ($fichier = readdir($dossier))) {
@@ -463,16 +463,16 @@ class TestController extends Controller
             }
         }
 
-        closedir($dossier); // Directory close*/
+        closedir($dossier); // Directory close
 
         //
         // To view
         //
         return array(
-            //"csvPathWeb" => $csvPathWeb,
+            "csvPathWeb" => $csvPathWeb,
             "csvName"  => $csvName,
-            //"fileList" => $fileList,
-            //"nbFile"   => $nbFile
+            "fileList" => $fileList,
+            "nbFile"   => $nbFile
         );
     }
 }
