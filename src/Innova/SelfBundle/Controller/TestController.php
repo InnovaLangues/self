@@ -469,7 +469,6 @@ class TestController extends Controller
         // To view
         //
         return array(
-            "csvPathWeb" => $csvPathWeb,
             "csvName"  => $csvName,
             "fileList" => $fileList,
             "nbFile"   => $nbFile
