@@ -406,9 +406,92 @@ class TestController extends Controller
         // Init csv write variable
         $csv = '';
 
+        // First line
+        $csv .= "NOM" . ";" ; // A
+        $csv .= "DATE" . ";" ; // B
+        $csv .= "TEMPS (s)" . ";" ; // C
+        // CR
+        $csv .= "\n";
+
         // Loop for test
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
+        $result = array();
+
+        foreach ($tests as $test) {
+            $questionnaires = $test->getQuestionnaires();
+            // For THE test, loop on the Questionnaire
+            foreach ($questionnaires as $questionnaire) {
+                // For THE questionnaire, loop on the Trace
+                $traces = $questionnaire->getTraces();
+                foreach ($traces as $trace) {
+                    $userName  = (string) $trace->getUser();
+                    $emailName = (string) $trace->getUser()->getEmail();
+                    $testDate  = date_format($trace->getDate(), 'd-m-Y');
+                    if (!isset($result[$userName]["time"])) {
+                        $result[$userName]["time"]=0;
+                    }
+                    $result[$userName]["time"] = $result[$userName]["time"] + $trace->getTotalTime();
+                    /*if (in_array($userName, $result)) {
+                        echo "trouvé" . "<br />";
+                        $result[$userName]["time"] = $result[$userName]["time"] + $trace->getTotalTime();
+                    } else {
+                        $result[$userName]["time"] = 0;
+                        echo "pas trouvé " . $userName . "<br />";
+                    }*/
+                    $result[$userName]["name"]  = $userName;
+                    $result[$userName]["email"] = $emailName;
+                    $result[$userName]["date"]  = $testDate;
+                }
+            }
+        }
+
+        foreach ($result as $key => $value) {
+            //foreach ($result[$key] as $key2 => $value2) {
+                //echo $key . "/" . $result[$key]["name"] . "/" . $result[$key]["time"]. "<br />";
+                $csv .= $result[$key]["name"] . ";" . $result[$key]["date"] . ";" . $result[$key]["time"] . ";" ;
+                // CR
+                $csv .= "\n";
+            //}
+        }
+
+        $csv .= "\n";
+        $csv .= "\n";
+
+        // Difficulty part
+        $csv .= "Difficulté" . ";" ; // G
+        $csv .= "Libellé" . ";" ; // G
+        $csv .= "\n";
+        $csv .= "1" . ";" ; // G
+        $csv .= "Très facile" . ";" ; // G
+        $csv .= "\n";
+        $csv .= "2" . ";" ; // G
+        $csv .= "Facile" . ";" ; // G
+        $csv .= "\n";
+        $csv .= "3" . ";" ; // G
+        $csv .= "Normal" . ";" ; // G
+        $csv .= "\n";
+        $csv .= "4" . ";" ; // G
+        $csv .= "Difficile" . ";" ; // G
+        $csv .= "\n";
+        $csv .= "5" . ";" ; // G
+        $csv .= "Très Difficile" . ";" ; // G
+        $csv .= "\n";
+
+        $csv .= "\n";
+        $csv .= "\n";
+
+        $csv .= ";" ; // A
+        $csv .= ";" ; // B
+        $csv .= "TEMPS" . ";" ; // C
+        $csv .= "DIFFICULTE" . ";" ; // E
+        $csv .= ";" ; // F
+        $csv .= "REPONSES" . ";" ; // E
+        // CR
+        $csv .= "\n";
+        $csv .= "\n";
+
+        // Loop for test
         foreach ($tests as $test) {
             $questionnaires = $test->getQuestionnaires();
             // For THE test, loop on the Questionnaire
@@ -420,7 +503,9 @@ class TestController extends Controller
                 foreach ($traces as $trace) {
                     $answers = $trace->getAnswers();
 
-                    $csv .= $trace->getUser() . ";" ;
+                    $csv .= $trace->getUser() . " " . $trace->getUser()->getEmail() . ";" ;
+                    $csv .= $trace->getDifficulty(). ";" ;
+                    $csv .= ";" ;
 
                     foreach ($answers as $answer) {
                         $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
