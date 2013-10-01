@@ -389,13 +389,14 @@ class TestController extends Controller
         // CSV Export part
         //
 
-        // File export name
-        $csvName = 'export-' . date("Ymd_d-m-Y_H:i:s") . '.csv';
-
         // File export path
         $csvPathExport =__DIR__.'/../../../../web/upload/export/csv/'; // Symfony
 
-        $urlCSVRelativeToWeb = 'upload/export/csv/'; // Symfony
+        // File export name
+        $csvName = 'export-' . date("Ymd_d-m-Y_H:i:s") . '.csv';
+
+        // Symfony
+        $urlCSVRelativeToWeb = 'upload/export/csv/';
 
         // Path + Name
         $csvPath = $csvPathExport . $csvName;
@@ -482,11 +483,9 @@ class TestController extends Controller
         $csv .= "\n";
 
         $csv .= ";" ; // A
-        $csv .= ";" ; // B
-        $csv .= "TEMPS" . ";" ; // C
-        $csv .= "DIFFICULTE" . ";" ; // E
-        $csv .= ";" ; // F
-        $csv .= "REPONSES" . ";" ; // E
+        $csv .= "DIFFICULTE" . ";" ; // B
+        $csv .= "TEMPS (s)" . ";"  ; // C
+        $csv .= "REPONSES" . ";" ; // D
         // CR
         $csv .= "\n";
         $csv .= "\n";
@@ -505,7 +504,7 @@ class TestController extends Controller
 
                     $csv .= $trace->getUser() . " " . $trace->getUser()->getEmail() . ";" ;
                     $csv .= $trace->getDifficulty(). ";" ;
-                    $csv .= ";" ;
+                    $csv .= $trace->getTotalTime().";" ;
 
                     foreach ($answers as $answer) {
                         $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
