@@ -551,6 +551,9 @@ class TestController extends Controller
 
         closedir($dossier); // Directory close
 
+        //Sort file
+        arsort($fileList);
+
         //
         // To view
         //

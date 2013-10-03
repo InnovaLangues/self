@@ -12,7 +12,7 @@
 
   	{# Files export CSV list  #}
 		{% for fileList in fileList %}
-			<h5><a href="{{ asset(urlCSVRelativeToWeb) ~ csvName }}">{{ fileList }}</a></h5>
+			<h5><a href="{{ asset(urlCSVRelativeToWeb) ~ fileList }}">{{ fileList }}</a></h5>
     {% endfor %}
 
 {% endblock %}
