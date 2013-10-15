@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Questionnaire
+ * 15/10/2013 : Add "originText" and "exerciceText" columns. EV.
  *
  * @ORM\Table("questionnaire")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\QuestionnaireRepository")
@@ -92,7 +93,7 @@ class Questionnaire
     */
     protected $languageLevel;
 
-   
+
     /**
      * @var string
      *
@@ -134,6 +135,20 @@ class Questionnaire
      * @ORM\Column(name="audioItem", type="string", length=255)
      */
     private $audioItem;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="originText", type="string", length=255)
+     */
+    private $originText;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="exerciceText", type="string", length=255)
+     */
+    private $exerciceText;
 
     /**
     * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"remove", "persist"})
@@ -191,7 +206,7 @@ class Questionnaire
         return $this->level;
     }
 
-    
+
     /**
      * Set theme
      *
@@ -284,6 +299,52 @@ class Questionnaire
     public function getAudioItem()
     {
         return $this->audioItem;
+    }
+
+    /**
+     * Set originText
+     *
+     * @param string $originText
+     * @return Questionnaire
+     */
+    public function setOriginText($originText)
+    {
+        $this->originText = $originText;
+
+        return $this;
+    }
+
+    /**
+     * Get originText
+     *
+     * @return string
+     */
+    public function getOriginText()
+    {
+        return $this->originText;
+    }
+
+    /**
+     * Set exerciceText
+     *
+     * @param string $exerciceText
+     * @return Questionnaire
+     */
+    public function setExerciceText($exerciceText)
+    {
+        $this->exerciceText = $exerciceText;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciceText
+     *
+     * @return string
+     */
+    public function getExerciceText()
+    {
+        return $this->exerciceText;
     }
 
     /**
@@ -396,14 +457,14 @@ class Questionnaire
     public function setDuration(\Innova\SelfBundle\Entity\Duration $duration = null)
     {
         $this->duration = $duration;
-    
+
         return $this;
     }
 
     /**
      * Get duration
      *
-     * @return \Innova\SelfBundle\Entity\Duration 
+     * @return \Innova\SelfBundle\Entity\Duration
      */
     public function getDuration()
     {
@@ -419,14 +480,14 @@ class Questionnaire
     public function setFocus(\Innova\SelfBundle\Entity\Focus $focus = null)
     {
         $this->focus = $focus;
-    
+
         return $this;
     }
 
     /**
      * Get focus
      *
-     * @return \Innova\SelfBundle\Entity\Focus 
+     * @return \Innova\SelfBundle\Entity\Focus
      */
     public function getFocus()
     {
@@ -442,14 +503,14 @@ class Questionnaire
     public function setSupport(\Innova\SelfBundle\Entity\Support $support = null)
     {
         $this->support = $support;
-    
+
         return $this;
     }
 
     /**
      * Get support
      *
-     * @return \Innova\SelfBundle\Entity\Support 
+     * @return \Innova\SelfBundle\Entity\Support
      */
     public function getSupport()
     {
@@ -465,14 +526,14 @@ class Questionnaire
     public function setFunctionType(\Innova\SelfBundle\Entity\FunctionType $functionType = null)
     {
         $this->functionType = $functionType;
-    
+
         return $this;
     }
 
     /**
      * Get functionType
      *
-     * @return \Innova\SelfBundle\Entity\FunctionType 
+     * @return \Innova\SelfBundle\Entity\FunctionType
      */
     public function getFunctionType()
     {
@@ -488,14 +549,14 @@ class Questionnaire
     public function setSource(\Innova\SelfBundle\Entity\Source $source = null)
     {
         $this->source = $source;
-    
+
         return $this;
     }
 
     /**
      * Get source
      *
-     * @return \Innova\SelfBundle\Entity\Source 
+     * @return \Innova\SelfBundle\Entity\Source
      */
     public function getSource()
     {
@@ -511,14 +572,14 @@ class Questionnaire
     public function setCognitiveOperation(\Innova\SelfBundle\Entity\CognitiveOperation $cognitiveOperation = null)
     {
         $this->cognitiveOperation = $cognitiveOperation;
-    
+
         return $this;
     }
 
     /**
      * Get cognitiveOperation
      *
-     * @return \Innova\SelfBundle\Entity\CognitiveOperation 
+     * @return \Innova\SelfBundle\Entity\CognitiveOperation
      */
     public function getCognitiveOperation()
     {
@@ -534,14 +595,14 @@ class Questionnaire
     public function setLanguageLevel(\Innova\SelfBundle\Entity\LanguageLevel $languageLevel = null)
     {
         $this->languageLevel = $languageLevel;
-    
+
         return $this;
     }
 
     /**
      * Get languageLevel
      *
-     * @return \Innova\SelfBundle\Entity\LanguageLevel 
+     * @return \Innova\SelfBundle\Entity\LanguageLevel
      */
     public function getLanguageLevel()
     {
@@ -557,14 +618,14 @@ class Questionnaire
     public function setSourceType(\Innova\SelfBundle\Entity\SourceType $sourceType = null)
     {
         $this->sourceType = $sourceType;
-    
+
         return $this;
     }
 
     /**
      * Get sourceType
      *
-     * @return \Innova\SelfBundle\Entity\SourceType 
+     * @return \Innova\SelfBundle\Entity\SourceType
      */
     public function getSourceType()
     {
@@ -580,14 +641,14 @@ class Questionnaire
     public function setFlow(\Innova\SelfBundle\Entity\Flow $flow = null)
     {
         $this->flow = $flow;
-    
+
         return $this;
     }
 
     /**
      * Get flow
      *
-     * @return \Innova\SelfBundle\Entity\Flow 
+     * @return \Innova\SelfBundle\Entity\Flow
      */
     public function getFlow()
     {
@@ -603,14 +664,14 @@ class Questionnaire
     public function setDomain(\Innova\SelfBundle\Entity\Domain $domain = null)
     {
         $this->domain = $domain;
-    
+
         return $this;
     }
 
     /**
      * Get domain
      *
-     * @return \Innova\SelfBundle\Entity\Domain 
+     * @return \Innova\SelfBundle\Entity\Domain
      */
     public function getDomain()
     {
@@ -626,14 +687,14 @@ class Questionnaire
     public function setReceptionType(\Innova\SelfBundle\Entity\ReceptionType $receptionType = null)
     {
         $this->receptionType = $receptionType;
-    
+
         return $this;
     }
 
     /**
      * Get receptionType
      *
-     * @return \Innova\SelfBundle\Entity\ReceptionType 
+     * @return \Innova\SelfBundle\Entity\ReceptionType
      */
     public function getReceptionType()
     {
@@ -649,14 +710,14 @@ class Questionnaire
     public function setAuthor(\Innova\SelfBundle\Entity\User $author = null)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return \Innova\SelfBundle\Entity\User 
+     * @return \Innova\SelfBundle\Entity\User
      */
     public function getAuthor()
     {
@@ -672,14 +733,14 @@ class Questionnaire
     public function setInstruction(\Innova\SelfBundle\Entity\Instruction $instruction = null)
     {
         $this->instruction = $instruction;
-    
+
         return $this;
     }
 
     /**
      * Get instruction
      *
-     * @return \Innova\SelfBundle\Entity\Instruction 
+     * @return \Innova\SelfBundle\Entity\Instruction
      */
     public function getInstruction()
     {
@@ -695,14 +756,14 @@ class Questionnaire
     public function setListeningLimit($listeningLimit)
     {
         $this->listeningLimit = $listeningLimit;
-    
+
         return $this;
     }
 
     /**
      * Get listeningLimit
      *
-     * @return integer 
+     * @return integer
      */
     public function getListeningLimit()
     {
@@ -718,14 +779,14 @@ class Questionnaire
     public function setDialogue($dialogue)
     {
         $this->dialogue = $dialogue;
-    
+
         return $this;
     }
 
     /**
      * Get dialogue
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDialogue()
     {

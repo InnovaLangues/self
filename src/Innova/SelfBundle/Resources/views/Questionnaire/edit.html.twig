@@ -5,9 +5,19 @@
 
 {{ form_start(edit_form) }}
   {# Liste des champs affichés -> #}
+
+
   <div class="form-group">
     {{ form_label(edit_form.theme) }}
     {{ form_widget(edit_form.theme, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(edit_form.originText) }}
+    {{ form_widget(edit_form.originText, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(edit_form.exerciceText) }}
+    {{ form_widget(edit_form.exerciceText, { 'attr': {'class': 'form-control'} }) }}
   </div>
   <div class="form-group">
     {{ form_label(edit_form.audioInstruction) }}
@@ -38,7 +48,87 @@
     {{ form_widget(edit_form.audioItem, { 'attr': {'class': 'form-control'} }) }}
   </div>
 
-  {# Pour ne pas afficher ses champs -> #}
+  <div class="form-group">
+    {{ form_label(edit_form.level) }}
+    {{ form_widget(edit_form.level, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.author) }}
+    {{ form_widget(edit_form.author, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.sourceType) }}
+    {{ form_widget(edit_form.sourceType, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.instruction) }}
+    {{ form_widget(edit_form.instruction, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.receptionType) }}
+    {{ form_widget(edit_form.receptionType, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.source) }}
+    {{ form_widget(edit_form.source, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.duration) }}
+    {{ form_widget(edit_form.duration, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.domain) }}
+    {{ form_widget(edit_form.domain, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.functionType) }}
+    {{ form_widget(edit_form.functionType, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.cognitiveOperation) }}
+    {{ form_widget(edit_form.cognitiveOperation, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.support) }}
+    {{ form_widget(edit_form.support, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.flow) }}
+    {{ form_widget(edit_form.flow, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.focus) }}
+    {{ form_widget(edit_form.focus, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.languageLevel) }}
+    {{ form_widget(edit_form.languageLevel, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.focus) }}
+    {{ form_widget(edit_form.focus, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.tests) }}
+    {{ form_widget(edit_form.tests, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  {# Pour ne pas afficher ses champs / En commentaire suite remarque AB.
   {% do edit_form.level.setRendered %}
   {% do edit_form.author.setRendered %}
   {% do edit_form.sourceType.setRendered %}
@@ -55,32 +145,13 @@
   {% do edit_form.languageLevel.setRendered %}
   {% do edit_form.focus.setRendered %}
   {% do edit_form.tests.setRendered %}
+  #}
 
   {# Bouton Submit #}
   {{ form_widget(edit_form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
 
 {{ form_end(edit_form) }}
-{#
-   <input type="submit" class="btn btn-default" />
-<form class="form-horizontal" action="/eric/SelfSymfony/web/app_dev.php/admin/questionnaire/1" method="post">
-<div class="control-group">
-<label class="control-label" for="inputEmail">Email</label>
-<div class="controls">
-<input type="text" id="inputEmail" placeholder="Email">
-</div>
-</div>
 
-   <div class="control-group">
-      {{ form_label(edit_form.theme) }}
-        {{ form_errors(edit_form.theme) }}
-     <div class="controls">
-          {{ form_widget(edit_form.theme) }}
-    </div>
-
-  </div>
-
-  {{ form_end(edit_form) }}
-#}
     <hr>
     {{ form_start(delete_form) }}
         {{ form_errors(delete_form) }}

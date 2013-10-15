@@ -18,6 +18,8 @@ class QuestionnaireType extends AbstractType
             ->add('theme')
             ->add('listeningLimit')
             ->add('dialogue')
+            ->add('originText')
+            ->add('exerciceText')
             ->add('audioInstruction')
             ->add('audioContext')
             ->add('audioItem')
