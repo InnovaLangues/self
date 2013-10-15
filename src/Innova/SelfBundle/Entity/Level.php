@@ -33,10 +33,27 @@ class Level
     */
     protected $questionnaires;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * To String
+     */
+
+    public function __toString() {
+        return $this->getName();
+    }
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -52,27 +69,20 @@ class Level
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Add questionnaires
      *
@@ -82,7 +92,7 @@ class Level
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-    
+
         return $this;
     }
 
@@ -99,7 +109,7 @@ class Level
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestionnaires()
     {

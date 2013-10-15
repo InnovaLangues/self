@@ -13,7 +13,7 @@ use Innova\SelfBundle\Form\QuestionnaireType;
 /**
  * Questionnaire controller.
  *
- * @Route("/admin/questionnaire")
+ * @Route("admin/questionnaire")
  */
 class QuestionnaireController extends Controller
 {
@@ -21,7 +21,7 @@ class QuestionnaireController extends Controller
     /**
      * Lists all Questionnaire entities.
      *
-     * @Route("/", name="admin_questionnaire")
+     * @Route("/", name="questionnaire")
      * @Method("GET")
      * @Template()
      */
@@ -35,10 +35,29 @@ class QuestionnaireController extends Controller
             'entities' => $entities,
         );
     }
+
+    /**
+     * Lists all Questionnaire entities.
+     *
+     * @Route("/list", name="questionnaire_list")
+     * @Method("GET")
+     * @Template()
+     */
+    public function listAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
     /**
      * Creates a new Questionnaire entity.
      *
-     * @Route("/", name="admin_questionnaire_create")
+     * @Route("/", name="questionnaire_create")
      * @Method("POST")
      * @Template("InnovaSelfBundle:Questionnaire:new.html.twig")
      */
@@ -53,7 +72,7 @@ class QuestionnaireController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_questionnaire_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('questionnaire_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -72,7 +91,7 @@ class QuestionnaireController extends Controller
     private function createCreateForm(Questionnaire $entity)
     {
         $form = $this->createForm(new QuestionnaireType(), $entity, array(
-            'action' => $this->generateUrl('admin_questionnaire_create'),
+            'action' => $this->generateUrl('questionnaire_create'),
             'method' => 'POST',
         ));
 
@@ -84,7 +103,7 @@ class QuestionnaireController extends Controller
     /**
      * Displays a form to create a new Questionnaire entity.
      *
-     * @Route("/new", name="admin_questionnaire_new")
+     * @Route("/new", name="questionnaire_new")
      * @Method("GET")
      * @Template()
      */
@@ -102,7 +121,7 @@ class QuestionnaireController extends Controller
     /**
      * Finds and displays a Questionnaire entity.
      *
-     * @Route("/{id}", name="admin_questionnaire_show")
+     * @Route("/{id}", name="questionnaire_show")
      * @Method("GET")
      * @Template()
      */
@@ -127,7 +146,7 @@ class QuestionnaireController extends Controller
     /**
      * Displays a form to edit an existing Questionnaire entity.
      *
-     * @Route("/{id}/edit", name="admin_questionnaire_edit")
+     * @Route("/{id}/edit", name="questionnaire_edit")
      * @Method("GET")
      * @Template()
      */
@@ -141,15 +160,17 @@ class QuestionnaireController extends Controller
             throw $this->createNotFoundException('Unable to find Questionnaire entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        //$editForm = $this->createEditForm($entity);
+        //$deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity'      => $entity
+            //'edit_form'   => $editForm->createView()
+            //'delete_form' => $deleteForm->createView(),
         );
     }
+
+
 
     /**
     * Creates a form to edit a Questionnaire entity.
@@ -161,7 +182,7 @@ class QuestionnaireController extends Controller
     private function createEditForm(Questionnaire $entity)
     {
         $form = $this->createForm(new QuestionnaireType(), $entity, array(
-            'action' => $this->generateUrl('admin_questionnaire_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('questionnaire_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -172,7 +193,7 @@ class QuestionnaireController extends Controller
     /**
      * Edits an existing Questionnaire entity.
      *
-     * @Route("/{id}", name="admin_questionnaire_update")
+     * @Route("/{id}", name="questionnaire_update")
      * @Method("PUT")
      * @Template("InnovaSelfBundle:Questionnaire:edit.html.twig")
      */
@@ -193,7 +214,7 @@ class QuestionnaireController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_questionnaire_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('questionnaire_edit', array('id' => $id)));
         }
 
         return array(
@@ -205,7 +226,7 @@ class QuestionnaireController extends Controller
     /**
      * Deletes a Questionnaire entity.
      *
-     * @Route("/{id}", name="admin_questionnaire_delete")
+     * @Route("/{id}", name="questionnaire_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -225,7 +246,7 @@ class QuestionnaireController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_questionnaire'));
+        return $this->redirect($this->generateUrl('questionnaire'));
     }
 
     /**
@@ -238,10 +259,11 @@ class QuestionnaireController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_questionnaire_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('questionnaire_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }
+
 }

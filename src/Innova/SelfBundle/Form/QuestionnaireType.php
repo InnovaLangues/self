@@ -15,30 +15,30 @@ class QuestionnaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('level')
-            ->add('source')
-            ->add('supportType')
-            ->add('focus')
-            ->add('cognitiveOperation')
-            ->add('function')
-            ->add('receptionType')
-            ->add('domain')
-            ->add('type')
-            ->add('sourceType')
-            ->add('languageLevel')
-            ->add('durationGroup')
-            ->add('flow')
-            ->add('wordCount')
             ->add('theme')
-            ->add('author')
-            ->add('instruction')
+            ->add('listeningLimit')
+            ->add('dialogue')
             ->add('audioInstruction')
             ->add('audioContext')
             ->add('audioItem')
+            ->add('level')
+            ->add('sourceType')
+            ->add('author')
+            ->add('instruction')
+            ->add('receptionType')
+            ->add('source')
+            ->add('duration')
+            ->add('domain')
+            ->add('functionType')
+            ->add('cognitiveOperation')
+            ->add('support')
+            ->add('flow')
+            ->add('focus')
+            ->add('languageLevel')
             ->add('tests')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
