@@ -39,9 +39,17 @@ class Instruction
     protected $questions;
 
     /**
+     * To String
+     */
+
+    public function __toString() {
+        return $this->getName();
+    }
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -57,14 +65,14 @@ class Instruction
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -77,7 +85,7 @@ class Instruction
     {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add questionnaires
      *
@@ -87,7 +95,7 @@ class Instruction
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-    
+
         return $this;
     }
 
@@ -104,10 +112,43 @@ class Instruction
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestionnaires()
     {
         return $this->questionnaires;
+    }
+
+    /**
+     * Add questions
+     *
+     * @param \Innova\SelfBundle\Entity\Question $questions
+     * @return Instruction
+     */
+    public function addQuestion(\Innova\SelfBundle\Entity\Question $questions)
+    {
+        $this->questions[] = $questions;
+
+        return $this;
+    }
+
+    /**
+     * Remove questions
+     *
+     * @param \Innova\SelfBundle\Entity\Question $questions
+     */
+    public function removeQuestion(\Innova\SelfBundle\Entity\Question $questions)
+    {
+        $this->questions->removeElement($questions);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
     }
 }

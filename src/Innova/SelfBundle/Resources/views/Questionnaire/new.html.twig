@@ -1,15 +1,128 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Questionnaire creation</h1>
+    <h1>Ajouter un questionnaire</h1>
 
-    {{ form(form) }}
+<hr>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('questionnaire') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{{ form_start(form) }}
+  <div class="form-group">
+    {{ form_label(form.theme) }}
+    {{ form_widget(form.theme, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.audioInstruction) }}
+    {{ form_widget(form.audioInstruction, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.audioInstruction) }}
+    {{ form_widget(form.audioInstruction, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.listeningLimit) }}
+    {{ form_widget(form.listeningLimit, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.dialogue) }}
+    {{ form_widget(form.dialogue, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.audioInstruction) }}
+    {{ form_widget(form.audioInstruction, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.audioContext) }}
+    {{ form_widget(form.audioContext, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.audioItem) }}
+    {{ form_widget(form.audioItem, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.level) }}
+    {{ form_widget(form.level, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.author) }}
+    {{ form_widget(form.author, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.sourceType) }}
+    {{ form_widget(form.sourceType, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.instruction) }}
+    {{ form_widget(form.instruction, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.receptionType) }}
+    {{ form_widget(form.receptionType, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.source) }}
+    {{ form_widget(form.source, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.duration) }}
+    {{ form_widget(form.duration, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.domain) }}
+    {{ form_widget(form.domain, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.functionType) }}
+    {{ form_widget(form.functionType, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.cognitiveOperation) }}
+    {{ form_widget(form.cognitiveOperation, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.support) }}
+    {{ form_widget(form.support, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.flow) }}
+    {{ form_widget(form.flow, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.focus) }}
+    {{ form_widget(form.focus, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.languageLevel) }}
+    {{ form_widget(form.languageLevel, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.focus) }}
+    {{ form_widget(form.focus, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.tests) }}
+    {{ form_widget(form.tests, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+   {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+
+{{ form_end(form) }}
+
+<a href="{{ path('admin_questionnaire') }}" class="btn btn-default">Back to the list</a>
+
 {% endblock %}
