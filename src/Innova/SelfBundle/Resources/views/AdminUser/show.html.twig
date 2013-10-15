@@ -40,9 +40,6 @@
     {{ form_start(delete_form) }}
         {{ form_errors(delete_form) }}
         <a href="{{ path('admin_user') }}" class="btn btn-default">Back to the list</a>
-{#
-        <a href="{{ path('test_affectation', { 'id': entity.id }) }}" class="btn btn-default">Affectation to this user</a>
-#}
         {{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
         {{ form_rest(delete_form) }}
     {{ form_start(delete_form) }}

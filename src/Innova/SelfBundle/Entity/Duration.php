@@ -33,11 +33,18 @@ class Duration
     */
     protected $questionnaires;
 
+    /**
+     * To String
+     */
+
+    public function __toString() {
+        return $this->getName();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -53,14 +60,14 @@ class Duration
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -73,7 +80,7 @@ class Duration
     {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add questionnaires
      *
@@ -83,7 +90,7 @@ class Duration
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-    
+
         return $this;
     }
 
@@ -100,7 +107,7 @@ class Duration
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestionnaires()
     {

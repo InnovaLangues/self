@@ -1,29 +1,15 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Questionnaire list</h1>
+    <h1>Liste des questionnaires</h1>
 
-    <table class="records_list">
+    <table class="records_list table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Level</th>
-                <th>Source</th>
-                <th>Supporttype</th>
-                <th>Focus</th>
-                <th>Cognitiveoperation</th>
-                <th>Function</th>
-                <th>Receptiontype</th>
-                <th>Domain</th>
-                <th>Type</th>
-                <th>Sourcetype</th>
-                <th>Languagelevel</th>
-                <th>Durationgroup</th>
-                <th>Flow</th>
-                <th>Wordcount</th>
                 <th>Theme</th>
-                <th>Author</th>
-                <th>Instruction</th>
+                <th>Listeninglimit</th>
+                <th>Dialogue</th>
                 <th>Audioinstruction</th>
                 <th>Audiocontext</th>
                 <th>Audioitem</th>
@@ -33,47 +19,30 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('questionnaire_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.level }}</td>
-                <td>{{ entity.source }}</td>
-                <td>{{ entity.supportType }}</td>
-                <td>{{ entity.focus }}</td>
-                <td>{{ entity.cognitiveOperation }}</td>
-                <td>{{ entity.function }}</td>
-                <td>{{ entity.receptionType }}</td>
-                <td>{{ entity.domain }}</td>
-                <td>{{ entity.type }}</td>
-                <td>{{ entity.sourceType }}</td>
-                <td>{{ entity.languageLevel }}</td>
-                <td>{{ entity.durationGroup }}</td>
-                <td>{{ entity.flow }}</td>
-                <td>{{ entity.wordCount }}</td>
+                <td><a href="{{ path('admin_questionnaire_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.theme }}</td>
-                <td>{{ entity.author }}</td>
-                <td>{{ entity.instruction }}</td>
+                <td>{{ entity.listeningLimit }}</td>
+                <td>{{ entity.dialogue }}</td>
                 <td>{{ entity.audioInstruction }}</td>
                 <td>{{ entity.audioContext }}</td>
                 <td>{{ entity.audioItem }}</td>
-                <td>
+                <td><a href="{{ path('admin_questionnaire_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                <!--
                 <ul>
                     <li>
-                        <a href="{{ path('questionnaire_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('admin_questionnaire_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('questionnaire_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('admin_questionnaire_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
+                -->
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('questionnaire_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    <a href="{{ path('admin_questionnaire_new') }}" class="btn btn-primary">Insérer un nouveau questionnaire</a>
+
     {% endblock %}
