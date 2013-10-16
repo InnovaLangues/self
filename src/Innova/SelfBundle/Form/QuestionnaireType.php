@@ -17,7 +17,9 @@ class QuestionnaireType extends AbstractType
         $builder
             ->add('theme')
             ->add('listeningLimit')
-            ->add('dialogue')
+            ->add('dialogue', 'checkbox', array('required' => false))
+            ->add('originText')
+            ->add('exerciceText')
             ->add('audioInstruction')
             ->add('audioContext')
             ->add('audioItem')
