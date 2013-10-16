@@ -12,22 +12,6 @@
     {{ form_widget(edit_form.theme, { 'attr': {'class': 'form-control'} }) }}
   </div>
   <div class="form-group">
-    {{ form_label(edit_form.originText) }}
-    {{ form_widget(edit_form.originText, { 'attr': {'class': 'form-control'} }) }}
-  </div>
-  <div class="form-group">
-    {{ form_label(edit_form.exerciceText) }}
-    {{ form_widget(edit_form.exerciceText, { 'attr': {'class': 'form-control'} }) }}
-  </div>
-  <div class="form-group">
-    {{ form_label(edit_form.audioInstruction) }}
-    {{ form_widget(edit_form.audioInstruction, { 'attr': {'class': 'form-control'} }) }}
-  </div>
-  <div class="form-group">
-    {{ form_label(edit_form.audioInstruction) }}
-    {{ form_widget(edit_form.audioInstruction, { 'attr': {'class': 'form-control'} }) }}
-  </div>
-  <div class="form-group">
     {{ form_label(edit_form.listeningLimit) }}
     {{ form_widget(edit_form.listeningLimit, { 'attr': {'class': 'form-control'} }) }}
   </div>
@@ -126,6 +110,16 @@
   <div class="form-group">
     {{ form_label(edit_form.tests) }}
     {{ form_widget(edit_form.tests, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.originText) }}
+    {{ form_widget(edit_form.originText, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.exerciceText) }}
+    {{ form_widget(edit_form.exerciceText, { 'attr': {'class': 'form-control'} }) }}
   </div>
 
   {# Pour ne pas afficher ses champs / En commentaire suite remarque AB.
