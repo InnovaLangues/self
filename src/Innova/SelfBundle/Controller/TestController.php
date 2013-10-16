@@ -371,6 +371,7 @@ class TestController extends Controller
 
     /**
      * exportCsvSQL function
+     * Update : 16/10/2013 by EV email Cristiana
      *
      * @Route(
      *     "/csv",
@@ -460,51 +461,121 @@ class TestController extends Controller
         $csv .= "\n";
 
         // Difficulty part
-        $csv .= "Difficulté" . ";" ; // G
-        $csv .= "Libellé" . ";" ; // G
+        $csv .= "Difficulté" . ";" ;
+        $csv .= "Libellé" . ";" ;
         $csv .= "\n";
-        $csv .= "1" . ";" ; // G
-        $csv .= "Très facile" . ";" ; // G
+        $csv .= "1" . ";" ;
+        $csv .= "Très facile" . ";" ;
         $csv .= "\n";
-        $csv .= "2" . ";" ; // G
-        $csv .= "Facile" . ";" ; // G
+        $csv .= "2" . ";" ;
+        $csv .= "Facile" . ";" ;
         $csv .= "\n";
-        $csv .= "3" . ";" ; // G
-        $csv .= "Normal" . ";" ; // G
+        $csv .= "3" . ";" ;
+        $csv .= "Normal" . ";" ;
         $csv .= "\n";
-        $csv .= "4" . ";" ; // G
-        $csv .= "Difficile" . ";" ; // G
+        $csv .= "4" . ";" ;
+        $csv .= "Difficile" . ";" ;
         $csv .= "\n";
-        $csv .= "5" . ";" ; // G
-        $csv .= "Très Difficile" . ";" ; // G
-        $csv .= "\n";
-
-        $csv .= "\n";
+        $csv .= "5" . ";" ;
+        $csv .= "Très Difficile" . ";" ;
         $csv .= "\n";
 
-        $csv .= ";" ; // A
+        $csv .= "\n";
+        $csv .= "\n";
+
+/*
         $csv .= "DIFFICULTE" . ";" ; // B
         $csv .= "TEMPS (s)" . ";"  ; // C
         $csv .= "REPONSES" . ";" ; // D
         // CR
         $csv .= "\n";
         $csv .= "\n";
+*/
 
-        // Loop for test
+        // HEADER
+        // Loop to display all questionnaire of the test
+        $csv .= ";" ; // A
         foreach ($tests as $test) {
             $questionnaires = $test->getQuestionnaires();
             // For THE test, loop on the Questionnaire
             foreach ($questionnaires as $questionnaire) {
-                $csv .= $questionnaire->getTheme() . ";\n";
+                $csv .= $questionnaire->getTheme() . ";";
+                $csv .= "DIFFICULTE;";
+                $csv .= "TEMPS (s);";
+                $questions = $questionnaire->getQuestions();
+                foreach ($questions as $question) {
+                    $subquestions = $question->getSubQuestions();
+                    $cpt=0;
+                    foreach ($subquestions as $subquestion) {
+                        $cpt++;
+                        $csv .= "REPONSES " . $cpt . ";" ; // Ajout d'une colonne pour chaque proposition de la question.
+                        /*foreach ($propositions as $proposition) {
+                                //echo $proposition->getRightAnswer();
+                        }*/
+                        $csv .= ";" ;
+                    }
+                }
+            }
+        }
 
+        $csv .= "\n";
+
+        // BODY
+        // Loop to display all data
+        foreach ($tests as $test) {
+            $users = $test->getUsers();
+            foreach ($users as $user) {
+                $csv .= $user->getUserName() . " " . $user->getEmail() . ";" ;
+                $questionnaires = $test->getQuestionnaires();
+                // For THE test, loop on the Questionnaire
+                foreach ($questionnaires as $questionnaire) {
+                    $traces = $questionnaire->getTraces();
+                    foreach ($traces as $trace) {
+                        $answers = $trace->getAnswers();
+
+                        $csv .= ";" ;
+                        $csv .= $trace->getDifficulty(). ";" ;
+                        $csv .= $trace->getTotalTime().";" ;
+
+                        foreach ($answers as $answer) {
+                            $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
+                            $cptProposition = 0;
+                            foreach ($propositions as $proposition) {
+                                $cptProposition++;
+                                if ($proposition->getId() === $answer->getProposition()->getId()) {
+                                    $propositionRank = $cptProposition;
+                                }
+                            }
+                            $csv .= ($answer->getProposition()->getRightAnswer() ? '1' : '0') . ";";
+
+                            if ($answer->getProposition()->getTitle() != "") {
+                                $csv .= $answer->getProposition()->getTitle() . ";";
+                            } else {
+                                $csv .= "proposition " . $propositionRank . ";";
+                            }
+                        }
+                    }
+                }
+                    // CR
+                    $csv .= "\n";
+            }
+        }
+
+        // Loop to display all data
+        /*foreach ($tests as $test) {
+            $questionnaires = $test->getQuestionnaires();
+            // For THE test, loop on the Questionnaire
+            foreach ($questionnaires as $questionnaire) {
                 // For THE questionnaire, loop on the Trace
                 $traces = $questionnaire->getTraces();
                 foreach ($traces as $trace) {
                     $answers = $trace->getAnswers();
 
                     $csv .= $trace->getUser() . " " . $trace->getUser()->getEmail() . ";" ;
+                    $csv .= ";" ; // A
                     $csv .= $trace->getDifficulty(). ";" ;
                     $csv .= $trace->getTotalTime().";" ;
+
 
                     foreach ($answers as $answer) {
                         $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
@@ -526,10 +597,15 @@ class TestController extends Controller
                     // CR
                     $csv .= "\n";
                 }
-                // CR
-                $csv .= "\n";
             }
-        }
+            // CR
+            $csv .= "\n";
+        }*/
+
+
+        // FOOTER
+        // Empty
+
 
         fwrite($csvh, $csv);
         fclose($csvh);
@@ -545,7 +621,6 @@ class TestController extends Controller
                     $nbFile++; // Number of files + 1
                     $fileList[$nbFile] = $fichier;
                 }
-
             }
         }
 
@@ -564,4 +639,5 @@ class TestController extends Controller
             "nbFile"              => $nbFile
         );
     }
+
 }
