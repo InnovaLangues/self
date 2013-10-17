@@ -508,11 +508,11 @@ class TestController extends Controller
                     $cpt=0;
                     foreach ($subquestions as $subquestion) {
                         $cpt++;
-                        $csv .= "REPONSES " . $cpt . ";" ; // Ajout d'une colonne pour chaque proposition de la question.
+                        $csv .= "BONNE REPONSE " . $cpt . " ?;" ; // Ajout d'une colonne pour chaque proposition de la question.
                         /*foreach ($propositions as $proposition) {
                                 //echo $proposition->getRightAnswer();
                         }*/
-                        $csv .= ";" ;
+                        $csv .= "REPONSE;" ;
                     }
                 }
             }
@@ -524,18 +524,27 @@ class TestController extends Controller
         // Loop to display all data
         foreach ($tests as $test) {
             $users = $test->getUsers();
+            //$questionnaires = $test->getQuestionnaires();
+            //$questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllByTest($test);
             foreach ($users as $user) {
                 $csv .= $user->getUserName() . " " . $user->getEmail() . ";" ;
-                $questionnaires = $test->getQuestionnaires();
                 // For THE test, loop on the Questionnaire
+                // CR
+                $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
                 foreach ($questionnaires as $questionnaire) {
-                    $traces = $questionnaire->getTraces();
+
+
+                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
+                                    'questionnaire' => $questionnaire->getId()
+                                    )
+                                );
+
                     foreach ($traces as $trace) {
                         $answers = $trace->getAnswers();
-
                         $csv .= ";" ;
-                        $csv .= $trace->getDifficulty(). ";" ;
-                        $csv .= $trace->getTotalTime().";" ;
+                        $csv .= $trace->getDifficulty() . ";" ;
+                        $csv .= $trace->getTotalTime() . ";" ;
+                        //echo "trace = " . $trace->getId() . "-" . $user->getId() . "-" . $trace->getTotalTime() . "<br />";
 
                         foreach ($answers as $answer) {
                             $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
@@ -556,8 +565,7 @@ class TestController extends Controller
                         }
                     }
                 }
-                    // CR
-                    $csv .= "\n";
+                $csv .= "\n";
             }
         }
 
