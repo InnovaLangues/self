@@ -4,18 +4,18 @@
     <link rel="stylesheet" href="{{ asset("bundles/innovaself/css/main.css") }}" />
 {% endblock %}
 
-{% macro audio(id, src, icon, height, limit, tooltip) %}
+{% macro audio(id, source, icon, height, limitAudio, tooltip) %}
         <audio preload="auto" id="{{ id }}" class="item_audio">
-            <source src="{{ asset('upload/audio/') ~ src }}.ogg" type="audio/ogg">
-            <source src="{{ asset('upload/audio/') ~ src }}.mp3" type="audio/mp3">
+            <source src="{{ asset('upload/audio/') ~ source }}.ogg" type="audio/ogg">
+            <source src="{{ asset('upload/audio/') ~ source }}.mp3" type="audio/mp3">
             Votre navigateur est trop ancien.
         </audio>
-        <img rel="tooltip"  data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limit }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+        <img rel="tooltip"  data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
 {% endmacro %}
 
 {% macro inputs(type, subquestionId, propositionId, text) %}
     <label class="{{ type }}-inline">
-        <input type="{{ type }}" name="subquestion{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required> 
+        <input type="{{ type }}" name="subquestion{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required>
         {{ text }}
     </label>
 {% endmacro %}
@@ -47,16 +47,16 @@
     {% set bulleCountVf = 0 %}
      <div class="row col-md-12 test-container">
          <div class="row col-md-12 main">
-            
+
             {% if questionnaire.audioContext != "" %}
             <div class="contexte">
-                {{ audio("context", questionnaire.audioContext, "contexte.png", 90, 0, "Ecouter le contexte dans lequel se déroule cette situation") }}
+                {{ audio.audio("context", questionnaire.audioContext, "contexte.png", 90, 0, "Ecouter le contexte dans lequel se déroule cette situation") }}
             </div>
             {% endif %}
-            
+
             {% if questionnaire.audioInstruction != "" %}
             <div class="consigne">
-                {{ audio("instruction", questionnaire.audioInstruction, "oignon.png", 90, 0, "Ecouter la consigne didactique") }}
+                {{ audio.audio("instruction", questionnaire.audioInstruction, "oignon.png", 90, 0, "Ecouter la consigne didactique") }}
             </div>
             {% endif %}
 
@@ -65,9 +65,9 @@
                      <div class="col-md-4 col-md-offset-1 situation vertical-align-center">
                         <div class="situation-icon">
                             {% if questionnaire.dialogue == 1 %}
-                                {{ audio("situtation", questionnaire.audioItem, "situation_dialogue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
+                                {{ audio.audio("situtation", questionnaire.audioItem, "situation_dialogue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
                             {% else %}
-                                {{ audio("situtation", questionnaire.audioItem, "situation_monologue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
+                                {{ audio.audio("situtation", questionnaire.audioItem, "situation_monologue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
                             {% endif %}
                             <div>Reste <span data-limit={{ questionnaire.ListeningLimit }} id="limit_listening">{{ questionnaire.ListeningLimit }}</span> <span id="limit_listening_text">{{ limit_listening_text }}</span> </div>
                         </div>
@@ -80,22 +80,22 @@
                                 <p>
                                     {% if subquestion.typology.name == "VF" and subquestion.audioUrl!= "" %}
                                         {% set bulleCountVf = bulleCountVf + 1 %}
-                                        {{ audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulle"~ bulleCountVf ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
+                                        {{ audio.audio("subquestion"+subquestion.id, subquestion.audioUrl, "bulle"~ bulleCountVf ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
                                     {% endif %}
                                     {% for proposition in subquestion.propositions %}
                                         {% set bulleCount = bulleCount + 1 %}
                                         {% if subquestion.typology.name == "QRU" %}
                                         <p>
-                                            {{ audio("proposition"+proposition.id, proposition.audioUrl, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
-                                            {{ inputs("radio", subquestion.id, proposition.id, proposition.title) }}
+                                            {{ audio.audio("proposition"+proposition.id, proposition.audioUrl, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
+                                            {{ inputs.inputs("radio", subquestion.id, proposition.id, proposition.title) }}
                                         </p>
                                         {% elseif subquestion.typology.name == "QRM" %}
                                         <p>
-                                            {{ audio("proposition"+proposition.id, proposition.audioUrl,  "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
-                                            {{ inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
+                                            {{ audio.audio("proposition"+proposition.id, proposition.audioUrl,  "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
+                                            {{ inputs.inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
                                         </p>
                                         {% elseif subquestion.typology.name == "VF" %}
-                                            {{ inputs("radio", subquestion.id, proposition.id, proposition.title, 90, 0, "Ecouter cette proposition de réponse") }}
+                                            {{ inputs.inputs("radio", subquestion.id, proposition.id, proposition.title, 90, 0, "Ecouter cette proposition de réponse") }}
                                             {% if subquestion.audioUrl == "" %}
                                                 <br/>
                                             {% endif %}
@@ -112,13 +112,13 @@
                     <input id="submit" type="submit" class="pull-right btn btn-default" value="{{ 'generic.validate' | trans }}"/>
                 </form>
             </div>
-        </div>   
+        </div>
         <div class="row col-md-12">
              <div class="row col-md-2 col-md-offset-10 item-count">
                 Item n° {{ counQuestionnaireDone + 1 }}/{{ test.questionnaires.count }}
             </div>
-        </div> 
-     </div>    
+        </div>
+     </div>
 
 {% endblock %}
 

@@ -10,20 +10,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
-    use Innova\SelfBundle\Entity\Level;
-    use Innova\SelfBundle\Entity\Duration;
-    use Innova\SelfBundle\Entity\Focus;
-    use Innova\SelfBundle\Entity\Support;
-    use Innova\SelfBundle\Entity\FunctionType;
-    use Innova\SelfBundle\Entity\Source;
-    use Innova\SelfBundle\Entity\Flow;
-    use Innova\SelfBundle\Entity\LanguageLevel;
-    use Innova\SelfBundle\Entity\SourceType;
-    use Innova\SelfBundle\Entity\Domain;
-    use Innova\SelfBundle\Entity\ReceptionType;
-    use Innova\SelfBundle\Entity\Author;
-    use Innova\SelfBundle\Entity\Instruction;
-    use Innova\SelfBundle\Entity\Typology;
+use Innova\SelfBundle\Entity\Level;
+use Innova\SelfBundle\Entity\Duration;
+use Innova\SelfBundle\Entity\Focus;
+use Innova\SelfBundle\Entity\Support;
+use Innova\SelfBundle\Entity\FunctionType;
+use Innova\SelfBundle\Entity\Source;
+use Innova\SelfBundle\Entity\Flow;
+use Innova\SelfBundle\Entity\LanguageLevel;
+use Innova\SelfBundle\Entity\SourceType;
+use Innova\SelfBundle\Entity\Domain;
+use Innova\SelfBundle\Entity\ReceptionType;
+use Innova\SelfBundle\Entity\Author;
+use Innova\SelfBundle\Entity\Instruction;
+use Innova\SelfBundle\Entity\Typology;
 use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
@@ -214,6 +214,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire1->setAudioItem('1_item');
         $questionnaire1->setListeningLimit(2);
         $questionnaire1->setDialogue(1);
+        $questionnaire1->setOriginText('1_Origin');
+        $questionnaire1->setExerciceText('1_Exercice');
         $manager->persist($questionnaire1);
 
         $question1 = new Question();
@@ -268,6 +270,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire2->setAudioItem('2_item');
         $questionnaire2->setListeningLimit(1);
         $questionnaire2->setDialogue(1);
+        $questionnaire2->setOriginText('2_Origin');
+        $questionnaire2->setExerciceText('2_Exercice');
+
         $manager->persist($questionnaire2);
 
         $question2 = new Question();
@@ -322,6 +327,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire25->setAudioItem('25_item');
         $questionnaire25->setListeningLimit(2);
         $questionnaire25->setDialogue(1);
+        $questionnaire25->setOriginText('25_Origin');
+        $questionnaire25->setExerciceText('25_Exercice');
+
         $manager->persist($questionnaire25);
 
         $question25 = new Question();
@@ -452,6 +460,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire32->setAudioItem('32_item');
         $questionnaire32->setListeningLimit(2);
         $questionnaire32->setDialogue(1);
+        $questionnaire32->setOriginText('32_Origin');
+        $questionnaire32->setExerciceText('32_Exercice');
         $manager->persist($questionnaire32);
 
         $question32 = new Question();
@@ -505,6 +515,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire9->setAudioItem('9_item');
         $questionnaire9->setListeningLimit(1);
         $questionnaire9->setDialogue(1);
+        $questionnaire9->setOriginText('9_Origin');
+        $questionnaire9->setExerciceText('9_Exercice');
         $manager->persist($questionnaire9);
 
         $question9 = new Question();
@@ -595,6 +607,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire3->setAudioItem('3_item');
         $questionnaire3->setListeningLimit(1);
         $questionnaire3->setDialogue(1);
+        $questionnaire3->setOriginText('3_Origin');
+        $questionnaire3->setExerciceText('3_Exercice');
         $manager->persist($questionnaire3);
 
         $question3 = new Question();
@@ -648,6 +662,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire23->setAudioItem('23_item');
         $questionnaire23->setListeningLimit(1);
         $questionnaire23->setDialogue(1);
+        $questionnaire23->setOriginText('23_Origin');
+        $questionnaire23->setExerciceText('23_Exercice');
         $manager->persist($questionnaire23);
 
         $question23 = new Question();
@@ -706,6 +722,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire33->setAudioItem('33_item');
         $questionnaire33->setListeningLimit(2);
         $questionnaire33->setDialogue(1);
+        $questionnaire33->setOriginText('33_Origin');
+        $questionnaire33->setExerciceText('33_Exercice');
         $manager->persist($questionnaire33);
 
         $question33 = new Question();
@@ -759,6 +777,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire11->setAudioItem('11_item');
         $questionnaire11->setListeningLimit(1);
         $questionnaire11->setDialogue(1);
+        $questionnaire11->setOriginText('11_Origin');
+        $questionnaire11->setExerciceText('11_Exercice');
         $manager->persist($questionnaire11);
 
         $question11 = new Question();
@@ -812,6 +832,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire12->setAudioItem('12_item');
         $questionnaire12->setListeningLimit(1);
         $questionnaire12->setDialogue(1);
+        $questionnaire12->setOriginText('12_Origin');
+        $questionnaire12->setExerciceText('12_Exercice');
         $manager->persist($questionnaire12);
 
         $question12 = new Question();
@@ -863,6 +885,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire13->setAudioItem('13_item');
         $questionnaire13->setListeningLimit(1);
         $questionnaire13->setDialogue(1);
+        $questionnaire13->setOriginText('13_Origin');
+        $questionnaire13->setExerciceText('13_Exercice');
         $manager->persist($questionnaire13);
 
         $question13 = new Question();
@@ -913,6 +937,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire14->setAudioItem('14_item');
         $questionnaire14->setListeningLimit(1);
         $questionnaire14->setDialogue(1);
+        $questionnaire14->setOriginText('14_Origin');
+        $questionnaire14->setExerciceText('14_Exercice');
         $manager->persist($questionnaire14);
 
         $question14 = new Question();
@@ -963,6 +989,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire15->setAudioItem('15_item');
         $questionnaire15->setListeningLimit(1);
         $questionnaire15->setDialogue(1);
+        $questionnaire15->setOriginText('15_Origin');
+        $questionnaire15->setExerciceText('15_Exercice');
         $manager->persist($questionnaire15);
 
         $question15 = new Question();
@@ -1012,6 +1040,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire34->setAudioItem('34_item');
         $questionnaire34->setListeningLimit(1);
         $questionnaire34->setDialogue(1);
+        $questionnaire34->setOriginText('34_Origin');
+        $questionnaire34->setExerciceText('34_Exercice');
         $manager->persist($questionnaire34);
 
         $question34 = new Question();
@@ -1067,6 +1097,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire35->setAudioItem('35_item');
         $questionnaire35->setListeningLimit(1);
         $questionnaire35->setDialogue(1);
+        $questionnaire35->setOriginText('35_Origin');
+        $questionnaire35->setExerciceText('35_Exercice');
         $manager->persist($questionnaire35);
 
         $question35 = new Question();
@@ -1120,6 +1152,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire27->setAudioItem('27_item');
         $questionnaire27->setListeningLimit(2);
         $questionnaire27->setDialogue(0);
+        $questionnaire27->setOriginText('27_Origin');
+        $questionnaire27->setExerciceText('27_Exercice');
+
         $manager->persist($questionnaire27);
 
         $question27 = new Question();
@@ -1210,6 +1245,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire28->setAudioItem('28_item');
         $questionnaire28->setListeningLimit(2);
         $questionnaire28->setDialogue(0);
+        $questionnaire28->setOriginText('28_Origin');
+        $questionnaire28->setExerciceText('28_Exercice');
         $manager->persist($questionnaire28);
 
         $question28 = new Question();
@@ -1320,6 +1357,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire29->setAudioItem('29_item');
         $questionnaire29->setListeningLimit(2);
         $questionnaire29->setDialogue(0);
+        $questionnaire29->setOriginText('29_Origin');
+        $questionnaire29->setExerciceText('29_Exercice');
         $manager->persist($questionnaire29);
 
         $question29 = new Question();
@@ -1431,6 +1470,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire4->setAudioItem('4_item');
         $questionnaire4->setListeningLimit(2);
         $questionnaire4->setDialogue(1);
+        $questionnaire4->setOriginText('4_Origin');
+        $questionnaire4->setExerciceText('4_Exercice');
         $manager->persist($questionnaire4);
 
         $question4 = new Question();
@@ -1485,6 +1526,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire5->setAudioItem('5_item');
         $questionnaire5->setListeningLimit(1);
         $questionnaire5->setDialogue(1);
+        $questionnaire5->setOriginText('5_Origin');
+        $questionnaire5->setExerciceText('5_Exercice');
         $manager->persist($questionnaire5);
 
         $question5 = new Question();
@@ -1539,6 +1582,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire36->setAudioItem('36_item');
         $questionnaire36->setListeningLimit(2);
         $questionnaire36->setDialogue(0);
+        $questionnaire36->setOriginText('36_Origin');
+        $questionnaire36->setExerciceText('36_Exercice');
         $manager->persist($questionnaire36);
 
         $question36 = new Question();
@@ -1594,6 +1639,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire37->setAudioItem('37_item');
         $questionnaire37->setListeningLimit(1);
         $questionnaire37->setDialogue(1);
+        $questionnaire37->setOriginText('37_Origin');
+        $questionnaire37->setExerciceText('37_Exercice');
         $manager->persist($questionnaire37);
 
         $question37 = new Question();
@@ -1647,6 +1694,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire10->setAudioItem('10_item');
         $questionnaire10->setListeningLimit(2);
         $questionnaire10->setDialogue(1);
+        $questionnaire10->setOriginText('10_Origin');
+        $questionnaire10->setExerciceText('10_Exercice');
         $manager->persist($questionnaire10);
 
         $question10 = new Question();
@@ -1757,6 +1806,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire22->setAudioItem('22_item');
         $questionnaire22->setListeningLimit(1);
         $questionnaire22->setDialogue(1);
+        $questionnaire22->setOriginText('22_Origin');
+        $questionnaire22->setExerciceText('22_Exercice');
         $manager->persist($questionnaire22);
 
         $question22 = new Question();
@@ -1813,6 +1864,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire38->setAudioItem('38_item');
         $questionnaire38->setListeningLimit(2);
         $questionnaire38->setDialogue(1);
+        $questionnaire38->setOriginText('38_Origin');
+        $questionnaire38->setExerciceText('38_Exercice');
+
         $manager->persist($questionnaire38);
 
         $question38 = new Question();
@@ -1866,6 +1920,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire16->setAudioItem('16_item');
         $questionnaire16->setListeningLimit(1);
         $questionnaire16->setDialogue(1);
+        $questionnaire16->setOriginText('16_Origin');
+        $questionnaire16->setExerciceText('16_Exercice');
         $manager->persist($questionnaire16);
 
         $question16 = new Question();
@@ -1916,6 +1972,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire17->setAudioItem('17_item');
         $questionnaire17->setListeningLimit(1);
         $questionnaire17->setDialogue(1);
+        $questionnaire17->setOriginText('17_Origin');
+        $questionnaire17->setExerciceText('17_Exercice');
+
         $manager->persist($questionnaire17);
 
         $question17 = new Question();
@@ -1967,6 +2026,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire18->setAudioItem('18_item');
         $questionnaire18->setListeningLimit(1);
         $questionnaire18->setDialogue(1);
+        $questionnaire18->setOriginText('18_Origin');
+        $questionnaire18->setExerciceText('18_Exercice');
         $manager->persist($questionnaire18);
 
         $question18 = new Question();
@@ -2018,6 +2079,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire19->setAudioItem('19_item');
         $questionnaire19->setListeningLimit(1);
         $questionnaire19->setDialogue(1);
+        $questionnaire19->setOriginText('19_Origin');
+        $questionnaire19->setExerciceText('19_Exercice');
         $manager->persist($questionnaire19);
 
         $question19 = new Question();
@@ -2069,6 +2132,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire20->setAudioItem('20_item');
         $questionnaire20->setListeningLimit(1);
         $questionnaire20->setDialogue(1);
+        $questionnaire20->setOriginText('20_Origin');
+        $questionnaire20->setExerciceText('20_Exercice');
         $manager->persist($questionnaire20);
 
         $question20 = new Question();
@@ -2118,6 +2183,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire30->setAudioItem('30_item');
         $questionnaire30->setListeningLimit(2);
         $questionnaire30->setDialogue(0);
+        $questionnaire30->setOriginText('30_Origin');
+        $questionnaire30->setExerciceText('30_Exercice');
         $manager->persist($questionnaire30);
 
         $question30 = new Question();
@@ -2209,6 +2276,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire31->setAudioItem('31_item');
         $questionnaire31->setListeningLimit(2);
         $questionnaire31->setDialogue(0);
+        $questionnaire31->setOriginText('31_Origin');
+        $questionnaire31->setExerciceText('31_Exercice');
         $manager->persist($questionnaire31);
 
         $question31 = new Question();
@@ -2320,6 +2389,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire6->setAudioItem('6_item');
         $questionnaire6->setListeningLimit(1);
         $questionnaire6->setDialogue(1);
+        $questionnaire6->setOriginText('6_Origin');
+        $questionnaire6->setExerciceText('6_Exercice');
         $manager->persist($questionnaire6);
 
         $question6 = new Question();
@@ -2373,6 +2444,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire24->setAudioItem('24_item');
         $questionnaire24->setListeningLimit(1);
         $questionnaire24->setDialogue(1);
+        $questionnaire24->setOriginText('24_Origin');
+        $questionnaire24->setExerciceText('24_Exercice');
         $manager->persist($questionnaire24);
 
         $question24 = new Question();
@@ -2432,6 +2505,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire39->setAudioItem('39_item');
         $questionnaire39->setListeningLimit(1);
         $questionnaire39->setDialogue(1);
+        $questionnaire39->setOriginText('39_Origin');
+        $questionnaire39->setExerciceText('39_Exercice');
         $manager->persist($questionnaire39);
 
         $question39 = new Question();
@@ -2485,6 +2560,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire7->setAudioItem('7_item');
         $questionnaire7->setListeningLimit(1);
         $questionnaire7->setDialogue(1);
+        $questionnaire7->setOriginText('7_Origin');
+        $questionnaire7->setExerciceText('7_Exercice');
         $manager->persist($questionnaire7);
 
         $question7 = new Question();
@@ -2539,6 +2616,8 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $questionnaire8->setAudioItem('8_item');
         $questionnaire8->setListeningLimit(1);
         $questionnaire8->setDialogue(1);
+        $questionnaire8->setOriginText('8_Origin');
+        $questionnaire8->setExerciceText('8_Exercice');
         $manager->persist($questionnaire8);
 
         $question8 = new Question();
