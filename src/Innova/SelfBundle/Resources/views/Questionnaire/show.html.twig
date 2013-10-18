@@ -3,7 +3,14 @@
 {% block body -%}
     <h1>{{ 'questionnaire.action.show' | trans }}</h1>
 
-    <table class="record_properties table">
+    {# Display result message -> #}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ 'questionnaire.message.create.success' | trans }}
+        </div>
+    {% endfor %}
+
+    <table class="record_properties table table-striped">
         <tbody>
             <tr>
                 <th>{{ 'questionnaire.field.theme' | trans }}</th>

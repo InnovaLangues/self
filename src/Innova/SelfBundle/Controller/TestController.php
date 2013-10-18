@@ -494,25 +494,27 @@ class TestController extends Controller
 
         // HEADER
         // Loop to display all questionnaire of the test
-        $csv .= ";" ; // A
+        $csv .= "Code étudiant;" ; // A
         foreach ($tests as $test) {
             $questionnaires = $test->getQuestionnaires();
+            $cpt_questionnaire=0;
             // For THE test, loop on the Questionnaire
             foreach ($questionnaires as $questionnaire) {
-                $csv .= $questionnaire->getTheme() . ";";
-                $csv .= "DIFFICULTE;";
-                $csv .= "TEMPS (s);";
+                $cpt_questionnaire++;
+                $csv .= "T" . $cpt_questionnaire . "-" . $questionnaire->getTheme() . ";";
+                $csv .= "T" . $cpt_questionnaire . "-Diff.;";
+                $csv .= "T" . $cpt_questionnaire . "-TEMPS;";
                 $questions = $questionnaire->getQuestions();
                 foreach ($questions as $question) {
                     $subquestions = $question->getSubQuestions();
                     $cpt=0;
                     foreach ($subquestions as $subquestion) {
                         $cpt++;
-                        $csv .= "BONNE REPONSE " . $cpt . " ?;" ; // Ajout d'une colonne pour chaque proposition de la question.
+                        $csv .= "T" . $cpt_questionnaire . "-CORR-FAUX " . $cpt . ";" ; // Ajout d'une colonne pour chaque proposition de la question.
                         /*foreach ($propositions as $proposition) {
                                 //echo $proposition->getRightAnswer();
                         }*/
-                        $csv .= "REPONSE;" ;
+                        $csv .= "T" . $cpt_questionnaire . "-prop. choisie;" ;
                     }
                 }
             }

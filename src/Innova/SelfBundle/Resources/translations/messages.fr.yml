@@ -61,7 +61,8 @@ trace:
 
 questionnaire:
     action:
-        actions: Actions
+        edit_button: Editer
+        show_button: Afficher
         index: Lister les questionnaires
         create: Ajouter un questionnaire
         show: Afficher le questionnaire
@@ -69,18 +70,18 @@ questionnaire:
         delete: Supprimer ce questionnaire
     message:
         create:
-            success: Votre utilisateur a bien été ajouté
-            error: Votre utilisateur n'a pas été ajouté
+            success: Votre questionnaire a bien été ajouté
+            error: Votre questionnaire n'a pas été ajouté
         edit:
-            success: Votre utilisateur a bien été modifié
-            error: Votre utilisateur n'a pas été modifié
+            success: Votre questionnaire a bien été modifié
+            error: Votre questionnaire n'a pas été modifié
         delete:
-            success: Votre utilisateur a bien été supprimé
-            error: Votre utilisateur n'a pas été supprimé
+            success: Votre questionnaire a bien été supprimé
+            error: Votre questionnaire n'a pas été supprimé
     field:
-        theme: ThemeEric3
+        theme: Theme
         listeningLimit: Temps d'écoute limite
-        dialogue: Texte d'origine
+        dialogue: Dialogue
         audioInstruction: Consigne audio
         audioContext: Contexte audio
         audioItem: Item audio

@@ -54,6 +54,11 @@ class QuestionnaireController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add(
+                        'notice',
+                        'Le questionnaire a été créé.'
+                    );
+
             return $this->redirect($this->generateUrl('admin_questionnaire_show', array('id' => $entity->getId())));
         }
 
@@ -230,6 +235,12 @@ class QuestionnaireController extends Controller
 
             $em->remove($entity);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                        'notice',
+                        'Vos changements ont été sauvegardés.'
+                    );
+
         }
 
         return $this->redirect($this->generateUrl('admin_questionnaire'));
