@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Form\QuestionnaireType;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Questionnaire controller.
@@ -52,6 +53,11 @@ class QuestionnaireController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                        'notice',
+                        'Le questionnaire a été créé.'
+                    );
 
             return $this->redirect($this->generateUrl('admin_questionnaire_show', array('id' => $entity->getId())));
         }
@@ -133,6 +139,7 @@ class QuestionnaireController extends Controller
      */
     public function editAction($id)
     {
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($id);
@@ -147,7 +154,7 @@ class QuestionnaireController extends Controller
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteForm->createView()
         );
     }
 
@@ -193,6 +200,11 @@ class QuestionnaireController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add(
+                        'notice',
+                        'Vos changements ont été sauvegardés.'
+                    );
+
             return $this->redirect($this->generateUrl('admin_questionnaire_edit', array('id' => $id)));
         }
 
@@ -223,6 +235,12 @@ class QuestionnaireController extends Controller
 
             $em->remove($entity);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                        'notice',
+                        'Vos changements ont été sauvegardés.'
+                    );
+
         }
 
         return $this->redirect($this->generateUrl('admin_questionnaire'));

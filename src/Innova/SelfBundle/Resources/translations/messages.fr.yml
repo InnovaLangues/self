@@ -10,7 +10,7 @@ generic:
     login: Connexion
     logout: Déconnexion
     validate: Valider
-    chooseCorrectAnswer: Sélectionner la réponse correcte    
+    chooseCorrectAnswer: Sélectionner la réponse correcte
 
 user:
     singular: Utilisateur
@@ -30,10 +30,10 @@ user:
         edit: Modifier cet utilisateur
         delete: Supprimer cet utilisateur
     message:
-        create: 
+        create:
             success: Votre utilisateur a bien été ajouté
             error: Votre utilisateur n'a pas été ajouté
-        edit: 
+        edit:
             success: Votre utilisateur a bien été modifié
             error: Votre utilisateur n'a pas été modifié
         delete:
@@ -54,7 +54,50 @@ trace:
     field:
         difficulty:
             veryEasy: Très facile
-            easy: Facile 
+            easy: Facile
             normal: Normal
-            difficult: Difficile 
-            veryDifficult: Très difficile 
+            difficult: Difficile
+            veryDifficult: Très difficile
+
+questionnaire:
+    action:
+        edit_button: Editer
+        show_button: Afficher
+        index: Lister les questionnaires
+        create: Ajouter un questionnaire
+        show: Afficher le questionnaire
+        edit: Modifier ce questionnaire
+        delete: Supprimer ce questionnaire
+    message:
+        create:
+            success: Votre questionnaire a bien été ajouté
+            error: Votre questionnaire n'a pas été ajouté
+        edit:
+            success: Votre questionnaire a bien été modifié
+            error: Votre questionnaire n'a pas été modifié
+        delete:
+            success: Votre questionnaire a bien été supprimé
+            error: Votre questionnaire n'a pas été supprimé
+    field:
+        theme: Theme
+        listeningLimit: Temps d'écoute limite
+        dialogue: Dialogue
+        audioInstruction: Consigne audio
+        audioContext: Contexte audio
+        audioItem: Item audio
+        sourceType: Type de source
+        receptionType: Type de réception
+        functionType: Type de fonction
+        cognitiveOperation: Opération cognitive
+        languageLevel: Niveau de langage
+        originText: Texte d'origine
+        exerciceText: Texte d'exercice
+        level: Niveau
+        author: Auteur
+        instruction: Consigne
+        source: Source
+        duration: Durée
+        domain: Domaine
+        support: Support
+        flow: Flow
+        focus: Focus
