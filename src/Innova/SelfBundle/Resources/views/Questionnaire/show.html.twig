@@ -1,45 +1,73 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Questionnaire</h1>
+    <h1>{{ 'questionnaire.action.show' | trans }}</h1>
 
     <table class="record_properties table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Theme</th>
+                <th>{{ 'questionnaire.field.theme' | trans }}</th>
                 <td>{{ entity.theme }}</td>
             </tr>
             <tr>
-                <th>Listeninglimit</th>
+                <th>{{ 'questionnaire.field.listeningLimit' | trans }}</th>
                 <td>{{ entity.listeningLimit }}</td>
             </tr>
             <tr>
-                <th>Dialogue</th>
+                <th>{{ 'questionnaire.field.dialogue' | trans }}</th>
                 <td>{{ entity.dialogue }}</td>
             </tr>
             <tr>
-                <th>Audioinstruction</th>
+                <th>{{ 'questionnaire.field.audioInstruction' | trans }}</th>
                 <td>{{ entity.audioInstruction }}</td>
             </tr>
             <tr>
-                <th>Audiocontext</th>
+                <th>{{ 'questionnaire.field.audioContext' | trans }}</th>
                 <td>{{ entity.audioContext }}</td>
             </tr>
             <tr>
-                <th>Audioitem</th>
+                <th>{{ 'questionnaire.field.audioItem' | trans }}</th>
                 <td>{{ entity.audioItem }}</td>
             </tr>
             <tr>
-                <th>OriginText</th>
+                <th>{{ 'questionnaire.field.sourceType' | trans }}</th>
+                <td>{{ entity.sourceType }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'questionnaire.field.receptionType' | trans }}</th>
+                <td>{{ entity.receptionType }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'questionnaire.field.functionType' | trans }}</th>
+                <td>{{ entity.functionType }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'questionnaire.field.cognitiveOperation' | trans }}</th>
+                <td>{{ entity.cognitiveOperation }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'questionnaire.field.languageLevel' | trans }}</th>
+                <td>{{ entity.languageLevel }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'questionnaire.field.originText' | trans }}</th>
                 <td>{{ entity.originText }}</td>
             </tr>
             <tr>
-                <th>ExerciceText</th>
+                <th>{{ 'questionnaire.field.exerciceText' | trans }}</th>
                 <td>{{ entity.exerciceText }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'questionnaire.field.level' | trans }}</th>
+                <td>{{ entity.Level }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'questionnaire.field.author' | trans }}</th>
+                <td>{{ entity.author }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'questionnaire.field.instruction' | trans }}</th>
+                <td>{{ entity.instruction }}</td>
             </tr>
         </tbody>
     </table>
@@ -50,6 +78,7 @@
         <a href="{{ path('admin_questionnaire') }}" class="btn btn-default">Back to the list</a>
         <a href="{{ path('admin_questionnaire_edit', { 'id': entity.id }) }}" class="btn btn-default">Edit</a>
         {{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
+
         {{ form_rest(delete_form) }}
     {{ form_start(delete_form) }}
 

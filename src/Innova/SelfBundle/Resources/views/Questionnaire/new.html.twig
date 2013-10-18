@@ -14,13 +14,18 @@
   <div class="form-group">
     {{ form_errors(form.listeningLimit) }}
     {{ form_label(form.listeningLimit) }}
-    {{ form_widget(form.listeningLimit, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_widget(form.listeningLimit, { 'attr': {'class': 'form-control','type': 'checkbox'}}) }}
   </div>
-  <div class="form-group">
-    {{ form_errors(form.dialogue) }}
-    {{ form_label(form.dialogue) }}
-    {{ form_widget(form.dialogue, { 'attr': {'class': 'form-control'} }) }}
+
+  {% do form.dialogue.setRendered %}
+  <div class="control-group">
+    <div class="controls">
+    <label for="innova_selfbundle_questionnaire_dialogue" class="checkbox">
+      <input type="checkbox" value="1" name="innova_selfbundle_questionnaire[dialogue]" id="innova_selfbundle_questionnaire_dialogue">Dialogue
+    </label>
+    </div>
   </div>
+
   <div class="form-group">
     {{ form_errors(form.audioInstruction) }}
     {{ form_label(form.audioInstruction) }}
@@ -108,11 +113,6 @@
   </div>
 
   <div class="form-group">
-    {{ form_label(form.tests) }}
-    {{ form_widget(form.tests, { 'attr': {'class': 'form-control'} }) }}
-  </div>
-
-  <div class="form-group">
     {{ form_errors(form.originText) }}
     {{ form_label(form.originText) }}
     {{ form_widget(form.originText, { 'attr': {'class': 'form-control'} }) }}
@@ -124,13 +124,11 @@
     {{ form_widget(form.exerciceText, { 'attr': {'class': 'form-control'} }) }}
   </div>
 
-
-      {% do form.submit.setRendered %}
+  {% do form.submit.setRendered %}
   {{ form_rest(form) }}
   <button type="submit" class="btn btn-primary">Create</button>
+  <a href="{{ path('admin_questionnaire') }}" class="btn btn-default">Back to the list</a>
 
 {{ form_end(form) }}
-
-<a href="{{ path('admin_questionnaire') }}" class="btn btn-default">Back to the list</a>
 
 {% endblock %}

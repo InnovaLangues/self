@@ -1,48 +1,38 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Liste des questionnaires</h1>
+    <h1>{{ 'questionnaire.action.index' | trans }}</h1>
 
     <table class="records_list table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Theme</th>
-                <th>Listeninglimit</th>
-                <th>Dialogue</th>
-                <th>Audioinstruction</th>
-                <th>Audiocontext</th>
-                <th>Audioitem</th>
-                <th>Actions</th>
+                <th>{{ 'questionnaire.field.theme' | trans }}</th>
+                <th>{{ 'questionnaire.field.listeningLimit' | trans }}</th>
+                <th>{{ 'questionnaire.field.dialogue' | trans }}</th>
+                <th>{{ 'questionnaire.field.audioInstruction' | trans }}</th>
+                <th>{{ 'questionnaire.field.audioContext' | trans }}</th>
+                <th>{{ 'questionnaire.field.audioItem' | trans }}</th>
+                <th>{{ 'questionnaire.action.actions' | trans }}</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('admin_questionnaire_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.theme }}</td>
                 <td>{{ entity.listeningLimit }}</td>
                 <td>{{ entity.dialogue }}</td>
                 <td>{{ entity.audioInstruction }}</td>
                 <td>{{ entity.audioContext }}</td>
                 <td>{{ entity.audioItem }}</td>
-                <td><a href="{{ path('admin_questionnaire_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
-                <!--
-                <ul>
-                    <li>
-                        <a href="{{ path('admin_questionnaire_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_questionnaire_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                -->
+                <td>
+                    <a href="{{ path('admin_questionnaire_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    <a href="{{ path('admin_questionnaire_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('admin_questionnaire_new') }}" class="btn btn-primary">Insérer un nouveau questionnaire</a>
+    <a href="{{ path('admin_questionnaire_new') }}" class="btn btn-primary">{{ 'questionnaire.action.create' | trans }}</a>
 
     {% endblock %}
