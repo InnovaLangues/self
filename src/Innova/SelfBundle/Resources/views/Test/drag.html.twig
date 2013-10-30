@@ -1,0 +1,25 @@
+{% extends '::base-jquery.html.twig' %}
+
+{% block body -%}
+    <h1>Test Drag and Drop</h1>
+
+    <div id="parking">
+        <div id="liste_bleue" class="liste"></div>
+        {% for entities in entities %}
+            <div id="{{ entities.name }}" class="personnage"><span class="nom">{{ entities.name }}</span></div>
+        {% endfor %}
+    </div>
+
+    {#
+    <div id="parking">
+        <div id="voiture_bleue" class="voiture"></div>
+        <div id="voiture_rouge" class="voiture horizontale"></div>
+        <div id="boby" class="personnage"><span class="nom">Boby</span></div>
+        <div id="jeanne" class="personnage"><span class="nom">Jeanne</span></div>
+    </div>
+    #}
+
+                <a href="{{ path('drag_new') }}">
+                Validez vos choix
+            </a>
+{% endblock %}

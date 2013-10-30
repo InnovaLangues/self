@@ -650,4 +650,121 @@ class TestController extends Controller
         );
     }
 
+    /**
+     * importCsvSQL function
+     *
+     * @Route(
+     *     "/csv-import",
+     *     name = "csv-import",
+     *     options = {"expose"=true}
+     * )
+     *
+     * @Method("GET")
+     * @Template()
+     */
+    public function importCsvSQLAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        //
+        // CSV Import part
+        //
+
+        // File import path
+        $csvPathImport =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
+
+        // File import name
+        $csvName = 'codage-protocoles.csv';
+
+        // Symfony
+        $urlCSVRelativeToWeb = 'upload/import/csv/';
+
+        // Path + Name
+        $csvPath = $csvPathImport . $csvName;
+
+        // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
+        // Contrainte :
+        // dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
+        // Cette contrainte a été prise en compte par rapport au fichier reçu.
+        $row = 0;
+        $indice = 0;
+        if (($handle = fopen($csvPath, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $num = count($data);
+                $c = 0;
+                if ($data[$c] = $row)
+                {
+                    for ($c=0; $c < $num; $c++)
+                    {
+                        //echo $data[$c] . "<br />\n";
+                        $fileData[$indice][$c]=$data[$c];
+                        echo $fileData[$indice][$c] . "<br />\n";
+                        $indice ++;
+                    }
+                }
+
+                $row++;
+            }
+            fclose($handle);
+        }
+
+        //
+        // To view
+        //
+        return array(
+            "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
+            "csvName"             => $csvName,
+            "fileData"            => $fileData
+        );
+    }
+
+
+     /**
+     * importCsvSQL function
+     *
+     * @Route(
+     *     "/drag",
+     *     name = "drag",
+     *     options = {"expose"=true}
+     * )
+     *
+     * @Method("GET")
+     * @Template()
+     */
+   public function dragAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
+
+        return array(
+            'entities' => $entities
+        );
+   }
+
+
+    /**
+     * dragNew function
+     *
+     * @Route(
+     *     "/drag/new",
+     *     name = "drag_new",
+     *     options = {"expose"=true}
+     * )
+     *
+     * @Method("GET")
+     * @Template()
+     */
+   public function dragNewAction()
+    {
+
+        echo "ici";
+        die();
+        // Ici, on peut faire le traitement suite à la validation.
+        //
+        // Appel de la redirection après la validation.
+        return $this->redirect($this->generateUrl('drag'));
+
+    }
+
 }
