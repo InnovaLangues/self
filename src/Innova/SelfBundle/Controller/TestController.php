@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Form\TestType;
 
 class TestController extends Controller
@@ -698,7 +699,19 @@ class TestController extends Controller
                     {
                         //echo $data[$c] . "<br />\n";
                         $fileData[$indice][$c]=$data[$c];
-                        echo $fileData[$indice][$c] . "<br />\n";
+                        echo $c . "-" . $fileData[$indice][$c] . "<br />\n";
+                        // Add to Questionnaire table
+                        $entity = new Questionnaire();
+                        $entity->setAuthor($this->get('security.context')->getToken()->getUser());
+//                        $entity->setInstruction("");
+                        if ($c == 2)
+                        {
+                            $libLevel = $fileData[$indice][$c];
+                            echo "Level = " . $libLevel . "<br />";
+                        }
+//                                $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
+//                            ->CountAnswerByUserByTest($test->getId(), $user->getId());
+//                        $entity->setLevel($this->get('security.context')->getToken()->getUser());
                         $indice ++;
                     }
                 }

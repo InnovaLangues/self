@@ -125,6 +125,12 @@
     {{ form_widget(form.exerciceText, { 'attr': {'class': 'form-control'} }) }}
   </div>
 
+  <div class="form-group">
+    {{ form_errors(form.skill) }}
+    {{ form_label(form.skill) }}
+    {{ form_widget(form.skill, { 'attr': {'class': 'form-control'} }) }}
+  </div>
+
   {% do form.submit.setRendered %}
   {{ form_rest(form) }}
   <button type="submit" class="btn btn-primary">Create</button>

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Questionnaire
  * 15/10/2013 : Add "originText" and "exerciceText" columns. EV.
+ * 04/11/2013 : Add "skill" columns ans Skill.php (for Entity). EV.
  *
  * @ORM\Table("questionnaire")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\QuestionnaireRepository")
@@ -149,6 +150,11 @@ class Questionnaire
      * @ORM\Column(name="exerciceText", type="string", length=255)
      */
     private $exerciceText;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires")
+    */
+    protected $skill;
 
     /**
     * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"remove", "persist"})
@@ -653,6 +659,29 @@ class Questionnaire
     public function getFlow()
     {
         return $this->flow;
+    }
+
+    /**
+     * Set skill
+     *
+     * @param \Innova\SelfBundle\Entity\Skill $skill
+     * @return Questionnaire
+     */
+    public function setSkill(\Innova\SelfBundle\Entity\Skill $skill = null)
+    {
+        $this->skill = $skill;
+
+        return $this;
+    }
+
+    /**
+     * Get skill
+     *
+     * @return \Innova\SelfBundle\Entity\Skill
+     */
+    public function getSkill()
+    {
+        return $this->skill;
     }
 
     /**
