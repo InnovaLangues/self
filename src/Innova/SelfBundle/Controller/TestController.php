@@ -691,31 +691,74 @@ class TestController extends Controller
         $indice = 0;
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                // Nombre de colonnes
                 $num = count($data);
                 $c = 0;
+                // Ainsi, je ne prends pas les intitulés des colonnes
                 if ($data[$c] = $row)
                 {
-                    for ($c=0; $c < $num; $c++)
-                    {
-                        //echo $data[$c] . "<br />\n";
-                        $fileData[$indice][$c]=$data[$c];
-                        echo $c . "-" . $fileData[$indice][$c] . "<br />\n";
-                        // Add to Questionnaire table
-                        $entity = new Questionnaire();
-                        $entity->setAuthor($this->get('security.context')->getToken()->getUser());
-//                        $entity->setInstruction("");
-                        if ($c == 2)
-                        {
-                            $libLevel = $fileData[$indice][$c];
-                            echo "Level = " . $libLevel . "<br />";
-                        }
-//                                $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-//                            ->CountAnswerByUserByTest($test->getId(), $user->getId());
-//                        $entity->setLevel($this->get('security.context')->getToken()->getUser());
-                        $indice ++;
-                    }
-                }
+                    // Add to Questionnaire table
+                    $entity = new Questionnaire();
 
+                    //
+                    // J'ai traité les colonnes de la table Questionnaire dans l'ordre
+                    //
+
+                    // Traitement sur le level
+                    $libLevel = $data[2];
+                    $level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($libLevel);
+                    $entity->setLevel($level);
+
+                    // Traitement sur le skill
+                    $libSkill = $data[3];
+                    $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($libSkill);
+                    $entity->setSkill($skill);
+
+                    // Traitement des autres colonnes
+                    $entity->setAuthor();
+                    $entity->setInstruction();
+                    $entity->setSource();
+                    $entity->setDuration();
+                    $entity->setDomain();
+                    $entity->setSupport();
+                    $entity->setFlow();
+                    $entity->setFocus();
+                    $entity->setTheme("");
+
+                    //Dialogue
+                    $entity->setDialogue(0);
+                    // Vu avec Arnaud : 1 pour Dialogue / 0 pour Monologue
+                    $libDialogue = $data[8];
+                    $pos = strripos($libDialogue, 'dialogue');
+
+                    if ($pos === false) {
+                        $pos = strripos($libDialogue, 'monologue');
+                        if (!($pos === false)) {
+                            $entity->setDialogue(0);
+                        }
+                    } else {
+                        $entity->setDialogue(1);
+                    }
+
+                    //ListeningLimit
+                    $entity->setListeningLimit($data[9]);
+
+                    //Autres colonnes
+                    $entity->setAudioInstruction("");
+                    $entity->setAudioContext("");
+                    $entity->setAudioItem("");
+                    $entity->setSource();
+                    $entity->setReceptionType();
+                    $entity->setFunctionType();
+                    $entity->setCognitiveOperation();
+                    $entity->setLanguageLevel();
+                    $entity->setOriginText("");
+                    $entity->setExerciceText("");
+
+                    // Enregistrement en base
+                    $em->persist($entity);
+                    $em->flush();
+                }
                 $row++;
             }
             fclose($handle);
@@ -726,8 +769,7 @@ class TestController extends Controller
         //
         return array(
             "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
-            "csvName"             => $csvName,
-            "fileData"            => $fileData
+            "csvName"             => $csvName
         );
     }
 
