@@ -117,25 +117,19 @@ class Questionnaire
     private $dialogue;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="audioInstruction", type="string", length=255)
-     */
-    private $audioInstruction;
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaInstruction;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="audioContext", type="string", length=255)
-     */
-    private $audioContext;
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaContext;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="audioItem", type="string", length=255)
-     */
-    private $audioItem;
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaItem;
 
     /**
      * @var string
@@ -234,77 +228,6 @@ class Questionnaire
     public function getTheme()
     {
         return $this->theme;
-    }
-
-
-
-    /**
-     * Set audioInstruction
-     *
-     * @param string $audioInstruction
-     * @return Questionnaire
-     */
-    public function setAudioInstruction($audioInstruction)
-    {
-        $this->audioInstruction = $audioInstruction;
-
-        return $this;
-    }
-
-    /**
-     * Get audioInstruction
-     *
-     * @return string
-     */
-    public function getAudioInstruction()
-    {
-        return $this->audioInstruction;
-    }
-
-    /**
-     * Set audioContext
-     *
-     * @param string $audioContext
-     * @return Questionnaire
-     */
-    public function setAudioContext($audioContext)
-    {
-        $this->audioContext = $audioContext;
-
-        return $this;
-    }
-
-    /**
-     * Get audioContext
-     *
-     * @return string
-     */
-    public function getAudioContext()
-    {
-        return $this->audioContext;
-    }
-
-    /**
-     * Set audioItem
-     *
-     * @param string $audioItem
-     * @return Questionnaire
-     */
-    public function setAudioItem($audioItem)
-    {
-        $this->audioItem = $audioItem;
-
-        return $this;
-    }
-
-    /**
-     * Get audioItem
-     *
-     * @return string
-     */
-    public function getAudioItem()
-    {
-        return $this->audioItem;
     }
 
     /**
