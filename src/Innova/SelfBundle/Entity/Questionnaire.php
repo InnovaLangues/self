@@ -667,7 +667,7 @@ class Questionnaire
      * @param \Innova\SelfBundle\Entity\Skill $skill
      * @return Questionnaire
      */
-    public function setSkill(\Innova\SelfBundle\Entity\Skill $skill = null)
+    public function setSkill($skill = null)
     {
         $this->skill = $skill;
 
