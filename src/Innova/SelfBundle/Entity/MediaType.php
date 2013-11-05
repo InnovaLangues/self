@@ -32,4 +32,77 @@ class MediaType
     * @ORM\OneToMany(targetEntity="Media", mappedBy="mediaType")
     */
     protected $medias;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->medias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return MediaType
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Add medias
+     *
+     * @param \Innova\SelfBundle\Entity\Media $medias
+     * @return MediaType
+     */
+    public function addMedia(\Innova\SelfBundle\Entity\Media $medias)
+    {
+        $this->medias[] = $medias;
+    
+        return $this;
+    }
+
+    /**
+     * Remove medias
+     *
+     * @param \Innova\SelfBundle\Entity\Media $medias
+     */
+    public function removeMedia(\Innova\SelfBundle\Entity\Media $medias)
+    {
+        $this->medias->removeElement($medias);
+    }
+
+    /**
+     * Get medias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMedias()
+    {
+        return $this->medias;
+    }
 }

@@ -33,5 +33,60 @@ class Media
     */
     protected $mediaType;
 
-}
 
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Media
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set mediaType
+     *
+     * @param \Innova\SelfBundle\Entity\MediaType $mediaType
+     * @return Media
+     */
+    public function setMediaType(\Innova\SelfBundle\Entity\MediaType $mediaType = null)
+    {
+        $this->mediaType = $mediaType;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaType
+     *
+     * @return \Innova\SelfBundle\Entity\MediaType 
+     */
+    public function getMediaType()
+    {
+        return $this->mediaType;
+    }
+}
