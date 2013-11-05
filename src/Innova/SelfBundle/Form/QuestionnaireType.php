@@ -37,6 +37,7 @@ class QuestionnaireType extends AbstractType
             ->add('support', null, array('label' => 'questionnaire.field.support'))
             ->add('flow', null, array('label' => 'questionnaire.field.flow'))
             ->add('focus', null, array('label' => 'questionnaire.field.focus'))
+            ->add('skill', null, array('label' => 'questionnaire.field.skill'))
         ;
     }
 
