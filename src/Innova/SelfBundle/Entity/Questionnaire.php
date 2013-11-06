@@ -134,14 +134,14 @@ class Questionnaire
     /**
      * @var string
      *
-     * @ORM\Column(name="originText", type="string", length=255)
+     * @ORM\Column(name="originText", type="string", length=255, nullable=true)
      */
     private $originText;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="exerciceText", type="string", length=255)
+     * @ORM\Column(name="exerciceText", type="string", length=255, nullable=true)
      */
     private $exerciceText;
 
@@ -754,14 +754,14 @@ class Questionnaire
     public function setMediaInstruction(\Innova\SelfBundle\Entity\Media $mediaInstruction = null)
     {
         $this->mediaInstruction = $mediaInstruction;
-    
+
         return $this;
     }
 
     /**
      * Get mediaInstruction
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMediaInstruction()
     {
@@ -777,14 +777,14 @@ class Questionnaire
     public function setMediaContext(\Innova\SelfBundle\Entity\Media $mediaContext = null)
     {
         $this->mediaContext = $mediaContext;
-    
+
         return $this;
     }
 
     /**
      * Get mediaContext
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMediaContext()
     {
@@ -800,14 +800,14 @@ class Questionnaire
     public function setMediaItem(\Innova\SelfBundle\Entity\Media $mediaItem = null)
     {
         $this->mediaItem = $mediaItem;
-    
+
         return $this;
     }
 
     /**
      * Get mediaItem
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMediaItem()
     {
