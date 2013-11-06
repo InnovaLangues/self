@@ -744,9 +744,9 @@ class TestController extends Controller
                     $entity->setListeningLimit($data[9]);
 
                     //Autres colonnes
-                    $entity->setAudioInstruction("");
-                    $entity->setAudioContext("");
-                    $entity->setAudioItem("");
+                    $entity->setMediaInstruction();
+                    $entity->setMediaContext();
+                    $entity->setMediaItem();
                     $entity->setSource();
                     $entity->setReceptionType();
                     $entity->setFunctionType();
