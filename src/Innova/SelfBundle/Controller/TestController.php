@@ -10,7 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Form\TestType;
+use Innova\SelfBundle\Entity\MediaType;
+use Symfony\Component\Security\Core\Util\SecureRandom;
 
 class TestController extends Controller
 {
@@ -697,6 +700,12 @@ class TestController extends Controller
                 // Ainsi, je ne prends pas les intitulés des colonnes
                 if ($data[$c] = $row)
                 {
+                    //
+                    //
+                    // Première partie : ajout dans la table Questionnaire
+                    //
+                    //
+
                     // Add to Questionnaire table
                     $entity = new Questionnaire();
 
@@ -723,7 +732,7 @@ class TestController extends Controller
                     $entity->setSupport();
                     $entity->setFlow();
                     $entity->setFocus();
-                    $entity->setTheme("");
+                    $entity->setTheme($data[1]); // Thême
 
                     //Dialogue
                     $entity->setDialogue(0);
@@ -744,20 +753,20 @@ class TestController extends Controller
                     $entity->setListeningLimit($data[9]);
 
                     //Autres colonnes
-                    $entity->setAudioInstruction("");
-                    $entity->setAudioContext("");
-                    $entity->setAudioItem("");
-                    $entity->setSource();
-                    $entity->setReceptionType();
-                    $entity->setFunctionType();
-                    $entity->setCognitiveOperation();
-                    $entity->setLanguageLevel();
-                    $entity->setOriginText("");
-                    $entity->setExerciceText("");
+                    $entity->setMediaInstruction();
+                    $entity->setMediaContext();
+                    $entity->setMediaItem();
 
                     // Enregistrement en base
-                    $em->persist($entity);
-                    $em->flush();
+                    //$em->persist($entity);
+                    //$em->flush();
+
+                    //
+                    //
+                    // Deuxième partie : traitement des fichiers de type "Media"
+                    //
+                    //
+                    $this->copieFileDir($data[1],$data[10]);
                 }
                 $row++;
             }
@@ -771,6 +780,88 @@ class TestController extends Controller
             "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
             "csvName"             => $csvName
         );
+    }
+
+
+     /**
+     * importCsvSQL function
+     *
+     * @Route(
+     *     "/drag",
+     *     name = "drag",
+     *     options = {"expose"=true}
+     * )
+     *
+     * @Method("GET")
+     * @Template()
+     */
+   public function copieFileDir($mediaDir, $itemExtention)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        // File import path
+        $dir2copy =__DIR__.'/../../../../web/upload/test_eric/'; // Symfony
+
+        // File import path
+        $dir_paste =__DIR__.'/../../../../web/upload/test_eric/media/'; // Symfony
+
+
+        if (is_dir($dir2copy))
+        {
+            // Si oui, on l'ouvre
+            if ($dh = opendir($dir2copy))
+            {
+
+                $filesToCopy = array('consigne', 'item', 'contexte');
+                // Consigne = audio
+                // Item = cf Excel
+                // Contexte = audio
+
+                foreach ($filesToCopy as $fichier)
+                {
+                    // Création dans "Media"
+                    $media = new Media();
+                    $media->setName($mediaDir . "_" . $fichier);
+                    $media->setUrl($mediaDir . "_" . $fichier . "_" . time());
+
+                    // Tableau d'extension
+                    $aMedia["label"] = array("audio", "video");
+                    $aMedia["extension"][0] = array('mp3');
+                    $aMedia["extension"][1] = array('flv', 'mp4');
+
+                    if ($fichier != 'item')
+                    {
+                        $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+                    }
+                    else
+                    {
+                        foreach ($aMedia["extension"] as $key => $value) {
+                            if(in_array($itemExtention, $value)){
+                                $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]);
+                            }
+                        }
+                    }
+                    $media->setMediaType($mediaType);
+
+                    // Enregistrement en base
+                    $em->persist($media);
+                    $em->flush();
+                    // Récupération de l'Id
+                    $id = $media->getId();
+                    echo "Id crée : " . $id . "<br />";
+                    // Copie
+                    //copy($dir2copy . '/' . $file,$dir_paste . '/' . $file);
+                }
+
+              // On ferme $dir2copy
+              closedir($dh);
+        }
+
+    }
+
+
+
     }
 
 

@@ -82,9 +82,9 @@ questionnaire:
         theme: Theme
         listeningLimit: Temps d'écoute limite
         dialogue: Dialogue
-        audioInstruction: Consigne audio
-        audioContext: Contexte audio
-        audioItem: Item audio
+        mediaInstruction: Consigne audio
+        mediaContext: Contexte audio
+        mediaItem: Item audio
         sourceType: Type de source
         receptionType: Type de réception
         functionType: Type de fonction

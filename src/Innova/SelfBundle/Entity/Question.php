@@ -31,7 +31,7 @@ class Question
     * @ORM\ManyToOne(targetEntity="Typology", inversedBy="questions")
     */
     protected $typology;
-    
+
     /**
     * @ORM\OneToMany(targetEntity="Subquestion", mappedBy="question", cascade={"remove", "persist"})
     */
@@ -43,11 +43,17 @@ class Question
     protected $instruction;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="audioUrl", type="string", length=255, nullable=true)
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $media;
+
+    /**
+     * Constructor
      */
-    private $audioUrl;
+    public function __construct()
+    {
+        $this->subquestions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
     /**
      * Get id
@@ -59,15 +65,6 @@ class Question
         return $this->id;
     }
 
-   
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->subquestions = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
     /**
      * Set questionnaire
      *
@@ -91,7 +88,28 @@ class Question
         return $this->questionnaire;
     }
 
-   
+    /**
+     * Set typology
+     *
+     * @param \Innova\SelfBundle\Entity\Typology $typology
+     * @return Question
+     */
+    public function setTypology(\Innova\SelfBundle\Entity\Typology $typology = null)
+    {
+        $this->typology = $typology;
+    
+        return $this;
+    }
+
+    /**
+     * Get typology
+     *
+     * @return \Innova\SelfBundle\Entity\Typology 
+     */
+    public function getTypology()
+    {
+        return $this->typology;
+    }
 
     /**
      * Add subquestions
@@ -126,31 +144,6 @@ class Question
         return $this->subquestions;
     }
 
-
-
-    /**
-     * Set audioUrl
-     *
-     * @param string $audioUrl
-     * @return Question
-     */
-    public function setAudioUrl($audioUrl)
-    {
-        $this->audioUrl = $audioUrl;
-    
-        return $this;
-    }
-
-    /**
-     * Get audioUrl
-     *
-     * @return string 
-     */
-    public function getAudioUrl()
-    {
-        return $this->audioUrl;
-    }
-
     /**
      * Set instruction
      *
@@ -175,25 +168,25 @@ class Question
     }
 
     /**
-     * Set typology
+     * Set media
      *
-     * @param \Innova\SelfBundle\Entity\Typology $typology
+     * @param \Innova\SelfBundle\Entity\Media $media
      * @return Question
      */
-    public function setTypology(\Innova\SelfBundle\Entity\Typology $typology = null)
+    public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
     {
-        $this->typology = $typology;
+        $this->media = $media;
     
         return $this;
     }
 
     /**
-     * Get typology
+     * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Typology 
+     * @return \Innova\SelfBundle\Entity\Media 
      */
-    public function getTypology()
+    public function getMedia()
     {
-        return $this->typology;
+        return $this->media;
     }
 }
