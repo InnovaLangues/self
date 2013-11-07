@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Question;
+use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Form\TestType;
 use Innova\SelfBundle\Entity\MediaType;
@@ -723,6 +725,10 @@ class TestController extends Controller
                     $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($libSkill);
                     $entity->setSkill($skill);
 
+                    // Traitement sur la typologie
+                    $libTypo = $data[4];
+                    $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypo);
+
                     // Traitement des autres colonnes
                     $entity->setAuthor();
                     $entity->setInstruction();
@@ -770,7 +776,18 @@ class TestController extends Controller
                     //
                     // $data[1]  = nom du répertoire = nom du thême
                     // $data[10] = nom de l'extension du fichier (ex : mp3)
+                    // $idQuestionnaire = id du questionnaire créé
                     $this->copieFileDir($data[1], $data[10], $idQuestionnaire);
+
+                    //
+                    //
+                    // Troisième partie : travail sur les types TQRM et TQRU
+                    //
+                    //
+                    $type = array("TQRU", "TQRM");
+                    if(in_array($data[4], $type)){
+                        $this->tqrProcess($typo, $entity, $data[11]);
+                    }
                 }
                 $row++;
             }
@@ -887,9 +904,54 @@ class TestController extends Controller
        }
     }
 
+    /**
+     * tqrProcess function
+     *
+     */
+    public function tqrProcess($typo, $questionnaire, $nbItems)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+        $em->flush();
+
+        // Traitement sur le nombre d'items
+        for ( $i = 0; $i < $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
+            $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
+            $subQuestion->setTypology($typoSubQuestion);
+            $subQuestion->setQuestion($question);
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+            $em->flush();
+
+            // Créer une occurrence dans la table "Proposition"
+            //$this->propositionProcess
+        }
+    }
+
+
+    /**
+     * propositionProcess function
+     *
+     */
+    public function propositionProcess()
+    {
+    }
 
      /**
-     * importCsvSQL function
+     * dragAction function
      *
      * @Route(
      *     "/drag",
