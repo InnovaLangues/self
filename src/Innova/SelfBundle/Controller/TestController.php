@@ -758,15 +758,19 @@ class TestController extends Controller
                     $entity->setMediaItem();
 
                     // Enregistrement en base
-                    //$em->persist($entity);
-                    //$em->flush();
+                    $em->persist($entity);
+                    $em->flush();
+                    // Récupération de l'Id du questionnaire qui vient d'être créé
+                    $idQuestionnaire = $entity->getId();
 
                     //
                     //
                     // Deuxième partie : traitement des fichiers de type "Media"
                     //
                     //
-                    $this->copieFileDir($data[1],$data[10]);
+                    // $data[1]  = nom du répertoire = nom du thême
+                    // $data[10] = nom de l'extension du fichier (ex : mp3)
+                    $this->copieFileDir($data[1], $data[10], $idQuestionnaire);
                 }
                 $row++;
             }
@@ -783,85 +787,104 @@ class TestController extends Controller
     }
 
 
-     /**
-     * importCsvSQL function
+    /**
+     * copieFileDir function
      *
-     * @Route(
-     *     "/drag",
-     *     name = "drag",
-     *     options = {"expose"=true}
-     * )
-     *
-     * @Method("GET")
-     * @Template()
      */
-   public function copieFileDir($mediaDir, $itemExtention)
+    public function copieFileDir($mediaDir, $itemExtention, $idQuestionnaire)
     {
 
         $em = $this->getDoctrine()->getManager();
 
         // File import path
-        $dir2copy =__DIR__.'/../../../../web/upload/test_eric/'; // Symfony
+        // Répertoire où seront stockés les fichiers
+        $dir2copy =__DIR__.'/../../../../web/upload/test_eric/'; // A modifier quand on aura l'adresse
 
-        // File import path
-        $dir_paste =__DIR__.'/../../../../web/upload/test_eric/media/'; // Symfony
-
+        // File copy path
+        // Répertoire où seront copiés les fichiers
+        $dir_paste =__DIR__.'/../../../../web/upload/test_eric/media/'; // A modifier quand on aura l'adresse
 
         if (is_dir($dir2copy))
         {
             // Si oui, on l'ouvre
             if ($dh = opendir($dir2copy))
             {
-
                 $filesToCopy = array('consigne', 'item', 'contexte');
                 // Consigne = audio
                 // Item = cf Excel
                 // Contexte = audio
-
                 foreach ($filesToCopy as $fichier)
                 {
-                    // Création dans "Media"
-                    $media = new Media();
-                    $media->setName($mediaDir . "_" . $fichier);
-                    $media->setUrl($mediaDir . "_" . $fichier . "_" . time());
 
-                    // Tableau d'extension
-                    $aMedia["label"] = array("audio", "video");
-                    $aMedia["extension"][0] = array('mp3');
-                    $aMedia["extension"][1] = array('flv', 'mp4');
+                    // Recherche si le fichier existe
+                    // S'il n'existe pas, je passe au suivant.
+                    //
+                    $testFile = $dir2copy . '/' . $fichier . "." . $itemExtention;
 
-                    if ($fichier != 'item')
-                    {
-                        $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
-                    }
-                    else
-                    {
-                        foreach ($aMedia["extension"] as $key => $value) {
-                            if(in_array($itemExtention, $value)){
-                                $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]);
+                    if (file_exists($testFile)) {
+
+                        // Création dans "Media"
+                        $media = new Media();
+                        $media->setName($mediaDir . "_" . $fichier);
+                        $media->setUrl($mediaDir . "_" . $fichier . "_" . time());
+
+                        // Tableau d'extension
+                        $aMedia["label"] = array("audio", "video");
+                        $aMedia["extension"][0] = array('mp3');
+                        $aMedia["extension"][1] = array('flv', 'mp4');
+
+                        // Traitement suivant le type de fichier.
+                        if ($fichier != 'item')
+                        {
+                            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+                        }
+                        else
+                        {
+                            foreach ($aMedia["extension"] as $key => $value) {
+                                if(in_array($itemExtention, $value)){
+                                    $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]);
+                                }
                             }
                         }
-                    }
-                    $media->setMediaType($mediaType);
+                        $media->setMediaType($mediaType);
 
-                    // Enregistrement en base
-                    $em->persist($media);
-                    $em->flush();
-                    // Récupération de l'Id
-                    $id = $media->getId();
-                    echo "Id crée : " . $id . "<br />";
-                    // Copie
-                    //copy($dir2copy . '/' . $file,$dir_paste . '/' . $file);
+                        // Enregistrement en base
+                        $em->persist($media);
+                        $em->flush();
+
+                        // Récupération de l'Id du média qui vient d'être créé
+                        $idMedia = $media->getId();
+
+                        // Copie du fichier
+                        $fileCopy = $idMedia . "_" .  $fichier;
+                        copy($dir2copy . '/' . $fichier . "." . $itemExtention, $dir_paste . '/' . $fileCopy . "." . $itemExtention);
+
+                        // Lecture de la table "Questionnaire" avec l'id = $idQuestionnaire
+                        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($idQuestionnaire);
+
+                        // Mise à jour de Questionnaire suivant le type de média
+                        switch ($fichier) {
+                             case 'consigne':
+                                $questionnaire->setMediaInstruction($media);
+                                break;
+                             case 'item':
+                                $questionnaire->setMediaItem($media);
+                                break;
+                             case 'contexte':
+                                $questionnaire->setMediaContext($media);
+                                break;
+                        }
+
+                        // Enregistrement en base
+                        $em->persist($media);
+                        $em->flush();
+                    }
                 }
 
               // On ferme $dir2copy
               closedir($dh);
-        }
-
-    }
-
-
-
+            }
+       }
     }
 
 
@@ -877,7 +900,7 @@ class TestController extends Controller
      * @Method("GET")
      * @Template()
      */
-   public function dragAction()
+    public function dragAction()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -886,7 +909,7 @@ class TestController extends Controller
         return array(
             'entities' => $entities
         );
-   }
+    }
 
 
     /**
@@ -901,7 +924,7 @@ class TestController extends Controller
      * @Method("GET")
      * @Template()
      */
-   public function dragNewAction()
+    public function dragNewAction()
     {
 
         echo "ici";
