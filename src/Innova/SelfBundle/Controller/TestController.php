@@ -791,6 +791,7 @@ class TestController extends Controller
                     // Troisième partie : travail sur les types TQRM et TQRU
                     //
                     //
+                    /*
                     $type = array("TQRU", "TQRM");
                     if(in_array($data[4], $type)){
                         $this->tqrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
@@ -799,6 +800,42 @@ class TestController extends Controller
                     if(in_array($data[4], $type)){
                         $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                     }
+                    $type = array("TVF", "VF", "VFPM", "TVFPM");
+                    if(in_array($data[4], $type)){
+                        $this->vfProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                    }
+                    */
+
+                    // Traitement suivi le type de questionnaire.
+                    switch($data[4])
+                    {
+                        case "TQRU";
+                        case "TQRM";
+                            $this->tqrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "QRU";
+                        case "QRM";
+                            $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "TVF";
+                        case "VF";
+                        case "VFPM";
+                        case "TVFPM";
+                            $this->vfProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "APPAT";
+                            $this->appatProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "QRU_I";
+                            $this->qruiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        // manque APPAI et APPAA
+                        //case "APPAI";
+                        case "APPAA";
+                            $this->appaaProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                    }
+
                     $em->flush();
                 }
                 $row++;
@@ -815,6 +852,49 @@ class TestController extends Controller
         );
     }
 
+    /**
+     * appaProcess function
+     *
+     */
+    public function appaaProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+
+        $medias = array();
+        $nbItems = $data[11];
+        for ($i=0; $i < $nbItems; $i++) {
+            $this->mediaAppaaProcess($data[1], $medias, $dir2copy, $dir_paste, $i);
+        }
+
+        // Traitement sur le nombre d'items
+        for ( $i = 0; $i < $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $subQuestion->setTypology($typo);
+            $subQuestion->setQuestion($question);
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+
+            // Créer une occurrence dans la table "Proposition"
+            $indice = 11+(2*$i);
+            $nbProposition = $data[$indice];
+            $rightAnswer = $data[$indice-1];
+
+            for ($j=0; $j < count($medias); $j++) {
+                $this->propositionAppaProcess($i, $j, $subQuestion, $medias[$j]);
+            }
+        }
+    }
 
     /**
      * copieFileDir function
@@ -987,6 +1067,281 @@ class TestController extends Controller
     }
 
     /**
+     * vfProcess function
+     *
+     */
+    public function vfProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+        //$em->flush();
+
+        // Traitement sur le nombre d'items
+        for ( $i = 1; $i <= $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $ctrlTypo = $typo->getName();
+            if ($ctrlTypo[0] == "T")
+            {
+                $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
+                $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
+                $subQuestion->setTypology($typoSubQuestion);
+            }
+            else
+            {
+                $subQuestion->setTypology($typo);
+            }
+            $subQuestion->setQuestion($question);
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+            // $em->flush();
+
+            // Créer une occurrence dans la table "Proposition"
+            $indice = 11+(2*$i);
+            $rightAnswer = $data[$indice-1];
+
+            $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
+            $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
+
+            if ($data[$indice] = "VFPM")
+            {
+                $this->vfPropositionProcess($rightAnswer, "PM", "PM", $subQuestion); // PM : à confirmer
+            }
+        }
+    }
+
+    /**
+     * vfPropositionProcess function
+     *
+     */
+    public function vfPropositionProcess($rightAnswer, $nameProposition, $expectedAnswer, $subQuestion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+        if ($rightAnswer == $expectedAnswer)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        if (!$media = $em->getRepository('InnovaSelfBundle:Media')->findOneByName($nameProposition)){
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($nameProposition); // Ajout contrôle existance V ou F
+
+            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte");
+            $media->setMediaType($mediaType);
+        }
+        $em->persist($media);
+
+        $proposition->setMedia($media);
+        $em->persist($proposition);
+    }
+
+    /**
+     * appatProcess function
+     *
+     */
+    public function appatProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+      //  $em->flush();
+
+        $medias = array();
+        $nbItems = $data[11];
+        for ($i=0; $i < $nbItems; $i++) {
+            $indice = 12+(2*$i);
+            $this->mediaAppatProcess($data[$indice], $medias);
+        }
+
+        // Traitement sur le nombre d'items
+        for ( $i = 0; $i < $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $subQuestion->setTypology($typo);
+            $subQuestion->setQuestion($question);
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+        //    $em->flush();
+
+            // Créer une occurrence dans la table "Proposition"
+            $indice = 11+(2*$i);
+            $nbProposition = $data[$indice];
+            $rightAnswer = $data[$indice-1];
+
+            for ($j=0; $j < count($medias); $j++) {
+                $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
+            }
+        }
+    }
+
+    /**
+     * propositionAppaaProcess function
+     *
+     */
+    public function propositionAppaaProcess($i, $j, $subQuestion, $media)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        if ($i == $j)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        $proposition->setMedia($media);
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+    }
+
+    /**
+     * propositionAppatProcess function
+     *
+     */
+    public function propositionAppatProcess($i, $j, $subQuestion, $media)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        if ($i == $j)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        $proposition->setMedia($media);
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+    }
+
+    /**
+     * qruiProcess function
+     *
+     */
+    public function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+      //  $em->flush();
+
+        // Créer une occurrence dans la table "SubQuestion"
+        $subQuestion = new subQuestion();
+        $subQuestion->setTypology($typo);
+        $subQuestion->setQuestion($question);
+
+        // Voir le traitement de l'amorce // AB.
+        $em->persist($subQuestion);
+        // $em->flush();
+
+        // Créer une occurrence dans la table "Proposition"
+        $nbProposition = $data[13];
+        $rightAnswer = $data[12];
+
+        for ($j=1; $j <= $nbProposition; $j++) {
+            $this->propositionQruiProcess($j, $subQuestion, $rightAnswer, $dir2copy, $data[1], $dir_paste);
+        }
+    }
+
+    /**
+     * propositionQruiProcess function
+     *
+     */
+    public function propositionQruiProcess($j, $subQuestion, $rightAnswer, $dir2copy, $dirName, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        if ($j == $rightAnswer)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        // Recherche si le fichier existe
+        // S'il n'existe pas, je passe au suivant.
+        //
+        $fileName = "option_" . $j;
+        $testFile = $dir2copy . $dirName . '/' . $fileName . ".jpg";
+
+        if (file_exists($testFile)) {
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_" . $fileName);
+            $media->setUrl($dirName . "_" . $fileName . "_" . time() . ".jpg");
+
+            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image");
+            $media->setMediaType($mediaType);
+            $proposition->setMedia($media);
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            copy($dir2copy . $dirName . "/" . $fileName . ".jpg", $dir_paste . $fileName . ".jpg");
+        }
+
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+    }
+
+
+    /**
      * propositionProcess function
      *
      */
@@ -1035,6 +1390,55 @@ class TestController extends Controller
         $em->persist($proposition);
         //$em->flush();
 
+    }
+
+    /**
+     * mediaAppatProcess function
+     *
+     */
+    public function mediaAppatProcess($texte, &$medias)
+    {
+        $em = $this->getDoctrine()->getManager();
+        // Création dans "Media"
+        $media = new Media();
+        $media->setName($texte);
+
+        $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte");
+        $media->setMediaType($mediaType);
+
+        $em->persist($media);
+        $medias[] = $media;
+    }
+
+
+    /**
+     * mediaAppaaProcess function
+     *
+     */
+    public function mediaAppaaProcess($dirName, &$medias, $dir2copy, $dir_paste, $i)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $testFile = $dir2copy . "/" . $dirName . "/reponse_" . $i . ".mp3";
+echo "<br />testFile =" . $testFile;
+        if (file_exists($testFile)) {
+
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_" . "/reponse_" . $i);
+            $media->setUrl($dirName . "_" . "/reponse_" . $i . "_" . time());
+
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            // Copie du fichier
+            $fileCopy = $media->getUrl();
+            copy($testFile, $dir_paste . '/' . $fileCopy . ".mp3");
+
+            $medias[] = $media;
+        }
     }
 
      /**
