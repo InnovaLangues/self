@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Subquestion
- * 13/11/2013 : Add mediaText column. AB/EV.
+ * 13/11/2013 : Add mediaAmorce column. AB/EV.
  *
  * @ORM\Table("subquestion")
  * @ORM\Entity
@@ -27,7 +27,6 @@ class Subquestion
     */
     protected $typology;
 
-
     /**
      * @var string
      *
@@ -43,7 +42,7 @@ class Subquestion
     /**
     * @ORM\ManyToOne(targetEntity="Media")
     */
-    protected $mediaText;
+    protected $mediaAmorce;
 
     /**
     * @ORM\ManyToOne(targetEntity="Question", inversedBy="subquestions")
@@ -219,5 +218,28 @@ class Subquestion
     public function getMediaText()
     {
         return $this->mediaText;
+    }
+
+    /**
+     * Set mediaAmorce
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaAmorce
+     * @return Subquestion
+     */
+    public function setMediaAmorce(\Innova\SelfBundle\Entity\Media $mediaAmorce = null)
+    {
+        $this->mediaAmorce = $mediaAmorce;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaAmorce
+     *
+     * @return \Innova\SelfBundle\Entity\Media 
+     */
+    public function getMediaAmorce()
+    {
+        return $this->mediaAmorce;
     }
 }

@@ -129,7 +129,7 @@ class Questionnaire
     /**
     * @ORM\ManyToOne(targetEntity="Media")
     */
-    protected $mediaItem;
+    protected $mediaText;
 
     /**
      * @var string
@@ -791,4 +791,27 @@ class Questionnaire
         return $this->mediaContext;
     }
 
+
+    /**
+     * Set mediaText
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaText
+     * @return Questionnaire
+     */
+    public function setMediaText(\Innova\SelfBundle\Entity\Media $mediaText = null)
+    {
+        $this->mediaText = $mediaText;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaText
+     *
+     * @return \Innova\SelfBundle\Entity\Media 
+     */
+    public function getMediaText()
+    {
+        return $this->mediaText;
+    }
 }

@@ -51,8 +51,6 @@ class TestController extends Controller
             );
         }
 
-
-
         // $questionnaire = $this->getRandom($questionnaires);
         return array(
             'questionnaire' => $questionnaire,
@@ -490,15 +488,6 @@ class TestController extends Controller
         $csv .= "\n";
         $csv .= "\n";
 
-/*
-        $csv .= "DIFFICULTE" . ";" ; // B
-        $csv .= "TEMPS (s)" . ";"  ; // C
-        $csv .= "REPONSES" . ";" ; // D
-        // CR
-        $csv .= "\n";
-        $csv .= "\n";
-*/
-
         // HEADER
         // Loop to display all questionnaire of the test
         $csv .= "Code étudiant;" ; // A
@@ -577,49 +566,6 @@ class TestController extends Controller
                 $csv .= "\n";
             }
         }
-
-        // Loop to display all data
-        /*foreach ($tests as $test) {
-            $questionnaires = $test->getQuestionnaires();
-            // For THE test, loop on the Questionnaire
-            foreach ($questionnaires as $questionnaire) {
-                // For THE questionnaire, loop on the Trace
-                $traces = $questionnaire->getTraces();
-                foreach ($traces as $trace) {
-                    $answers = $trace->getAnswers();
-
-                    $csv .= $trace->getUser() . " " . $trace->getUser()->getEmail() . ";" ;
-                    $csv .= ";" ; // A
-                    $csv .= $trace->getDifficulty(). ";" ;
-                    $csv .= $trace->getTotalTime().";" ;
-
-
-                    foreach ($answers as $answer) {
-                        $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
-                        $cptProposition = 0;
-                        foreach ($propositions as $proposition) {
-                            $cptProposition++;
-                            if ($proposition->getId() === $answer->getProposition()->getId()) {
-                                $propositionRank = $cptProposition;
-                            }
-                        }
-                        $csv .= ($answer->getProposition()->getRightAnswer() ? '1' : '0') . ";";
-
-                        if ($answer->getProposition()->getTitle() != "") {
-                            $csv .= $answer->getProposition()->getTitle() . ";";
-                        } else {
-                            $csv .= "proposition " . $propositionRank . ";";
-                        }
-                    }
-                    // CR
-                    $csv .= "\n";
-                }
-            }
-            // CR
-            $csv .= "\n";
-        }*/
-
-
         // FOOTER
         // Empty
 
@@ -694,7 +640,7 @@ class TestController extends Controller
 
         // File copy path
         // Répertoire où seront copiés les fichiers
-        $dir_paste =__DIR__.'/../../../../web/upload/test_eric/media/'; // A modifier quand on aura l'adresse
+        $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
 
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte :
@@ -769,7 +715,7 @@ class TestController extends Controller
                     //Autres colonnes
                     $questionnaire->setMediaInstruction();
                     $questionnaire->setMediaContext();
-                    $questionnaire->setMediaItem();
+//                    $questionnaire->setMediaItem();
 
                     // Enregistrement en base
                     $em->persist($questionnaire);
@@ -863,7 +809,7 @@ class TestController extends Controller
         {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
-            $this->processTexteSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
+            $this->processAmorceSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
 
             $subQuestion->setTypology($typo);
             $subQuestion->setQuestion($question);
@@ -992,7 +938,7 @@ class TestController extends Controller
         {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
-            $this->processTexteSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
+            $this->processAmorceSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
 
             $subQuestion->setTypology($typo);
             $subQuestion->setQuestion($question);
@@ -1117,14 +1063,19 @@ class TestController extends Controller
             // Si oui, on l'ouvre
             if ($dh = opendir($dir2copy))
             {
-                $filesToCopy = array('consigne', 'contexte');
+                $filesToCopy = array('consigne', 'texte', 'contexte');
                 // Consigne = audio
                 // Item = cf Excel
                 // Contexte = audio
                 foreach ($filesToCopy as $fichier)
                 {
 
-                    $newItemExtention = "mp3";
+                    if ($fichier != 'texte') {
+                        $newItemExtention = "mp3";
+                    }
+                    else{
+                         $newItemExtention = $itemExtention;
+                    }
 
                     // Recherche si le fichier existe
                     // S'il n'existe pas, je passe au suivant.
@@ -1137,8 +1088,25 @@ class TestController extends Controller
                         $media->setName($mediaDir . "_" . $fichier);
                         $media->setUrl($mediaDir . "_" . $fichier . "_" . uniqid());
 
+                        // Tableau d'extension
+                        $aMedia["label"] = array("audio", "video");
+                        $aMedia["extension"][0] = array('mp3');
+                        $aMedia["extension"][1] = array('flv', 'mp4');
+
                         // Traitement suivant le type de fichier.
-                        $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
+                        if ($fichier != 'texte')
+                        {
+                            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+                        }
+                        else
+                        {
+                            foreach ($aMedia["extension"] as $key => $value) {
+                                if(in_array($newItemExtention, $value)){
+                                    $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]);
+                                }
+                            }
+                        }
+                        $media->setMediaType($mediaType);
 
                         // Enregistrement en base
                         $em->persist($media);
@@ -1149,10 +1117,13 @@ class TestController extends Controller
 
                         // Mise à jour de Questionnaire suivant le type de média
                         switch ($fichier) {
-                             case 'consigne':
+                            case 'consigne':
                                 $questionnaire->setMediaInstruction($media);
                                 break;
-                             case 'contexte':
+                            case 'texte':
+                                $questionnaire->setMediaText($media);
+                                break;
+                            case 'contexte':
                                 $questionnaire->setMediaContext($media);
                                 break;
                         }
@@ -1169,53 +1140,33 @@ class TestController extends Controller
     }
 
     /**
-     * processTexteSubquestion function
+     * processAmorceSubquestion function
      *
      */
-    public function processTexteSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data)
+    public function processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data)
     {
         $em = $this->getDoctrine()->getManager();
         $mediaDir = $data[1];
-        $extension = $data[10];
         $typo = $data[4];
-        $aMedia["label"] = array("audio", "video");
-        $aMedia["extension"][0] = array('mp3');
-        $aMedia["extension"][1] = array('flv', 'mp4');
 
-        if ($typo[0] == "T" && $i != 0)
+        if ($typo[0] == "T")
         {
-            $testFile = $dir2copy . $mediaDir . "/texte_" . $i. "." . $extension;
+            $testFile = $dir2copy . $mediaDir . "/amorce_" . $i. ".mp3";
         }
         else{
-            $testFile = $dir2copy . $mediaDir . "/texte." . $extension;
+            $testFile = $dir2copy . $mediaDir . "/amorce.mp3";
         }
 
         if (file_exists($testFile)) {
             $media = new Media();
-            foreach ($aMedia["extension"] as $key => $value) {
-                if(in_array($extension, $value)){
-                    $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]));
-                    $mediaType = $aMedia["label"][$key];
-                }
-            }
-
-            if($mediaType == "audio"){
-                $media->setUrl($mediaDir . "_texte_" . $i . "_" . uniqid());
-                copy($testFile, $dir_paste . $media->getUrl() . "." . $extension);
-            }
-            else{
-                $media->setUrl($mediaDir . "_texte_" . $i . "_" . uniqid() . "." .$extension);
-                copy($dir2copy . $mediaDir . '/' . $testFile, $dir_paste . $media->getUrl());
-            }
-
-            $media->setName($mediaDir . "_texte_" .$i);
+            $media->setUrl($mediaDir . "_amorce_" . $i . "_" . uniqid());
+            $media->setName($mediaDir . "_amorce_" .$i);
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
             $em->persist($media);
-            $subQuestion->setMediaText($media);
-        }
-        else{
-            $this->processTexteSubquestion(0, $subQuestion, $dir2copy, $dir_paste, $data);
-        }
+            $subQuestion->setMediaAmorce($media);
 
+            copy($testFile, $dir_paste . $media->getUrl() . ".mp3");
+        }
     }
 
     /**
@@ -1240,7 +1191,7 @@ class TestController extends Controller
         {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
-            $this->processTexteSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
+            $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
 
             $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
             $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
@@ -1257,7 +1208,7 @@ class TestController extends Controller
             $rightAnswer = $data[$indice-1];
 
             for ($j=1; $j <= $nbProposition; $j++) {
-                $this->propositionProcess($i, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste);
+                $this->propositionProcess($i, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
             }
         }
     }
@@ -1282,7 +1233,7 @@ class TestController extends Controller
         // Traitement sur le nombre d'items
         // Créer une occurrence dans la table "SubQuestion"
         $subQuestion = new Subquestion();
-        $this->processTexteSubquestion(1, $subQuestion, $dir2copy, $dir_paste, $data);
+        $this->processAmorceSubquestion(1, $subQuestion, $dir2copy, $dir_paste, $data);
         $subQuestion->setTypology($typo);
         $subQuestion->setQuestion($question);
 
@@ -1295,7 +1246,7 @@ class TestController extends Controller
         $rightAnswer = $data[12];
 
         for ($j=1; $j <= $nbProposition; $j++) {
-            $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste);
+            $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
         }
     }
 
@@ -1323,7 +1274,7 @@ class TestController extends Controller
         {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
-            $this->processTexteSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
+            $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
 
             $ctrlTypo = $typo->getName();
             if ($ctrlTypo[0] == "T")
@@ -1442,7 +1393,7 @@ class TestController extends Controller
         {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
-            $this->processTexteSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
+            $this->processAmorceSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
 
             $subQuestion->setTypology($typo);
             $subQuestion->setQuestion($question);
@@ -1509,7 +1460,7 @@ class TestController extends Controller
 
         // Créer une occurrence dans la table "SubQuestion"
         $subQuestion = new Subquestion();
-        $this->processTexteSubquestion(1, $subQuestion, $dir2copy, $dir_paste, $data);
+        $this->processAmorceSubquestion(1, $subQuestion, $dir2copy, $dir_paste, $data);
         $subQuestion->setTypology($typo);
         $subQuestion->setQuestion($question);
 
@@ -1579,7 +1530,7 @@ class TestController extends Controller
      * propositionProcess function
      *
      */
-    public function propositionProcess($i, $j, $rightAnswer, $dirName, $subQuestion, $dir2copy, $dir_paste)
+    public function propositionProcess($i, $j, $rightAnswer, $dirName, $subQuestion, $dir2copy, $dir_paste, $nbItems)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1589,7 +1540,7 @@ class TestController extends Controller
 
         // Formatage et test si le fichier existe
         // exemple de nom de fichier : option_1_2.mp3
-        if ($i == 1 ) // Test QRU/QRM
+        if ($nbItems == 1 ) // Test QRU/QRM
             $fileName = "option" . "_" . $j;
         else
             $fileName = "option" . "_" . $i . "_" . $j;
