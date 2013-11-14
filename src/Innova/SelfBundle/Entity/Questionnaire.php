@@ -117,37 +117,31 @@ class Questionnaire
     private $dialogue;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="audioInstruction", type="string", length=255)
-     */
-    private $audioInstruction;
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaInstruction;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaContext;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaItem;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="audioContext", type="string", length=255)
-     */
-    private $audioContext;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="audioItem", type="string", length=255)
-     */
-    private $audioItem;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="originText", type="string", length=255)
+     * @ORM\Column(name="originText", type="string", length=255, nullable=true)
      */
     private $originText;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="exerciceText", type="string", length=255)
+     * @ORM\Column(name="exerciceText", type="string", length=255, nullable=true)
      */
     private $exerciceText;
 
@@ -234,77 +228,6 @@ class Questionnaire
     public function getTheme()
     {
         return $this->theme;
-    }
-
-
-
-    /**
-     * Set audioInstruction
-     *
-     * @param string $audioInstruction
-     * @return Questionnaire
-     */
-    public function setAudioInstruction($audioInstruction)
-    {
-        $this->audioInstruction = $audioInstruction;
-
-        return $this;
-    }
-
-    /**
-     * Get audioInstruction
-     *
-     * @return string
-     */
-    public function getAudioInstruction()
-    {
-        return $this->audioInstruction;
-    }
-
-    /**
-     * Set audioContext
-     *
-     * @param string $audioContext
-     * @return Questionnaire
-     */
-    public function setAudioContext($audioContext)
-    {
-        $this->audioContext = $audioContext;
-
-        return $this;
-    }
-
-    /**
-     * Get audioContext
-     *
-     * @return string
-     */
-    public function getAudioContext()
-    {
-        return $this->audioContext;
-    }
-
-    /**
-     * Set audioItem
-     *
-     * @param string $audioItem
-     * @return Questionnaire
-     */
-    public function setAudioItem($audioItem)
-    {
-        $this->audioItem = $audioItem;
-
-        return $this;
-    }
-
-    /**
-     * Get audioItem
-     *
-     * @return string
-     */
-    public function getAudioItem()
-    {
-        return $this->audioItem;
     }
 
     /**
@@ -820,5 +743,74 @@ class Questionnaire
     public function getDialogue()
     {
         return $this->dialogue;
+    }
+
+    /**
+     * Set mediaInstruction
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaInstruction
+     * @return Questionnaire
+     */
+    public function setMediaInstruction(\Innova\SelfBundle\Entity\Media $mediaInstruction = null)
+    {
+        $this->mediaInstruction = $mediaInstruction;
+
+        return $this;
+    }
+
+    /**
+     * Get mediaInstruction
+     *
+     * @return \Innova\SelfBundle\Entity\Media
+     */
+    public function getMediaInstruction()
+    {
+        return $this->mediaInstruction;
+    }
+
+    /**
+     * Set mediaContext
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaContext
+     * @return Questionnaire
+     */
+    public function setMediaContext(\Innova\SelfBundle\Entity\Media $mediaContext = null)
+    {
+        $this->mediaContext = $mediaContext;
+
+        return $this;
+    }
+
+    /**
+     * Get mediaContext
+     *
+     * @return \Innova\SelfBundle\Entity\Media
+     */
+    public function getMediaContext()
+    {
+        return $this->mediaContext;
+    }
+
+    /**
+     * Set mediaItem
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaItem
+     * @return Questionnaire
+     */
+    public function setMediaItem(\Innova\SelfBundle\Entity\Media $mediaItem = null)
+    {
+        $this->mediaItem = $mediaItem;
+
+        return $this;
+    }
+
+    /**
+     * Get mediaItem
+     *
+     * @return \Innova\SelfBundle\Entity\Media
+     */
+    public function getMediaItem()
+    {
+        return $this->mediaItem;
     }
 }

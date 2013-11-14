@@ -10,7 +10,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Question;
+use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Media;
+use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Form\TestType;
+use Innova\SelfBundle\Entity\MediaType;
+use Symfony\Component\Security\Core\Util\SecureRandom;
 
 class TestController extends Controller
 {
@@ -617,7 +623,6 @@ class TestController extends Controller
         // FOOTER
         // Empty
 
-
         fwrite($csvh, $csv);
         fclose($csvh);
 
@@ -675,13 +680,21 @@ class TestController extends Controller
         $csvPathImport =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
 
         // File import name
-        $csvName = 'codage-protocoles.csv';
+        $csvName = 'test-import.csv';
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
 
         // Path + Name
         $csvPath = $csvPathImport . $csvName;
+
+        // File import path
+        // Répertoire où seront stockés les fichiers
+        $dir2copy =__DIR__.'/../../../../web/upload/test_eric/'; // A modifier quand on aura l'adresse
+
+        // File copy path
+        // Répertoire où seront copiés les fichiers
+        $dir_paste =__DIR__.'/../../../../web/upload/test_eric/media/'; // A modifier quand on aura l'adresse
 
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte :
@@ -697,8 +710,14 @@ class TestController extends Controller
                 // Ainsi, je ne prends pas les intitulés des colonnes
                 if ($data[$c] = $row)
                 {
+                    //
+                    //
+                    // Première partie : ajout dans la table Questionnaire
+                    //
+                    //
+
                     // Add to Questionnaire table
-                    $entity = new Questionnaire();
+                    $questionnaire = new Questionnaire();
 
                     //
                     // J'ai traité les colonnes de la table Questionnaire dans l'ordre
@@ -707,26 +726,30 @@ class TestController extends Controller
                     // Traitement sur le level
                     $libLevel = $data[2];
                     $level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($libLevel);
-                    $entity->setLevel($level);
+                    $questionnaire->setLevel($level);
 
                     // Traitement sur le skill
                     $libSkill = $data[3];
                     $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($libSkill);
-                    $entity->setSkill($skill);
+                    $questionnaire->setSkill($skill);
+
+                    // Traitement sur la typologie
+                    $libTypo = $data[4];
+                    $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypo);
 
                     // Traitement des autres colonnes
-                    $entity->setAuthor();
-                    $entity->setInstruction();
-                    $entity->setSource();
-                    $entity->setDuration();
-                    $entity->setDomain();
-                    $entity->setSupport();
-                    $entity->setFlow();
-                    $entity->setFocus();
-                    $entity->setTheme("");
+                    $questionnaire->setAuthor();
+                    $questionnaire->setInstruction();
+                    $questionnaire->setSource();
+                    $questionnaire->setDuration();
+                    $questionnaire->setDomain();
+                    $questionnaire->setSupport();
+                    $questionnaire->setFlow();
+                    $questionnaire->setFocus();
+                    $questionnaire->setTheme($data[1]); // Thême
 
                     //Dialogue
-                    $entity->setDialogue(0);
+                    $questionnaire->setDialogue(0);
                     // Vu avec Arnaud : 1 pour Dialogue / 0 pour Monologue
                     $libDialogue = $data[8];
                     $pos = strripos($libDialogue, 'dialogue');
@@ -734,29 +757,71 @@ class TestController extends Controller
                     if ($pos === false) {
                         $pos = strripos($libDialogue, 'monologue');
                         if (!($pos === false)) {
-                            $entity->setDialogue(0);
+                            $questionnaire->setDialogue(0);
                         }
                     } else {
-                        $entity->setDialogue(1);
+                        $questionnaire->setDialogue(1);
                     }
 
                     //ListeningLimit
-                    $entity->setListeningLimit($data[9]);
+                    $questionnaire->setListeningLimit($data[9]);
 
                     //Autres colonnes
-                    $entity->setAudioInstruction("");
-                    $entity->setAudioContext("");
-                    $entity->setAudioItem("");
-                    $entity->setSource();
-                    $entity->setReceptionType();
-                    $entity->setFunctionType();
-                    $entity->setCognitiveOperation();
-                    $entity->setLanguageLevel();
-                    $entity->setOriginText("");
-                    $entity->setExerciceText("");
+                    $questionnaire->setMediaInstruction();
+                    $questionnaire->setMediaContext();
+                    $questionnaire->setMediaItem();
 
                     // Enregistrement en base
-                    $em->persist($entity);
+                    $em->persist($questionnaire);
+                    //$em->flush();
+
+                    //
+                    //
+                    // Deuxième partie : traitement des fichiers de type "Media"
+                    //
+                    //
+                    // $data[1]  = nom du répertoire = nom du thême
+                    // $data[10] = nom de l'extension du fichier (ex : mp3)
+                    // $idQuestionnaire = id du questionnaire créé
+                    $this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
+
+                    //
+                    //
+                    // Troisième partie : travail sur les types TQRM et TQRU
+                    //
+                    //
+
+                    // Traitement suivi le type de questionnaire.
+                    switch($data[4])
+                    {
+                        case "TQRU";
+                        case "TQRM";
+                            $this->tqrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "QRU";
+                        case "QRM";
+                            $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "TVF";
+                        case "VF";
+                        case "VFPM";
+                        case "TVFPM";
+                            $this->vfProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "APPAT";
+                            $this->appatProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "QRU_I";
+                            $this->qruiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "APPAA";
+                            $this->appaaProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "APPAI";
+                            $this->appaiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                    }
+
                     $em->flush();
                 }
                 $row++;
@@ -773,9 +838,786 @@ class TestController extends Controller
         );
     }
 
+    /**
+     * appaiProcess function
+     *
+     */
+    public function appaiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+
+        $medias = array();
+        $this->mediaAppaiPropositionProcess($data[1], $medias, $dir2copy, $dir_paste);
+
+        $nbItems = $data[11];
+        // Traitement sur le nombre d'items
+        for ( $i = 0; $i < $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $subQuestion->setTypology($typo);
+            $subQuestion->setQuestion($question);
+
+            $this->mediaAppaiSubQuestionProcess($data[1], $i, $dir2copy, $dir_paste, $subQuestion);
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+
+            for ($j = 0; $j < count($medias); $j++) {
+                $this->propositionAppaiProcess($i, $j, $subQuestion, $medias[$j]);
+            }
+        }
+    }
+
+    /**
+     * mediaAppaiPropositionProcess function
+     *
+     */
+    public function mediaAppaiPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $i = 1;
+
+        while (file_exists($dir2copy . $dirName . "/reponse_" . $i . ".jpg")) {
+            $media = new Media();
+            $media->setName($dirName . "_reponse_" . $i);
+            $media->setUrl($dirName . "_reponse_" . $i . "_" . time());
+
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image"));
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            // Copie du fichier
+            $fileCopy = $media->getUrl();
+            copy($dir2copy . $dirName . "/reponse_" . $i . ".jpg", $dir_paste . $fileCopy . ".jpg");
+
+            $medias[] = $media;
+            $i++;
+        }
+    }
+
+
+    /**
+     * mediaAppaiSubQuestionProcess function
+     *
+     */
+    public function mediaAppaiSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $indice = $i+1;
+
+        $testFile = $dir2copy . $dirName . "/option_" . $indice . ".mp3";
+
+        if (file_exists($testFile)) {
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_option_" . $indice);
+            $media->setUrl($dirName . "_option_" . $indice . "_" . time());
+
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            $subQuestion->setMedia($media);
+
+            // Copie du fichier
+            $fileCopy = $media->getUrl();
+            copy($testFile, $dir_paste . $fileCopy . ".mp3");
+        }
+    }
+
+
+    /**
+     * propositionAppaaProcess function
+     *
+     */
+    public function propositionAppaiProcess($i, $j, $subQuestion, $media)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        if ($i == $j)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        $proposition->setMedia($media);
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+    }
+
+
+    /**
+     * appaProcess function
+     *
+     */
+    public function appaaProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+
+        $medias = array();
+        $this->mediaAppaaPropositionProcess($data[1], $medias, $dir2copy, $dir_paste);
+
+        $nbItems = $data[11];
+        // Traitement sur le nombre d'items
+        for ( $i = 0; $i < $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $subQuestion->setTypology($typo);
+            $subQuestion->setQuestion($question);
+
+            $this->mediaAppaaSubQuestionProcess($data[1], $i, $dir2copy, $dir_paste, $subQuestion);
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+
+            for ($j = 0; $j < count($medias); $j++) {
+                $this->propositionAppaaProcess($i, $j, $subQuestion, $medias[$j]);
+            }
+        }
+    }
+
+    /**
+     * mediaAppaaSubQuestionProcess function
+     *
+     */
+    public function mediaAppaaSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $indice = $i+1;
+        $testFile = $dir2copy . $dirName . "/option_" . $indice . ".mp3";
+
+        if (file_exists($testFile)) {
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_option_" . $indice);
+            $media->setUrl($dirName . "_option_" . $indice . "_" . time());
+
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            $subQuestion->setMedia($media);
+
+            // Copie du fichier
+            $fileCopy = $media->getUrl();
+            copy($testFile, $dir_paste . $fileCopy . ".mp3");
+        }
+    }
+
+    /**
+     * mediaAppaaPropositionProcess function
+     *
+     */
+    public function mediaAppaaPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $i = 1;
+
+        while (file_exists($dir2copy . $dirName . "/reponse_" . $i . ".mp3")) {
+            $media = new Media();
+            $media->setName($dirName . "_reponse_" . $i);
+            $media->setUrl($dirName . "_reponse_" . $i . "_" . time());
+
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            // Copie du fichier
+            $fileCopy = $media->getUrl();
+           copy($dir2copy . $dirName . "/reponse_" . $i . ".mp3", $dir_paste . $fileCopy . ".mp3");
+
+            $medias[] = $media;
+            $i++;
+        }
+    }
+
+    /**
+     * propositionAppaaProcess function
+     *
+     */
+    public function propositionAppaaProcess($i, $j, $subQuestion, $media)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        if ($i == $j)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        $proposition->setMedia($media);
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+    }
+
+
+    /**
+     * copieFileDir function
+     *
+     */
+    public function copieFileDir($mediaDir, $itemExtention, $questionnaire, $dir2copy, $dir_paste)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        // File import path
+        // Répertoire où seront stockés les fichiers
+        //$dir2copy =__DIR__.'/../../../../web/upload/test_eric/'; // A modifier quand on aura l'adresse
+
+        // File copy path
+        // Répertoire où seront copiés les fichiers
+        //$dir_paste =__DIR__.'/../../../../web/upload/test_eric/media/'; // A modifier quand on aura l'adresse
+
+        if (is_dir($dir2copy))
+        {
+            // Si oui, on l'ouvre
+            if ($dh = opendir($dir2copy))
+            {
+                $filesToCopy = array('consigne', 'item', 'contexte');
+                // Consigne = audio
+                // Item = cf Excel
+                // Contexte = audio
+                foreach ($filesToCopy as $fichier)
+                {
+                    if ($fichier != 'item') {
+                        $newItemExtention = "mp3";
+                    }
+                    else{
+                         $newItemExtention = $itemExtention;
+                    }
+                    // Recherche si le fichier existe
+                    // S'il n'existe pas, je passe au suivant.
+                    //
+                    $testFile = $dir2copy . $mediaDir . '/' . $fichier . "." . $newItemExtention;
+
+                    if (file_exists($testFile)) {
+                        // Création dans "Media"
+                        $media = new Media();
+                        $media->setName($mediaDir . "_" . $fichier);
+                        $media->setUrl($mediaDir . "_" . $fichier . "_" . time());
+
+                        // Tableau d'extension
+                        $aMedia["label"] = array("audio", "video");
+                        $aMedia["extension"][0] = array('mp3');
+                        $aMedia["extension"][1] = array('flv', 'mp4');
+
+                        // Traitement suivant le type de fichier.
+                        if ($fichier != 'item')
+                        {
+                            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+                        }
+                        else
+                        {
+                            foreach ($aMedia["extension"] as $key => $value) {
+                                if(in_array($newItemExtention, $value)){
+                                    $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]);
+                                }
+                            }
+                        }
+                        $media->setMediaType($mediaType);
+
+                        // Enregistrement en base
+                        $em->persist($media);
+
+                        // Copie du fichier
+                        $fileCopy = $media->getUrl();
+                        copy($dir2copy . $mediaDir . '/' . $fichier . "." . $newItemExtention, $dir_paste . $fileCopy . "." . $newItemExtention);
+
+                        // Mise à jour de Questionnaire suivant le type de média
+                        switch ($fichier) {
+                             case 'consigne':
+                                $questionnaire->setMediaInstruction($media);
+                                break;
+                             case 'item':
+                                $questionnaire->setMediaItem($media);
+                                break;
+                             case 'contexte':
+                                $questionnaire->setMediaContext($media);
+                                break;
+                        }
+
+                        // Enregistrement en base
+                        $em->persist($questionnaire);
+                        $em->flush();
+                    }
+                }
+              // On ferme $dir2copy
+              closedir($dh);
+            }
+       }
+    }
+
+    /**
+     * tqrProcess function
+     *
+     */
+    public function tqrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+      //  $em->flush();
+
+        // Traitement sur le nombre d'items
+        for ( $i = 1; $i <= $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
+            $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
+            $subQuestion->setTypology($typoSubQuestion);
+            $subQuestion->setQuestion($question);
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+        //    $em->flush();
+
+            // Créer une occurrence dans la table "Proposition"
+            $indice = 11+(2*$i);
+            $nbProposition = $data[$indice];
+            $rightAnswer = $data[$indice-1];
+
+            for ($j=1; $j <= $nbProposition; $j++) {
+                $this->propositionProcess($i, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste);
+            }
+        }
+    }
+
+    /**
+     * qrProcess function
+     *
+     */
+    public function qrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+        //$em->flush();
+
+        // Traitement sur le nombre d'items
+        // Créer une occurrence dans la table "SubQuestion"
+        $subQuestion = new subQuestion();
+        $subQuestion->setTypology($typo);
+        $subQuestion->setQuestion($question);
+
+        // Voir le traitement de l'amorce // AB.
+        $em->persist($subQuestion);
+        //$em->flush();
+
+        // Créer une occurrence dans la table "Proposition"
+        $nbProposition = $data[13];
+        $rightAnswer = $data[12];
+
+        for ($j=1; $j <= $nbProposition; $j++) {
+            $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste);
+        }
+    }
+
+    /**
+     * vfProcess function
+     *
+     */
+    public function vfProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+        //$em->flush();
+
+        $dirName = $data[1];
+
+        // Traitement sur le nombre d'items
+        for ( $i = 1; $i <= $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $ctrlTypo = $typo->getName();
+            if ($ctrlTypo[0] == "T")
+            {
+                $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
+                $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
+                $subQuestion->setTypology($typoSubQuestion);
+            }
+            else
+            {
+                $subQuestion->setTypology($typo);
+            }
+            $subQuestion->setQuestion($question);
+
+            // Recherche si le fichier existe
+            // S'il n'existe pas, je passe au suivant.
+            //
+            $fileName = "option_" . $i;
+            $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
+
+            if (file_exists($testFile)) {
+                // Création dans "Media"
+                $media = new Media();
+                $media->setName($dirName . "_" . $fileName);
+                $media->setUrl($dirName . "_" . $fileName . "_" . time());
+
+                $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+                $media->setMediaType($mediaType);
+                $subQuestion->setMedia($media);
+
+                // Enregistrement en base
+                $em->persist($media);
+                copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
+            }
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+            // $em->flush();
+
+            // Créer une occurrence dans la table "Proposition"
+            $indice = 11+(2*$i);
+            $rightAnswer = $data[$indice-1];
+
+            $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
+            $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
+
+            if ($data[$indice] == "VFPM")
+            {
+                $this->vfPropositionProcess($rightAnswer, "PM", "PM", $subQuestion); // PM : à confirmer
+            }
+        }
+    }
+
+    /**
+     * vfPropositionProcess function
+     *
+     */
+    public function vfPropositionProcess($rightAnswer, $nameProposition, $expectedAnswer, $subQuestion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+        if ($rightAnswer == $expectedAnswer)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        if (!$media = $em->getRepository('InnovaSelfBundle:Media')->findOneByName($nameProposition)){
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($nameProposition); // Ajout contrôle existance V ou F
+
+            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte");
+            $media->setMediaType($mediaType);
+        }
+        $em->persist($media);
+
+        $proposition->setMedia($media);
+        $em->persist($proposition);
+
+        $em->flush();
+    }
+
+    /**
+     * appatProcess function
+     *
+     */
+    public function appatProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+      //  $em->flush();
+
+        $medias = array();
+        $nbItems = $data[11];
+        for ($i=0; $i < $nbItems; $i++) {
+            $indice = 12+(2*$i);
+            $this->mediaAppatProcess($data[$indice], $medias);
+        }
+
+        // Traitement sur le nombre d'items
+        for ( $i = 0; $i < $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $subQuestion->setTypology($typo);
+            $subQuestion->setQuestion($question);
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+        //    $em->flush();
+
+            // Créer une occurrence dans la table "Proposition"
+            $indice = 11+(2*$i);
+            $nbProposition = $data[$indice];
+            $rightAnswer = $data[$indice-1];
+
+            for ($j=0; $j < count($medias); $j++) {
+                $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
+            }
+        }
+    }
+
+    /**
+     * propositionAppatProcess function
+     *
+     */
+    public function propositionAppatProcess($i, $j, $subQuestion, $media)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        if ($i == $j)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        $proposition->setMedia($media);
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+    }
+
+    /**
+     * qruiProcess function
+     *
+     */
+    public function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+      //  $em->flush();
+
+        // Créer une occurrence dans la table "SubQuestion"
+        $subQuestion = new subQuestion();
+        $subQuestion->setTypology($typo);
+        $subQuestion->setQuestion($question);
+
+        // Voir le traitement de l'amorce // AB.
+        $em->persist($subQuestion);
+        // $em->flush();
+
+        // Créer une occurrence dans la table "Proposition"
+        $nbProposition = $data[13];
+        $rightAnswer = $data[12];
+
+        for ($j=1; $j <= $nbProposition; $j++) {
+            $this->propositionQruiProcess($j, $subQuestion, $rightAnswer, $dir2copy, $data[1], $dir_paste);
+        }
+    }
+
+    /**
+     * propositionQruiProcess function
+     *
+     */
+    public function propositionQruiProcess($j, $subQuestion, $rightAnswer, $dir2copy, $dirName, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        if ($j == $rightAnswer)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        // Recherche si le fichier existe
+        // S'il n'existe pas, je passe au suivant.
+        //
+        $fileName = "option_" . $j;
+        $testFile = $dir2copy . $dirName . '/' . $fileName . ".jpg";
+
+        if (file_exists($testFile)) {
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_" . $fileName);
+            $media->setUrl($dirName . "_" . $fileName . "_" . time() . ".jpg");
+
+            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image");
+            $media->setMediaType($mediaType);
+            $proposition->setMedia($media);
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            copy($dir2copy . $dirName . "/" . $fileName . ".jpg", $dir_paste . $fileName . ".jpg");
+        }
+
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+    }
+
+
+    /**
+     * propositionProcess function
+     *
+     */
+    public function propositionProcess($i, $j, $rightAnswer, $dirName, $subQuestion, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        // Formatage et test si le fichier existe
+        // exemple de nom de fichier : option_1_2.mp3
+        if ($i == 1 ) // Test QRU/QRM
+            $fileName = "option" . "_" . $j;
+        else
+            $fileName = "option" . "_" . $i . "_" . $j;
+
+        $pathFileName = $dir2copy . $dirName . "/" . $fileName;
+
+        $extension = ".mp3";
+
+        if (file_exists($pathFileName . $extension)) {
+            if (preg_match("/".$j."/", $rightAnswer))
+            {
+                $proposition->setRightAnswer(true);
+            }
+            else
+            {
+                $proposition->setRightAnswer(false);
+            }
+
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_" . $fileName);
+            $media->setUrl($dirName . "_" . $fileName . "_" . time());
+
+            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+            $media->setMediaType($mediaType);
+            $proposition->setMedia($media);
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            // Copie du fichier
+            copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
+        }
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+
+    }
+
+    /**
+     * mediaAppatProcess function
+     *
+     */
+    public function mediaAppatProcess($texte, &$medias)
+    {
+        $em = $this->getDoctrine()->getManager();
+        // Création dans "Media"
+        $media = new Media();
+        $media->setName($texte);
+
+        $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte");
+        $media->setMediaType($mediaType);
+
+        $em->persist($media);
+        $medias[] = $media;
+    }
+
+
 
      /**
-     * importCsvSQL function
+     * dragAction function
      *
      * @Route(
      *     "/drag",
@@ -786,7 +1628,7 @@ class TestController extends Controller
      * @Method("GET")
      * @Template()
      */
-   public function dragAction()
+    public function dragAction()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -795,7 +1637,7 @@ class TestController extends Controller
         return array(
             'entities' => $entities
         );
-   }
+    }
 
 
     /**
@@ -810,7 +1652,7 @@ class TestController extends Controller
      * @Method("GET")
      * @Template()
      */
-   public function dragNewAction()
+    public function dragNewAction()
     {
 
         echo "ici";

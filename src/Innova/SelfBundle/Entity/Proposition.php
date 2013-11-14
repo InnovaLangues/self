@@ -31,13 +31,11 @@ class Proposition
     */
     protected $answers;
 
-
     /**
-     * @var string
-     *
-     * @ORM\Column(name="audioUrl", type="string", length=255, nullable=true)
-     */
-    private $audioUrl;
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $media;
+
 
     /**
      * @var string
@@ -53,7 +51,14 @@ class Proposition
      */
     private $rightAnswer;
 
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -62,30 +67,6 @@ class Proposition
     public function getId()
     {
         return $this->id;
-    }
-
-
-    /**
-     * Set audioUrl
-     *
-     * @param string $audioUrl
-     * @return Proposition
-     */
-    public function setAudioUrl($audioUrl)
-    {
-        $this->audioUrl = $audioUrl;
-    
-        return $this;
-    }
-
-    /**
-     * Get audioUrl
-     *
-     * @return string 
-     */
-    public function getAudioUrl()
-    {
-        return $this->audioUrl;
     }
 
     /**
@@ -133,15 +114,30 @@ class Proposition
     {
         return $this->rightAnswer;
     }
+
     /**
-     * Constructor
+     * Set subquestion
+     *
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestion
+     * @return Proposition
      */
-    public function __construct()
+    public function setSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestion = null)
     {
-        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subquestion = $subquestion;
+    
+        return $this;
     }
-    
-    
+
+    /**
+     * Get subquestion
+     *
+     * @return \Innova\SelfBundle\Entity\Subquestion 
+     */
+    public function getSubquestion()
+    {
+        return $this->subquestion;
+    }
+
     /**
      * Add answers
      *
@@ -176,48 +172,25 @@ class Proposition
     }
 
     /**
-     * Set question
+     * Set media
      *
-     * @param \Innova\SelfBundle\Entity\Subquestion $question
+     * @param \Innova\SelfBundle\Entity\Media $media
      * @return Proposition
      */
-    public function setQuestion(\Innova\SelfBundle\Entity\Subquestion $question = null)
+    public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
     {
-        $this->question = $question;
+        $this->media = $media;
     
         return $this;
     }
 
     /**
-     * Get question
+     * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Subquestion 
+     * @return \Innova\SelfBundle\Entity\Media 
      */
-    public function getQuestion()
+    public function getMedia()
     {
-        return $this->question;
-    }
-
-    /**
-     * Set subquestion
-     *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestion
-     * @return Proposition
-     */
-    public function setSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestion = null)
-    {
-        $this->subquestion = $subquestion;
-    
-        return $this;
-    }
-
-    /**
-     * Get subquestion
-     *
-     * @return \Innova\SelfBundle\Entity\Subquestion 
-     */
-    public function getSubquestion()
-    {
-        return $this->subquestion;
+        return $this->media;
     }
 }
