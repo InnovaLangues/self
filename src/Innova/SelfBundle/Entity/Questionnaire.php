@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Questionnaire
  * 15/10/2013 : Add "originText" and "exerciceText" columns. EV.
- * 04/11/2013 : Add "skill" columns ans Skill.php (for Entity). EV.
+ * 04/11/2013 : Add "skill" columns and Skill.php (for Entity). EV.
  *
  * @ORM\Table("questionnaire")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\QuestionnaireRepository")
@@ -791,26 +791,4 @@ class Questionnaire
         return $this->mediaContext;
     }
 
-    /**
-     * Set mediaItem
-     *
-     * @param \Innova\SelfBundle\Entity\Media $mediaItem
-     * @return Questionnaire
-     */
-    public function setMediaItem(\Innova\SelfBundle\Entity\Media $mediaItem = null)
-    {
-        $this->mediaItem = $mediaItem;
-
-        return $this;
-    }
-
-    /**
-     * Get mediaItem
-     *
-     * @return \Innova\SelfBundle\Entity\Media
-     */
-    public function getMediaItem()
-    {
-        return $this->mediaItem;
-    }
 }

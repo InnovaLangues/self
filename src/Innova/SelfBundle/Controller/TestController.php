@@ -862,7 +862,9 @@ class TestController extends Controller
         for ( $i = 0; $i < $nbItems; $i++ )
         {
             // Créer une occurrence dans la table "SubQuestion"
-            $subQuestion = new subQuestion();
+            $subQuestion = new Subquestion();
+            $this->processTexteSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
+
             $subQuestion->setTypology($typo);
             $subQuestion->setQuestion($question);
 
@@ -890,7 +892,7 @@ class TestController extends Controller
         while (file_exists($dir2copy . $dirName . "/reponse_" . $i . ".jpg")) {
             $media = new Media();
             $media->setName($dirName . "_reponse_" . $i);
-            $media->setUrl($dirName . "_reponse_" . $i . "_" . time());
+            $media->setUrl($dirName . "_reponse_" . $i . "_" . uniqid());
 
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image"));
 
@@ -905,7 +907,6 @@ class TestController extends Controller
             $i++;
         }
     }
-
 
     /**
      * mediaAppaiSubQuestionProcess function
@@ -923,7 +924,7 @@ class TestController extends Controller
             // Création dans "Media"
             $media = new Media();
             $media->setName($dirName . "_option_" . $indice);
-            $media->setUrl($dirName . "_option_" . $indice . "_" . time());
+            $media->setUrl($dirName . "_option_" . $indice . "_" . uniqid());
 
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
 
@@ -937,7 +938,6 @@ class TestController extends Controller
             copy($testFile, $dir_paste . $fileCopy . ".mp3");
         }
     }
-
 
     /**
      * propositionAppaaProcess function
@@ -967,7 +967,6 @@ class TestController extends Controller
         //$em->flush();
     }
 
-
     /**
      * appaProcess function
      *
@@ -992,7 +991,9 @@ class TestController extends Controller
         for ( $i = 0; $i < $nbItems; $i++ )
         {
             // Créer une occurrence dans la table "SubQuestion"
-            $subQuestion = new subQuestion();
+            $subQuestion = new Subquestion();
+            $this->processTexteSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
+
             $subQuestion->setTypology($typo);
             $subQuestion->setQuestion($question);
 
@@ -1022,7 +1023,7 @@ class TestController extends Controller
             // Création dans "Media"
             $media = new Media();
             $media->setName($dirName . "_option_" . $indice);
-            $media->setUrl($dirName . "_option_" . $indice . "_" . time());
+            $media->setUrl($dirName . "_option_" . $indice . "_" . uniqid());
 
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
 
@@ -1050,7 +1051,7 @@ class TestController extends Controller
         while (file_exists($dir2copy . $dirName . "/reponse_" . $i . ".mp3")) {
             $media = new Media();
             $media->setName($dirName . "_reponse_" . $i);
-            $media->setUrl($dirName . "_reponse_" . $i . "_" . time());
+            $media->setUrl($dirName . "_reponse_" . $i . "_" . uniqid());
 
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
 
@@ -1094,7 +1095,6 @@ class TestController extends Controller
         //$em->flush();
     }
 
-
     /**
      * copieFileDir function
      *
@@ -1117,18 +1117,15 @@ class TestController extends Controller
             // Si oui, on l'ouvre
             if ($dh = opendir($dir2copy))
             {
-                $filesToCopy = array('consigne', 'item', 'contexte');
+                $filesToCopy = array('consigne', 'contexte');
                 // Consigne = audio
                 // Item = cf Excel
                 // Contexte = audio
                 foreach ($filesToCopy as $fichier)
                 {
-                    if ($fichier != 'item') {
-                        $newItemExtention = "mp3";
-                    }
-                    else{
-                         $newItemExtention = $itemExtention;
-                    }
+
+                    $newItemExtention = "mp3";
+
                     // Recherche si le fichier existe
                     // S'il n'existe pas, je passe au suivant.
                     //
@@ -1138,27 +1135,10 @@ class TestController extends Controller
                         // Création dans "Media"
                         $media = new Media();
                         $media->setName($mediaDir . "_" . $fichier);
-                        $media->setUrl($mediaDir . "_" . $fichier . "_" . time());
-
-                        // Tableau d'extension
-                        $aMedia["label"] = array("audio", "video");
-                        $aMedia["extension"][0] = array('mp3');
-                        $aMedia["extension"][1] = array('flv', 'mp4');
+                        $media->setUrl($mediaDir . "_" . $fichier . "_" . uniqid());
 
                         // Traitement suivant le type de fichier.
-                        if ($fichier != 'item')
-                        {
-                            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
-                        }
-                        else
-                        {
-                            foreach ($aMedia["extension"] as $key => $value) {
-                                if(in_array($newItemExtention, $value)){
-                                    $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]);
-                                }
-                            }
-                        }
-                        $media->setMediaType($mediaType);
+                        $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
 
                         // Enregistrement en base
                         $em->persist($media);
@@ -1171,9 +1151,6 @@ class TestController extends Controller
                         switch ($fichier) {
                              case 'consigne':
                                 $questionnaire->setMediaInstruction($media);
-                                break;
-                             case 'item':
-                                $questionnaire->setMediaItem($media);
                                 break;
                              case 'contexte':
                                 $questionnaire->setMediaContext($media);
@@ -1189,6 +1166,56 @@ class TestController extends Controller
               closedir($dh);
             }
        }
+    }
+
+    /**
+     * processTexteSubquestion function
+     *
+     */
+    public function processTexteSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mediaDir = $data[1];
+        $extension = $data[10];
+        $typo = $data[4];
+        $aMedia["label"] = array("audio", "video");
+        $aMedia["extension"][0] = array('mp3');
+        $aMedia["extension"][1] = array('flv', 'mp4');
+
+        if ($typo[0] == "T" && $i != 0)
+        {
+            $testFile = $dir2copy . $mediaDir . "/texte_" . $i. "." . $extension;
+        }
+        else{
+            $testFile = $dir2copy . $mediaDir . "/texte." . $extension;
+        }
+
+        if (file_exists($testFile)) {
+            $media = new Media();
+            foreach ($aMedia["extension"] as $key => $value) {
+                if(in_array($extension, $value)){
+                    $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]));
+                    $mediaType = $aMedia["label"][$key];
+                }
+            }
+
+            if($mediaType == "audio"){
+                $media->setUrl($mediaDir . "_texte_" . $i . "_" . uniqid());
+                copy($testFile, $dir_paste . $media->getUrl() . "." . $extension);
+            }
+            else{
+                $media->setUrl($mediaDir . "_texte_" . $i . "_" . uniqid() . "." .$extension);
+                copy($dir2copy . $mediaDir . '/' . $testFile, $dir_paste . $media->getUrl());
+            }
+
+            $media->setName($mediaDir . "_texte_" .$i);
+            $em->persist($media);
+            $subQuestion->setMediaText($media);
+        }
+        else{
+            $this->processTexteSubquestion(0, $subQuestion, $dir2copy, $dir_paste, $data);
+        }
+
     }
 
     /**
@@ -1212,7 +1239,9 @@ class TestController extends Controller
         for ( $i = 1; $i <= $nbItems; $i++ )
         {
             // Créer une occurrence dans la table "SubQuestion"
-            $subQuestion = new subQuestion();
+            $subQuestion = new Subquestion();
+            $this->processTexteSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
+
             $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
             $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
             $subQuestion->setTypology($typoSubQuestion);
@@ -1252,7 +1281,8 @@ class TestController extends Controller
 
         // Traitement sur le nombre d'items
         // Créer une occurrence dans la table "SubQuestion"
-        $subQuestion = new subQuestion();
+        $subQuestion = new Subquestion();
+        $this->processTexteSubquestion(1, $subQuestion, $dir2copy, $dir_paste, $data);
         $subQuestion->setTypology($typo);
         $subQuestion->setQuestion($question);
 
@@ -1292,7 +1322,9 @@ class TestController extends Controller
         for ( $i = 1; $i <= $nbItems; $i++ )
         {
             // Créer une occurrence dans la table "SubQuestion"
-            $subQuestion = new subQuestion();
+            $subQuestion = new Subquestion();
+            $this->processTexteSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
+
             $ctrlTypo = $typo->getName();
             if ($ctrlTypo[0] == "T")
             {
@@ -1316,7 +1348,7 @@ class TestController extends Controller
                 // Création dans "Media"
                 $media = new Media();
                 $media->setName($dirName . "_" . $fileName);
-                $media->setUrl($dirName . "_" . $fileName . "_" . time());
+                $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
 
                 $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
                 $media->setMediaType($mediaType);
@@ -1409,7 +1441,9 @@ class TestController extends Controller
         for ( $i = 0; $i < $nbItems; $i++ )
         {
             // Créer une occurrence dans la table "SubQuestion"
-            $subQuestion = new subQuestion();
+            $subQuestion = new Subquestion();
+            $this->processTexteSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
+
             $subQuestion->setTypology($typo);
             $subQuestion->setQuestion($question);
 
@@ -1474,7 +1508,8 @@ class TestController extends Controller
       //  $em->flush();
 
         // Créer une occurrence dans la table "SubQuestion"
-        $subQuestion = new subQuestion();
+        $subQuestion = new Subquestion();
+        $this->processTexteSubquestion(1, $subQuestion, $dir2copy, $dir_paste, $data);
         $subQuestion->setTypology($typo);
         $subQuestion->setQuestion($question);
 
@@ -1522,7 +1557,7 @@ class TestController extends Controller
             // Création dans "Media"
             $media = new Media();
             $media->setName($dirName . "_" . $fileName);
-            $media->setUrl($dirName . "_" . $fileName . "_" . time() . ".jpg");
+            $media->setUrl($dirName . "_" . $fileName . "_" . uniqid() . ".jpg");
 
             $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image");
             $media->setMediaType($mediaType);
@@ -1539,7 +1574,6 @@ class TestController extends Controller
         $em->persist($proposition);
         //$em->flush();
     }
-
 
     /**
      * propositionProcess function
@@ -1577,7 +1611,7 @@ class TestController extends Controller
             // Création dans "Media"
             $media = new Media();
             $media->setName($dirName . "_" . $fileName);
-            $media->setUrl($dirName . "_" . $fileName . "_" . time());
+            $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
 
             $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
             $media->setMediaType($mediaType);
@@ -1614,8 +1648,6 @@ class TestController extends Controller
         $medias[] = $media;
     }
 
-
-
      /**
      * dragAction function
      *
@@ -1638,7 +1670,6 @@ class TestController extends Controller
             'entities' => $entities
         );
     }
-
 
     /**
      * dragNew function

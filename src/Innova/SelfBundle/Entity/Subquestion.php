@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Subquestion
+ * 13/11/2013 : Add mediaText column. AB/EV.
  *
  * @ORM\Table("subquestion")
  * @ORM\Entity
@@ -40,6 +41,11 @@ class Subquestion
     protected $media;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaText;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Question", inversedBy="subquestions")
     */
     protected $question;
@@ -56,11 +62,11 @@ class Subquestion
     {
         $this->propositions = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,14 +82,14 @@ class Subquestion
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -99,14 +105,14 @@ class Subquestion
     public function setTypology(\Innova\SelfBundle\Entity\Typology $typology = null)
     {
         $this->typology = $typology;
-    
+
         return $this;
     }
 
     /**
      * Get typology
      *
-     * @return \Innova\SelfBundle\Entity\Typology 
+     * @return \Innova\SelfBundle\Entity\Typology
      */
     public function getTypology()
     {
@@ -122,14 +128,14 @@ class Subquestion
     public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
     {
         $this->media = $media;
-    
+
         return $this;
     }
 
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMedia()
     {
@@ -145,14 +151,14 @@ class Subquestion
     public function setQuestion(\Innova\SelfBundle\Entity\Question $question = null)
     {
         $this->question = $question;
-    
+
         return $this;
     }
 
     /**
      * Get question
      *
-     * @return \Innova\SelfBundle\Entity\Question 
+     * @return \Innova\SelfBundle\Entity\Question
      */
     public function getQuestion()
     {
@@ -168,7 +174,7 @@ class Subquestion
     public function addProposition(\Innova\SelfBundle\Entity\Proposition $propositions)
     {
         $this->propositions[] = $propositions;
-    
+
         return $this;
     }
 
@@ -185,10 +191,33 @@ class Subquestion
     /**
      * Get propositions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPropositions()
     {
         return $this->propositions;
+    }
+
+    /**
+     * Set mediaText
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaText
+     * @return Subquestion
+     */
+    public function setMediaText(\Innova\SelfBundle\Entity\Media $mediaText = null)
+    {
+        $this->mediaText = $mediaText;
+
+        return $this;
+    }
+
+    /**
+     * Get mediaText
+     *
+     * @return \Innova\SelfBundle\Entity\Media
+     */
+    public function getMediaText()
+    {
+        return $this->mediaText;
     }
 }
