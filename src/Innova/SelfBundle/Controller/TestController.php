@@ -123,6 +123,8 @@ class TestController extends Controller
 
         // Par défaut pour la V1, on crée le premier test quand un utilisateur est nouveau
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+
+        // TODO
         $test = $tests[0];
 
         if (!$test) {
@@ -624,13 +626,10 @@ class TestController extends Controller
 
         // File import path
         $csvPathImport =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
-
         // File import name
         $csvName = 'test-import.csv';
-
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
-
         // Path + Name
         $csvPath = $csvPathImport . $csvName;
 
@@ -664,7 +663,13 @@ class TestController extends Controller
 
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
-
+                    $testName = "PLOP";
+                    if(!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)){
+                        $test = new Test();
+                        $test->setName($testName);
+                        $em->persist($test);
+                    }
+                    $questionnaire->addTest($test);
                     //
                     // J'ai traité les colonnes de la table Questionnaire dans l'ordre
                     //
@@ -715,7 +720,7 @@ class TestController extends Controller
                     //Autres colonnes
                     $questionnaire->setMediaInstruction();
                     $questionnaire->setMediaContext();
-//                    $questionnaire->setMediaItem();
+                    $questionnaire->setMediaText();
 
                     // Enregistrement en base
                     $em->persist($questionnaire);
