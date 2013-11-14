@@ -623,7 +623,6 @@ class TestController extends Controller
         // FOOTER
         // Empty
 
-
         fwrite($csvh, $csv);
         fclose($csvh);
 
@@ -791,20 +790,6 @@ class TestController extends Controller
                     // Troisième partie : travail sur les types TQRM et TQRU
                     //
                     //
-                    /*
-                    $type = array("TQRU", "TQRM");
-                    if(in_array($data[4], $type)){
-                        $this->tqrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
-                    }
-                    $type = array("QRU", "QRM");
-                    if(in_array($data[4], $type)){
-                        $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
-                    }
-                    $type = array("TVF", "VF", "VFPM", "TVFPM");
-                    if(in_array($data[4], $type)){
-                        $this->vfProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
-                    }
-                    */
 
                     // Traitement suivi le type de questionnaire.
                     switch($data[4])
@@ -829,10 +814,11 @@ class TestController extends Controller
                         case "QRU_I";
                             $this->qruiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
-                        // manque APPAI et APPAA
-                        //case "APPAI";
                         case "APPAA";
                             $this->appaaProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "APPAI";
+                            $this->appaiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                     }
 
@@ -853,6 +839,136 @@ class TestController extends Controller
     }
 
     /**
+     * appaiProcess function
+     *
+     */
+    public function appaiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+
+        $medias = array();
+        $this->mediaAppaiPropositionProcess($data[1], $medias, $dir2copy, $dir_paste);
+
+        $nbItems = $data[11];
+        // Traitement sur le nombre d'items
+        for ( $i = 0; $i < $nbItems; $i++ )
+        {
+            // Créer une occurrence dans la table "SubQuestion"
+            $subQuestion = new subQuestion();
+            $subQuestion->setTypology($typo);
+            $subQuestion->setQuestion($question);
+
+            $this->mediaAppaiSubQuestionProcess($data[1], $i, $dir2copy, $dir_paste, $subQuestion);
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+
+            for ($j = 0; $j < count($medias); $j++) {
+                $this->propositionAppaiProcess($i, $j, $subQuestion, $medias[$j]);
+            }
+        }
+    }
+
+    /**
+     * mediaAppaiPropositionProcess function
+     *
+     */
+    public function mediaAppaiPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $i = 1;
+
+        while (file_exists($dir2copy . $dirName . "/reponse_" . $i . ".jpg")) {
+            $media = new Media();
+            $media->setName($dirName . "_reponse_" . $i);
+            $media->setUrl($dirName . "_reponse_" . $i . "_" . time());
+
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image"));
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            // Copie du fichier
+            $fileCopy = $media->getUrl();
+            copy($dir2copy . $dirName . "/reponse_" . $i . ".jpg", $dir_paste . $fileCopy . ".jpg");
+
+            $medias[] = $media;
+            $i++;
+        }
+    }
+
+
+    /**
+     * mediaAppaiSubQuestionProcess function
+     *
+     */
+    public function mediaAppaiSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $indice = $i+1;
+
+        $testFile = $dir2copy . $dirName . "/option_" . $indice . ".mp3";
+
+        if (file_exists($testFile)) {
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_option_" . $indice);
+            $media->setUrl($dirName . "_option_" . $indice . "_" . time());
+
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            $subQuestion->setMedia($media);
+
+            // Copie du fichier
+            $fileCopy = $media->getUrl();
+            copy($testFile, $dir_paste . $fileCopy . ".mp3");
+        }
+    }
+
+
+    /**
+     * propositionAppaaProcess function
+     *
+     */
+    public function propositionAppaiProcess($i, $j, $subQuestion, $media)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        if ($i == $j)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        $proposition->setMedia($media);
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+    }
+
+
+    /**
      * appaProcess function
      *
      */
@@ -869,11 +985,9 @@ class TestController extends Controller
         $em->persist($question);
 
         $medias = array();
-        $nbItems = $data[11];
-        for ($i=0; $i < $nbItems; $i++) {
-            $this->mediaAppaaProcess($data[1], $medias, $dir2copy, $dir_paste, $i);
-        }
+        $this->mediaAppaaPropositionProcess($data[1], $medias, $dir2copy, $dir_paste);
 
+        $nbItems = $data[11];
         // Traitement sur le nombre d'items
         for ( $i = 0; $i < $nbItems; $i++ )
         {
@@ -882,19 +996,104 @@ class TestController extends Controller
             $subQuestion->setTypology($typo);
             $subQuestion->setQuestion($question);
 
+            $this->mediaAppaaSubQuestionProcess($data[1], $i, $dir2copy, $dir_paste, $subQuestion);
+
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
 
-            // Créer une occurrence dans la table "Proposition"
-            $indice = 11+(2*$i);
-            $nbProposition = $data[$indice];
-            $rightAnswer = $data[$indice-1];
-
-            for ($j=0; $j < count($medias); $j++) {
-                $this->propositionAppaProcess($i, $j, $subQuestion, $medias[$j]);
+            for ($j = 0; $j < count($medias); $j++) {
+                $this->propositionAppaaProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
     }
+
+    /**
+     * mediaAppaaSubQuestionProcess function
+     *
+     */
+    public function mediaAppaaSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $indice = $i+1;
+        $testFile = $dir2copy . $dirName . "/option_" . $indice . ".mp3";
+
+        if (file_exists($testFile)) {
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_option_" . $indice);
+            $media->setUrl($dirName . "_option_" . $indice . "_" . time());
+
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            $subQuestion->setMedia($media);
+
+            // Copie du fichier
+            $fileCopy = $media->getUrl();
+            copy($testFile, $dir_paste . $fileCopy . ".mp3");
+        }
+    }
+
+    /**
+     * mediaAppaaPropositionProcess function
+     *
+     */
+    public function mediaAppaaPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $i = 1;
+
+        while (file_exists($dir2copy . $dirName . "/reponse_" . $i . ".mp3")) {
+            $media = new Media();
+            $media->setName($dirName . "_reponse_" . $i);
+            $media->setUrl($dirName . "_reponse_" . $i . "_" . time());
+
+            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            // Copie du fichier
+            $fileCopy = $media->getUrl();
+           copy($dir2copy . $dirName . "/reponse_" . $i . ".mp3", $dir_paste . $fileCopy . ".mp3");
+
+            $medias[] = $media;
+            $i++;
+        }
+    }
+
+    /**
+     * propositionAppaaProcess function
+     *
+     */
+    public function propositionAppaaProcess($i, $j, $subQuestion, $media)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Créer une occurrence dans la table "Proposition"
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subQuestion);
+
+        if ($i == $j)
+        {
+            $proposition->setRightAnswer(true);
+        }
+        else
+        {
+            $proposition->setRightAnswer(false);
+        }
+
+        $proposition->setMedia($media);
+
+        // Enregistrement en base
+        $em->persist($proposition);
+        //$em->flush();
+    }
+
 
     /**
      * copieFileDir function
@@ -924,14 +1123,18 @@ class TestController extends Controller
                 // Contexte = audio
                 foreach ($filesToCopy as $fichier)
                 {
-
+                    if ($fichier != 'item') {
+                        $newItemExtention = "mp3";
+                    }
+                    else{
+                         $newItemExtention = $itemExtention;
+                    }
                     // Recherche si le fichier existe
                     // S'il n'existe pas, je passe au suivant.
                     //
-                    $testFile = $dir2copy . '/' . $fichier . "." . $itemExtention;
+                    $testFile = $dir2copy . $mediaDir . '/' . $fichier . "." . $newItemExtention;
 
                     if (file_exists($testFile)) {
-
                         // Création dans "Media"
                         $media = new Media();
                         $media->setName($mediaDir . "_" . $fichier);
@@ -950,7 +1153,7 @@ class TestController extends Controller
                         else
                         {
                             foreach ($aMedia["extension"] as $key => $value) {
-                                if(in_array($itemExtention, $value)){
+                                if(in_array($newItemExtention, $value)){
                                     $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]);
                                 }
                             }
@@ -962,7 +1165,7 @@ class TestController extends Controller
 
                         // Copie du fichier
                         $fileCopy = $media->getUrl();
-                        copy($dir2copy . '/' . $fichier . "." . $itemExtention, $dir_paste . '/' . $fileCopy . "." . $itemExtention);
+                        copy($dir2copy . $mediaDir . '/' . $fichier . "." . $newItemExtention, $dir_paste . $fileCopy . "." . $newItemExtention);
 
                         // Mise à jour de Questionnaire suivant le type de média
                         switch ($fichier) {
@@ -1083,6 +1286,8 @@ class TestController extends Controller
         $em->persist($question);
         //$em->flush();
 
+        $dirName = $data[1];
+
         // Traitement sur le nombre d'items
         for ( $i = 1; $i <= $nbItems; $i++ )
         {
@@ -1101,6 +1306,27 @@ class TestController extends Controller
             }
             $subQuestion->setQuestion($question);
 
+            // Recherche si le fichier existe
+            // S'il n'existe pas, je passe au suivant.
+            //
+            $fileName = "option_" . $i;
+            $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
+
+            if (file_exists($testFile)) {
+                // Création dans "Media"
+                $media = new Media();
+                $media->setName($dirName . "_" . $fileName);
+                $media->setUrl($dirName . "_" . $fileName . "_" . time());
+
+                $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+                $media->setMediaType($mediaType);
+                $subQuestion->setMedia($media);
+
+                // Enregistrement en base
+                $em->persist($media);
+                copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
+            }
+
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
             // $em->flush();
@@ -1112,7 +1338,7 @@ class TestController extends Controller
             $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
             $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
 
-            if ($data[$indice] = "VFPM")
+            if ($data[$indice] == "VFPM")
             {
                 $this->vfPropositionProcess($rightAnswer, "PM", "PM", $subQuestion); // PM : à confirmer
             }
@@ -1151,6 +1377,8 @@ class TestController extends Controller
 
         $proposition->setMedia($media);
         $em->persist($proposition);
+
+        $em->flush();
     }
 
     /**
@@ -1198,34 +1426,6 @@ class TestController extends Controller
                 $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
-    }
-
-    /**
-     * propositionAppaaProcess function
-     *
-     */
-    public function propositionAppaaProcess($i, $j, $subQuestion, $media)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        // Créer une occurrence dans la table "Proposition"
-        $proposition = new Proposition();
-        $proposition->setSubquestion($subQuestion);
-
-        if ($i == $j)
-        {
-            $proposition->setRightAnswer(true);
-        }
-        else
-        {
-            $proposition->setRightAnswer(false);
-        }
-
-        $proposition->setMedia($media);
-
-        // Enregistrement en base
-        $em->persist($proposition);
-        //$em->flush();
     }
 
     /**
@@ -1355,8 +1555,12 @@ class TestController extends Controller
 
         // Formatage et test si le fichier existe
         // exemple de nom de fichier : option_1_2.mp3
-        $fileName = "option" . "_" . $i . "_" . $j;
-        $pathFileName = $dir2copy . $fileName;
+        if ($i == 1 ) // Test QRU/QRM
+            $fileName = "option" . "_" . $j;
+        else
+            $fileName = "option" . "_" . $i . "_" . $j;
+
+        $pathFileName = $dir2copy . $dirName . "/" . $fileName;
 
         $extension = ".mp3";
 
@@ -1411,35 +1615,6 @@ class TestController extends Controller
     }
 
 
-    /**
-     * mediaAppaaProcess function
-     *
-     */
-    public function mediaAppaaProcess($dirName, &$medias, $dir2copy, $dir_paste, $i)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $testFile = $dir2copy . "/" . $dirName . "/reponse_" . $i . ".mp3";
-echo "<br />testFile =" . $testFile;
-        if (file_exists($testFile)) {
-
-            // Création dans "Media"
-            $media = new Media();
-            $media->setName($dirName . "_" . "/reponse_" . $i);
-            $media->setUrl($dirName . "_" . "/reponse_" . $i . "_" . time());
-
-            $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio"));
-
-            // Enregistrement en base
-            $em->persist($media);
-
-            // Copie du fichier
-            $fileCopy = $media->getUrl();
-            copy($testFile, $dir_paste . '/' . $fileCopy . ".mp3");
-
-            $medias[] = $media;
-        }
-    }
 
      /**
      * dragAction function
