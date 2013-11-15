@@ -24,16 +24,18 @@
             {% for test in tests %}
                 <tr>
                     <td class="text-left">
-                        {# TODO afficher en checked=checked si le test est affecté #}
-                        {# TODO sinon ne pas afficher #}
+                        {% if test in userTests %}
                         <input type="checkbox" name="test[{{ test.id }}]" checked="checked">
+                        {% else %}
+                        <input type="checkbox" name="test[{{ test.id }}]">
+                       {% endif %}
                     </td>
                     <td>{{ test.name }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        <input type="submit" value="Affecter" class="btn btn-default" />
+        <input type="submit" value="Valider" class="btn btn-default" />
     </form>
 
     <hr>

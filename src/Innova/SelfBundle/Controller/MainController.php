@@ -18,7 +18,7 @@ class MainController extends Controller
 {
 
     /**
-     * @Route("/", name="show_help")
+     * @Route("/help", name="show_help")
      * @Template()
      */
     public function showHelpAction()
@@ -29,4 +29,38 @@ class MainController extends Controller
         'user' => $user,
         );
     }
+
+    /**
+     * @Route("/", name="show_tests")
+     * @Template()
+     */
+    public function showTestsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->get('security.context')->getToken()->getUser();
+/*
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+
+        foreach ($tests as $test) {
+            $testUsers = $test->getUsers();
+            if (in_array($user->getId(), $testUsers))
+            {
+                echo "Trouvé";
+            }
+            else
+            {
+                echo "Non trouvé";
+            }
+        }
+*/
+
+        $userTests = $user->getTests(); // Tous les tests de l'utilisateur X.
+
+        return array(
+        'user' => $user,
+        'tests' => $userTests,
+        );
+    }
+
 }
