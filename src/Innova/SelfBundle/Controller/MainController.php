@@ -18,7 +18,7 @@ class MainController extends Controller
 {
 
     /**
-     * @Route("/", name="show_help")
+     * @Route("/help", name="show_help")
      * @Template()
      */
     public function showHelpAction()
@@ -29,4 +29,33 @@ class MainController extends Controller
         'user' => $user,
         );
     }
+
+    /**
+     * @Route("/", name="show_tests")
+     * @Template()
+     */
+    public function showTestsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $userTests = $user->getTests(); // Tous les tests de l'utilisateur X.
+
+        $testsProgress = array();
+        foreach ($userTests as $test) {
+            $countDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
+            ->CountDoneYetByUserByTest($test->getId(), $user->getId());
+            $countTotal = count($test->getQuestionnaires());
+            $number = $countDone/$countTotal*100;
+            $testsProgress[] = number_format($number, 2, '.', ' ');
+        }
+
+        return array(
+            'user' => $user,
+            'tests' => $userTests,
+            'testsProgress' => $testsProgress
+        );
+    }
+
 }

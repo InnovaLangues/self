@@ -4,14 +4,9 @@
 
 {% block fos_user_content %}
 	<div class="row">
-		<div class="col-md-12">	
+		<div class="col-md-12">
 		    <div class="alert alert-success">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</div>
-			{% include 'InnovaSelfBundle::Main/help.html.twig' %}
-			<a href="{{ path('user_test') }}" class="btn btn-primary">Démarrer</a>
+			<a href="{{ path('show_tests') }}" class="btn btn-primary">Accéder à la liste des tests</a>
 		</div>
-
-
 	</div>
-	
-
 {% endblock fos_user_content %}

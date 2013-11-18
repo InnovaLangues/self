@@ -37,7 +37,7 @@ class AdminUserController extends Controller
             'entities' => $entities,
         );
     }
- 
+
 
 
     /**
@@ -165,6 +165,7 @@ class AdminUserController extends Controller
 
         $entity = $em->getRepository('InnovaSelfBundle:User')->find($id);
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+        $userTests = $entity->getTests();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -173,11 +174,12 @@ class AdminUserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
+            'userTests' => $userTests,
             'tests'       => $tests,
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         );
-    }   
+    }
 
 
 
@@ -260,7 +262,7 @@ class AdminUserController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
-    }   
+    }
 
     /**
      * Edits an existing Test entity.
@@ -307,12 +309,12 @@ class AdminUserController extends Controller
 
         // Insertion en base de données;
         $em->flush();
-      
+
         //TODO:  gestion d'un flash message SUCCESS
 
         // Redirection
         return $this->redirect($this->generateUrl('admin_user'));
-    }     
+    }
 
 
 }

@@ -22,7 +22,7 @@ $(document).ready(function() {
 	$(".item_audio_button").click(function(){
 		var limit = Number($(this).attr("data-limit"));
 		var listened = Number($(this).attr("data-listened"));
-		
+
 
 		if(!play_in_progress && (limit == 0 || listened < limit)){
 			play_in_progress = true;
@@ -53,7 +53,7 @@ $(document).ready(function() {
 	});
 
 	/* TOOLTIP */
-	
+
 	$('img').tooltip({placement:'top'});
 });
 

@@ -43,6 +43,7 @@ user:
 test:
     action:
         start: Démarrer
+        start_test: Démarrer ce test
     field:
         instruction: Consigne
         context: Contexte
