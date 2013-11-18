@@ -13,32 +13,29 @@
             </div>
             <div class="panel-body">
                 {% for i, test in tests %}
-                    <div class="panel panel-default">
+                <div class='row pull-left col-md-3 test-available'>
+                    <div class="panel panel-default  ">
                         <div class="panel-body">
-
-                            <div class='row test-available'>
-                                <div class="col-md-2">
-                                    {% if testsProgress[i] != 100 %} {# Je n'affiche le lien pour démarrer le test que s'il n'est pas terminé. #}
-                                        <a href="{{ path('test_start', { 'id': test.id } )}}">{{ test.name }}</a>
-                                    {% else %}
-                                        {{ test.name }}
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="progress" rel="tooltip" data-original-title="Progression : {{ testsProgress[i] }}%">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ testsProgress[i] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ testsProgress[i] }}%;">
-                                        <span class="sr-only">{{ testsProgress[i] }}% Complete</span>
-                                        </div>
+                            <div>
+                                {% if testsProgress[i] != 100 %} {# Je n'affiche le lien pour démarrer le test que s'il n'est pas terminé. #}
+                                    <a href="{{ path('test_start', { 'id': test.id } )}}">{{ test.name }}</a>
+                                {% else %}
+                                    {{ test.name }}
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="progress" rel="tooltip" data-original-title="Progression : {{ testsProgress[i] }}%">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ testsProgress[i] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ testsProgress[i] }}%;">
+                                    <span class="sr-only">{{ testsProgress[i] }}% Complete</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+                </div>
                 {% endfor %}
             </div>
         </div>
-
         <div class="panel panel-default">
             <div class="panel-body">
                 {% include 'InnovaSelfBundle::Main/help.html.twig' %}
