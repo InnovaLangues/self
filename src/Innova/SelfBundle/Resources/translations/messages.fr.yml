@@ -85,7 +85,7 @@ questionnaire:
         dialogue: Dialogue
         mediaInstruction: Consigne audio
         mediaContext: Contexte audio
-        mediaItem: Item audio
+        mediaText: Item audio
         sourceType: Type de source
         receptionType: Type de réception
         functionType: Type de fonction

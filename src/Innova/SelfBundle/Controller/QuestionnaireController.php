@@ -114,6 +114,8 @@ class QuestionnaireController extends Controller
      */
     public function showAction($id)
     {
+
+        echo "ici";
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($id);

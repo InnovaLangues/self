@@ -20,7 +20,7 @@ class QuestionnaireType extends AbstractType
             ->add('dialogue', 'checkbox', array('required' => false))
             ->add('mediaInstruction', null, array('label' => 'questionnaire.field.mediaInstruction'))
             ->add('mediaContext', null, array('label' => 'questionnaire.field.mediaContext'))
-            ->add('mediaItem', null, array('label' => 'questionnaire.field.mediaItem'))
+            ->add('mediaText', null, array('label' => 'questionnaire.field.mediaText'))
             ->add('sourceType', null, array('label' => 'questionnaire.field.sourceType'))
             ->add('receptionType', null, array('label' => 'questionnaire.field.receptionType'))
             ->add('functionType', null, array('label' => 'questionnaire.field.functionType'))
