@@ -47,7 +47,9 @@ class MainController extends Controller
             $countDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
             ->CountDoneYetByUserByTest($test->getId(), $user->getId());
             $countTotal = count($test->getQuestionnaires());
+            if ($countTotal < 1) $countTotal=1;
             $number = $countDone/$countTotal*100;
+
             $testsProgress[] = number_format($number, 2, '.', ' ');
         }
 
