@@ -625,9 +625,13 @@ class TestController extends Controller
         //
 
         // File import path
-        $csvPathImport =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3/'; // Symfony
+
         // File import name
         $csvName = 'test-import.csv';
+        $csvName = 'marie-pierre.csv'; // Suite réception MP.
+
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
         // Path + Name
@@ -635,11 +639,52 @@ class TestController extends Controller
 
         // File import path
         // Répertoire où seront stockés les fichiers
-        $dir2copy =__DIR__.'/../../../../web/upload/test_eric/'; // A modifier quand on aura l'adresse
+        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3/'; // A modifier quand on aura l'adresse
 
         // File copy path
         // Répertoire où seront copiés les fichiers
         $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
+
+
+        if ($dossier = opendir($csvPathImportMp3)) {
+            while (false !== ($fichier = readdir($dossier))) {
+                if ($fichier != '.' && $fichier != '..') {
+                    echo "<br />Fichier = " . $fichier;
+                    $exp = explode("_", $fichier);
+                    var_dump($exp);
+
+                    $repertoryName = strtolower($exp[0]);
+                    $fileName = $exp[1];
+                    echo "<br />   " . $fichier . "  --   " . $repertoryName . " -- " . $fileName;
+
+                    /*
+                    $tabName = explode("_", $exp[1]);
+                    var_dump($tabName);die();
+                    $name = $tabName[0];
+                    */
+
+                    $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
+                    echo "<br />Rep : " . $repertoryMkDir;
+                    // Création du répertoire (s'il n'est pas déjà créé)
+                    if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
+
+                    echo "<br />exp[1] = " . $exp[1];
+                    if (preg_match("/amorce/", $fileName))
+                    {
+                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
+                    }
+                    if (preg_match("/option/", $fileName))
+                    {
+                        $number = $exp[2];
+                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number . ".mp3");
+                    }
+                    if (preg_match("/txt/", $fileName))
+                    {
+                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
+                    }
+                }
+            }
+        }
 
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte :
@@ -743,6 +788,7 @@ class TestController extends Controller
                     //
 
                     // Traitement suivi le type de questionnaire.
+                    echo "<br />Type = " . $data[4];
                     switch($data[4])
                     {
                         case "TQRU";
@@ -1250,6 +1296,7 @@ class TestController extends Controller
         $nbProposition = $data[13];
         $rightAnswer = $data[12];
 
+echo $rightAnswer . " - " . $nbProposition;
         for ($j=1; $j <= $nbProposition; $j++) {
             $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
         }
@@ -1299,6 +1346,7 @@ class TestController extends Controller
             //
             $fileName = "option_" . $i;
             $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
+            echo "<br />Test Copie : " . $testFile;
 
             if (file_exists($testFile)) {
                 // Création dans "Media"
@@ -1312,6 +1360,7 @@ class TestController extends Controller
 
                 // Enregistrement en base
                 $em->persist($media);
+                echo "<br />Copie : " . $dir2copy . $dirName . "/" . $fileName . ".mp3" . " TO " . $dir_paste . '/' . $media->getUrl() . ".mp3";
                 copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
             }
 
@@ -1554,7 +1603,12 @@ class TestController extends Controller
 
         $extension = ".mp3";
 
+
+        echo "<br />path : " . $pathFileName . "   -<br /> ext : " . $extension;
+
+
         if (file_exists($pathFileName . $extension)) {
+            echo " TROUVE !!!!!!!!!!!!!!!!!!";
             if (preg_match("/".$j."/", $rightAnswer))
             {
                 $proposition->setRightAnswer(true);
