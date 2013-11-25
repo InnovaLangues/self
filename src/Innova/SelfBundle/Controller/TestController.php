@@ -649,36 +649,30 @@ class TestController extends Controller
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..') {
-                    echo "<br />Fichier = " . $fichier;
+                    //echo "<br />Fichier = " . $fichier;
                     $exp = explode("_", $fichier);
-                    var_dump($exp);
+                    //var_dump($exp);
 
                     $repertoryName = strtolower($exp[0]);
                     $fileName = $exp[1];
-                    echo "<br />   " . $fichier . "  --   " . $repertoryName . " -- " . $fileName;
-
-                    /*
-                    $tabName = explode("_", $exp[1]);
-                    var_dump($tabName);die();
-                    $name = $tabName[0];
-                    */
+                    //echo "<br />   " . $fichier . "  --   " . $repertoryName . " -- " . $fileName;
 
                     $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
-                    echo "<br />Rep : " . $repertoryMkDir;
+                    //echo "<br />Rep : " . $repertoryMkDir;
                     // Création du répertoire (s'il n'est pas déjà créé)
                     if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
 
-                    echo "<br />exp[1] = " . $exp[1];
-                    if (preg_match("/amorce/", $fileName))
+                    //echo "<br />exp[1] = " . $exp[1];
+                    if (preg_match("/amorce/i", $fileName))
                     {
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
                     }
-                    if (preg_match("/option/", $fileName))
+                    if (preg_match("/option/i", $fileName))
                     {
                         $number = $exp[2];
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number . ".mp3");
                     }
-                    if (preg_match("/txt/", $fileName))
+                    if (preg_match("/txt/i", $fileName))
                     {
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
                     }
@@ -708,7 +702,7 @@ class TestController extends Controller
 
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
-                    $testName = "PLOP";
+                    $testName = "CO-pilote-dec2013-ang";
                     if(!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)){
                         $test = new Test();
                         $test->setName($testName);
@@ -718,6 +712,10 @@ class TestController extends Controller
                     //
                     // J'ai traité les colonnes de la table Questionnaire dans l'ordre
                     //
+                    //
+                    //
+                    //
+                    $data[1] = strtolower($data[1]); // Mise en minuscules du nom du fichier suite aux tests.
 
                     // Traitement sur le level
                     $libLevel = $data[2];
@@ -788,7 +786,7 @@ class TestController extends Controller
                     //
 
                     // Traitement suivi le type de questionnaire.
-                    echo "<br />Type = " . $data[4];
+                    //echo "<br />Type = " . $data[4];
                     switch($data[4])
                     {
                         case "TQRU";
@@ -1200,7 +1198,7 @@ class TestController extends Controller
         $mediaDir = $data[1];
         $typo = $data[4];
 
-        if ($typo[0] == "T")
+        if ($typo[0] == "T" && $typo != "TVF" && $typo != "TVFPM")
         {
             $testFile = $dir2copy . $mediaDir . "/amorce_" . $i. ".mp3";
         }
@@ -1296,7 +1294,7 @@ class TestController extends Controller
         $nbProposition = $data[13];
         $rightAnswer = $data[12];
 
-echo $rightAnswer . " - " . $nbProposition;
+        //echo $rightAnswer . " - " . $nbProposition;
         for ($j=1; $j <= $nbProposition; $j++) {
             $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
         }
@@ -1326,7 +1324,7 @@ echo $rightAnswer . " - " . $nbProposition;
         {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
-            $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
+            if ($i == 1) $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
 
             $ctrlTypo = $typo->getName();
             if ($ctrlTypo[0] == "T")
@@ -1346,7 +1344,7 @@ echo $rightAnswer . " - " . $nbProposition;
             //
             $fileName = "option_" . $i;
             $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
-            echo "<br />Test Copie : " . $testFile;
+            //echo "<br />Test Copie : " . $testFile;
 
             if (file_exists($testFile)) {
                 // Création dans "Media"
@@ -1360,7 +1358,7 @@ echo $rightAnswer . " - " . $nbProposition;
 
                 // Enregistrement en base
                 $em->persist($media);
-                echo "<br />Copie : " . $dir2copy . $dirName . "/" . $fileName . ".mp3" . " TO " . $dir_paste . '/' . $media->getUrl() . ".mp3";
+                //echo "<br />Copie : " . $dir2copy . $dirName . "/" . $fileName . ".mp3" . " TO " . $dir_paste . '/' . $media->getUrl() . ".mp3";
                 copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
             }
 
@@ -1603,12 +1601,10 @@ echo $rightAnswer . " - " . $nbProposition;
 
         $extension = ".mp3";
 
-
-        echo "<br />path : " . $pathFileName . "   -<br /> ext : " . $extension;
-
+        //echo "<br />path : " . $pathFileName . $extension;
 
         if (file_exists($pathFileName . $extension)) {
-            echo " TROUVE !!!!!!!!!!!!!!!!!!";
+            //echo " TROUVE !";
             if (preg_match("/".$j."/", $rightAnswer))
             {
                 $proposition->setRightAnswer(true);
@@ -1633,6 +1629,12 @@ echo $rightAnswer . " - " . $nbProposition;
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         }
+        else
+        {
+            //echo " PAS TROUVE !";
+        }
+
+        //var_dump($proposition);
 
         // Enregistrement en base
         $em->persist($proposition);
