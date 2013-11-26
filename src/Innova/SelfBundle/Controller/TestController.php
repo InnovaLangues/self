@@ -630,7 +630,7 @@ class TestController extends Controller
 
         // File import name
         $csvName = 'test-import.csv';
-        $csvName = 'marie-pierre.csv'; // Suite réception MP.
+        $csvName = 'mp2.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -645,7 +645,7 @@ class TestController extends Controller
         // Répertoire où seront copiés les fichiers
         $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
 
-
+        // Traitement des fichiers reçus
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..') {
@@ -654,28 +654,33 @@ class TestController extends Controller
                     //var_dump($exp);
 
                     $repertoryName = strtolower($exp[0]);
+                    //echo "<br />Exp0" . $exp[0];
                     $fileName = $exp[1];
-                    //echo "<br />   " . $fichier . "  --   " . $repertoryName . " -- " . $fileName;
+                    echo "<br />   " . $fichier . "  --   " . $repertoryName . " -- " . $fileName;
 
                     $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
                     //echo "<br />Rep : " . $repertoryMkDir;
                     // Création du répertoire (s'il n'est pas déjà créé)
                     if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
 
-                    //echo "<br />exp[1] = " . $exp[1];
+                    //echo "<br />fileName = " . $fileName;
                     if (preg_match("/amorce/i", $fileName))
                     {
+                        //echo "<br />copie Amorce" . $csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3";
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
                     }
                     if (preg_match("/option/i", $fileName))
                     {
-                        $number = $exp[2];
-                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number . ".mp3");
+                        $number = explode(".", $exp[2]);
+                        //echo "<br />copie Option" . $csvPathImportMp3 . $fichier, $repertoryMkDir . "/optionX.mp3";
+                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
                     }
                     if (preg_match("/txt/i", $fileName))
                     {
+                        //echo "<br />copie Txt" . $csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3";
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
                     }
+                    //echo "<br />";
                 }
             }
         }
@@ -686,19 +691,23 @@ class TestController extends Controller
         // Cette contrainte a été prise en compte par rapport au fichier reçu.
         $row = 0;
         $indice = 0;
+
+        //echo $csvPath;
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 // Nombre de colonnes
                 $num = count($data);
                 $c = 0;
                 // Ainsi, je ne prends pas les intitulés des colonnes
-                if ($data[$c] = $row)
+                if ($row != 0)
                 {
                     //
                     //
                     // Première partie : ajout dans la table Questionnaire
                     //
                     //
+//                    echo "dans while/if";
+//                    echo " row = " . $row . " - c = " . $c . " - " . " data = " . $data[$c];
 
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
@@ -716,6 +725,7 @@ class TestController extends Controller
                     //
                     //
                     $data[1] = strtolower($data[1]); // Mise en minuscules du nom du fichier suite aux tests.
+                    echo "<br />Traitement de : " . $data[1];
 
                     // Traitement sur le level
                     $libLevel = $data[2];

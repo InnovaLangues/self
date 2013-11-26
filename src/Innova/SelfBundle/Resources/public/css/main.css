@@ -14,7 +14,7 @@ html, body, .test-container. #main_form{
 
 .central {
 	border-radius:10px;
-	background-color: #717EE3;
+	background-color: #E37E71;
 	min-height:300px;
 }
 
@@ -70,4 +70,4 @@ html, body, .test-container. #main_form{
 
 input[type="checkbox"], input[type="radio"], label{
 	cursor: pointer;
-}	
+}
