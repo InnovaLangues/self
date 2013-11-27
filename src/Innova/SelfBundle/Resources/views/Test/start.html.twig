@@ -84,7 +84,7 @@
                                         {% set bulleCountVf = bulleCountVf + 1 %}
                                         {{ audio.audio("subquestion"+subquestion.id, subquestion.media.url, "bulle"~ bulleCountVf ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
                                     {% endif %}
-                                    {% for proposition in subquestion.propositions %}
+                                    {% for proposition in subquestion.propositions | shuffle %}
                                         {% set bulleCount = bulleCount + 1 %}
                                         {% if subquestion.typology.name == "QRU" %}
                                         <p>
