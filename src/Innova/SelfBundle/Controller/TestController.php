@@ -51,9 +51,17 @@ class TestController extends Controller
             );
         }
 
+        // One color per language. Two languages for the moment : ang and it.
+        // In database, we must have "ang" in english test and "it" in italian test.
+        // See main.css for more information.
+        $language = "default";
+        if (preg_match("/ang/i", $test->getName() )) $language = "eng";
+        if (preg_match("/it/i", $test->getName() )) $language = "it";
+
         // $questionnaire = $this->getRandom($questionnaires);
         return array(
             'questionnaire' => $questionnaire,
+            'language' => $language,
             'test' => $test,
             'counQuestionnaireDone' => $countQuestionnaireDone,
         );
@@ -694,7 +702,7 @@ class TestController extends Controller
 
         //echo $csvPath;
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 // Nombre de colonnes
                 $num = count($data);
                 $c = 0;

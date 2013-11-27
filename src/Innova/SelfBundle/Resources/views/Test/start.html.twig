@@ -68,7 +68,8 @@
             </div>
             {% endif %}
 
-            <div class="row col-md-12 pull-right central">
+            {# language = to have the color per language. #}
+            <div class="row col-md-12 pull-right central-{{ language }}">
                 <form id="main_form" action="{{ path('trace_submit') }}" method="post">
                      <div class="col-md-4 col-md-offset-1 situation vertical-align-center">
                         <div class="situation-icon">
@@ -125,6 +126,7 @@
                     <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>
                     <input type="hidden" id="totalTime" name="totalTime" value=""/>
                     <input type="hidden" name="testId" value="{{ test.id }}"/>
+                    <input type="hidden" name="testName" value="{{ test.name }}"/>
                     <input id="submit" type="submit" class="pull-right btn btn-default" value="{{ 'generic.validate' | trans }}"/>
                 </form>
             </div>

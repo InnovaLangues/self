@@ -12,12 +12,23 @@ html, body, .test-container. #main_form{
 	min-height:100%;
 }
 
-.central {
+.central-default {
+	border-radius:10px;
+	background-color: #717EE3;
+	min-height:300px;
+}
+
+.central-it {
+	border-radius:10px;
+	background-color: #717EE3;
+	min-height:300px;
+}
+
+.central-eng {
 	border-radius:10px;
 	background-color: #E37E71;
 	min-height:300px;
 }
-
 
 .item-count{
 	float:right;
@@ -31,7 +42,6 @@ html, body, .test-container. #main_form{
 	top:30px;
 	left:-45px;
 }
-
 
 .consigne{
 	position:absolute;
