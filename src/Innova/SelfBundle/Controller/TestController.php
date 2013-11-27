@@ -656,7 +656,7 @@ class TestController extends Controller
                     $repertoryName = strtolower($exp[0]);
                     //echo "<br />Exp0" . $exp[0];
                     $fileName = $exp[1];
-                    echo "<br />   " . $fichier . "  --   " . $repertoryName . " -- " . $fileName;
+                    //echo "<br />   " . $fichier . "  --   " . $repertoryName . " -- " . $fileName;
 
                     $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
                     //echo "<br />Rep : " . $repertoryMkDir;
@@ -725,7 +725,7 @@ class TestController extends Controller
                     //
                     //
                     $data[1] = strtolower($data[1]); // Mise en minuscules du nom du fichier suite aux tests.
-                    echo "<br />Traitement de : " . $data[1];
+                    //echo "<br />Traitement de : " . $data[1];
 
                     // Traitement sur le level
                     $libLevel = $data[2];
