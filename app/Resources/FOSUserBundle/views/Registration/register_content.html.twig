@@ -3,50 +3,71 @@
 
 <br>{# TODO: Berk c'est encore Eric qui à mis des BR! #}
 <div class="well">
-	<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
-		<fieldset>
-	       <div id="legend">
-	            <legend class="">Inscription</legend>{# TODO: i18n #}
-	        </div>
-		    
-			{{ form_errors(form) }}
+    <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
+        <fieldset>
+           <div id="legend">
+                <legend class="">Inscription</legend>{# TODO: i18n #}
+            </div>
 
-			<div class="form-group">
-				{{ form_errors(form.username) }}
-				<label class="col-lg-2 control-label required" for="fos_user_registration_form_username">Nom d'utilisateur :</label>
-				<div class="col-lg-10">
-					<input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
-				</div>
-			</div>
-			<div class="form-group">
-				{{ form_errors(form.email) }}
-				<label class="col-lg-2 control-label required" for="fos_user_registration_form_email">Adresse e-mail :</label>
-				<div class="col-lg-10">
-					<input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
-				</div>
-			</div>
-			<div class="form-group">
-				{{ form_errors(form.plainPassword.first) }}
-				<label class="col-lg-2 control-label required" for="fos_user_registration_form_plainPassword_first">Mot de passe :</label>
-				<div class="col-lg-10">
-					<input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-lg-2 control-label required" for="fos_user_registration_form_plainPassword_second">Retaper le mot de passe :</label>
-				<div class="col-lg-10">
-					<input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
-				</div>
-			</div>
-			<div class="form-group">
-				{{ form_widget(form._token) }}
-			     <div class="col-lg-offset-2 col-lg-10">
-		            <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary"/>
-		        </div>
-			</div>
+            {{ form_errors(form) }}
 
-		</fieldset>
-	</form>
+            <div class="form-group">
+                {{ form_errors(form.username) }}
+                <label class="col-lg-2 control-label required" for="fos_user_registration_form_username">Nom d'utilisateur :</label>
+                <div class="col-lg-10">
+                    <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_errors(form.email) }}
+                <label class="col-lg-2 control-label required" for="fos_user_registration_form_email">Adresse e-mail :</label>
+                <div class="col-lg-10">
+                    <input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_errors(form.plainPassword.first) }}
+                <label class="col-lg-2 control-label required" for="fos_user_registration_form_plainPassword_first">Mot de passe :</label>
+                <div class="col-lg-10">
+                    <input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label required" for="fos_user_registration_form_plainPassword_second">Retaper le mot de passe :</label>
+                <div class="col-lg-10">
+                    <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_errors(form.globalDialang) }}
+                <label class="col-lg-2 control-label required" for="fos_user_registration_form_globalDialang">Global Dialang :</label>
+                <div class="col-lg-10">
+                    <input class="form-control" id="fos_user_registration_form_globalDialang" required="required" name="fos_user_registration_form[globalDialang]">
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_errors(form.coDialang) }}
+                <label class="col-lg-2 control-label required" for="fos_user_registration_form_coDialang">C.O. Dialang :</label>
+                <div class="col-lg-10">
+                    <input class="form-control" id="fos_user_registration_form_coDialang" required="required" name="fos_user_registration_form[coDialang]">
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_errors(form.lansad) }}
+                <label class="col-lg-2 control-label required" for="fos_user_registration_form_lansad">Lansad :</label>
+                <div class="col-lg-10">
+                    <input class="form-control" id="fos_user_registration_form_lansad" required="required" name="fos_user_registration_form[lansad]">
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_widget(form._token) }}
+                 <div class="col-lg-offset-2 col-lg-10">
+                    <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary"/>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
 </div>
 
 

@@ -51,6 +51,27 @@ class User extends BaseUser
     */
     private $tests;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="globalDialang", type="string", length=255, nullable=true)
+     */
+    private $globalDialang;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="coDialang", type="string", length=255, nullable=true)
+     */
+    private $coDialang;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lansad", type="string", length=255, nullable=true)
+     */
+    private $lansad;
+
 
 	/**
 	 * Constructor
@@ -275,7 +296,7 @@ class User extends BaseUser
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-    
+
         return $this;
     }
 
@@ -292,10 +313,79 @@ class User extends BaseUser
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestionnaires()
     {
         return $this->questionnaires;
+    }
+
+    /**
+     * Set globalDialang
+     *
+     * @param string $globalDialang
+     * @return User
+     */
+    public function setGlobalDialang($globalDialang)
+    {
+        $this->globalDialang = $globalDialang;
+    
+        return $this;
+    }
+
+    /**
+     * Get globalDialang
+     *
+     * @return string 
+     */
+    public function getGlobalDialang()
+    {
+        return $this->globalDialang;
+    }
+
+    /**
+     * Set coDialang
+     *
+     * @param string $coDialang
+     * @return User
+     */
+    public function setCoDialang($coDialang)
+    {
+        $this->coDialang = $coDialang;
+    
+        return $this;
+    }
+
+    /**
+     * Get coDialang
+     *
+     * @return string 
+     */
+    public function getCoDialang()
+    {
+        return $this->coDialang;
+    }
+
+    /**
+     * Set lansad
+     *
+     * @param string $lansad
+     * @return User
+     */
+    public function setLansad($lansad)
+    {
+        $this->lansad = $lansad;
+    
+        return $this;
+    }
+
+    /**
+     * Get lansad
+     *
+     * @return string 
+     */
+    public function getLansad()
+    {
+        return $this->lansad;
     }
 }

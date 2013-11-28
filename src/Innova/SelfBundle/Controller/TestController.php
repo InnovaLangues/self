@@ -472,6 +472,8 @@ class TestController extends Controller
             //}
         }
 
+        var_dump($result["jojo"]["time"]);
+
         $csv .= "\n";
         $csv .= "\n";
 
@@ -531,16 +533,23 @@ class TestController extends Controller
         // BODY
         // Loop to display all data
         foreach ($tests as $test) {
-            $users = $test->getUsers();
+            $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
             //$questionnaires = $test->getQuestionnaires();
             //$questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllByTest($test);
             foreach ($users as $user) {
                 $csv .= $user->getUserName() . " " . $user->getEmail() . ";" ;
                 // For THE test, loop on the Questionnaire
                 // CR
+                //
+                //
+                $key = $user->getUserName();
+                echo $key;
+                //$csv .= $result["$key"]["date"] . ";" . $result["$key"]["time"] . ";" ;
+                //
+                //
+                //
                 $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
                 foreach ($questionnaires as $questionnaire) {
-
 
                     $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
                                     'questionnaire' => $questionnaire->getId()
@@ -550,6 +559,9 @@ class TestController extends Controller
                     foreach ($traces as $trace) {
                         $answers = $trace->getAnswers();
                         $csv .= ";" ;
+
+                        $csv .= date_format($trace->getDate(), 'd-m-Y');
+
                         $csv .= $trace->getDifficulty() . ";" ;
                         $csv .= $trace->getTotalTime() . ";" ;
                         //echo "trace = " . $trace->getId() . "-" . $user->getId() . "-" . $trace->getTotalTime() . "<br />";
