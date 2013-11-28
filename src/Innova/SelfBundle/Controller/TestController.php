@@ -51,9 +51,17 @@ class TestController extends Controller
             );
         }
 
+        // One color per language. Two languages for the moment : ang and it.
+        // In database, we must have "ang" in english test and "it" in italian test.
+        // See main.css for more information.
+        $language = "default";
+        if (preg_match("/ang/i", $test->getName() )) $language = "eng";
+        if (preg_match("/it/i", $test->getName() )) $language = "it";
+
         // $questionnaire = $this->getRandom($questionnaires);
         return array(
             'questionnaire' => $questionnaire,
+            'language' => $language,
             'test' => $test,
             'counQuestionnaireDone' => $countQuestionnaireDone,
         );
@@ -464,6 +472,8 @@ class TestController extends Controller
             //}
         }
 
+        var_dump($result["jojo"]["time"]);
+
         $csv .= "\n";
         $csv .= "\n";
 
@@ -523,16 +533,23 @@ class TestController extends Controller
         // BODY
         // Loop to display all data
         foreach ($tests as $test) {
-            $users = $test->getUsers();
+            $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
             //$questionnaires = $test->getQuestionnaires();
             //$questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllByTest($test);
             foreach ($users as $user) {
                 $csv .= $user->getUserName() . " " . $user->getEmail() . ";" ;
                 // For THE test, loop on the Questionnaire
                 // CR
+                //
+                //
+                $key = $user->getUserName();
+                echo $key;
+                //$csv .= $result["$key"]["date"] . ";" . $result["$key"]["time"] . ";" ;
+                //
+                //
+                //
                 $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
                 foreach ($questionnaires as $questionnaire) {
-
 
                     $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
                                     'questionnaire' => $questionnaire->getId()
@@ -542,6 +559,9 @@ class TestController extends Controller
                     foreach ($traces as $trace) {
                         $answers = $trace->getAnswers();
                         $csv .= ";" ;
+
+                        $csv .= date_format($trace->getDate(), 'd-m-Y');
+
                         $csv .= $trace->getDifficulty() . ";" ;
                         $csv .= $trace->getTotalTime() . ";" ;
                         //echo "trace = " . $trace->getId() . "-" . $user->getId() . "-" . $trace->getTotalTime() . "<br />";
@@ -694,7 +714,7 @@ class TestController extends Controller
 
         //echo $csvPath;
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 // Nombre de colonnes
                 $num = count($data);
                 $c = 0;

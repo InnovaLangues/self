@@ -5,8 +5,9 @@ namespace Innova\SelfBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
 
-class UserType extends AbstractType
+class UserType extends BaseType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -14,22 +15,16 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        parent::buildForm($builder, $options);
+
         $builder
-            ->add('lastName')
-            ->add('firstName')
-            ->add('username')
-            ->add('password')
-            ->add('email')
-            ->add('email_canonical', 'hidden')
-            ->add('enabled', 'hidden')
-            ->add('salt', 'hidden')
-            ->add('locked', 'hidden')
-            ->add('expired', 'hidden')
-            ->add('roles')
-            ->add('credentials_expired')
-        ;
+            ->add('globalDialang')
+            ->add('coDialang')
+            ->add('lansad')
+         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
