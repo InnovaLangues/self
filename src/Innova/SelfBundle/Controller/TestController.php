@@ -466,13 +466,11 @@ class TestController extends Controller
         foreach ($result as $key => $value) {
             //foreach ($result[$key] as $key2 => $value2) {
                 //echo $key . "/" . $result[$key]["name"] . "/" . $result[$key]["time"]. "<br />";
-                $csv .= $result[$key]["name"] . ";" . $result[$key]["date"] . ";" . $result[$key]["time"] . ";" ;
+                //$csv .= $result[$key]["name"] . ";" . $result[$key]["date"] . ";" . $result[$key]["time"] . ";" ;
                 // CR
                 $csv .= "\n";
             //}
         }
-
-        var_dump($result["jojo"]["time"]);
 
         $csv .= "\n";
         $csv .= "\n";
@@ -502,7 +500,9 @@ class TestController extends Controller
 
         // HEADER
         // Loop to display all questionnaire of the test
-        $csv .= "Code étudiant;" ; // A
+        $csv .= "Login;" ; // A
+        $csv .= "Code;" ; // B
+        $csv .= "Date;" ; // C
         foreach ($tests as $test) {
             $questionnaires = $test->getQuestionnaires();
             $cpt_questionnaire=0;
@@ -541,11 +541,9 @@ class TestController extends Controller
                 // For THE test, loop on the Questionnaire
                 // CR
                 //
+
                 //
-                $key = $user->getUserName();
-                echo $key;
-                //$csv .= $result["$key"]["date"] . ";" . $result["$key"]["time"] . ";" ;
-                //
+                $csv .= $user->getId() . ";";
                 //
                 //
                 $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
@@ -558,9 +556,7 @@ class TestController extends Controller
 
                     foreach ($traces as $trace) {
                         $answers = $trace->getAnswers();
-                        $csv .= ";" ;
-
-                        $csv .= date_format($trace->getDate(), 'd-m-Y');
+                        //$csv .= ";" ;
 
                         $csv .= $trace->getDifficulty() . ";" ;
                         $csv .= $trace->getTotalTime() . ";" ;
@@ -586,6 +582,7 @@ class TestController extends Controller
                     }
                 }
                 $csv .= "\n";
+
             }
         }
         // FOOTER
@@ -650,7 +647,7 @@ class TestController extends Controller
 
         // File import name
         $csvName = 'test-import.csv';
-        $csvName = 'mp2.csv'; // Suite réception MP.
+        $csvName = 'mp2-ok.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';

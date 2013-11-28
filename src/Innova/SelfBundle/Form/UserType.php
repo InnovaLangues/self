@@ -19,9 +19,11 @@ class UserType extends BaseType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('globalDialang')
-            ->add('coDialang')
-            ->add('lansad')
+            ->add('studentType')
+            ->add('lastLevel')
+            ->add('coLevel')
+            ->add('ceLevel')
+            ->add('eeLevel')
          ;
     }
 
