@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Level
+ * 28/11/2013 : Add "OneToMany" to User.
  *
  * @ORM\Table("questionnaireLevel")
  * @ORM\Entity
@@ -33,6 +34,10 @@ class Level
     */
     protected $questionnaires;
 
+    /**
+    * @ORM\OneToMany(targetEntity="User", mappedBy="level")
+    */
+    protected $users;
 
     /**
      * Constructor
@@ -114,5 +119,38 @@ class Level
     public function getQuestionnaires()
     {
         return $this->questionnaires;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \Innova\SelfBundle\Entity\User $users
+     * @return Level
+     */
+    public function addUser(\Innova\SelfBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+    
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Innova\SelfBundle\Entity\User $users
+     */
+    public function removeUser(\Innova\SelfBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

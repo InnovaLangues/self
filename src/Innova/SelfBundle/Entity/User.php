@@ -7,7 +7,8 @@ use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
- *
+ * 27/11/2013 : Add "global", "co", "lansad" columns. EV.
+ * 28/11/2013 : Add "studentType" and "*Skill" colums. Delete "global", "co", "lansad" columns. EV.
  * @ORM\Table(name="self_user")
  * @ORM\Entity
  */
@@ -54,24 +55,29 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="globalDialang", type="string", length=255, nullable=true)
+     * @ORM\Column(name="studentType", type="string", length=255, nullable=true)
      */
-    private $globalDialang;
+    private $studentType;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="coDialang", type="string", length=255, nullable=true)
-     */
-    private $coDialang;
+    * @ORM\ManyToOne(targetEntity="Level", inversedBy="users")
+    */
+    protected $coLevel;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="lansad", type="string", length=255, nullable=true)
-     */
-    private $lansad;
+    * @ORM\ManyToOne(targetEntity="Level", inversedBy="users")
+    */
+    protected $ceLevel;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Level", inversedBy="users")
+    */
+    protected $eeLevel;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Level", inversedBy="users")
+    */
+    protected $lastLevel;
 
 	/**
 	 * Constructor
@@ -321,71 +327,117 @@ class User extends BaseUser
     }
 
     /**
-     * Set globalDialang
+     * Set studentType
      *
-     * @param string $globalDialang
+     * @param string $studentType
      * @return User
      */
-    public function setGlobalDialang($globalDialang)
+    public function setStudentType($studentType)
     {
-        $this->globalDialang = $globalDialang;
-    
+        $this->studentType = $studentType;
+
         return $this;
     }
 
     /**
-     * Get globalDialang
+     * Get studentType
      *
-     * @return string 
+     * @return string
      */
-    public function getGlobalDialang()
+    public function getStudentType()
     {
-        return $this->globalDialang;
+        return $this->studentType;
     }
 
     /**
-     * Set coDialang
+     * Set coLevel
      *
-     * @param string $coDialang
+     * @param \Innova\SelfBundle\Entity\Level $coLevel
      * @return User
      */
-    public function setCoDialang($coDialang)
+    public function setCoLevel(\Innova\SelfBundle\Entity\Level $coLevel = null)
     {
-        $this->coDialang = $coDialang;
-    
+        $this->coLevel = $coLevel;
+
         return $this;
     }
 
     /**
-     * Get coDialang
+     * Get coLevel
      *
-     * @return string 
+     * @return \Innova\SelfBundle\Entity\Level
      */
-    public function getCoDialang()
+    public function getCoLevel()
     {
-        return $this->coDialang;
+        return $this->coLevel;
     }
 
     /**
-     * Set lansad
+     * Set ceLevel
      *
-     * @param string $lansad
+     * @param \Innova\SelfBundle\Entity\Level $ceLevel
      * @return User
      */
-    public function setLansad($lansad)
+    public function setCeLevel(\Innova\SelfBundle\Entity\Level $ceLevel = null)
     {
-        $this->lansad = $lansad;
-    
+        $this->ceLevel = $ceLevel;
+
         return $this;
     }
 
     /**
-     * Get lansad
+     * Get ceLevel
      *
-     * @return string 
+     * @return \Innova\SelfBundle\Entity\Level
      */
-    public function getLansad()
+    public function getCeLevel()
     {
-        return $this->lansad;
+        return $this->ceLevel;
+    }
+
+    /**
+     * Set eeLevel
+     *
+     * @param \Innova\SelfBundle\Entity\Level $eeLevel
+     * @return User
+     */
+    public function setEeLevel(\Innova\SelfBundle\Entity\Level $eeLevel = null)
+    {
+        $this->eeLevel = $eeLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get eeLevel
+     *
+     * @return \Innova\SelfBundle\Entity\Level
+     */
+    public function getEeLevel()
+    {
+        return $this->eeLevel;
+    }
+
+    /**
+     * Set lastLevel
+     *
+     * @param \Innova\SelfBundle\Entity\Level $lastLevel
+     * @return User
+     */
+    public function setLastLevel(\Innova\SelfBundle\Entity\Level $lastLevel = null)
+    {
+        $this->lastLevel = $lastLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get lastLevel
+     *
+     * @return \Innova\SelfBundle\Entity\Level
+     */
+    public function getLastLevel()
+    {
+        return $this->lastLevel;
     }
 }

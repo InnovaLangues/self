@@ -41,9 +41,7 @@ class MainController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
 //      $userTests = $user->getTests(); // Tous les tests de l'utilisateur X.
-
         $userTests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-
 
         $testsProgress = array();
         foreach ($userTests as $test) {
