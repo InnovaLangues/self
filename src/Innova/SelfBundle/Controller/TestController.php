@@ -500,13 +500,17 @@ class TestController extends Controller
 
         // HEADER
         // Loop to display all questionnaire of the test
-        $csv .= "Login;" ; // A
-        $csv .= "Date;" ; // B
-        $csv .= "Secondes;" ; // C
+        $csv .= "Mail;" ; // A
+        $csv .= "NOM;" ; // B
+        $csv .= "Prénom;" ; // C
+        $csv .= "Date;" ; // D
+        $csv .= "tpstot;" ; // E
 
-        $csv .= "Niveau Dialang CO;" ; // D
-        $csv .= "Acquis;" ; // E
-        $csv .= "Niveau global;" ; // F
+        $csv .= "filiere;" ; // F
+        $csv .= "nivlans;" ; // G
+        $csv .= "dialco;" ; // H
+        $csv .= "dialce;" ; // I
+        $csv .= "dialee;" ; // J
 
         $cpt_questionnaire=0;
         foreach ($tests as $test) {
@@ -516,9 +520,9 @@ class TestController extends Controller
                 // For THE test, loop on the Questionnaire
                 foreach ($questionnaires as $questionnaire) {
                     $cpt_questionnaire++;
-                    $csv .= "T" . $cpt_questionnaire . "-" . $questionnaire->getTheme() . ";";
-                    $csv .= "T" . $cpt_questionnaire . "-Diff.;";
-                    $csv .= "T" . $cpt_questionnaire . "-TEMPS;";
+                    $csv .= $questionnaire->getTheme() . ";";
+                    $csv .= "t" . $cpt_questionnaire . "diff;";
+                    $csv .= "t" . $cpt_questionnaire . "tps;";
                     $questions = $questionnaire->getQuestions();
                     foreach ($questions as $question) {
                         $subquestions = $question->getSubQuestions();
@@ -545,7 +549,9 @@ class TestController extends Controller
             //$questionnaires = $test->getQuestionnaires();
             //$questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllByTest($test);
             foreach ($users as $user) {
-                $csv .= $user->getUserName() . " " . $user->getEmail() . ";" ;
+                $csv .= $user->getEmail() . ";" ;
+                $csv .= $user->getUserName() . ";" ;
+                $csv .= $user->getFirstName() . ";" ;
                 // For THE test, loop on the Questionnaire
                 // CR
                 //
@@ -557,10 +563,14 @@ class TestController extends Controller
                 if ($countQuestionnaireDone > 0)
                 {
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
-                    // Add 3 colums for Level
+                    // Add 5 colums for Level
+                    //
+                    $csv .= $user->getStudentType() . ";";
+                    $csv .= $user->getLastLevel() . ";";
                     $csv .= $user->getCoLevel() . ";";
                     $csv .= $user->getCeLevel() . ";";
                     $csv .= $user->getEeLevel() . ";";
+                    //
                     $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
                     foreach ($questionnaires as $questionnaire) {
 
