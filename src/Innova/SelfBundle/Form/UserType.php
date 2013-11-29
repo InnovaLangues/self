@@ -20,6 +20,7 @@ class UserType extends BaseType
 
         $builder
             ->add('studentType')
+            ->add('firstName')
             ->add('lastLevel')
             ->add('coLevel')
             ->add('ceLevel')
