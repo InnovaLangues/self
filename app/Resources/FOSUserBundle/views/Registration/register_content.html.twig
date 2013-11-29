@@ -13,9 +13,16 @@
 
             <div class="form-group">
                 {{ form_errors(form.username) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_username">Nom, prénom :</label>
+                <label class="col-lg-2 control-label required" for="fos_user_registration_form_username">Nom :</label>
                 <div class="col-lg-10">
                     <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_errors(form.firstName) }}
+                <label class="col-lg-2 control-label required" for="fos_user_registration_form_firstName">Prénom :</label>
+                <div class="col-lg-10">
+                    <input value="{{ form.vars.value.firstName }}" class="form-control" id="fos_user_registration_form_firstName" type="text" maxlength="255" required="required" name="fos_user_registration_form[firstName]">
                 </div>
             </div>
             <div class="form-group">
@@ -38,51 +45,55 @@
                     <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
                 </div>
             </div>
-            {# studentType, user entity #}
-            <div class="form-group">
-                {{ form_errors(form.studentType) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_studentType">Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / Autres)</label>
-                <div class="col-lg-10">
-                    <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]">
-                </div>
-            </div>
-            {# lastLevel, user entity #}
-            <div class="form-group">
-                {{ form_errors(form.lastLevel) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_lastLevel">Quel était le niveau du dernier cours LANSAD que vous avez validé ?</label>
-                <div class="col-lg-10">
-                    {{ form_widget(form.lastLevel, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-            </div>
 
-            {# coLevel, user entity #}
-            <div class="form-group">
-                {{ form_errors(form.coLevel) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_coLevel">Niveau obtenu en CO (compréhension orale)</label>
-                <div class="col-lg-10">
-                    {{ form_widget(form.coLevel, { 'attr': {'class': 'form-control'} }) }}
+            <fieldset>
+                <legend>Filière</legend>
+                {# studentType, user entity #}
+                <div class="form-group">
+                    {{ form_errors(form.studentType) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_studentType">Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / Autres)</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]">
+                    </div>
                 </div>
-            </div>
-
-            {# ceLevel, user entity #}
-            <div class="form-group">
-                {{ form_errors(form.coLevel) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_ceLevel">Niveau obtenu en CE (compréhension écrite)</label>
-                <div class="col-lg-10">
-                    {{ form_widget(form.ceLevel, { 'attr': {'class': 'form-control'} }) }}
+                {# lastLevel, user entity #}
+                <div class="form-group">
+                    {{ form_errors(form.lastLevel) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_lastLevel">Quel était le niveau du dernier cours LANSAD que vous avez validé ?</label>
+                    <div class="col-lg-10">
+                        {{ form_widget(form.lastLevel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
                 </div>
-            </div>
-            {# eeLevel, user entity #}
-            <div class="form-group">
-                {{ form_errors(form.eeLevel) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_eeLevel">Niveau obtenu en EE (expression écrite) </label>
-                <div class="col-lg-10">
-                    {{ form_widget(form.eeLevel, { 'attr': {'class': 'form-control'} }) }}
+            </fieldset>
+
+            <fieldset>
+                <legend>Dialang</legend>
+                {# coLevel, user entity #}
+                <div class="form-group">
+                    {{ form_errors(form.coLevel) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_coLevel">Niveau obtenu en CO (compréhension orale)</label>
+                    <div class="col-lg-10">
+                        {{ form_widget(form.coLevel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
                 </div>
-            </div>
 
-
-
+                {# ceLevel, user entity #}
+                <div class="form-group">
+                    {{ form_errors(form.coLevel) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_ceLevel">Niveau obtenu en CE (compréhension écrite)</label>
+                    <div class="col-lg-10">
+                        {{ form_widget(form.ceLevel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                {# eeLevel, user entity #}
+                <div class="form-group">
+                    {{ form_errors(form.eeLevel) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_eeLevel">Niveau obtenu en EE (expression écrite) </label>
+                    <div class="col-lg-10">
+                        {{ form_widget(form.eeLevel, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </fieldset>
 
             <div class="form-group">
                 {{ form_widget(form._token) }}
