@@ -501,10 +501,13 @@ class TestController extends Controller
         // HEADER
         // Loop to display all questionnaire of the test
         $csv .= "Login;" ; // A
-        $csv .= "Code;" ; // B
-        $csv .= "Date;" ; // C
-        $csv .= "Secondes;" ; // D
-        $boolQuestionnaire = false;
+        $csv .= "Date;" ; // B
+        $csv .= "Secondes;" ; // C
+
+        $csv .= "Niveau Dialang CO;" ; // D
+        $csv .= "Acquis;" ; // E
+        $csv .= "Niveau global;" ; // F
+
         $cpt_questionnaire=0;
         foreach ($tests as $test) {
             if ($cpt_questionnaire == 0)
@@ -553,8 +556,11 @@ class TestController extends Controller
 
                 if ($countQuestionnaireDone > 0)
                 {
-                    $csv .= $user->getId() . ";";
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
+                    // Add 3 colums for Level
+                    $csv .= $user->getCoLevel() . ";";
+                    $csv .= $user->getCeLevel() . ";";
+                    $csv .= $user->getEeLevel() . ";";
                     $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
                     foreach ($questionnaires as $questionnaire) {
 
