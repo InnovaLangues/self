@@ -424,11 +424,11 @@ class TestController extends Controller
         $csv = '';
 
         // First line
-        $csv .= "NOM" . ";" ; // A
-        $csv .= "DATE" . ";" ; // B
-        $csv .= "TEMPS (s)" . ";" ; // C
+        //$csv .= "NOM" . ";" ; // A
+        //$csv .= "DATE" . ";" ; // B
+        //$csv .= "TEMPS (s)" . ";" ; // C
         // CR
-        $csv .= "\n";
+        //$csv .= "\n";
 
         // Loop for test
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
@@ -468,12 +468,12 @@ class TestController extends Controller
                 //echo $key . "/" . $result[$key]["name"] . "/" . $result[$key]["time"]. "<br />";
                 //$csv .= $result[$key]["name"] . ";" . $result[$key]["date"] . ";" . $result[$key]["time"] . ";" ;
                 // CR
-                $csv .= "\n";
+                //$csv .= "\n";
             //}
         }
 
         $csv .= "\n";
-        $csv .= "\n";
+        //$csv .= "\n";
 
         // Difficulty part
         $csv .= "Difficulté" . ";" ;
@@ -503,26 +503,31 @@ class TestController extends Controller
         $csv .= "Login;" ; // A
         $csv .= "Code;" ; // B
         $csv .= "Date;" ; // C
+        $csv .= "Secondes;" ; // D
+        $boolQuestionnaire = false;
+        $cpt_questionnaire=0;
         foreach ($tests as $test) {
-            $questionnaires = $test->getQuestionnaires();
-            $cpt_questionnaire=0;
-            // For THE test, loop on the Questionnaire
-            foreach ($questionnaires as $questionnaire) {
-                $cpt_questionnaire++;
-                $csv .= "T" . $cpt_questionnaire . "-" . $questionnaire->getTheme() . ";";
-                $csv .= "T" . $cpt_questionnaire . "-Diff.;";
-                $csv .= "T" . $cpt_questionnaire . "-TEMPS;";
-                $questions = $questionnaire->getQuestions();
-                foreach ($questions as $question) {
-                    $subquestions = $question->getSubQuestions();
-                    $cpt=0;
-                    foreach ($subquestions as $subquestion) {
-                        $cpt++;
-                        $csv .= "T" . $cpt_questionnaire . "-CORR-FAUX " . $cpt . ";" ; // Ajout d'une colonne pour chaque proposition de la question.
-                        /*foreach ($propositions as $proposition) {
-                                //echo $proposition->getRightAnswer();
-                        }*/
-                        $csv .= "T" . $cpt_questionnaire . "-prop. choisie;" ;
+            if ($cpt_questionnaire == 0)
+            {
+                $questionnaires = $test->getQuestionnaires();
+                // For THE test, loop on the Questionnaire
+                foreach ($questionnaires as $questionnaire) {
+                    $cpt_questionnaire++;
+                    $csv .= "T" . $cpt_questionnaire . "-" . $questionnaire->getTheme() . ";";
+                    $csv .= "T" . $cpt_questionnaire . "-Diff.;";
+                    $csv .= "T" . $cpt_questionnaire . "-TEMPS;";
+                    $questions = $questionnaire->getQuestions();
+                    foreach ($questions as $question) {
+                        $subquestions = $question->getSubQuestions();
+                        $cpt=0;
+                        foreach ($subquestions as $subquestion) {
+                            $cpt++;
+                            $csv .= "T" . $cpt_questionnaire . "-CORR-FAUX " . $cpt . ";" ; // Ajout d'une colonne pour chaque proposition de la question.
+                            /*foreach ($propositions as $proposition) {
+                                    //echo $proposition->getRightAnswer();
+                            }*/
+                            $csv .= "T" . $cpt_questionnaire . "-prop. choisie;" ;
+                        }
                     }
                 }
             }
@@ -541,42 +546,47 @@ class TestController extends Controller
                 // For THE test, loop on the Questionnaire
                 // CR
                 //
+                $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                    ->CountDoneYetByUserByTest($test->getId(), $user->getId());
 
-                //
-                $csv .= $user->getId() . ";";
-                //
-                //
-                $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
-                foreach ($questionnaires as $questionnaire) {
+                $countQuestionnaire = count($test->getQuestionnaires());
 
-                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
-                                    'questionnaire' => $questionnaire->getId()
-                                    )
-                                );
+                if ($countQuestionnaireDone > 0)
+                {
+                    $csv .= $user->getId() . ";";
+                    $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
+                    $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+                    foreach ($questionnaires as $questionnaire) {
 
-                    foreach ($traces as $trace) {
-                        $answers = $trace->getAnswers();
-                        //$csv .= ";" ;
+                        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
+                                        'questionnaire' => $questionnaire->getId()
+                                        )
+                                    );
 
-                        $csv .= $trace->getDifficulty() . ";" ;
-                        $csv .= $trace->getTotalTime() . ";" ;
-                        //echo "trace = " . $trace->getId() . "-" . $user->getId() . "-" . $trace->getTotalTime() . "<br />";
+                        foreach ($traces as $trace) {
+                            $answers = $trace->getAnswers();
+                            $csv .= ";" ;
 
-                        foreach ($answers as $answer) {
-                            $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
-                            $cptProposition = 0;
-                            foreach ($propositions as $proposition) {
-                                $cptProposition++;
-                                if ($proposition->getId() === $answer->getProposition()->getId()) {
-                                    $propositionRank = $cptProposition;
+                            $csv .= $trace->getDifficulty() . ";" ;
+                            $csv .= $trace->getTotalTime() . ";" ;
+                            //echo "trace = " . $trace->getId() . "-" . $user->getId() . "-" . $trace->getTotalTime() . "<br />";
+
+                            foreach ($answers as $answer) {
+                                $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
+                                $cptProposition = 0;
+                                foreach ($propositions as $proposition) {
+                                    $cptProposition++;
+                                    if ($proposition->getId() === $answer->getProposition()->getId()) {
+                                        $propositionRank = $cptProposition;
+                                    }
                                 }
-                            }
-                            $csv .= ($answer->getProposition()->getRightAnswer() ? '1' : '0') . ";";
+                                $csv .= ($answer->getProposition()->getRightAnswer() ? '1' : '0') . ";";
 
-                            if ($answer->getProposition()->getTitle() != "") {
-                                $csv .= $answer->getProposition()->getTitle() . ";";
-                            } else {
-                                $csv .= "proposition " . $propositionRank . ";";
+                                if ($answer->getProposition()->getTitle() != "") {
+                                    $csv .= $answer->getProposition()->getTitle() . ";";
+                                } else {
+                                    $csv .= "proposition " . $propositionRank . ";";
+                                }
                             }
                         }
                     }
@@ -666,38 +676,28 @@ class TestController extends Controller
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..') {
-                    //echo "<br />Fichier = " . $fichier;
                     $exp = explode("_", $fichier);
-                    //var_dump($exp);
 
                     $repertoryName = strtolower($exp[0]);
-                    //echo "<br />Exp0" . $exp[0];
                     $fileName = $exp[1];
-                    //echo "<br />   " . $fichier . "  --   " . $repertoryName . " -- " . $fileName;
 
                     $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
-                    //echo "<br />Rep : " . $repertoryMkDir;
                     // Création du répertoire (s'il n'est pas déjà créé)
                     if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
 
-                    //echo "<br />fileName = " . $fileName;
                     if (preg_match("/amorce/i", $fileName))
                     {
-                        //echo "<br />copie Amorce" . $csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3";
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
                     }
                     if (preg_match("/option/i", $fileName))
                     {
                         $number = explode(".", $exp[2]);
-                        //echo "<br />copie Option" . $csvPathImportMp3 . $fichier, $repertoryMkDir . "/optionX.mp3";
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
                     }
                     if (preg_match("/txt/i", $fileName))
                     {
-                        //echo "<br />copie Txt" . $csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3";
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
                     }
-                    //echo "<br />";
                 }
             }
         }
@@ -723,8 +723,6 @@ class TestController extends Controller
                     // Première partie : ajout dans la table Questionnaire
                     //
                     //
-//                    echo "dans while/if";
-//                    echo " row = " . $row . " - c = " . $c . " - " . " data = " . $data[$c];
 
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
@@ -742,7 +740,6 @@ class TestController extends Controller
                     //
                     //
                     $data[1] = strtolower($data[1]); // Mise en minuscules du nom du fichier suite aux tests.
-                    //echo "<br />Traitement de : " . $data[1];
 
                     // Traitement sur le level
                     $libLevel = $data[2];
@@ -813,7 +810,6 @@ class TestController extends Controller
                     //
 
                     // Traitement suivi le type de questionnaire.
-                    //echo "<br />Type = " . $data[4];
                     switch($data[4])
                     {
                         case "TQRU";
