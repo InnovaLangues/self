@@ -1,7 +1,7 @@
 <h4> {{ subquestion.title }}</h4>
 {% set bulleCount = i + 1 %}
 <p>
-    {{ macros.audio("subquestion"+subquestion.id, subquestion.media.url, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
+    {{ macros.media("subquestion"+subquestion.id, subquestion.media, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
     {% for proposition in subquestion.propositions %}
         {{ macros.inputs("radio", subquestion.id, proposition.id, proposition.media.name, 90, 0, "Ecouter cette proposition de réponse") }}
     {% endfor %}

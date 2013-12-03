@@ -4,7 +4,7 @@
 {% for proposition in subquestion.propositions | shuffle %}
     {% set bulleCount = bulleCount + 1 %}
     <p>
-        {{ macros.audio("proposition"+proposition.id, proposition.media.url, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
+        {{ macros.media("proposition"+proposition.id, proposition.media, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
         {{ macros.inputs("radio", subquestion.id, proposition.id, proposition.title) }}
     </p>
 {% endfor %}
