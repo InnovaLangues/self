@@ -86,39 +86,17 @@
                         <div class="proposition-icon">
                             {% for question in questionnaire.questions %}
                                 {% for subquestion in question.subquestions %}
-                                    {% set bulleCount = 0 %}
-                                <h4> {{ subquestion.title }}</h4>
-                                <p>
-                                    {% if subquestion.typology.name == "VF" and subquestion.media!= "" %}
-                                        {% set bulleCountVf = bulleCountVf + 1 %}
-                                        {{ audio.audio("subquestion"+subquestion.id, subquestion.media.url, "bulle"~ bulleCountVf ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
+
+
+                                    {% if subquestion.typology.name  == "QRM" %}
+                                        {% include "partials/QRM.html.twig" %}
+                                    {% elseif subquestion.typology.name  == "QRU" %}
+                                         {% include "partials/QRU.html.twig" %}
+                                    {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
+                                        {% include "partials/VF.html.twig" %}
                                     {% endif %}
 
-                                    {% if subquestion.typology.name == "VF" or subquestion.typology.name == "VFPM" %}
-                                        {% for proposition in subquestion.propositions %}
-                                            {% set bulleCount = bulleCount + 1 %}
-                                                {{ inputs.inputs("radio", subquestion.id, proposition.id, proposition.media.name, 90, 0, "Ecouter cette proposition de réponse") }}
-                                                {% if subquestion.media == "" %}
-                                                    <br/>
-                                                {% endif %}
-                                        {% endfor %}
-                                    {% else %}
-                                        {% for proposition in subquestion.propositions | shuffle %}
-                                            {% set bulleCount = bulleCount + 1 %}
-                                            {% if subquestion.typology.name == "QRU" %}
-                                            <p>
-                                                {{ audio.audio("proposition"+proposition.id, proposition.media.url, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
-                                                {{ inputs.inputs("radio", subquestion.id, proposition.id, proposition.title) }}
-                                            </p>
-                                            {% elseif subquestion.typology.name == "QRM" %}
-                                            <p>
-                                                {{ audio.audio("proposition"+proposition.id, proposition.media.url,  "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
-                                                {{ inputs.inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
-                                            </p>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                </p>
+                                    
                                 {% endfor %}
                             {% endfor %}
                         </div>
