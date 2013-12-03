@@ -31,15 +31,6 @@
 {% import _self as audio %}
 {% import _self as inputs %}
 
-{#
-{% if (questionnaire.questions|length == 1) and (questionnaire.audioInstruction == "") %}
-    {% set consigne = questionnaire.questions[0].audioUrl %}
-{% else %}
-    {% set consigne = questionnaire.audioInstruction %}
-{% endif %}
-#}
-
-
 {% if questionnaire.ListeningLimit == 1 %}
     {% set limit_listening_text = "écoute" %}
 {% else %}
@@ -85,19 +76,17 @@
                      <div class="row col-md-6 col-md-offset-1 proposition">
                         <div class="proposition-icon">
                             {% for question in questionnaire.questions %}
-                                {% for subquestion in question.subquestions %}
 
-
+                                {% for i, subquestion in question.subquestions %}
                                     {% if subquestion.typology.name  == "QRM" %}
-                                        {% include "partials/QRM.html.twig" %}
+                                        {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
                                     {% elseif subquestion.typology.name  == "QRU" %}
-                                         {% include "partials/QRU.html.twig" %}
+                                         {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
                                     {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
-                                        {% include "partials/VF.html.twig" %}
+                                        {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
                                     {% endif %}
-
-                                    
                                 {% endfor %}
+                                
                             {% endfor %}
                         </div>
                     </div>
@@ -115,7 +104,6 @@
             </div>
         </div>
      </div>
-
 {% endblock %}
 
 {% block javascripts %}

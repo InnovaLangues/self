@@ -1,16 +1,8 @@
-{% set bulleCount = 0 %}
 <h4> {{ subquestion.title }}</h4>
+{% set bulleCount = i + 1 %}
 <p>
-    {% if subquestion.media != "" %}
-        {% set bulleCountVf = bulleCountVf + 1 %}
-        {{ audio.audio("subquestion"+subquestion.id, subquestion.media.url, "bulle"~ bulleCountVf ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
-    {% endif %}
-
+    {{ audio.audio("subquestion"+subquestion.id, subquestion.media.url, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
     {% for proposition in subquestion.propositions %}
-        {% set bulleCount = bulleCount + 1 %}
         {{ inputs.inputs("radio", subquestion.id, proposition.id, proposition.media.name, 90, 0, "Ecouter cette proposition de réponse") }}
-        {% if subquestion.media == "" %}
-            <br/>
-        {% endif %}
     {% endfor %}
 </p>
