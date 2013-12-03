@@ -28,8 +28,7 @@
     </label>
 {% endmacro %}
 
-{% import _self as audio %}
-{% import _self as inputs %}
+{% import _self as macros %}
 
 {% if questionnaire.ListeningLimit == 1 %}
     {% set limit_listening_text = "écoute" %}
@@ -38,43 +37,36 @@
 {% endif %}
 
 {% block body -%}
-
-    {% set bulleCountVf = 0 %}
-     <div class="row col-md-12 test-container">
-         <div class="row col-md-12 main">
-
+     <div class="test-container">
+         <div class="row main">
             {% if questionnaire.mediaContext != "" %}
             <div class="contexte">
-                {{ audio.audio("context", questionnaire.mediaContext.url, "contexte.png", 90, 0, "Ecouter le contexte dans lequel se déroule cette situation") }}
+                {{ macros.audio("context", questionnaire.mediaContext.url, "contexte.png", 90, 0, "Ecouter le contexte dans lequel se déroule cette situation") }}
             </div>
             {% endif %}
 
+            <div class="consigne">
             {% if questionnaire.mediaInstruction != "" %}
-            <div class="consigne">
-                {{ audio.audio("instruction", questionnaire.mediaInstruction.url, "oignon.png", 90, 0, "Ecouter la consigne didactique") }}
-            </div>
+                {{ macros.audio("instruction", questionnaire.mediaInstruction.url, "oignon.png", 90, 0, "Ecouter la consigne didactique") }}
             {% else %}
-            <div class="consigne">
-                {{ audio.audio("instruction", questionnaire.questions[0].subquestions[0].mediaAmorce.url, "oignon.png", 90, 0, "Ecouter la consigne didactique") }}
-            </div>
+                {{ macros.audio("instruction", questionnaire.questions[0].subquestions[0].mediaAmorce.url, "oignon.png", 90, 0, "Ecouter la consigne didactique") }}
             {% endif %}
-
+            </div>
             {# language = to have the color per language. #}
-            <div class="row col-md-12 pull-right central-{{ language }}">
+            <div class="col-md-12 pull-right central-{{ language }}">
                 <form id="main_form" action="{{ path('trace_submit') }}" method="post">
                      <div class="col-md-4 col-md-offset-1 situation vertical-align-center">
                         <div class="situation-icon">
                             {% if questionnaire.dialogue == 1 %}
-                                {{ audio.audio("situtation", questionnaire.mediaText.url, "situation_dialogue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
+                                {{ macros.audio("situtation", questionnaire.mediaText.url, "situation_dialogue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
                             {% else %}
-                                {{ audio.audio("situtation", questionnaire.mediaText.url, "situation_monologue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
-
+                                {{ macros.audio("situtation", questionnaire.mediaText.url, "situation_monologue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
                             {% endif %}
                             <div>Reste <span data-limit={{ questionnaire.ListeningLimit }} id="limit_listening">{{ questionnaire.ListeningLimit }}</span> <span id="limit_listening_text">{{ limit_listening_text }}</span> </div>
                         </div>
                     </div>
-                     <div class="row col-md-6 col-md-offset-1 proposition">
-                        <div class="proposition-icon">
+                     <div class="col-md-6 col-md-offset-1">
+                        <div class="proposition">
                             {% for question in questionnaire.questions %}
 
                                 {% for i, subquestion in question.subquestions %}
@@ -86,7 +78,7 @@
                                         {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
                                     {% endif %}
                                 {% endfor %}
-                                
+
                             {% endfor %}
                         </div>
                     </div>
@@ -98,7 +90,7 @@
                 </form>
             </div>
         </div>
-        <div class="row col-md-12">
+        <div>
              <div class="row col-md-2 col-md-offset-10 item-count">
                 Item n° {{ counQuestionnaireDone + 1 }}/{{ test.questionnaires.count }}
             </div>
