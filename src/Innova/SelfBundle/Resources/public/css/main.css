@@ -81,3 +81,11 @@ html, body, .test-container. #main_form{
 input[type="checkbox"], input[type="radio"], label{
 	cursor: pointer;
 }
+
+.answer{
+	display:inline-block;
+	border:1px dotted black;
+	min-width: 68px;
+	min-height:60px;
+	vertical-align: middle;
+}

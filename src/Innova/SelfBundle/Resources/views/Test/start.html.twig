@@ -37,6 +37,8 @@
                                          {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
                                     {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
                                         {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
+                                    {% elseif subquestion.typology.name  == "APPAT" %}
+                                        {% include "InnovaSelfBundle:Test/partials:APP.html.twig" %}
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}
@@ -60,4 +62,5 @@
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/main.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/dragAndDrop.js") }}"></script>
 {% endblock %}
