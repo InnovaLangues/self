@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 	$( ".droppable" ).droppable({
 		accept: ".draggable",
-		activeClass: "ui-state-hover",
+		activeClass: "valid-target",
 		drop: function( event, ui ) {
 			$(this).droppable('option', 'accept', ui.draggable);
 		},

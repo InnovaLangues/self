@@ -23,10 +23,10 @@
         {# language = to have the color per language. #}
         <div class="col-md-12 central-{{ language }}">
             <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
-                <div class="col-md-6 situation">
+                <div class="col-md-5 situation">
                     {% include "InnovaSelfBundle:Test/partials:texte.html.twig" %}
                 </div>
-                 <div class="col-md-6">
+                 <div class="col-md-7">
                     {% for question in questionnaire.questions %}
                         {% for i, subquestion in question.subquestions %}
                         <div class="subquestion">

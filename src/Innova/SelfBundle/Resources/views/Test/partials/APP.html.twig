@@ -9,6 +9,7 @@
 	    {% set bulleCount = bulleCount + 1 %}
 	    <div class="droppable source">
 		    <div propositionId="{{ proposition.id }}" class="proposition draggable">
+		    	<span class="glyphicon glyphicon-move touch-me"></span>
 		        {{ macros.media("proposition"+proposition.id, proposition.media,  "situation_monologue.png", 70, 0, "Proposition à associer à un élément de gauche") }}
 		    </div>
 		</div>

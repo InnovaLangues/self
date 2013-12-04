@@ -68,6 +68,22 @@ input[type="checkbox"], input[type="radio"], label{
 	cursor: pointer;
 }
 
+
+.audio-container{
+	display:inline-block;
+}
+
+
+/* Drag and drop */
+.touch-me{
+	cursor:move;
+	height:30px;
+}
+
+.valid-target{
+	border:1px dotted white;
+}
+
 .answer{
 	width:160px;
 	height:100px;
@@ -79,9 +95,9 @@ input[type="checkbox"], input[type="radio"], label{
 
 .source{
 	margin-bottom:10px;
+	text-align:center;
 }
 
 .answer, .source{
-	padding:5px;
 	border:1px dotted black;
 }
