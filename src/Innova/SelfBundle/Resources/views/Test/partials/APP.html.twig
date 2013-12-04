@@ -1,16 +1,15 @@
 {% set bulleCount = i + 1 %}
 <div> 
 	{{ macros.media("apparriement"+subquestion.id, subquestion.media,  "bulle"~ bulleCount ~".png", 90, 0, "Liez une proposition de droite à cet élément") }}
-	<span class="answer droppable"></span>
+	<span subquestionId="{{ subquestion.id }}" class="answer droppable"></span>
 </div>
 {% if i == 0 %}
 <div class="pull-right">
 	{% for proposition in subquestion.propositions | shuffle %}
 	    {% set bulleCount = bulleCount + 1 %}
 	    <div class="droppable source">
-		    <div class="draggable">
-		    	prop
-		        {{ macros.media("proposition"+proposition.id, proposition.media,  "bulle"~ bulleCount ~".png", 90, 0, "Proposition à associer à un élément de gauche") }}
+		    <div propositionId="{{ proposition.id }}" class="proposition draggable">
+		        {{ macros.media("proposition"+proposition.id, proposition.media,  "situation_monologue.png", 70, 0, "Proposition à associer à un élément de gauche") }}
 		    </div>
 		</div>
 	{% endfor %}

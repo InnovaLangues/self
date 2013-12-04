@@ -20,27 +20,28 @@ $(document).ready(function() {
 	});
 
 	$(".item_audio_button").click(function(){
-		var limit = Number($(this).attr("data-limit"));
-		var listened = Number($(this).attr("data-listened"));
+		var btn = $(this);
+		var limit = Number(btn.attr("data-limit"));
+		var listened = Number(btn.attr("data-listened"));
 
 
 		if(!play_in_progress && (limit == 0 || listened < limit)){
 			play_in_progress = true;
-			sound = $(this).attr("sound");
+			sound = btn.attr("sound");
 			audio = document.getElementById(sound);
 
 			listened++;
-			$(this).attr("data-listened", listened);
+			btn.attr("data-listened", listened);
 
 			if (sound == "situtation"){
-				var reste = limit - $(this).attr("data-listened");
+				var reste = limit - btn.attr("data-listened");
 				$("#limit_listening").html(reste);
 				if(reste < 2){
 					$("#limit_listening_text").html("écoute");
 				}
 			}
 			$(".item_audio_button").css("opacity","0.5");
-			$(this).css("opacity","1");
+			btn.css("opacity","1");
 			audio.play();
 		}
 	});

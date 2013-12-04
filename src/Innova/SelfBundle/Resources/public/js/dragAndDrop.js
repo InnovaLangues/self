@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	$( ".draggable" ).draggable({
+		snap: true,
 		revert: "invalid"
 	});
+
 	$( ".droppable" ).droppable({
 		accept: ".draggable",
 		activeClass: "ui-state-hover",
