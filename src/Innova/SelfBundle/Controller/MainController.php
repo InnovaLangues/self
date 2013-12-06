@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 /**
  * Main controller.
  *
@@ -23,6 +25,7 @@ class MainController extends Controller
      */
     public function showHelpAction()
     {
+
         $user = $this->get('security.context')->getToken()->getUser();
 
         return array(
@@ -36,6 +39,9 @@ class MainController extends Controller
      */
     public function showTestsAction()
     {
+
+        $session = $this->container->get('request')->getSession();
+        $session->set('item', 0);
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->get('security.context')->getToken()->getUser();

@@ -5,12 +5,12 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MediaType
+ * OriginStudent
  *
- * @ORM\Table("mediaType")
+ * @ORM\Table("originStudent")
  * @ORM\Entity
  */
-class MediaType
+class OriginStudent
 {
     /**
      * @var integer
@@ -29,16 +29,13 @@ class MediaType
     private $name;
 
     /**
-    * @ORM\OneToMany(targetEntity="Media", mappedBy="mediaType")
+    * @ORM\OneToMany(targetEntity="User", mappedBy="originStudent")
     */
-    protected $medias;
+    protected $originStudents;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->medias = new \Doctrine\Common\Collections\ArrayCollection();
+
+    public function __toString(){
+        return $this->name;
     }
 
     /**
@@ -55,7 +52,7 @@ class MediaType
      * Set name
      *
      * @param string $name
-     * @return MediaType
+     * @return OriginStudent
      */
     public function setName($name)
     {
@@ -73,37 +70,44 @@ class MediaType
     {
         return $this->name;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->originStudents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
-     * Add medias
+     * Add originStudents
      *
-     * @param \Innova\SelfBundle\Entity\Media $medias
-     * @return MediaType
+     * @param \Innova\SelfBundle\Entity\User $originStudents
+     * @return OriginStudent
      */
-    public function addMedia(\Innova\SelfBundle\Entity\Media $medias)
+    public function addOriginStudent(\Innova\SelfBundle\Entity\User $originStudents)
     {
-        $this->medias[] = $medias;
+        $this->originStudents[] = $originStudents;
 
         return $this;
     }
 
     /**
-     * Remove medias
+     * Remove originStudents
      *
-     * @param \Innova\SelfBundle\Entity\Media $medias
+     * @param \Innova\SelfBundle\Entity\User $originStudents
      */
-    public function removeMedia(\Innova\SelfBundle\Entity\Media $medias)
+    public function removeOriginStudent(\Innova\SelfBundle\Entity\User $originStudents)
     {
-        $this->medias->removeElement($medias);
+        $this->originStudents->removeElement($originStudents);
     }
 
     /**
-     * Get medias
+     * Get originStudents
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMedias()
+    public function getOriginStudents()
     {
-        return $this->medias;
+        return $this->originStudents;
     }
 }

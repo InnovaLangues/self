@@ -1,7 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-
-<br>{# TODO: Berk c'est encore Eric qui à mis des BR! #}
+<br>
 <div class="well">
     <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
         <fieldset>
@@ -55,20 +54,21 @@
 
             <fieldset>
                 <legend>Filière</legend>
-                {# studentType, user entity #}
+                {# originStudent, user entity #}
                 <div class="form-group">
-                    {{ form_errors(form.studentType) }}
-                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_studentType">Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / Autres)</label>
+                    {{ form_errors(form.originStudent) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_originStudent">Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / Autres)</label>
                     <div class="col-lg-10">
-                        <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]">
+                        {# <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]"> #}
+                        {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                 </div>
                 {# lastLevel, user entity #}
                 <div class="form-group">
-                    {{ form_errors(form.lastLevel) }}
-                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_lastLevel">Quel était le niveau du dernier cours LANSAD que vous avez validé ?</label>
+                    {{ form_errors(form.levelLansad) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_levelLansad">Quel était le niveau du dernier cours LANSAD que vous avez validé ?</label>
                     <div class="col-lg-10">
-                        {{ form_widget(form.lastLevel, { 'attr': {'class': 'form-control'} }) }}
+                        {{ form_widget(form.levelLansad, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                 </div>
             </fieldset>
@@ -112,7 +112,3 @@
         </fieldset>
     </form>
 </div>
-
-
-
-

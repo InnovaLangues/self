@@ -19,10 +19,10 @@ class UserType extends BaseType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('studentType')
             ->add('lastName')
             ->add('firstName')
-            ->add('lastLevel')
+            ->add('originStudent')
+            ->add('levelLansad')
             ->add('coLevel')
             ->add('ceLevel')
             ->add('eeLevel')

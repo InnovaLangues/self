@@ -18,6 +18,8 @@ use Innova\SelfBundle\Form\TestType;
 use Innova\SelfBundle\Entity\MediaType;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 class TestController extends Controller
 {
 
@@ -30,6 +32,10 @@ class TestController extends Controller
      */
     public function startAction(Test $test)
     {
+
+        $session = $this->container->get('request')->getSession();
+
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -40,6 +46,8 @@ class TestController extends Controller
             ->CountDoneYetByUserByTest($test->getId(), $user->getId());
 
         $countQuestionnaire = count($test->getQuestionnaires());
+
+        $session->set('item', $countQuestionnaireDone);
 
         if (is_null($questionnaire)) {
 

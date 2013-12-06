@@ -35,9 +35,19 @@ class Level
     protected $questionnaires;
 
     /**
-    * @ORM\OneToMany(targetEntity="User", mappedBy="level")
+    * @ORM\OneToMany(targetEntity="User", mappedBy="coLevel")
     */
-    protected $users;
+    protected $coLevels;
+
+    /**
+    * @ORM\OneToMany(targetEntity="User", mappedBy="ceLevel")
+    */
+    protected $ceLevels;
+
+    /**
+    * @ORM\OneToMany(targetEntity="User", mappedBy="eeLevel")
+    */
+    protected $eeLevels;
 
     /**
      * Constructor
@@ -130,7 +140,7 @@ class Level
     public function addUser(\Innova\SelfBundle\Entity\User $users)
     {
         $this->users[] = $users;
-    
+
         return $this;
     }
 
@@ -147,10 +157,142 @@ class Level
     /**
      * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add coLevels
+     *
+     * @param \Innova\SelfBundle\Entity\User $coLevels
+     * @return Level
+     */
+    public function addCoLevel(\Innova\SelfBundle\Entity\User $coLevels)
+    {
+        $this->coLevels[] = $coLevels;
+
+        return $this;
+    }
+
+    /**
+     * Remove coLevels
+     *
+     * @param \Innova\SelfBundle\Entity\User $coLevels
+     */
+    public function removeCoLevel(\Innova\SelfBundle\Entity\User $coLevels)
+    {
+        $this->coLevels->removeElement($coLevels);
+    }
+
+    /**
+     * Get coLevels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCoLevels()
+    {
+        return $this->coLevels;
+    }
+
+    /**
+     * Add ceLevels
+     *
+     * @param \Innova\SelfBundle\Entity\User $ceLevels
+     * @return Level
+     */
+    public function addCeLevel(\Innova\SelfBundle\Entity\User $ceLevels)
+    {
+        $this->ceLevels[] = $ceLevels;
+
+        return $this;
+    }
+
+    /**
+     * Remove ceLevels
+     *
+     * @param \Innova\SelfBundle\Entity\User $ceLevels
+     */
+    public function removeCeLevel(\Innova\SelfBundle\Entity\User $ceLevels)
+    {
+        $this->ceLevels->removeElement($ceLevels);
+    }
+
+    /**
+     * Get ceLevels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCeLevels()
+    {
+        return $this->ceLevels;
+    }
+
+    /**
+     * Add eeLevels
+     *
+     * @param \Innova\SelfBundle\Entity\User $eeLevels
+     * @return Level
+     */
+    public function addEeLevel(\Innova\SelfBundle\Entity\User $eeLevels)
+    {
+        $this->eeLevels[] = $eeLevels;
+
+        return $this;
+    }
+
+    /**
+     * Remove eeLevels
+     *
+     * @param \Innova\SelfBundle\Entity\User $eeLevels
+     */
+    public function removeEeLevel(\Innova\SelfBundle\Entity\User $eeLevels)
+    {
+        $this->eeLevels->removeElement($eeLevels);
+    }
+
+    /**
+     * Get eeLevels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEeLevels()
+    {
+        return $this->eeLevels;
+    }
+
+    /**
+     * Add lastLevels
+     *
+     * @param \Innova\SelfBundle\Entity\User $lastLevels
+     * @return Level
+     */
+    public function addLastLevel(\Innova\SelfBundle\Entity\User $lastLevels)
+    {
+        $this->lastLevels[] = $lastLevels;
+
+        return $this;
+    }
+
+    /**
+     * Remove lastLevels
+     *
+     * @param \Innova\SelfBundle\Entity\User $lastLevels
+     */
+    public function removeLastLevel(\Innova\SelfBundle\Entity\User $lastLevels)
+    {
+        $this->lastLevels->removeElement($lastLevels);
+    }
+
+    /**
+     * Get lastLevels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLastLevels()
+    {
+        return $this->lastLevels;
     }
 }

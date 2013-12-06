@@ -43,6 +43,11 @@ class Test
      */
     private $users;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Language", inversedBy="tests")
+    */
+    protected $language;
+
     public function __construct() {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
@@ -160,7 +165,7 @@ class Test
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
     {
         $this->traces[] = $traces;
-    
+
         return $this;
     }
 
@@ -177,10 +182,33 @@ class Test
     /**
      * Get traces
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTraces()
     {
         return $this->traces;
+    }
+
+    /**
+     * Set language
+     *
+     * @param \Innova\SelfBundle\Entity\Language $language
+     * @return Test
+     */
+    public function setLanguage(\Innova\SelfBundle\Entity\Language $language = null)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return \Innova\SelfBundle\Entity\Language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }

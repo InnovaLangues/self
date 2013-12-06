@@ -1,7 +1,7 @@
 <?php
 
 namespace Innova\SelfBundle\Repository;
- 
+
 use Doctrine\ORM\EntityRepository;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
@@ -26,6 +26,36 @@ class QuestionnaireRepository extends EntityRepository{
 				->setParameter('testId', $testId)
 				->setParameter('userId', $userId);
 		return count($query->getResult());
+	}
+
+    /**
+     * Count Trace By user/test/questionnaire
+     *
+     */
+	public function CountTraceByUserByTestByQuestionnaire($testId, $questionnaireId, $userId){
+		$dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t WHERE t.user = :userId AND t.test = :testId AND t.questionnaire = :questionnaireId";
+
+		$query = $this->_em->createQuery($dql)
+				->setParameter('testId', $testId)
+				->setParameter('questionnaireId', $questionnaireId)
+				->setParameter('userId', $userId);
+
+		return count($query->getResult());
+	}
+
+    /**
+     * Trace By user/test/questionnaire
+     *
+     */
+	public function findOneByUserByTestByQuestionnaire($testId, $questionnaireId, $userId){
+		$dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t WHERE t.user = :userId AND t.test = :testId AND t.questionnaire = :questionnaireId";
+
+		$query = $this->_em->createQuery($dql)
+				->setParameter('testId', $testId)
+				->setParameter('questionnaireId', $questionnaireId)
+				->setParameter('userId', $userId);
+
+		return $query->getResult();
 	}
 
 

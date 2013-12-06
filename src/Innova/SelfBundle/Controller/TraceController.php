@@ -15,7 +15,7 @@ class TraceController extends Controller
 {
 
     /**
-     * Save Trace and display a form to set the difficulty 
+     * Save Trace and display a form to set the difficulty
      *
      * @Route("trace_submit", name="trace_submit")
      * @Method("POST")
@@ -30,6 +30,22 @@ class TraceController extends Controller
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($post["questionnaireId"]);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($post["testId"]);
         $user = $this->get('security.context')->getToken()->getUser();
+
+        $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')
+            ->CountTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
+
+        /* If I already have a TRACE, the validation is not allowed.*/
+        if ($countTrace > 0)
+        {
+            $this->get('session')->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
+
+            //$trace = $em->getRepository('InnovaSelfBundle:Questionnaire')
+            //->findOneByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
+
+            //$traceId = $trace[0]->getId();
+            $traceId = 0;
+            return array("traceId" => $traceId, "testId" => $test->getId());
+        }
 
         $trace = new Trace();
 
@@ -62,7 +78,7 @@ class TraceController extends Controller
                     $em->persist($answer);
                     $em->flush();
                 }
-            }   
+            }
         }
         return array("traceId" => $traceId, "testId" => $post["testId"]);
 

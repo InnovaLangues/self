@@ -55,29 +55,29 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="studentType", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="OriginStudent", inversedBy="originStudents")
      */
-    private $studentType;
+    private $originStudent;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Level", inversedBy="users")
+    * @ORM\ManyToOne(targetEntity="Level", inversedBy="coLevels")
     */
     protected $coLevel;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Level", inversedBy="users")
+    * @ORM\ManyToOne(targetEntity="Level", inversedBy="ceLevels")
     */
     protected $ceLevel;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Level", inversedBy="users")
+    * @ORM\ManyToOne(targetEntity="Level", inversedBy="eeLevels")
     */
     protected $eeLevel;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Level", inversedBy="users")
+    * @ORM\ManyToOne(targetEntity="LevelLansad", inversedBy="levelLansads")
     */
-    protected $lastLevel;
+    protected $levelLansad;
 
 	/**
 	 * Constructor
@@ -327,29 +327,6 @@ class User extends BaseUser
     }
 
     /**
-     * Set studentType
-     *
-     * @param string $studentType
-     * @return User
-     */
-    public function setStudentType($studentType)
-    {
-        $this->studentType = $studentType;
-
-        return $this;
-    }
-
-    /**
-     * Get studentType
-     *
-     * @return string
-     */
-    public function getStudentType()
-    {
-        return $this->studentType;
-    }
-
-    /**
      * Set coLevel
      *
      * @param \Innova\SelfBundle\Entity\Level $coLevel
@@ -439,5 +416,74 @@ class User extends BaseUser
     public function getLastLevel()
     {
         return $this->lastLevel;
+    }
+
+    /**
+     * Set originStudent
+     *
+     * @param \Innova\SelfBundle\Entity\OriginStudent $originStudent
+     * @return User
+     */
+    public function setOriginStudent(\Innova\SelfBundle\Entity\OriginStudent $originStudent = null)
+    {
+        $this->originStudent = $originStudent;
+
+        return $this;
+    }
+
+    /**
+     * Get originStudent
+     *
+     * @return \Innova\SelfBundle\Entity\OriginStudent
+     */
+    public function getOriginStudent()
+    {
+        return $this->originStudent;
+    }
+
+    /**
+     * Set lLansad
+     *
+     * @param \Innova\SelfBundle\Entity\LevelLansad $lLansad
+     * @return User
+     */
+    public function setLLansad(\Innova\SelfBundle\Entity\LevelLansad $lLansad = null)
+    {
+        $this->lLansad = $lLansad;
+
+        return $this;
+    }
+
+    /**
+     * Get lLansad
+     *
+     * @return \Innova\SelfBundle\Entity\LevelLansad
+     */
+    public function getLLansad()
+    {
+        return $this->lLansad;
+    }
+
+    /**
+     * Set levelLansad
+     *
+     * @param \Innova\SelfBundle\Entity\LevelLansad $levelLansad
+     * @return User
+     */
+    public function setLevelLansad(\Innova\SelfBundle\Entity\LevelLansad $levelLansad = null)
+    {
+        $this->levelLansad = $levelLansad;
+    
+        return $this;
+    }
+
+    /**
+     * Get levelLansad
+     *
+     * @return \Innova\SelfBundle\Entity\LevelLansad 
+     */
+    public function getLevelLansad()
+    {
+        return $this->levelLansad;
     }
 }
