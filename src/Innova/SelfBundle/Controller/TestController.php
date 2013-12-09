@@ -46,6 +46,7 @@ class TestController extends Controller
 
         $countQuestionnaire = count($test->getQuestionnaires());
 
+        // Session to F5 key and sesion.
         $session->set('listening', $questionnaire->getListeningLimit());
 
         if (is_null($questionnaire)) {

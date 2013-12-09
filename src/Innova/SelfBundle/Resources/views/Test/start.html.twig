@@ -82,8 +82,6 @@
                                 {{ audio.audio("situtation", questionnaire.mediaText.url, "situation_monologue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
 
                             {% endif %}
-                            {% set limit = questionnaire.ListeningLimit %}
-                            {% set listening = app.session.set('listening', limit) %}
                             <div class="hidden" id="listens-counter">Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span> <span id="limit_listening_text">{{ limit_listening_text }}</span> <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span></div>
 
                         </div>

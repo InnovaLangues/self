@@ -20,6 +20,8 @@ class AjaxController extends Controller
 {
 
     /**
+     * Vérify if the session variable is OK and initialize if not.
+     *
      * @Route("/session-situation-listen-number", name="sessionSituationListenNumber", options={"expose"=true})
      * @Method("GET")
      */
@@ -33,14 +35,14 @@ class AjaxController extends Controller
             $situationListenNumber = $session->get('situationListenNumber');
         }
 
-
         return new JsonResponse(
             array('situationListenNumber' => $situationListenNumber)
         );
     }
 
-
     /**
+     * To incremente the variable session + 1.
+     *
      * @Route("/increment-session-situation-listen-number", name="incrementeSessionSituationListenNumber", options={"expose"=true})
      * @Method("PUT")
      */
@@ -64,6 +66,8 @@ class AjaxController extends Controller
     }
 
     /**
+     * To reset the variable session to null.
+     *
      * @Route("/reset-session-situation-listen-number", name="resetSessionSituationListenNumber", options={"expose"=true})
      * @Method("PUT")
      */

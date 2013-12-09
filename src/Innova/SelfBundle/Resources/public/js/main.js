@@ -4,6 +4,17 @@ function timestamp(){
 
 $(document).ready(function() {
 
+	/***
+	WORD "ECOUTE" DISPLAY WITH OR WITHOUT "s"
+	****/
+	function pluralizeListen(limit, listened) {
+		if((limit - listened) < 2){
+			return 'écoute';
+		};
+
+		return 'écoutes';
+	}
+
 	play_in_progress = false;
 	timestampIn = timestamp();
 	listening_count = new Array;
@@ -17,6 +28,9 @@ $(document).ready(function() {
 		$(".item_audio_button").css("opacity","1");
 	});
 
+	/***
+	TO KNOW IF I HAVE A SESSION DATA
+	****/
 	$.ajax({
 		url: Routing.generate('sessionSituationListenNumber'),
 		type: 'GET',
@@ -42,14 +56,10 @@ $(document).ready(function() {
 		alert('Ajax error');
 	});
 
-	function pluralizeListen(limit, listened) {
-		if((limit - listened) < 2){
-			return 'écoute';
-		};
 
-		return 'écoutes';
-	}
-
+	/***
+	IF I CLICK ON SOUND THEN I DO ...
+	****/
 
 	$(".item_audio_button").click(function(){
 
@@ -67,23 +77,14 @@ $(document).ready(function() {
 			sound = $(this).attr("sound");
 			audio = document.getElementById(sound);
 
-/*			listened++;
-			$(this).attr("data-listened", listened);
-*/
-
-//			if (sound == "situtation"){
-//				var reste = limit - $(this).attr("data-listened");
-//				$("#limit_listening").html(reste);
-//			//
-//
 			$("#limit_listening_text").html(
 				pluralizeListen(limit, listened)
 			);
 
-//			}
 			$(".item_audio_button").css("opacity","0.5");
 			$(this).css("opacity","1");
 			audio.play();
+
 			//Increment session
 			$.ajax({
 				url: Routing.generate('incrementeSessionSituationListenNumber'),
@@ -92,15 +93,14 @@ $(document).ready(function() {
 			})
 
 			.done(function(data) {
-				console.log("done");
 				var limitListening = $("#limit_listening").html();
 				var reste = $("#limit_listening").html() - data.situationListenNumber;
 				$("#listening_number").html(reste);
-				if(reste < 2){
-					$("#limit_listening_text").html("écoute");
-				}
-
-				//console.log(data.situationListenNumber);
+				var limit = $("#limit_listening").html();
+				var listened = data.situationListenNumber;
+				$("#limit_listening_text").html(
+					pluralizeListen(limit, listened)
+				);
 			})
 			.fail(function() {
 				alert('Ajax error');
@@ -117,6 +117,10 @@ $(document).ready(function() {
 
 	/* TOOLTIP */
 	$('img').tooltip({placement:'top'});
+
+	/***
+	TO RESET SESSION VARIABLE IF I CLICK ON "VALIDER" BUTTON
+	****/
 
 	$('.reset-listening-number').click(function(event) {
 		$.ajax({
