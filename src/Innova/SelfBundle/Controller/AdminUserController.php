@@ -84,7 +84,6 @@ class AdminUserController extends Controller
         ;
     }
 
-
     /**
      * Creates a new Test entity.
      *
@@ -111,8 +110,6 @@ class AdminUserController extends Controller
             'form'   => $form->createView(),
         );
     }
-
-
 
     /**
     * Creates a form to create a Admin User entity.

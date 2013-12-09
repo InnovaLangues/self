@@ -19,7 +19,8 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Innova\SelfBundle\InnovaSelfBundle(),
 	        new FOS\UserBundle\FOSUserBundle(),
-            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle()
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

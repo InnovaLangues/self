@@ -39,8 +39,6 @@
 {% endif %}
 #}
 
-
-
 {% if questionnaire.ListeningLimit == 1 %}
     {% set limit_listening_text = "écoute" %}
 {% else %}
@@ -50,8 +48,7 @@
 {% block body -%}
  <div class="container">
 
-
-
+    {% set listening = app.session.get('listening') %}
 
 
     {% set bulleCountVf = 0 %}
@@ -85,7 +82,10 @@
                                 {{ audio.audio("situtation", questionnaire.mediaText.url, "situation_monologue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
 
                             {% endif %}
-                            <div>Reste <span data-limit={{ questionnaire.ListeningLimit }} id="limit_listening">{{ questionnaire.ListeningLimit }}</span> <span id="limit_listening_text">{{ limit_listening_text }}</span> </div>
+                            {% set limit = questionnaire.ListeningLimit %}
+                            {% set listening = app.session.set('listening', limit) %}
+                            <div class="hidden" id="listens-counter">Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span> <span id="limit_listening_text">{{ limit_listening_text }}</span> <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span></div>
+
                         </div>
                     </div>
                      <div class="row col-md-6 col-md-offset-1 proposition">
@@ -133,7 +133,7 @@
                     <input type="hidden" id="totalTime" name="totalTime" value=""/>
                     <input type="hidden" name="testId" value="{{ test.id }}"/>
                     <input type="hidden" name="testName" value="{{ test.name }}"/>
-                    <input id="submit" type="submit" class="pull-right btn btn-default" value="{{ 'generic.validate' | trans }}"/>
+                    <input id="submit" type="submit" class="pull-right btn btn-default reset-listening-number" value="{{ 'generic.validate' | trans }}"/>
                 </form>
             </div>
         </div>
@@ -145,8 +145,3 @@
      </div>
 
 {% endblock %}
-
-{% block javascripts %}
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/main.js") }}"></script>
-{% endblock %}
-

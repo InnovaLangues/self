@@ -35,7 +35,6 @@ class TestController extends Controller
 
         $session = $this->container->get('request')->getSession();
 
-
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -47,7 +46,7 @@ class TestController extends Controller
 
         $countQuestionnaire = count($test->getQuestionnaires());
 
-        $session->set('item', $countQuestionnaireDone);
+        $session->set('listening', $questionnaire->getListeningLimit());
 
         if (is_null($questionnaire)) {
 
