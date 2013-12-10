@@ -4,6 +4,9 @@ function timestamp(){
 
 $(document).ready(function() {
 
+	/* TOOLTIP */
+	$('img').tooltip({placement:'top'});
+
 	/***
 	WORD "ECOUTE" DISPLAY WITH OR WITHOUT "s"
 	****/
@@ -37,7 +40,6 @@ $(document).ready(function() {
 		dataType: 'json'
 	})
 	.done(function(data) {
-		console.log(data.situationListenNumber);
 		var number = $("#listening_number").html();
 		if (data.situationListenNumber !== null) {
 			var limit = $('#listening_number').html()
@@ -62,21 +64,17 @@ $(document).ready(function() {
 	****/
 
 	$(".item_audio_button").click(function(){
-
 		// Number of possible listens
 		var limit = Number($(this).attr("data-limit"));
 
 		// Number of times listened
 		//var listened = Number($(this).attr("data-listened"));
 		var listened = $("#listening_number").html();
+		var sound = $(this).attr("sound");
+		var audio = document.getElementById(sound);
 
-		console.log(listened + " " + limit);
-
-		if((listened === null || listened <= limit) && listened > 0 && !play_in_progress) {
+		if(((listened === null || listened <= limit) && listened > 0 || sound != "situation") && !play_in_progress) {
 			play_in_progress = true;
-			sound = $(this).attr("sound");
-			audio = document.getElementById(sound);
-
 			$("#limit_listening_text").html(
 				pluralizeListen(limit, listened)
 			);
@@ -84,60 +82,49 @@ $(document).ready(function() {
 			$(".item_audio_button").css("opacity","0.5");
 			$(this).css("opacity","1");
 			audio.play();
+			if (sound === "situation"){
+				//Increment session
+				$.ajax({
+					url: Routing.generate('incrementeSessionSituationListenNumber'),
+					type: 'PUT',
+					dataType: 'json'
+				})
 
-			//Increment session
-			$.ajax({
-				url: Routing.generate('incrementeSessionSituationListenNumber'),
-				type: 'PUT',
-				dataType: 'json'
-			})
-
-			.done(function(data) {
-				var limitListening = $("#limit_listening").html();
-				var reste = $("#limit_listening").html() - data.situationListenNumber;
-				$("#listening_number").html(reste);
-				var limit = $("#limit_listening").html();
-				var listened = data.situationListenNumber;
-				$("#limit_listening_text").html(
-					pluralizeListen(limit, listened)
-				);
-			})
-			.fail(function() {
-				alert('Ajax error');
-			});
+				.done(function(data) {
+					var limitListening = $("#limit_listening").html();
+					var reste = $("#limit_listening").html() - data.situationListenNumber;
+					$("#listening_number").html(reste);
+					var limit = $("#limit_listening").html();
+					var listened = data.situationListenNumber;
+					$("#limit_listening_text").html(
+						pluralizeListen(limit, listened)
+					);
+				})
+				.fail(function() {
+					alert('Ajax error');
+				});
+			}
 		}
-
 	});
 
 	/* FORM  */
+
 	$("form").submit(function(){
 		totalTime = timestamp() - timestampIn;
 		$("#totalTime").val(totalTime);
 	});
 
-	/* TOOLTIP */
-	$('img').tooltip({placement:'top'});
 
-	/***
-	TO RESET SESSION VARIABLE IF I CLICK ON "VALIDER" BUTTON
-	****/
+	 /***
+    TO RESET SESSION VARIABLE IF I CLICK ON "VALIDER" BUTTON
+    ****/
 
-	$('.reset-listening-number').click(function(event) {
-		$.ajax({
-			url: Routing.generate('resetSessionSituationListenNumber'),
-			type: 'PUT',
-			dataType: 'json'
-		})
-	});
-
-	/***
-	TO FUEL UX in registration form.
-	****/
-	$('.btn-wizard-prev').on('click', function() {
-		$('#register-wizard').wizard('previous');
-	});
-	$('.btn-wizard-next').on('click', function() {
-		$('#register-wizard').wizard('next','foo');
-	});
-
+    $('.reset-listening-number').click(function(event) {
+        $.ajax({
+                url: Routing.generate('resetSessionSituationListenNumber'),
+                type: 'PUT',
+                dataType: 'json'
+        })
+    });
 });
+

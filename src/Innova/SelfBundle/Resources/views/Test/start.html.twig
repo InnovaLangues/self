@@ -14,79 +14,51 @@
 
 {% block body -%}
     {% set listening = app.session.get('listening') %}
-     <div class="test-container">
-         <div class="row main">
-            <div class="contexte">
-                {% include "InnovaSelfBundle:Test/partials:contexte.html.twig" %}
-            </div>
-            <div class="consigne">
-                {% include "InnovaSelfBundle:Test/partials:instruction.html.twig" %}
-            </div>
-            {# language = to have the color per language. #}
-            <div class="col-md-12 pull-right central-{{ language }}">
-                <form id="main_form" action="{{ path('trace_submit') }}" method="post">
-                    <div class="col-md-4 col-md-offset-1 situation vertical-align-center">
-                        {% include "InnovaSelfBundle:Test/partials:texte.html.twig" %}
-                    </div>
-                     <div class="col-md-6 col-md-offset-1">
-                        <div class="proposition">
-                            {% for question in questionnaire.questions %}
-                                {% for i, subquestion in question.subquestions %}
-                                    {% if subquestion.typology.name  == "QRM" %}
-                                        {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
-                                    {% elseif subquestion.typology.name  == "QRU" %}
-                                         {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
-                                    {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
-                                        {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
-                                    {% endif %}
-
-                                    {% if subquestion.typology.name == "VF" or subquestion.typology.name == "VFPM" %}
-                                        {% for proposition in subquestion.propositions %}
-                                            {% set bulleCount = bulleCount + 1 %}
-                                                {{ inputs.inputs("radio", subquestion.id, proposition.id, proposition.media.name, 90, 0, "Ecouter cette proposition de réponse") }}
-                                                {% if subquestion.media == "" %}
-                                                    <br/>
-                                                {% endif %}
-                                        {% endfor %}
-                                    {% else %}
-                                        {% for proposition in subquestion.propositions | shuffle %}
-                                            {% set bulleCount = bulleCount + 1 %}
-                                            {% if subquestion.typology.name == "QRU" %}
-                                            <p>
-                                                {{ audio.audio("proposition"+proposition.id, proposition.media.url, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
-                                                {{ inputs.inputs("radio", subquestion.id, proposition.id, proposition.title) }}
-                                            </p>
-                                            {% elseif subquestion.typology.name == "QRM" %}
-                                            <p>
-                                                {{ audio.audio("proposition"+proposition.id, proposition.media.url,  "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
-                                                {{ inputs.inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
-                                            </p>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                </p>
-                                {% endfor %}
-                            {% endfor %}
+     <div class="row questionnaire-container">
+        <div class="contexte">
+            {% include "InnovaSelfBundle:Test/partials:contexte.html.twig" %}
+        </div>
+        <div class="consigne">
+            {% include "InnovaSelfBundle:Test/partials:instruction.html.twig" %}
+        </div>
+        {# language = to have the color per language. #}
+        <div class="col-md-12 central-{{ language }}">
+            <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+                <div class="col-md-5 situation">
+                    {% include "InnovaSelfBundle:Test/partials:texte.html.twig" %}
+                </div>
+                <div class="col-md-7">
+                    {% for question in questionnaire.questions %}
+                        {% for i, subquestion in question.subquestions %}
+                        <div class="subquestion">
+                            {% if subquestion.typology.name  == "QRM" %}
+                                {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
+                            {% elseif subquestion.typology.name  == "QRU" %}
+                                 {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
+                            {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
+                                {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
+                            {% elseif subquestion.typology.name  == "APPAT" %}
+                                {% include "InnovaSelfBundle:Test/partials:APP.html.twig" %}
+                            {% endif %}
                         </div>
-                    </div>
-                    <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>
-                    <input type="hidden" id="totalTime" name="totalTime" value=""/>
-                    <input type="hidden" name="testId" value="{{ test.id }}"/>
-                    <input type="hidden" name="testName" value="{{ test.name }}"/>
-                    <input id="submit" type="submit" class="pull-right btn btn-default reset-listening-number" value="{{ 'generic.validate' | trans }}"/>
-                </form>
-            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>
+                <input type="hidden" id="totalTime" name="totalTime" value=""/>
+                <input type="hidden" name="testId" value="{{ test.id }}"/>
+                <input type="hidden" name="testName" value="{{ test.name }}"/>
+                <input id="submit" type="submit" class="pull-right btn btn-default reset-listening-number" value="{{ 'generic.validate' | trans }}"/>
+            </form>
         </div>
-        <div>
-             <div class="row col-md-2 col-md-offset-10 item-count">
-                Item n° {{ counQuestionnaireDone + 1 }}/{{ test.questionnaires.count }}
-            </div>
+        <div id="item-count">
+            Item n° {{ counQuestionnaireDone + 1 }}/{{ test.questionnaires.count }}
         </div>
-     </div>
-
+    </div>
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/main.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/dragAndDrop.js") }}"></script>
 {% endblock %}
-

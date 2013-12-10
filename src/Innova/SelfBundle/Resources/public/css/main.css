@@ -1,40 +1,40 @@
-html, body, .test-container. #main_form{
-	min-height:100%;
-}
-.main{
+.questionnaire-container{
 	border-radius:10px;
 	border:2px solid black;
-	padding:60px;
 	margin-bottom:20px;
 	position:relative;
 	color:white;
 	font-size:130%;
-	min-height:100%;
+	padding:50px;
 }
 
 .central-default {
 	border-radius:10px;
 	background-color: #717EE3;
-	min-height:300px;
 }
 
 .central-it {
 	border-radius:10px;
 	background-color: #717EE3;
-	min-height:300px;
 }
 
 .central-eng {
 	border-radius:10px;
 	background-color: #E37E71;
-	min-height:300px;
 }
 
-.item-count{
-	float:right;
+#main_form{
+	padding:24px;
+	display:inline-block;
+}
+
+#item-count{
+	color:black;
+	position:absolute;
 	text-align:center;
-	border:2px solid black;
-	border-radius:5px;
+	bottom:10px;
+	right:15px;
+	font-size:90%;
 }
 
 .contexte{
@@ -55,17 +55,11 @@ html, body, .test-container. #main_form{
 }
 
 .situation{
-	text-align:center;
-}
-.situation-icon{
-  	margin-top:30%;
-  	margin-bottom:30%;
+	padding:60px 0 0 60px;
 }
 
-
-.proposition{
-  	margin-top:15%;
-  	margin-bottom:15%;
+.subquestion{
+	margin-bottom:10px;
 }
 
 #submit{
@@ -82,10 +76,48 @@ input[type="checkbox"], input[type="radio"], label{
 	cursor: pointer;
 }
 
+
+.audio-container{
+	display:inline-block;
+}
+
+/* Drag and drop */
+.touch-me{
+	cursor:move;
+	height:30px;
+}
+
+.valid-target{
+	border:1px dotted white;
+}
+
+.answer{
+	width:160px;
+	height:100px;
+	display:inline-block;
+	vertical-align: middle;
+	border:1px dotted black;
+	border-radius:5px;
+}
+
+.source{
+	margin-bottom:10px;
+	text-align:center;
+}
+
+.answer, .source{
+	border:1px dotted black;
+}
+
 /*Fuel UX overides*/
 /*.fuelux .wizard-example label {
 	font-weight: bold;
 }
+
+.fuelux .wizard-example label {
+	font-weight: bold;
+}*
+/
 
 .fuelux .wizard-example label {
 	font-weight: bold;
