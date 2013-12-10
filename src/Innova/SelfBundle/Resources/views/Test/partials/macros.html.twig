@@ -1,0 +1,37 @@
+{% macro media(id, media, icon, height, limitAudio, tooltip) %}
+    {% if media.mediaType.name == "audio" %}
+        <audio preload="auto" id="{{ id }}" class="item_audio">
+            <source src="{{ asset('upload/media/') ~ media.url }}.mp3" type="audio/mp3">
+            <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
+            Votre navigateur est trop ancien.
+        </audio>
+        <img rel="tooltip"  data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+
+    {% elseif media.mediaType.name == "image" %}
+        <img id="{{ id }}" src="{{ asset('upload/media/') ~ media.url }}" height="{{ height }}" rel="tooltip" data-original-title="{{ tooltip }}"/> 
+
+    {% elseif media.mediaType.name == "texte" %}
+        <span id="{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}"> {{ media.description }} </span>
+
+    {% elseif media.mediaType.name == "video" %}
+        <video width="100%" controls>
+            <source src="{{ asset('upload/media/') ~ media.url }}" >
+            Your browser does not support the video tag.
+        </video> 
+    {% endif %}
+{% endmacro %}
+
+{% macro inputs(type, subquestionId, propositionId, text) %}
+    <label class="{{ type }}-inline">
+        <input type="{{ type }}" name="subquestion{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required>
+        {% if text == "VRAI" %}
+            {{ 'generic.boolTrue' | trans }}
+        {% else %}
+            {% if text == "FAUX" %}
+                {{ 'generic.boolFalse' | trans }}
+            {% else %}
+                {{ text }}
+            {% endif %}
+        {% endif %}
+    </label>
+{% endmacro %}

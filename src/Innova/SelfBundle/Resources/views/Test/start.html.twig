@@ -4,40 +4,7 @@
     <link rel="stylesheet" href="{{ asset("bundles/innovaself/css/main.css") }}" />
 {% endblock %}
 
-{% macro audio(id, source, icon, height, limitAudio, tooltip) %}
-        <audio preload="auto" id="{{ id }}" class="item_audio">
-            <source src="{{ asset('upload/media/') ~ source }}.mp3" type="audio/mp3">
-            <source src="{{ asset('upload/media/') ~ source }}.ogg" type="audio/ogg">
-            Votre navigateur est trop ancien.
-        </audio>
-        <img rel="tooltip"  data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
-{% endmacro %}
-
-{% macro inputs(type, subquestionId, propositionId, text) %}
-    <label class="{{ type }}-inline">
-        <input type="{{ type }}" name="subquestion{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required>
-        {% if text == "VRAI" %}
-            {{ 'generic.boolTrue' | trans }}
-        {% else %}
-            {% if text == "FAUX" %}
-                {{ 'generic.boolFalse' | trans }}
-            {% else %}
-                {{ text }}
-            {% endif %}
-        {% endif %}
-    </label>
-{% endmacro %}
-
-{% import _self as audio %}
-{% import _self as inputs %}
-
-{#
-{% if (questionnaire.questions|length == 1) and (questionnaire.audioInstruction == "") %}
-    {% set consigne = questionnaire.questions[0].audioUrl %}
-{% else %}
-    {% set consigne = questionnaire.audioInstruction %}
-{% endif %}
-#}
+{% import "InnovaSelfBundle:Test:partials/macros.html.twig" as macros %}
 
 {% if questionnaire.ListeningLimit == 1 %}
     {% set limit_listening_text = "écoute" %}
@@ -46,56 +13,31 @@
 {% endif %}
 
 {% block body -%}
- <div class="container">
-
     {% set listening = app.session.get('listening') %}
-
-
-    {% set bulleCountVf = 0 %}
-     <div class="row col-md-12 test-container">
-         <div class="row col-md-12 main">
-
-            {% if questionnaire.mediaContext != "" %}
+     <div class="test-container">
+         <div class="row main">
             <div class="contexte">
-                {{ audio.audio("context", questionnaire.mediaContext.url, "contexte.png", 90, 0, "Ecouter le contexte dans lequel se déroule cette situation") }}
+                {% include "InnovaSelfBundle:Test/partials:contexte.html.twig" %}
             </div>
-            {% endif %}
-
-            {% if questionnaire.mediaInstruction != "" %}
             <div class="consigne">
-                {{ audio.audio("instruction", questionnaire.mediaInstruction.url, "oignon.png", 90, 0, "Ecouter la consigne didactique") }}
+                {% include "InnovaSelfBundle:Test/partials:instruction.html.twig" %}
             </div>
-            {% else %}
-            <div class="consigne">
-                {{ audio.audio("instruction", questionnaire.questions[0].subquestions[0].mediaAmorce.url, "oignon.png", 90, 0, "Ecouter la consigne didactique") }}
-            </div>
-            {% endif %}
-
             {# language = to have the color per language. #}
-            <div class="row col-md-12 pull-right central-{{ language }}">
+            <div class="col-md-12 pull-right central-{{ language }}">
                 <form id="main_form" action="{{ path('trace_submit') }}" method="post">
-                     <div class="col-md-4 col-md-offset-1 situation vertical-align-center">
-                        <div class="situation-icon">
-                            {% if questionnaire.dialogue == 1 %}
-                                {{ audio.audio("situtation", questionnaire.mediaText.url, "situation_dialogue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
-                            {% else %}
-                                {{ audio.audio("situtation", questionnaire.mediaText.url, "situation_monologue.png", 120, questionnaire.ListeningLimit, "Ecouter la situation de départ") }}
-
-                            {% endif %}
-                            <div class="hidden" id="listens-counter">Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span> <span id="limit_listening_text">{{ limit_listening_text }}</span> <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span></div>
-
-                        </div>
+                    <div class="col-md-4 col-md-offset-1 situation vertical-align-center">
+                        {% include "InnovaSelfBundle:Test/partials:texte.html.twig" %}
                     </div>
-                     <div class="row col-md-6 col-md-offset-1 proposition">
-                        <div class="proposition-icon">
+                     <div class="col-md-6 col-md-offset-1">
+                        <div class="proposition">
                             {% for question in questionnaire.questions %}
-                                {% for subquestion in question.subquestions %}
-                                    {% set bulleCount = 0 %}
-                                <h4> {{ subquestion.title }}</h4>
-                                <p>
-                                    {% if subquestion.typology.name == "VF" and subquestion.media!= "" %}
-                                        {% set bulleCountVf = bulleCountVf + 1 %}
-                                        {{ audio.audio("subquestion"+subquestion.id, subquestion.media.url, "bulle"~ bulleCountVf ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
+                                {% for i, subquestion in question.subquestions %}
+                                    {% if subquestion.typology.name  == "QRM" %}
+                                        {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
+                                    {% elseif subquestion.typology.name  == "QRU" %}
+                                         {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
+                                    {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
+                                        {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
                                     {% endif %}
 
                                     {% if subquestion.typology.name == "VF" or subquestion.typology.name == "VFPM" %}
@@ -135,7 +77,7 @@
                 </form>
             </div>
         </div>
-        <div class="row col-md-12">
+        <div>
              <div class="row col-md-2 col-md-offset-10 item-count">
                 Item n° {{ counQuestionnaireDone + 1 }}/{{ test.questionnaires.count }}
             </div>
@@ -143,3 +85,8 @@
      </div>
 
 {% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/main.js") }}"></script>
+{% endblock %}
+
