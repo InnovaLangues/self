@@ -81,3 +81,13 @@ html, body, .test-container. #main_form{
 input[type="checkbox"], input[type="radio"], label{
 	cursor: pointer;
 }
+
+/*Fuel UX overides*/
+/*.fuelux .wizard-example label {
+	font-weight: bold;
+}
+
+.fuelux .wizard-example label {
+	font-weight: bold;
+}*
+/

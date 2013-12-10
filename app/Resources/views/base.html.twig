@@ -4,11 +4,13 @@
         <meta charset="UTF-8" />
         <title>{% block title %}SELF{% endblock %}</title>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href=" http://fuelcdn.com/fuelux/2.3/css/fuelux.css" rel="stylesheet" />
+        <link href="http://www.fuelcdn.com/fuelux-imh/2.4.0/css/fuelux-responsive.css" rel="stylesheet" />
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-		<nav class="navbar navbar-inverse navbar-static-top">
+        <nav class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-header">
                 <ul class="nav navbar-nav">
                     <li class="active"><a style="cursor: default;" href="#">SELF</a></li>
@@ -58,12 +60,11 @@
             </div>
         </div>
 
-        <!-- Jquery first then Bootstrap call -->
-        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-        <script src="http://www.fuelcdn.com/fuelux/2.4.1/loader.min.js" type="text/javascript"></script>
-
         {% block javascripts %}
+            <!-- Jquery first then Bootstrap call -->
+            <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+            <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+            <script src="http://www.fuelcdn.com/fuelux/2.4.1/loader.min.js" type="text/javascript"></script>
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             <script type="text/javascript" src="{{ asset("bundles/innovaself/js/main.js") }}"></script>

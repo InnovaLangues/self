@@ -3,7 +3,24 @@
 <br>
 <div class="well">
     <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
-        <fieldset>
+
+
+<div class="well wizard-example">
+  <div id="register-wizard" class="wizard">
+    <ul class="steps">
+      <li data-target="#step1" class="active"><span class="badge badge-info">1</span>Step 1<span class="chevron"></span></li>
+      <li data-target="#step2"><span class="badge">2</span>Step 2<span class="chevron"></span></li>
+    </ul>
+    <!--
+    <div class="actions">
+      <button class="btn btn-mini btn-prev"> <i class="icon-arrow-left"></i>Prev</button>
+      <button class="btn btn-mini btn-next" data-last="Finish">Next<i class="icon-arrow-right"></i></button>
+    </div>
+-->
+  </div>
+  <div class="step-content">
+    <div class="step-pane active" id="step1">
+
            <div id="legend">
                 <legend class="">Inscription</legend>{# TODO: i18n #}
             </div>
@@ -51,6 +68,9 @@
                     <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
                 </div>
             </div>
+    </div>
+
+    <div class="step-pane" id="step2">
 
             <fieldset>
                 <legend>Filière</legend>
@@ -109,6 +129,13 @@
                 </div>
             </div>
 
-        </fieldset>
+    </div>
+  </div>
+  <br>
+  <input type="button" class="btn btn-wizard-prev" value="Back">
+  <input type="button" class="btn btn-primary btn-wizard-next" value="Next">
+
+</div>
+
     </form>
 </div>
