@@ -84,6 +84,12 @@ class LevelLansad
     public function setLanguage(\Innova\SelfBundle\Entity\Language $language = null)
     {
         $this->language = $language;
+        if (!empty($language)) {
+            $language->addLevelLansad($this);
+        }
+        else {
+            $language->removeLevelLansad($this);
+        }
 
         return $this;
     }
