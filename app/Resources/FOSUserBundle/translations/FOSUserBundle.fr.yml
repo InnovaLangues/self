@@ -1,3 +1,4 @@
 security:
     login:
-        username: "Login :"
+        username: "Login"
+        password: "Mot de passe"

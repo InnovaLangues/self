@@ -4,138 +4,128 @@
 <div class="well">
     <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
 
+        {# Pour avoir le Wizard #}
+        {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
+        <ul class='nav nav-wizard' id="register-form-tabs">
+           <li class='active'><a href='#step1' data-toggle="tab">Login</a></li>
+           <li><a href='#step2' data-toggle="tab">Filière/Dialang</a></li>
+        </ul>
 
-<div class="well wizard-example">
-  <div id="register-wizard" class="wizard">
-    <ul class="steps">
-      <li data-target="#step1" class="active"><span class="badge badge-info">1</span>Step 1<span class="chevron"></span></li>
-      <li data-target="#step2"><span class="badge">2</span>Step 2<span class="chevron"></span></li>
-    </ul>
-    <!--
-    <div class="actions">
-      <button class="btn btn-mini btn-prev"> <i class="icon-arrow-left"></i>Prev</button>
-      <button class="btn btn-mini btn-next" data-last="Finish">Next<i class="icon-arrow-right"></i></button>
-    </div>
--->
-  </div>
-  <div class="step-content">
-    <div class="step-pane active" id="step1">
+        <hr/>
 
-           <div id="legend">
-                <legend class="">Inscription</legend>{# TODO: i18n #}
-            </div>
+        <div id="myTabContent" class="tab-content">
 
-            {{ form_errors(form) }}
+            {# Onglet 1 #}
+            <div class="tab-pane fade active in" id="step1">
+                <div id="legend">
+                    <legend class="">Inscription</legend>{# TODO: i18n #}
+                </div>
 
-            <div class="form-group">
-                {{ form_errors(form.lastName) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_lastName">Nom :</label>
-                <div class="col-lg-10">
-                    <input value="{{ form.vars.value.lastName }}" class="form-control" id="fos_user_registration_form_lastName" type="text" maxlength="255" required="required" name="fos_user_registration_form[lastName]">
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_errors(form.firstName) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_firstName">Prénom :</label>
-                <div class="col-lg-10">
-                    <input value="{{ form.vars.value.firstName }}" class="form-control" id="fos_user_registration_form_firstName" type="text" maxlength="255" required="required" name="fos_user_registration_form[firstName]">
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_errors(form.email) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_email">Adresse mail :</label>
-                <div class="col-lg-10">
-                    <input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_errors(form.username) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_username">{{ 'security.login.username'|trans }}</label>
-                <div class="col-lg-10">
-                    <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_errors(form.plainPassword.first) }}
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_plainPassword_first">{{ 'security.login.password'|trans }}</label>
-                <div class="col-lg-10">
-                    <input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-2 control-label required" for="fos_user_registration_form_plainPassword_second">Confirmation du mot de passe :</label>
-                <div class="col-lg-10">
-                    <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
-                </div>
-            </div>
-    </div>
+                {{ form_errors(form) }}
 
-    <div class="step-pane" id="step2">
-
-            <fieldset>
-                <legend>Filière</legend>
-                {# originStudent, user entity #}
                 <div class="form-group">
-                    {{ form_errors(form.originStudent) }}
-                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_originStudent">Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / Autres)</label>
+                    {{ form_errors(form.lastName) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_lastName">Nom</label>
                     <div class="col-lg-10">
-                        {# <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]"> #}
-                        {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
+                        <input value="{{ form.vars.value.lastName }}" class="form-control" id="fos_user_registration_form_lastName" type="text"  required="required" name="fos_user_registration_form[lastName]">
                     </div>
                 </div>
-                {# lastLevel, user entity #}
                 <div class="form-group">
-                    {{ form_errors(form.levelLansad) }}
-                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_levelLansad">Quel était le niveau du dernier cours LANSAD que vous avez validé ?</label>
+                    {{ form_errors(form.firstName) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_firstName">Prénom</label>
                     <div class="col-lg-10">
-                        {{ form_widget(form.levelLansad, { 'attr': {'class': 'form-control'} }) }}
+                        <input value="{{ form.vars.value.firstName }}" class="form-control" id="fos_user_registration_form_firstName" type="text" maxlength="255" required="required" name="fos_user_registration_form[firstName]">
                     </div>
                 </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Dialang</legend>
-                {# coLevel, user entity #}
                 <div class="form-group">
-                    {{ form_errors(form.coLevel) }}
-                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_coLevel">Niveau obtenu en CO (compréhension orale)</label>
+                    {{ form_errors(form.email) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_email">Adresse mail</label>
                     <div class="col-lg-10">
-                        {{ form_widget(form.coLevel, { 'attr': {'class': 'form-control'} }) }}
+                        <input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
                     </div>
                 </div>
-
-                {# ceLevel, user entity #}
                 <div class="form-group">
-                    {{ form_errors(form.coLevel) }}
-                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_ceLevel">Niveau obtenu en CE (compréhension écrite)</label>
+                    {{ form_errors(form.username) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_username">{{ 'security.login.username'|trans }}</label>
                     <div class="col-lg-10">
-                        {{ form_widget(form.ceLevel, { 'attr': {'class': 'form-control'} }) }}
+                        <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
                     </div>
                 </div>
-                {# eeLevel, user entity #}
                 <div class="form-group">
-                    {{ form_errors(form.eeLevel) }}
-                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_eeLevel">Niveau obtenu en EE (expression écrite) </label>
+                    {{ form_errors(form.plainPassword.first) }}
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_plainPassword_first">{{ 'security.login.password'|trans }}</label>
                     <div class="col-lg-10">
-                        {{ form_widget(form.eeLevel, { 'attr': {'class': 'form-control'} }) }}
+                        <input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
                     </div>
                 </div>
-            </fieldset>
-
-            <div class="form-group">
-                {{ form_widget(form._token) }}
-                 <div class="col-lg-offset-2 col-lg-10">
-                    <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary"/>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label required" for="fos_user_registration_form_plainPassword_second">Confirmation du mot de passe</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
+                    </div>
                 </div>
             </div>
 
-    </div>
-  </div>
-  <br>
-  <input type="button" class="btn btn-wizard-prev" value="Back">
-  <input type="button" class="btn btn-primary btn-wizard-next" value="Next">
+            {# Onglet 2 #}
+            <div class="tab-pane fade" id="step2">
+                <fieldset>
+                    <legend>Filière</legend>
+                    {# originStudent, user entity #}
+                    <div class="form-group">
+                        {{ form_errors(form.originStudent) }}
+                        <label class="col-lg-2 control-label" for="fos_user_registration_form_originStudent">Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / Autres)</label>
+                        <div class="col-lg-10">
+                            {# <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]"> #}
+                            {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                    {# lastLevel, user entity #}
+                    <div class="form-group">
+                        {{ form_errors(form.levelLansad) }}
+                        <label class="col-lg-2 control-label" for="fos_user_registration_form_levelLansad">Quel était le niveau du dernier cours LANSAD que vous avez validé ?</label>
+                        <div class="col-lg-10">
+                            {{ form_widget(form.levelLansad, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                </fieldset>
 
-</div>
+                <fieldset>
+                    <legend>Dialang</legend>
+                    {# coLevel, user entity #}
+                    <div class="form-group">
+                        {{ form_errors(form.coLevel) }}
+                        <label class="col-lg-2 control-label" for="fos_user_registration_form_coLevel">Niveau obtenu en CO (compréhension orale)</label>
+                        <div class="col-lg-10">
+                            {{ form_widget(form.coLevel, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
 
+                    {# ceLevel, user entity #}
+                    <div class="form-group">
+                        {{ form_errors(form.coLevel) }}
+                        <label class="col-lg-2 control-label" for="fos_user_registration_form_ceLevel">Niveau obtenu en CE (compréhension écrite)</label>
+                        <div class="col-lg-10">
+                            {{ form_widget(form.ceLevel, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                    {# eeLevel, user entity #}
+                    <div class="form-group">
+                        {{ form_errors(form.eeLevel) }}
+                        <label class="col-lg-2 control-label" for="fos_user_registration_form_eeLevel">Niveau obtenu en EE (expression écrite) </label>
+                        <div class="col-lg-10">
+                            {{ form_widget(form.eeLevel, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    {{ form_widget(form._token) }}
+                     <div class="col-lg-offset-2 col-lg-10">
+                        <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </form>
 </div>

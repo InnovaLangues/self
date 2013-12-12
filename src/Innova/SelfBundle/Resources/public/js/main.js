@@ -126,5 +126,33 @@ $(document).ready(function() {
                 dataType: 'json'
         })
     });
+
+
+
+
+    /*Login form validation*/
+    $('.fos_user_registration_register #_submit').click(function(event) {
+
+
+    	$('.fos_user_registration_register .help-block').remove();
+    	$('.fos_user_registration_register .has-error').removeClass('has-error');
+
+
+    	$('#register-form-tabs a:first').tab('show');
+
+    	$('.fos_user_registration_register').find('input').each(function(){
+   			if($(this).prop('required') && !$(this).val()){
+	    		event.preventDefault();
+	    		var div = $(this).parent().parent();
+	    		div.addClass('has-error');
+		   		if ($(this).prop('type') === 'email') {
+	    			div.append('<div class="col-md-offset-2 col-md-10"><span class="help-block">Ce champ doit obligatoirement etre un email valide</span></div>');
+	    		} else {
+	    			div.append('<div class="col-md-offset-2 col-md-10"><span class="help-block">Ce champ est obligatoire</span></div>');
+	    		};
+    		}
+		});
+
+    });
 });
 

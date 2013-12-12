@@ -19,6 +19,11 @@ use Innova\SelfBundle\Entity\Language;
 use Innova\SelfBundle\Entity\LanguageLevel;
 use Innova\SelfBundle\Entity\LevelLansad;
 
+/**
+ * Symfony command to add or not fixtures. EV.
+ *
+ */
+
 class FixtureCommand extends ContainerAwareCommand
 {
 
@@ -30,12 +35,20 @@ class FixtureCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * If I have any data in database, then I don't execute fixtures. EV.
+     *
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        if(!$skill =  $em->getRepository('InnovaSelfBundle:Skill')->findOneByName("CO")){
+        $skill =  $em->getRepository('InnovaSelfBundle:Skill')->findAll();
+
+        $countSkill = count($skill);
+
+        if($countSkill == 0){
 
             $output->writeln("Fixtures exécutées.");
 
