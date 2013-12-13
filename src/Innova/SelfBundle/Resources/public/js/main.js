@@ -124,7 +124,6 @@ $(document).ready(function() {
     ****/
 
     $('.reset-listening-number').click(function(event) {
-        alert('reset');
         $.ajax({
                 url: Routing.generate('resetSessionSituationListenNumber'),
                 type: 'PUT',
