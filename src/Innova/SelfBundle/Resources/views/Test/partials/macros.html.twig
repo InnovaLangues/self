@@ -7,7 +7,7 @@
     </audio>
     <img rel="tooltip"  data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
 {% elseif media.mediaType.name == "image" %}
-        <img id="{{ id }}" src="{{ asset('upload/media/') ~ media.url }}" height="{{ height }}" rel="tooltip" data-original-title="{{ tooltip }}"/> 
+        <img id="{{ id }}" src="{{ asset('upload/media/') ~ media.url }}" height="{{ height }}" rel="tooltip" data-original-title="{{ tooltip }}"/>
 
     {% elseif media.mediaType.name == "texte" %}
         <span id="{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}"> {{ media.name }} </span>
@@ -16,7 +16,7 @@
         <video width="100%" controls>
             <source src="{{ asset('upload/media/') ~ media.url }}" >
             Your browser does not support the video tag.
-        </video> 
+        </video>
     {% endif %}
 {% endmacro %}
 
