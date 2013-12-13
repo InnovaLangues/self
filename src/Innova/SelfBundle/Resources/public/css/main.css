@@ -113,18 +113,3 @@ input[type="checkbox"], input[type="radio"], label{
 .answer, .source{
 	border:1px dotted black;
 }
-
-/*Fuel UX overides*/
-/*.fuelux .wizard-example label {
-	font-weight: bold;
-}
-
-.fuelux .wizard-example label {
-	font-weight: bold;
-}*
-/
-
-.fuelux .wizard-example label {
-	font-weight: bold;
-}*
-/

@@ -44,12 +44,16 @@ $(document).ready(function() {
 		if (data.situationListenNumber !== null) {
 			var limit = $('#listening_number').html()
 			var listened = data.situationListenNumber;
+			alert("passe UN limit : " + limit);
+			alert("passe UN listened : " + listened);
 
 			$("#listening_number").html(limit - listened);
 
 			$("#limit_listening_text").html(
 				pluralizeListen(limit, listened)
 			);
+			alert("passe DEUX limit : " + limit);
+			alert("passe DEUX listened : " + listened);
 		};
 
 		$('#listens-counter').removeClass('hidden');
@@ -120,6 +124,7 @@ $(document).ready(function() {
     ****/
 
     $('.reset-listening-number').click(function(event) {
+        alert('reset');
         $.ajax({
                 url: Routing.generate('resetSessionSituationListenNumber'),
                 type: 'PUT',
