@@ -1,5 +1,5 @@
 {% set bulleCount = 0 %}
-<h4> {{ subquestion.title }}</h4>
+<h4> {{ subquestion.title  }}</h4>
 <p>
 {% for proposition in subquestion.propositions | shuffle %}
     {% set bulleCount = bulleCount + 1 %}

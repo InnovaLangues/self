@@ -1,7 +1,8 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("bundles/innovaself/css/main.css") }}" />
+        <link href="{{ asset("bundles/innovaself/css/navWizard.css") }}" rel="stylesheet" />
+        <link href="{{ asset("bundles/innovaself/css/main.css") }}" rel="stylesheet" />
 {% endblock %}
 
 {% import "InnovaSelfBundle:Test:partials/macros.html.twig" as macros %}
@@ -29,21 +30,58 @@
                 </div>
                 <div class="col-md-7">
                     {% for question in questionnaire.questions %}
-                        {{ "Q" ~ question.id }}
-                        {% for i, subquestion in question.subquestions %}
-                        <div class="subquestion">
-                            {{ "SQ" ~ subquestion.id }}
-                            {% if subquestion.typology.name  == "QRM" %}
-                                {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
-                            {% elseif subquestion.typology.name  == "QRU" %}
-                                 {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
-                            {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
-                                {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
-                            {% elseif subquestion.typology.name  == "APPAT" %}
-                                {% include "InnovaSelfBundle:Test/partials:APP.html.twig" %}
-                            {% endif %}
-                        </div>
-                        {% endfor %}
+                        {{ "Q" ~ question.id ~ "-" ~ questionnaire.id ~ "-"~ question.typology.name }}
+                        {% if question.typology.name == "TQRU" %}
+
+                        <div class="well">
+
+                            {# Pour avoir le Wizard #}
+                            {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
+                            <ul class='nav nav-wizard' id="register-form-tabs">
+                               <li class='active'><a href='#step0' data-toggle="tab">Part 1</a></li>
+                               <li><a href='#step1' data-toggle="tab">Part 2</a></li>
+                            </ul>
+
+                            <div id="myTabContent" class="tab-content">
+
+                            {% for i, subquestion in question.subquestions %}
+                                {% if i == 0 %}
+                                {# Onglet 1 #}
+                                    <div class="tab-pane fade active in" id="step{{i}}">
+                                        <div class="subquestion">
+                                                 {% include "InnovaSelfBundle:Test/partials:TQRU.html.twig" %}
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                {# Onglet >1 #}
+                                    <div class="tab-pane fade" id="step{{i}}">
+                                        <div class="subquestion">
+                                                 {% include "InnovaSelfBundle:Test/partials:TQRU.html.twig" %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                            {% endfor %}
+
+                            </div> {# myTabContent #}
+
+                        </div> {# well #}
+                        {% else %}
+                            {% for i, subquestion in question.subquestions %}
+                            <div class="subquestion">
+                                {{ "SQ" ~ subquestion.id }}
+                                {% if subquestion.typology.name  == "QRM" %}
+                                    {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
+                                {% elseif subquestion.typology.name  == "QRU" %}
+                                     {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
+                                {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
+                                    {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
+                                {% elseif subquestion.typology.name  == "APPAT" %}
+                                    {% include "InnovaSelfBundle:Test/partials:APP.html.twig" %}
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <input type="hidden" name="questionnaireId" value="{{ questionnaire.id}}"/>

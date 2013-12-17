@@ -17,7 +17,7 @@ class UserType extends BaseType
     {
         $this->levelLansad = $level->getLevelLansads();
     }
-*/
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options

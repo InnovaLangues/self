@@ -43,28 +43,34 @@ class TestController extends Controller
         $findQuestionnaireWithoutTrace = false;
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
         foreach ($questionnaires as $questionnaire) {
-            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(), 'test' => $test->getId(),
-                            'questionnaire' => $questionnaire->getId()
-                            )
-                        );
 
-            if (count($traces) == 0)
-            {
-                if (!$findQuestionnaireWithoutTrace)
+        $tests = $questionnaire->getTests();
+
+        $testQ = $tests[0];
+
+        if ($test->getId() === $testQ->getId())
+        {
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(), 'test' => $test->getId(),
+                                        'questionnaire' => $questionnaire->getId()
+                                        )
+                                    );
+                if (count($traces) == 0)
                 {
-                    echo "<br />Trace PAS trouvée pour " . $questionnaire->getId() . " - " . count($traces);
-                    $questionnaireWithoutTrace = new Questionnaire();
-                    $questionnaireWithoutTrace = $questionnaire;
-                    $findQuestionnaireWithoutTrace = true;
+                    if (!$findQuestionnaireWithoutTrace)
+                    {
+//                        echo "<br />Trace PAS trouvée pour " . $questionnaire->getId() . " U" . $user->getId() . " T". $test->getId() . "  - " . count($traces);
+                        $questionnaireWithoutTrace = new Questionnaire();
+                        $questionnaireWithoutTrace = $questionnaire;
+//                        echo " T" . $questionnaireWithoutTrace->getTheme();
+                        $findQuestionnaireWithoutTrace = true;
+                    }
                 }
             }
+
         }
 
-        /*$questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')
-            ->findOneNotDoneYetByUserByTest($test->getId(), $user->getId());
-        */
-        $questionnaire = $questionnaireWithoutTrace;
         // Et j'affecte à la variable passée à la vue le premier questionnaire sans trace.
+        $questionnaire = $questionnaireWithoutTrace;
 
         $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
             ->CountDoneYetByUserByTest($test->getId(), $user->getId());
@@ -75,7 +81,6 @@ class TestController extends Controller
         $session->set('listening', $questionnaire->getListeningLimit());
 
         if (is_null($questionnaire)) {
-
             return $this->redirect(
                 $this->generateUrl(
                     'test_end',
@@ -90,6 +95,16 @@ class TestController extends Controller
         $language = "default";
         if (preg_match("/ang/i", $test->getName() )) $language = "eng";
         if (preg_match("/it/i", $test->getName() )) $language = "it";
+
+echo $questionnaire->getId() . "A" . $questionnaire->getTheme() . "Z";
+
+/*
+{% if questionnaire.mediaInstruction != "" %}
+    {{ macros.media("instruction", questionnaire.mediaInstruction, "oignon.png", 90, 0, "Consigne didactique") }}
+{% else %}
+    {{ macros.media("instruction", questionnaire.questions[0].subquestions[0].mediaAmorce, "oignon.png", 90, 0, "Consigne didactique") }}
+{% endif %}
+*/
 
         return array(
             'questionnaire' => $questionnaire,
