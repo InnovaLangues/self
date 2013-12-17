@@ -79,7 +79,12 @@
                             {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
                         </div>
                     </div>
+
+
+
                     {# lastLevel, user entity #}
+                    {# display by language. So, I use an "optgroup" #}
+
                     <div class="form-group">
                         {{ form_errors(form.levelLansad) }}
                         <label class="col-lg-2 control-label" for="fos_user_registration_form_levelLansad">Quel était le niveau du dernier cours LANSAD que vous avez validé ?</label>
@@ -87,6 +92,9 @@
                             {{ form_widget(form.levelLansad, { 'attr': {'class': 'form-control'} }) }}
                         </div>
                     </div>
+
+
+
                 </fieldset>
 
                 <fieldset>

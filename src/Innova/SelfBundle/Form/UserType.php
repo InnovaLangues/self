@@ -6,10 +6,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
+use Innova\SelfBundle\Entity\LevelLansad;
 
 class UserType extends BaseType
 {
-        /**
+    private $levelLansad;
+
+/*
+    public function __construct(LevelLansad $level)
+    {
+        $this->levelLansad = $level->getLevelLansads();
+    }
+*/
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -18,11 +27,30 @@ class UserType extends BaseType
 
         parent::buildForm($builder, $options);
 
+        $category_choices = array(
+            array('English' => array(
+                '1' => 'Option 1...',
+                '2' => 'Option 2...',
+                '3' => 'Option 3...'
+            )),
+            array('Italian' => array(
+                '4' => 'Option 4...',
+                '5' => 'Option 5...'
+            ))
+        );
+
         $builder
             ->add('lastName')
             ->add('firstName')
             ->add('originStudent')
-            ->add('levelLansad')
+            ->add(
+                'levelLansad',
+                'choice',
+                array(
+                    'label'   => 'Category',
+                    'choices' => $category_choices
+                )
+            )
             ->add('coLevel')
             ->add('ceLevel')
             ->add('eeLevel')

@@ -29,8 +29,10 @@
                 </div>
                 <div class="col-md-7">
                     {% for question in questionnaire.questions %}
+                        {{ "Q" ~ question.id }}
                         {% for i, subquestion in question.subquestions %}
                         <div class="subquestion">
+                            {{ "SQ" ~ subquestion.id }}
                             {% if subquestion.typology.name  == "QRM" %}
                                 {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
                             {% elseif subquestion.typology.name  == "QRU" %}

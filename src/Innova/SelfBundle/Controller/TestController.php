@@ -38,8 +38,33 @@ class TestController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')
+        // Je parcours tous les questionnaires du test X
+        // et je m'arrête au premier questionnaire qui n'a pas de trace.
+        $findQuestionnaireWithoutTrace = false;
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+        foreach ($questionnaires as $questionnaire) {
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(), 'test' => $test->getId(),
+                            'questionnaire' => $questionnaire->getId()
+                            )
+                        );
+
+            if (count($traces) == 0)
+            {
+                if (!$findQuestionnaireWithoutTrace)
+                {
+                    echo "<br />Trace PAS trouvée pour " . $questionnaire->getId() . " - " . count($traces);
+                    $questionnaireWithoutTrace = new Questionnaire();
+                    $questionnaireWithoutTrace = $questionnaire;
+                    $findQuestionnaireWithoutTrace = true;
+                }
+            }
+        }
+
+        /*$questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')
             ->findOneNotDoneYetByUserByTest($test->getId(), $user->getId());
+        */
+        $questionnaire = $questionnaireWithoutTrace;
+        // Et j'affecte à la variable passée à la vue le premier questionnaire sans trace.
 
         $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
             ->CountDoneYetByUserByTest($test->getId(), $user->getId());
@@ -66,7 +91,6 @@ class TestController extends Controller
         if (preg_match("/ang/i", $test->getName() )) $language = "eng";
         if (preg_match("/it/i", $test->getName() )) $language = "it";
 
-        // $questionnaire = $this->getRandom($questionnaires);
         return array(
             'questionnaire' => $questionnaire,
             'language' => $language,
@@ -728,10 +752,23 @@ class TestController extends Controller
                     {
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
                     }
+
+                    // Traitement de la partie "option".
                     if (preg_match("/option/i", $fileName))
                     {
-                        $number = explode(".", $exp[2]);
-                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
+                        // Ajout 13/12/2013 : traitement du cas TQRU.
+                        // Les fichiers "option" sont nommés par exemple <XXX_option_1_1.mp3>
+                        // alors que dans les autres cas, ils sont de type <XXX_option_1.mp3>
+                        if (!is_numeric($exp[2]))
+                        {
+                            $number = explode(".", $exp[2]);
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
+                        }
+                        else
+                        {
+                            $number = explode(".", $exp[3]);
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number[0] . ".mp3");
+                        }
                     }
                     if (preg_match("/txt/i", $fileName))
                     {
@@ -766,6 +803,7 @@ class TestController extends Controller
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
                     $testName = "CO-pilote-dec2013-ang";
+                    $testName = "test-TQRU";
                     if(!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)){
                         $test = new Test();
                         $test->setName($testName);
@@ -1693,7 +1731,7 @@ class TestController extends Controller
         }
         else
         {
-            //echo " PAS TROUVE !";
+            echo "<br/>PAS TROUVE !" . $pathFileName . $extension;
         }
 
         //var_dump($proposition);
