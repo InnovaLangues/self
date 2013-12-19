@@ -96,15 +96,7 @@ class TestController extends Controller
         if (preg_match("/ang/i", $test->getName() )) $language = "eng";
         if (preg_match("/it/i", $test->getName() )) $language = "it";
 
-echo $questionnaire->getId() . "A" . $questionnaire->getTheme() . "Z";
-
-/*
-{% if questionnaire.mediaInstruction != "" %}
-    {{ macros.media("instruction", questionnaire.mediaInstruction, "oignon.png", 90, 0, "Consigne didactique") }}
-{% else %}
-    {{ macros.media("instruction", questionnaire.questions[0].subquestions[0].mediaAmorce, "oignon.png", 90, 0, "Consigne didactique") }}
-{% endif %}
-*/
+        //echo $questionnaire->getId() . "A" . $questionnaire->getTheme() . "Z";
 
         return array(
             'questionnaire' => $questionnaire,
