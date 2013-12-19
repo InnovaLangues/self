@@ -6,6 +6,8 @@ services:
 
     innova_user.registration.form.type:
         class: Innova\SelfBundle\Form\UserType
-        arguments: [%fos_user.model.user.class%]
+        arguments:
+            class: %fos_user.model.user.class%
+            om: @doctrine.orm.entity_manager
         tags:
             - { name: form.type, alias: innova_selfbundle_user }

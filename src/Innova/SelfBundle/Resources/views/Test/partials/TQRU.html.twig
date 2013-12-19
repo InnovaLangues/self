@@ -1,0 +1,11 @@
+{% set bulleCount = 0 %}
+<h4> {{ subquestion.title  }}</h4>
+<p>
+{% for proposition in subquestion.propositions | shuffle %}
+    {% set bulleCount = bulleCount + 1 %}
+    <p>
+        {{ macros.media("proposition"+proposition.id, proposition.media, "bulle"~ bulleCount ~".png", 90, 0, "Ecouter cette proposition de réponse") }}
+        {{ macros.inputs("radio", subquestion.id, proposition.id, proposition.title) }}
+    </p>
+{% endfor %}
+</p>
