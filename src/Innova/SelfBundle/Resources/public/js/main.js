@@ -60,8 +60,24 @@ $(document).ready(function() {
 
 
 	/***
-	IF I CLICK ON SOUND THEN I DO ...
+    /* Allow or not to listen "Situation de départ". We must listen "Consigne didactique" before.". EV, 20/12/2013
 	****/
+	$(".consigne").click(function(){
+		//Increment session
+		$.ajax({
+			url: Routing.generate('incrementeSessionConsigneListenNumber'),
+			type: 'PUT',
+			dataType: 'json'
+		})
+
+		.done(function(data) {
+			var consigne = data.consigneListenNumber;
+		})
+
+		.fail(function() {
+			alert('Ajax error');
+		});
+	});
 
 	$(".item_audio_button").click(function(){
 		// Number of possible listens
@@ -74,35 +90,72 @@ $(document).ready(function() {
 		var audio = document.getElementById(sound);
 
 		if(((listened === null || listened <= limit) && listened > 0 || sound != "situation") && !play_in_progress) {
-			play_in_progress = true;
-			$("#limit_listening_text").html(
-				pluralizeListen(limit, listened)
-			);
+			if (sound != "situation"){
+				play_in_progress = true;
+				$("#limit_listening_text").html(
+					pluralizeListen(limit, listened)
+				);
 
-			$(".item_audio_button").css("opacity","0.5");
-			$(this).css("opacity","1");
-			audio.play();
+				$(".item_audio_button").css("opacity","0.5");
+				$(this).css("opacity","1");
+				audio.play();
+			}
 			if (sound === "situation"){
-				//Increment session
-				$.ajax({
-					url: Routing.generate('incrementeSessionSituationListenNumber'),
-					type: 'PUT',
-					dataType: 'json'
-				})
 
-				.done(function(data) {
-					var limitListening = $("#limit_listening").html();
-					var reste = $("#limit_listening").html() - data.situationListenNumber;
-					$("#listening_number").html(reste);
-					var limit = $("#limit_listening").html();
-					var listened = data.situationListenNumber;
+				var consigne = 0;
+
+				$.ajax({
+						url: Routing.generate('sessionConsigneListenNumber'),
+						async: false,
+						type: 'GET',
+						dataType: 'json'
+					})
+					.done(function(data) {
+						consigne = data.consigneListenNumber;
+					})
+					.fail(function() {
+						alert('Ajax error');
+					});
+
+				if (consigne > 0){
+
+					play_in_progress = true;
 					$("#limit_listening_text").html(
 						pluralizeListen(limit, listened)
 					);
-				})
-				.fail(function() {
-					alert('Ajax error');
-				});
+
+					$(".item_audio_button").css("opacity","0.5");
+					$(this).css("opacity","1");
+					audio.play();
+
+					//Increment session
+					$.ajax({
+						url: Routing.generate('incrementeSessionSituationListenNumber'),
+						type: 'PUT',
+						dataType: 'json'
+					})
+
+					.done(function(data) {
+						var limitListening = $("#limit_listening").html();
+						var reste = $("#limit_listening").html() - data.situationListenNumber;
+						var consigne = data.consigneListenNumber;
+						$("#listening_number").html(reste);
+						var limit = $("#limit_listening").html();
+						var listened = data.situationListenNumber;
+						$("#limit_listening_text").html(
+							pluralizeListen(limit, listened)
+						);
+					})
+					.fail(function() {
+						alert('Ajax error');
+					});
+
+				}
+				else
+				{
+					alert('Vous n\'avez pas encore écouté la consigne située à gauche de l\'écran');
+				};
+
 			}
 		}
 	});
@@ -125,18 +178,38 @@ $(document).ready(function() {
                 type: 'PUT',
                 dataType: 'json'
         })
+        $.ajax({
+                url: Routing.generate('resetConsigneSituationListenNumber'),
+                type: 'PUT',
+                dataType: 'json'
+        })
     });
 
+    /*Display or not "Quel était le niveau du dernier cours LANSAD que vous avez validé ?". EV, 20/12/2013 */
+    $('#fos_user_registration_form_originStudent').click(function(event) {
 
+    	// Je récupère la zone sélectionnée et en minuscules.
+		var choice = $("#fos_user_registration_form_originStudent option:selected").text().toLowerCase();
+
+		// Demande de Cristiana : si je choisis "LANSAD" alors j'affiche la liste suivante sinon je n'affiche pas.
+		if (choice == 'lansad')
+		{
+	    	$('#fos_user_registration_form_levelLansad').show();
+    		$('#fos_user_registration_form_levelLansad').parent().parent().show();
+		}
+		else
+		{
+    		$('#fos_user_registration_form_levelLansad').hide();
+    		$('#fos_user_registration_form_levelLansad').parent().parent().hide();
+		}
+    });
 
 
     /*Login form validation*/
     $('.fos_user_registration_register #_submit').click(function(event) {
 
-
     	$('.fos_user_registration_register .help-block').remove();
     	$('.fos_user_registration_register .has-error').removeClass('has-error');
-
 
     	$('#register-form-tabs a:first').tab('show');
 
@@ -146,7 +219,7 @@ $(document).ready(function() {
 	    		var div = $(this).parent().parent();
 	    		div.addClass('has-error');
 		   		if ($(this).prop('type') === 'email') {
-	    			div.append('<div class="col-md-offset-2 col-md-10"><span class="help-block">Ce champ doit obligatoirement etre un email valide</span></div>');
+	    			div.append('<div class="col-md-offset-2 col-md-10"><span class="help-block">Ce champ doit obligatoirement être un email valide</span></div>');
 	    		} else {
 	    			div.append('<div class="col-md-offset-2 col-md-10"><span class="help-block">Ce champ est obligatoire</span></div>');
 	    		};
@@ -155,4 +228,3 @@ $(document).ready(function() {
 
     });
 });
-

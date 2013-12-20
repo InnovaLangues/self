@@ -34,6 +34,7 @@ class UserType extends BaseType
         parent::buildForm($builder, $options);
 
         $builder
+            ->add('email', 'email')
             ->add('lastName')
             ->add('firstName')
             ->add('originStudent')

@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
 
 /**
@@ -35,7 +37,7 @@ class User extends BaseUser
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="Title must not be empty")
      * @ORM\Column(name="lastName", type="string", length=255, nullable=true)
      */
     private $lastName;
@@ -473,14 +475,14 @@ class User extends BaseUser
     public function setLevelLansad(\Innova\SelfBundle\Entity\LevelLansad $levelLansad = null)
     {
         $this->levelLansad = $levelLansad;
-    
+
         return $this;
     }
 
     /**
      * Get levelLansad
      *
-     * @return \Innova\SelfBundle\Entity\LevelLansad 
+     * @return \Innova\SelfBundle\Entity\LevelLansad
      */
     public function getLevelLansad()
     {
