@@ -61,7 +61,8 @@ class AjaxController extends Controller
         $session->set('situationListenNumber', $nextSituationListenNumber);
 
         return new JsonResponse(
-            array('situationListenNumber' => $nextSituationListenNumber)
+            array('situationListenNumber' => $nextSituationListenNumber
+                 )
         );
     }
 
@@ -80,6 +81,70 @@ class AjaxController extends Controller
 
         return new JsonResponse(
             array('situationListenNumber' => $situationListenNumber)
+        );
+    }
+
+    /**
+     * Vérify if the session variable is OK and initialize if not.
+     *
+     * @Route("/session-consigne-listen-number", name="sessionConsigneListenNumber", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function sessionConsigneListenNumber()
+    {
+        $consigneListenNumber = null;
+
+        $session = $this->container->get('request')->getSession();
+
+        if ($session->get('consigneListenNumber')) {
+            $consigneListenNumber = $session->get('consigneListenNumber');
+        }
+
+        return new JsonResponse(
+            array('consigneListenNumber' => $consigneListenNumber)
+        );
+    }
+
+    /**
+     * To incremente the variable session + 1.
+     *
+     * @Route("/increment-session-consigne-listen-number", name="incrementeSessionConsigneListenNumber", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function incrementeSessionConsigneListenNumber()
+    {
+
+        $session = $this->container->get('request')->getSession();
+
+        $consigneListenNumber = $session->get('consigneListenNumber');
+
+        if ($consigneListenNumber === null) {
+            $consigneListenNumber = 0;
+        }
+
+        $nextConsigneListenNumber = $consigneListenNumber + 1;
+        $session->set('consigneListenNumber', $nextConsigneListenNumber);
+
+        return new JsonResponse(
+            array('consigneListenNumber' => $nextConsigneListenNumber)
+        );
+    }
+
+    /**
+     * To reset the variable session to null.
+     *
+     * @Route("/reset-session-consigne-listen-number", name="resetConsigneSituationListenNumber", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function resetSessionConsigneListenNumber()
+    {
+
+        $session = $this->container->get('request')->getSession();
+
+        $consigneListenNumber = $session->set('consigneListenNumber', null);
+
+        return new JsonResponse(
+            array('consigneListenNumber' => $consigneListenNumber)
         );
     }
 
