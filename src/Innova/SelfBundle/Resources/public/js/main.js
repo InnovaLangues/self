@@ -58,27 +58,6 @@ $(document).ready(function() {
 		alert('Ajax error');
 	});
 
-
-	/***
-    /* Allow or not to listen "Situation de départ". We must listen "Consigne didactique" before.". EV, 20/12/2013
-	****/
-	$(".consigne").click(function(){
-		//Increment session
-		$.ajax({
-			url: Routing.generate('incrementeSessionConsigneListenNumber'),
-			type: 'PUT',
-			dataType: 'json'
-		})
-
-		.done(function(data) {
-			var consigne = data.consigneListenNumber;
-		})
-
-		.fail(function() {
-			alert('Ajax error');
-		});
-	});
-
 	$(".item_audio_button").click(function(){
 		// Number of possible listens
 		var limit = Number($(this).attr("data-limit"));
@@ -161,7 +140,6 @@ $(document).ready(function() {
 	});
 
 	/* FORM  */
-
 	$("form").submit(function(){
 		totalTime = timestamp() - timestampIn;
 		$("#totalTime").val(totalTime);
@@ -171,7 +149,6 @@ $(document).ready(function() {
 	 /***
     TO RESET SESSION VARIABLE IF I CLICK ON "VALIDER" BUTTON
     ****/
-
     $('.reset-listening-number').click(function(event) {
         $.ajax({
                 url: Routing.generate('resetSessionSituationListenNumber'),
@@ -184,26 +161,6 @@ $(document).ready(function() {
                 dataType: 'json'
         })
     });
-
-    /*Display or not "Quel était le niveau du dernier cours LANSAD que vous avez validé ?". EV, 20/12/2013 */
-    $('#fos_user_registration_form_originStudent').click(function(event) {
-
-    	// Je récupère la zone sélectionnée et en minuscules.
-		var choice = $("#fos_user_registration_form_originStudent option:selected").text().toLowerCase();
-
-		// Demande de Cristiana : si je choisis "LANSAD" alors j'affiche la liste suivante sinon je n'affiche pas.
-		if (choice == 'lansad')
-		{
-	    	$('#fos_user_registration_form_levelLansad').show();
-    		$('#fos_user_registration_form_levelLansad').parent().parent().show();
-		}
-		else
-		{
-    		$('#fos_user_registration_form_levelLansad').hide();
-    		$('#fos_user_registration_form_levelLansad').parent().parent().hide();
-		}
-    });
-
 
     /*Login form validation*/
     $('.fos_user_registration_register #_submit').click(function(event) {
@@ -227,4 +184,44 @@ $(document).ready(function() {
 		});
 
     });
+
+    /*Display or not "Quel était le niveau du dernier cours LANSAD que vous avez validé ?". EV, 20/12/2013 */
+    $('#fos_user_registration_form_originStudent').click(function(event) {
+
+    	// Je récupère la zone sélectionnée et en minuscules.
+		var choice = $("#fos_user_registration_form_originStudent option:selected").text().toLowerCase();
+
+		// Demande de Cristiana : si je choisis "LANSAD" alors j'affiche la liste suivante sinon je n'affiche pas.
+		if (choice == 'lansad')
+		{
+	    	$('#fos_user_registration_form_levelLansad').show();
+    		$('#fos_user_registration_form_levelLansad').parent().parent().show();
+		}
+		else
+		{
+    		$('#fos_user_registration_form_levelLansad').hide();
+    		$('#fos_user_registration_form_levelLansad').parent().parent().hide();
+		}
+    });
+
+	/***
+    /* Allow or not to listen "Situation de départ". We must listen "Consigne didactique" before.". EV, 20/12/2013
+	****/
+	$(".consigne").click(function(){
+		//Increment session
+		$.ajax({
+			url: Routing.generate('incrementeSessionConsigneListenNumber'),
+			type: 'PUT',
+			dataType: 'json'
+		})
+
+		.done(function(data) {
+			var consigne = data.consigneListenNumber;
+		})
+
+		.fail(function() {
+			alert('Ajax error');
+		});
+	});
+
 });

@@ -26,15 +26,21 @@ class Answer
     */
     protected $trace;
 
-     /**
+    /**
     * @ORM\ManyToOne(targetEntity="Proposition", inversedBy="answers")
     */
     protected $proposition;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Subquestion", inversedBy="answers")
+    */
+    protected $subquestion;
+
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -50,14 +56,14 @@ class Answer
     public function setTrace(\Innova\SelfBundle\Entity\Trace $trace = null)
     {
         $this->trace = $trace;
-    
+
         return $this;
     }
 
     /**
      * Get trace
      *
-     * @return \Innova\SelfBundle\Entity\Trace 
+     * @return \Innova\SelfBundle\Entity\Trace
      */
     public function getTrace()
     {
@@ -73,17 +79,40 @@ class Answer
     public function setProposition(\Innova\SelfBundle\Entity\Proposition $proposition = null)
     {
         $this->proposition = $proposition;
-    
+
         return $this;
     }
 
     /**
      * Get proposition
      *
-     * @return \Innova\SelfBundle\Entity\Proposition 
+     * @return \Innova\SelfBundle\Entity\Proposition
      */
     public function getProposition()
     {
         return $this->proposition;
+    }
+
+    /**
+     * Set subquestion
+     *
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestion
+     * @return Answer
+     */
+    public function setSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestion = null)
+    {
+        $this->subquestion = $subquestion;
+
+        return $this;
+    }
+
+    /**
+     * Get subquestion
+     *
+     * @return \Innova\SelfBundle\Entity\Subquestion
+     */
+    public function getSubquestion()
+    {
+        return $this->subquestion;
     }
 }

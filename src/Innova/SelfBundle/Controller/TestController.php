@@ -44,28 +44,26 @@ class TestController extends Controller
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
         foreach ($questionnaires as $questionnaire) {
 
-        $tests = $questionnaire->getTests();
+            $tests = $questionnaire->getTests();
 
-        $testQ = $tests[0];
+            $testQ = $tests[0];
 
-        if ($test->getId() === $testQ->getId())
-        {
-            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(), 'test' => $test->getId(),
-                                        'questionnaire' => $questionnaire->getId()
-                                        )
-                                    );
-                if (count($traces) == 0)
-                {
-                    if (!$findQuestionnaireWithoutTrace)
+            if ($test->getId() === $testQ->getId())
+            {
+                $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(), 'test' => $test->getId(),
+                                            'questionnaire' => $questionnaire->getId()
+                                            )
+                                        );
+                    if (count($traces) == 0)
                     {
-//                        echo "<br />Trace PAS trouvée pour " . $questionnaire->getId() . " U" . $user->getId() . " T". $test->getId() . "  - " . count($traces);
-                        $questionnaireWithoutTrace = new Questionnaire();
-                        $questionnaireWithoutTrace = $questionnaire;
-//                        echo " T" . $questionnaireWithoutTrace->getTheme();
-                        $findQuestionnaireWithoutTrace = true;
+                        if (!$findQuestionnaireWithoutTrace)
+                        {
+                            $questionnaireWithoutTrace = new Questionnaire();
+                            $questionnaireWithoutTrace = $questionnaire;
+                            $findQuestionnaireWithoutTrace = true;
+                        }
                     }
                 }
-            }
 
         }
 

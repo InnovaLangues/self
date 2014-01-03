@@ -20,7 +20,7 @@
 
 {% macro inputs(type, subquestionId, propositionId, text) %}
     <label class="{{ type }}-inline">
-        <input type="{{ type }}" name="subquestion{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required>
+        <input type="{{ type }}" name="{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required>
         {% if text == "VRAI" %}
             {{ 'generic.boolTrue' | trans }}
         {% else %}

@@ -77,7 +77,8 @@
                                 {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
                                     {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
                                 {% elseif subquestion.typology.name  == "APPAT" %}
-                                    {% include "InnovaSelfBundle:Test/partials:APP.html.twig" %}
+                                    {% set vars = {'subquestion0' : question.subquestions[0]} %}
+                                    {% include "InnovaSelfBundle:Test/partials:APP.html.twig" with vars %}
                                 {% endif %}
                             </div>
                             {% endfor %}

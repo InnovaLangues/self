@@ -55,6 +55,12 @@ class Subquestion
     protected $propositions;
 
     /**
+    * @ORM\OneToMany(targetEntity="Answer", mappedBy="subquestion")
+    */
+    protected $answers;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -229,17 +235,50 @@ class Subquestion
     public function setMediaAmorce(\Innova\SelfBundle\Entity\Media $mediaAmorce = null)
     {
         $this->mediaAmorce = $mediaAmorce;
-    
+
         return $this;
     }
 
     /**
      * Get mediaAmorce
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMediaAmorce()
     {
         return $this->mediaAmorce;
+    }
+
+    /**
+     * Add answers
+     *
+     * @param \Innova\SelfBundle\Entity\Answer $answers
+     * @return Subquestion
+     */
+    public function addAnswer(\Innova\SelfBundle\Entity\Answer $answers)
+    {
+        $this->answers[] = $answers;
+
+        return $this;
+    }
+
+    /**
+     * Remove answers
+     *
+     * @param \Innova\SelfBundle\Entity\Answer $answers
+     */
+    public function removeAnswer(\Innova\SelfBundle\Entity\Answer $answers)
+    {
+        $this->answers->removeElement($answers);
+    }
+
+    /**
+     * Get answers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
     }
 }
