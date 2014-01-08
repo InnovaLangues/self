@@ -125,17 +125,6 @@ class TestController extends Controller
         return array("nbRightAnswer" => $nbRightAnswer, "nbAnswer" => $nbAnswer);
     }
 
-
-    /*
-    private function getRandom($questionnaires)
-    {
-        $nb_questionnaire = count($questionnaires) -1;
-        $rnd = rand(0,$nb_questionnaire);
-
-        return $questionnaires[$rnd];
-    }
-    */
-
     /**
      * Lists all Test entities.
      *
