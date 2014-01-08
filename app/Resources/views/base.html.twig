@@ -5,6 +5,8 @@
         <title>{% block title %}SELF{% endblock %}</title>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
         <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="{{ asset('bundles/innovaself/js/mediaelement-and-player.min.js') }}"></script>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -63,8 +65,7 @@
 
         {% block javascripts %}
             <!-- Jquery first then Bootstrap call -->
-            <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-            <script src="http:////code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+            <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 			<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>

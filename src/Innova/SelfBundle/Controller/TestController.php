@@ -16,6 +16,7 @@ use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Form\TestType;
 use Innova\SelfBundle\Entity\MediaType;
+use Innova\SelfBundle\Entity\Language;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -41,24 +42,27 @@ class TestController extends Controller
         // Je parcours tous les questionnaires du test X
         // et je m'arrête au premier questionnaire qui n'a pas de trace.
         $findQuestionnaireWithoutTrace = false;
+        $questionnaireWithoutTrace = new Questionnaire();
+
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
         foreach ($questionnaires as $questionnaire) {
 
             $tests = $questionnaire->getTests();
-
             $testQ = $tests[0];
 
             if ($test->getId() === $testQ->getId())
             {
+                // Recherche des traces pour UN utilisateur UN test et UN questionnaire.
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(), 'test' => $test->getId(),
                                             'questionnaire' => $questionnaire->getId()
                                             )
                                         );
+
+                    // Si je n'ai pas de traces, alors il faut que j'affiche ce questionnaire. Car il n'est pas encore été "répondu".
                     if (count($traces) == 0)
                     {
                         if (!$findQuestionnaireWithoutTrace)
                         {
-                            $questionnaireWithoutTrace = new Questionnaire();
                             $questionnaireWithoutTrace = $questionnaire;
                             $findQuestionnaireWithoutTrace = true;
                         }
@@ -78,7 +82,8 @@ class TestController extends Controller
         // Session to F5 key and sesion.
         $session->set('listening', $questionnaire->getListeningLimit());
 
-        if (is_null($questionnaire)) {
+        // Renvoi vers la méthode indiquant la fin du test.
+        if (!$findQuestionnaireWithoutTrace) {
             return $this->redirect(
                 $this->generateUrl(
                     'test_end',
@@ -88,17 +93,14 @@ class TestController extends Controller
         }
 
         // One color per language. Two languages for the moment : ang and it.
-        // In database, we must have "ang" in english test and "it" in italian test.
+        // In database, we must have one color per test. Table : language.
         // See main.css for more information.
-        $language = "default";
-        if (preg_match("/ang/i", $test->getName() )) $language = "eng";
-        if (preg_match("/it/i", $test->getName() )) $language = "it";
-
-        //echo $questionnaire->getId() . "A" . $questionnaire->getTheme() . "Z";
+        $language = $em->getRepository('InnovaSelfBundle:Language')->findBy(array('id' => $test->getLanguage()->getId()));
+        $languageColor = $language[0]->getColor();
 
         return array(
             'questionnaire' => $questionnaire,
-            'language' => $language,
+            'language' => $languageColor,
             'test' => $test,
             'counQuestionnaireDone' => $countQuestionnaireDone,
         );

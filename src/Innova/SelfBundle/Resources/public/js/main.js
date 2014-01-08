@@ -11,7 +11,14 @@ $(document).ready(function() {
 	WORD "ECOUTE" DISPLAY WITH OR WITHOUT "s"
 	****/
 	function pluralizeListen(limit, listened) {
-		if((limit - listened) < 2){
+		if ((limit - listened) < 0){
+			var diff = listened - limit;
+		}
+		else
+		{
+			var diff = limit - listened;
+		}
+		if(diff < 2){
 			return 'écoute';
 		};
 

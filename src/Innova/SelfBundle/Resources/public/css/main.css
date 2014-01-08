@@ -18,12 +18,12 @@
 	background-color: #717EE3;
 }
 
-.central-it {
+.central-pink {
 	border-radius:10px;
 	background-color: #717EE3;
 }
 
-.central-eng {
+.central-blue {
 	border-radius:10px;
 	background-color: #E37E71;
 }
@@ -69,8 +69,8 @@
 
 #submit{
 	position:absolute;
-	bottom:15px;
-	right:15px;
+	bottom:2px;
+	right:40px;
 }
 
 .item_audio_button{
