@@ -83,7 +83,6 @@ class QuestionnaireRepository extends EntityRepository{
 		return $query->getResult();
 	}
 
-
 	public function CountAnswerByUserByTest($testId, $userId){
 		$dql = "SELECT a FROM Innova\SelfBundle\Entity\Answer a
 		LEFT JOIN a.trace at

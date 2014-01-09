@@ -35,7 +35,6 @@
 
                 <div class="col-md-7">
                     {% for question in questionnaire.questions %}
-                        {{ "Q" ~ question.id ~ "-" ~ questionnaire.id ~ "-"~ question.typology.name }}
                         {% if question.typology.name == "TQRU" %}
 
                             <div class="well well2">

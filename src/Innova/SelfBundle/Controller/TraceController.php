@@ -65,7 +65,6 @@ class TraceController extends Controller
 
         $traceId = $trace->getId();
 
-        print_r($post);
         foreach ($post as $subquestionId => $postVar){
             if (is_array($postVar)){
                 foreach ($postVar as $key => $propositionId){

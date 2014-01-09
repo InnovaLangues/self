@@ -116,13 +116,16 @@ class TestController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
-        $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->CountAnswerByUserByTest($test->getId(), $user->getId());
 
         $nbRightAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
                             ->CountRightAnswerByUserByTest($test->getId(), $user->getId());
 
-        return array("nbRightAnswer" => $nbRightAnswer, "nbAnswer" => $nbAnswer);
+        $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                            ->CountAnswerByUserByTest($test->getId(), $user->getId());
+
+        $pourcentRightAnswer = number_format(($nbRightAnswer/$nbAnswer)*100, 0);
+
+        return array("pourcentRightAnswer" => $pourcentRightAnswer);
     }
 
     /**
