@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Trace;
 use Innova\SelfBundle\Entity\Answer;
 use Innova\SelfBundle\Entity\Proposition;
+use Innova\SelfBundle\Entity\Subquestion;
 
 class TraceController extends Controller
 {
@@ -39,10 +40,6 @@ class TraceController extends Controller
         {
             $this->get('session')->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
 
-            //$trace = $em->getRepository('InnovaSelfBundle:Questionnaire')
-            //->findOneByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
-
-            //$traceId = $trace[0]->getId();
             $traceId = 0;
             return array("traceId" => $traceId, "testId" => $test->getId());
         }
@@ -68,13 +65,15 @@ class TraceController extends Controller
 
         $traceId = $trace->getId();
 
-        foreach ($post as $postVar){
+        foreach ($post as $subquestionId => $postVar){
             if (is_array($postVar)){
                 foreach ($postVar as $key => $propositionId){
                     $answer = new Answer();
                     $answer->setTrace($trace);
                     $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
                     $answer->setProposition($proposition);
+                    $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
+                    $answer->setSubquestion($subquestion);
                     $em->persist($answer);
                     $em->flush();
                 }
