@@ -765,8 +765,16 @@ class TestController extends Controller
                         }
                         else
                         {
-                            $number = explode(".", $exp[3]);
-                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number[0] . ".mp3");
+                            if (!is_numeric($exp[3]))
+                            {
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . ".mp3");
+                            }
+                            else
+                            {
+                                $number = explode(".", $exp[3]);
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number[0] . ".mp3");
+                            }
+
                         }
                     }
                     if (preg_match("/txt/i", $fileName))
