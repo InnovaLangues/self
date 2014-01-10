@@ -22,8 +22,7 @@ use Innova\SelfBundle\Entity\LevelLansad;
 /**
  * Symfony command to add or not fixtures. EV.
  *
- */
-
+*/
 class FixtureCommand extends ContainerAwareCommand
 {
 
