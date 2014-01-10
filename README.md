@@ -20,7 +20,7 @@ php app/console cache:clear --env=prod --no-debug
 
 Create a new admin user :
 ``` bash
-php app/console fos:user:create admin2 --super-admin
+php app/console fos:user:create admin --super-admin
 ```
 
 # Basic update 
