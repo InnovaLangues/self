@@ -72,7 +72,6 @@
                         {% else %}
                             {% for i, subquestion in question.subquestions %}
                             <div class="subquestion">
-                                {{ "SQ" ~ subquestion.id }}
                                 {% if subquestion.typology.name  == "QRM" %}
                                     {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
                                 {% elseif subquestion.typology.name  == "QRU" %}

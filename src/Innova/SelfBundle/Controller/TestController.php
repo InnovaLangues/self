@@ -809,13 +809,17 @@ class TestController extends Controller
 
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
-                    $testName = "CO-pilote-dec2013-ang";
-                    $testName = "test-TQRU";
+                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
+                    $testName = "CO-pilote-dec2013-ang"; // For tests.
+                    $testName = "test-english"; // For tests.
+
                     if(!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)){
                         $test = new Test();
                         $test->setName($testName);
+                        $test->setLanguage($language);
                         $em->persist($test);
                     }
+
                     $questionnaire->addTest($test);
                     //
                     // J'ai traité les colonnes de la table Questionnaire dans l'ordre
