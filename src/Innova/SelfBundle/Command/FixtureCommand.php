@@ -102,15 +102,19 @@ class FixtureCommand extends ContainerAwareCommand
             New table for version 1.2 or version 2 (2014)
             fixtures for language table
             */
+            /*
+            Important : we must have some keywords to add test.
+            So, in TestController.php, we create the test with language "English" or "Italian".
+            */
             $lang_eng = new Language();
-            $lang_eng->setName("eng");
-            $lang_eng->setColor("E37E71");
+            $lang_eng->setName("English");
+            $lang_eng->setColor("blue");
             $em->persist($lang_eng);
             $em->flush();
 
             $lang_it = new Language();
-            $lang_it->setName("it");
-            $lang_it->setColor("717EE3");
+            $lang_it->setName("Italian");
+            $lang_it->setColor("pink");
             $em->persist($lang_it);
             $em->flush();
 
