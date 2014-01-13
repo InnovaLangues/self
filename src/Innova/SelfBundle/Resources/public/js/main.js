@@ -62,7 +62,7 @@ $(document).ready(function() {
 		$('#listens-counter').removeClass('hidden');
 	})
 	.fail(function() {
-		alert('Ajax error');
+		alert('Ajax error 1');
 	});
 
 	$(".item_audio_button").click(function(){
@@ -100,7 +100,7 @@ $(document).ready(function() {
 						consigne = data.consigneListenNumber;
 					})
 					.fail(function() {
-						alert('Ajax error');
+						alert('Ajax error 2');
 					});
 
 				if (consigne > 0){
@@ -133,7 +133,7 @@ $(document).ready(function() {
 						);
 					})
 					.fail(function() {
-						alert('Ajax error');
+						alert('Ajax error 3');
 					});
 
 				}
@@ -157,7 +157,23 @@ $(document).ready(function() {
     TO RESET SESSION VARIABLE IF I CLICK ON "VALIDER" BUTTON
     ****/
    $('.reset-listening-number').click(function(event) {
-
+    	alert("session");
+      $.ajax({
+         url: Routing.generate('resetSessionSituationListenNumber'),
+         async: false,
+         type: 'PUT',
+         dataType: 'json'
+      })
+      .done(function(data) {
+         var reste = data.situationListenNumber;
+         alert('Ajax session');
+         alert(reste);
+         var reste = data.situationListenNumber;
+         alert(reste);
+      })
+      .fail(function() {
+         alert('Ajax session error');
+      });
 
     	alert("consigne");
       $.ajax({
@@ -236,7 +252,7 @@ $(document).ready(function() {
 		})
 
 		.fail(function() {
-			alert('Ajax error');
+			alert('Ajax error 4');
 		});
 	});
 
