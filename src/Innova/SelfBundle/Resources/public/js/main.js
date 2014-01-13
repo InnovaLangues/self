@@ -157,23 +157,7 @@ $(document).ready(function() {
     TO RESET SESSION VARIABLE IF I CLICK ON "VALIDER" BUTTON
     ****/
    $('.reset-listening-number').click(function(event) {
-    	alert("session");
-      $.ajax({
-         url: Routing.generate('resetSessionSituationListenNumber'),
-         async: false,
-         type: 'PUT',
-         dataType: 'json'
-      })
-      .done(function(data) {
-         var reste = data.situationListenNumber;
-         alert(reste);
-         alert('Ajax session');
-         var reste = data.situationListenNumber;
-      alert(reste);
-      })
-      .fail(function() {
-         alert('Ajax session error');
-      });
+
 
     	alert("consigne");
       $.ajax({
@@ -183,7 +167,11 @@ $(document).ready(function() {
          dataType: 'json'
       })
       .done(function(data) {
+         var reste = data.consigneListenNumber;
          alert('Ajax consigne');
+         alert(reste);
+         var reste = data.consigneListenNumber;
+         alert(reste);
       })
       .fail(function() {
          alert('Ajax consigne error');
