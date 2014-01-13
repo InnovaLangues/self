@@ -156,18 +156,39 @@ $(document).ready(function() {
 	 /***
     TO RESET SESSION VARIABLE IF I CLICK ON "VALIDER" BUTTON
     ****/
-    $('.reset-listening-number').click(function(event) {
-        $.ajax({
-                url: Routing.generate('resetSessionSituationListenNumber'),
-                type: 'PUT',
-                dataType: 'json'
-        })
-        $.ajax({
-                url: Routing.generate('resetConsigneSituationListenNumber'),
-                type: 'PUT',
-                dataType: 'json'
-        })
-    });
+   $('.reset-listening-number').click(function(event) {
+    	alert("session");
+      $.ajax({
+         url: Routing.generate('resetSessionSituationListenNumber'),
+         async: false,
+         type: 'PUT',
+         dataType: 'json'
+      })
+      .done(function(data) {
+         var reste = data.situationListenNumber;
+         alert(reste);
+         alert('Ajax session');
+         var reste = data.situationListenNumber;
+      alert(reste);
+      })
+      .fail(function() {
+         alert('Ajax session error');
+      });
+
+    	alert("consigne");
+      $.ajax({
+         url: Routing.generate('resetSessionConsigneListenNumber'),
+         async: false,
+         type: 'PUT',
+         dataType: 'json'
+      })
+      .done(function(data) {
+         alert('Ajax consigne');
+      })
+      .fail(function() {
+         alert('Ajax consigne error');
+      });
+   });
 
     /*Login form validation*/
     $('.fos_user_registration_register #_submit').click(function(event) {
