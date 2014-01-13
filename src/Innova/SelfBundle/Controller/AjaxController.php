@@ -90,7 +90,7 @@ class AjaxController extends Controller
      * @Route("/session-consigne-listen-number", name="sessionConsigneListenNumber", options={"expose"=true})
      * @Method("GET")
      */
-    public function sessionConsigneListenNumber()
+    public function sessionConsigneListenNumberAction()
     {
         $consigneListenNumber = null;
 
@@ -111,7 +111,7 @@ class AjaxController extends Controller
      * @Route("/increment-session-consigne-listen-number", name="incrementeSessionConsigneListenNumber", options={"expose"=true})
      * @Method("PUT")
      */
-    public function incrementeSessionConsigneListenNumber()
+    public function incrementeSessionConsigneListenNumberAction()
     {
 
         $session = $this->container->get('request')->getSession();
@@ -136,7 +136,7 @@ class AjaxController extends Controller
      * @Route("/reset-session-consigne-listen-number", name="resetConsigneSituationListenNumber", options={"expose"=true})
      * @Method("PUT")
      */
-    public function resetSessionConsigneListenNumber()
+    public function resetSessionConsigneListenNumberAction()
     {
 
         $session = $this->container->get('request')->getSession();
