@@ -709,7 +709,15 @@ class TestController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        //
+
+        //SOX
+        echo "Début";
+        echo(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
+        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
+        echo " Fin";
+        die();
+
+       //
         // CSV Import part
         //
 
