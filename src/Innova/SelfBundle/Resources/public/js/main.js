@@ -21,7 +21,6 @@ $(document).ready(function() {
 		if(diff < 2){
 			return 'écoute';
 		};
-
 		return 'écoutes';
 	}
 
@@ -62,7 +61,7 @@ $(document).ready(function() {
 		$('#listens-counter').removeClass('hidden');
 	})
 	.fail(function() {
-		alert('Ajax error');
+		alert('Ajax error 1');
 	});
 
 	$(".item_audio_button").click(function(){
@@ -100,7 +99,7 @@ $(document).ready(function() {
 						consigne = data.consigneListenNumber;
 					})
 					.fail(function() {
-						alert('Ajax error');
+						alert('Ajax error 2');
 					});
 
 				if (consigne > 0){
@@ -133,7 +132,7 @@ $(document).ready(function() {
 						);
 					})
 					.fail(function() {
-						alert('Ajax error');
+						alert('Ajax error 3');
 					});
 
 				}
@@ -156,18 +155,33 @@ $(document).ready(function() {
 	 /***
     TO RESET SESSION VARIABLE IF I CLICK ON "VALIDER" BUTTON
     ****/
-    $('.reset-listening-number').click(function(event) {
-        $.ajax({
-                url: Routing.generate('resetSessionSituationListenNumber'),
-                type: 'PUT',
-                dataType: 'json'
-        })
-        $.ajax({
-                url: Routing.generate('resetConsigneSituationListenNumber'),
-                type: 'PUT',
-                dataType: 'json'
-        })
-    });
+   $('.reset-listening-number').click(function(event) {
+      $.ajax({
+         url: Routing.generate('resetSessionSituationListenNumber'),
+         async: false,
+         type: 'PUT',
+         dataType: 'json'
+      })
+      .done(function(data) {
+         var reste = data.situationListenNumber;
+      })
+      .fail(function() {
+         alert('Ajax error session');
+      });
+
+      $.ajax({
+         url: Routing.generate('resetSessionConsigneListenNumber'),
+         async: false,
+         type: 'PUT',
+         dataType: 'json'
+      })
+      .done(function(data) {
+         var reste = data.consigneListenNumber;
+      })
+      .fail(function() {
+         alert('Ajax error consigne');
+      });
+   });
 
     /*Login form validation*/
     $('.fos_user_registration_register #_submit').click(function(event) {
@@ -227,7 +241,7 @@ $(document).ready(function() {
 		})
 
 		.fail(function() {
-			alert('Ajax error');
+			alert('Ajax error 4');
 		});
 	});
 
