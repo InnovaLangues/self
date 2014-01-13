@@ -21,7 +21,6 @@ $(document).ready(function() {
 		if(diff < 2){
 			return 'écoute';
 		};
-
 		return 'écoutes';
 	}
 
