@@ -172,7 +172,7 @@ $(document).ready(function() {
          alert(reste);
       })
       .fail(function() {
-         alert('Ajax session error');
+         alert('Ajax error session');
       });
 
     	alert("consigne");
@@ -190,7 +190,7 @@ $(document).ready(function() {
          alert(reste);
       })
       .fail(function() {
-         alert('Ajax consigne error');
+         alert('Ajax error consigne');
       });
    });
 
