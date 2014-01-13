@@ -133,7 +133,7 @@ class AjaxController extends Controller
     /**
      * To reset the variable session to null.
      *
-     * @Route("/reset-session-consigne-listen-number", name="resetConsigneSituationListenNumber", options={"expose"=true})
+     * @Route("/reset-session-consigne-listen-number", name="resetSessionConsigneListenNumber", options={"expose"=true})
      * @Method("PUT")
      */
     public function resetSessionConsigneListenNumberAction()
