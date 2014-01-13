@@ -709,14 +709,6 @@ class TestController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-
-        //SOX
-        echo "Début";
-        echo(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
-        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
-        echo " Fin";
-        die();
-
        //
         // CSV Import part
         //
@@ -942,6 +934,9 @@ class TestController extends Controller
             }
             fclose($handle);
         }
+
+        //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
+        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
 
         //
         // To view
