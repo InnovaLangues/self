@@ -813,7 +813,9 @@ class TestController extends Controller
                     $testName = "CO-pilote-dec2013-ang"; // For tests.
                     $testName = "test-english"; // For tests.
 
-                    if(!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)){
+//                    if(!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)){
+                    if ($row == 1) {
+                        echo "<br />Création du test row=1";
                         $test = new Test();
                         $test->setName($testName);
                         $test->setLanguage($language);
@@ -877,6 +879,8 @@ class TestController extends Controller
                     $questionnaire->setMediaContext();
                     $questionnaire->setMediaText();
 
+                    $indice++;
+                    echo "<br />" . $indice . " theme : "  . $questionnaire->getTheme();
                     // Enregistrement en base
                     $em->persist($questionnaire);
                     //$em->flush();
