@@ -792,12 +792,12 @@ class TestController extends Controller
         $row = 0;
         $indice = 0;
 
-        //echo $csvPath;
+        echo $csvPath;
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 // Nombre de colonnes
                 $num = count($data);
-                $c = 0;
+
                 // Ainsi, je ne prends pas les intitulés des colonnes
                 if ($row != 0)
                 {
@@ -892,8 +892,7 @@ class TestController extends Controller
                     //
                     // $data[1]  = nom du répertoire = nom du thême
                     // $data[10] = nom de l'extension du fichier (ex : mp3)
-                    // $idQuestionnaire = id du questionnaire créé
-                    $this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
+                    //$this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
 
                     //
                     //
@@ -902,7 +901,7 @@ class TestController extends Controller
                     //
 
                     // Traitement suivi le type de questionnaire.
-                    switch($data[4])
+                    /*switch($data[4])
                     {
                         case "TQRU";
                         case "TQRM";
@@ -930,7 +929,7 @@ class TestController extends Controller
                         case "APPAI";
                             $this->appaiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
-                    }
+                    }*/
 
                     $em->flush();
                 }
