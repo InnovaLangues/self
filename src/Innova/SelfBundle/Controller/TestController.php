@@ -722,7 +722,7 @@ class TestController extends Controller
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
-        // Path + Name
+        // Path + Name:wq
         $csvPath = $csvPathImport . $csvName;
 
         // File import path
@@ -953,7 +953,7 @@ class TestController extends Controller
      * appaiProcess function
      *
      */
-    public function appaiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function appaiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -984,7 +984,8 @@ class TestController extends Controller
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
 
-            for ($j = 0; $j < count($medias); $j++) {
+            $nbMedias = count($medias); #80
+            for ($j = 0; $j <  $nbMedias; $j++) {
                 $this->propositionAppaiProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
@@ -1113,7 +1114,8 @@ class TestController extends Controller
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
 
-            for ($j = 0; $j < count($medias); $j++) {
+            $nbMedias = count($medias); #80
+            for ($j = 0; $j < $nbMedias; $j++) {
                 $this->propositionAppaaProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
@@ -1171,7 +1173,7 @@ class TestController extends Controller
 
             // Copie du fichier
             $fileCopy = $media->getUrl();
-           copy($dir2copy . $dirName . "/reponse_" . $i . ".mp3", $dir_paste . $fileCopy . ".mp3");
+            copy($dir2copy . $dirName . "/reponse_" . $i . ".mp3", $dir_paste . $fileCopy . ".mp3");
 
             $medias[] = $media;
             $i++;
@@ -1210,7 +1212,8 @@ class TestController extends Controller
      * copieFileDir function
      *
      */
-    public function copieFileDir($mediaDir, $itemExtention, $questionnaire, $dir2copy, $dir_paste)
+    //#77
+    public function copieFileDir($mediaDir, $itemExtention, Questionnaire $questionnaire, $dir2copy, $dir_paste)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -1575,7 +1578,8 @@ class TestController extends Controller
             $nbProposition = $data[$indice];
             $rightAnswer = $data[$indice-1];
 
-            for ($j=0; $j < count($medias); $j++) {
+            $nbMedias = count($medias); #80
+            for ($j=0; $j < $nbMedias; $j++) {
                 $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
@@ -1814,8 +1818,7 @@ class TestController extends Controller
     public function dragNewAction()
     {
 
-        echo "ici";
-        die();
+        //#78
         // Ici, on peut faire le traitement suite à la validation.
         //
         // Appel de la redirection après la validation.
