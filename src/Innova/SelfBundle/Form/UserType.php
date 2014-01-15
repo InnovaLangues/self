@@ -2,12 +2,9 @@
 
 namespace Innova\SelfBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
-use Innova\SelfBundle\Entity\LevelLansad;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class UserType extends BaseType
