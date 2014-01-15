@@ -8,18 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
-use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Form\TestType;
-use Innova\SelfBundle\Entity\MediaType;
-use Innova\SelfBundle\Entity\Language;
-use Symfony\Component\Security\Core\Util\SecureRandom;
-
-use Symfony\Component\HttpFoundation\Session\Session;
+use Innova\SelfBundle\Entity\Typology;
 
 class TestController extends Controller
 {
@@ -76,8 +71,6 @@ class TestController extends Controller
 
         $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
             ->CountDoneYetByUserByTest($test->getId(), $user->getId());
-
-        $countQuestionnaire = count($test->getQuestionnaires());
 
         // Session to F5 key and sesion.
         $session->set('listening', $questionnaire->getListeningLimit());
@@ -150,7 +143,7 @@ class TestController extends Controller
      * Lists all Test entities.
      *
      * @Route("student/test/user", name="user_test")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function userIndexAction()
@@ -425,7 +418,7 @@ class TestController extends Controller
      *     options = {"expose"=true}
      * )
      *
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function exportCsvSQLAction()
@@ -454,13 +447,6 @@ class TestController extends Controller
         // Init csv write variable
         $csv = '';
 
-        // First line
-        //$csv .= "NOM" . ";" ; // A
-        //$csv .= "DATE" . ";" ; // B
-        //$csv .= "TEMPS (s)" . ";" ; // C
-        // CR
-        //$csv .= "\n";
-
         // Loop for test
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
@@ -480,27 +466,11 @@ class TestController extends Controller
                         $result[$userName]["time"]=0;
                     }
                     $result[$userName]["time"] = $result[$userName]["time"] + $trace->getTotalTime();
-                    /*if (in_array($userName, $result)) {
-                        echo "trouvé" . "<br />";
-                        $result[$userName]["time"] = $result[$userName]["time"] + $trace->getTotalTime();
-                    } else {
-                        $result[$userName]["time"] = 0;
-                        echo "pas trouvé " . $userName . "<br />";
-                    }*/
                     $result[$userName]["name"]  = $userName;
                     $result[$userName]["email"] = $emailName;
                     $result[$userName]["date"]  = $testDate;
                 }
             }
-        }
-
-        foreach ($result as $key => $value) {
-            //foreach ($result[$key] as $key2 => $value2) {
-                //echo $key . "/" . $result[$key]["name"] . "/" . $result[$key]["time"]. "<br />";
-                //$csv .= $result[$key]["name"] . ";" . $result[$key]["date"] . ";" . $result[$key]["time"] . ";" ;
-                // CR
-                //$csv .= "\n";
-            //}
         }
 
         $csv .= "\n";
@@ -572,12 +542,7 @@ class TestController extends Controller
                         $cpt=0;
                         foreach ($subquestions as $subquestion) {
                             $cpt++;
-                            //$csv .= "T" . $cpt_questionnaire . "-CORR-FAUX " . $cpt . ";" ; // Ajout d'une colonne pour chaque proposition de la question.
                             $csv .= "t" . $themeCode . "res" . $cpt . ";"; // Ajout d'une colonne pour chaque proposition de la question.
-                            /*foreach ($propositions as $proposition) {
-                                    //echo $proposition->getRightAnswer();
-                            }*/
-                            //$csv .= "T" . $cpt_questionnaire . "-prop. choisie;" ;
                             $csv .= "t" . $themeCode . "ch" . $cpt . ";";
                         }
                     }
@@ -591,8 +556,6 @@ class TestController extends Controller
         // Loop to display all data
         foreach ($tests as $test) {
             $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
-            //$questionnaires = $test->getQuestionnaires();
-            //$questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllByTest($test);
             foreach ($users as $user) {
                 $csv .= $user->getEmail() . ";" ;
                 $csv .= $user->getUserName() . ";" ;
@@ -602,8 +565,6 @@ class TestController extends Controller
                 //
                 $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                     ->CountDoneYetByUserByTest($test->getId(), $user->getId());
-
-                $countQuestionnaire = count($test->getQuestionnaires());
 
                 if ($countQuestionnaireDone > 0)
                 {
@@ -630,7 +591,6 @@ class TestController extends Controller
 
                             $csv .= $trace->getDifficulty() . ";" ;
                             $csv .= $trace->getTotalTime() . ";" ;
-                            //echo "trace = " . $trace->getId() . "-" . $user->getId() . "-" . $trace->getTotalTime() . "<br />";
 
                             foreach ($answers as $answer) {
                                 $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
@@ -646,7 +606,6 @@ class TestController extends Controller
                                 if ($answer->getProposition()->getTitle() != "") {
                                     $csv .= $answer->getProposition()->getTitle() . ";";
                                 } else {
-                                    //$csv .= "proposition " . $propositionRank . ";";
                                     $csv .= $propositionRank . ";";
                                 }
                             }
@@ -697,12 +656,11 @@ class TestController extends Controller
      * importCsvSQL function
      *
      * @Route(
-     *     "/csv-import",
-     *     name = "csv-import",
-     *     options = {"expose"=true}
+     *     "/admin/csv-import",
+     *     name = "csv-import"
      * )
      *
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function importCsvSQLAction()
@@ -723,7 +681,7 @@ class TestController extends Controller
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
-        // Path + Name
+        // Path + Name:wq
         $csvPath = $csvPathImport . $csvName;
 
         // File import path
@@ -786,8 +744,7 @@ class TestController extends Controller
         }
 
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
-        // Contrainte :
-        // dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
+        // Contrainte : dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
         // Cette contrainte a été prise en compte par rapport au fichier reçu.
         $row = 0;
         $indice = 0;
@@ -795,8 +752,6 @@ class TestController extends Controller
         echo $csvPath;
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                // Nombre de colonnes
-                $num = count($data);
 
                 // Ainsi, je ne prends pas les intitulés des colonnes
                 if ($row != 0)
@@ -883,7 +838,6 @@ class TestController extends Controller
                     echo "<br />" . $indice . " theme : "  . $questionnaire->getTheme();
                     // Enregistrement en base
                     $em->persist($questionnaire);
-                    //$em->flush();
 
                     //
                     //
@@ -892,7 +846,7 @@ class TestController extends Controller
                     //
                     // $data[1]  = nom du répertoire = nom du thême
                     // $data[10] = nom de l'extension du fichier (ex : mp3)
-                    //$this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
+                    $this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
 
                     //
                     //
@@ -901,7 +855,7 @@ class TestController extends Controller
                     //
 
                     // Traitement suivi le type de questionnaire.
-                    /*switch($data[4])
+                    switch($data[4])
                     {
                         case "TQRU";
                         case "TQRM";
@@ -929,7 +883,7 @@ class TestController extends Controller
                         case "APPAI";
                             $this->appaiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
-                    }*/
+                    }
 
                     $em->flush();
                 }
@@ -954,7 +908,7 @@ class TestController extends Controller
      * appaiProcess function
      *
      */
-    public function appaiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function appaiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -985,7 +939,8 @@ class TestController extends Controller
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
 
-            for ($j = 0; $j < count($medias); $j++) {
+            $nbMedias = count($medias); #80
+            for ($j = 0; $j <  $nbMedias; $j++) {
                 $this->propositionAppaiProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
@@ -995,7 +950,7 @@ class TestController extends Controller
      * mediaAppaiPropositionProcess function
      *
      */
-    public function mediaAppaiPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
+    private function mediaAppaiPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1024,7 +979,7 @@ class TestController extends Controller
      * mediaAppaiSubQuestionProcess function
      *
      */
-    public function mediaAppaiSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
+    private function mediaAppaiSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, Subquestion $subQuestion)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1055,7 +1010,7 @@ class TestController extends Controller
      * propositionAppaaProcess function
      *
      */
-    public function propositionAppaiProcess($i, $j, $subQuestion, $media)
+    private function propositionAppaiProcess($i, $j, $subQuestion, $media)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1083,7 +1038,7 @@ class TestController extends Controller
      * appaProcess function
      *
      */
-    public function appaaProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function appaaProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1114,7 +1069,8 @@ class TestController extends Controller
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
 
-            for ($j = 0; $j < count($medias); $j++) {
+            $nbMedias = count($medias); #80
+            for ($j = 0; $j < $nbMedias; $j++) {
                 $this->propositionAppaaProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
@@ -1124,7 +1080,7 @@ class TestController extends Controller
      * mediaAppaaSubQuestionProcess function
      *
      */
-    public function mediaAppaaSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
+    private function mediaAppaaSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, Subquestion $subQuestion)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1154,7 +1110,7 @@ class TestController extends Controller
      * mediaAppaaPropositionProcess function
      *
      */
-    public function mediaAppaaPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
+    private function mediaAppaaPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1172,7 +1128,7 @@ class TestController extends Controller
 
             // Copie du fichier
             $fileCopy = $media->getUrl();
-           copy($dir2copy . $dirName . "/reponse_" . $i . ".mp3", $dir_paste . $fileCopy . ".mp3");
+            copy($dir2copy . $dirName . "/reponse_" . $i . ".mp3", $dir_paste . $fileCopy . ".mp3");
 
             $medias[] = $media;
             $i++;
@@ -1183,7 +1139,7 @@ class TestController extends Controller
      * propositionAppaaProcess function
      *
      */
-    public function propositionAppaaProcess($i, $j, $subQuestion, $media)
+    private function propositionAppaaProcess($i, $j, $subQuestion, $media)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1211,7 +1167,8 @@ class TestController extends Controller
      * copieFileDir function
      *
      */
-    public function copieFileDir($mediaDir, $itemExtention, $questionnaire, $dir2copy, $dir_paste)
+    //#77
+    private function copieFileDir($mediaDir, $itemExtention, Questionnaire $questionnaire, $dir2copy, $dir_paste)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -1309,7 +1266,7 @@ class TestController extends Controller
      * processAmorceSubquestion function
      *
      */
-    public function processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data)
+    private function processAmorceSubquestion($i, Subquestion $subQuestion, $dir2copy, $dir_paste, $data)
     {
         $em = $this->getDoctrine()->getManager();
         $mediaDir = $data[1];
@@ -1339,7 +1296,7 @@ class TestController extends Controller
      * tqrProcess function
      *
      */
-    public function tqrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function tqrProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1383,7 +1340,7 @@ class TestController extends Controller
      * qrProcess function
      *
      */
-    public function qrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function qrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1394,7 +1351,6 @@ class TestController extends Controller
         $question->setTypology($typo);
 
         $em->persist($question);
-        //$em->flush();
 
         // Traitement sur le nombre d'items
         // Créer une occurrence dans la table "SubQuestion"
@@ -1405,13 +1361,11 @@ class TestController extends Controller
 
         // Voir le traitement de l'amorce // AB.
         $em->persist($subQuestion);
-        //$em->flush();
 
         // Créer une occurrence dans la table "Proposition"
         $nbProposition = $data[13];
         $rightAnswer = $data[12];
 
-        //echo $rightAnswer . " - " . $nbProposition;
         for ($j=1; $j <= $nbProposition; $j++) {
             $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
         }
@@ -1421,7 +1375,7 @@ class TestController extends Controller
      * vfProcess function
      *
      */
-    public function vfProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function vfProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1461,7 +1415,6 @@ class TestController extends Controller
             //
             $fileName = "option_" . $i;
             $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
-            //echo "<br />Test Copie : " . $testFile;
 
             if (file_exists($testFile)) {
                 // Création dans "Media"
@@ -1475,13 +1428,11 @@ class TestController extends Controller
 
                 // Enregistrement en base
                 $em->persist($media);
-                //echo "<br />Copie : " . $dir2copy . $dirName . "/" . $fileName . ".mp3" . " TO " . $dir_paste . '/' . $media->getUrl() . ".mp3";
                 copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
             }
 
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
-            // $em->flush();
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
@@ -1501,7 +1452,7 @@ class TestController extends Controller
      * vfPropositionProcess function
      *
      */
-    public function vfPropositionProcess($rightAnswer, $nameProposition, $expectedAnswer, $subQuestion)
+    private function vfPropositionProcess($rightAnswer, $nameProposition, $expectedAnswer, $subQuestion)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1537,7 +1488,7 @@ class TestController extends Controller
      * appatProcess function
      *
      */
-    public function appatProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function appatProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1573,10 +1524,9 @@ class TestController extends Controller
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
-            $nbProposition = $data[$indice];
-            $rightAnswer = $data[$indice-1];
 
-            for ($j=0; $j < count($medias); $j++) {
+            $nbMedias = count($medias); #80
+            for ($j=0; $j < $nbMedias; $j++) {
                 $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
@@ -1586,7 +1536,7 @@ class TestController extends Controller
      * propositionAppatProcess function
      *
      */
-    public function propositionAppatProcess($i, $j, $subQuestion, $media)
+    private function propositionAppatProcess($i, $j, $subQuestion, $media)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1614,7 +1564,7 @@ class TestController extends Controller
      * qruiProcess function
      *
      */
-    public function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1650,7 +1600,7 @@ class TestController extends Controller
      * propositionQruiProcess function
      *
      */
-    public function propositionQruiProcess($j, $subQuestion, $rightAnswer, $dir2copy, $dirName, $dir_paste)
+    private function propositionQruiProcess($j, $subQuestion, $rightAnswer, $dir2copy, $dirName, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1699,7 +1649,7 @@ class TestController extends Controller
      * propositionProcess function
      *
      */
-    public function propositionProcess($i, $j, $rightAnswer, $dirName, $subQuestion, $dir2copy, $dir_paste, $nbItems)
+    private function propositionProcess($i, $j, $rightAnswer, $dirName, $subQuestion, $dir2copy, $dir_paste, $nbItems)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1718,10 +1668,7 @@ class TestController extends Controller
 
         $extension = ".mp3";
 
-        //echo "<br />path : " . $pathFileName . $extension;
-
         if (file_exists($pathFileName . $extension)) {
-            //echo " TROUVE !";
             if (preg_match("/".$j."/", $rightAnswer))
             {
                 $proposition->setRightAnswer(true);
@@ -1751,8 +1698,6 @@ class TestController extends Controller
             echo "<br/>PAS TROUVE !" . $pathFileName . $extension;
         }
 
-        //var_dump($proposition);
-
         // Enregistrement en base
         $em->persist($proposition);
         //$em->flush();
@@ -1763,7 +1708,7 @@ class TestController extends Controller
      * mediaAppatProcess function
      *
      */
-    public function mediaAppatProcess($texte, &$medias)
+    private function mediaAppatProcess($texte, &$medias)
     {
         $em = $this->getDoctrine()->getManager();
         // Création dans "Media"
@@ -1815,8 +1760,7 @@ class TestController extends Controller
     public function dragNewAction()
     {
 
-        echo "ici";
-        die();
+        //#78
         // Ici, on peut faire le traitement suite à la validation.
         //
         // Appel de la redirection après la validation.
