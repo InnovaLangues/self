@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Form\QuestionnaireType;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Questionnaire controller.
