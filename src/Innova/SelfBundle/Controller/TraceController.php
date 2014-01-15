@@ -2,15 +2,12 @@
 
 namespace Innova\SelfBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Trace;
 use Innova\SelfBundle\Entity\Answer;
-use Innova\SelfBundle\Entity\Proposition;
-use Innova\SelfBundle\Entity\Subquestion;
 
 class TraceController extends Controller
 {
@@ -19,7 +16,7 @@ class TraceController extends Controller
      * Save Trace and display a form to set the difficulty
      *
      * @Route("trace_submit", name="trace_submit")
-     * @Method("POST")
+     * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Trace:difficulty.html.twig")
      */
     public function saveTraceAction()

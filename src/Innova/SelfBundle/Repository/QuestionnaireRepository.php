@@ -3,9 +3,6 @@
 namespace Innova\SelfBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Innova\SelfBundle\Entity\Test;
-use Innova\SelfBundle\Entity\Trace;
-use Innova\SelfBundle\Entity\Questionnaire;
 
 class QuestionnaireRepository extends EntityRepository{
 
@@ -29,8 +26,7 @@ class QuestionnaireRepository extends EntityRepository{
   		$query = $this->_em->createQuery($dql)
 				->setParameter('testId', $testId)
 				->setParameter('userId', $userId);
-//				->setMaxResults(1);
-//		return $query->getOneOrNullResult();
+
 		return $query->getResult();
 	}
 
