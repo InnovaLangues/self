@@ -77,8 +77,6 @@ class TestController extends Controller
         $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
             ->CountDoneYetByUserByTest($test->getId(), $user->getId());
 
-        $countQuestionnaire = count($test->getQuestionnaires());
-
         // Session to F5 key and sesion.
         $session->set('listening', $questionnaire->getListeningLimit());
 
@@ -603,8 +601,6 @@ class TestController extends Controller
                 $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                     ->CountDoneYetByUserByTest($test->getId(), $user->getId());
 
-                $countQuestionnaire = count($test->getQuestionnaires());
-
                 if ($countQuestionnaireDone > 0)
                 {
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
@@ -794,8 +790,6 @@ class TestController extends Controller
         echo $csvPath;
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                // Nombre de colonnes
-                $num = count($data);
 
                 // Ainsi, je ne prends pas les intitulés des colonnes
                 if ($row != 0)
@@ -995,7 +989,7 @@ class TestController extends Controller
      * mediaAppaiPropositionProcess function
      *
      */
-    public function mediaAppaiPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
+    private function mediaAppaiPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1024,7 +1018,7 @@ class TestController extends Controller
      * mediaAppaiSubQuestionProcess function
      *
      */
-    public function mediaAppaiSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
+    private function mediaAppaiSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1055,7 +1049,7 @@ class TestController extends Controller
      * propositionAppaaProcess function
      *
      */
-    public function propositionAppaiProcess($i, $j, $subQuestion, $media)
+    private function propositionAppaiProcess($i, $j, $subQuestion, $media)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1083,7 +1077,7 @@ class TestController extends Controller
      * appaProcess function
      *
      */
-    public function appaaProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function appaaProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1125,7 +1119,7 @@ class TestController extends Controller
      * mediaAppaaSubQuestionProcess function
      *
      */
-    public function mediaAppaaSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
+    private function mediaAppaaSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, $subQuestion)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1155,7 +1149,7 @@ class TestController extends Controller
      * mediaAppaaPropositionProcess function
      *
      */
-    public function mediaAppaaPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
+    private function mediaAppaaPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1184,7 +1178,7 @@ class TestController extends Controller
      * propositionAppaaProcess function
      *
      */
-    public function propositionAppaaProcess($i, $j, $subQuestion, $media)
+    private function propositionAppaaProcess($i, $j, $subQuestion, $media)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1213,7 +1207,7 @@ class TestController extends Controller
      *
      */
     //#77
-    public function copieFileDir($mediaDir, $itemExtention, Questionnaire $questionnaire, $dir2copy, $dir_paste)
+    private function copieFileDir($mediaDir, $itemExtention, Questionnaire $questionnaire, $dir2copy, $dir_paste)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -1311,7 +1305,7 @@ class TestController extends Controller
      * processAmorceSubquestion function
      *
      */
-    public function processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data)
+    private function processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data)
     {
         $em = $this->getDoctrine()->getManager();
         $mediaDir = $data[1];
@@ -1341,7 +1335,7 @@ class TestController extends Controller
      * tqrProcess function
      *
      */
-    public function tqrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function tqrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1385,7 +1379,7 @@ class TestController extends Controller
      * qrProcess function
      *
      */
-    public function qrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function qrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1423,7 +1417,7 @@ class TestController extends Controller
      * vfProcess function
      *
      */
-    public function vfProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function vfProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1503,7 +1497,7 @@ class TestController extends Controller
      * vfPropositionProcess function
      *
      */
-    public function vfPropositionProcess($rightAnswer, $nameProposition, $expectedAnswer, $subQuestion)
+    private function vfPropositionProcess($rightAnswer, $nameProposition, $expectedAnswer, $subQuestion)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1539,7 +1533,7 @@ class TestController extends Controller
      * appatProcess function
      *
      */
-    public function appatProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function appatProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1575,8 +1569,6 @@ class TestController extends Controller
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
-            $nbProposition = $data[$indice];
-            $rightAnswer = $data[$indice-1];
 
             $nbMedias = count($medias); #80
             for ($j=0; $j < $nbMedias; $j++) {
@@ -1589,7 +1581,7 @@ class TestController extends Controller
      * propositionAppatProcess function
      *
      */
-    public function propositionAppatProcess($i, $j, $subQuestion, $media)
+    private function propositionAppatProcess($i, $j, $subQuestion, $media)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1617,7 +1609,7 @@ class TestController extends Controller
      * qruiProcess function
      *
      */
-    public function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1653,7 +1645,7 @@ class TestController extends Controller
      * propositionQruiProcess function
      *
      */
-    public function propositionQruiProcess($j, $subQuestion, $rightAnswer, $dir2copy, $dirName, $dir_paste)
+    private function propositionQruiProcess($j, $subQuestion, $rightAnswer, $dir2copy, $dirName, $dir_paste)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1702,7 +1694,7 @@ class TestController extends Controller
      * propositionProcess function
      *
      */
-    public function propositionProcess($i, $j, $rightAnswer, $dirName, $subQuestion, $dir2copy, $dir_paste, $nbItems)
+    private function propositionProcess($i, $j, $rightAnswer, $dirName, $subQuestion, $dir2copy, $dir_paste, $nbItems)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1766,7 +1758,7 @@ class TestController extends Controller
      * mediaAppatProcess function
      *
      */
-    public function mediaAppatProcess($texte, &$medias)
+    private function mediaAppatProcess($texte, &$medias)
     {
         $em = $this->getDoctrine()->getManager();
         // Création dans "Media"

@@ -75,10 +75,12 @@ class TraceController extends Controller
                     $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
                     $answer->setSubquestion($subquestion);
                     $em->persist($answer);
-                    $em->flush();
                 }
             }
         }
+
+        $em->flush();
+
         return array("traceId" => $traceId, "testId" => $post["testId"]);
 
     }
