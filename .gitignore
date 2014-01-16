@@ -21,3 +21,8 @@ sql/*
 build/api/
 build/logs/
 build/code-browser/
+
+
+*.php~
+*.orig
+composer.phar
