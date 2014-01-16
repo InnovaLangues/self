@@ -1,0 +1,8 @@
+<project>
+    <target name="composer" description="Install composer.phar">
+        <exec executable="bash">
+            <arg value="-c"/>
+            <arg value="curl -s http://getcomposer.org/installer | php"/>
+        </exec>
+    </target>
+</project>

@@ -1,0 +1,12 @@
+<project>
+    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
+        <exec executable="phpcb">
+            <arg value="--log" />
+            <arg value="${project.basedir}/build/logs" />
+            <arg value="--source" />
+            <arg value="${project.basedir}/src" />
+            <arg value="--output" />
+            <arg value="${project.basedir}/build/code-browser" />
+        </exec>
+    </target>
+</project>
