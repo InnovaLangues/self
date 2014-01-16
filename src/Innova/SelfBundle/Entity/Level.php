@@ -61,7 +61,8 @@ class Level
      * To String
      */
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
@@ -78,7 +79,7 @@ class Level
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Level
      */
     public function setName($name)
@@ -101,7 +102,7 @@ class Level
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return Level
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
@@ -134,7 +135,7 @@ class Level
     /**
      * Add users
      *
-     * @param \Innova\SelfBundle\Entity\User $users
+     * @param  \Innova\SelfBundle\Entity\User $users
      * @return Level
      */
     public function addUser(\Innova\SelfBundle\Entity\User $users)
@@ -167,7 +168,7 @@ class Level
     /**
      * Add coLevels
      *
-     * @param \Innova\SelfBundle\Entity\User $coLevels
+     * @param  \Innova\SelfBundle\Entity\User $coLevels
      * @return Level
      */
     public function addCoLevel(\Innova\SelfBundle\Entity\User $coLevels)
@@ -200,7 +201,7 @@ class Level
     /**
      * Add ceLevels
      *
-     * @param \Innova\SelfBundle\Entity\User $ceLevels
+     * @param  \Innova\SelfBundle\Entity\User $ceLevels
      * @return Level
      */
     public function addCeLevel(\Innova\SelfBundle\Entity\User $ceLevels)
@@ -233,7 +234,7 @@ class Level
     /**
      * Add eeLevels
      *
-     * @param \Innova\SelfBundle\Entity\User $eeLevels
+     * @param  \Innova\SelfBundle\Entity\User $eeLevels
      * @return Level
      */
     public function addEeLevel(\Innova\SelfBundle\Entity\User $eeLevels)
@@ -266,7 +267,7 @@ class Level
     /**
      * Add lastLevels
      *
-     * @param \Innova\SelfBundle\Entity\User $lastLevels
+     * @param  \Innova\SelfBundle\Entity\User $lastLevels
      * @return Level
      */
     public function addLastLevel(\Innova\SelfBundle\Entity\User $lastLevels)

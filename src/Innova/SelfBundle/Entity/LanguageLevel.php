@@ -33,11 +33,10 @@ class LanguageLevel
     */
     protected $questionnaires;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -47,20 +46,20 @@ class LanguageLevel
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string        $name
      * @return LanguageLevel
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -73,17 +72,17 @@ class LanguageLevel
     {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return LanguageLevel
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-    
+
         return $this;
     }
 
@@ -100,7 +99,7 @@ class LanguageLevel
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestionnaires()
     {

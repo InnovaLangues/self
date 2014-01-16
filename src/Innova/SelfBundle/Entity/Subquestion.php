@@ -59,7 +59,6 @@ class Subquestion
     */
     protected $answers;
 
-
     /**
      * Constructor
      */
@@ -81,7 +80,7 @@ class Subquestion
     /**
      * Set title
      *
-     * @param string $title
+     * @param  string      $title
      * @return Subquestion
      */
     public function setTitle($title)
@@ -104,7 +103,7 @@ class Subquestion
     /**
      * Set typology
      *
-     * @param \Innova\SelfBundle\Entity\Typology $typology
+     * @param  \Innova\SelfBundle\Entity\Typology $typology
      * @return Subquestion
      */
     public function setTypology(\Innova\SelfBundle\Entity\Typology $typology = null)
@@ -127,7 +126,7 @@ class Subquestion
     /**
      * Set media
      *
-     * @param \Innova\SelfBundle\Entity\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media $media
      * @return Subquestion
      */
     public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
@@ -150,7 +149,7 @@ class Subquestion
     /**
      * Set question
      *
-     * @param \Innova\SelfBundle\Entity\Question $question
+     * @param  \Innova\SelfBundle\Entity\Question $question
      * @return Subquestion
      */
     public function setQuestion(\Innova\SelfBundle\Entity\Question $question = null)
@@ -173,7 +172,7 @@ class Subquestion
     /**
      * Add propositions
      *
-     * @param \Innova\SelfBundle\Entity\Proposition $propositions
+     * @param  \Innova\SelfBundle\Entity\Proposition $propositions
      * @return Subquestion
      */
     public function addProposition(\Innova\SelfBundle\Entity\Proposition $propositions)
@@ -206,7 +205,7 @@ class Subquestion
     /**
      * Set mediaText
      *
-     * @param \Innova\SelfBundle\Entity\Media $mediaText
+     * @param  \Innova\SelfBundle\Entity\Media $mediaText
      * @return Subquestion
      */
     public function setMediaText(\Innova\SelfBundle\Entity\Media $mediaText = null)
@@ -229,7 +228,7 @@ class Subquestion
     /**
      * Set mediaAmorce
      *
-     * @param \Innova\SelfBundle\Entity\Media $mediaAmorce
+     * @param  \Innova\SelfBundle\Entity\Media $mediaAmorce
      * @return Subquestion
      */
     public function setMediaAmorce(\Innova\SelfBundle\Entity\Media $mediaAmorce = null)
@@ -252,7 +251,7 @@ class Subquestion
     /**
      * Add answers
      *
-     * @param \Innova\SelfBundle\Entity\Answer $answers
+     * @param  \Innova\SelfBundle\Entity\Answer $answers
      * @return Subquestion
      */
     public function addAnswer(\Innova\SelfBundle\Entity\Answer $answers)

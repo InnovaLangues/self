@@ -24,6 +24,7 @@ class TestRepository extends EntityRepository
         ';
         $query = $this->_em->createQuery($dql)
                 ->setParameter('testId', $testId);
+
         return $query->getOneOrNullResult();
     }
 }

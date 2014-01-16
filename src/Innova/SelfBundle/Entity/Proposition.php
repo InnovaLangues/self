@@ -36,7 +36,6 @@ class Proposition
     */
     protected $media;
 
-
     /**
      * @var string
      *
@@ -58,11 +57,11 @@ class Proposition
     {
         $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -72,20 +71,20 @@ class Proposition
     /**
      * Set title
      *
-     * @param string $title
+     * @param  string      $title
      * @return Proposition
      */
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -95,20 +94,20 @@ class Proposition
     /**
      * Set rightAnswer
      *
-     * @param boolean $rightAnswer
+     * @param  boolean     $rightAnswer
      * @return Proposition
      */
     public function setRightAnswer($rightAnswer)
     {
         $this->rightAnswer = $rightAnswer;
-    
+
         return $this;
     }
 
     /**
      * Get rightAnswer
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getRightAnswer()
     {
@@ -118,20 +117,20 @@ class Proposition
     /**
      * Set subquestion
      *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestion
+     * @param  \Innova\SelfBundle\Entity\Subquestion $subquestion
      * @return Proposition
      */
     public function setSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestion = null)
     {
         $this->subquestion = $subquestion;
-    
+
         return $this;
     }
 
     /**
      * Get subquestion
      *
-     * @return \Innova\SelfBundle\Entity\Subquestion 
+     * @return \Innova\SelfBundle\Entity\Subquestion
      */
     public function getSubquestion()
     {
@@ -141,13 +140,13 @@ class Proposition
     /**
      * Add answers
      *
-     * @param \Innova\SelfBundle\Entity\Answer $answers
+     * @param  \Innova\SelfBundle\Entity\Answer $answers
      * @return Proposition
      */
     public function addAnswer(\Innova\SelfBundle\Entity\Answer $answers)
     {
         $this->answers[] = $answers;
-    
+
         return $this;
     }
 
@@ -164,7 +163,7 @@ class Proposition
     /**
      * Get answers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAnswers()
     {
@@ -174,20 +173,20 @@ class Proposition
     /**
      * Set media
      *
-     * @param \Innova\SelfBundle\Entity\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media $media
      * @return Proposition
      */
     public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
     {
         $this->media = $media;
-    
+
         return $this;
     }
 
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMedia()
     {

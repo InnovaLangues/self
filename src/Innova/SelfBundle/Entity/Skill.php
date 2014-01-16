@@ -45,7 +45,8 @@ class Skill
      * To String
      */
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
@@ -62,7 +63,7 @@ class Skill
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Skill
      */
     public function setName($name)
@@ -85,7 +86,7 @@ class Skill
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return Skill
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
@@ -118,7 +119,7 @@ class Skill
     /**
      * Add users
      *
-     * @param \Innova\SelfBundle\Entity\User $users
+     * @param  \Innova\SelfBundle\Entity\User $users
      * @return Skill
      */
     public function addUser(\Innova\SelfBundle\Entity\User $users)

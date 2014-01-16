@@ -51,7 +51,7 @@ class Typology
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string   $name
      * @return Typology
      */
     public function setName($name)
@@ -82,7 +82,7 @@ class Typology
     /**
      * Add questions
      *
-     * @param \Innova\SelfBundle\Entity\Question $questions
+     * @param  \Innova\SelfBundle\Entity\Question $questions
      * @return Typology
      */
     public function addQuestion(\Innova\SelfBundle\Entity\Question $questions)
@@ -115,7 +115,7 @@ class Typology
     /**
      * Add subquestions
      *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestions
+     * @param  \Innova\SelfBundle\Entity\Subquestion $subquestions
      * @return Typology
      */
     public function addSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestions)

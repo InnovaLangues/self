@@ -33,11 +33,11 @@ class TraceController extends Controller
             ->CountTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
 
         /* If I already have a TRACE, the validation is not allowed.*/
-        if ($countTrace > 0)
-        {
+        if ($countTrace > 0) {
             $this->get('session')->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
 
             $traceId = 0;
+
             return array("traceId" => $traceId, "testId" => $test->getId());
         }
 
@@ -62,9 +62,9 @@ class TraceController extends Controller
 
         $traceId = $trace->getId();
 
-        foreach ($post as $subquestionId => $postVar){
-            if (is_array($postVar)){
-                foreach ($postVar as $key => $propositionId){
+        foreach ($post as $subquestionId => $postVar) {
+            if (is_array($postVar)) {
+                foreach ($postVar as $key => $propositionId) {
                     $answer = new Answer();
                     $answer->setTrace($trace);
                     $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
@@ -98,11 +98,7 @@ class TraceController extends Controller
         $em->persist($trace);
         $em->flush();
 
-
         return $this->redirect($this->generateUrl('test_start', array('id' => $post["testId"])));
-
     }
-
-
 
 }

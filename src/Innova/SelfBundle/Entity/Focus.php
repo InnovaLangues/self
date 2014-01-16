@@ -37,7 +37,8 @@ class Focus
      * To String
      */
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
@@ -54,7 +55,7 @@ class Focus
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Focus
      */
     public function setName($name)
@@ -84,7 +85,7 @@ class Focus
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return Focus
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)

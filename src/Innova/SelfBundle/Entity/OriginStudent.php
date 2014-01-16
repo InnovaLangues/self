@@ -33,8 +33,8 @@ class OriginStudent
     */
     protected $originStudents;
 
-
-    public function __toString(){
+    public function __toString()
+    {
         return $this->name;
     }
 
@@ -51,7 +51,7 @@ class OriginStudent
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string        $name
      * @return OriginStudent
      */
     public function setName($name)
@@ -81,7 +81,7 @@ class OriginStudent
     /**
      * Add originStudents
      *
-     * @param \Innova\SelfBundle\Entity\User $originStudents
+     * @param  \Innova\SelfBundle\Entity\User $originStudents
      * @return OriginStudent
      */
     public function addOriginStudent(\Innova\SelfBundle\Entity\User $originStudents)

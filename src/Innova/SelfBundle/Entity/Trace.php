@@ -97,35 +97,33 @@ class Trace
      */
     private $difficulty;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
 
-
     /**
      * Set date
      *
-     * @param \DateTime $date
+     * @param  \DateTime $date
      * @return Trace
      */
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -135,20 +133,20 @@ class Trace
     /**
      * Set totalTime
      *
-     * @param integer $totalTime
+     * @param  integer $totalTime
      * @return Trace
      */
     public function setTotalTime($totalTime)
     {
         $this->totalTime = $totalTime;
-    
+
         return $this;
     }
 
     /**
      * Get totalTime
      *
-     * @return integer 
+     * @return integer
      */
     public function getTotalTime()
     {
@@ -158,20 +156,20 @@ class Trace
     /**
      * Set clickCorrectif
      *
-     * @param integer $clickCorrectif
+     * @param  integer $clickCorrectif
      * @return Trace
      */
     public function setClickCorrectif($clickCorrectif)
     {
         $this->clickCorrectif = $clickCorrectif;
-    
+
         return $this;
     }
 
     /**
      * Get clickCorrectif
      *
-     * @return integer 
+     * @return integer
      */
     public function getClickCorrectif()
     {
@@ -181,20 +179,20 @@ class Trace
     /**
      * Set listeningTime
      *
-     * @param integer $listeningTime
+     * @param  integer $listeningTime
      * @return Trace
      */
     public function setListeningTime($listeningTime)
     {
         $this->listeningTime = $listeningTime;
-    
+
         return $this;
     }
 
     /**
      * Get listeningTime
      *
-     * @return integer 
+     * @return integer
      */
     public function getListeningTime()
     {
@@ -204,20 +202,20 @@ class Trace
     /**
      * Set listeningAfterAnswer
      *
-     * @param integer $listeningAfterAnswer
+     * @param  integer $listeningAfterAnswer
      * @return Trace
      */
     public function setListeningAfterAnswer($listeningAfterAnswer)
     {
         $this->listeningAfterAnswer = $listeningAfterAnswer;
-    
+
         return $this;
     }
 
     /**
      * Get listeningAfterAnswer
      *
-     * @return integer 
+     * @return integer
      */
     public function getListeningAfterAnswer()
     {
@@ -227,20 +225,20 @@ class Trace
     /**
      * Set ip
      *
-     * @param string $ip
+     * @param  string $ip
      * @return Trace
      */
     public function setIp($ip)
     {
         $this->ip = $ip;
-    
+
         return $this;
     }
 
     /**
      * Get ip
      *
-     * @return string 
+     * @return string
      */
     public function getIp()
     {
@@ -250,20 +248,20 @@ class Trace
     /**
      * Set userAgent
      *
-     * @param string $userAgent
+     * @param  string $userAgent
      * @return Trace
      */
     public function setUserAgent($userAgent)
     {
         $this->userAgent = $userAgent;
-    
+
         return $this;
     }
 
     /**
      * Get userAgent
      *
-     * @return string 
+     * @return string
      */
     public function getUserAgent()
     {
@@ -273,20 +271,20 @@ class Trace
     /**
      * Set difficulty
      *
-     * @param integer $difficulty
+     * @param  integer $difficulty
      * @return Trace
      */
     public function setDifficulty($difficulty)
     {
         $this->difficulty = $difficulty;
-    
+
         return $this;
     }
 
     /**
      * Get difficulty
      *
-     * @return integer 
+     * @return integer
      */
     public function getDifficulty()
     {
@@ -299,24 +297,24 @@ class Trace
     {
         $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Set questionnaire
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
      * @return Trace
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
     {
         $this->questionnaire = $questionnaire;
-    
+
         return $this;
     }
 
     /**
      * Get questionnaire
      *
-     * @return \Innova\SelfBundle\Entity\Questionnaire 
+     * @return \Innova\SelfBundle\Entity\Questionnaire
      */
     public function getQuestionnaire()
     {
@@ -326,13 +324,13 @@ class Trace
     /**
      * Add answers
      *
-     * @param \Innova\SelfBundle\Entity\Answer $answers
+     * @param  \Innova\SelfBundle\Entity\Answer $answers
      * @return Trace
      */
     public function addAnswer(\Innova\SelfBundle\Entity\Answer $answers)
     {
         $this->answers[] = $answers;
-    
+
         return $this;
     }
 
@@ -349,7 +347,7 @@ class Trace
     /**
      * Get answers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAnswers()
     {
@@ -359,20 +357,20 @@ class Trace
     /**
      * Set user
      *
-     * @param \Innova\SelfBundle\Entity\User $user
+     * @param  \Innova\SelfBundle\Entity\User $user
      * @return Trace
      */
     public function setUser(\Innova\SelfBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Innova\SelfBundle\Entity\User 
+     * @return \Innova\SelfBundle\Entity\User
      */
     public function getUser()
     {
@@ -382,20 +380,20 @@ class Trace
     /**
      * Set test
      *
-     * @param \Innova\SelfBundle\Entity\Test $test
+     * @param  \Innova\SelfBundle\Entity\Test $test
      * @return Trace
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
     {
         $this->test = $test;
-    
+
         return $this;
     }
 
     /**
      * Get test
      *
-     * @return \Innova\SelfBundle\Entity\Test 
+     * @return \Innova\SelfBundle\Entity\Test
      */
     public function getTest()
     {

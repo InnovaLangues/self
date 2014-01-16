@@ -3,11 +3,8 @@
 namespace Innova\SelfBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 use Innova\SelfBundle\Entity\MediaType;
 use Innova\SelfBundle\Entity\Duration;
@@ -16,7 +13,6 @@ use Innova\SelfBundle\Entity\Skill;
 use Innova\SelfBundle\Entity\Typology;
 use Innova\SelfBundle\Entity\OriginStudent;
 use Innova\SelfBundle\Entity\Language;
-use Innova\SelfBundle\Entity\LanguageLevel;
 use Innova\SelfBundle\Entity\LevelLansad;
 
 /**
@@ -47,7 +43,7 @@ class FixtureCommand extends ContainerAwareCommand
 
         $countSkill = count($skill);
 
-        if($countSkill == 0){
+        if ($countSkill == 0) {
 
             $output->writeln("Fixtures exécutées.");
 
@@ -140,9 +136,7 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             $em->flush();
-        }
-        else
-        {
+        } else {
             $output->writeln("Fixtures non exécutées. Des données existent déjà.");
         }
 

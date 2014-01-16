@@ -38,7 +38,8 @@ class LevelLansad
     */
     protected $levelLansads;
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->name;
     }
 
@@ -55,7 +56,7 @@ class LevelLansad
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string      $name
      * @return LevelLansad
      */
     public function setName($name)
@@ -78,7 +79,7 @@ class LevelLansad
     /**
      * Set language
      *
-     * @param \Innova\SelfBundle\Entity\Language $language
+     * @param  \Innova\SelfBundle\Entity\Language $language
      * @return LevelLansad
      */
     public function setLanguage(\Innova\SelfBundle\Entity\Language $language = null)
@@ -86,8 +87,7 @@ class LevelLansad
         $this->language = $language;
         if (!empty($language)) {
             $language->addLevelLansad($this);
-        }
-        else {
+        } else {
             $language->removeLevelLansad($this);
         }
 
@@ -114,7 +114,7 @@ class LevelLansad
     /**
      * Add levelLansads
      *
-     * @param \Innova\SelfBundle\Entity\User $levelLansads
+     * @param  \Innova\SelfBundle\Entity\User $levelLansads
      * @return LevelLansad
      */
     public function addLevelLansad(\Innova\SelfBundle\Entity\User $levelLansads)

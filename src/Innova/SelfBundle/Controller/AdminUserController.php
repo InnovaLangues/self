@@ -9,8 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Form\UserType;
 use Innova\SelfBundle\Entity\Test;
-use Innova\SelfBundle\Form\TestType;
-
 
 /**
  * Test controller.
@@ -37,8 +35,6 @@ class AdminUserController extends Controller
             'entities' => $entities,
         );
     }
-
-
 
     /**
      * Deletes a Test entity.
@@ -148,7 +144,6 @@ class AdminUserController extends Controller
         );
     }
 
-
     /**
      * Finds and displays a Admin User entity.
      *
@@ -177,8 +172,6 @@ class AdminUserController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
-
-
 
     /**
      * Displays a form to edit an existing Test entity.
@@ -225,7 +218,6 @@ class AdminUserController extends Controller
 
         return $form;
     }
-
 
     /**
      * Edits an existing Test entity.
@@ -286,7 +278,6 @@ class AdminUserController extends Controller
         // Insertion en base de données;
         $em->flush();
 
-
         $put = $request->request;
 
         // Boucle pour remplir ce tableau
@@ -312,6 +303,5 @@ class AdminUserController extends Controller
         // Redirection
         return $this->redirect($this->generateUrl('admin_user'));
     }
-
 
 }

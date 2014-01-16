@@ -48,12 +48,14 @@ class Test
     */
     protected $language;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->name;
     }
 
@@ -70,7 +72,7 @@ class Test
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return Session
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
@@ -103,7 +105,7 @@ class Test
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string  $name
      * @return Session
      */
     public function setName($name)
@@ -126,7 +128,7 @@ class Test
     /**
      * Add users
      *
-     * @param \Innova\SelfBundle\Entity\User $users
+     * @param  \Innova\SelfBundle\Entity\User $users
      * @return Test
      */
     public function addUser(\Innova\SelfBundle\Entity\User $users)
@@ -159,7 +161,7 @@ class Test
     /**
      * Add traces
      *
-     * @param \Innova\SelfBundle\Entity\Trace $traces
+     * @param  \Innova\SelfBundle\Entity\Trace $traces
      * @return Test
      */
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
@@ -192,7 +194,7 @@ class Test
     /**
      * Set language
      *
-     * @param \Innova\SelfBundle\Entity\Language $language
+     * @param  \Innova\SelfBundle\Entity\Language $language
      * @return Test
      */
     public function setLanguage(\Innova\SelfBundle\Entity\Language $language = null)

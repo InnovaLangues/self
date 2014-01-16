@@ -22,7 +22,7 @@ class UserType extends BaseType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      * LevelLansad part : to have an opt group
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -70,19 +70,19 @@ class UserType extends BaseType
      * @return array
      * Request to have all skills for all languages
      */
-    private function getArrayOfLevelLansad(){
-
+    private function getArrayOfLevelLansad()
+    {
         // Tab declaration
         $list = array();
 
         // To have all Language
         $languages = $this->om->getRepository('InnovaSelfBundle:Language')->findAll();
 
-        foreach($languages as $language){
+        foreach ($languages as $language) {
             $levelLansads = $language->getLevelLansads();
-            if(count($levelLansads)>0){
+            if (count($levelLansads)>0) {
                 $list[$language->getName()] = array();
-                foreach($levelLansads as $levelLansad){
+                foreach ($levelLansads as $levelLansad) {
                     $list[$language->getName()][$levelLansad->getName()] = $levelLansad;
                 }
             }

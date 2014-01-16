@@ -67,7 +67,7 @@ class Language
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string   $name
      * @return Language
      */
     public function setName($name)
@@ -90,7 +90,7 @@ class Language
     /**
      * Set color
      *
-     * @param string $color
+     * @param  string   $color
      * @return Language
      */
     public function setColor($color)
@@ -113,7 +113,7 @@ class Language
     /**
      * Add levelLansads
      *
-     * @param \Innova\SelfBundle\Entity\LevelLansad $levelLansads
+     * @param  \Innova\SelfBundle\Entity\LevelLansad $levelLansads
      * @return Language
      */
     public function addLevelLansad(\Innova\SelfBundle\Entity\LevelLansad $levelLansads)
@@ -146,7 +146,7 @@ class Language
     /**
      * Add tests
      *
-     * @param \Innova\SelfBundle\Entity\Test $tests
+     * @param  \Innova\SelfBundle\Entity\Test $tests
      * @return Language
      */
     public function addTest(\Innova\SelfBundle\Entity\Test $tests)

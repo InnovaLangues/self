@@ -36,7 +36,7 @@ class Flow
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -46,20 +46,20 @@ class Flow
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Flow
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -72,17 +72,17 @@ class Flow
     {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return Flow
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-    
+
         return $this;
     }
 
@@ -99,7 +99,7 @@ class Flow
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestionnaires()
     {

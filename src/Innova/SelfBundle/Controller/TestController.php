@@ -45,8 +45,7 @@ class TestController extends Controller
             $tests = $questionnaire->getTests();
             $testQ = $tests[0];
 
-            if ($test->getId() === $testQ->getId())
-            {
+            if ($test->getId() === $testQ->getId()) {
                 // Recherche des traces pour UN utilisateur UN test et UN questionnaire.
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(), 'test' => $test->getId(),
                                             'questionnaire' => $questionnaire->getId()
@@ -54,10 +53,8 @@ class TestController extends Controller
                                         );
 
                     // Si je n'ai pas de traces, alors il faut que j'affiche ce questionnaire. Car il n'est pas encore été "répondu".
-                    if (count($traces) == 0)
-                    {
-                        if (!$findQuestionnaireWithoutTrace)
-                        {
+                    if (count($traces) == 0) {
+                        if (!$findQuestionnaireWithoutTrace) {
                             $questionnaireWithoutTrace = $questionnaire;
                             $findQuestionnaireWithoutTrace = true;
                         }
@@ -515,8 +512,7 @@ class TestController extends Controller
 
         $cpt_questionnaire=0;
         foreach ($tests as $test) {
-            if ($cpt_questionnaire == 0)
-            {
+            if ($cpt_questionnaire == 0) {
                 $questionnaires = $test->getQuestionnaires();
                 // For THE test, loop on the Questionnaire
                 foreach ($questionnaires as $questionnaire) {
@@ -529,8 +525,7 @@ class TestController extends Controller
                     // Exemple : A1COT2, je prends le dernier
                     // A1COT13, je prends les 2 derniers.
                     //
-                    if (!is_numeric($themeCode))
-                    {
+                    if (!is_numeric($themeCode)) {
                         $themeCode = substr($questionnaire->getTheme(), -1);
                     }
                     $csv .= $questionnaire->getTheme() . ";";
@@ -566,8 +561,7 @@ class TestController extends Controller
                 $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                     ->CountDoneYetByUserByTest($test->getId(), $user->getId());
 
-                if ($countQuestionnaireDone > 0)
-                {
+                if ($countQuestionnaireDone > 0) {
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
                     // Add 5 colums for Level
                     //
@@ -705,38 +699,29 @@ class TestController extends Controller
                     // Création du répertoire (s'il n'est pas déjà créé)
                     if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
 
-                    if (preg_match("/amorce/i", $fileName))
-                    {
+                    if (preg_match("/amorce/i", $fileName)) {
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
                     }
 
                     // Traitement de la partie "option".
-                    if (preg_match("/option/i", $fileName))
-                    {
+                    if (preg_match("/option/i", $fileName)) {
                         // Ajout 13/12/2013 : traitement du cas TQRU.
                         // Les fichiers "option" sont nommés par exemple <XXX_option_1_1.mp3>
                         // alors que dans les autres cas, ils sont de type <XXX_option_1.mp3>
-                        if (!is_numeric($exp[2]))
-                        {
+                        if (!is_numeric($exp[2])) {
                             $number = explode(".", $exp[2]);
                             copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
-                        }
-                        else
-                        {
-                            if (!is_numeric($exp[3]))
-                            {
+                        } else {
+                            if (!is_numeric($exp[3])) {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . ".mp3");
-                            }
-                            else
-                            {
+                            } else {
                                 $number = explode(".", $exp[3]);
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number[0] . ".mp3");
                             }
 
                         }
                     }
-                    if (preg_match("/txt/i", $fileName))
-                    {
+                    if (preg_match("/txt/i", $fileName)) {
                         copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
                     }
                 }
@@ -754,8 +739,7 @@ class TestController extends Controller
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 
                 // Ainsi, je ne prends pas les intitulés des colonnes
-                if ($row != 0)
-                {
+                if ($row != 0) {
                     //
                     //
                     // Première partie : ajout dans la table Questionnaire
@@ -768,7 +752,7 @@ class TestController extends Controller
                     $testName = "CO-pilote-dec2013-ang"; // For tests.
                     $testName = "test-english"; // For tests.
 
-//                    if(!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)){
+//                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
                         echo "<br />Création du test row=1";
                         $test = new Test();
@@ -855,8 +839,7 @@ class TestController extends Controller
                     //
 
                     // Traitement suivi le type de questionnaire.
-                    switch($data[4])
-                    {
+                    switch ($data[4]) {
                         case "TQRU";
                         case "TQRM";
                             $this->tqrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
@@ -925,8 +908,7 @@ class TestController extends Controller
 
         $nbItems = $data[11];
         // Traitement sur le nombre d'items
-        for ( $i = 0; $i < $nbItems; $i++ )
-        {
+        for ($i = 0; $i < $nbItems; $i++) {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
             $this->processAmorceSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
@@ -1018,12 +1000,9 @@ class TestController extends Controller
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
 
-        if ($i == $j)
-        {
+        if ($i == $j) {
             $proposition->setRightAnswer(true);
-        }
-        else
-        {
+        } else {
             $proposition->setRightAnswer(false);
         }
 
@@ -1055,8 +1034,7 @@ class TestController extends Controller
 
         $nbItems = $data[11];
         // Traitement sur le nombre d'items
-        for ( $i = 0; $i < $nbItems; $i++ )
-        {
+        for ($i = 0; $i < $nbItems; $i++) {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
             $this->processAmorceSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
@@ -1147,12 +1125,9 @@ class TestController extends Controller
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
 
-        if ($i == $j)
-        {
+        if ($i == $j) {
             $proposition->setRightAnswer(true);
-        }
-        else
-        {
+        } else {
             $proposition->setRightAnswer(false);
         }
 
@@ -1181,22 +1156,18 @@ class TestController extends Controller
         // Répertoire où seront copiés les fichiers
         //$dir_paste =__DIR__.'/../../../../web/upload/test_eric/media/'; // A modifier quand on aura l'adresse
 
-        if (is_dir($dir2copy))
-        {
+        if (is_dir($dir2copy)) {
             // Si oui, on l'ouvre
-            if ($dh = opendir($dir2copy))
-            {
+            if ($dh = opendir($dir2copy)) {
                 $filesToCopy = array('consigne', 'texte', 'contexte');
                 // Consigne = audio
                 // Item = cf Excel
                 // Contexte = audio
-                foreach ($filesToCopy as $fichier)
-                {
+                foreach ($filesToCopy as $fichier) {
 
                     if ($fichier != 'texte') {
                         $newItemExtention = "mp3";
-                    }
-                    else{
+                    } else {
                          $newItemExtention = $itemExtention;
                     }
 
@@ -1217,14 +1188,11 @@ class TestController extends Controller
                         $aMedia["extension"][1] = array('flv', 'mp4');
 
                         // Traitement suivant le type de fichier.
-                        if ($fichier != 'texte')
-                        {
+                        if ($fichier != 'texte') {
                             $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
-                        }
-                        else
-                        {
+                        } else {
                             foreach ($aMedia["extension"] as $key => $value) {
-                                if(in_array($newItemExtention, $value)){
+                                if (in_array($newItemExtention, $value)) {
                                     $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($aMedia["label"][$key]);
                                 }
                             }
@@ -1272,11 +1240,9 @@ class TestController extends Controller
         $mediaDir = $data[1];
         $typo = $data[4];
 
-        if ($typo[0] == "T" && $typo != "TVF" && $typo != "TVFPM")
-        {
+        if ($typo[0] == "T" && $typo != "TVF" && $typo != "TVFPM") {
             $testFile = $dir2copy . $mediaDir . "/amorce_" . $i. ".mp3";
-        }
-        else{
+        } else {
             $testFile = $dir2copy . $mediaDir . "/amorce.mp3";
         }
 
@@ -1310,8 +1276,7 @@ class TestController extends Controller
       //  $em->flush();
 
         // Traitement sur le nombre d'items
-        for ( $i = 1; $i <= $nbItems; $i++ )
-        {
+        for ($i = 1; $i <= $nbItems; $i++) {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
             $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
@@ -1391,21 +1356,17 @@ class TestController extends Controller
         $dirName = $data[1];
 
         // Traitement sur le nombre d'items
-        for ( $i = 1; $i <= $nbItems; $i++ )
-        {
+        for ($i = 1; $i <= $nbItems; $i++) {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
             if ($i == 1) $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
 
             $ctrlTypo = $typo->getName();
-            if ($ctrlTypo[0] == "T")
-            {
+            if ($ctrlTypo[0] == "T") {
                 $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
                 $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
                 $subQuestion->setTypology($typoSubQuestion);
-            }
-            else
-            {
+            } else {
                 $subQuestion->setTypology($typo);
             }
             $subQuestion->setQuestion($question);
@@ -1441,8 +1402,7 @@ class TestController extends Controller
             $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
             $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
 
-            if ($data[$indice] == "VFPM")
-            {
+            if ($data[$indice] == "VFPM") {
                 $this->vfPropositionProcess($rightAnswer, "PM", "PM", $subQuestion); // PM : à confirmer
             }
         }
@@ -1459,16 +1419,13 @@ class TestController extends Controller
         // Créer une occurrence dans la table "Proposition"
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
-        if ($rightAnswer == $expectedAnswer)
-        {
+        if ($rightAnswer == $expectedAnswer) {
             $proposition->setRightAnswer(true);
-        }
-        else
-        {
+        } else {
             $proposition->setRightAnswer(false);
         }
 
-        if (!$media = $em->getRepository('InnovaSelfBundle:Media')->findOneByName($nameProposition)){
+        if (!$media = $em->getRepository('InnovaSelfBundle:Media')->findOneByName($nameProposition)) {
             // Création dans "Media"
             $media = new Media();
             $media->setName($nameProposition); // Ajout contrôle existance V ou F
@@ -1509,8 +1466,7 @@ class TestController extends Controller
         }
 
         // Traitement sur le nombre d'items
-        for ( $i = 0; $i < $nbItems; $i++ )
-        {
+        for ($i = 0; $i < $nbItems; $i++) {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
             $this->processAmorceSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
@@ -1544,12 +1500,9 @@ class TestController extends Controller
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
 
-        if ($i == $j)
-        {
+        if ($i == $j) {
             $proposition->setRightAnswer(true);
-        }
-        else
-        {
+        } else {
             $proposition->setRightAnswer(false);
         }
 
@@ -1608,12 +1561,9 @@ class TestController extends Controller
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
 
-        if ($j == $rightAnswer)
-        {
+        if ($j == $rightAnswer) {
             $proposition->setRightAnswer(true);
-        }
-        else
-        {
+        } else {
             $proposition->setRightAnswer(false);
         }
 
@@ -1638,7 +1588,6 @@ class TestController extends Controller
 
             copy($dir2copy . $dirName . "/" . $fileName . ".jpg", $dir_paste . $fileName . ".jpg");
         }
-
 
         // Enregistrement en base
         $em->persist($proposition);
@@ -1669,12 +1618,9 @@ class TestController extends Controller
         $extension = ".mp3";
 
         if (file_exists($pathFileName . $extension)) {
-            if (preg_match("/".$j."/", $rightAnswer))
-            {
+            if (preg_match("/".$j."/", $rightAnswer)) {
                 $proposition->setRightAnswer(true);
-            }
-            else
-            {
+            } else {
                 $proposition->setRightAnswer(false);
             }
 
@@ -1692,9 +1638,7 @@ class TestController extends Controller
 
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
-        }
-        else
-        {
+        } else {
             echo "<br/>PAS TROUVE !" . $pathFileName . $extension;
         }
 

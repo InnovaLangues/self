@@ -36,7 +36,6 @@ class Answer
     */
     protected $subquestion;
 
-
     /**
      * Get id
      *
@@ -50,7 +49,7 @@ class Answer
     /**
      * Set trace
      *
-     * @param \Innova\SelfBundle\Entity\Trace $trace
+     * @param  \Innova\SelfBundle\Entity\Trace $trace
      * @return Answer
      */
     public function setTrace(\Innova\SelfBundle\Entity\Trace $trace = null)
@@ -73,7 +72,7 @@ class Answer
     /**
      * Set proposition
      *
-     * @param \Innova\SelfBundle\Entity\Proposition $proposition
+     * @param  \Innova\SelfBundle\Entity\Proposition $proposition
      * @return Answer
      */
     public function setProposition(\Innova\SelfBundle\Entity\Proposition $proposition = null)
@@ -96,7 +95,7 @@ class Answer
     /**
      * Set subquestion
      *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestion
+     * @param  \Innova\SelfBundle\Entity\Subquestion $subquestion
      * @return Answer
      */
     public function setSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestion = null)

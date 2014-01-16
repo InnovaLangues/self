@@ -10,7 +10,7 @@ class QuestionType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,7 +18,7 @@ class QuestionType extends AbstractType
             ->add('questionnaire')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

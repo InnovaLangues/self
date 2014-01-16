@@ -37,7 +37,8 @@ class Source
      * To String
      */
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
@@ -54,7 +55,7 @@ class Source
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Source
      */
     public function setName($name)
@@ -84,7 +85,7 @@ class Source
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return Source
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)

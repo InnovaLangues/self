@@ -14,7 +14,6 @@ use Innova\SelfBundle\Entity\Skill;
 use Innova\SelfBundle\Entity\Typology;
 use Innova\SelfBundle\Entity\OriginStudent;
 use Innova\SelfBundle\Entity\Language;
-use Innova\SelfBundle\Entity\LanguageLevel;
 use Innova\SelfBundle\Entity\LevelLansad;
 
 class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
@@ -117,7 +116,6 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         }
 
         $manager->flush();
-
 
     }
 }

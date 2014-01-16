@@ -80,12 +80,12 @@ class User extends BaseUser
     */
     protected $levelLansad;
 
-	/**
-	 * Constructor
-	 */
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-    	parent::__construct();
+        parent::__construct();
         $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -103,7 +103,7 @@ class User extends BaseUser
     /**
      * Set lastName
      *
-     * @param string $lastName
+     * @param  string $lastName
      * @return User
      */
     public function setLastName($lastName)
@@ -126,7 +126,7 @@ class User extends BaseUser
     /**
      * Set firstName
      *
-     * @param string $firstName
+     * @param  string $firstName
      * @return User
      */
     public function setFirstName($firstName)
@@ -149,7 +149,7 @@ class User extends BaseUser
     /**
      * Set login
      *
-     * @param string $login
+     * @param  string $login
      * @return User
      */
     public function setLogin($login)
@@ -172,7 +172,7 @@ class User extends BaseUser
     /**
      * Set password
      *
-     * @param string $password
+     * @param  string $password
      * @return User
      */
     public function setPassword($password)
@@ -195,7 +195,7 @@ class User extends BaseUser
     /**
      * Add traces
      *
-     * @param \Innova\SelfBundle\Entity\Trace $traces
+     * @param  \Innova\SelfBundle\Entity\Trace $traces
      * @return User
      */
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
@@ -238,7 +238,7 @@ class User extends BaseUser
     /**
      * Add tests
      *
-     * @param \Innova\SelfBundle\Entity\Test $tests
+     * @param  \Innova\SelfBundle\Entity\Test $tests
      * @return User
      */
     public function addTest(\Innova\SelfBundle\Entity\Test $tests)
@@ -268,11 +268,10 @@ class User extends BaseUser
         return $this->tests;
     }
 
-
     /**
      * Set salt
      *
-     * @param string $salt
+     * @param  string $salt
      * @return User
      */
     public function setSalt($salt)
@@ -292,12 +291,10 @@ class User extends BaseUser
         return $this->salt;
     }
 
-
-
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return User
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
@@ -330,7 +327,7 @@ class User extends BaseUser
     /**
      * Set coLevel
      *
-     * @param \Innova\SelfBundle\Entity\Level $coLevel
+     * @param  \Innova\SelfBundle\Entity\Level $coLevel
      * @return User
      */
     public function setCoLevel(\Innova\SelfBundle\Entity\Level $coLevel = null)
@@ -353,7 +350,7 @@ class User extends BaseUser
     /**
      * Set ceLevel
      *
-     * @param \Innova\SelfBundle\Entity\Level $ceLevel
+     * @param  \Innova\SelfBundle\Entity\Level $ceLevel
      * @return User
      */
     public function setCeLevel(\Innova\SelfBundle\Entity\Level $ceLevel = null)
@@ -376,7 +373,7 @@ class User extends BaseUser
     /**
      * Set eeLevel
      *
-     * @param \Innova\SelfBundle\Entity\Level $eeLevel
+     * @param  \Innova\SelfBundle\Entity\Level $eeLevel
      * @return User
      */
     public function setEeLevel(\Innova\SelfBundle\Entity\Level $eeLevel = null)
@@ -399,7 +396,7 @@ class User extends BaseUser
     /**
      * Set lastLevel
      *
-     * @param \Innova\SelfBundle\Entity\Level $lastLevel
+     * @param  \Innova\SelfBundle\Entity\Level $lastLevel
      * @return User
      */
     public function setLastLevel(\Innova\SelfBundle\Entity\Level $lastLevel = null)
@@ -422,7 +419,7 @@ class User extends BaseUser
     /**
      * Set originStudent
      *
-     * @param \Innova\SelfBundle\Entity\OriginStudent $originStudent
+     * @param  \Innova\SelfBundle\Entity\OriginStudent $originStudent
      * @return User
      */
     public function setOriginStudent(\Innova\SelfBundle\Entity\OriginStudent $originStudent = null)
@@ -445,7 +442,7 @@ class User extends BaseUser
     /**
      * Set lLansad
      *
-     * @param \Innova\SelfBundle\Entity\LevelLansad $lLansad
+     * @param  \Innova\SelfBundle\Entity\LevelLansad $lLansad
      * @return User
      */
     public function setLLansad(\Innova\SelfBundle\Entity\LevelLansad $lLansad = null)
@@ -468,7 +465,7 @@ class User extends BaseUser
     /**
      * Set levelLansad
      *
-     * @param \Innova\SelfBundle\Entity\LevelLansad $levelLansad
+     * @param  \Innova\SelfBundle\Entity\LevelLansad $levelLansad
      * @return User
      */
     public function setLevelLansad(\Innova\SelfBundle\Entity\LevelLansad $levelLansad = null)

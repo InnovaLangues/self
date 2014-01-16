@@ -26,7 +26,6 @@ class Question
     */
     protected $questionnaire;
 
-
     /**
     * @ORM\ManyToOne(targetEntity="Typology", inversedBy="questions")
     */
@@ -54,11 +53,11 @@ class Question
     {
         $this->subquestions = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,20 +67,20 @@ class Question
     /**
      * Set questionnaire
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
      * @return Question
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
     {
         $this->questionnaire = $questionnaire;
-    
+
         return $this;
     }
 
     /**
      * Get questionnaire
      *
-     * @return \Innova\SelfBundle\Entity\Questionnaire 
+     * @return \Innova\SelfBundle\Entity\Questionnaire
      */
     public function getQuestionnaire()
     {
@@ -91,20 +90,20 @@ class Question
     /**
      * Set typology
      *
-     * @param \Innova\SelfBundle\Entity\Typology $typology
+     * @param  \Innova\SelfBundle\Entity\Typology $typology
      * @return Question
      */
     public function setTypology(\Innova\SelfBundle\Entity\Typology $typology = null)
     {
         $this->typology = $typology;
-    
+
         return $this;
     }
 
     /**
      * Get typology
      *
-     * @return \Innova\SelfBundle\Entity\Typology 
+     * @return \Innova\SelfBundle\Entity\Typology
      */
     public function getTypology()
     {
@@ -114,13 +113,13 @@ class Question
     /**
      * Add subquestions
      *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestions
+     * @param  \Innova\SelfBundle\Entity\Subquestion $subquestions
      * @return Question
      */
     public function addSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestions)
     {
         $this->subquestions[] = $subquestions;
-    
+
         return $this;
     }
 
@@ -137,7 +136,7 @@ class Question
     /**
      * Get subquestions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubquestions()
     {
@@ -147,20 +146,20 @@ class Question
     /**
      * Set instruction
      *
-     * @param \Innova\SelfBundle\Entity\Instruction $instruction
+     * @param  \Innova\SelfBundle\Entity\Instruction $instruction
      * @return Question
      */
     public function setInstruction(\Innova\SelfBundle\Entity\Instruction $instruction = null)
     {
         $this->instruction = $instruction;
-    
+
         return $this;
     }
 
     /**
      * Get instruction
      *
-     * @return \Innova\SelfBundle\Entity\Instruction 
+     * @return \Innova\SelfBundle\Entity\Instruction
      */
     public function getInstruction()
     {
@@ -170,20 +169,20 @@ class Question
     /**
      * Set media
      *
-     * @param \Innova\SelfBundle\Entity\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media $media
      * @return Question
      */
     public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
     {
         $this->media = $media;
-    
+
         return $this;
     }
 
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMedia()
     {

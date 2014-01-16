@@ -51,7 +51,8 @@ class Media
      * To String
      */
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
@@ -68,7 +69,7 @@ class Media
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string $description
      * @return Media
      */
     public function setDescription($description)
@@ -91,7 +92,7 @@ class Media
     /**
      * Set mediaType
      *
-     * @param \Innova\SelfBundle\Entity\MediaType $mediaType
+     * @param  \Innova\SelfBundle\Entity\MediaType $mediaType
      * @return Media
      */
     public function setMediaType(\Innova\SelfBundle\Entity\MediaType $mediaType = null)
@@ -114,7 +115,7 @@ class Media
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Media
      */
     public function setName($name)
@@ -137,7 +138,7 @@ class Media
     /**
      * Set url
      *
-     * @param string $url
+     * @param  string $url
      * @return Media
      */
     public function setUrl($url)

@@ -42,7 +42,8 @@ class Instruction
      * To String
      */
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
@@ -59,7 +60,7 @@ class Instruction
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string      $name
      * @return Instruction
      */
     public function setName($name)
@@ -89,7 +90,7 @@ class Instruction
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return Instruction
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
@@ -122,7 +123,7 @@ class Instruction
     /**
      * Add questions
      *
-     * @param \Innova\SelfBundle\Entity\Question $questions
+     * @param  \Innova\SelfBundle\Entity\Question $questions
      * @return Instruction
      */
     public function addQuestion(\Innova\SelfBundle\Entity\Question $questions)
