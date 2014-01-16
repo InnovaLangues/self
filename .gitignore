@@ -16,3 +16,8 @@ app/config/parameters.yml
 *.sql
 *.log
 sql/*
+
+# Build
+build/api/
+build/logs/
+build/code-browser/
