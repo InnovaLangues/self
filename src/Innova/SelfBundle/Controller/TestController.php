@@ -672,6 +672,7 @@ class TestController extends Controller
         // File import name
         $csvName = 'test-import.csv';
         $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
+        $csvName = 'mp2-ok.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -730,15 +731,12 @@ class TestController extends Controller
             }
         }
 
-die();
-
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte : dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
         // Cette contrainte a été prise en compte par rapport au fichier reçu.
         $row = 0;
         $indice = 0;
 
-        echo $csvPath;
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 
@@ -754,7 +752,7 @@ die();
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
                     $testName = "CO-pilote-dec2013-ang"; // For tests.
-                    $testName = "TQRU"; // For tests.
+                    $testName = "test-english"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
