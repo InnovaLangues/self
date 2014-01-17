@@ -69,8 +69,9 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         /*
         New table for version 1.2 or version 2 (2014)
         fixtures for originStudent table
+        #116
         */
-        $originStudents = array("LANSAD", "LLCE", "LEA", "Autres");
+        $originStudents = array("LANSAD", "LLCE", "LEA", "UJF", "Autres");
         foreach ($originStudents as $originStudent) {
             $student = new originStudent();
             $student->setName($originStudent);

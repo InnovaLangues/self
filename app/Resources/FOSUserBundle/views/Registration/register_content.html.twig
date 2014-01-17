@@ -90,8 +90,8 @@
                             {# <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]"> #}
                             {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
                         </div>
-                    <div class="col-lg-offset-5">
-                    </div>
+                        <div class="col-lg-offset-5">
+                        </div>
                     </div>
 
                     {# lastLevel, user entity #}
@@ -99,8 +99,10 @@
                     <div class="form-group">
                         {{ form_errors(form.levelLansad) }}
                         <label class="col-lg-4 control-label" for="fos_user_registration_form_levelLansad">Quel était le niveau du dernier cours LANSAD que vous avez validé ?</label>
-                        <div class="col-lg-8">
+                        <div class="col-lg-3">
                             {{ form_widget(form.levelLansad, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-lg-offset-5">
                         </div>
                     </div>
                 </fieldset>
@@ -111,8 +113,10 @@
                     <div class="form-group">
                         {{ form_errors(form.coLevel) }}
                         <label class="col-lg-4 control-label" for="fos_user_registration_form_coLevel">Niveau obtenu en CO (compréhension orale)</label>
-                        <div class="col-lg-8">
+                        <div class="col-lg-3">
                             {{ form_widget(form.coLevel, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-lg-offset-5">
                         </div>
                     </div>
 
@@ -120,16 +124,21 @@
                     <div class="form-group">
                         {{ form_errors(form.coLevel) }}
                         <label class="col-lg-4 control-label" for="fos_user_registration_form_ceLevel">Niveau obtenu en CE (compréhension écrite)</label>
-                        <div class="col-lg-8">
+                        <div class="col-lg-3">
                             {{ form_widget(form.ceLevel, { 'attr': {'class': 'form-control'} }) }}
                         </div>
+                        <div class="col-lg-offset-5">
+                        </div>
+
                     </div>
                     {# eeLevel, user entity #}
                     <div class="form-group">
                         {{ form_errors(form.eeLevel) }}
                         <label class="col-lg-4 control-label" for="fos_user_registration_form_eeLevel">Niveau obtenu en EE (expression écrite) </label>
-                        <div class="col-lg-8">
+                        <div class="col-lg-3">
                             {{ form_widget(form.eeLevel, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-lg-offset-5">
                         </div>
                     </div>
                 </fieldset>

@@ -671,7 +671,7 @@ class TestController extends Controller
 
         // File import name
         $csvName = 'test-import.csv';
-        $csvName = 'mp2-ok.csv'; // Suite réception MP.
+        $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -708,15 +708,17 @@ class TestController extends Controller
                         // Ajout 13/12/2013 : traitement du cas TQRU.
                         // Les fichiers "option" sont nommés par exemple <XXX_option_1_1.mp3>
                         // alors que dans les autres cas, ils sont de type <XXX_option_1.mp3>
+                        // #118
                         if (!is_numeric($exp[2])) {
                             $number = explode(".", $exp[2]);
                             copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
                         } else {
-                            if (!is_numeric($exp[3])) {
+                            $number = explode(".", $exp[3]);
+                            $number = $number[0];
+                            if (!is_numeric($number)) {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . ".mp3");
                             } else {
-                                $number = explode(".", $exp[3]);
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number[0] . ".mp3");
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number . ".mp3");
                             }
 
                         }
@@ -727,6 +729,8 @@ class TestController extends Controller
                 }
             }
         }
+
+die();
 
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte : dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
@@ -750,7 +754,7 @@ class TestController extends Controller
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
                     $testName = "CO-pilote-dec2013-ang"; // For tests.
-                    $testName = "test-english"; // For tests.
+                    $testName = "TQRU"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
