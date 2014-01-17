@@ -26,42 +26,54 @@
                 <div class="form-group">
                     {{ form_errors(form.lastName) }}
                     <label class="col-lg-3 control-label required" for="fos_user_registration_form_lastName">Nom</label>
-                    <div class="col-lg-9">
+                    <div class="col-lg-4">
                         <input value="{{ form.vars.value.lastName }}" class="form-control" id="fos_user_registration_form_lastName" type="text"  required="required" name="fos_user_registration_form[lastName]">
+                    </div>
+                    <div class="col-lg-offset-5">
                     </div>
                 </div>
                 <div class="form-group">
                     {{ form_errors(form.firstName) }}
                     <label class="col-lg-3 control-label required" for="fos_user_registration_form_firstName">Prénom</label>
-                    <div class="col-lg-9">
+                    <div class="col-lg-4">
                         <input value="{{ form.vars.value.firstName }}" class="form-control" id="fos_user_registration_form_firstName" type="text" required="required" name="fos_user_registration_form[firstName]">
+                    </div>
+                    <div class="col-lg-offset-5">
                     </div>
                 </div>
                 <div class="form-group">
                     {{ form_errors(form.email) }}
                     <label class="col-lg-3 control-label required" for="fos_user_registration_form_email">Adresse mail</label>
-                    <div class="col-lg-9">
+                    <div class="col-lg-5">
                         <input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
+                    </div>
+                    <div class="col-lg-offset-4">
                     </div>
                 </div>
                 <div class="form-group">
                     {{ form_errors(form.username) }}
                     <label class="col-lg-3 control-label required" for="fos_user_registration_form_username">{{ 'security.login.username'|trans }}</label>
-                    <div class="col-lg-9">
+                    <div class="col-lg-3">
                         <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
+                    </div>
+                    <div class="col-lg-offset-6">
                     </div>
                 </div>
                 <div class="form-group">
                     {{ form_errors(form.plainPassword.first) }}
                     <label class="col-lg-3 control-label required" for="fos_user_registration_form_plainPassword_first">{{ 'security.login.password'|trans }}</label>
-                    <div class="col-lg-9">
+                    <div class="col-lg-4">
                         <input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
+                    </div>
+                    <div class="col-lg-offset-5">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label required" for="fos_user_registration_form_plainPassword_second">Confirmation du mot de passe</label>
-                    <div class="col-lg-9">
+                    <div class="col-lg-4">
                         <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
+                    </div>
+                    <div class="col-lg-offset-5">
                     </div>
                 </div>
             </div>
@@ -74,10 +86,12 @@
                     <div class="form-group">
                         {{ form_errors(form.originStudent) }}
                         <label class="col-lg-4 control-label" for="fos_user_registration_form_originStudent">Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / Autres)</label>
-                        <div class="col-lg-8">
+                        <div class="col-lg-3">
                             {# <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]"> #}
                             {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
                         </div>
+                    <div class="col-lg-offset-5">
+                    </div>
                     </div>
 
                     {# lastLevel, user entity #}

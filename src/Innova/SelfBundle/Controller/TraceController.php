@@ -30,7 +30,7 @@ class TraceController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
         $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')
-            ->CountTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
+            ->countTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
 
         /* If I already have a TRACE, the validation is not allowed.*/
         if ($countTrace > 0) {
@@ -88,8 +88,9 @@ class TraceController extends Controller
      * @Route("trace_setDifficulty", name="trace_setDifficulty")
      * @Method("POST")
      */
-    public function trace_setDifficultyAction()
+    public function traceSetDifficultyAction()
     {
+
         $em = $this->getDoctrine()->getManager();
         $post = $this->get('request')->request->all();
 

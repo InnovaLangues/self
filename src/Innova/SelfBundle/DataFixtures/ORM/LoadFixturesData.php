@@ -81,16 +81,16 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         New table for version 1.2 or version 2 (2014)
         fixtures for language table
         */
-        $lang_eng = new Language();
-        $lang_eng->setName("eng");
-        $lang_eng->setColor("E37E71");
-        $manager->persist($lang_eng);
+        $langEng = new Language();
+        $langEng->setName("eng");
+        $langEng->setColor("E37E71");
+        $manager->persist($langEng);
         $manager->flush();
 
-        $lang_it = new Language();
-        $lang_it->setName("it");
-        $lang_it->setColor("717EE3");
-        $manager->persist($lang_it);
+        $langIt = new Language();
+        $langIt->setName("it");
+        $langIt->setColor("717EE3");
+        $manager->persist($langIt);
         $manager->flush();
 
         /*
@@ -101,7 +101,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $levelLansadEngs = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
         foreach ($levelLansadEngs as $levelLansadEng) {
             $level = new LevelLansad();
-            $level->setLanguage($lang_eng);
+            $level->setLanguage($langEng);
             $level->setName($levelLansadEng);
             $manager->persist($level);
         }
@@ -110,7 +110,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         $levelLansadIts = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
         foreach ($levelLansadIts as $levelLansadIt) {
             $level = new LevelLansad();
-            $level->setLanguage($lang_it);
+            $level->setLanguage($langIt);
             $level->setName($levelLansadIt);
             $manager->persist($level);
         }

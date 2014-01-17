@@ -67,7 +67,7 @@ class TestController extends Controller
         $questionnaire = $questionnaireWithoutTrace;
 
         $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-            ->CountDoneYetByUserByTest($test->getId(), $user->getId());
+            ->countDoneYetByUserByTest($test->getId(), $user->getId());
 
         // Session to F5 key and sesion.
         $session->set('listening', $questionnaire->getListeningLimit());
@@ -108,10 +108,10 @@ class TestController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
         $nbRightAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->CountRightAnswerByUserByTest($test->getId(), $user->getId());
+                            ->countRightAnswerByUserByTest($test->getId(), $user->getId());
 
         $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->CountAnswerByUserByTest($test->getId(), $user->getId());
+                            ->countAnswerByUserByTest($test->getId(), $user->getId());
 
         $pourcentRightAnswer = number_format(($nbRightAnswer/$nbAnswer)*100, 0);
 
@@ -559,7 +559,7 @@ class TestController extends Controller
                 // CR
                 //
                 $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                    ->CountDoneYetByUserByTest($test->getId(), $user->getId());
+                    ->countDoneYetByUserByTest($test->getId(), $user->getId());
 
                 if ($countQuestionnaireDone > 0) {
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";

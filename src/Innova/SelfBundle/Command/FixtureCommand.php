@@ -93,24 +93,20 @@ class FixtureCommand extends ContainerAwareCommand
                 $em->persist($student);
             }
 
-            /*
-            New table for version 1.2 or version 2 (2014)
+            /* New table for version 1.2 or version 2 (2014)
             fixtures for language table
-            */
-            /*
             Important : we must have some keywords to add test.
-            So, in TestController.php, we create the test with language "English" or "Italian".
-            */
-            $lang_eng = new Language();
-            $lang_eng->setName("English");
-            $lang_eng->setColor("blue");
-            $em->persist($lang_eng);
+            So, in TestController.php, we create the test with language "English" or "Italian". */
+            $langEng = new Language();
+            $langEng->setName("English");
+            $langEng->setColor("blue");
+            $em->persist($langEng);
             $em->flush();
 
-            $lang_it = new Language();
-            $lang_it->setName("Italian");
-            $lang_it->setColor("pink");
-            $em->persist($lang_it);
+            $langIt = new Language();
+            $langIt->setName("Italian");
+            $langIt->setColor("pink");
+            $em->persist($langIt);
             $em->flush();
 
             /*
@@ -121,7 +117,7 @@ class FixtureCommand extends ContainerAwareCommand
             $levelLansadEngs = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
             foreach ($levelLansadEngs as $levelLansadEng) {
                 $level = new LevelLansad();
-                $level->setLanguage($lang_eng);
+                $level->setLanguage($langEng);
                 $level->setName($levelLansadEng);
                 $em->persist($level);
             }
@@ -130,7 +126,7 @@ class FixtureCommand extends ContainerAwareCommand
             $levelLansadIts = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
             foreach ($levelLansadIts as $levelLansadIt) {
                 $level = new LevelLansad();
-                $level->setLanguage($lang_it);
+                $level->setLanguage($langIt);
                 $level->setName($levelLansadIt);
                 $em->persist($level);
             }

@@ -6,9 +6,13 @@ use Doctrine\ORM\EntityRepository;
 
 class QuestionnaireRepository extends EntityRepository
 {
+
     /**
-     * To have the next Question for one test and one user
+     * findOneNotDoneYetByUserByTest description]
+     * @param  id $testId
+     * @param  id $userId
      *
+     * @return test+questionnaires
      */
     public function findOneNotDoneYetByUserByTest($testId, $userId)
     {
@@ -30,7 +34,14 @@ class QuestionnaireRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function CountDoneYetByUserByTest($testId, $userId)
+    /**
+     * countDoneYetByUserByTest count traces for test and for user
+     * @param id $testId
+     * @param id $userId
+     *
+     * @return  int number of traces for the test and the user
+     */
+    public function countDoneYetByUserByTest($testId, $userId)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
         LEFT JOIN t.questionnaire tq
@@ -45,10 +56,14 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * Count Trace By user/test/questionnaire
+     * countTraceByUserByTestByQuestionnaire Count Trace By user/test/questionnaire
+     * @param id $testId
+     * @param id $questionnaireId
+     * @param id $userId
      *
+     * @return  int number of traces for the test and the questionnaire and the user
      */
-    public function CountTraceByUserByTestByQuestionnaire($testId, $questionnaireId, $userId)
+    public function countTraceByUserByTestByQuestionnaire($testId, $questionnaireId, $userId)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
         WHERE t.user = :userId
@@ -64,8 +79,12 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * Trace By user/test/questionnaire
+     * findOneByUserByTestByQuestionnaire Trace By user/test/questionnaire
+     * @param  id $testId
+     * @param  id $questionnaireId
+     * @param  id $userId
      *
+     * @return trace
      */
     public function findOneByUserByTestByQuestionnaire($testId, $questionnaireId, $userId)
     {
@@ -82,7 +101,14 @@ class QuestionnaireRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function CountAnswerByUserByTest($testId, $userId)
+    /**
+     * countAnswerByUserByTest Count Answer By user/test
+     * @param id $testId
+     * @param id $userId
+     *
+     * @return  int number of answers for the test and the user
+     */
+    public function countAnswerByUserByTest($testId, $userId)
     {
         $dql = "SELECT a FROM Innova\SelfBundle\Entity\Answer a
         LEFT JOIN a.trace at
@@ -95,7 +121,14 @@ class QuestionnaireRepository extends EntityRepository
         return count($query->getResult());
     }
 
-    public function CountRightAnswerByUserByTest($testId, $userId)
+    /**
+     * countRightAnswerByUserByTest Count right answer by test/user
+     * @param id $testId
+     * @param id $userId
+     *
+     * @return  int number of right answer for the test and the user
+     */
+    public function countRightAnswerByUserByTest($testId, $userId)
     {
         $dql = "SELECT a FROM Innova\SelfBundle\Entity\Answer a
         LEFT JOIN a.proposition ap
