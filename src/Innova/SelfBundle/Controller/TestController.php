@@ -410,8 +410,8 @@ class TestController extends Controller
      * Update : 16/10/2013 by EV email Cristiana
      *
      * @Route(
-     *     "/csv",
-     *     name = "csv-export",
+     *     "/admin/csv",
+     *     name = "csv_export",
      *     options = {"expose"=true}
      * )
      *
@@ -565,11 +565,11 @@ class TestController extends Controller
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
                     // Add 5 colums for Level
                     //
-                    $csv .= $user->getStudentType() . ";";
+                    /*$csv .= $user->getStudentType() . ";";
                     $csv .= $user->getLastLevel() . ";";
                     $csv .= $user->getCoLevel() . ";";
                     $csv .= $user->getCeLevel() . ";";
-                    $csv .= $user->getEeLevel() . ";";
+                    $csv .= $user->getEeLevel() . ";";*/
                     //
                     $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
                     foreach ($questionnaires as $questionnaire) {
