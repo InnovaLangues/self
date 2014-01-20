@@ -13,6 +13,10 @@
 	padding:50px;
 }
 
+.modal-black {
+	background-color: #333300;
+}
+
 .central-default {
 	border-radius:10px;
 	background-color: #717EE3;
