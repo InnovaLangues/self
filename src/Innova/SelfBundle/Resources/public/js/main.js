@@ -138,9 +138,9 @@ $(document).ready(function() {
 				}
 				else
 				{
-					alert('Vous n\'avez pas encore écouté la consigne située à gauche de l\'écran');
-				};
-
+                    $('#myModal').modal({remote: $(this).attr("data-target")})
+                    $('#myModal').modal('show')
+    			};
 			}
 		}
 	});

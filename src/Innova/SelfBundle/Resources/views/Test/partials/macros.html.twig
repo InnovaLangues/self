@@ -1,7 +1,7 @@
 {% macro media(id, media, icon, height, limitAudio, tooltip) %}
 
     {% if media.mediaType.name == "audio" %}
-        <img rel="tooltip"  data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+        <img rel="tooltip" data-toggle="modal" data-target="#controlModal" data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
         <audio preload="auto" id="{{ id }}" class="item_audio">
             <source src="{{ asset('upload/media/') ~ media.url }}.mp3" type="audio/mp3">
             <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
@@ -16,7 +16,6 @@
                 <h4 class="modal-title">{{ tooltip }}</h4>
               </div>
               <div class="modal-body modal-black">
-
 
                 {% if media.mediaType.name == "image" %}
                     <img id="{{ id }}" src="{{ asset('upload/media/') ~ media.url }}" height="280" rel="tooltip" data-original-title="{{ tooltip }}"/>
@@ -38,6 +37,10 @@
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+
+
+
+
 
 
         <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip"  data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
