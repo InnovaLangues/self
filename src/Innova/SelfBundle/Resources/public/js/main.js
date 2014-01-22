@@ -245,4 +245,11 @@ $(document).ready(function() {
 		});
 	});
 
+    //Tabs login page #130
+    var $tabs = $('#register-form-tabs li');
+
+    $('.nexttab').on('click', function() {
+        $tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
+    });
+
 });
