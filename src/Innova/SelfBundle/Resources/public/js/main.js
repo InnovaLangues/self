@@ -65,6 +65,8 @@ $(document).ready(function() {
 	});
 
 	$(".item_audio_button").click(function(){
+
+
 		// Number of possible listens
 		var limit = Number($(this).attr("data-limit"));
 
@@ -85,6 +87,8 @@ $(document).ready(function() {
 				$(this).css("opacity","1");
 				audio.play();
 			}
+
+            // Cas du clic sur "Situation de départ".
 			if (sound === "situation"){
 
 				var consigne = 0;
@@ -103,6 +107,11 @@ $(document).ready(function() {
 					});
 
 				if (consigne > 0){
+
+                    // Si j'ai déjà cliqué sur la consigne didactique
+                    // alors j'initialise l'attribut "data-toggle"
+                    // afin de ne plus afficher la modal de contrôle.
+                    $(".item_audio_button").attr("data-toggle", "");
 
 					play_in_progress = true;
 					$("#limit_listening_text").html(
@@ -134,13 +143,7 @@ $(document).ready(function() {
 					.fail(function() {
 						alert('Ajax error 3');
 					});
-
-				}
-				else
-				{
-					alert('Vous n\'avez pas encore écouté la consigne située à gauche de l\'écran');
-				};
-
+    			};
 			}
 		}
 	});
@@ -244,5 +247,12 @@ $(document).ready(function() {
 			alert('Ajax error 4');
 		});
 	});
+
+    //Tabs login page #130
+    var $tabs = $('#register-form-tabs li');
+
+    $('.nexttab').on('click', function() {
+        $tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
+    });
 
 });
