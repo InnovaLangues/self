@@ -85,7 +85,6 @@ input[type="checkbox"], input[type="radio"], label{
 	cursor: pointer;
 }
 
-
 .audio-container{
 	display:inline-block;
 }
@@ -116,4 +115,9 @@ input[type="checkbox"], input[type="radio"], label{
 
 .answer, .source{
 	border:1px dotted black;
+}
+
+#controlModal{
+    height: 400px;
+    top: calc(50% - 200px) !important;
 }
