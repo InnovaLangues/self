@@ -121,3 +121,8 @@ input[type="checkbox"], input[type="radio"], label{
     height: 400px;
     top: calc(50% - 200px) !important;
 }
+
+#helpModal{
+    height: 1200px;
+    top: calc(20% - 100px) !important;
+}
