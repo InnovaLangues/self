@@ -20,393 +20,6 @@ class ImportController extends Controller
 {
 
     /**
-     * Pick a questionnaire entity for a given test not done yet by the user.
-     *
-     * @Route("student/test/start/{id}", name="test_start")
-     * @Method("GET")
-     * @Template()
-     */
-    public function startAction(Test $test)
-    {
-
-        $session = $this->container->get('request')->getSession();
-
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        // Je parcours tous les questionnaires du test X
-        // et je m'arrête au premier questionnaire qui n'a pas de trace.
-        $findQuestionnaireWithoutTrace = false;
-        $questionnaireWithoutTrace = new Questionnaire();
-
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
-        foreach ($questionnaires as $questionnaire) {
-
-            $tests = $questionnaire->getTests();
-            $testQ = $tests[0];
-
-            if ($test->getId() === $testQ->getId()) {
-                // Recherche des traces pour UN utilisateur UN test et UN questionnaire.
-                $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(), 'test' => $test->getId(),
-                                            'questionnaire' => $questionnaire->getId()
-                                            )
-                                        );
-
-                    // Si je n'ai pas de traces, alors il faut que j'affiche ce questionnaire. Car il n'est pas encore été "répondu".
-                    if (count($traces) == 0) {
-                        if (!$findQuestionnaireWithoutTrace) {
-                            $questionnaireWithoutTrace = $questionnaire;
-                            $findQuestionnaireWithoutTrace = true;
-                        }
-                    }
-                }
-
-        }
-
-        // Et j'affecte à la variable passée à la vue le premier questionnaire sans trace.
-        $questionnaire = $questionnaireWithoutTrace;
-
-        $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-            ->countDoneYetByUserByTest($test->getId(), $user->getId());
-
-        // Session to F5 key and sesion.
-        $session->set('listening', $questionnaire->getListeningLimit());
-
-        // Renvoi vers la méthode indiquant la fin du test.
-        if (!$findQuestionnaireWithoutTrace) {
-            return $this->redirect(
-                $this->generateUrl(
-                    'test_end',
-                    array("id"=>$test->getId())
-                )
-            );
-        }
-
-        // One color per language. Two languages for the moment : ang and it.
-        // In database, we must have one color per test. Table : language.
-        // See main.css for more information.
-        $language = $em->getRepository('InnovaSelfBundle:Language')->findBy(array('id' => $test->getLanguage()->getId()));
-        $languageColor = $language[0]->getColor();
-
-        return array(
-            'questionnaire' => $questionnaire,
-            'language' => $languageColor,
-            'test' => $test,
-            'counQuestionnaireDone' => $countQuestionnaireDone,
-        );
-    }
-
-     /**
-     * Pick a questionnaire entity for a given test not done yet by the user.
-     *
-     * @Route("/test_end/{id}", name="test_end")
-     * @Template()
-     */
-    public function endAction(Test $test)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $nbRightAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countRightAnswerByUserByTest($test->getId(), $user->getId());
-
-        $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countAnswerByUserByTest($test->getId(), $user->getId());
-
-        $pourcentRightAnswer = number_format(($nbRightAnswer/$nbAnswer)*100, 0);
-
-        return array("pourcentRightAnswer" => $pourcentRightAnswer);
-    }
-
-    /**
-     * Lists all Test entities.
-     *
-     * @Route("admin/test", name="test")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
-
-    /**
-     * Lists all Test entities.
-     *
-     * @Route("student/test/user", name="user_test")
-     * @Method({"GET", "POST"})
-     * @Template()
-     */
-    public function userIndexAction()
-    {
-
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $em = $this->getDoctrine()->getManager();
-
-        // Par défaut pour la V1, on crée le premier test quand un utilisateur est nouveau
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-
-        // TODO
-        $test = $tests[0];
-
-        if (!$test) {
-            throw $this->createNotFoundException('Unable to find Test entity.');
-        }
-
-        // If the user doesn't have any test, then I add one test in 'user_test 'table.
-        if (count($user->getTests()) === 0) {
-            $user->addTest($test);
-            $em->persist($user);
-            $em->flush();
-        }
-
-        // Redirection vers la page de démarrage du test.
-        return $this->redirect(
-            $this->generateUrl(
-                'test_start',
-                array('id' => $test->getId()
-                )
-            )
-        );
-    }
-
-    /**
-     * Creates a new Test entity.
-     *
-     * @Route("admin/test", name="test_create")
-     * @Method("POST")
-     * @Template("InnovaSelfBundle:Test:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new Test();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect(
-                $this->generateUrl(
-                    'test_show',
-                    array(
-                        'id' => $entity->getId()
-                    )
-                )
-            );
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to create a Test entity.
-    *
-    * @param Test $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Test $entity)
-    {
-        $form = $this->createForm(
-            new TestType(),
-            $entity,
-            array(
-            'action' => $this->generateUrl('test_create'),
-            'method' => 'POST',
-            )
-        );
-
-        $form->add(
-            'submit',
-            array('label' => 'Create')
-        );
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Test entity.
-     *
-     * @Route("admin/test/new", name="test_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Test();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Finds and displays a Test entity.
-     *
-     * @Route("admin/test/{id}", name="test_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Test entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing Test entity.
-     *
-     * @Route("admin/test/{id}/edit", name="test_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Test entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Test entity.
-    *
-    * @param Test $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Test $entity)
-    {
-        $form = $this->createForm(
-            new TestType(),
-            $entity,
-            array(
-            'action' => $this->generateUrl('test_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-           )
-        );
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Test entity.
-     *
-     * @Route("admin/test/{id}", name="test_update")
-     * @Method("PUT")
-     * @Template("InnovaSelfBundle:Test:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Test entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('test_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-    /**
-     * Deletes a Test entity.
-     *
-     * @Route("admin/test/{id}", name="test_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Test entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('test'));
-    }
-
-    /**
-     * Creates a form to delete a Test entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('test_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
-    }
-
-
-    /**
      * importCsvSQLCoce function
      *
      * @Route(
@@ -420,10 +33,11 @@ class ImportController extends Controller
     public function importCsvSQLCoceAction($language, $type)
     {
 
+        $em = $this->getDoctrine()->getManager();
+
         echo $language;
         echo $type;
-        die();
-        $langue = $em->getRepository('InnovaSelfBundle:Test')->find($id);
+//        $langue = $em->getRepository('InnovaSelfBundle:Test')->find($id);
 
        //
         // CSV Import part
@@ -431,17 +45,36 @@ class ImportController extends Controller
 
         // File import path
         $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3/'; // Symfony
+        $csvPathImport    = '/media/Innova/SELF/Italien/'; // Symfony
+
+        //
+        // Export file list
+        //
+        $fileList = array();
+        $nbFile = 0;
+        if ($dossier = opendir($csvPathImport)) {
+            while (false !== ($fichier = readdir($dossier))) {
+                if ($fichier != '.' && $fichier != '..') {
+                    $nbFile++; // Number of files + 1
+                    echo "<br />" . $fichier;
+                    $fileList[$nbFile] = $fichier;
+                }
+            }
+        }
+
 
         // File import name
         $csvName = 'test-import.csv';
         $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
         $csvName = 'mp2-ok.csv'; // Suite réception MP.
+        $csvName = 'CE_piloteII-27-01-14.csv'; // CE Italien
+        $csvName = 'CE_pilote.csv'; // CE Italien à partir du serveur "commun"
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
         // Path + Name:wq
         $csvPath = $csvPathImport . $csvName;
+echo "résultat : " . $csvPath;
 
         // File import path
         // Répertoire où seront stockés les fichiers
@@ -451,49 +84,6 @@ class ImportController extends Controller
         // Répertoire où seront copiés les fichiers
         $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
 
-        // Traitement des fichiers reçus
-        if ($dossier = opendir($csvPathImportMp3)) {
-            while (false !== ($fichier = readdir($dossier))) {
-                if ($fichier != '.' && $fichier != '..') {
-                    $exp = explode("_", $fichier);
-
-                    $repertoryName = strtolower($exp[0]);
-                    $fileName = $exp[1];
-
-                    $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
-                    // Création du répertoire (s'il n'est pas déjà créé)
-                    if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
-
-                    if (preg_match("/amorce/i", $fileName)) {
-                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
-                    }
-
-                    // Traitement de la partie "option".
-                    if (preg_match("/option/i", $fileName)) {
-                        // Ajout 13/12/2013 : traitement du cas TQRU.
-                        // Les fichiers "option" sont nommés par exemple <XXX_option_1_1.mp3>
-                        // alors que dans les autres cas, ils sont de type <XXX_option_1.mp3>
-                        // #118
-                        if (!is_numeric($exp[2])) {
-                            $number = explode(".", $exp[2]);
-                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
-                        } else {
-                            $number = explode(".", $exp[3]);
-                            $number = $number[0];
-                            if (!is_numeric($number)) {
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . ".mp3");
-                            } else {
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number . ".mp3");
-                            }
-
-                        }
-                    }
-                    if (preg_match("/txt/i", $fileName)) {
-                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
-                    }
-                }
-            }
-        }
 
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte : dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
@@ -514,9 +104,9 @@ class ImportController extends Controller
 
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
-                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
+                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
                     $testName = "CO-pilote-dec2013-ang"; // For tests.
-                    $testName = "test-english"; // For tests.
+                    $testName = "CE_piloteII-27-01-14"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
@@ -596,13 +186,17 @@ class ImportController extends Controller
                     //
                     // $data[1]  = nom du répertoire = nom du thême
                     // $data[10] = nom de l'extension du fichier (ex : mp3)
-                    $this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
+                    //$this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
 
                     //
                     //
                     // Troisième partie : travail sur les types TQRM et TQRU
                     //
                     //
+
+            echo "dans boucle";
+            echo $data[4];
+            die();
 
                     // Traitement suivi le type de questionnaire.
                     switch ($data[4]) {
