@@ -37,44 +37,23 @@ class ImportController extends Controller
 
         echo $language;
         echo $type;
-//        $langue = $em->getRepository('InnovaSelfBundle:Test')->find($id);
 
-       //
+        //
         // CSV Import part
         //
 
         // File import path
+        $csvPathImport    = '/media/Innova/SELF/Italien/'; // test sur le serveur "commun"
         $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
-        $csvPathImport    = '/media/Innova/SELF/Italien/'; // Symfony
-
-        //
-        // Export file list
-        //
-        $fileList = array();
-        $nbFile = 0;
-        if ($dossier = opendir($csvPathImport)) {
-            while (false !== ($fichier = readdir($dossier))) {
-                if ($fichier != '.' && $fichier != '..') {
-                    $nbFile++; // Number of files + 1
-                    echo "<br />" . $fichier;
-                    $fileList[$nbFile] = $fichier;
-                }
-            }
-        }
-
 
         // File import name
-        $csvName = 'test-import.csv';
-        $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
-        $csvName = 'mp2-ok.csv'; // Suite réception MP.
-        $csvName = 'CE_piloteII-27-01-14.csv'; // CE Italien
         $csvName = 'CE_pilote.csv'; // CE Italien à partir du serveur "commun"
+        $csvName = 'CE_piloteII-27-01-14.csv'; // CE Italien
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
         // Path + Name:wq
         $csvPath = $csvPathImport . $csvName;
-echo "résultat : " . $csvPath;
 
         // File import path
         // Répertoire où seront stockés les fichiers
@@ -91,7 +70,7 @@ echo "résultat : " . $csvPath;
         $row = 0;
         $indice = 0;
 
-        if (($handle = fopen($csvPath, "r")) !== FALSE) {
+        if (($handle = fopen($csvPath, "r+")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 
                 // Ainsi, je ne prends pas les intitulés des colonnes
@@ -200,10 +179,12 @@ echo "résultat : " . $csvPath;
 
                     // Traitement suivi le type de questionnaire.
                     switch ($data[4]) {
+                        case "RE";
                         case "TQRU";
                         case "TQRM";
                             $this->tqrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
+/*
                         case "QRU";
                         case "QRM";
                             $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
@@ -226,6 +207,7 @@ echo "résultat : " . $csvPath;
                         case "APPAI";
                             $this->appaiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
+*/
                     }
 
                     $em->flush();
@@ -236,7 +218,7 @@ echo "résultat : " . $csvPath;
         }
 
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
-        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
+        //shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
 
         //
         // To view

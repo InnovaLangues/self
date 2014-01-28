@@ -75,7 +75,7 @@ class FixtureCommand extends ContainerAwareCommand
                 $em->persist($skill);
             }
 
-            $typologies = array("TVF", "QRU", "VF", "QRM", "TQRU", "TQRM", "TVFPM", "VFPM", "APPAT", "APPAA", "APPAI");
+            $typologies = array("TVF", "QRU", "VF", "QRM", "TQRU", "TQRM", "TVFPM", "VFPM", "APPAT", "APPAA", "APPAI", "RE");
             foreach ($typologies as $typology) {
                 $typo = new Typology();
                 $typo->setName($typology);
