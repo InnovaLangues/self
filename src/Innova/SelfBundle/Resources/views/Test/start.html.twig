@@ -70,6 +70,7 @@
 
                             </div> {# well #}
                         {% else %}
+                            {{ "typo" ~ subquestion.typology.name }}
                             {% for i, subquestion in question.subquestions %}
                                 <div class="subquestion">
                                     {% if subquestion.typology.name  == "QRM" %}
@@ -81,6 +82,8 @@
                                     {% elseif subquestion.typology.name  == "APPAT" %}
                                         {% set vars = {'subquestion0' : question.subquestions[0]} %}
                                         {% include "InnovaSelfBundle:Test/partials:APP.html.twig" with vars %}
+                                    {% elseif subquestion.typology.name  == "RE" %}
+                                        {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
                                     {% endif %}
                                 </div>
                             {% endfor %}
