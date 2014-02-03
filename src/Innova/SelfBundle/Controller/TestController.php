@@ -88,7 +88,7 @@ class TestController extends Controller
         $language = $em->getRepository('InnovaSelfBundle:Language')->findBy(array('id' => $test->getLanguage()->getId()));
         $languageColor = $language[0]->getColor();
 
-echo "<pre>" . $questionnaire . "</pre>";
+//echo "<pre>" . $questionnaire . "</pre>";
         return array(
             'questionnaire' => $questionnaire,
             'language' => $languageColor,

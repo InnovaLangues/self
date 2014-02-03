@@ -24,13 +24,13 @@ class ImportController extends Controller
      *
      * @Route(
      *     "/admin/csv_import/{language}/{type}",
-     *     name = "csv_import_coce",
-     *     requirements={"language" = "en|it","type" = "ce|co"}
+     *     name = "csv_import_ce",
+     *     requirements={"language" = "en|it","type" = "ce"}
      * )
      * @Method({"GET"})
      * @Template()
      */
-    public function importCsvSQLCoceAction($language, $type)
+    public function importCsvSQLCeAction($language, $type)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -48,7 +48,7 @@ class ImportController extends Controller
 
         // File import name
         $csvName = 'CE_pilote.csv'; // CE Italien à partir du serveur "commun"
-        $csvName = 'CE_piloteII-27-01-14.csv'; // CE Italien
+        $csvName = 'CE_piloteII-27-01-14-re.csv'; // CE Italien
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -85,7 +85,7 @@ class ImportController extends Controller
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
                     $testName = "CO-pilote-dec2013-ang"; // For tests.
-                    $testName = "CE_piloteII-28-01-14"; // For tests.
+                    $testName = "CE_piloteII-27-01-14-re"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
@@ -131,6 +131,7 @@ class ImportController extends Controller
                     $questionnaire->setListeningLimit(0); //ListeningLimit
                     $questionnaire->setDialogue(0);
                     $questionnaire->setTheme($data[1]); // Thême
+                    echo "<br />Thême : " . $data[1];
 
                     // Texte source
                     $textSource = $data[9];
@@ -163,6 +164,7 @@ class ImportController extends Controller
 
                     // Traitement suivi le type de questionnaire.
                     // $data[11] = nombre d'items.
+                    echo "<br />" . $data[4];
                     switch ($data[4]) {
                         case "RE";
                         //case "TQRU";
@@ -174,12 +176,16 @@ class ImportController extends Controller
                         case "QRM";
                             $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
+*/
                         case "TVF";
+/*
                         case "VF";
                         case "VFPM";
                         case "TVFPM";
+*/
                             $this->vfProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
+/*
                         case "APPAT";
                             $this->appatProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
@@ -204,7 +210,7 @@ class ImportController extends Controller
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
         //shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
 
-        echo "fin";
+        echo "<br><br><br>fin";
         die();
 
         //
@@ -230,21 +236,20 @@ class ImportController extends Controller
         //
         //
         // For more explications : http://www.php.net/manual/fr/reference.pcre.pattern.modifiers.php
-        echo "<br /><br />Texte AVANT = " . $textSource;
+        // echo "<br /><br />Texte AVANT = " . $textSource;
         //$rule = '($$$).*?($$$)';
         //$final = '<i>.*?</i>';
 
         $textDisplay = preg_replace('/\*{3}(.*?)\*{3}/s', '<i>$1</i>', $textSource);
-        echo "<br /><br />Texte APRES = " . $textDisplay;
+        // echo "<br /><br />Texte APRES = " . $textDisplay;
 
-
-        echo "<br /><br />Texte AVANT = " . $textSource;
+        // echo "<br /><br />Texte AVANT = " . $textSource;
         $textDisplay = preg_replace('/\${3}(.*?)\${3}/s', '<u>$1</u>', $textDisplay);
         //$textDisplay = preg_replace('/***(.*?)***/s', '<i>$1</i>', $textSource); // Texte italique
 
         $textDisplay = str_replace('@@@', '<br>', $textDisplay); // Saut de ligne
 
-        echo "<br /><br />Texte APRES = " . $textDisplay;
+        // echo "<br /><br />Texte APRES = " . $textDisplay;
 
         return $textDisplay;
     }
@@ -632,7 +637,7 @@ class ImportController extends Controller
      */
     private function tqrProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
-        echo "tqrProcess"; echo "<br>" . $nbItems;
+        echo "<br />tqrProcess"; echo "<br>" . $nbItems;
         $em = $this->getDoctrine()->getManager();
 
         // Créer une occurrence dans la table "Question"
@@ -644,8 +649,6 @@ class ImportController extends Controller
         $em->persist($question);
       //  $em->flush();
 
-        // Traitement sur le nombre d'items
-        for ($i = 1; $i <= $nbItems; $i++) {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
             // Appel en commentaire car pas ce traitement en CE.
@@ -659,6 +662,8 @@ class ImportController extends Controller
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
 
+        // Traitement sur le nombre d'items
+        for ($i = 1; $i <= $nbItems; $i++) {
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
             $rightAnswer = $data[$indice];
@@ -742,14 +747,17 @@ class ImportController extends Controller
             // Recherche si le fichier existe
             // S'il n'existe pas, je passe au suivant.
             //
-            $fileName = "option_" . $i;
-            $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
+            //$fileName = "option_" . $i;
+            //$testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
 
-            if (file_exists($testFile)) {
+            //if (file_exists($testFile)) {
                 // Création dans "Media"
                 $media = new Media();
                 $media->setName($dirName . "_" . $fileName);
-                $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
+                // Créer une occurrence dans la table "Proposition"
+                $indice = 11+(2*$i);
+                $optionText = $data[$indice-1];
+                $media->setName($optionText);
 
                 $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
                 $media->setMediaType($mediaType);
@@ -757,15 +765,15 @@ class ImportController extends Controller
 
                 // Enregistrement en base
                 $em->persist($media);
-                copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
-            }
+                //copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
+            //}
 
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
-            $rightAnswer = $data[$indice-1];
+            $rightAnswer = $data[$indice];
 
             $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
             $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
@@ -973,6 +981,7 @@ class ImportController extends Controller
         // Créer une occurrence dans la table "Proposition"
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
+        $proposition->setTitle($optionText);
 
         // Formatage et test si le fichier existe
         // exemple de nom de fichier : option_1_2.mp3

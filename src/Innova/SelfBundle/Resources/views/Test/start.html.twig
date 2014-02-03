@@ -35,6 +35,7 @@
 
                 <div class="col-md-7">
                     {% for question in questionnaire.questions %}
+                        {{ "type Q : " ~ question.typology.name }}
                         {% if question.typology.name == "TQRU" %}
 
                             <div class="well well2">
@@ -70,20 +71,20 @@
 
                             </div> {# well #}
                         {% else %}
-                            {{ "typo" ~ subquestion.typology.name }}
                             {% for i, subquestion in question.subquestions %}
                                 <div class="subquestion">
+                                    {{ "type SQ : " ~ subquestion.typology.name ~ " " ~ subquestion.id ~ " title " ~ subquestion.title }}
                                     {% if subquestion.typology.name  == "QRM" %}
                                         {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
                                     {% elseif subquestion.typology.name  == "QRU" %}
                                          {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
-                                    {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" %}
+                                    {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" or subquestion.typology.name  == "TVF" %}
                                         {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
                                     {% elseif subquestion.typology.name  == "APPAT" %}
                                         {% set vars = {'subquestion0' : question.subquestions[0]} %}
                                         {% include "InnovaSelfBundle:Test/partials:APP.html.twig" with vars %}
                                     {% elseif subquestion.typology.name  == "RE" %}
-                                        {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
+                                        {% include "InnovaSelfBundle:Test/partials:RE.html.twig" %}
                                     {% endif %}
                                 </div>
                             {% endfor %}
