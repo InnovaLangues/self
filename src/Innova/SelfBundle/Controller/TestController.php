@@ -673,7 +673,7 @@ class TestController extends Controller
         // File import name
         $csvName = 'test-import.csv';
         $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
-        $csvName = 'mp2-ok.csv'; // Suite réception MP.
+        $csvName = 'Pilote SELF Italien_février 2014_sequence affichage_CO_CE (1).csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
