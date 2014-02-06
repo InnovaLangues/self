@@ -123,12 +123,12 @@ class ImportController extends Controller
 
         // File import path
         $csvPathImport    = '/media/Innova/SELF/Italien/'; // test sur le serveur "commun"
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/' . $language . "/"; // Symfony
 
         // File import name
         $csvName = 'CE_pilote.csv'; // CE Italien à partir du serveur "commun"
         $csvName = 'CE_piloteII-27-01-14-re.csv'; // CE Italien
-        $csvName = 'Pilote SELF Italien_février 2014_sequence affichage_CO_CE-QRM.csv'; // Suite réception MP.
+        $csvName = 'TQRU.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -155,77 +155,80 @@ class ImportController extends Controller
 
                 // Ainsi, je ne prends pas les intitulés des colonnes
                 if ($row != 0) {
-                    //
-                    //
-                    // Première partie : ajout dans la table Questionnaire
-                    //
-                    //
 
-                    // Add to Questionnaire table
-                    $questionnaire = new Questionnaire();
-                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
-                    $testName = "CO-pilote-dec2013-ang"; // For tests.
-                    $testName = "CE_piloteII-27-01-14-QRM"; // For tests.
+                        //
+                        //
+                        // Première partie : ajout dans la table Questionnaire
+                        //
+                        //
 
-//                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
-                    if ($row == 1) {
-                        echo "<br />Création du test row=1";
-                        $test = new Test();
-                        $test->setName($testName);
-                        $test->setLanguage($language);
-                        $em->persist($test);
-                    }
+                        // Add to Questionnaire table
+                        $questionnaire = new Questionnaire();
+                        $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
+                        $testName = "CO-pilote-dec2013-ang"; // For tests.
+                        $testName = "CE_piloteII-02-05-2014-TQRU"; // For tests.
 
-                    $questionnaire->addTest($test);
-                    //
-                    // J'ai traité les colonnes de la table Questionnaire dans l'ordre
-                    //
-                    //
-                    //
-                    //
-                    $data[1] = strtolower($data[1]); // Mise en minuscules du nom du fichier suite aux tests.
+    //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
+                        if ($row == 1) {
+                            echo "<br />Création du test row=1";
+                            $test = new Test();
+                            $test->setName($testName);
+                            $test->setLanguage($language);
+                            $em->persist($test);
+                        }
 
-                    // Traitement sur le level
-                    $libLevel = $data[2];
-                    $level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($libLevel);
-                    $questionnaire->setLevel($level);
+echo "<br />tEst : " . $test;
+                        $questionnaire->addTest($test);
+                        //
+                        // J'ai traité les colonnes de la table Questionnaire dans l'ordre
+                        //
+                        //
+                        //
+                        //
+                        $data[1] = strtolower($data[1]); // Mise en minuscules du nom du fichier suite aux tests.
 
-                    // Traitement sur le skill
-                    $libSkill = $data[3];
-                    $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($libSkill);
-                    $questionnaire->setSkill($skill);
+                        // Traitement sur le level
+                        $libLevel = $data[2];
+                        $level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($libLevel);
+                        $questionnaire->setLevel($level);
 
-                    // Traitement sur la typologie
-                    $libTypo = $data[4];
-                    $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypo);
+                        // Traitement sur le skill
+                        $libSkill = $data[3];
+                        $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($libSkill);
+                        $questionnaire->setSkill($skill);
 
-                    // Traitement des autres colonnes
-                    $questionnaire->setAuthor();
-                    $questionnaire->setInstruction();
-                    $questionnaire->setSource();
-                    $questionnaire->setDuration();
-                    $questionnaire->setDomain();
-                    $questionnaire->setSupport();
-                    $questionnaire->setFlow();
-                    $questionnaire->setFocus();
-                    $questionnaire->setListeningLimit(0); //ListeningLimit
-                    $questionnaire->setDialogue(0);
-                    $questionnaire->setTheme($data[1]); // Thême
-                    echo "<br />Thême : " . $data[1];
+                        // Traitement sur la typologie
+                        $libTypo = $data[4];
+                        $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypo);
 
-                    // Texte source
-                    $textSource = $data[9];
-                    // Traitement du "texte source".
-                    $questionnaire->setOriginText($this->textSource($textSource));
+                        // Traitement des autres colonnes
+                        $questionnaire->setAuthor();
+                        $questionnaire->setInstruction();
+                        $questionnaire->setSource();
+                        $questionnaire->setDuration();
+                        $questionnaire->setDomain();
+                        $questionnaire->setSupport();
+                        $questionnaire->setFlow();
+                        $questionnaire->setFocus();
+                        $questionnaire->setListeningLimit(0); //ListeningLimit
+                        $questionnaire->setDialogue(0);
+                        $questionnaire->setTheme($data[1]); // Thême
+                        echo "<br />Thême : " . $data[1];
 
-                    //Autres colonnes
-                    $questionnaire->setMediaInstruction();
-                    $questionnaire->setMediaContext();
-                    $questionnaire->setMediaText();
+                        // Texte source
+                        $textSource = $data[9];
+                        // Traitement du "texte source".
+                        $questionnaire->setOriginText($this->textSource($textSource));
 
-                    $indice++;
-                    // Enregistrement en base
-                    $em->persist($questionnaire);
+                        //Autres colonnes
+                        $questionnaire->setMediaInstruction();
+                        $questionnaire->setMediaContext();
+                        $questionnaire->setMediaText();
+
+                        $indice++;
+                        // Enregistrement en base
+                        $em->persist($questionnaire);
+
 
                     //
                     //
@@ -283,18 +286,20 @@ class ImportController extends Controller
                             $this->appaiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
 */
-                    }
+                    } // Fin du switch
+                } // Fin de if ($row != 0) {
+
+                    $row++;
+
+            } // Fin du while
                     $em->flush();
-                }
-                $row++;
-            }
             fclose($handle);
-        }
+        } // Fin de if (($handle = fopen($csvPath, "r+")) !== FALSE) {
 
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
         //shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
 
-        echo "<br><br><br>fin";
+        echo "<br><br><br>Fin pour le moment. Reste à faire : redirection vers la vue.";
         die();
 
         //
