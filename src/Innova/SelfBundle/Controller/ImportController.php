@@ -128,7 +128,7 @@ class ImportController extends Controller
         // File import name
         $csvName = 'CE_pilote.csv'; // CE Italien à partir du serveur "commun"
         $csvName = 'CE_piloteII-27-01-14-re.csv'; // CE Italien
-        $csvName = 'TQRU.csv'; // Suite réception MP.
+        $csvName = 'QRU.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -166,7 +166,7 @@ class ImportController extends Controller
                         $questionnaire = new Questionnaire();
                         $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
                         $testName = "CO-pilote-dec2013-ang"; // For tests.
-                        $testName = "CE_piloteII-02-05-2014-TQRU"; // For tests.
+                        $testName = "CE_piloteII-02-05-2014-QRU"; // For tests.
 
     //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                         if ($row == 1) {
@@ -221,9 +221,9 @@ echo "<br />tEst : " . $test;
                         $questionnaire->setOriginText($this->textSource($textSource));
 
                         //Autres colonnes
-                        $questionnaire->setMediaInstruction();
-                        $questionnaire->setMediaContext();
-                        $questionnaire->setMediaText();
+                        $questionnaire->setMediaInstruction($data[7]); // texte "Amorce"
+                        $questionnaire->setMediaContext($data[8]); // texte "Contexte"
+                        $questionnaire->setMediaText($data[9]); // texte "Texte de la tâche"
 
                         $indice++;
                         // Enregistrement en base
