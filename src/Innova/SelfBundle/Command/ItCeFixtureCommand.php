@@ -49,6 +49,13 @@ class ItceFixtureCommand extends ContainerAwareCommand
         // CREATION TEST
         $test = $this->createTest("Italien CE", "Italian");
 
+
+        /*******************************************
+
+                    NIVEAU : A1
+
+        ********************************************/
+
         /*******************************************
                     QUESTIONNAIRE 1 : TVF
         ********************************************/
@@ -331,24 +338,23 @@ class ItceFixtureCommand extends ContainerAwareCommand
         $questionnaire_16->setMediaText($this->mediaText("Notizie da Londra", "Ciao Luca, scusa il ritardo ma** 1.** _______ancora abituarmi ai ritmi della nuova vita. @@@ Sai dove vivo adesso? Sono a Londra e finalmente posso fare il lavoro dei miei sogni! @@@Lavoro come stilista per una grande marca.** 2.** ________ assolutamente venire a trovarmi!@@@In questa cittŕ **3.** ________ fare davvero quello che ti piace.
 I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso **4.**_______ andare! Ciao@@@Giovanni @@@P. S. Dobbiamo sentirci piů spesso!"));
         // CREATION QUESTION
-        $questionnaire_2_1 = $this->createQuestion("TQRU", $questionnaire_16);
+        $questionnaire_16_1 = $this->createQuestion("TQRU", $questionnaire_16);
         // CREATION SUBQUESTION
-        $questionnaire_2_1_1 = $this->createSubquestion("QRU", $questionnaire_2_1, "XXX");
-        $questionnaire_2_1_2 = $this->createSubquestion("QRU", $questionnaire_2_1, "XXX");
-        $questionnaire_2_1_3 = $this->createSubquestion("QRU", $questionnaire_2_1, "XXX");
+        $questionnaire_16_1_1 = $this->createSubquestion("QRU", $questionnaire_16_1, "XXX");
+        $questionnaire_16_1_2 = $this->createSubquestion("QRU", $questionnaire_16_1, "XXX");
+        $questionnaire_16_1_3 = $this->createSubquestion("QRU", $questionnaire_16_1, "XXX");
         // CREATION PROPOSITIONS
-        $questionnaire_2_1_1_1 = $this->createProposition("1.1. devo", true, $questionnaire_2_1_1);
-        $questionnaire_2_1_1_2 = $this->createProposition("1.2. posso", false, $questionnaire_2_1_1);
-        $questionnaire_2_1_1_3 = $this->createProposition("1.3. voglio", false, $questionnaire_2_1_1);
+        $questionnaire_16_1_1_1 = $this->createProposition("1.1. devo", true, $questionnaire_16_1_1);
+        $questionnaire_16_1_1_2 = $this->createProposition("1.2. posso", false, $questionnaire_16_1_1);
+        $questionnaire_16_1_1_3 = $this->createProposition("1.3. voglio", false, $questionnaire_16_1_1);
 
-        $questionnaire_2_1_2_1 = $this->createProposition("2.1. devi", false, $questionnaire_2_1_2);
-        $questionnaire_2_1_2_2 = $this->createProposition("2.2. puoi", true, $questionnaire_2_1_2);
-        $questionnaire_2_1_2_3 = $this->createProposition("2.3. vuoi", false, $questionnaire_2_1_2);
+        $questionnaire_16_1_2_1 = $this->createProposition("2.1. devi", false, $questionnaire_16_1_2);
+        $questionnaire_16_1_2_2 = $this->createProposition("2.2. puoi", true, $questionnaire_16_1_2);
+        $questionnaire_16_1_2_3 = $this->createProposition("2.3. vuoi", false, $questionnaire_16_1_2);
 
-        $questionnaire_2_1_3_1 = $this->createProposition("3.1. devi", true, $questionnaire_2_1_3);
-        $questionnaire_2_1_3_2 = $this->createProposition("3.2. puoi", false, $questionnaire_2_1_3);
-        $questionnaire_2_1_3_3 = $this->createProposition("3.3. vuoi", false, $questionnaire_2_1_3);
-
+        $questionnaire_16_1_3_1 = $this->createProposition("3.1. devi", true, $questionnaire_16_1_3);
+        $questionnaire_16_1_3_2 = $this->createProposition("3.2. puoi", false, $questionnaire_16_1_3);
+        $questionnaire_16_1_3_3 = $this->createProposition("3.3. vuoi", false, $questionnaire_16_1_3);
 
         /*******************************************
                     QUESTIONNAIRE 17 : TVF
@@ -367,6 +373,115 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         $questionnaire_17_1_1_2 = $this->createProposition("Per andare alla festa Sara deve prendere il tram", false, $questionnaire_17_1_1);
         $questionnaire_17_1_1_3 = $this->createProposition("Il Bar Sport si trova dopo piazza Verdi", true, $questionnaire_17_1_1);
         $questionnaire_17_1_1_4 = $this->createProposition("La casa di Giorgio si trova al lato del panificio", true, $questionnaire_17_1_1);
+
+        /*******************************************
+                    QUESTIONNAIRE 18 : TQRU
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_18 = $this->createQuestionnaire("A1_CE_shopping_florence_2_2", "A1", "CE", $test);
+        $questionnaire_18->setMediaInstruction($this->mediaText("", "Completa il testo usando le parole suggerite"));
+        $questionnaire_18->setMediaContext($this->mediaText("", "Breve articolo su rivista femminile"));
+        $questionnaire_18->setMediaText($this->mediaText("Le vie dello shopping a Firenze", "Sempre **1.** ____ pieno centro per uno shopping più alla portata dei giovani segnaliamo Via dei Calzaioli, **2.** ______ potrete trovare negozi sportivi, grandi catene commerciali e anche, per la felicità dei più piccoli tanti negozi **3.** ____ giocattoli."));
+        // CREATION QUESTION
+        $questionnaire_18_1 = $this->createQuestion("TQRU", $questionnaire_18);
+        // CREATION SUBQUESTION
+        $questionnaire_18_1_1 = $this->createSubquestion("QRU", $questionnaire_18_1, "XXX");
+        $questionnaire_18_1_2 = $this->createSubquestion("QRU", $questionnaire_18_1, "XXX");
+        $questionnaire_18_1_3 = $this->createSubquestion("QRU", $questionnaire_18_1, "XXX");
+        // CREATION PROPOSITIONS
+        $questionnaire_18_1_1_1 = $this->createProposition("1.1. dal", false, $questionnaire_18_1_1);
+        $questionnaire_18_1_1_2 = $this->createProposition("1.2. in", true, $questionnaire_18_1_1);
+        $questionnaire_18_1_1_3 = $this->createProposition("1.3. sul ", false, $questionnaire_18_1_1);
+
+        $questionnaire_18_1_2_1 = $this->createProposition("2.1. quando", false, $questionnaire_18_1_2);
+        $questionnaire_18_1_2_2 = $this->createProposition("2.2. come", false, $questionnaire_18_1_2);
+        $questionnaire_18_1_2_3 = $this->createProposition("2.3. dove ", true, $questionnaire_18_1_2);
+
+        $questionnaire_18_1_3_1 = $this->createProposition("3.1. di", true, $questionnaire_18_1_3);
+        $questionnaire_18_1_3_2 = $this->createProposition("3.2. a", false, $questionnaire_18_1_3);
+        $questionnaire_18_1_3_3 = $this->createProposition("3.3. da", false, $questionnaire_18_1_3);
+
+        /*******************************************
+                    QUESTIONNAIRE 19 : TVF
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_19 = $this->createQuestionnaire("A1_CE_agenda_anita", "A1", "CE", $test);
+        $questionnaire_19->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false"));
+        $questionnaire_19->setMediaContext($this->mediaText("", "L’agenda di Anita"));
+        $questionnaire_19->setMediaText($this->mediaText("Appuntamenti della settimana", "Le tableau vous sera donner dans un dossier  à part"));
+        // CREATION QUESTION
+        $questionnaire_19_1 = $this->createQuestion("TVF", $questionnaire_19);
+        // CREATION SUBQUESTION
+        $questionnaire_19_1_1 = $this->createSubquestion("QRM", $questionnaire_19_1, "");
+        // CREATION PROPOSITIONS
+        $questionnaire_19_1_1_1 = $this->createProposition("Anita esce spesso con Luca.", false, $questionnaire_19_1_1);
+        $questionnaire_19_1_1_2 = $this->createProposition("Anita non va mai a correre.", true, $questionnaire_19_1_1);
+        $questionnaire_19_1_1_3 = $this->createProposition("Le lezioni di Anita sono quasi sempre la mattina.", true, $questionnaire_19_1_1);
+        $questionnaire_19_1_1_4 = $this->createProposition("Anita vede i genitori durante la settimana", false, $questionnaire_19_1_1);
+        $questionnaire_19_1_1_1 = $this->createProposition("Anita lavora solo la sera.", false, $questionnaire_19_1_1);
+
+        /*******************************************
+
+                    NIVEAU : B1
+
+        ********************************************/
+
+        /*******************************************
+                    QUESTIONNAIRE 3 : QRM
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_3 = $this->createQuestionnaire("B1_CE_vacance_croisiere", "B1", "CE", $test);
+        $questionnaire_3->setMediaInstruction($this->mediaText("", "Due informazioni sono presenti nel testo. Quali?"));
+        $questionnaire_3->setMediaContext($this->mediaText("", "Pubblicità in agenzia di viaggi"));
+        $questionnaire_3->setMediaText($this->mediaText("Partire con ***Crociere nel Mondo***", "Sempre più persone scelgono ogni anno di trascorrere le proprie vacanze con Crociere nel Mondo; se deciderai di unirti a noi, capirai subito il perché. @@@
+Il comfort e l’eccezionale servizio della nostra nave saprà come sorprenderti: ti innamorerai delle meravigliose SPA, degli spettacoli, dell’intrattenimento a bordo, dei numerosi sport che potrai praticare e delle delizie della nostra cucina. Apprezzerai anche il modo  in cui sappiamo intrattenere gli ospiti di tutte le età, ad un prezzo che continuerà a farti sorridere. Prova l’esperienza di un viaggio con noi, non vorrai più tornare a casa.
+Sempre più persone scelgono ogni anno di trascorrere le proprie vacanze con Crociere nel Mondo; se deciderai di unirti a noi, capirai subito il perché. @@@
+Il comfort e l’eccezionale servizio della nostra nave saprà come sorprenderti: ti innamorerai delle meravigliose SPA, degli spettacoli, dell’intrattenimento a bordo, dei numerosi sport che potrai praticare e delle delizie della nostra cucina. Apprezzerai anche il modo  in cui sappiamo intrattenere gli ospiti di tutte le età, ad un prezzo che continuerà a farti sorridere. Prova l’esperienza di un viaggio con noi, non vorrai più tornare a casa."));
+        // CREATION QUESTION
+        $questionnaire_3_1 = $this->createQuestion("QRM", $questionnaire_3);
+        // CREATION SUBQUESTION
+        $questionnaire_3_1_1 = $this->createSubquestion("QRM", $questionnaire_3_1, "");
+        // CREATION PROPOSITIONS
+        $questionnaire_3_1_1_1 = $this->createProposition("Con Crociere nel Mondo puoi continuare a fare gli sport che ti  piacciono anche in vacanza.", true, $questionnaire_3_1_1);
+        $questionnaire_3_1_1_2 = $this->createProposition("Il punto di forza dell’azienda è la capacità di offrire servizi per  tutte le esigenze.", true, $questionnaire_3_1_1);
+        $questionnaire_3_1_1_3 = $this->createProposition("L’offerta è accessibile ad un pubblico ristretto", false, $questionnaire_3_1_1);
+
+
+        /*******************************************
+                    QUESTIONNAIRE 4 : TVF
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_4 = $this->createQuestionnaire("B1_CE_voyager_en_securite", "B1", "CE", $test);
+        $questionnaire_4->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false"));
+        $questionnaire_4->setMediaContext($this->mediaText("", "Avviso sul sito del Ministero degli Esteri"));
+        $questionnaire_4->setMediaText($this->mediaText("Viaggiare sicuri", "Sono stati di recente segnalati casi di false società che, attraverso la rete, propongono servizi di prenotazione alberghiera, in particolare per le regioni del sud del Portogallo. Per evitare di pagare un servizio e  avere poi brutte sorprese, si raccomanda quindi, di rivolgersi esclusivamente ad agenzie e a tour operator affidabili.@@@
+Si consiglia inoltre di registrare i dati relativi al viaggio che si intende effettuare sul sito Dove siamo nel mondo e di sottoscrivere una assicurazione che copra anche le spese sanitarie, e l’eventuale trasferimento aereo al paese d’origine in caso di malattie gravi.
+Sono stati di recente segnalati casi di false società che, attraverso la rete, propongono servizi di prenotazione alberghiera, in particolare per le regioni del sud del Portogallo. Per evitare di pagare un servizio e  avere poi brutte sorprese, si raccomanda quindi, di rivolgersi esclusivamente ad agenzie e a tour operator affidabili.@@@
+Si consiglia inoltre di registrare i dati relativi al viaggio che si intende effettuare sul sito Dove siamo nel mondo e di sottoscrivere una assicurazione che copra anche le spese sanitarie, e l’eventuale trasferimento aereo al paese d’origine in caso di malattie gravi.
+"));
+        // CREATION QUESTION
+        $questionnaire_4_1 = $this->createQuestion("TVF", $questionnaire_19);
+        // CREATION SUBQUESTION
+        $questionnaire_4_1_1 = $this->createSubquestion("QRM", $questionnaire_19_1, "");
+        // CREATION PROPOSITIONS
+        $questionnaire_4_1_1_1 = $this->createProposition("Il messaggio intende mettere in guardia i turisti da siti internet poco sicuri.", true, $questionnaire_4_1_1);
+        $questionnaire_4_1_1_2 = $this->createProposition("Nel messaggio si consiglia di contattare le società di prenotazione alberghiera una volta arrivati sul posto.", false, $questionnaire_4_1_1);
+        $questionnaire_4_1_1_3 = $this->createProposition("Prima di partire è obbligatorio acquistare un'assicurazione per le spese mediche.", false, $questionnaire_4_1_1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
