@@ -30,7 +30,7 @@
         <div class="col-md-12 central-{{ language }}">
             <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
                 <div class="col-md-5 situation">
-                    {% include "InnovaSelfBundle:Test/partials:texte.html.twig" %}
+                    {% include "InnovaSelfBundle:Import/partials:texteCe.html.twig" %}
                 </div>
 
                 <div class="col-md-7">
@@ -73,11 +73,10 @@
                         {% else %}
                             {% for i, subquestion in question.subquestions %}
                                 <div class="subquestion">
-                                    {{ "type SQ : " ~ subquestion.typology.name ~ " " ~ subquestion.id ~ " title " ~ subquestion.title }}
                                     {% if subquestion.typology.name  == "QRM" %}
                                         {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
                                     {% elseif subquestion.typology.name  == "QRU" %}
-                                         {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
+                                         {% include "InnovaSelfBundle:Import/partials:QRUCe.html.twig" %}
                                     {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" or subquestion.typology.name  == "TVF" %}
                                         {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
                                     {% elseif subquestion.typology.name  == "APPAT" %}

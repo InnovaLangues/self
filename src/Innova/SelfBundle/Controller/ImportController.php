@@ -22,11 +22,11 @@ class ImportController extends Controller
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.
      *
-     * @Route("student/test/start/{id}", name="test_start")
+     * @Route("student/test/start/{id}", name="test_start_ce")
      * @Method("GET")
      * @Template()
      */
-    public function startAction(Test $test)
+    public function startCeAction(Test $test)
     {
 
         $session = $this->container->get('request')->getSession();
@@ -88,6 +88,7 @@ class ImportController extends Controller
         $language = $em->getRepository('InnovaSelfBundle:Language')->findBy(array('id' => $test->getLanguage()->getId()));
         $languageColor = $language[0]->getColor();
 
+//echo "<pre>" . $questionnaire . "</pre>";
         return array(
             'questionnaire' => $questionnaire,
             'language' => $languageColor,
@@ -96,347 +97,38 @@ class ImportController extends Controller
         );
     }
 
-     /**
-     * Pick a questionnaire entity for a given test not done yet by the user.
-     *
-     * @Route("/test_end/{id}", name="test_end")
-     * @Template()
-     */
-    public function endAction(Test $test)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $nbRightAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countRightAnswerByUserByTest($test->getId(), $user->getId());
-
-        $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countAnswerByUserByTest($test->getId(), $user->getId());
-
-        $pourcentRightAnswer = number_format(($nbRightAnswer/$nbAnswer)*100, 0);
-
-        return array("pourcentRightAnswer" => $pourcentRightAnswer);
-    }
-
-    /**
-     * Lists all Test entities.
-     *
-     * @Route("admin/test", name="test")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
-
-    /**
-     * Lists all Test entities.
-     *
-     * @Route("student/test/user", name="user_test")
-     * @Method({"GET", "POST"})
-     * @Template()
-     */
-    public function userIndexAction()
-    {
-
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $em = $this->getDoctrine()->getManager();
-
-        // Par défaut pour la V1, on crée le premier test quand un utilisateur est nouveau
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-
-        // TODO
-        $test = $tests[0];
-
-        if (!$test) {
-            throw $this->createNotFoundException('Unable to find Test entity.');
-        }
-
-        // If the user doesn't have any test, then I add one test in 'user_test 'table.
-        if (count($user->getTests()) === 0) {
-            $user->addTest($test);
-            $em->persist($user);
-            $em->flush();
-        }
-
-        // Redirection vers la page de démarrage du test.
-        return $this->redirect(
-            $this->generateUrl(
-                'test_start',
-                array('id' => $test->getId()
-                )
-            )
-        );
-    }
-
-    /**
-     * Creates a new Test entity.
-     *
-     * @Route("admin/test", name="test_create")
-     * @Method("POST")
-     * @Template("InnovaSelfBundle:Test:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new Test();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect(
-                $this->generateUrl(
-                    'test_show',
-                    array(
-                        'id' => $entity->getId()
-                    )
-                )
-            );
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to create a Test entity.
-    *
-    * @param Test $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Test $entity)
-    {
-        $form = $this->createForm(
-            new TestType(),
-            $entity,
-            array(
-            'action' => $this->generateUrl('test_create'),
-            'method' => 'POST',
-            )
-        );
-
-        $form->add(
-            'submit',
-            array('label' => 'Create')
-        );
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Test entity.
-     *
-     * @Route("admin/test/new", name="test_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Test();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Finds and displays a Test entity.
-     *
-     * @Route("admin/test/{id}", name="test_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Test entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing Test entity.
-     *
-     * @Route("admin/test/{id}/edit", name="test_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Test entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Test entity.
-    *
-    * @param Test $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Test $entity)
-    {
-        $form = $this->createForm(
-            new TestType(),
-            $entity,
-            array(
-            'action' => $this->generateUrl('test_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-           )
-        );
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Test entity.
-     *
-     * @Route("admin/test/{id}", name="test_update")
-     * @Method("PUT")
-     * @Template("InnovaSelfBundle:Test:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Test entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('test_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-    /**
-     * Deletes a Test entity.
-     *
-     * @Route("admin/test/{id}", name="test_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Test entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('test'));
-    }
-
-    /**
-     * Creates a form to delete a Test entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('test_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
-    }
-
 
     /**
      * importCsvSQLCoce function
      *
      * @Route(
      *     "/admin/csv_import/{language}/{type}",
-     *     name = "csv_import_coce",
-     *     requirements={"language" = "en|it","type" = "ce|co"}
+     *     name = "csv_import_ce",
+     *     requirements={"language" = "en|it","type" = "ce"}
      * )
      * @Method({"GET"})
      * @Template()
      */
-    public function importCsvSQLCoceAction($language, $type)
+    public function importCsvSQLCeAction($language, $type)
     {
+
+        $em = $this->getDoctrine()->getManager();
 
         echo $language;
         echo $type;
-        die();
-        $langue = $em->getRepository('InnovaSelfBundle:Test')->find($id);
 
-       //
+        //
         // CSV Import part
         //
 
         // File import path
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3/'; // Symfony
+        $csvPathImport    = '/media/Innova/SELF/Italien/'; // test sur le serveur "commun"
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/' . $language . "/"; // Symfony
 
         // File import name
-        $csvName = 'test-import.csv';
-        $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
-        $csvName = 'mp2-ok.csv'; // Suite réception MP.
+        $csvName = 'CE_pilote.csv'; // CE Italien à partir du serveur "commun"
+        $csvName = 'CE_piloteII-27-01-14-re.csv'; // CE Italien
+        $csvName = 'QRU.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -451,49 +143,6 @@ class ImportController extends Controller
         // Répertoire où seront copiés les fichiers
         $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
 
-        // Traitement des fichiers reçus
-        if ($dossier = opendir($csvPathImportMp3)) {
-            while (false !== ($fichier = readdir($dossier))) {
-                if ($fichier != '.' && $fichier != '..') {
-                    $exp = explode("_", $fichier);
-
-                    $repertoryName = strtolower($exp[0]);
-                    $fileName = $exp[1];
-
-                    $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
-                    // Création du répertoire (s'il n'est pas déjà créé)
-                    if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
-
-                    if (preg_match("/amorce/i", $fileName)) {
-                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
-                    }
-
-                    // Traitement de la partie "option".
-                    if (preg_match("/option/i", $fileName)) {
-                        // Ajout 13/12/2013 : traitement du cas TQRU.
-                        // Les fichiers "option" sont nommés par exemple <XXX_option_1_1.mp3>
-                        // alors que dans les autres cas, ils sont de type <XXX_option_1.mp3>
-                        // #118
-                        if (!is_numeric($exp[2])) {
-                            $number = explode(".", $exp[2]);
-                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
-                        } else {
-                            $number = explode(".", $exp[3]);
-                            $number = $number[0];
-                            if (!is_numeric($number)) {
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . ".mp3");
-                            } else {
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number . ".mp3");
-                            }
-
-                        }
-                    }
-                    if (preg_match("/txt/i", $fileName)) {
-                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
-                    }
-                }
-            }
-        }
 
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte : dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
@@ -501,93 +150,85 @@ class ImportController extends Controller
         $row = 0;
         $indice = 0;
 
-        if (($handle = fopen($csvPath, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+        if (($handle = fopen($csvPath, "r+")) !== FALSE) {
+            while (($data = fgetcsv($handle, 2000, ";")) !== FALSE) {
 
                 // Ainsi, je ne prends pas les intitulés des colonnes
                 if ($row != 0) {
-                    //
-                    //
-                    // Première partie : ajout dans la table Questionnaire
-                    //
-                    //
 
-                    // Add to Questionnaire table
-                    $questionnaire = new Questionnaire();
-                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
-                    $testName = "CO-pilote-dec2013-ang"; // For tests.
-                    $testName = "test-english"; // For tests.
+                        //
+                        //
+                        // Première partie : ajout dans la table Questionnaire
+                        //
+                        //
 
-//                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
-                    if ($row == 1) {
-                        echo "<br />Création du test row=1";
-                        $test = new Test();
-                        $test->setName($testName);
-                        $test->setLanguage($language);
-                        $em->persist($test);
-                    }
+                        // Add to Questionnaire table
+                        $questionnaire = new Questionnaire();
+                        $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
+                        $testName = "CO-pilote-dec2013-ang"; // For tests.
+                        $testName = "CE_piloteII-02-05-2014-QRU"; // For tests.
 
-                    $questionnaire->addTest($test);
-                    //
-                    // J'ai traité les colonnes de la table Questionnaire dans l'ordre
-                    //
-                    //
-                    //
-                    //
-                    $data[1] = strtolower($data[1]); // Mise en minuscules du nom du fichier suite aux tests.
-
-                    // Traitement sur le level
-                    $libLevel = $data[2];
-                    $level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($libLevel);
-                    $questionnaire->setLevel($level);
-
-                    // Traitement sur le skill
-                    $libSkill = $data[3];
-                    $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($libSkill);
-                    $questionnaire->setSkill($skill);
-
-                    // Traitement sur la typologie
-                    $libTypo = $data[4];
-                    $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypo);
-
-                    // Traitement des autres colonnes
-                    $questionnaire->setAuthor();
-                    $questionnaire->setInstruction();
-                    $questionnaire->setSource();
-                    $questionnaire->setDuration();
-                    $questionnaire->setDomain();
-                    $questionnaire->setSupport();
-                    $questionnaire->setFlow();
-                    $questionnaire->setFocus();
-                    $questionnaire->setTheme($data[1]); // Thême
-
-                    //Dialogue
-                    $questionnaire->setDialogue(0);
-                    // Vu avec Arnaud : 1 pour Dialogue / 0 pour Monologue
-                    $libDialogue = $data[8];
-                    $pos = strripos($libDialogue, 'dialogue');
-
-                    if ($pos === false) {
-                        $pos = strripos($libDialogue, 'monologue');
-                        if (!($pos === false)) {
-                            $questionnaire->setDialogue(0);
+    //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
+                        if ($row == 1) {
+                            echo "<br />Création du test row=1";
+                            $test = new Test();
+                            $test->setName($testName);
+                            $test->setLanguage($language);
+                            $em->persist($test);
                         }
-                    } else {
-                        $questionnaire->setDialogue(1);
-                    }
 
-                    //ListeningLimit
-                    $questionnaire->setListeningLimit($data[9]);
+echo "<br />tEst : " . $test;
+                        $questionnaire->addTest($test);
+                        //
+                        // J'ai traité les colonnes de la table Questionnaire dans l'ordre
+                        //
+                        //
+                        //
+                        //
+                        $data[1] = strtolower($data[1]); // Mise en minuscules du nom du fichier suite aux tests.
 
-                    //Autres colonnes
-                    $questionnaire->setMediaInstruction();
-                    $questionnaire->setMediaContext();
-                    $questionnaire->setMediaText();
+                        // Traitement sur le level
+                        $libLevel = $data[2];
+                        $level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($libLevel);
+                        $questionnaire->setLevel($level);
 
-                    $indice++;
-                    echo "<br />" . $indice . " theme : "  . $questionnaire->getTheme();
-                    // Enregistrement en base
-                    $em->persist($questionnaire);
+                        // Traitement sur le skill
+                        $libSkill = $data[3];
+                        $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($libSkill);
+                        $questionnaire->setSkill($skill);
+
+                        // Traitement sur la typologie
+                        $libTypo = $data[4];
+                        $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypo);
+
+                        // Traitement des autres colonnes
+                        $questionnaire->setAuthor();
+                        $questionnaire->setInstruction();
+                        $questionnaire->setSource();
+                        $questionnaire->setDuration();
+                        $questionnaire->setDomain();
+                        $questionnaire->setSupport();
+                        $questionnaire->setFlow();
+                        $questionnaire->setFocus();
+                        $questionnaire->setListeningLimit(0); //ListeningLimit
+                        $questionnaire->setDialogue(0);
+                        $questionnaire->setTheme($data[1]); // Thême
+                        echo "<br />Thême : " . $data[1];
+
+                        // Texte source
+                        $textSource = $data[9];
+                        // Traitement du "texte source".
+                        $questionnaire->setOriginText($this->textSource($textSource));
+
+                        //Autres colonnes
+                        $questionnaire->setMediaInstruction($data[7]); // texte "Amorce"
+                        $questionnaire->setMediaContext($data[8]); // texte "Contexte"
+                        $questionnaire->setMediaText($data[9]); // texte "Texte de la tâche"
+
+                        $indice++;
+                        // Enregistrement en base
+                        $em->persist($questionnaire);
+
 
                     //
                     //
@@ -596,7 +237,7 @@ class ImportController extends Controller
                     //
                     // $data[1]  = nom du répertoire = nom du thême
                     // $data[10] = nom de l'extension du fichier (ex : mp3)
-                    $this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
+                    //$this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
 
                     //
                     //
@@ -605,24 +246,36 @@ class ImportController extends Controller
                     //
 
                     // Traitement suivi le type de questionnaire.
+                    // $data[11] = nombre d'items.
                     switch ($data[4]) {
+                        //case "RE";
                         case "TQRU";
-                        case "TQRM";
-                            $this->tqrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                        //case "TQRM";
+                            $this->tqrProcess($typo, $questionnaire, $data[13], $data, $dir2copy, $dir_paste);
                             break;
                         case "QRU";
                         case "QRM";
-                            $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            echo "<br />" . $data[4];
+                            $this->qrProcess($typo, $questionnaire, $data[13], $data, $dir2copy, $dir_paste);
                             break;
                         case "TVF";
+                        case "TVFND";
+/*
                         case "VF";
                         case "VFPM";
                         case "TVFPM";
-                            $this->vfProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+*/
+                            echo "<br />Case : " . $data[4];
+                            $this->vfProcess($typo, $questionnaire, $data[13], $data, $dir2copy, $dir_paste);
                             break;
+/*
                         case "APPAT";
-                            $this->appatProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+*/
+                        case "APPTT";
+                            echo "<br />Case : " . $data[4];
+                            $this->appatProcess($typo, $questionnaire, $data[13], $data, $dir2copy, $dir_paste);
                             break;
+/*
                         case "QRU_I";
                             $this->qruiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
@@ -632,17 +285,22 @@ class ImportController extends Controller
                         case "APPAI";
                             $this->appaiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
-                    }
+*/
+                    } // Fin du switch
+                } // Fin de if ($row != 0) {
 
+                    $row++;
+
+            } // Fin du while
                     $em->flush();
-                }
-                $row++;
-            }
             fclose($handle);
-        }
+        } // Fin de if (($handle = fopen($csvPath, "r+")) !== FALSE) {
 
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
-        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
+        //shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
+
+        echo "<br><br><br>Fin pour le moment. Reste à faire : redirection vers la vue.";
+        die();
 
         //
         // To view
@@ -652,6 +310,40 @@ class ImportController extends Controller
             "csvName"             => $csvName
         );
     }
+
+    /**
+     * textSource function
+     *
+     */
+    private function textSource($textSource)
+    {
+
+        // Règles :
+        // *** pour un texte italique
+        // $$$ pour un texte souligné
+        // @@@ pour aller à la ligne
+        //
+        //
+        // For more explications : http://www.php.net/manual/fr/reference.pcre.pattern.modifiers.php
+        // echo "<br /><br />Texte AVANT = " . $textSource;
+        //$rule = '($$$).*?($$$)';
+        //$final = '<i>.*?</i>';
+
+        $textDisplay = preg_replace('/\*{3}(.*?)\*{3}/s', '<i>$1</i>', $textSource);
+        // echo "<br /><br />Texte APRES = " . $textDisplay;
+
+        // echo "<br /><br />Texte AVANT = " . $textSource;
+        $textDisplay = preg_replace('/\${3}(.*?)\${3}/s', '<u>$1</u>', $textDisplay);
+        //$textDisplay = preg_replace('/***(.*?)***/s', '<i>$1</i>', $textSource); // Texte italique
+
+        $textDisplay = str_replace('@@@', '<br>', $textDisplay); // Saut de ligne
+
+        // echo "<br /><br />Texte APRES = " . $textDisplay;
+
+        return $textDisplay;
+    }
+
+
 
     /**
      * appaiProcess function
@@ -1002,6 +694,9 @@ class ImportController extends Controller
      */
     private function processAmorceSubquestion($i, Subquestion $subQuestion, $dir2copy, $dir_paste, $data)
     {
+
+    // Contenu de la fonction en commentaire car pas ce traitement en CE.
+    /*
         $em = $this->getDoctrine()->getManager();
         $mediaDir = $data[1];
         $typo = $data[4];
@@ -1022,6 +717,7 @@ class ImportController extends Controller
 
             copy($testFile, $dir_paste . $media->getUrl() . ".mp3");
         }
+    */
     }
 
     /**
@@ -1030,6 +726,7 @@ class ImportController extends Controller
      */
     private function tqrProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
+        echo "<br />tqrProcess"; echo "<br>NbItems : @" . $nbItems . "@<br>";
         $em = $this->getDoctrine()->getManager();
 
         // Créer une occurrence dans la table "Question"
@@ -1041,29 +738,28 @@ class ImportController extends Controller
         $em->persist($question);
       //  $em->flush();
 
-        // Traitement sur le nombre d'items
-        for ($i = 1; $i <= $nbItems; $i++) {
             // Créer une occurrence dans la table "SubQuestion"
             $subQuestion = new Subquestion();
-            $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
+            // Appel en commentaire car pas ce traitement en CE.
+            //$this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
 
-            $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
+            $libTypoSubQuestion = $typo->getName();
             $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
             $subQuestion->setTypology($typoSubQuestion);
             $subQuestion->setQuestion($question);
 
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
-        //    $em->flush();
 
+        // Traitement sur le nombre d'items
+        for ($i = 1; $i <= $nbItems; $i++) {
             // Créer une occurrence dans la table "Proposition"
-            $indice = 11+(2*$i);
-            $nbProposition = $data[$indice];
-            $rightAnswer = $data[$indice-1];
+            $indice = 13+(2*$i);
+            $rightAnswer = $data[$indice];
+            $optionText = $data[$indice-1];
 
-            for ($j=1; $j <= $nbProposition; $j++) {
-                $this->propositionProcess($i, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
-            }
+            $j=1;
+            $this->propositionProcess($i, $j, $rightAnswer, $optionText, $subQuestion, $dir2copy, $dir_paste, $nbItems);
         }
     }
 
@@ -1097,8 +793,13 @@ class ImportController extends Controller
         $nbProposition = $data[13];
         $rightAnswer = $data[12];
 
+
         for ($j=1; $j <= $nbProposition; $j++) {
-            $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
+            // Créer une occurrence dans la table "Proposition"
+            $indice = 13+(2*$j);
+            $optionText = $data[$indice-1];
+
+            $this->propositionProcess(1, $j, $rightAnswer, $optionText, $subQuestion, $dir2copy, $dir_paste, $nbItems);
         }
     }
 
@@ -1108,6 +809,7 @@ class ImportController extends Controller
      */
     private function vfProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
+        echo "<br />vfProcess"; echo "<br>NbItems : @" . $nbItems . "@<br>";
         $em = $this->getDoctrine()->getManager();
 
         // Créer une occurrence dans la table "Question"
@@ -1128,6 +830,7 @@ class ImportController extends Controller
             if ($i == 1) $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
 
             $ctrlTypo = $typo->getName();
+/*
             if ($ctrlTypo[0] == "T") {
                 $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
                 $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
@@ -1135,35 +838,39 @@ class ImportController extends Controller
             } else {
                 $subQuestion->setTypology($typo);
             }
+*/
+            $subQuestion->setTypology($typo);
+
             $subQuestion->setQuestion($question);
 
             // Recherche si le fichier existe
             // S'il n'existe pas, je passe au suivant.
             //
-            $fileName = "option_" . $i;
-            $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
+            //$fileName = "option_" . $i;
+            //$testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
 
-            if (file_exists($testFile)) {
+            //if (file_exists($testFile)) {
+                $indice = 11+(2*$i);
+                $optionText = $data[$indice-1];
+
                 // Création dans "Media"
                 $media = new Media();
-                $media->setName($dirName . "_" . $fileName);
-                $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
-
+                $media->setName($optionText);
                 $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
                 $media->setMediaType($mediaType);
                 $subQuestion->setMedia($media);
 
                 // Enregistrement en base
                 $em->persist($media);
-                copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
-            }
+                //copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
+            //}
 
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
-            $rightAnswer = $data[$indice-1];
+            $rightAnswer = $data[$indice];
 
             $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
             $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
@@ -1364,38 +1071,37 @@ class ImportController extends Controller
      * propositionProcess function
      *
      */
-    private function propositionProcess($i, $j, $rightAnswer, $dirName, $subQuestion, $dir2copy, $dir_paste, $nbItems)
+    private function propositionProcess($i, $j, $rightAnswer, $optionText, $subQuestion, $dir2copy, $dir_paste, $nbItems)
     {
         $em = $this->getDoctrine()->getManager();
 
         // Créer une occurrence dans la table "Proposition"
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
+        $proposition->setTitle($optionText);
 
         // Formatage et test si le fichier existe
         // exemple de nom de fichier : option_1_2.mp3
-        if ($nbItems == 1 ) // Test QRU/QRM
-            $fileName = "option" . "_" . $j;
-        else
-            $fileName = "option" . "_" . $i . "_" . $j;
+        // if ($nbItems == 1 ) // Test QRU/QRM
+        //     $fileName = "option" . "_" . $j;
+        // else
+        //     $fileName = "option" . "_" . $i . "_" . $j;
 
-        $pathFileName = $dir2copy . $dirName . "/" . $fileName;
+        // $pathFileName = $dir2copy . $dirName . "/" . $fileName;
 
-        $extension = ".mp3";
+        // $extension = ".mp3";
 
-        if (file_exists($pathFileName . $extension)) {
-            if (preg_match("/".$j."/", $rightAnswer)) {
+        // if (file_exists($pathFileName . $extension)) {
+            if (preg_match("/ok/i", $rightAnswer)) {
                 $proposition->setRightAnswer(true);
             } else {
                 $proposition->setRightAnswer(false);
             }
-
             // Création dans "Media"
             $media = new Media();
-            $media->setName($dirName . "_" . $fileName);
-            $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
+            $media->setName($optionText);
 
-            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte");
             $media->setMediaType($mediaType);
             $proposition->setMedia($media);
 
@@ -1403,16 +1109,15 @@ class ImportController extends Controller
             $em->persist($media);
 
             // Copie du fichier
-            copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
-        } else {
-            echo "<br/>PAS TROUVE !" . $pathFileName . $extension;
-        }
+            // copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
+        // } else {
+        //     echo "<br/>PAS TROUVE !" . $pathFileName . $extension;
+        // }
 
         // Enregistrement en base
         $em->persist($proposition);
-        //$em->flush();
 
-    }
+        }
 
     /**
      * mediaAppatProcess function

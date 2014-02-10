@@ -55,6 +55,7 @@ class MainController extends Controller
             $testsProgress[] = number_format($number, 2, '.', ' ');
         }
 
+//var_dump($userTests);die();
         return array(
             'user' => $user,
             'tests' => $userTests,

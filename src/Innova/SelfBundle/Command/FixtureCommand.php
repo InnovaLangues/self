@@ -14,6 +14,13 @@ use Innova\SelfBundle\Entity\Typology;
 use Innova\SelfBundle\Entity\OriginStudent;
 use Innova\SelfBundle\Entity\Language;
 use Innova\SelfBundle\Entity\LevelLansad;
+use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Question;
+use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Proposition;
+use Innova\SelfBundle\Entity\Media;
+
 
 /**
  * Symfony command to add or not fixtures. EV.
@@ -26,7 +33,7 @@ class FixtureCommand extends ContainerAwareCommand
     {
         $this
             ->setName('self:fixtures:load')
-            ->setDescription('Optimize Load Fixtures')
+            ->setDescription('Optimize Load FixturesAA')
         ;
     }
 
@@ -39,102 +46,156 @@ class FixtureCommand extends ContainerAwareCommand
 
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        $skill =  $em->getRepository('InnovaSelfBundle:Skill')->findAll();
+        // CREATION TEST
+        $test = $this->createTest("Italien CE", "Italian");
 
-        $countSkill = count($skill);
+        /*******************************************
+                    QUESTIONNAIRE 6
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_1 = $this->createQuestionnaire("A1_CE_cours_bibliotheque", "A1", "CE", $test);
+        $questionnaire_1->setMediaInstruction($this->mediaText("Rispondi alle domande. Una sola risposta è corretta"));
+        $questionnaire_1->setMediaContext($this->mediaText("Brochure informativa in biblioteca"));
+        $questionnaire_1->setMediaText($this->mediaText("Società per la Biblioteca Circolante di Sesto Fiorentino"));
+        // CREATION QUESTION
+        $questionnaire_1_1 = $this->createQuestion("TQRU", $questionnaire_1);
+        // CREATION SUBQUESTION
+        $questionnaire_1_1_1 = $this->createSubquestion("QRU", $questionnaire_1_1, "1.I corsi dell’associazione sono");
+        // CREATION PROPOSITIONS
+        $questionnaire_1_1_1_1 = $this->createProposition("rivolti agli anziani.", false, $questionnaire_1_1_1);
+        $questionnaire_1_1_1_2 = $this->createProposition("aperti a tutti.", false, $questionnaire_1_1_1);
+        $questionnaire_1_1_1_3 = $this->createProposition("solo per i soci.", true, $questionnaire_1_1_1);
 
-        if ($countSkill == 0) {
+        $em->flush();
 
-            $output->writeln("Fixtures exécutées.");
-
-            $mediaTypes = array("audio", "video", "texte", "image");
-            foreach ($mediaTypes as $mediaType) {
-                $type = new mediaType();
-                $type->setName($mediaType);
-                $em->persist($type);
-            }
-
-            $questionnaireDurations = array("brève", "moyenne", "longue");
-            foreach ($questionnaireDurations as $questionnaireDuration) {
-                $duration = new Duration();
-                $duration->setName($questionnaireDuration);
-                $em->persist($duration);
-            }
-
-            $questionnaireLevels = array("A1", "A2", "B1", "B2", "C1");
-            foreach ($questionnaireLevels as $questionnaireLevel) {
-                $level = new Level();
-                $level->setName($questionnaireLevel);
-                $em->persist($level);
-            }
-
-            $questionnaireSkills = array("CO", "CE");
-            foreach ($questionnaireSkills as $questionnaireSkill) {
-                $skill = new Skill();
-                $skill->setName($questionnaireSkill);
-                $em->persist($skill);
-            }
-
-            $typologies = array("TVF", "QRU", "VF", "QRM", "TQRU", "TQRM", "TVFPM", "VFPM", "APPAT", "APPAA", "APPAI");
-            foreach ($typologies as $typology) {
-                $typo = new Typology();
-                $typo->setName($typology);
-                $em->persist($typo);
-            }
-
-            /*
-            New table for version 1.2 or version 2 (2014)
-            fixtures for originStudent table
-            */
-            $originStudents = array("LANSAD", "LLCE", "LEA", "UJF", "Autres");
-            foreach ($originStudents as $originStudent) {
-                $student = new originStudent();
-                $student->setName($originStudent);
-                $em->persist($student);
-            }
-
-            /* New table for version 1.2 or version 2 (2014)
-            fixtures for language table
-            Important : we must have some keywords to add test.
-            So, in TestController.php, we create the test with language "English" or "Italian". */
-            $langEng = new Language();
-            $langEng->setName("English");
-            $langEng->setColor("blue");
-            $em->persist($langEng);
-            $em->flush();
-
-            $langIt = new Language();
-            $langIt->setName("Italian");
-            $langIt->setColor("pink");
-            $em->persist($langIt);
-            $em->flush();
-
-            /*
-            New table for version 1.2 or version 2 (2014)
-            fixtures for levelLansad table
-            */
-            /* Level for English language */
-            $levelLansadEngs = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
-            foreach ($levelLansadEngs as $levelLansadEng) {
-                $level = new LevelLansad();
-                $level->setLanguage($langEng);
-                $level->setName($levelLansadEng);
-                $em->persist($level);
-            }
-
-            /* Level for Ialian language */
-            $levelLansadIts = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
-            foreach ($levelLansadIts as $levelLansadIt) {
-                $level = new LevelLansad();
-                $level->setLanguage($langIt);
-                $level->setName($levelLansadIt);
-                $em->persist($level);
-            }
-
-            $em->flush();
-        } else {
-            $output->writeln("Fixtures non exécutées. Des données existent déjà.");
-        }
+        $output->writeln("Fixtures exécutées.");
 
     }
+
+    /**
+     *
+     */
+    protected function createTest($name, $language)
+    {
+        $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+
+        $test = new Test();
+        $test->setName($name);
+        $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName($language);
+        $test->setLanguage($language);
+        $em->persist($test);
+
+        return $test;
+    }
+
+    /**
+     *
+     */
+    protected function createQuestionnaire($title, $level, $skill, $test)
+    {
+        $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+
+        // Création du questionnaire
+        $questionnaire = new Questionnaire();
+
+        $questionnaire->addTest($test);
+
+        $questionnaire->setTheme($title);
+
+        $level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($level);
+        $questionnaire->setLevel($level);
+
+        // Traitement sur le skill
+        $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skill);
+        $questionnaire->setSkill($skill);
+
+        $em->persist($questionnaire);
+
+        return $questionnaire;
+    }
+
+    /**
+     *
+     */
+    protected function createQuestion($typology, $questionnaire)
+    {
+        $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+
+        // Création du questionnaire
+        $question = new Question();
+
+        $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology);
+        $question->setTypology($typo);
+
+        $question->setQuestionnaire($questionnaire);
+
+        $em->persist($question);
+
+        return $question;
+    }
+
+
+    /**
+     *
+     */
+    protected function createSubquestion($typology, $question, $amorce)
+    {
+        $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+
+        // Création du questionnaire
+        $subquestion = new Subquestion();
+
+        $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology);
+        $subquestion->setTypology($typo);
+
+        $subquestion->setQuestion($question);
+
+        if ($amorce != '') {
+            $subquestion->setMediaAmorce($this->mediaText($amorce));
+        }
+
+        $em->persist($subquestion);
+
+        return $subquestion;
+    }
+
+    /**
+     *
+     */
+    protected function createProposition($text, $rightAnswer, $subquestion)
+    {
+        $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+
+        $proposition = new Proposition();
+
+        $proposition->setSubquestion($subquestion);
+        $proposition->setMedia($this->mediaText($text));
+        $proposition->setRightAnswer($rightAnswer);
+
+        $em->persist($proposition);
+
+        return $proposition;
+    }
+
+    /**
+     *
+     */
+    protected function mediaText($name)
+    {
+        $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+
+        // TODO : l'appel à la fonction qui traite le markdown !!
+        // Création dans "Media"
+        $media = new Media();
+        $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));
+
+        $media->setName($name);
+        $media->setDescription("");
+        $media->setUrl("");
+
+        $em->persist($media);
+
+        return $media;
+    }
+
 }
