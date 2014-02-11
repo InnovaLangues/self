@@ -126,3 +126,18 @@ input[type="checkbox"], input[type="radio"], label{
     height: 1200px;
     top: calc(20% - 100px) !important;
 }
+
+.modales{
+	color:black;
+	word-wrap: break-word;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
+	-o-hyphens: auto;
+	hyphens: auto;
+}
+
+.modales img, .modales video{
+	max-width:100%;
+}
+

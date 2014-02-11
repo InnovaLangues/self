@@ -1,5 +1,4 @@
 {% macro media(id, media, icon, height, limitAudio, tooltip) %}
-
     {% if media.mediaType.name == "audio" %}
         {% if id == "situation" %}
             <!--#134 : appel de la modal uniquement dans le cas "audio/situation" -->
@@ -13,27 +12,24 @@
             Votre navigateur est trop ancien.
         </audio>
     {% else %}
-        <div id="modal-{{ id }}" class="modal fade black">
+        <div id="modal-{{ id }}" class="modal fade modales">
             <div class="modal-dialog">
                 <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{ tooltip }}</h4>
-                </div>
-                <div class="modal-body">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{ tooltip }}</h4>
+                    </div>
+                    <div class="modal-body">
                     {% if media.mediaType.name == "image" %}
-                    <img id="{{ id }}" src="{{ asset('upload/media/') ~ media.url }}" height="280" rel="tooltip" data-original-title="{{ tooltip }}"/>
-
+                        <img id="{{ id }}" src="{{ asset('upload/media/') ~ media.url }}" rel="tooltip" data-original-title="{{ tooltip }}"/>
                     {% elseif media.mediaType.name == "texte" %}
-                    <span id="{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}"> {{ media.description }} </span>
-
+                        <div id="{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}"> {{ media.description }} </div>
                     {% elseif media.mediaType.name == "video" %}
-                    <video height="280" id="{{ id }}">
-                        <source src="{{ asset('upload/media/') ~ media.url }}" >
+                        <video id="{{ id }}">
+                            <source src="{{ asset('upload/media/') ~ media.url }}" >
                             Your browser does not support the video tag.
                         </video>
                     {% endif %}
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -41,9 +37,14 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+        {% if media.mediaType.name == "image" %}
+            <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset('upload/media/') ~ media.url }}" />
+        {% elseif media.mediaType.name == "texte" %}
+            <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+        {% else %}
+            <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+        {% endif %}
     {% endif %}
-
 {% endmacro %}
 
 {% macro inputs(type, subquestionId, propositionId, text) %}

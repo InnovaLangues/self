@@ -24,11 +24,14 @@
                         <div class="panel-body">
                             <div>
                                 {% if testsProgress[i] != 100 %} {# Je n'affiche le lien pour démarrer le test que s'il n'est pas terminé. #}
+                                    <a href="{{ path('test_start', { 'id': test.id } )}}">{{ test.name }}</a>
+                                    {#
                                     {% if test.questionnaires[0].skill.name  == "CO" %}
                                         <a href="{{ path('test_start', { 'id': test.id } )}}">{{ test.name }}</a>
                                     {% elseif test.questionnaires[0].skill.name  == "CE" %}
                                         <a href="{{ path('test_start_ce', { 'id': test.id } )}}">{{ test.name }}</a>
                                     {% endif %}
+                                    #}
                                 {% else %}
                                     {{ test.name }}
                                 {% endif %}
