@@ -26,14 +26,14 @@ use Innova\SelfBundle\Entity\Media;
  * Symfony command to add or not fixtures. EV.
  *
 */
-class ItceFixtureCommand extends ContainerAwareCommand
+class EnceFixtureCommand extends ContainerAwareCommand
 {
 
     protected function configure()
     {
         $this
-            ->setName('self:fixtures:itce')
-            ->setDescription('Italian CE test')
+            ->setName('self:fixtures:ence')
+            ->setDescription('English CE test')
         ;
     }
 
@@ -47,14 +47,41 @@ class ItceFixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("Italien CE", "Italian");
+        $test = $this->createTest("English CE", "English");
 
 
         /*******************************************
 
-                    NIVEAU : A1
+                    NIVEAU : B1
 
         ********************************************/
+
+        /*******************************************
+                    QUESTIONNAIRE 1 : QRU
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_1 = $this->createQuestionnaire("B1_CE_AgathaChristie", "B1", "CE", $test);
+        $questionnaire_1->setMediaInstruction($this->mediaText("", "Read the text and answer the following question."));
+        $questionnaire_1->setMediaContext($this->mediaText("", ""));
+        $questionnaire_1->setMediaText($this->mediaText("", "Dame Agatha Mary Clarissa Christie, DBE (born Miller; 15 September 1890 – 12 January 1976) was an English crime writer of novels, short stories, and plays. She also wrote six romances under the name Mary Westmacott, but she is best remembered for the 66 detective novels and 14 short story collections she wrote under her own name, most of which revolve around the investigations of such characters as Hercule Poirot, Miss Jane Marple and Tommy and Tuppence. She also wrote the world's longest-running play, The Mousetrap."));
+        // CREATION QUESTION
+        $questionnaire_1_1 = $this->createQuestion("QRU", $questionnaire_1);
+        // CREATION SUBQUESTION
+        $questionnaire_1_1_1 = $this->createSubquestion("QRU", $questionnaire_1_1, "Il servizio permette di");
+
+        // CREATION PROPOSITIONS
+        $questionnaire_1_1_1_1 = $this->createProposition("avere informazioni sul traffico.", false, $questionnaire_1_1_1);
+        $questionnaire_1_1_1_2 = $this->createProposition("comprare il biglietto con il cellulare.", true, $questionnaire_1_1_1);
+        $questionnaire_1_1_1_3 = $this->createProposition("conoscere gli orari dell’autobus.", false, $questionnaire_1_1_1);
+
+
+
+
+
+
+
+
+
 
         /*******************************************
                     QUESTIONNAIRE 1 : TVF

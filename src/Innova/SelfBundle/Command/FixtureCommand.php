@@ -33,7 +33,7 @@ class FixtureCommand extends ContainerAwareCommand
     {
         $this
             ->setName('self:fixtures:load')
-            ->setDescription('Optimize Load FixturesAA')
+            ->setDescription('Optimize Load Fixtures')
         ;
     }
 
