@@ -1249,7 +1249,8 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
 
         $em->flush();
 
-        $output->writeln("Fixtures exécutées.");
+        $output->writeln("Fixtures Italian CE exécutées.");
+
 
     }
 
@@ -1356,7 +1357,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
     /**
      *
      */
-    protected function createProposition($text, $rightAnswer, $subquestion)
+    protected function createProposition($text, $rightAnswer, Subquestion $subquestion)
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 

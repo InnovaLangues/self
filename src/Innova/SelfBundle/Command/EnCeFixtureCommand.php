@@ -85,9 +85,9 @@ class EnceFixtureCommand extends ContainerAwareCommand
         // CREATION QUESTION
         $questionnaire_2_1 = $this->createQuestion("TQRU", $questionnaire_2);
         // CREATION SUBQUESTION
-        $questionnaire_2_1_1 = $this->createSubquestion("QRU", $questionnaire_2_1, "XXX");
-        $questionnaire_2_1_2 = $this->createSubquestion("QRU", $questionnaire_2_1, "XXX");
-        $questionnaire_2_1_3 = $this->createSubquestion("QRU", $questionnaire_2_1, "XXX");
+        $questionnaire_2_1_1 = $this->createSubquestion("QRU", $questionnaire_2_1, "When do we have to heat the oven?@@@Where should we put the bread crumbs that are not used?@@@What is the visual indicator that means the dish is ready?");
+        $questionnaire_2_1_2 = $this->createSubquestion("QRU", $questionnaire_2_1, "When do we have to heat the oven?@@@Where should we put the bread crumbs that are not used?@@@What is the visual indicator that means the dish is ready?");
+        $questionnaire_2_1_3 = $this->createSubquestion("QRU", $questionnaire_2_1, "When do we have to heat the oven?@@@Where should we put the bread crumbs that are not used?@@@What is the visual indicator that means the dish is ready?");
         // CREATION PROPOSITIONS
         $questionnaire_2_1_1_1 = $this->createProposition("1.1. As you start the recipe", true, $questionnaire_2_1_1);
         $questionnaire_2_1_1_2 = $this->createProposition("1.2. When the chicken is no longer pink", false, $questionnaire_2_1_1);
@@ -112,9 +112,9 @@ class EnceFixtureCommand extends ContainerAwareCommand
         // CREATION QUESTION
         $questionnaire_3_1 = $this->createQuestion("TQRU", $questionnaire_3);
         // CREATION SUBQUESTION
-        $questionnaire_3_1_1 = $this->createSubquestion("QRU", $questionnaire_3_1, "XXX");
-        $questionnaire_3_1_2 = $this->createSubquestion("QRU", $questionnaire_3_1, "XXX");
-        $questionnaire_3_1_3 = $this->createSubquestion("QRU", $questionnaire_3_1, "XXX");
+        $questionnaire_3_1_1 = $this->createSubquestion("QRU", $questionnaire_3_1, "The advertisement is encouraging you to buy …@@@What do they say about people?");
+        $questionnaire_3_1_2 = $this->createSubquestion("QRU", $questionnaire_3_1, "The advertisement is encouraging you to buy …@@@What do they say about people?");
+        $questionnaire_3_1_3 = $this->createSubquestion("QRU", $questionnaire_3_1, "The advertisement is encouraging you to buy …@@@What do they say about people?");
         // CREATION PROPOSITIONS
         $questionnaire_3_1_1_1 = $this->createProposition("1.1. A Porsche", true, $questionnaire_3_1_1);
         $questionnaire_3_1_1_2 = $this->createProposition("1.2. A Mitsubishi", false, $questionnaire_3_1_1);
@@ -136,9 +136,9 @@ class EnceFixtureCommand extends ContainerAwareCommand
         // CREATION QUESTION
         $questionnaire_4_1 = $this->createQuestion("TQRU", $questionnaire_4);
         // CREATION SUBQUESTION
-        $questionnaire_4_1_1 = $this->createSubquestion("QRU", $questionnaire_4_1, "XXX");
-        $questionnaire_4_1_2 = $this->createSubquestion("QRU", $questionnaire_4_1, "XXX");
-        $questionnaire_4_1_3 = $this->createSubquestion("QRU", $questionnaire_4_1, "XXX");
+        $questionnaire_4_1_1 = $this->createSubquestion("QRU", $questionnaire_4_1, "What, according to this extract, is the major problem with renewable sources of energy?@@@What is the meaning of “solar power is even more dear”?");
+        $questionnaire_4_1_2 = $this->createSubquestion("QRU", $questionnaire_4_1, "What, according to this extract, is the major problem with renewable sources of energy?@@@What is the meaning of “solar power is even more dear”?");
+        $questionnaire_4_1_3 = $this->createSubquestion("QRU", $questionnaire_4_1, "What, according to this extract, is the major problem with renewable sources of energy?@@@What is the meaning of “solar power is even more dear”?");
         // CREATION PROPOSITIONS
         $questionnaire_4_1_1_1 = $this->createProposition("1.1. They are very expensive in comparison to non-renewable sources", true, $questionnaire_4_1_1);
         $questionnaire_4_1_1_2 = $this->createProposition("1.2. Governments argue over which renewable source of energy is better", false, $questionnaire_4_1_1);
@@ -179,7 +179,7 @@ The theory is that the doves should automatically return to their place of origi
         // CREATION QUESTION
         $questionnaire_6_1 = $this->createQuestion("QRM", $questionnaire_6);
         // CREATION SUBQUESTION
-        $questionnaire_6_1_1 = $this->createSubquestion("QRM", $questionnaire_6_1, "");
+        $questionnaire_6_1_1 = $this->createSubquestion("QRM", $questionnaire_6_1, "What did the ISPCA observe?");
         // CREATION PROPOSITIONS
         $questionnaire_6_1_1_1 = $this->createProposition("Doves are not always able to return to their home", true, $questionnaire_6_1_1);
         $questionnaire_6_1_1_2 = $this->createProposition("Doves didn’t know how to provide nourishment for themselves", true, $questionnaire_6_1_1);
@@ -196,9 +196,9 @@ The theory is that the doves should automatically return to their place of origi
         // CREATION QUESTION
         $questionnaire_7_1 = $this->createQuestion("TQRU", $questionnaire_7);
         // CREATION SUBQUESTION
-        $questionnaire_7_1_1 = $this->createSubquestion("QRU", $questionnaire_7_1, "XXX");
-        $questionnaire_7_1_2 = $this->createSubquestion("QRU", $questionnaire_7_1, "XXX");
-        $questionnaire_7_1_3 = $this->createSubquestion("QRU", $questionnaire_7_1, "XXX");
+        $questionnaire_7_1_1 = $this->createSubquestion("QRU", $questionnaire_7_1, "The advertisement is encouraging you to buy …@@@What do they say about people?");
+        $questionnaire_7_1_2 = $this->createSubquestion("QRU", $questionnaire_7_1, "The advertisement is encouraging you to buy …@@@What do they say about people?");
+        $questionnaire_7_1_3 = $this->createSubquestion("QRU", $questionnaire_7_1, "The advertisement is encouraging you to buy …@@@What do they say about people?");
         // CREATION PROPOSITIONS
         $questionnaire_7_1_1_1 = $this->createProposition("1.1. A Porsche", true, $questionnaire_7_1_1);
         $questionnaire_7_1_1_2 = $this->createProposition("1.2. A Mitsubishi", false, $questionnaire_7_1_1);
@@ -237,7 +237,7 @@ The theory is that the doves should automatically return to their place of origi
         // CREATION QUESTION
         $questionnaire_9_1 = $this->createQuestion("QRU", $questionnaire_9);
         // CREATION SUBQUESTION
-        $questionnaire_9_1_1 = $this->createSubquestion("QRU", $questionnaire_9_1, "According to the survey, how would the sales be this year?");
+        $questionnaire_9_1_1 = $this->createSubquestion("QRU", $questionnaire_9_1, "What according to this extract is the principal consequence of this course?");
 
         // CREATION PROPOSITIONS
         $questionnaire_9_1_1_1 = $this->createProposition("Students' behaviour is better", true, $questionnaire_9_1_1);
@@ -257,7 +257,7 @@ The theory is that the doves should automatically return to their place of origi
         // CREATION QUESTION
         $questionnaire_10_1 = $this->createQuestion("QRU", $questionnaire_10);
         // CREATION SUBQUESTION
-        $questionnaire_10_1_1 = $this->createSubquestion("QRU", $questionnaire_10_1, "According to the survey, how would the sales be this year?");
+        $questionnaire_10_1_1 = $this->createSubquestion("QRU", $questionnaire_10_1, "What do you think Mather means when he says, \"A teacher would think you were trying to skive off if you asked for time out\"?");
 
         // CREATION PROPOSITIONS
         $questionnaire_10_1_1_1 = $this->createProposition("A teacher would think you were trying to miss class if you asked to be let out for some time", true, $questionnaire_10_1_1);
@@ -318,7 +318,7 @@ A local sect and assorted Hindu right-wingers opposed his law, which Maharashtra
         // CREATION SUBQUESTION
         $questionnaire_12_1_1 = $this->createSubquestion("QRM", $questionnaire_12_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_12_1_1_1 = $this->createProposition("The Maharashtra state government has passed the law that Mr Dabholkar fought for", false, $questionnaire_12_1_1);
+        $questionnaire_12_1_1_1 = $this->createProposition("The Maharashtra state government has passed the law that Mr Dabholkar fought for", true, $questionnaire_12_1_1);
         $questionnaire_12_1_1_2 = $this->createProposition("One politician has condemned the murder", true, $questionnaire_12_1_1);
         $questionnaire_12_1_1_3 = $this->createProposition("Mr Dabholkar was killed while he was walking", true, $questionnaire_12_1_1);
 
@@ -335,7 +335,7 @@ Yet powerful groups remain to exploit superstition and religious fear. “Even n
         // CREATION QUESTION
         $questionnaire_13_1 = $this->createQuestion("QRU", $questionnaire_13);
         // CREATION SUBQUESTION
-        $questionnaire_13_1_1 = $this->createSubquestion("QRU", $questionnaire_13_1, "According to the survey, how would the sales be this year?");
+        $questionnaire_13_1_1 = $this->createSubquestion("QRU", $questionnaire_13_1, "How can this extract be best summarized?");
 
         // CREATION PROPOSITIONS
         $questionnaire_13_1_1_1 = $this->createProposition("A teacher would think you were trying to miss class if you asked to be let out for some time", true, $questionnaire_13_1_1);
@@ -354,11 +354,11 @@ Opinions abound about who the original Valentine was, with the most popular theo
         // CREATION QUESTION
         $questionnaire_14_1 = $this->createQuestion("QRM", $questionnaire_14);
         // CREATION SUBQUESTION
-        $questionnaire_14_1_1 = $this->createSubquestion("QRM", $questionnaire_14_1, "");
+        $questionnaire_14_1_1 = $this->createSubquestion("QRM", $questionnaire_14_1, "Which historical facts about Valentine’s Day do readers get from this extract?");
         // CREATION PROPOSITIONS
         $questionnaire_14_1_1_1 = $this->createProposition("The day can be traced back to ancient Rome", true, $questionnaire_14_1_1);
         $questionnaire_14_1_1_2 = $this->createProposition("Valentine was a church minister who was killed", true, $questionnaire_14_1_1);
-        $questionnaire_14_1_1_3 = $this->createProposition("The day is named to honor a Pope", false, $questionnaire_14);
+        $questionnaire_14_1_1_3 = $this->createProposition("The day is named to honor a Pope", false, $questionnaire_14_1_1);
 
         /*******************************************
                     QUESTIONNAIRE 15 : QRU
@@ -372,7 +372,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
         // CREATION QUESTION
         $questionnaire_15_1 = $this->createQuestion("QRU", $questionnaire_15);
         // CREATION SUBQUESTION
-        $questionnaire_15_1_1 = $this->createSubquestion("QRU", $questionnaire_15_1, "According to the survey, how would the sales be this year?");
+        $questionnaire_15_1_1 = $this->createSubquestion("QRU", $questionnaire_15_1, "Most \"bad\" schools are...");
 
         // CREATION PROPOSITIONS
         $questionnaire_15_1_1_1 = $this->createProposition("schools in city centers", true, $questionnaire_15_1_1);
@@ -382,7 +382,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
 
         $em->flush();
 
-        $output->writeln("Fixtures exécutées.");
+        $output->writeln("Fixtures English CE exécutées.");
 
     }
 
@@ -489,7 +489,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
     /**
      *
      */
-    protected function createProposition($text, $rightAnswer, $subquestion)
+    protected function createProposition($text, $rightAnswer, Subquestion $subquestion)
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
