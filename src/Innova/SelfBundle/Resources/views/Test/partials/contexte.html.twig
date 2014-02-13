@@ -1,3 +1,3 @@
-{% if questionnaire.mediaContext != "" %}
+{% if questionnaire.mediaContext is not null %}
 	{{ macros.media("context", questionnaire.mediaContext, "contexte.png", 90, 0, "Contexte dans lequel se déroule cette situation") }}
 {% endif %}

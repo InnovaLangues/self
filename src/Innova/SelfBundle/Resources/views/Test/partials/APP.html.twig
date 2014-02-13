@@ -1,6 +1,6 @@
 {% set bulleCount = i + 1 %}
 <div>
-	{{ macros.media("apparriement" ~ subquestion.id, subquestion.media,  "bulle"~ bulleCount ~".png", 90, 0, "Liez une proposition de droite à cet élément") }}
+	{{ macros.media("apparriement" ~ subquestion.id, subquestion.media,  proposition.media.mediaType.name ~ bulleCount ~".png", 90, 0, "Liez une proposition de droite à cet élément") }}
 	<span subquestionId="{{ subquestion.id }}" class="answer droppable">
 		{% for i, proposition in subquestion.propositions %}
 			<input type="checkbox" equivalence = {{ subquestion0.propositions[i].id }} value = {{ proposition.id }} > {{ proposition.id }} <br/>

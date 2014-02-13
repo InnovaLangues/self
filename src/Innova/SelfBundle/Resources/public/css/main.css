@@ -22,12 +22,12 @@
 	background-color: #717EE3;
 }
 
-.central-pink {
+.central-717EE3 {
 	border-radius:10px;
 	background-color: #717EE3;
 }
 
-.central-blue {
+.central-E37E71 {
 	border-radius:10px;
 	background-color: #E37E71;
 }
@@ -68,6 +68,7 @@
 }
 
 .subquestion{
+	margin-left:10px;
 	margin-bottom:10px;
 }
 
@@ -135,9 +136,31 @@ input[type="checkbox"], input[type="radio"], label{
 	-ms-hyphens: auto;
 	-o-hyphens: auto;
 	hyphens: auto;
+	text-align:justify;
+	font-size:15px;
+
 }
 
 .modales img, .modales video{
 	max-width:100%;
 }
 
+.situation-icon{
+	color:white;
+	word-wrap: break-word;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
+	-o-hyphens: auto;
+	hyphens: auto;
+	text-align:justify;
+}
+
+.qru-sub, .qrm-sub, .vf-sub{
+	padding:20%;
+}
+
+
+div[class="tooltip-inner"] {
+    max-width: 250px;
+}
