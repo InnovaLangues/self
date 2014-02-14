@@ -3,13 +3,13 @@
     <h4> {{ subquestion.title }}</h4>
     <p>
     {% if subquestion.media is not null %}
-        {{ macros.media("subquestion" ~ subquestion.id, subquestion.media, subquestion.media.mediaType.name ~ ".png", 90, 0, "Proposition de réponse") }}
+        {{ macros.media("subquestion-" ~ subquestion.id, subquestion.media, subquestion.media.mediaType.name ~ ".png", 90, 0, "Proposition de réponse") }}
     {% endif %}
     {% for proposition in subquestion.propositions | shuffle %}
         {% set bulleCount = bulleCount + 1 %}
         <p>
             {{ macros.inputs("radio", subquestion.id, proposition.id, proposition.title) }}
-            {{ macros.media("proposition" ~ proposition.id, proposition.media, proposition.media.mediaType.name ~ bulleCount ~".png", 90, 0, "Proposition de réponse") }}
+            {{ macros.media("proposition-" ~ proposition.id, proposition.media, proposition.media.mediaType.name ~ bulleCount ~".png", 90, 0, "Proposition de réponse") }}
         </p>
     {% endfor %}
     </p>
