@@ -688,9 +688,9 @@ class TestController extends Controller
         // Répertoire où seront copiés les fichiers
         $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
 
-// DEBUT
-//
 // Traitement des fichiers reçus
+// DEBUT
+/*
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..') {
@@ -912,7 +912,7 @@ class TestController extends Controller
                             copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse.mp3");
                         }
                     }
-
+*/
 /*
                     // Traitement de la partie "option".
                     if (preg_match("/option/i", $fileName)) {
@@ -935,6 +935,7 @@ class TestController extends Controller
                         }
                     }
 */
+/*
                     if (preg_match("/amorce/i", $fileName)) {
                         if ($numberExist) {
                             copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce_". $nb[0] . ".mp3");
@@ -981,6 +982,7 @@ class TestController extends Controller
 
         }
 die();
+*/
 // FIN
 //
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
@@ -1003,7 +1005,7 @@ die();
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
                     $testName = "test-english"; // For tests.
-                    $testName = "CO-IT"; // For tests.
+                    $testName = "SELF CO Italien TVF"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
