@@ -1,0 +1,3 @@
+generic:
+    boolTrue: "True"
+    boolFalse: "False"

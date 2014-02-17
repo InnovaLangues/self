@@ -1,18 +1,20 @@
 <div class="situation-icon">
-    
+
        {% if questionnaire.dialogue == 1 %}
             {% set icon = "situation_dialogue.png" %}
         {% else %}
             {% set icon = "situation_monologue.png" %}
         {% endif %}
 
-        {{ macros.media("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Situation de départ") }}
-        
-        {% if questionnaire.mediaText.mediaType.name == "audio" %}
+        {% if questionnaire.mediaText is not null %}
+            {{ macros.media("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Situation de départ") }}
+
+            {% if questionnaire.mediaText.mediaType.name == "audio" %}
             <div class="hidden" id="listens-counter">
-                Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span> 
-                <span id="limit_listening_text">{{ limit_listening_text }}</span> 
+                Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span>
+                <span id="limit_listening_text">{{ limit_listening_text }}</span>
                 <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span>
             </div>
+            {% endif %}
         {% endif %}
 </div>
