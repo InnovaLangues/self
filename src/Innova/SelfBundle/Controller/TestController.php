@@ -668,7 +668,7 @@ class TestController extends Controller
 
         // File import path
         $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/it/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/it/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/it-copie-flv/'; // Symfony
 
         // File import name
         $csvName = 'test-import.csv';
@@ -682,7 +682,7 @@ class TestController extends Controller
 
         // File import path
         // Répertoire où seront stockés les fichiers
-        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3-p2/it/'; // A modifier quand on aura l'adresse
+        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3-p2/it-copie-flv/'; // A modifier quand on aura l'adresse
 
         // File copy path
         // Répertoire où seront copiés les fichiers
@@ -690,11 +690,14 @@ class TestController extends Controller
 
 // Traitement des fichiers reçus
 // DEBUT
-/*
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..') {
                     $exp = explode("_", $fichier);
+
+                    // Pour récupérer l'extension du fichier : MP3 ou FLV
+                    $ext = explode(".", $fichier);
+                    $extension = $ext[1];
 
                     $exp[0] = strtolower($exp[0]);
                     if (isset($exp[1])) {
@@ -912,7 +915,6 @@ class TestController extends Controller
                             copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse.mp3");
                         }
                     }
-*/
 /*
                     // Traitement de la partie "option".
                     if (preg_match("/option/i", $fileName)) {
@@ -935,7 +937,7 @@ class TestController extends Controller
                         }
                     }
 */
-/*
+
                     if (preg_match("/amorce/i", $fileName)) {
                         if ($numberExist) {
                             copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce_". $nb[0] . ".mp3");
@@ -960,11 +962,11 @@ class TestController extends Controller
                     if (preg_match("/^texte/i", $fileName)) {
                         echo "<br />dans texte preg match";
                         if ($numberExist) {
-                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte_". $nb[0] . ".mp3");
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte_". $nb[0] . "." . $extension);
                         }
                         else
                         {
-                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte." . $extension);
                         }
                     }
 
@@ -982,7 +984,6 @@ class TestController extends Controller
 
         }
 die();
-*/
 // FIN
 //
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
@@ -1662,7 +1663,8 @@ die();
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
-            $rightAnswer = $data[$indice-1];
+            //$rightAnswer = $data[$indice-1];
+            $rightAnswer = $data[$indice]; // Changement 14/02/2014 car décalage du fichier.
 
             $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
             $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
