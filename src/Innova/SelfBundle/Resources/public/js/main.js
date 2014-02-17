@@ -65,8 +65,6 @@ $(document).ready(function() {
 	});
 
 	$(".item_audio_button").click(function(){
-
-
 		// Number of possible listens
 		var limit = Number($(this).attr("data-limit"));
 

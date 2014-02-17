@@ -32,14 +32,10 @@
                 <div class="col-md-5 situation">
                     {% include "InnovaSelfBundle:Test/partials:texte.html.twig" %}
                 </div>
-
                 <div class="col-md-7">
                     {% for question in questionnaire.questions %}
-                        {{ "type Q : " ~ question.typology.name }}
                         {% if question.typology.name == "TQRU" %}
-
                             <div class="well well2">
-
                                 {# Pour avoir le Wizard #}
                                 {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
                                 <ul class='nav nav-wizard' id="register-form-tabs">
@@ -73,14 +69,13 @@
                         {% else %}
                             {% for i, subquestion in question.subquestions %}
                                 <div class="subquestion">
-                                    {{ "type SQ : " ~ subquestion.typology.name ~ " " ~ subquestion.id ~ " title " ~ subquestion.title }}
                                     {% if subquestion.typology.name  == "QRM" %}
                                         {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
                                     {% elseif subquestion.typology.name  == "QRU" %}
                                          {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
                                     {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" or subquestion.typology.name  == "TVF" %}
                                         {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
-                                    {% elseif subquestion.typology.name  == "APPAT" %}
+                                    {% elseif subquestion.typology.name  == "APPAA" %}
                                         {% set vars = {'subquestion0' : question.subquestions[0]} %}
                                         {% include "InnovaSelfBundle:Test/partials:APP.html.twig" with vars %}
                                     {% elseif subquestion.typology.name  == "RE" %}
@@ -110,4 +105,5 @@
     {{ parent() }}
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/mediaElement.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/dragAndDrop.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/questionnaire.js") }}"></script>
 {% endblock %}

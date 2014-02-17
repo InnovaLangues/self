@@ -22,13 +22,12 @@ class ImportController extends Controller
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.
      *
-     * @Route("student/test/start/{id}", name="test_start_ce")
+     * @Route("student/test/startce/{id}", name="test_start_ce")
      * @Method("GET")
      * @Template()
      */
     public function startCeAction(Test $test)
     {
-
         $session = $this->container->get('request')->getSession();
 
         $em = $this->getDoctrine()->getManager();

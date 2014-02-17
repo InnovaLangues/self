@@ -1,18 +1,109 @@
 {% macro media(id, media, icon, height, limitAudio, tooltip) %}
+    {% import _self as macros %}
 
+    {% if media.mediaType.name == "audio" %}
+        {{ macros.audio(id, media, icon, height, limitAudio, tooltip) }}
+    {% elseif media.mediaType.name == "image" %}
+        {{ macros.image(id, media, icon, height, limitAudio, tooltip) }}
+    {% elseif media.mediaType.name == "texte" %}
+        {{ macros.texte(id, media, icon, height, limitAudio, tooltip) }}
+    {% elseif media.mediaType.name == "video" %}
+        {{ macros.video(id, media, icon, height, limitAudio, tooltip) }}
+    {% endif %}
 {% endmacro %}
+
+{% macro texte(id, media, icon, height, limitAudio, tooltip) %}
+    {% import _self as macros %}
+    {% if id == "situation" %}
+        {{ media.description }}
+    {% else %}
+
+        {% if id != "context" and id != "consigne" %}
+            {% set tooltip = media.description | truncate(120, true, '...') %}
+        {% endif %}
+
+        {% if media.description|length > 10 or id == "context" or id == "consigne" %}
+            <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+            {{ macros.modale(id, media, tooltip) }}
+        {% else %}
+            {% if media.description == "VRAI" %}
+                {{ 'generic.boolTrue' | trans({}, "messages", "it") }}
+            {% else %}
+                {% if media.description == "FAUX" %}
+                    {{ 'generic.boolFalse' | trans({}, "messages", "it") }}
+                {% else %}
+                    {{ media.description }}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+    {% endif %}
+{% endmacro %}
+
+{% macro video(id, media, icon, height, limitAudio, tooltip) %}
+    {% import _self as macros %}
+    {% if id != "situation" %}
+        {{ macros.modale(id, media, tooltip) }}
+        <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{icon}}"/>
+    {% else %}
+        <video id="{{ id }}" height="{{ height }}px">
+            <source src="{{ asset('upload/media/') ~ media.url }}" >
+            Your browser does not support the video tag.
+        </video>
+    {% endif %}
+{% endmacro %}
+
+{% macro image(id, media, icon, height, limitAudio, tooltip) %}
+    {% import _self as macros %}
+    {{ macros.modale(id, media, tooltip) }}
+    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset('upload/media/') ~ media.url }}" />
+{% endmacro %}
+
+{% macro audio(id, media, icon, height, limitAudio, tooltip) %}
+    {% if id == "situation" %}
+        <!--#134 : appel de la modal uniquement dans le cas "audio/situation" -->
+        <img rel="tooltip" data-toggle="modal" data-target="#controlModal" data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+    {% else %}
+       <img rel="tooltip" data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+    {% endif %}
+    <audio preload="auto" id="{{ id }}" class="item_audio">
+        <source src="{{ asset('upload/media/') ~ media.url }}.mp3" type="audio/mp3">
+        <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
+        Votre navigateur est trop ancien.
+    </audio>
+{% endmacro %}
+
+{% macro modale (id, media, title) %}
+    <div id="modal-{{ id }}" class="modal fade modales">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ title }}</h4>
+                </div>
+                <div class="modal-body">
+                {% if media.mediaType.name == "image" %}
+                    <img src="{{ asset('upload/media/') ~ media.url }}"/>
+                {% elseif media.mediaType.name == "texte" %}
+                    <div id="{{ id }}"> {{ media.description }} </div>
+                {% elseif media.mediaType.name == "video" %}
+                    <video id="{{ id }}">
+                        <source src="{{ asset('upload/media/') ~ media.url }}" >
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endmacro %}
+
 
 {% macro inputs(type, subquestionId, propositionId, text) %}
     <label class="{{ type }}-inline">
-        <input type="{{ type }}" name="{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required>
-        {% if text == "VRAI" %}
-            {{ 'generic.boolTrue' | trans }}
-        {% else %}
-            {% if text == "FAUX" %}
-                {{ 'generic.boolFalse' | trans }}
-            {% else %}
-                {{ text }}
-            {% endif %}
-        {% endif %}
+        <input type="{{ type }}" name="{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required />
     </label>
 {% endmacro %}

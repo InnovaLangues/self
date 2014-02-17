@@ -667,13 +667,13 @@ class TestController extends Controller
         //
 
         // File import path
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3/'; // Symfony
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/it/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // Symfony
 
         // File import name
         $csvName = 'test-import.csv';
         $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
-        $csvName = 'Pilote SELF Italien_février 2014_sequence affichage_CO_CE (1).csv'; // Suite réception MP.
+        $csvName = 'italien-co.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -682,56 +682,16 @@ class TestController extends Controller
 
         // File import path
         // Répertoire où seront stockés les fichiers
-        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3/'; // A modifier quand on aura l'adresse
+        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // A modifier quand on aura l'adresse
 
         // File copy path
         // Répertoire où seront copiés les fichiers
         $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
 
-        // Traitement des fichiers reçus
-        if ($dossier = opendir($csvPathImportMp3)) {
-            while (false !== ($fichier = readdir($dossier))) {
-                if ($fichier != '.' && $fichier != '..') {
-                    $exp = explode("_", $fichier);
-
-                    $repertoryName = strtolower($exp[0]);
-                    $fileName = $exp[1];
-
-                    $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
-                    // Création du répertoire (s'il n'est pas déjà créé)
-                    if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
-
-                    if (preg_match("/amorce/i", $fileName)) {
-                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
-                    }
-
-                    // Traitement de la partie "option".
-                    if (preg_match("/option/i", $fileName)) {
-                        // Ajout 13/12/2013 : traitement du cas TQRU.
-                        // Les fichiers "option" sont nommés par exemple <XXX_option_1_1.mp3>
-                        // alors que dans les autres cas, ils sont de type <XXX_option_1.mp3>
-                        // #118
-                        if (!is_numeric($exp[2])) {
-                            $number = explode(".", $exp[2]);
-                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
-                        } else {
-                            $number = explode(".", $exp[3]);
-                            $number = $number[0];
-                            if (!is_numeric($number)) {
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . ".mp3");
-                            } else {
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number . ".mp3");
-                            }
-
-                        }
-                    }
-                    if (preg_match("/txt/i", $fileName)) {
-                        copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
-                    }
-                }
-            }
-        }
-
+// Traitement des fichiers reçus
+// DEBUT
+// FIN
+//
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte : dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
         // Cette contrainte a été prise en compte par rapport au fichier reçu.
@@ -739,8 +699,7 @@ class TestController extends Controller
         $indice = 0;
 
         if (($handle = fopen($csvPath, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-
+            while (($data = fgetcsv($handle, 2000, ";")) !== FALSE) {
                 // Ainsi, je ne prends pas les intitulés des colonnes
                 if ($row != 0) {
                     //
@@ -752,8 +711,8 @@ class TestController extends Controller
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
-                    $testName = "CO-pilote-dec2013-ang"; // For tests.
                     $testName = "test-english"; // For tests.
+                    $testName = "SELF CO Italien VF ok"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
@@ -822,7 +781,7 @@ class TestController extends Controller
                     $questionnaire->setMediaText();
 
                     $indice++;
-                    echo "<br />" . $indice . " theme : "  . $questionnaire->getTheme();
+                    echo "<br />" . $indice . " theme : "  . $questionnaire->getTheme() . " Typo : " . $data[4];
                     // Enregistrement en base
                     $em->persist($questionnaire);
 
@@ -877,9 +836,10 @@ class TestController extends Controller
             }
             fclose($handle);
         }
-
+echo "<br />fin temporaire";
+die();
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
-        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
+        //shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
 
         //
         // To view
@@ -1172,14 +1132,18 @@ class TestController extends Controller
                         $newItemExtention = "mp3";
                     } else {
                          $newItemExtention = $itemExtention;
+                         print " texte !!! " . $itemExtention . " fichier : " . $fichier;
                     }
+
 
                     // Recherche si le fichier existe
                     // S'il n'existe pas, je passe au suivant.
                     //
                     $testFile = $dir2copy . $mediaDir . '/' . $fichier . "." . $newItemExtention;
 
+                    echo "<br />testFile :" .  $testFile;
                     if (file_exists($testFile)) {
+                    echo "<br />dans file_ex";
                         // Création dans "Media"
                         $media = new Media();
                         $media->setName($mediaDir . "_" . $fichier);
@@ -1331,8 +1295,9 @@ class TestController extends Controller
         $em->persist($subQuestion);
 
         // Créer une occurrence dans la table "Proposition"
-        $nbProposition = $data[13];
-        $rightAnswer = $data[12];
+        // Changement d'ordre par rapport au pilote de décembre Anglais et avant Italien.
+        $nbProposition = $data[12];
+        $rightAnswer = $data[13];
 
         for ($j=1; $j <= $nbProposition; $j++) {
             $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
@@ -1347,6 +1312,8 @@ class TestController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        echo "<br />vfProcess" . $nbItems;
+
         // Créer une occurrence dans la table "Question"
         $question = new Question();
 
@@ -1360,7 +1327,7 @@ class TestController extends Controller
 
         // Traitement sur le nombre d'items
         for ($i = 1; $i <= $nbItems; $i++) {
-            // Créer une occurrence dans la table "SubQuestion"
+            echo "<br />Suis dans la boucle";
             $subQuestion = new Subquestion();
             if ($i == 1) $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
 
@@ -1380,7 +1347,9 @@ class TestController extends Controller
             $fileName = "option_" . $i;
             $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
 
+            echo "<br />" . $testFile;
             if (file_exists($testFile)) {
+            echo "<br />Création média";
                 // Création dans "Media"
                 $media = new Media();
                 $media->setName($dirName . "_" . $fileName);
@@ -1400,7 +1369,8 @@ class TestController extends Controller
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
-            $rightAnswer = $data[$indice-1];
+            //$rightAnswer = $data[$indice-1];
+            $rightAnswer = $data[$indice]; // Changement 14/02/2014 car décalage du fichier.
 
             $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
             $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
@@ -1431,6 +1401,7 @@ class TestController extends Controller
         if (!$media = $em->getRepository('InnovaSelfBundle:Media')->findOneByName($nameProposition)) {
             // Création dans "Media"
             $media = new Media();
+            $media->setDescription($nameProposition); // Ajout contrôle existance V ou F
             $media->setName($nameProposition); // Ajout contrôle existance V ou F
 
             $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte");
@@ -1642,7 +1613,7 @@ class TestController extends Controller
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
-            echo "<br/>PAS TROUVE !" . $pathFileName . $extension;
+            echo "<br/>PAS TROUVE 1 !" . $pathFileName . $extension;
         }
 
         // Enregistrement en base
