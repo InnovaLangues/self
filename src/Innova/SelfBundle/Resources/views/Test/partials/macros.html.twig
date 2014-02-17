@@ -26,6 +26,7 @@
             <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
             {{ macros.modale(id, media, tooltip) }}
         {% else %}
+            <label for="input-{{ id }}" class="inline">
             {% if media.description == "VRAI" %}
                 {{ 'generic.boolTrue' | trans({}, "messages", "it") }}
             {% else %}
@@ -35,6 +36,7 @@
                     {{ media.description }}
                 {% endif %}
             {% endif %}
+            </label>
         {% endif %}
 
     {% endif %}
@@ -103,7 +105,5 @@
 
 
 {% macro inputs(type, subquestionId, propositionId, text) %}
-    <label class="{{ type }}-inline">
-        <input type="{{ type }}" name="{{ subquestionId }}[]" id="proposition{{ propositionId }}" value="{{ propositionId }}" required />
-    </label>
+    <input type="{{ type }}" name="{{ subquestionId }}[]" id="input-proposition{{ propositionId }}" value="{{ propositionId }}" required />
 {% endmacro %}
