@@ -987,7 +987,6 @@ class TestController extends Controller
             }
 
         }
-die();
 // FIN
 //
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
@@ -1106,6 +1105,7 @@ die();
                             break;
                         case "QRU";
                         case "QRM";
+                        case "QRU + jpg";
                             $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                         case "TVF";
@@ -1933,6 +1933,33 @@ die();
             $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
 
             $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+            $media->setMediaType($mediaType);
+            $proposition->setMedia($media);
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            // Copie du fichier
+            copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
+        } else {
+            echo "<br/>PAS TROUVE 1 !" . $pathFileName . $extension;
+        }
+
+        $extension = ".jpg";
+
+        if (file_exists($pathFileName . $extension)) {
+            if (preg_match("/".$j."/", $rightAnswer)) {
+                $proposition->setRightAnswer(true);
+            } else {
+                $proposition->setRightAnswer(false);
+            }
+
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_" . $fileName);
+            $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
+
+            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image");
             $media->setMediaType($mediaType);
             $proposition->setMedia($media);
 
