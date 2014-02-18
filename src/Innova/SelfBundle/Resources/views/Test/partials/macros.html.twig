@@ -22,7 +22,7 @@
             {% set tooltip = media.description | truncate(120, true, '...') %}
         {% endif %}
 
-        {% if media.description|length > 10 or id == "context" or id == "consigne" %}
+        {% if media.description|length > 12 or id == "context" or id == "consigne" %}
             <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
             {{ macros.modale(id, media, tooltip) }}
         {% else %}
