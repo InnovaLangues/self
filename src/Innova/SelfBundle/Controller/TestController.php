@@ -690,6 +690,303 @@ class TestController extends Controller
 
 // Traitement des fichiers reçus
 // DEBUT
+//
+        if ($dossier = opendir($csvPathImportMp3)) {
+            while (false !== ($fichier = readdir($dossier))) {
+                if ($fichier != '.' && $fichier != '..') {
+                    $exp = explode("_", $fichier);
+
+                    $exp[0] = strtolower($exp[0]);
+                    if (isset($exp[1])) {
+                        $exp[1] = strtolower($exp[1]);
+                    }
+                    if (isset($exp[2])) {
+                        $exp[2] = strtolower($exp[2]);
+                    }
+                    if (isset($exp[3])) {
+                        $exp[3] = strtolower($exp[3]);
+                    }
+                    if (isset($exp[4])) {
+                        $exp[4] = strtolower($exp[4]);
+                    echo "<br />exp4 = " . $exp[4];
+                    }
+                    if (isset($exp[5])) {
+                        $exp[5] = strtolower($exp[5]);
+                    echo "<br />exp5 = " . $exp[5];
+                    }
+                    if (isset($exp[6])) {
+                        $exp[6] = strtolower($exp[6]);
+                    echo "<br />exp6 = " . $exp[6];
+                    }
+                    if (isset($exp[7])) {
+                        $exp[7] = strtolower($exp[7]);
+                    echo "<br />exp7 = " . $exp[7];
+                    }
+                    //$repertoryName = strtolower($exp[0]);
+
+                    $indice_fileName = 0;
+                    if (isset($exp[0])) {
+                        if ((preg_match("/consigne/i", $exp[0])) || (preg_match("/option/i", $exp[0]))
+                        || (preg_match("/contexte/i", $exp[0])) || (preg_match("/texte/i", $exp[0]))
+                        || (preg_match("/amorce/i", $exp[0])) || (preg_match("/reponse/i", $exp[0]))) {
+                            $indice_fileName = 0;
+                        }
+
+                        else
+                        {
+                            $repertoryName = strtolower($exp[0]);
+                        }
+                    }
+
+                    if (isset($exp[1])) {
+                        if ((preg_match("/consigne/i", $exp[1])) || (preg_match("/option/i", $exp[1]))
+                        || (preg_match("/contexte/i", $exp[1])) || (preg_match("/texte/i", $exp[1]))
+                        || (preg_match("/amorce/i", $exp[1])) || (preg_match("/reponse/i", $exp[1]))) {
+                            $indice_fileName = 1;
+                        }
+                        else
+                        {
+                            $repertoryName .=  "_" . strtolower($exp[1]);
+                        }
+                    }
+
+                    if (isset($exp[2])) {
+                        if ((preg_match("/consigne/i", $exp[2])) || (preg_match("/option/i", $exp[2]))
+                        || (preg_match("/contexte/i", $exp[2])) || (preg_match("/texte/i", $exp[2]))
+                        || (preg_match("/amorce/i", $exp[2])) || (preg_match("/reponse/i", $exp[2]))) {
+                            $indice_fileName = 2;
+                        }
+                        else
+                        {
+                            $repertoryName .=  "_" .  strtolower($exp[2]);
+                        }
+                    }
+
+                    if (isset($exp[3])) {
+                        if ((preg_match("/consigne/i", $exp[3])) || (preg_match("/option/i", $exp[3]))
+                        || (preg_match("/contexte/i", $exp[3])) || (preg_match("/texte/i", $exp[3]))
+                        || (preg_match("/amorce/i", $exp[3])) || (preg_match("/reponse/i", $exp[3]))) {
+                            $indice_fileName = 3;
+                        }
+                        else
+                        {
+                            if (!preg_match("/mp3/i", $exp[3]) && !preg_match("/jpg/i", $exp[3])) {
+                                $repertoryName .=   "_" . strtolower($exp[3]);
+                            }
+                        }
+                    }
+
+                    if (isset($exp[4])) {
+                        if ((preg_match("/consigne/i", $exp[4])) || (preg_match("/option/i", $exp[4]))
+                        || (preg_match("/contexte/i", $exp[4])) || (preg_match("/texte/i", $exp[4]))
+                        || (preg_match("/amorce/i", $exp[4])) || (preg_match("/reponse/i", $exp[4]))) {
+                            echo "stop";
+                            $indice_fileName = 4;
+                        }
+                        else
+                        {
+                            if (!preg_match("/mp3/i", $exp[4]) && !preg_match("/jpg/i", $exp[4])) {
+                                $repertoryName .=   "_" . strtolower($exp[4]);
+                            }
+                        }
+                    }
+
+                    if (isset($exp[5])) {
+                        if ((preg_match("/consigne/i", $exp[5])) || (preg_match("/option/i", $exp[5]))
+                        || (preg_match("/contexte/i", $exp[5])) || (preg_match("/texte/i", $exp[5]))
+                        || (preg_match("/amorce/i", $exp[5])) || (preg_match("/reponse/i", $exp[5]))) {
+                            echo "stop";
+                            $indice_fileName = 5;
+                        }
+                        else
+                        {
+                            if (!preg_match("/mp3/i", $exp[5]) && !preg_match("/jpg/i", $exp[5])) {
+                                $repertoryName .= "_" . strtolower($exp[5]);
+                            }
+                        }
+                    }
+                    if (isset($exp[6])) {
+                        if ((preg_match("/consigne/i", $exp[6])) || (preg_match("/option/i", $exp[6]))
+                        || (preg_match("/contexte/i", $exp[6])) || (preg_match("/texte/i", $exp[6]))
+                        || (preg_match("/amorce/i", $exp[6])) || (preg_match("/reponse/i", $exp[6]))) {
+                            echo "<br />stop6<br />";
+                            $indice_fileName = 6;
+                        }
+                        else
+                        {
+                            if (!preg_match("/mp3/i", $exp[6]) && !preg_match("/jpg/i", $exp[6])) {
+                                $repertoryName .= "_" . strtolower($exp[6]);
+                            }
+                        }
+                    }
+                    if (isset($exp[7])) {
+                        if ((preg_match("/consigne/i", $exp[7])) || (preg_match("/option/i", $exp[7]))
+                        || (preg_match("/contexte/i", $exp[7])) || (preg_match("/texte/i", $exp[7]))
+                        || (preg_match("/amorce/i", $exp[7])) || (preg_match("/reponse/i", $exp[7]))) {
+                            echo "<br />stop7<br />";
+                            $indice_fileName = 7;
+                        }
+                        else
+                        {
+                            if (!preg_match("/mp3/i", $exp[7]) && !preg_match("/jpg/i", $exp[7])) {
+                                $repertoryName .= "_" . strtolower($exp[7]);
+                            }
+                        }
+                    }
+
+                    $fileName = $exp[$indice_fileName]; // = nom de l'option : amorce/consigne/contexte/texte
+                    echo "<br />fileName : " . $fileName;
+
+                    if (preg_match("/mp3/i", $exp[$indice_fileName])) {
+                         echo "<br />MP3 dans fileName<br />";
+                        $nb = explode(".", $exp[$indice_fileName]);
+                        $fileName = $nb[0];
+                    }
+
+                    echo "<br />fileName APRES : " . $fileName;
+
+                    echo "<br />fileName : " . $fileName;
+
+                    $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
+                    echo "<br />Rep : " . $repertoryMkDir . "<br /> fileName : " . $fileName;
+                    // Création du répertoire (s'il n'est pas déjà créé)
+                    if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
+
+                    $number = $indice_fileName+1;
+                    echo "<br />Number : " . $number;
+
+                    $nb[0] = null;
+                    if (isset($exp[$number])) {
+                    echo "<br />Exp Number : " . $exp[$number];
+                        $nb = explode(".", $exp[$number]);
+                        if (($nb[0] == '1') || ($nb[0] == '2') || ($nb[0] == '3')  || ($nb[0] == '4')) {
+                            echo "<br />extension0";
+                            $fileName .= $nb[0];
+                            $numberExist = true;
+                            echo "<br />fileName99 : " . $fileName;
+                        }
+                        $number++;
+                        echo "<br />Number2 : " . $number;
+                        if (isset($exp[$number])) {
+                            echo "<br />extension1";
+                            $fileName = $fileName . "_" . $exp[$number];
+                        }
+                        echo "<br />fileName après extension : " . $fileName;
+                    }
+                    else
+                    {
+                        $nb = explode(".", $fileName);
+                        $fileName = $nb[0];
+                        $numberExist = false;
+                    echo "<br />fileName2 : " . $fileName;
+                    }
+
+                    // Extension
+                    $fileExtension = explode(".", $fichier);
+                    $extension = $fileExtension[1];
+                    echo "<br />EXTENSION : " . $extension;
+
+                    // Fin traitement extension
+
+                    if (preg_match("/option/i", $fileName)) {
+                        if ($numberExist) {
+                            if (isset($exp[$number])) {
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_". $nb[0] . "_" . $exp[$number]);
+                            }
+                            else
+                            {
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_". $nb[0] . "." . $extension);
+                            }
+                        }
+                        else
+                        {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option." . $extension);
+                        }
+                    }
+
+                    if (preg_match("/reponse/i", $fileName)) {
+                        if ($numberExist) {
+                            if (isset($exp[$number])) {
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . "_" . $exp[$number]);
+                            }
+                            else
+                            {
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . ".mp3");
+                            }
+                        }
+                        else
+                        {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse.mp3");
+                        }
+                    }
+
+/*
+                    // Traitement de la partie "option".
+                    if (preg_match("/option/i", $fileName)) {
+                        // Ajout 13/12/2013 : traitement du cas TQRU.
+                        // Les fichiers "option" sont nommés par exemple <XXX_option_1_1.mp3>
+                        // alors que dans les autres cas, ils sont de type <XXX_option_1.mp3>
+                        // #118
+                        if (!is_numeric($exp[2])) {
+                            $number = explode(".", $exp[2]);
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
+                        } else {
+                            $number = explode(".", $exp[3]);
+                            $number = $number[0];
+                            if (!is_numeric($number)) {
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . ".mp3");
+                            } else {
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number . ".mp3");
+                            }
+
+                        }
+                    }
+*/
+                    if (preg_match("/amorce/i", $fileName)) {
+                        if ($numberExist) {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce_". $nb[0] . ".mp3");
+                        }
+                        else
+                        {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
+                        }
+                    }
+
+                    if (preg_match("/consigne/i", $fileName)) {
+                        if ($numberExist) {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/consigne_". $nb[0] . ".mp3");
+                        }
+                        else
+                        {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/consigne.mp3");
+                        }
+                    }
+
+                    // Ajout de ^ pour le test uniquement sur texte.
+                    if (preg_match("/^texte/i", $fileName)) {
+                        echo "<br />dans texte preg match";
+                        if ($numberExist) {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte_". $nb[0] . ".mp3");
+                        }
+                        else
+                        {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte.mp3");
+                        }
+                    }
+
+                    if (preg_match("/contexte/i", $fileName)) {
+                        if ($numberExist) {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/contexte_". $nb[0] . ".mp3");
+                        }
+                        else
+                        {
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/contexte.mp3");
+                        }
+                    }
+                }
+            }
+
+        }
 // FIN
 //
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
@@ -712,7 +1009,7 @@ class TestController extends Controller
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
                     $testName = "test-english"; // For tests.
-                    $testName = "SELF CO Italien VF ok"; // For tests.
+                    $testName = "SELF CO Italien (T)QRU"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
@@ -808,6 +1105,7 @@ class TestController extends Controller
                             break;
                         case "QRU";
                         case "QRM";
+                        case "QRU + jpg";
                             $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                         case "TVF";
@@ -1299,9 +1597,22 @@ die();
         $nbProposition = $data[12];
         $rightAnswer = $data[13];
 
-        for ($j=1; $j <= $nbProposition; $j++) {
-            $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
+        $tab = explode("#", $data[12]);
+        $type = $tab[0];
+        if ($type == "QRU") {
+            $countTab = count($tab);
+            for ($compteurTab = 1; $compteurTab < $countTab; $compteurTab++)
+            {
+                $this->vfPropositionProcess($rightAnswer, $tab[$compteurTab], $compteurTab, $subQuestion);
+            }
         }
+        else
+        {
+            for ($j=1; $j <= $nbProposition; $j++) {
+                $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
+            }
+        }
+
     }
 
     /**
@@ -1372,8 +1683,24 @@ die();
             //$rightAnswer = $data[$indice-1];
             $rightAnswer = $data[$indice]; // Changement 14/02/2014 car décalage du fichier.
 
-            $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
-            $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
+            $Vrai = "VRAI";
+
+            $tab = explode("#", $data[12]);
+            //var_dump($tab);
+            $type = $tab[0];
+            //echo "<br />" . $type;
+            if ($data[12] != "VF") {
+                echo "<br />!VF";
+                $vrai = $tab[1];
+                $this->vfPropositionProcess($rightAnswer, $vrai, "V", $subQuestion);
+                $faux = $tab[2];
+                $this->vfPropositionProcess($rightAnswer, $faux, "F", $subQuestion);
+            }
+            else
+            {
+                $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
+                $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
+            }
 
             if ($data[$indice] == "VFPM") {
                 $this->vfPropositionProcess($rightAnswer, "PM", "PM", $subQuestion); // PM : à confirmer
@@ -1393,8 +1720,10 @@ die();
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
         if ($rightAnswer == $expectedAnswer) {
+            echo "<br />true";
             $proposition->setRightAnswer(true);
         } else {
+            echo "<br />false";
             $proposition->setRightAnswer(false);
         }
 
@@ -1604,6 +1933,33 @@ die();
             $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
 
             $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+            $media->setMediaType($mediaType);
+            $proposition->setMedia($media);
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            // Copie du fichier
+            copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
+        } else {
+            echo "<br/>PAS TROUVE 1 !" . $pathFileName . $extension;
+        }
+
+        $extension = ".jpg";
+
+        if (file_exists($pathFileName . $extension)) {
+            if (preg_match("/".$j."/", $rightAnswer)) {
+                $proposition->setRightAnswer(true);
+            } else {
+                $proposition->setRightAnswer(false);
+            }
+
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_" . $fileName);
+            $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
+
+            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image");
             $media->setMediaType($mediaType);
             $proposition->setMedia($media);
 
