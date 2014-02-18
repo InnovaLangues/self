@@ -691,7 +691,7 @@ class TestController extends Controller
 // Traitement des fichiers reçus
 // DEBUT
 //
-       if ($dossier = opendir($csvPathImportMp3)) {
+        if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..') {
                     $exp = explode("_", $fichier);
@@ -770,7 +770,7 @@ class TestController extends Controller
                         }
                         else
                         {
-                            if (!preg_match("/mp3/i", $exp[3])) {
+                            if (!preg_match("/mp3/i", $exp[3]) && !preg_match("/jpg/i", $exp[3])) {
                                 $repertoryName .=   "_" . strtolower($exp[3]);
                             }
                         }
@@ -785,7 +785,7 @@ class TestController extends Controller
                         }
                         else
                         {
-                            if (!preg_match("/mp3/i", $exp[4])) {
+                            if (!preg_match("/mp3/i", $exp[4]) && !preg_match("/jpg/i", $exp[4])) {
                                 $repertoryName .=   "_" . strtolower($exp[4]);
                             }
                         }
@@ -800,7 +800,7 @@ class TestController extends Controller
                         }
                         else
                         {
-                            if (!preg_match("/mp3/i", $exp[5])) {
+                            if (!preg_match("/mp3/i", $exp[5]) && !preg_match("/jpg/i", $exp[5])) {
                                 $repertoryName .= "_" . strtolower($exp[5]);
                             }
                         }
@@ -814,7 +814,7 @@ class TestController extends Controller
                         }
                         else
                         {
-                            if (!preg_match("/mp3/i", $exp[6])) {
+                            if (!preg_match("/mp3/i", $exp[6]) && !preg_match("/jpg/i", $exp[6])) {
                                 $repertoryName .= "_" . strtolower($exp[6]);
                             }
                         }
@@ -828,7 +828,7 @@ class TestController extends Controller
                         }
                         else
                         {
-                            if (!preg_match("/mp3/i", $exp[7])) {
+                            if (!preg_match("/mp3/i", $exp[7]) && !preg_match("/jpg/i", $exp[7])) {
                                 $repertoryName .= "_" . strtolower($exp[7]);
                             }
                         }
@@ -881,6 +881,13 @@ class TestController extends Controller
                     echo "<br />fileName2 : " . $fileName;
                     }
 
+                    // Extension
+                    $fileExtension = explode(".", $fichier);
+                    $extension = $fileExtension[1];
+                    echo "<br />EXTENSION : " . $extension;
+
+                    // Fin traitement extension
+
                     if (preg_match("/option/i", $fileName)) {
                         if ($numberExist) {
                             if (isset($exp[$number])) {
@@ -888,12 +895,12 @@ class TestController extends Controller
                             }
                             else
                             {
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_". $nb[0] . ".mp3");
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_". $nb[0] . "." . $extension);
                             }
                         }
                         else
                         {
-                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option.mp3");
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option." . $extension);
                         }
                     }
 
@@ -955,7 +962,7 @@ class TestController extends Controller
                         }
                     }
 
-                    // Ajout de \b pour le test uniquement sur texte.
+                    // Ajout de ^ pour le test uniquement sur texte.
                     if (preg_match("/^texte/i", $fileName)) {
                         echo "<br />dans texte preg match";
                         if ($numberExist) {
@@ -1003,7 +1010,7 @@ die();
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
                     $testName = "test-english"; // For tests.
-                    $testName = "SELF CO Italien QRU"; // For tests.
+                    $testName = "SELF CO Italien (T)QRU"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
@@ -1590,9 +1597,22 @@ die();
         $nbProposition = $data[12];
         $rightAnswer = $data[13];
 
-        for ($j=1; $j <= $nbProposition; $j++) {
-            $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
+        $tab = explode("#", $data[12]);
+        $type = $tab[0];
+        if ($type == "QRU") {
+            $countTab = count($tab);
+            for ($compteurTab = 1; $compteurTab < $countTab; $compteurTab++)
+            {
+                $this->vfPropositionProcess($rightAnswer, $tab[$compteurTab], $compteurTab, $subQuestion);
+            }
         }
+        else
+        {
+            for ($j=1; $j <= $nbProposition; $j++) {
+                $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
+            }
+        }
+
     }
 
     /**
@@ -1666,9 +1686,9 @@ die();
             $Vrai = "VRAI";
 
             $tab = explode("#", $data[12]);
-            var_dump($tab);
+            //var_dump($tab);
             $type = $tab[0];
-            echo "<br />" . $type;
+            //echo "<br />" . $type;
             if ($data[12] != "VF") {
                 echo "<br />!VF";
                 $vrai = $tab[1];
@@ -1700,8 +1720,10 @@ die();
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
         if ($rightAnswer == $expectedAnswer) {
+            echo "<br />true";
             $proposition->setRightAnswer(true);
         } else {
+            echo "<br />false";
             $proposition->setRightAnswer(false);
         }
 
