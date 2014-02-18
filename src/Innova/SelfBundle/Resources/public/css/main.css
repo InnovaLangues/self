@@ -164,3 +164,8 @@ input[type="checkbox"], input[type="radio"], label{
 div[class="tooltip-inner"] {
     max-width: 250px;
 }
+
+.proposition-block{
+	display : inline-block;
+	vertical-align : middle;
+}

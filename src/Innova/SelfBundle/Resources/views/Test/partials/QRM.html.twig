@@ -4,7 +4,7 @@
     <p>
     {% for proposition in subquestion.propositions | shuffle %}
         {% set bulleCount = bulleCount + 1 %}
-        <p>
+        <p class="proposition-block">
             {{ macros.inputs("checkbox", subquestion.id, proposition.id, proposition.title) }}
             {{ macros.media("proposition-" ~ proposition.id, proposition.media,  proposition.media.mediaType.name ~ bulleCount ~".png", 90, 0, "Proposition de réponse") }}
         </p>

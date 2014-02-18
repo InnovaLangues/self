@@ -7,9 +7,9 @@
     {% endif %}
     {% for proposition in subquestion.propositions | shuffle %}
         {% set bulleCount = bulleCount + 1 %}
-        <p>
+        <p class="proposition-block">
             {{ macros.inputs("radio", subquestion.id, proposition.id, proposition.title) }}
-            {{ macros.media("proposition-" ~ proposition.id, proposition.media, proposition.media.mediaType.name ~ bulleCount ~".png", 90, 0, "Proposition de réponse") }}
+            {{ macros.media("proposition-" ~ proposition.id, proposition.media, proposition.media.mediaType.name ~ bulleCount ~".png", 90, 0, "Proposition de réponse " ~ bulleCount) }}
         </p>
     {% endfor %}
     </p>
