@@ -156,8 +156,13 @@ input[type="checkbox"], input[type="radio"], label{
 	text-align:justify;
 }
 
-.qru-sub, .qrm-sub, .vf-sub{
-	padding:20%;
+.qru-sub, .qrm-sub{
+	padding:10%;
+}
+
+.vf-sub{
+	padding-left:10%;
+	margin-bottom:10px;
 }
 
 

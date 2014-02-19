@@ -1,6 +1,8 @@
 {% set bulleCount = i + 1 %}
 <div class="vf-sub">
-    <h4> {{ subquestion.title }}</h4>
+    {% if subquestion.title is not null %}
+    <h4>{{ subquestion.title }}</h4>
+    {% endif %}
     <p>
         {% if subquestion.media is not null %}
             {{ macros.media("subquestion-" ~ subquestion.id, subquestion.media, subquestion.media.mediaType.name ~ bulleCount ~".png", 90, 0, "Proposition de réponse") }}
