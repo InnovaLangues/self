@@ -157,12 +157,16 @@ input[type="checkbox"], input[type="radio"], label{
 }
 
 .qru-sub, .qrm-sub{
-	padding:10%;
+	padding:15%;
 }
 
 .vf-sub{
-	padding-left:10%;
+	padding-left:15%;
 	margin-bottom:10px;
+}
+
+.vf-sub:first-child {
+	padding-top:15%;
 }
 
 
