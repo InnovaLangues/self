@@ -673,7 +673,7 @@ class TestController extends Controller
         // File import name
         $csvName = 'test-import.csv';
         $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
-        $csvName = 'italien-co.csv'; // Suite réception MP.
+        $csvName = 'ok.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -1007,9 +1007,9 @@ class TestController extends Controller
 
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
-                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
+                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
                     $testName = "test-english"; // For tests.
-                    $testName = "SELF CO Italien (T)QRU"; // For tests.
+                    $testName = "SELF CO Italien"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
@@ -1105,7 +1105,6 @@ class TestController extends Controller
                             break;
                         case "QRU";
                         case "QRM";
-                        case "QRU + jpg";
                             $this->qrProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                         case "TVF";
@@ -1134,10 +1133,10 @@ class TestController extends Controller
             }
             fclose($handle);
         }
+        //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
+        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
 echo "<br />fin temporaire";
 die();
-        //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
-        //shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
 
         //
         // To view
@@ -1942,7 +1941,7 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
-            echo "<br/>PAS TROUVE 1 !" . $pathFileName . $extension;
+            echo "<br/>PAS TROUVE 1 MP3 !" . $pathFileName . " - " . $extension;
         }
 
         $extension = ".jpg";
@@ -1969,7 +1968,7 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
-            echo "<br/>PAS TROUVE 1 !" . $pathFileName . $extension;
+            echo "<br/>PAS TROUVE 1 JPG !" . $pathFileName . " - " . $extension;
         }
 
         // Enregistrement en base
