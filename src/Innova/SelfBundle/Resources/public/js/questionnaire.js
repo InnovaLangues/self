@@ -65,13 +65,13 @@ $(document).ready(function() {
                 var consigne = 0;
 
                 $.ajax({
-                        url: Routing.generate('sessionConsigneListenNumber'),
+                        url: Routing.generate('sessionConsigneOrContextListenNumber'),
                         async: false,
                         type: 'GET',
                         dataType: 'json'
                     })
                     .done(function(data) {
-                        consigne = data.consigneListenNumber;
+                        consigne = data.consigneOrContextListenNumber;
                     })
                     .fail(function() {
                         alert('Ajax error 2');
@@ -184,13 +184,13 @@ $(document).ready(function() {
       });
 
       $.ajax({
-         url: Routing.generate('resetSessionConsigneListenNumber'),
+         url: Routing.generate('resetSessionConsigneOrContextListenNumber'),
          async: false,
          type: 'PUT',
          dataType: 'json'
       })
       .done(function(data) {
-         var reste = data.consigneListenNumber;
+         var reste = data.consigneOrContextListenNumber;
       })
       .fail(function() {
          alert('Ajax error consigne');
@@ -200,16 +200,16 @@ $(document).ready(function() {
     /**************
         Allow or not to listen "Situation de départ". We must listen "Consigne didactique" before.". EV, 20/12/2013
     **************/
-    $(".consigne").click(function(){
+    $(".consigne, .contexte").click(function(){
         //Increment session
         $.ajax({
-            url: Routing.generate('incrementeSessionConsigneListenNumber'),
+            url: Routing.generate('incrementeSessionConsigneOrContextListenNumber'),
             type: 'PUT',
             dataType: 'json'
         })
 
         .done(function(data) {
-            var consigne = data.consigneListenNumber;
+            var consigne = data.consigneOrContextListenNumber;
         })
 
         .fail(function() {

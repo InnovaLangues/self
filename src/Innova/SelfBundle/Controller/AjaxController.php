@@ -83,10 +83,10 @@ class AjaxController extends Controller
     /**
      * Vérify if the session variable is OK and initialize if not.
      *
-     * @Route("/session-consigne-listen-number", name="sessionConsigneListenNumber", options={"expose"=true})
+     * @Route("/session-consigne-or-context-listen-number", name="sessionConsigneOrContextListenNumber", options={"expose"=true})
      * @Method("GET")
      */
-    public function sessionConsigneListenNumberAction()
+    public function sessionConsigneOrContextListenNumberAction()
     {
         $consigneListenNumber = null;
 
@@ -97,17 +97,17 @@ class AjaxController extends Controller
         }
 
         return new JsonResponse(
-            array('consigneListenNumber' => $consigneListenNumber)
+            array('consigneOrContextListenNumber' => $consigneListenNumber)
         );
     }
 
     /**
      * To incremente the variable session + 1.
      *
-     * @Route("/increment-session-consigne-listen-number", name="incrementeSessionConsigneListenNumber", options={"expose"=true})
+     * @Route("/increment-session-consigne-or-context-listen-number", name="incrementeSessionConsigneOrContextListenNumber", options={"expose"=true})
      * @Method("PUT")
      */
-    public function incrementeSessionConsigneListenNumberAction()
+    public function incrementeSessionConsigneOrContextListenNumberAction()
     {
 
         $session = $this->container->get('request')->getSession();
@@ -122,17 +122,17 @@ class AjaxController extends Controller
         $session->set('consigneListenNumber', $nextConsigneListenNumber);
 
         return new JsonResponse(
-            array('consigneListenNumber' => $nextConsigneListenNumber)
+            array('consigneOrContextListenNumber' => $nextConsigneListenNumber)
         );
     }
 
     /**
      * To reset the variable session to null.
      *
-     * @Route("/reset-session-consigne-listen-number", name="resetSessionConsigneListenNumber", options={"expose"=true})
+     * @Route("/reset-session-consigne-or-context-listen-number", name="resetSessionConsigneOrContextListenNumber", options={"expose"=true})
      * @Method("PUT")
      */
-    public function resetSessionConsigneListenNumberAction()
+    public function resetSessionConsigneOrContextListenNumberAction()
     {
 
         $session = $this->container->get('request')->getSession();
@@ -140,7 +140,7 @@ class AjaxController extends Controller
         $consigneListenNumber = $session->set('consigneListenNumber', null);
 
         return new JsonResponse(
-            array('consigneListenNumber' => $consigneListenNumber)
+            array('consigneOrContextListenNumber' => $consigneListenNumber)
         );
     }
 
