@@ -675,6 +675,7 @@ class TestController extends Controller
         $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
         $csvName = 'ok.csv'; // Suite réception MP.
         $csvName = 'italien-co-flv.csv'; // Suite réception MP.
+        $csvName = 'ko-appat.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -887,7 +888,7 @@ class TestController extends Controller
                     if (isset($exp[$number])) {
                     echo "<br />Exp Number : " . $exp[$number];
                         $nb = explode(".", $exp[$number]);
-                        if (($nb[0] == '1') || ($nb[0] == '2') || ($nb[0] == '3')  || ($nb[0] == '4')) {
+                        if (($nb[0] == '1') || ($nb[0] == '2') || ($nb[0] == '3')  || ($nb[0] == '4') || ($nb[0] == '5')) {
                             echo "<br />extension0";
                             $fileName .= $nb[0];
                             $numberExist = true;
@@ -935,15 +936,18 @@ class TestController extends Controller
                     if (preg_match("/reponse/i", $fileName)) {
                         if ($numberExist) {
                             if (isset($exp[$number])) {
+                            echo "<br>DEUX<br>";
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . "_" . $exp[$number]);
                             }
                             else
                             {
+                            echo "<br>TROIS<br>";
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . ".mp3");
                             }
                         }
                         else
                         {
+                            echo "<br>UN<br>";
                             copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse.mp3");
                         }
                     }
@@ -1037,7 +1041,7 @@ class TestController extends Controller
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
                     $testName = "test-english"; // For tests.
-                    $testName = "SELF CO Italien FLV4"; // For tests.
+                    $testName = "SELF CO Italien KO/APPAT"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
@@ -1790,10 +1794,21 @@ die();
       //  $em->flush();
 
         $medias = array();
+/*
         $nbItems = $data[11];
         for ($i=0; $i < $nbItems; $i++) {
             $indice = 12+(2*$i);
             $this->mediaAppatProcess($data[$indice], $medias);
+        }
+
+*/
+        $tab = explode("#", $data[12]);
+        $countTab = count($tab);
+        echo "<br>CountTab : " . $countTab;
+        for ($j = 1; $j < $countTab; $j++)
+        {
+            echo "<br>j : " . $j;
+            $this->mediaAppatProcess($tab[$j], $medias);
         }
 
         // Traitement sur le nombre d'items
@@ -1811,9 +1826,19 @@ die();
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
-
+/*
             $nbMedias = count($medias); #80
             for ($j=0; $j < $nbMedias; $j++) {
+                $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
+            }
+*/
+//            $tab = explode("#", $data[12]);
+//            $countTab = count($tab);
+//            echo "<br>CountTab : " . $countTab;
+            $nbMedias = count($medias); #80
+            for ($j=0; $j < $nbMedias; $j++)
+            {
+                echo "<br>j : " . $j;
                 $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
@@ -1825,6 +1850,7 @@ die();
      */
     private function propositionAppatProcess($i, $j, $subQuestion, $media)
     {
+        echo "<br>Média propositionAppatProcess : " . $media . "<br>";
         $em = $this->getDoctrine()->getManager();
 
         // Créer une occurrence dans la table "Proposition"
@@ -2040,6 +2066,8 @@ die();
      */
     private function mediaAppatProcess($texte, &$medias)
     {
+
+        echo "<br>Texte : " . $texte;
         $em = $this->getDoctrine()->getManager();
         // Création dans "Media"
         $media = new Media();
