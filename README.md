@@ -13,7 +13,7 @@ create a database & user and fill in the app/config/parameter.yml
 composer install
 php app/console doctrine:schema:drop --force
 php app/console doctrine:schema:update --force
-php app/console doctrine:fixtures:load
+php app/console self:fixtures:load
 php app/console assets:install --symlink
 php app/console cache:clear --env=prod --no-debug
 ```
