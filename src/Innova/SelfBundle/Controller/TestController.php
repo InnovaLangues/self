@@ -1121,6 +1121,7 @@ class TestController extends Controller
                     //
                     // $data[1]  = nom du répertoire = nom du thême
                     // $data[10] = nom de l'extension du fichier (ex : mp3)
+                    $data[1] = trim($data[1]);
                     $this->copieFileDir($data[1], $data[10], $questionnaire, $dir2copy, $dir_paste);
 
                     //
@@ -1470,7 +1471,7 @@ die();
                     //
                     $testFile = $dir2copy . $mediaDir . '/' . $fichier . "." . $newItemExtention;
 
-                    echo "<br />testFile :" .  $testFile;
+                    echo "<br />testFile COPIE :" .  $testFile;
                     if (file_exists($testFile)) {
                     echo "<br />dans file_ex";
                         // Création dans "Media"
@@ -1503,8 +1504,10 @@ die();
                         copy($dir2copy . $mediaDir . '/' . $fichier . "." . $newItemExtention, $dir_paste . $fileCopy . "." . $newItemExtention);
 
                         // Mise à jour de Questionnaire suivant le type de média
+                            echo "<br>FICHIER !<br>" . $fichier;
                         switch ($fichier) {
                             case 'consigne':
+                            echo "<br>CONSIGNE !!!!!!!!!!<br>";
                                 $questionnaire->setMediaInstruction($media);
                                 break;
                             case 'texte':
@@ -1791,7 +1794,7 @@ die();
         $question->setTypology($typo);
 
         $em->persist($question);
-      //  $em->flush();
+        //$em->flush();
 
         $medias = array();
 /*
@@ -1819,6 +1822,7 @@ die();
 
             $subQuestion->setTypology($typo);
             $subQuestion->setQuestion($question);
+            $this->processMediaSubquestion($i+1, $subQuestion, $dir2copy, $dir_paste, $data);
 
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
@@ -1843,6 +1847,41 @@ die();
             }
         }
     }
+
+    /**
+     * processMediaSubquestion function
+     *
+     */
+    private function processMediaSubquestion($i, $subQuestion,  $dir2copy, $dir_paste, $data)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $dirName = trim($data[1]);
+        $fileName = "option_" . $i;
+        $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
+
+        if (file_exists($testFile)) {
+            // Création dans "Media"
+            $media = new Media();
+            $media->setName($dirName . "_" . $fileName);
+            $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
+
+            $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+            $media->setMediaType($mediaType);
+            $subQuestion->setMedia($media);
+
+            // Enregistrement en base
+            $em->persist($media);
+
+            copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . $media->getUrl() . ".mp3");
+        }
+
+        // Enregistrement en base
+        $em->persist($subQuestion);
+        //$em->flush();
+    }
+
 
     /**
      * propositionAppatProcess function
@@ -2072,6 +2111,7 @@ die();
         // Création dans "Media"
         $media = new Media();
         $media->setName($texte);
+        $media->setDescription($texte);
 
         $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte");
         $media->setMediaType($mediaType);
