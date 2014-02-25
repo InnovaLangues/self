@@ -69,16 +69,15 @@ $(document).ready(function() {
                         async: false,
                         type: 'GET',
                         dataType: 'json'
-                    })
-                    .done(function(data) {
-                        consigne = data.consigneOrContextListenNumber;
-                    })
-                    .fail(function() {
-                        alert('Ajax error 2');
-                    });
+                })
+                .done(function(data) {
+                    consigne = data.consigneOrContextListenNumber;
+                })
+                .fail(function() {
+                    alert('Ajax error 2');
+                });
 
                 if (consigne > 0){
-
                     // Si j'ai déjà cliqué sur la consigne didactique
                     // alors j'initialise l'attribut "data-toggle"
                     // afin de ne plus afficher la modal de contrôle.
