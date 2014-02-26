@@ -91,13 +91,16 @@ input[type="checkbox"], input[type="radio"], label{
 }
 
 /**************************
- Drag and drop 
+ Drag and drop
 ***************************/
 .touch-me{
 	cursor:move;
 	height:30px;
 }
 
+.source  {
+	max-width: 160px;
+}
 .answer{
 	width:160px;
 	height:100px;
@@ -190,3 +193,18 @@ div[class="tooltip-inner"] {
 	vertical-align : middle;
 }
 
+
+ul.nav-wizard {
+  background-color: transparent;
+  border: none;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  *zoom: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+ul.nav-wizard li {
+  background-color: #f9f9f9;
+}

@@ -40,11 +40,9 @@
                                 {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
                                 <ul class='nav nav-wizard' id="register-form-tabs">
                                     {% for i, subquestion in question.subquestions %}
-                                        {% if i == 0 %}
-                                            <li class='active'><a href='#step{{i}}' data-toggle="tab">Part 1</a></li>
-                                        {% else %}
-                                            <li><a href='#step{{i}}' data-toggle="tab">Part {{i+1}}</a></li>
-                                        {% endif %}
+                                        <li {% if i == 0 %}class='active'{% endif %}>
+                                            <a href='#step{{i}}' data-toggle="tab"># {{i+1}}</a>
+                                        </li>
                                     {% endfor %}
                                 </ul>
 
