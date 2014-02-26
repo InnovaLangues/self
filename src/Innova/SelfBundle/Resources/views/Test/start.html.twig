@@ -39,8 +39,13 @@
                                 {# Pour avoir le Wizard #}
                                 {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
                                 <ul class='nav nav-wizard' id="register-form-tabs">
-                                   <li class='active'><a href='#step0' data-toggle="tab">Part 1</a></li>
-                                   <li><a href='#step1' data-toggle="tab">Part 2</a></li>
+                                    {% for i, subquestion in question.subquestions %}
+                                        {% if i == 0 %}
+                                            <li class='active'><a href='#step{{i}}' data-toggle="tab">Part 1</a></li>
+                                        {% else %}
+                                            <li><a href='#step{{i}}' data-toggle="tab">Part {{i+1}}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
                                 </ul>
 
                                 <div id="myTabContent" class="tab-content">

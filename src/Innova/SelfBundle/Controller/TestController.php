@@ -675,7 +675,8 @@ class TestController extends Controller
         $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
         $csvName = 'ok.csv'; // Suite réception MP.
         $csvName = 'italien-co-flv.csv'; // Suite réception MP.
-        $csvName = 'italien-tvfnm.csv'; // Suite réception MP.
+        $csvName = 'ko-reste-a-faire.csv'; // Suite réception MP.
+        $csvName = 'ko-26-02.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -1041,7 +1042,7 @@ class TestController extends Controller
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
                     $testName = "test-english"; // For tests.
-                    $testName = "SELF CO Italien KO/TVFNM"; // For tests.
+                    $testName = "SELF CO Italien ko-26-02"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
