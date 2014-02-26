@@ -90,14 +90,12 @@ input[type="checkbox"], input[type="radio"], label{
 	display:inline-block;
 }
 
-/* Drag and drop */
+/**************************
+ Drag and drop 
+***************************/
 .touch-me{
 	cursor:move;
 	height:30px;
-}
-
-.valid-target{
-	border:1px dotted white;
 }
 
 .answer{
@@ -109,14 +107,27 @@ input[type="checkbox"], input[type="radio"], label{
 	border-radius:5px;
 }
 
-.source{
+.source {
 	margin-bottom:10px;
 	text-align:center;
 }
 
-.answer, .source{
+.answer, .source {
 	border:1px dotted black;
 }
+
+.drag-and-drop-input {
+	visibility: hidden;
+}
+
+.draggable-in-black {
+	color:black;
+}
+
+.droppable-hover {
+	border: 2px solid black;
+}
+/* End Drag and Drop */
 
 #controlModal{
     height: 400px;
@@ -178,3 +189,4 @@ div[class="tooltip-inner"] {
 	display : inline-block;
 	vertical-align : middle;
 }
+
