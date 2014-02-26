@@ -675,7 +675,7 @@ class TestController extends Controller
         $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
         $csvName = 'ok.csv'; // Suite réception MP.
         $csvName = 'italien-co-flv.csv'; // Suite réception MP.
-        $csvName = 'ko-appa.csv'; // Suite réception MP.
+        $csvName = 'italien-tvfnm.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -942,13 +942,13 @@ class TestController extends Controller
                             else
                             {
                             echo "<br>TROIS<br>";
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . ".mp3");
+                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . "." . $extension);
                             }
                         }
                         else
                         {
                             echo "<br>UN<br>";
-                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse.mp3");
+                            copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse." . $extension);
                         }
                     }
 
@@ -1041,7 +1041,7 @@ class TestController extends Controller
                     $questionnaire = new Questionnaire();
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
                     $testName = "test-english"; // For tests.
-                    $testName = "SELF CO Italien KO/APPAT"; // For tests.
+                    $testName = "SELF CO Italien KO/TVFNM"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
@@ -1145,6 +1145,9 @@ class TestController extends Controller
                         case "VFPM";
                         case "TVFPM";
                             $this->vfProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            break;
+                        case "TVFNM";
+                            $this->tvfnmProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                         case "APPAT";
                             $this->appatProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
@@ -1742,6 +1745,101 @@ die();
             }
         }
     }
+
+    /**
+     * tvfnmProcess function
+     *
+     */
+    private function tvfnmProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        echo "<br />tvfnmProcess" . $nbItems;
+
+        // Créer une occurrence dans la table "Question"
+        $question = new Question();
+
+        $question->setQuestionnaire($questionnaire);
+        $question->setTypology($typo);
+
+        $em->persist($question);
+        //$em->flush();
+
+        $dirName = $data[1];
+
+        // Traitement sur le nombre d'items
+        for ($i = 1; $i <= $nbItems; $i++) {
+            echo "<br />Suis dans la boucle";
+            $subQuestion = new Subquestion();
+            if ($i == 1) $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
+
+            $ctrlTypo = $typo->getName();
+            if ($ctrlTypo[0] == "T") {
+                $libTypoSubQuestion = substr($typo->getName(), 1); // J'enlève le premier caractère de la typoQuestion pour avoir la typoSubQuestion
+                $typoSubQuestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($libTypoSubQuestion);
+                $subQuestion->setTypology($typoSubQuestion);
+            } else {
+                $subQuestion->setTypology($typo);
+            }
+            $subQuestion->setQuestion($question);
+
+            // Recherche si le fichier existe
+            // S'il n'existe pas, je passe au suivant.
+            //
+            $fileName = "option_" . $i;
+            $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
+
+            echo "<br />" . $testFile;
+            if (file_exists($testFile)) {
+            echo "<br />Création média";
+                // Création dans "Media"
+                $media = new Media();
+                $media->setName($dirName . "_" . $fileName);
+                $media->setUrl($dirName . "_" . $fileName . "_" . uniqid());
+
+                $mediaType = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("audio");
+                $media->setMediaType($mediaType);
+                $subQuestion->setMedia($media);
+
+                // Enregistrement en base
+                $em->persist($media);
+                copy($dir2copy . $dirName . "/" . $fileName . ".mp3", $dir_paste . '/' . $media->getUrl() . ".mp3");
+            }
+
+            // Voir le traitement de l'amorce // AB.
+            $em->persist($subQuestion);
+
+            // Créer une occurrence dans la table "Proposition"
+            $indice = 10+(2*$i);
+            //$rightAnswer = $data[$indice-1];
+            $rightAnswer = $data[$indice+1]; // Changement 14/02/2014 car décalage du fichier.
+
+                $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
+                $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
+                $this->vfPropositionProcess($rightAnswer, "ND", "ND", $subQuestion); // PM : à confirmer
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * vfPropositionProcess function

@@ -73,7 +73,7 @@
                                         {% include "InnovaSelfBundle:Test/partials:QRM.html.twig" %}
                                     {% elseif subquestion.typology.name  == "QRU" %}
                                          {% include "InnovaSelfBundle:Test/partials:QRU.html.twig" %}
-                                    {% elseif subquestion.typology.name  == "VF" or subquestion.typology.name  == "VFPM" or subquestion.typology.name  == "TVF" %}
+                                    {% elseif subquestion.typology.name == "VF" or subquestion.typology.name == "VFPM" or subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" or subquestion.typology.name == "VFNM"%}
                                         {% include "InnovaSelfBundle:Test/partials:VF.html.twig" %}
                                     {% elseif subquestion.typology.name == "APPAA" or subquestion.typology.name == "APPAT" or subquestion.typology.name  == "APPAI" %}
                                         {% set vars = {'subquestion0' : question.subquestions[0]} %}

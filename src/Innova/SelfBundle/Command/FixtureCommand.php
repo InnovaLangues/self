@@ -83,7 +83,7 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             $typologies = array("TVF", "QRU", "VF", "QRM", "TQRU", "TQRM", "TVFPM",
-            "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFND");
+            "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFND", "TVFNM", "VFNM");
             foreach ($typologies as $typology) {
                 $typo = new Typology();
                 $typo->setName($typology);

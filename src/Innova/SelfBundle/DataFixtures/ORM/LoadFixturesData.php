@@ -60,7 +60,7 @@ class LoadFixturesData implements FixtureInterface, ContainerAwareInterface
         }
 
         $typologies = array("TVF", "QRU", "VF", "QRM", "TQRU", "TQRM", "TVFPM",
-            "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFNM");
+            "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFNM", "VFNM");
         foreach ($typologies as $typology) {
             $typo = new Typology();
             $typo->setName($typology);
