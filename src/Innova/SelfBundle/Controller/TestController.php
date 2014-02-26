@@ -88,7 +88,6 @@ class TestController extends Controller
         $language = $em->getRepository('InnovaSelfBundle:Language')->findBy(array('id' => $test->getLanguage()->getId()));
         $languageColor = $language[0]->getColor();
 
-//echo "<pre>" . $questionnaire . "</pre>";
         return array(
             'questionnaire' => $questionnaire,
             'language' => $languageColor,
@@ -667,16 +666,11 @@ class TestController extends Controller
         //
 
         // File import path
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/it/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // Symfony
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/test-csv/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/test-mp3/'; // Symfony
 
         // File import name
-        $csvName = 'test-import.csv';
-        $csvName = 'mp2-ok-un-theme.csv'; // Suite réception MP.
-        $csvName = 'ok.csv'; // Suite réception MP.
-        $csvName = 'italien-co-flv.csv'; // Suite réception MP.
-        $csvName = 'ko-reste-a-faire.csv'; // Suite réception MP.
-        $csvName = 'ko-26-02.csv'; // Suite réception MP.
+        $csvName = 'test.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -685,7 +679,7 @@ class TestController extends Controller
 
         // File import path
         // Répertoire où seront stockés les fichiers
-        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // A modifier quand on aura l'adresse
+        $dir2copy =__DIR__.'/../../../../web/upload/import/test-mp3/'; // A modifier quand on aura l'adresse
 
         // File copy path
         // Répertoire où seront copiés les fichiers
@@ -696,7 +690,8 @@ class TestController extends Controller
 //
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
-                if ($fichier != '.' && $fichier != '..') {
+                if ($fichier != '.' && $fichier != '..' && is_file($csvPathImportMp3.$fichier)) {
+
                     $exp = explode("_", $fichier);
 
                     $exp[0] = strtolower($exp[0]);
@@ -711,19 +706,15 @@ class TestController extends Controller
                     }
                     if (isset($exp[4])) {
                         $exp[4] = strtolower($exp[4]);
-                    echo "<br />exp4 = " . $exp[4];
                     }
                     if (isset($exp[5])) {
                         $exp[5] = strtolower($exp[5]);
-                    echo "<br />exp5 = " . $exp[5];
                     }
                     if (isset($exp[6])) {
                         $exp[6] = strtolower($exp[6]);
-                    echo "<br />exp6 = " . $exp[6];
                     }
                     if (isset($exp[7])) {
                         $exp[7] = strtolower($exp[7]);
-                    echo "<br />exp7 = " . $exp[7];
                     }
                     //$repertoryName = strtolower($exp[0]);
 
@@ -740,8 +731,6 @@ class TestController extends Controller
                             $repertoryName = strtolower($exp[0]);
                         }
                     }
-                     echo "<br />Indice : " . $indice_fileName;
-                   echo "<br />Rep0 : " . $repertoryName;
 
                     if (isset($exp[1])) {
                         if ((preg_match("/consigne/i", $exp[1])) || (preg_match("/option/i", $exp[1]))
@@ -754,8 +743,6 @@ class TestController extends Controller
                             $repertoryName .=  "_" . strtolower($exp[1]);
                         }
                     }
-                    echo "<br />Rep1 : " . $repertoryName;
-                    echo "<br />Indice : " . $indice_fileName;
 
                     if (isset($exp[2])) {
                         if ((preg_match("/consigne/i", $exp[2])) || (preg_match("/option/i", $exp[2]))
@@ -768,8 +755,6 @@ class TestController extends Controller
                             $repertoryName .=  "_" .  strtolower($exp[2]);
                         }
                     }
-                    echo "<br />Rep2 : " . $repertoryName;
-                    echo "<br />Indice : " . $indice_fileName;
 
                     if (isset($exp[3])) {
                         if ((preg_match("/consigne/i", $exp[3])) || (preg_match("/option/i", $exp[3]))
@@ -784,15 +769,12 @@ class TestController extends Controller
                             }
                         }
                     }
-                    echo "<br />Rep3 : " . $repertoryName;
-                    echo "<br />Indice : " . $indice_fileName;
 
                     if ($indice_fileName == 0 ) {
                         if (isset($exp[4])) {
                             if ((preg_match("/consigne/i", $exp[4])) || (preg_match("/option/i", $exp[4]))
                             || (preg_match("/contexte/i", $exp[4])) || (preg_match("/texte/i", $exp[4]))
                             || (preg_match("/amorce/i", $exp[4])) || (preg_match("/reponse/i", $exp[4]))) {
-                                echo "stop";
                                 $indice_fileName = 4;
                             }
                             else
@@ -803,15 +785,12 @@ class TestController extends Controller
                             }
                         }
                     }
-                    echo "<br />Rep4 : " . $repertoryName;
-                    echo "<br />Indice : " . $indice_fileName;
 
                     if ($indice_fileName == 0 ) {
                         if (isset($exp[5])) {
                             if ((preg_match("/consigne/i", $exp[5])) || (preg_match("/option/i", $exp[5]))
                             || (preg_match("/contexte/i", $exp[5])) || (preg_match("/texte/i", $exp[5]))
                             || (preg_match("/amorce/i", $exp[5])) || (preg_match("/reponse/i", $exp[5]))) {
-                                echo "stop";
                                 $indice_fileName = 5;
                             }
                             else
@@ -822,15 +801,12 @@ class TestController extends Controller
                             }
                         }
                     }
-                    echo "<br />Rep5 : " . $repertoryName;
-                    echo "<br />Indice : " . $indice_fileName;
 
                     if ($indice_fileName == 0 ) {
                         if (isset($exp[6])) {
                             if ((preg_match("/consigne/i", $exp[6])) || (preg_match("/option/i", $exp[6]))
                             || (preg_match("/contexte/i", $exp[6])) || (preg_match("/texte/i", $exp[6]))
                             || (preg_match("/amorce/i", $exp[6])) || (preg_match("/reponse/i", $exp[6]))) {
-                                echo "<br />stop6<br />";
                                 $indice_fileName = 6;
                             }
                             else
@@ -841,15 +817,12 @@ class TestController extends Controller
                             }
                         }
                     }
-                    echo "<br />Rep6 : " . $repertoryName;
-                    echo "<br />Indice : " . $indice_fileName;
 
                     if ($indice_fileName == 0 ) {
                         if (isset($exp[7])) {
                             if ((preg_match("/consigne/i", $exp[7])) || (preg_match("/option/i", $exp[7]))
                             || (preg_match("/contexte/i", $exp[7])) || (preg_match("/texte/i", $exp[7]))
                             || (preg_match("/amorce/i", $exp[7])) || (preg_match("/reponse/i", $exp[7]))) {
-                                echo "<br />stop7<br />";
                                 $indice_fileName = 7;
                             }
                             else
@@ -860,61 +833,46 @@ class TestController extends Controller
                             }
                         }
                     }
-                    echo "<br />Rep7 : " . $repertoryName;
 
-                    echo "<br />Indice : " . $indice_fileName;
 
                     $fileName = $exp[$indice_fileName]; // = nom de l'option : amorce/consigne/contexte/texte
-                    echo "<br />fileName : " . $fileName;
 
                     if (preg_match("/mp3/i", $exp[$indice_fileName])) {
-                         echo "<br />MP3 dans fileName<br />";
                         $nb = explode(".", $exp[$indice_fileName]);
                         $fileName = $nb[0];
                     }
 
-                    echo "<br />fileName APRES : " . $fileName;
 
-                    echo "<br />fileName : " . $fileName;
 
                     $repertoryMkDir = $csvPathImportMp3 . $repertoryName;
-                    echo "<br />Rep : " . $repertoryMkDir . "<br /> fileName : " . $fileName;
                     // Création du répertoire (s'il n'est pas déjà créé)
                     if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
 
+                    echo "## creation repertoire : ".$repertoryName."<br/>";
                     $number = $indice_fileName+1;
-                    echo "<br />Number : " . $number;
 
                     $nb[0] = null;
                     if (isset($exp[$number])) {
-                    echo "<br />Exp Number : " . $exp[$number];
                         $nb = explode(".", $exp[$number]);
                         if (($nb[0] == '1') || ($nb[0] == '2') || ($nb[0] == '3')  || ($nb[0] == '4') || ($nb[0] == '5')) {
-                            echo "<br />extension0";
                             $fileName .= $nb[0];
                             $numberExist = true;
-                            echo "<br />fileName99 : " . $fileName;
                         }
                         $number++;
-                        echo "<br />Number2 : " . $number;
                         if (isset($exp[$number])) {
-                            echo "<br />extension1";
                             $fileName = $fileName . "_" . $exp[$number];
                         }
-                        echo "<br />fileName après extension : " . $fileName;
                     }
                     else
                     {
                         $nb = explode(".", $fileName);
                         $fileName = $nb[0];
                         $numberExist = false;
-                    echo "<br />fileName2 : " . $fileName;
                     }
 
                     // Extension
                     $fileExtension = explode(".", $fichier);
                     $extension = $fileExtension[1];
-                    echo "<br />EXTENSION : " . $extension;
 
                     // Fin traitement extension
 
@@ -937,18 +895,15 @@ class TestController extends Controller
                     if (preg_match("/reponse/i", $fileName)) {
                         if ($numberExist) {
                             if (isset($exp[$number])) {
-                            echo "<br>DEUX<br>";
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . "_" . $exp[$number]);
                             }
                             else
                             {
-                            echo "<br>TROIS<br>";
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . "." . $extension);
                             }
                         }
                         else
                         {
-                            echo "<br>UN<br>";
                             copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse." . $extension);
                         }
                     }
@@ -997,7 +952,6 @@ class TestController extends Controller
 
                     // Ajout de ^ pour le test uniquement sur texte.
                     if (preg_match("/^texte/i", $fileName)) {
-                        echo "<br />dans texte preg match";
                         if ($numberExist) {
                             copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte_". $nb[0] . "." . $extension);
                         }
@@ -1022,6 +976,8 @@ class TestController extends Controller
         }
 // FIN
 //
+
+        echo "<br/> ************  TRAITEMENT CSV ************<br/>";
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte : dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
         // Cette contrainte a été prise en compte par rapport au fichier reçu.
@@ -1046,7 +1002,6 @@ class TestController extends Controller
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
-                        echo "<br />Création du test row=1";
                         $test = new Test();
                         $test->setName($testName);
                         $test->setLanguage($language);
@@ -1086,6 +1041,7 @@ class TestController extends Controller
                     $questionnaire->setFlow();
                     $questionnaire->setFocus();
                     $questionnaire->setTheme($data[1]); // Thême
+                    echo "## creation questionnaire : ".$data[1]."<br/>";
 
                     //Dialogue
                     $questionnaire->setDialogue(0);
@@ -1111,7 +1067,6 @@ class TestController extends Controller
                     $questionnaire->setMediaText();
 
                     $indice++;
-                    echo "<br />" . $indice . " theme : "  . $questionnaire->getTheme() . " Typo : " . $data[4];
                     // Enregistrement en base
                     $em->persist($questionnaire);
 
@@ -1172,7 +1127,6 @@ class TestController extends Controller
         }
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
         //shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
-echo "<br />fin temporaire";
 die();
 
         //
@@ -1466,18 +1420,14 @@ die();
                         $newItemExtention = "mp3";
                     } else {
                          $newItemExtention = $itemExtention;
-                         print " texte !!! " . $itemExtention . " fichier : " . $fichier;
                     }
-
 
                     // Recherche si le fichier existe
                     // S'il n'existe pas, je passe au suivant.
                     //
                     $testFile = $dir2copy . $mediaDir . '/' . $fichier . "." . $newItemExtention;
 
-                    echo "<br />testFile COPIE :" .  $testFile;
                     if (file_exists($testFile)) {
-                    echo "<br />dans file_ex";
                         // Création dans "Media"
                         $media = new Media();
                         $media->setName($mediaDir . "_" . $fichier);
@@ -1508,10 +1458,8 @@ die();
                         copy($dir2copy . $mediaDir . '/' . $fichier . "." . $newItemExtention, $dir_paste . $fileCopy . "." . $newItemExtention);
 
                         // Mise à jour de Questionnaire suivant le type de média
-                            echo "<br>FICHIER !<br>" . $fichier;
                         switch ($fichier) {
                             case 'consigne':
-                            echo "<br>CONSIGNE !!!!!!!!!!<br>";
                                 $questionnaire->setMediaInstruction($media);
                                 break;
                             case 'texte':
@@ -1662,7 +1610,6 @@ die();
     {
         $em = $this->getDoctrine()->getManager();
 
-        echo "<br />vfProcess" . $nbItems;
 
         // Créer une occurrence dans la table "Question"
         $question = new Question();
@@ -1677,7 +1624,6 @@ die();
 
         // Traitement sur le nombre d'items
         for ($i = 1; $i <= $nbItems; $i++) {
-            echo "<br />Suis dans la boucle";
             $subQuestion = new Subquestion();
             if ($i == 1) $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
 
@@ -1697,9 +1643,7 @@ die();
             $fileName = "option_" . $i;
             $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
 
-            echo "<br />" . $testFile;
             if (file_exists($testFile)) {
-            echo "<br />Création média";
                 // Création dans "Media"
                 $media = new Media();
                 $media->setName($dirName . "_" . $fileName);
@@ -1727,9 +1671,7 @@ die();
             $tab = explode("#", $data[12]);
             //var_dump($tab);
             $type = $tab[0];
-            //echo "<br />" . $type;
             if ($data[12] != "VF") {
-                echo "<br />!VF";
                 $vrai = $tab[1];
                 $this->vfPropositionProcess($rightAnswer, $vrai, "V", $subQuestion);
                 $faux = $tab[2];
@@ -1755,7 +1697,6 @@ die();
     {
         $em = $this->getDoctrine()->getManager();
 
-        echo "<br />tvfnmProcess" . $nbItems;
 
         // Créer une occurrence dans la table "Question"
         $question = new Question();
@@ -1770,7 +1711,6 @@ die();
 
         // Traitement sur le nombre d'items
         for ($i = 1; $i <= $nbItems; $i++) {
-            echo "<br />Suis dans la boucle";
             $subQuestion = new Subquestion();
             if ($i == 1) $this->processAmorceSubquestion($i, $subQuestion, $dir2copy, $dir_paste, $data);
 
@@ -1790,9 +1730,7 @@ die();
             $fileName = "option_" . $i;
             $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
 
-            echo "<br />" . $testFile;
             if (file_exists($testFile)) {
-            echo "<br />Création média";
                 // Création dans "Media"
                 $media = new Media();
                 $media->setName($dirName . "_" . $fileName);
@@ -1854,10 +1792,8 @@ die();
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
         if ($rightAnswer == $expectedAnswer) {
-            echo "<br />true";
             $proposition->setRightAnswer(true);
         } else {
-            echo "<br />false";
             $proposition->setRightAnswer(false);
         }
 
@@ -1906,10 +1842,8 @@ die();
 */
         $tab = explode("#", $data[12]);
         $countTab = count($tab);
-        echo "<br>CountTab : " . $countTab;
         for ($j = 1; $j < $countTab; $j++)
         {
-            echo "<br>j : " . $j;
             $this->mediaAppatProcess($tab[$j], $medias);
         }
 
@@ -1937,11 +1871,9 @@ die();
 */
 //            $tab = explode("#", $data[12]);
 //            $countTab = count($tab);
-//            echo "<br>CountTab : " . $countTab;
             $nbMedias = count($medias); #80
             for ($j=0; $j < $nbMedias; $j++)
             {
-                echo "<br>j : " . $j;
                 $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }
@@ -1988,7 +1920,6 @@ die();
      */
     private function propositionAppatProcess($i, $j, $subQuestion, $media)
     {
-        echo "<br>Média propositionAppatProcess : " . $media . "<br>";
         $em = $this->getDoctrine()->getManager();
 
         // Créer une occurrence dans la table "Proposition"
@@ -2134,7 +2065,6 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
-            echo "<br/>PAS TROUVE 1 MP3 !" . $pathFileName . " - " . $extension;
         }
 
         $extension = ".jpg";
@@ -2161,7 +2091,6 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
-            echo "<br/>PAS TROUVE 1 JPG !" . $pathFileName . " - " . $extension;
         }
 
 
@@ -2189,7 +2118,6 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
-            echo "<br/>PAS TROUVE 1 FLV !" . $pathFileName . " - " . $extension;
         }
 
         // Enregistrement en base
@@ -2205,7 +2133,6 @@ die();
     private function mediaAppatProcess($texte, &$medias)
     {
 
-        echo "<br>Texte : " . $texte;
         $em = $this->getDoctrine()->getManager();
         // Création dans "Media"
         $media = new Media();
