@@ -216,4 +216,17 @@ $(document).ready(function() {
         });
     });
 
+    /*****************
+        TQRU/M WIP
+    *******************/
+    $(":radio").change(function() {
+        $( ".control-tab" ).each(function( index ) {
+            subquestionId = $( this ).attr("data-subquestionId");
+
+            if ( $("[name='"+subquestionId+"[]']:checked").length > 0 ){
+                $( "#control-tab-" + subquestionId ).hide(300);
+                console.log( subquestionId );
+            }
+        });
+    });
 });
