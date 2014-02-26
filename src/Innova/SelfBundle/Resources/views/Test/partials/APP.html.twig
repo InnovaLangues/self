@@ -3,7 +3,7 @@
 	{{ macros.media("apparriement-" ~ subquestion.id, subquestion.media,  subquestion.media.mediaType.name ~ bulleCount ~".png", 90, 0, "Liez une proposition de droite à cet élément") }}
 	<span subquestionId="{{ subquestion.id }}" class="answer droppable">
 		{% for i, proposition in subquestion.propositions %}
-			<input type="checkbox" equivalence = {{ subquestion0.propositions[i].id }} value = {{ proposition.id }} > {{ proposition.id }} <br/>
+			<input  id="input-proposition{{ proposition.id }}" type="radio" equivalence = {{ subquestion0.propositions[i].id }} value = {{ proposition.id }} name="{{ subquestion.id }}[]" > {{ proposition.id }} <br/>
 		{% endfor %}
 
 	</span>
