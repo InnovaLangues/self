@@ -661,33 +661,30 @@ class TestController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-       //
+        //
         // CSV Import part
         //
+        $dirmp3 = "test-mp3";
+        $dircsv = "test-csv";
+        $csvName = 'test.csv';
 
         // File import path
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/test-csv/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/test-mp3/'; // Symfony
-
-        // File import name
-        $csvName = 'test.csv'; // Suite réception MP.
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/'.$dircsv.'/'; 
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/'.$dirmp3.'/'; 
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
         // Path + Name:wq
         $csvPath = $csvPathImport . $csvName;
 
-        // File import path
-        // Répertoire où seront stockés les fichiers
-        $dir2copy =__DIR__.'/../../../../web/upload/import/test-mp3/'; // A modifier quand on aura l'adresse
+        // Répertoire où sont stockés les fichiers avant moulinette
+        $dir2copy =__DIR__.'/../../../../web/upload/import/'.$dirmp3.'/'; // A modifier quand on aura l'adresse
 
-        // File copy path
         // Répertoire où seront copiés les fichiers
         $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
 
-// Traitement des fichiers reçus
-// DEBUT
-//
+        // Traitement des fichiers reçus
+
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..' && is_file($csvPathImportMp3.$fichier)) {
@@ -1000,7 +997,7 @@ class TestController extends Controller
                     $testName = "test-english"; // For tests.
                     $testName = "SELF CO Italien ko-26-02"; // For tests.
 
-//                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
+                    //  if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
                         $test = new Test();
                         $test->setName($testName);
@@ -1041,7 +1038,7 @@ class TestController extends Controller
                     $questionnaire->setFlow();
                     $questionnaire->setFocus();
                     $questionnaire->setTheme($data[1]); // Thême
-                    echo "## creation questionnaire : ".$data[1]."<br/>";
+                    echo "## creation questionnaire ".$libTypo ." : ".$data[1]."<br/>";
 
                     //Dialogue
                     $questionnaire->setDialogue(0);
@@ -1758,25 +1755,6 @@ class TestController extends Controller
                 $this->vfPropositionProcess($rightAnswer, "ND", "ND", $subQuestion); // PM : à confirmer
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
