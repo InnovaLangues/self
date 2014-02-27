@@ -30,8 +30,8 @@ php app/console cache:clear --no-debug --env=prod
 ``` bash
 mkdir web/upload/media
 mkdir web/upload/import/
-sudo setfacl -dR -m u:www-data:rwx -m u:youruser:rwx web/upload/media web/upload/import app/cache app/logs
-sudo setfacl -R -m u:www-data:rwx -m u:youruser:rwx web/upload/media web/upload/import app/cache app/logs
+sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/media web/upload/import app/cache app/logs
+sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/media web/upload/import app/cache app/logs
 ```
 
 ### Create a new admin user :
