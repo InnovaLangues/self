@@ -661,9 +661,7 @@ class TestController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        //
-        // CSV Import part
-        //
+        // Nom des répertoires et du fichier CSV utilisé par la moulinette 
         $dirmp3 = "test-mp3";
         $dircsv = "test-csv";
         $csvName = 'test.csv';
@@ -671,20 +669,14 @@ class TestController extends Controller
         // File import path
         $csvPathImport    =__DIR__.'/../../../../web/upload/import/'.$dircsv.'/'; 
         $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/'.$dirmp3.'/'; 
-
-        // Symfony
-        $urlCSVRelativeToWeb = 'upload/import/csv/';
-        // Path + Name:wq
+        // Path du fichier CSV
         $csvPath = $csvPathImport . $csvName;
-
-        // Répertoire où sont stockés les fichiers avant moulinette
-        $dir2copy =__DIR__.'/../../../../web/upload/import/'.$dirmp3.'/'; // A modifier quand on aura l'adresse
-
-        // Répertoire où seront copiés les fichiers
-        $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
+        // Répertoire où sont stockés les fichiers utilisés par la moulinette
+        $dir2copy =__DIR__.'/../../../../web/upload/import/'.$dirmp3.'/'; 
+        // Répertoire où seront copiés les fichiers utilisés par l'application
+        $dir_paste =__DIR__.'/../../../../web/upload/media/';
 
         // Traitement des fichiers reçus
-
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..' && is_file($csvPathImportMp3.$fichier)) {
@@ -1126,9 +1118,6 @@ class TestController extends Controller
         shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
         die();
 
-        //
-        // To view
-        //
         return array(
             "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
             "csvName"             => $csvName
