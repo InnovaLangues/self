@@ -51,14 +51,12 @@
                                     {% endfor %}
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
-
                                     {% for i, subquestion in question.subquestions %}
                                         <div class="tab-pane fade {% if i == 0 %} active in{% endif %}" id="step{{i}}">
                                             <div class="subquestion">
-                                                {% include "InnovaSelfBundle:Test/partials:TQRU.html.twig" %}
+                                                {% include "InnovaSelfBundle:Test/partials:TQR.html.twig" %}
                                             </div>
                                         </div>
-                                           
                                     {% endfor %}
                                 </div> {# myTabContent #}
                             </div> {# well #}
