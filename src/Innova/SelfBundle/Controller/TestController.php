@@ -1126,8 +1126,8 @@ class TestController extends Controller
             fclose($handle);
         }
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
-        //shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
-die();
+        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
+        die();
 
         //
         // To view

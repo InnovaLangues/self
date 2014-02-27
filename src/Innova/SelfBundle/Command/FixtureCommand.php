@@ -37,7 +37,7 @@ class FixtureCommand extends ContainerAwareCommand
             $start = time();
             $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-            $mediaTypes = array("audio", "video", "texte", "image", "plop");
+            $mediaTypes = array("audio", "video", "texte", "image");
             foreach ($mediaTypes as $mediaType) {
                 if (!$em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($mediaType)){
                     $type = new mediaType();
