@@ -41,9 +41,7 @@ php app/console fos:user:create admin --super-admin
 
 ### Copy mp3 files and csv files into web/upload/import...
 
-### Launch "moulinette" (check mp3 and csv dir in TestController before)
-
-### Convert wav -> mp3
+### Convert wav -> mp3 if needed
 ``` bash
 cd web/upload/import/mp3..
 find . -iname "*.wav" -exec sox {} {}.mp3 \;
