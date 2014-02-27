@@ -1067,6 +1067,8 @@ class TestController extends Controller
                     $questionnaire->setMediaText();
 
                     $indice++;
+                    $data[4] = trim($data[4]);
+                    $data[12] = trim($data[12]);
                     // Enregistrement en base
                     $em->persist($questionnaire);
 
