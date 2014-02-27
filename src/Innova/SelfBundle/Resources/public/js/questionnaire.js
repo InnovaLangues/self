@@ -200,6 +200,7 @@ $(document).ready(function() {
     /**************
         Allow or not to listen "Situation de départ". We must listen "Consigne didactique" before.". EV, 20/12/2013
     **************/
+
     $(".consigne, .contexte").click(function(){
         //Increment session
         $.ajax({
@@ -217,9 +218,10 @@ $(document).ready(function() {
         });
     });
 
-    /*****************
+    /**************
         TQRU/M
-    *******************/
+    **************/
+
     $(":radio").change(function(){
         $( ".control-tab" ).each(function( index ) {
             subquestionId = $( this ).attr("data-subquestionId");
@@ -240,5 +242,29 @@ $(document).ready(function() {
             }
         });
     });
+
+
+
+    /**************
+        Fix for checkboxes group required
+    **************/
+    
+    var chbxs = $(':checkbox[required]');
+    var namedChbxs = {};
+    chbxs.each(function(){
+        var name = $(this).attr('name');
+        namedChbxs[name] = (namedChbxs[name] || $()).add(this);
+    });
+    chbxs.change(function(){
+        var name = $(this).attr('name');
+        var cbx = namedChbxs[name];
+        if(cbx.filter(':checked').length>0){
+            cbx.removeAttr('required');
+
+        }else{
+            cbx.attr('required','required');
+        }
+    });
+
 
 });
