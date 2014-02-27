@@ -12,13 +12,16 @@ cp app/config/parameters.yml.dist app/config/parameters.yml
 vi app/config/parameters.yml
 ```
 
-### Dl vendors, update schema and assets install
+### Download vendors, update schema and assets install
 ``` bash
 composer update
 php app/console doctrine:schema:drop --force
 php app/console doctrine:schema:update --force
 php app/console self:fixtures:load
+php app/console assetic:dump
+php app/console assetic:dump --env=prod
 php app/console assets:install --symlink
+php app/console assets:install --symlink -env=prod
 php app/console cache:clear --no-debug
 php app/console cache:clear --no-debug --env=prod
 ```
@@ -37,6 +40,8 @@ php app/console fos:user:create admin --super-admin
 ```
 
 ### Copy mp3 files and csv files into web/upload/import...
+
+### Launch "moulinette" (check mp3 and csv dir in TestController before)
 
 ### Convert wav -> mp3
 ``` bash
