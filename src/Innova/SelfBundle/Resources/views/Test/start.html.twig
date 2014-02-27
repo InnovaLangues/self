@@ -43,7 +43,9 @@
                                         <li {% if i == 0 %}class='active'{% endif %}>
                                             <a href='#step{{i}}' data-toggle="tab">
                                                 # {{i+1}} 
-                                                <span id="control-tab-{{ subquestion.id }}" class="control-tab" data-subquestionId = "{{ subquestion.id }}" style="color:red">*</span>
+                                                <span class="control-tab-wrapper pull-right">
+                                                    <span id="control-tab-{{ subquestion.id }}" class="control-tab" data-subquestionId = "{{ subquestion.id }}">*</span>
+                                                </span>
                                             </a>
                                         </li>
                                     {% endfor %}

@@ -168,7 +168,8 @@ $(document).ready(function() {
     /**************
         TO RESET SESSION VARIABLE IF I CLICK ON "VALIDER" BUTTON
     **************/
-    $('.reset-listening-number').click(function(event) {
+
+    $("form").submit(function(){
       $.ajax({
          url: Routing.generate('resetSessionSituationListenNumber'),
          async: false,
@@ -217,16 +218,27 @@ $(document).ready(function() {
     });
 
     /*****************
-        TQRU/M WIP
+        TQRU/M
     *******************/
-    $(":radio").change(function() {
+    $(":radio").change(function(){
         $( ".control-tab" ).each(function( index ) {
             subquestionId = $( this ).attr("data-subquestionId");
 
             if ( $("[name='"+subquestionId+"[]']:checked").length > 0 ){
                 $( "#control-tab-" + subquestionId ).hide(300);
                 console.log( subquestionId );
+            } else {
+                $( "#control-tab-" + subquestionId ).show();
+            } 
+        });
+    });
+
+    $('#submit').click(function(event) {
+        $( ".control-tab" ).each(function( index ) {
+            if ( $(this).is(":visible") ){
+                $(this).toggle( "pulsate",  { times:2 } ).toggle( "pulsate", { times:2 } );
             }
         });
     });
+
 });
