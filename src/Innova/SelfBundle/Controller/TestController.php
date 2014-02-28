@@ -650,14 +650,14 @@ class TestController extends Controller
      * importCsvSQL function
      *
      * @Route(
-     *     "/admin/csv-import",
-     *     name = "csv-import"
+     *     "/admin/csv-import/{language}",
+     *     name = "csv-import",
+     *     requirements={"language" = "en|it"}
      * )
-     *
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function importCsvSQLAction()
+    public function importCsvSQLAction($language)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -666,11 +666,15 @@ class TestController extends Controller
         //
 
         // File import path
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/test-csv/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/test-mp3/'; // Symfony
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/it/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // Symfony
+
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/en/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // Symfony
+
 
         // File import name
-        $csvName = 'test.csv'; // Suite réception MP.
+        $csvName = 'ok-27-02-en.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -679,7 +683,7 @@ class TestController extends Controller
 
         // File import path
         // Répertoire où seront stockés les fichiers
-        $dir2copy =__DIR__.'/../../../../web/upload/import/test-mp3/'; // A modifier quand on aura l'adresse
+        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // A modifier quand on aura l'adresse
 
         // File copy path
         // Répertoire où seront copiés les fichiers
@@ -996,9 +1000,9 @@ class TestController extends Controller
 
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
-                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
+                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
                     $testName = "test-english"; // For tests.
-                    $testName = "SELF CO Italien ko-26-02"; // For tests.
+                    $testName = "CO Anglais"; // For tests.
 
 //                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
@@ -1128,7 +1132,7 @@ class TestController extends Controller
             fclose($handle);
         }
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
-        //shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
+        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
 die();
 
         //
@@ -1588,8 +1592,10 @@ die();
 
         $tab = explode("#", $data[12]);
         $type = $tab[0];
+        echo "<br>" . $type;
         if ($type == "QRU") {
             $countTab = count($tab);
+            echo "<br>dans boucle";
             for ($compteurTab = 1; $compteurTab < $countTab; $compteurTab++)
             {
                 $this->vfPropositionProcess($rightAnswer, $tab[$compteurTab], $compteurTab, $subQuestion);
@@ -1597,6 +1603,8 @@ die();
         }
         else
         {
+            echo "<br>PAS dans boucle";
+            echo "<br>" . $nbProposition;
             for ($j=1; $j <= $nbProposition; $j++) {
                 $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
             }
@@ -2045,6 +2053,7 @@ die();
 
         $extension = ".mp3";
 
+        echo "<br>pathFileName : " . $pathFileName . $extension;
         if (file_exists($pathFileName . $extension)) {
             if (preg_match("/".$j."/", $rightAnswer)) {
                 $proposition->setRightAnswer(true);
@@ -2067,6 +2076,7 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
+            echo "pas trouvé MP3";
         }
 
         $extension = ".jpg";
@@ -2093,6 +2103,7 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
+            echo "pas trouvé JPG";
         }
 
 
@@ -2120,6 +2131,7 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
+            echo "pas trouvé FLV";
         }
 
         // Enregistrement en base
