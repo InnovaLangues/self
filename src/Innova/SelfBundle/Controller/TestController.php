@@ -670,7 +670,7 @@ class TestController extends Controller
         $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // Symfony
 
         $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/en/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/en/'; // Symfony
 
 
         // File import name
@@ -683,7 +683,7 @@ class TestController extends Controller
 
         // File import path
         // Répertoire où seront stockés les fichiers
-        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // A modifier quand on aura l'adresse
+        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3-p2/en/'; // A modifier quand on aura l'adresse
 
         // File copy path
         // Répertoire où seront copiés les fichiers
@@ -2076,7 +2076,7 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
-            echo "pas trouvé MP3";
+            echo "<br>pas trouvé MP3";
         }
 
         $extension = ".jpg";
@@ -2103,7 +2103,7 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
-            echo "pas trouvé JPG";
+            echo "<br>pas trouvé JPG";
         }
 
 
@@ -2131,7 +2131,7 @@ die();
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
-            echo "pas trouvé FLV";
+            echo "<br>pas trouvé FLV";
         }
 
         // Enregistrement en base

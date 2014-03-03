@@ -2,6 +2,9 @@
 <div class="qrm-sub">
     <h4> {{ subquestion.title }}</h4>
     <p>
+    {% if subquestion.mediaAmorce is not null %}
+        {{ macros.media("amorce-"~ subquestion.id, subquestion.mediaAmorce, "audio.png", 90, 0, "Amorce") }}
+    {% endif %}
     {% for proposition in subquestion.propositions | shuffle %}
         {% set bulleCount = bulleCount + 1 %}
         <p class="proposition-block">
