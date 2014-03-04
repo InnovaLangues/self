@@ -21,11 +21,6 @@ use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\Media;
 
-
-/**
- * Symfony command to add or not fixtures. EV.
- *
-*/
 class FixtureCommand extends ContainerAwareCommand
 {
 
@@ -33,116 +28,138 @@ class FixtureCommand extends ContainerAwareCommand
     {
         $this
             ->setName('self:fixtures:load')
-            ->setDescription('Optimize Load Fixtures')
+            ->setDescription('Load needed datas')
         ;
     }
 
-/**
-* If I have any data in database, then I don't execute fixtures. EV.
-*
-*/
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-        $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
-
-        $skill = $em->getRepository('InnovaSelfBundle:Skill')->findAll();
-
-        $countSkill = count($skill);
-
-        if ($countSkill == 0) {
-
-            $output->writeln("Fixtures exécutées.");
+            $start = time();
+            $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
             $mediaTypes = array("audio", "video", "texte", "image");
             foreach ($mediaTypes as $mediaType) {
-                $type = new mediaType();
-                $type->setName($mediaType);
-                $em->persist($type);
+                if (!$em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($mediaType)){
+                    $type = new mediaType();
+                    $type->setName($mediaType);
+                    $em->persist($type);
+                    $output->writeln("Add new mediaType (".$mediaType.").");
+                }
             }
 
             $questionnaireDurations = array("brève", "moyenne", "longue");
             foreach ($questionnaireDurations as $questionnaireDuration) {
-                $duration = new Duration();
-                $duration->setName($questionnaireDuration);
-                $em->persist($duration);
+                if (!$em->getRepository('InnovaSelfBundle:Duration')->findOneByName($questionnaireDuration)){
+                    $duration = new Duration();
+                    $duration->setName($questionnaireDuration);
+                    $em->persist($duration);
+                    $output->writeln("Add new Duration (".$questionnaireDuration.").");
+                }
             }
 
             $questionnaireLevels = array("A1", "A2", "B1", "B2", "C1");
             foreach ($questionnaireLevels as $questionnaireLevel) {
-                $level = new Level();
-                $level->setName($questionnaireLevel);
-                $em->persist($level);
+                if (!$em->getRepository('InnovaSelfBundle:Level')->findOneByName($questionnaireLevel)){
+                    $level = new Level();
+                    $level->setName($questionnaireLevel);
+                    $em->persist($level);
+                    $output->writeln("Add new Level (".$questionnaireLevel.").");
+                }
             }
 
             $questionnaireSkills = array("CO", "CE");
             foreach ($questionnaireSkills as $questionnaireSkill) {
-                $skill = new Skill();
-                $skill->setName($questionnaireSkill);
-                $em->persist($skill);
+                if (!$em->getRepository('InnovaSelfBundle:Skill')->findOneByName($questionnaireSkill)){
+                    $skill = new Skill();
+                    $skill->setName($questionnaireSkill);
+                    $em->persist($skill);
+                    $output->writeln("Add new Skill (".$questionnaireSkill.").");
+                }
             }
 
             $typologies = array("TVF", "QRU", "VF", "QRM", "TQRU", "TQRM", "TVFPM",
-            "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFND", "TVFNM", "VFNM");
+            "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFNM", "VFNM");
             foreach ($typologies as $typology) {
-                $typo = new Typology();
-                $typo->setName($typology);
-                $em->persist($typo);
+                if (!$em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)){
+                    $typo = new Typology();
+                    $typo->setName($typology);
+                    $em->persist($typo);
+                    $output->writeln("Add new Typology (".$typology.").");
+                }
             }
 
             /*
-New table for version 1.2 or version 2 (2014)
-fixtures for originStudent table
-*/
+                New table for version 1.2 or version 2 (2014)
+                fixtures for originStudent table
+            */
             $originStudents = array("LANSAD", "LLCE", "LEA", "UJF", "Autres");
             foreach ($originStudents as $originStudent) {
-                $student = new originStudent();
-                $student->setName($originStudent);
-                $em->persist($student);
+                if (!$em->getRepository('InnovaSelfBundle:OriginStudent')->findOneByName($originStudent)){
+                    $student = new originStudent();
+                    $student->setName($originStudent);
+                    $em->persist($student);
+                    $output->writeln("Add new OriginStudent (".$originStudent.").");
+                }
             }
 
-            /* New table for version 1.2 or version 2 (2014)
-fixtures for language table
-Important : we must have some keywords to add test.
-So, in TestController.php, we create the test with language "English" or "Italian". */
-            $langEng = new Language();
-            $langEng->setName("English");
-            $langEng->setColor("blue");
-            $em->persist($langEng);
-            $em->flush();
+            /*  New table for version 1.2 or version 2 (2014)
+                fixtures for language table
+                Important : we must have some keywords to add test.
+                So, in TestController.php, we create the test with language "English" or "Italian". 
+            */
+            if (!$em->getRepository('InnovaSelfBundle:Language')->findOneByName("English")){
+                $langEng = new Language();
+                $langEng->setName("English");
+                $langEng->setColor("blue");
+                $em->persist($langEng);
+                $em->flush();
+                $output->writeln("Add new Language (English).");
+            }
 
-            $langIt = new Language();
-            $langIt->setName("Italian");
-            $langIt->setColor("pink");
-            $em->persist($langIt);
-            $em->flush();
+            if (!$em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian")){
+                $langIt = new Language();
+                $langIt->setName("Italian");
+                $langIt->setColor("pink");
+                $em->persist($langIt);
+                $em->flush();
+                $output->writeln("Add new Language (Italian).");
+            }
 
             /*
-New table for version 1.2 or version 2 (2014)
-fixtures for levelLansad table
-*/
+                New table for version 1.2 or version 2 (2014)
+                fixtures for levelLansad table
+            */
+            $langEng = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
             /* Level for English language */
             $levelLansadEngs = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
             foreach ($levelLansadEngs as $levelLansadEng) {
-                $level = new LevelLansad();
-                $level->setLanguage($langEng);
-                $level->setName($levelLansadEng);
-                $em->persist($level);
+                if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneByName($levelLansadEng)){
+                    $level = new LevelLansad();
+                    $level->setLanguage($langEng);
+                    $level->setName($levelLansadEng);
+                    $em->persist($level);
+                    $output->writeln("Add new LevelLansad (".$levelLansadEng.").");
+                }
             }
 
+            $langIt = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
             /* Level for Ialian language */
             $levelLansadIts = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
             foreach ($levelLansadIts as $levelLansadIt) {
-                $level = new LevelLansad();
-                $level->setLanguage($langIt);
-                $level->setName($levelLansadIt);
-                $em->persist($level);
+                if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneByName($levelLansadIt)){
+                    $level = new LevelLansad();
+                    $level->setLanguage($langIt);
+                    $level->setName($levelLansadIt);
+                    $em->persist($level);
+                    $output->writeln("Add new LevelLansad (".$levelLansadIt.").");
+                }
             }
 
             $em->flush();
-        } else {
-            $output->writeln("Fixtures non exécutées. Des données existent déjà.");
-        }
 
+            $now = time();
+            $duration = $now - $start;
+
+            $output->writeln("Fixtures exécutées en ".$duration." sec.");
     }
 }
