@@ -316,11 +316,6 @@ A local sect and assorted Hindu right-wingers opposed his law, which Maharashtra
         $questionnaire_12_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_12_1_3);
         $questionnaire_12_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_12_1_3);
 
-
-
-
-
-
         /*******************************************
                     QUESTIONNAIRE 12 : QRU
         ********************************************/
@@ -528,7 +523,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
     }
 
     /**
-     *tionVF(
+     *createPropositionVF()
      */
     protected function createPropositionVF($text, $textAnswer, $rightAnswer, Subquestion $subquestion)
     {
