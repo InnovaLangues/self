@@ -650,33 +650,48 @@ class TestController extends Controller
      * importCsvSQL function
      *
      * @Route(
-     *     "/admin/csv-import",
-     *     name = "csv-import"
+     *     "/admin/csv-import/{language}",
+     *     name = "csv-import",
+     *     requirements={"language" = "en|it"}
      * )
-     *
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function importCsvSQLAction()
+    public function importCsvSQLAction($language)
     {
         $em = $this->getDoctrine()->getManager();
 
-        // Nom des répertoires et du fichier CSV utilisé par la moulinette 
-        $dirmp3 = "test-mp3";
-        $dircsv = "test-csv";
-        $csvName = 'test.csv';
+       //
+        // CSV Import part
+        //
 
         // File import path
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/'.$dircsv.'/'; 
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/'.$dirmp3.'/'; 
-        // Path du fichier CSV
-        $csvPath = $csvPathImport . $csvName;
-        // Répertoire où sont stockés les fichiers utilisés par la moulinette
-        $dir2copy =__DIR__.'/../../../../web/upload/import/'.$dirmp3.'/'; 
-        // Répertoire où seront copiés les fichiers utilisés par l'application
-        $dir_paste =__DIR__.'/../../../../web/upload/media/';
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/it/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // Symfony
 
-        // Traitement des fichiers reçus
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/en/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/en/'; // Symfony
+
+
+        // File import name
+        $csvName = 'ok-27-02-en.csv'; // Suite réception MP.
+
+        // Symfony
+        $urlCSVRelativeToWeb = 'upload/import/csv/';
+        // Path + Name:wq
+        $csvPath = $csvPathImport . $csvName;
+
+        // File import path
+        // Répertoire où seront stockés les fichiers
+        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3-p2/en/'; // A modifier quand on aura l'adresse
+
+        // File copy path
+        // Répertoire où seront copiés les fichiers
+        $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
+
+// Traitement des fichiers reçus
+// DEBUT
+//
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..' && is_file($csvPathImportMp3.$fichier)) {
@@ -985,11 +1000,11 @@ class TestController extends Controller
 
                     // Add to Questionnaire table
                     $questionnaire = new Questionnaire();
-                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
+                    $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
                     $testName = "test-english"; // For tests.
-                    $testName = "SELF CO Italien ko-26-02"; // For tests.
+                    $testName = "CO Anglais"; // For tests.
 
-                    //  if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
+//                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
                         $test = new Test();
                         $test->setName($testName);
@@ -1030,7 +1045,7 @@ class TestController extends Controller
                     $questionnaire->setFlow();
                     $questionnaire->setFocus();
                     $questionnaire->setTheme($data[1]); // Thême
-                    echo "## creation questionnaire ".$libTypo ." : ".$data[1]."<br/>";
+                    echo "## creation questionnaire : ".$data[1]."<br/>";
 
                     //Dialogue
                     $questionnaire->setDialogue(0);
@@ -1056,6 +1071,8 @@ class TestController extends Controller
                     $questionnaire->setMediaText();
 
                     $indice++;
+                    $data[4] = trim($data[4]);
+                    $data[12] = trim($data[12]);
                     // Enregistrement en base
                     $em->persist($questionnaire);
 
@@ -1116,8 +1133,11 @@ class TestController extends Controller
         }
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
         shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
-        die();
+die();
 
+        //
+        // To view
+        //
         return array(
             "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
             "csvName"             => $csvName
@@ -1572,8 +1592,10 @@ class TestController extends Controller
 
         $tab = explode("#", $data[12]);
         $type = $tab[0];
+        echo "<br>" . $type;
         if ($type == "QRU") {
             $countTab = count($tab);
+            echo "<br>dans boucle";
             for ($compteurTab = 1; $compteurTab < $countTab; $compteurTab++)
             {
                 $this->vfPropositionProcess($rightAnswer, $tab[$compteurTab], $compteurTab, $subQuestion);
@@ -1581,6 +1603,8 @@ class TestController extends Controller
         }
         else
         {
+            echo "<br>PAS dans boucle";
+            echo "<br>" . $nbProposition;
             for ($j=1; $j <= $nbProposition; $j++) {
                 $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
             }
@@ -1744,6 +1768,25 @@ class TestController extends Controller
                 $this->vfPropositionProcess($rightAnswer, "ND", "ND", $subQuestion); // PM : à confirmer
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2010,6 +2053,7 @@ class TestController extends Controller
 
         $extension = ".mp3";
 
+        echo "<br>pathFileName : " . $pathFileName . $extension;
         if (file_exists($pathFileName . $extension)) {
             if (preg_match("/".$j."/", $rightAnswer)) {
                 $proposition->setRightAnswer(true);
@@ -2032,6 +2076,7 @@ class TestController extends Controller
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
+            echo "<br>pas trouvé MP3";
         }
 
         $extension = ".jpg";
@@ -2058,6 +2103,7 @@ class TestController extends Controller
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
+            echo "<br>pas trouvé JPG";
         }
 
 
@@ -2085,6 +2131,7 @@ class TestController extends Controller
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         } else {
+            echo "<br>pas trouvé FLV";
         }
 
         // Enregistrement en base
