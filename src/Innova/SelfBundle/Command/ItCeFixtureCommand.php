@@ -63,15 +63,32 @@ class ItceFixtureCommand extends ContainerAwareCommand
         $questionnaire_1 = $this->createQuestionnaire("A1_CE_parking_gare", "A1", "CE", $test);
         $questionnaire_1->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false"));
         $questionnaire_1->setMediaContext($this->mediaText("", "Pubblicità in stazione"));
-        $questionnaire_1->setMediaText($this->mediaText("Parcheggia l’auto e parti in treno!", "Lascia l’auto vicino alla stazione e parti con i treni Frecciarossa, Frecciargento e Frecciabianca.@@@ A Torino, Milano e Padova puoi avere una tariffa speciale in alcuni parcheggi e garage convenzionati, semplicemente presentando il tuo biglietto valido su treni Frecciarossa, Frecciargento e Frecciabianca."));
+        $questionnaire_1->setMediaText(
+        $this->mediaText("Parcheggia l’auto e parti in treno!",
+        "Lascia l’auto vicino alla stazione e parti con i treni Frecciarossa, Frecciargento e Frecciabianca.@@@ A Torino, Milano e Padova puoi avere una tariffa speciale in alcuni parcheggi e garage convenzionati, semplicemente presentando il tuo biglietto valido su treni Frecciarossa, Frecciargento e Frecciabianca.")
+        );
         // CREATION QUESTION
         $questionnaire_1_1 = $this->createQuestion("TVF", $questionnaire_1);
         // CREATION SUBQUESTION
-        $questionnaire_1_1_1 = $this->createSubquestion("QRM", $questionnaire_1_1, "");
+        //$questionnaire_1_1_1 = $this->createSubquestion("QRM", $questionnaire_1_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_1_1_1_1 = $this->createProposition("L’offerta è valida solo in alcune città.", true, $questionnaire_1_1_1);
-        $questionnaire_1_1_1_2 = $this->createProposition("Con il biglietto del treno il parcheggio per l’automobile è gratuito.", true, $questionnaire_1_1_1);
-        $questionnaire_1_1_1_3 = $this->createProposition("Per avere tariffa speciale è necessario presentare il biglietto del treno.", true, $questionnaire_1_1_1);
+        //$questionnaire_1_1_1_1 = $this->createProposition("L’offerta è valida solo in alcune città.", true, $questionnaire_1_1_1);
+        //$questionnaire_1_1_1_2 = $this->createProposition("Con il biglietto del treno il parcheggio per l’automobile è gratuito.", true, $questionnaire_1_1_1);
+        //$questionnaire_1_1_1_3 = $this->createProposition("Per avere tariffa speciale è necessario presentare il biglietto del treno.", true, $questionnaire_1_1_1);
+        // CREATION SUBQUESTION
+        $questionnaire_1_1_1 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "L’offerta è valida solo in alcune città.");
+        $questionnaire_1_1_2 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "Con il biglietto del treno il parcheggio per l’automobile è gratuito.");
+        $questionnaire_1_1_3 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "Per avere tariffa speciale è necessario presentare il biglietto del treno.");
+        // CREATION PROPOSITIONS
+        $questionnaire_1_1_1_1 = $this->createPropositionVF("", "VRAI", true, $questionnaire_1_1_1);
+        $questionnaire_1_1_1_1 = $this->createPropositionVF("", "FAUX", false, $questionnaire_1_1_1);
+
+        $questionnaire_1_1_1_2 = $this->createPropositionVF("", "VRAI", true, $questionnaire_1_1_2);
+        $questionnaire_1_1_1_2 = $this->createPropositionVF("", "FAUX", false, $questionnaire_1_1_2);
+
+        $questionnaire_1_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_1_1_3);
+        $questionnaire_1_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_1_1_3);
+
 
         /*******************************************
                     QUESTIONNAIRE 2 : TQRU
@@ -80,7 +97,7 @@ class ItceFixtureCommand extends ContainerAwareCommand
         $questionnaire_2 = $this->createQuestionnaire("A1_CE_shopping_florence_1_2", "A1", "CE", $test);
         $questionnaire_2->setMediaInstruction($this->mediaText("", "Completa il testo usando le parole suggerite"));
         $questionnaire_2->setMediaContext($this->mediaText("", "Breve articolo su rivista femminile"));
-        $questionnaire_2->setMediaText($this->mediaText("**1.** _________ davvero tanti i luoghi dove turisti e cittadini fiorentini **2.** __________ trascorrere una bella giornata di shopping all'aria aperta. Partendo dal centro storico, Via Tornabuoni **3.**  _______ sicuramente il posto ideale dove poter fare acquisti chic ed eleganti.", "Le vie dello shopping a Firenze"));
+        $questionnaire_2->setMediaText($this->mediaText("Le vie dello shopping a Firenze", "**1.** _________ davvero tanti i luoghi dove turisti e cittadini fiorentini **2.** __________ trascorrere una bella giornata di shopping all'aria aperta. Partendo dal centro storico, Via Tornabuoni **3.**  _______ sicuramente il posto ideale dove poter fare acquisti chic ed eleganti.", "Le vie dello shopping a Firenze"));
         // CREATION QUESTION
         $questionnaire_2_1 = $this->createQuestion("TQRU", $questionnaire_2);
         // CREATION SUBQUESTION
@@ -129,12 +146,30 @@ class ItceFixtureCommand extends ContainerAwareCommand
         // CREATION QUESTION
         $questionnaire_4_1 = $this->createQuestion("TVF", $questionnaire_4);
         // CREATION SUBQUESTION
-        $questionnaire_4_1_1 = $this->createSubquestion("QRM", $questionnaire_4_1, "");
+        //$questionnaire_4_1_1 = $this->createSubquestion("QRM", $questionnaire_4_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_4_1_1_1 = $this->createProposition("La biblioteca chiude per la pausa pranzo", true, $questionnaire_4_1_1);
-        $questionnaire_4_1_1_2 = $this->createProposition("La biblioteca č aperta tutte le mattine.", false, $questionnaire_4_1_1);
-        $questionnaire_4_1_1_3 = $this->createProposition("In biblioteca č possibile navigare su internet senza pagare.", true, $questionnaire_4_1_1);
-        $questionnaire_4_1_1_4 = $this->createProposition("XXXXXXXXXXXXXXXXXX", true, $questionnaire_4_1_1);
+        //$questionnaire_4_1_1_1 = $this->createProposition("La biblioteca chiude per la pausa pranzo", true, $questionnaire_4_1_1);
+        //$questionnaire_4_1_1_2 = $this->createProposition("La biblioteca č aperta tutte le mattine.", false, $questionnaire_4_1_1);
+        //$questionnaire_4_1_1_3 = $this->createProposition("In biblioteca č possibile navigare su internet senza pagare.", true, $questionnaire_4_1_1);
+        //$questionnaire_4_1_1_4 = $this->createProposition("XXXXXXXXXXXXXXXXXX", true, $questionnaire_4_1_1);
+
+        $questionnaire_4_1_1 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca chiude per la pausa pranzo");
+        $questionnaire_4_1_2 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca č aperta tutte le mattine.");
+        $questionnaire_4_1_3 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "In biblioteca č possibile navigare su internet senza pagare.");
+        $questionnaire_4_1_4 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "XXXXXXXXXXXXXXXXXX");
+        // CREATION PROPOSITIONS
+        $questionnaire_4_1_1_1 = $this->createPropositionVF("", "VRAI", true, $questionnaire_4_1_1);
+        $questionnaire_4_1_1_1 = $this->createPropositionVF("", "FAUX", false, $questionnaire_4_1_1);
+
+        $questionnaire_4_1_1_2 = $this->createPropositionVF("", "VRAI", false, $questionnaire_4_1_2);
+        $questionnaire_4_1_1_2 = $this->createPropositionVF("", "FAUX", true, $questionnaire_4_1_2);
+
+        $questionnaire_4_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_4_1_3);
+        $questionnaire_4_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_4_1_3);
+
+        $questionnaire_4_1_1_4 = $this->createPropositionVF("", "VRAI", false, $questionnaire_4_1_4);
+        $questionnaire_4_1_1_4 = $this->createPropositionVF("", "FAUX", true, $questionnaire_4_1_4);
+
 
         /*******************************************
                     QUESTIONNAIRE 5 : n'existe pas
@@ -164,8 +199,8 @@ class ItceFixtureCommand extends ContainerAwareCommand
         $questionnaire_6_1_2_3 = $this->createProposition("Offre corsi di vario tipo.", true, $questionnaire_6_1_2);
 
         $questionnaire_6_1_3_1 = $this->createProposition("Non si paga nulla", false, $questionnaire_6_1_3);
-        $questionnaire_6_1_3_2 = $this->createProposition("Bisogna pagare una piccola somma", false, $questionnaire_6_1_3);
-        $questionnaire_6_1_3_3 = $this->createProposition("Bisogna presentarsi il primo giorno dell’anno", true, $questionnaire_6_1_3);
+        $questionnaire_6_1_3_2 = $this->createProposition("Bisogna pagare una piccola somma", true, $questionnaire_6_1_3);
+        $questionnaire_6_1_3_3 = $this->createProposition("Bisogna presentarsi il primo giorno dell’anno", false, $questionnaire_6_1_3);
 
         /*******************************************
                     QUESTIONNAIRE 7 : QRU
@@ -219,8 +254,8 @@ class ItceFixtureCommand extends ContainerAwareCommand
         // CREATION QUESTION
         $questionnaire_10_1 = $this->createQuestion("TQRU", $questionnaire_10);
         // CREATION SUBQUESTION
-        $questionnaire_10_1_1 = $this->createSubquestion("QRU", $questionnaire_10_1, "");
-        $questionnaire_10_1_2 = $this->createSubquestion("QRU", $questionnaire_10_1, "");
+        $questionnaire_10_1_1 = $this->createSubquestion("QRU", $questionnaire_10_1, "1.Francesca esce con Paolo per:");
+        $questionnaire_10_1_2 = $this->createSubquestion("QRU", $questionnaire_10_1, "2. Domani Francesca:");
         // CREATION PROPOSITIONS
         $questionnaire_10_1_1_1 = $this->createProposition("cena", true, $questionnaire_10_1_1);
         $questionnaire_10_1_1_2 = $this->createProposition("apranzo", false, $questionnaire_10_1_1);
@@ -237,11 +272,11 @@ class ItceFixtureCommand extends ContainerAwareCommand
         $questionnaire_11 = $this->createQuestionnaire("A1_CE_mail_vacances", "A1", "CE", $test);
         $questionnaire_11->setMediaInstruction($this->mediaText("", "Due informazioni sono presenti nel testo. Quali?"));
         $questionnaire_11->setMediaContext($this->mediaText("", "E-mail tra padre e figlio"));
-        $questionnaire_11->setMediaText($this->mediaText("Qui tutto bene!", "Ciao papŕ,@@@le vacanze procedono benissimo! La mattina faccio sempre colazione al bar e poi vado in spiaggia fino allora di pranzo. Nel pomeriggio sto in camera a leggere e a riposarmi e poi la sera, verso le 7.00, vado a correre e dopo cena esco con dei ragazzi simpatici che ho conosciuto qui. Spero tutto bene lě a casa!! @@@Un abbraccio e a presto, Giulio"));
+        $questionnaire_11->setMediaText($this->mediaText("Qui tutto bene!", "Ciao papà,@@@le vacanze procedono benissimo! La mattina faccio sempre colazione al bar e poi vado in spiaggia fino all’ora di pranzo. Nel pomeriggio sto in camera a leggere e a riposarmi e poi la sera, verso le 7.00, vado a correre e dopo cena esco con dei ragazzi simpatici che ho conosciuto qui. Spero tutto bene lì a casa!! @@@Un abbraccio e a presto, Giulio"));
         // CREATION QUESTION
         $questionnaire_11_1 = $this->createQuestion("QRM", $questionnaire_11);
         // CREATION SUBQUESTION
-        $questionnaire_11_1_1 = $this->createSubquestion("QRM", $questionnaire_3_1, "");
+        $questionnaire_11_1_1 = $this->createSubquestion("QRM", $questionnaire_11_1, "");
         // CREATION PROPOSITIONS
         $questionnaire_11_1_1_1 = $this->createProposition("Giulio č in vacanza al mare.", true, $questionnaire_11_1_1);
         $questionnaire_11_1_1_2 = $this->createProposition("Giulio la mattina prende il cappuccino", false, $questionnaire_11_1_1);
@@ -254,16 +289,31 @@ class ItceFixtureCommand extends ContainerAwareCommand
         // CREATION QUESTIONNAIRE
         $questionnaire_12 = $this->createQuestionnaire("A1_CE_cours_prives_science", "A1", "CE", $test);
         $questionnaire_12->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false"));
-        $questionnaire_12->setMediaContext($this->mediaText("", "Annuncio alluniversitŕ"));
-        $questionnaire_12->setMediaText($this->mediaText("Lezioni private", "Hai problemi con la matematica? Non capisci la fisica? Non dormi prima dellesame di chimica? Stai tranquillo!! Cč chi puň aiutarti!! Sono disponibile per lezioni private e preparazione agli esami. Chiamami al 345 6756433,  oppure scrivi al mio indirizzo mail:@@@ fabrizio.sos-esami@hotmail.it."));
+        $questionnaire_12->setMediaContext($this->mediaText("", "Annuncio all’università"));
+        $questionnaire_12->setMediaText($this->mediaText("Lezioni private", "Hai problemi con la matematica? Non capisci la fisica? Non dormi prima dell’esame di chimica? Stai tranquillo!! C’è chi può aiutarti!! Sono disponibile per lezioni private e preparazione agli esami. Chiamami al 345 6756433,  oppure scrivi al mio indirizzo mail:@@@ fabrizio.sos-esami@hotmail.it."));
         // CREATION QUESTION
         $questionnaire_12_1 = $this->createQuestion("TVF", $questionnaire_12);
         // CREATION SUBQUESTION
-        $questionnaire_12_1_1 = $this->createSubquestion("QRM", $questionnaire_12_1, "");
+        //$questionnaire_12_1_1 = $this->createSubquestion("QRM", $questionnaire_12_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_12_1_1_1 = $this->createProposition("Lannuncio č rivolto agli studenti che hanno problemi con le materie letterarie.", false, $questionnaire_12_1_1);
-        $questionnaire_12_1_1_2 = $this->createProposition("Lannuncio pubblicizza i servizi di una scuola.", false, $questionnaire_12_1_1);
-        $questionnaire_12_1_1_3 = $this->createProposition("Fabrizio propone lezioni individuali.", true, $questionnaire_12_1_1);
+        //$questionnaire_12_1_1_1 = $this->createProposition("Lannuncio č rivolto agli studenti che hanno problemi con le materie letterarie.", false, $questionnaire_12_1_1);
+        //$questionnaire_12_1_1_2 = $this->createProposition("Lannuncio pubblicizza i servizi di una scuola.", false, $questionnaire_12_1_1);
+        //$questionnaire_12_1_1_3 = $this->createProposition("Fabrizio propone lezioni individuali.", true, $questionnaire_12_1_1);
+
+
+        // CREATION SUBQUESTION
+        $questionnaire_12_1_1 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "L’annuncio è rivolto agli studenti che hanno problemi con le materie letterarie.");
+        $questionnaire_12_1_2 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "DL’annuncio pubblicizza i servizi di una scuola.");
+        $questionnaire_12_1_3 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "Fabrizio propone lezioni individuali.");
+        // CREATION PROPOSITIONS
+        $questionnaire_12_1_1_1 = $this->createPropositionVF("", "VRAI", false, $questionnaire_12_1_1);
+        $questionnaire_12_1_1_1 = $this->createPropositionVF("", "FAUX", true, $questionnaire_12_1_1);
+
+        $questionnaire_12_1_1_2 = $this->createPropositionVF("", "VRAI", false, $questionnaire_12_1_2);
+        $questionnaire_12_1_1_2 = $this->createPropositionVF("", "FAUX", true, $questionnaire_12_1_2);
+
+        $questionnaire_12_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_12_1_3);
+        $questionnaire_12_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_12_1_3);
 
 
         /*******************************************
@@ -290,14 +340,13 @@ class ItceFixtureCommand extends ContainerAwareCommand
         $questionnaire_14 = $this->createQuestionnaire("A1_CE_soldes_ete", "A1", "CE", $test);
         $questionnaire_14->setMediaInstruction($this->mediaText("", "Rispondi alle domande. Una sola risposta è corretta"));
         $questionnaire_14->setMediaContext($this->mediaText("", "Pubblicità in un negozio di abbigliamento"));
-        $questionnaire_14->setMediaText($this->mediaText("Sconti di stagione","Dal 1° luglio al 30 agosto grandi sconti su tutti i capi d’abbigliamento. Pantaloni e giacche al 40%, gonne e vestiti fino al 60% e tutti i costumi da bagno al 50%. Per i clienti che hanno la carta fedeltà, in regalo una borsa da spiaggia. Venite a trovarci, dal lunedì al sabato dalle 9 alle 19. Siamo aperti anche la prima domenica del mese.
-"));
+        $questionnaire_14->setMediaText($this->mediaText("Sconti di stagione","Dal 1° luglio al 30 agosto grandi sconti su tutti i capi d’abbigliamento. Pantaloni e giacche al 40%, gonne e vestiti fino al 60% e tutti i costumi da bagno al 50%. Per i clienti che hanno la carta fedeltà, in regalo una borsa da spiaggia. Venite a trovarci, dal lunedì al sabato dalle 9 alle 19. Siamo aperti anche la prima domenica del mese."));
         // CREATION QUESTION
         $questionnaire_14_1 = $this->createQuestion("TQRU", $questionnaire_14);
         // CREATION SUBQUESTION
         $questionnaire_14_1_1 = $this->createSubquestion("QRU", $questionnaire_14_1, "1. Il messaggio pubblicizza gli sconti:");
         $questionnaire_14_1_2 = $this->createSubquestion("QRU", $questionnaire_14_1, "2. I clienti con la carta fedeltà hanno diritto a:");
-        $questionnaire_14_1_3 = $this->createSubquestion("QRU", $questionnaire_14_1, "3.  Il negozio è aperto la domenica:");
+        $questionnaire_14_1_3 = $this->createSubquestion("QRU", $questionnaire_14_1, "3. Il negozio è aperto la domenica:");
         // CREATION PROPOSITIONS
         $questionnaire_14_1_1_1 = $this->createProposition("estivi", true, $questionnaire_14_1_1);
         $questionnaire_14_1_1_2 = $this->createProposition("invernali", false, $questionnaire_14_1_1);
@@ -340,21 +389,26 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         // CREATION QUESTION
         $questionnaire_16_1 = $this->createQuestion("TQRU", $questionnaire_16);
         // CREATION SUBQUESTION
-        $questionnaire_16_1_1 = $this->createSubquestion("QRU", $questionnaire_16_1, "XXX");
-        $questionnaire_16_1_2 = $this->createSubquestion("QRU", $questionnaire_16_1, "XXX");
-        $questionnaire_16_1_3 = $this->createSubquestion("QRU", $questionnaire_16_1, "XXX");
+        $questionnaire_16_1_1 = $this->createSubquestion("QRU", $questionnaire_16_1, ""); // Partie vide, vu avec Francesca. 04/04/2014.
+        $questionnaire_16_1_2 = $this->createSubquestion("QRU", $questionnaire_16_1, "");
+        $questionnaire_16_1_3 = $this->createSubquestion("QRU", $questionnaire_16_1, "");
+        $questionnaire_16_1_4 = $this->createSubquestion("QRU", $questionnaire_16_1, "");
         // CREATION PROPOSITIONS
         $questionnaire_16_1_1_1 = $this->createProposition("1.1. devo", true, $questionnaire_16_1_1);
         $questionnaire_16_1_1_2 = $this->createProposition("1.2. posso", false, $questionnaire_16_1_1);
         $questionnaire_16_1_1_3 = $this->createProposition("1.3. voglio", false, $questionnaire_16_1_1);
 
-        $questionnaire_16_1_2_1 = $this->createProposition("2.1. devi", false, $questionnaire_16_1_2);
-        $questionnaire_16_1_2_2 = $this->createProposition("2.2. puoi", true, $questionnaire_16_1_2);
+        $questionnaire_16_1_2_1 = $this->createProposition("2.1. devi", true, $questionnaire_16_1_2);
+        $questionnaire_16_1_2_2 = $this->createProposition("2.2. puoi", false, $questionnaire_16_1_2);
         $questionnaire_16_1_2_3 = $this->createProposition("2.3. vuoi", false, $questionnaire_16_1_2);
 
-        $questionnaire_16_1_3_1 = $this->createProposition("3.1. devi", true, $questionnaire_16_1_3);
-        $questionnaire_16_1_3_2 = $this->createProposition("3.2. puoi", false, $questionnaire_16_1_3);
+        $questionnaire_16_1_3_1 = $this->createProposition("3.1. devi", false, $questionnaire_16_1_3);
+        $questionnaire_16_1_3_2 = $this->createProposition("3.2. puoi", true, $questionnaire_16_1_3);
         $questionnaire_16_1_3_3 = $this->createProposition("3.3. vuoi", false, $questionnaire_16_1_3);
+
+        $questionnaire_16_1_4_1 = $this->createProposition("4.1. devo", true, $questionnaire_16_1_4);
+        $questionnaire_16_1_4_2 = $this->createProposition("4.2. posso", false, $questionnaire_16_1_4);
+        $questionnaire_16_1_4_3 = $this->createProposition("4.3. voglio", false, $questionnaire_16_1_4);
 
         /*******************************************
                     QUESTIONNAIRE 17 : TVF
@@ -367,12 +421,30 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         // CREATION QUESTION
         $questionnaire_17_1 = $this->createQuestion("TVF", $questionnaire_17);
         // CREATION SUBQUESTION
-        $questionnaire_17_1_1 = $this->createSubquestion("QRM", $questionnaire_17_1, "");
+        //$questionnaire_17_1_1 = $this->createSubquestion("QRM", $questionnaire_17_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_17_1_1_1 = $this->createProposition("La casa di Giorgio è lontana da quella di Lucia e Sara", false, $questionnaire_17_1_1);
-        $questionnaire_17_1_1_2 = $this->createProposition("Per andare alla festa Sara deve prendere il tram", false, $questionnaire_17_1_1);
-        $questionnaire_17_1_1_3 = $this->createProposition("Il Bar Sport si trova dopo piazza Verdi", true, $questionnaire_17_1_1);
-        $questionnaire_17_1_1_4 = $this->createProposition("La casa di Giorgio si trova al lato del panificio", true, $questionnaire_17_1_1);
+        //$questionnaire_17_1_1_1 = $this->createProposition("La casa di Giorgio è lontana da quella di Lucia e Sara", false, $questionnaire_17_1_1);
+        //$questionnaire_17_1_1_2 = $this->createProposition("Per andare alla festa Sara deve prendere il tram", false, $questionnaire_17_1_1);
+        //$questionnaire_17_1_1_3 = $this->createProposition("Il Bar Sport si trova dopo piazza Verdi", true, $questionnaire_17_1_1);
+        //$questionnaire_17_1_1_4 = $this->createProposition("La casa di Giorgio si trova al lato del panificio", true, $questionnaire_17_1_1);
+
+        // CREATION SUBQUESTION
+        $questionnaire_17_1_1 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "La casa di Giorgio è lontana da quella di Lucia e Sara");
+        $questionnaire_17_1_2 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "Per andare alla festa Sara deve prendere il tram");
+        $questionnaire_17_1_3 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "Il Bar Sport si trova dopo piazza Verdi");
+        $questionnaire_17_1_3 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "La casa di Giorgio si trova al lato del panificio");
+        // CREATION PROPOSITIONS
+        $questionnaire_17_1_1_1 = $this->createPropositionVF("", "VRAI", false, $questionnaire_17_1_1);
+        $questionnaire_17_1_1_1 = $this->createPropositionVF("", "FAUX", true, $questionnaire_17_1_1);
+
+        $questionnaire_17_1_1_2 = $this->createPropositionVF("", "VRAI", false, $questionnaire_17_1_2);
+        $questionnaire_17_1_1_2 = $this->createPropositionVF("", "FAUX", true, $questionnaire_17_1_2);
+
+        $questionnaire_17_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_17_1_3);
+        $questionnaire_17_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_17_1_3);
+
+        $questionnaire_17_1_1_4 = $this->createPropositionVF("", "VRAI", true, $questionnaire_17_1_4);
+        $questionnaire_17_1_1_4 = $this->createPropositionVF("", "FAUX", false, $questionnaire_17_1_4);
 
         /*******************************************
                     QUESTIONNAIRE 18 : TQRU
@@ -385,9 +457,9 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         // CREATION QUESTION
         $questionnaire_18_1 = $this->createQuestion("TQRU", $questionnaire_18);
         // CREATION SUBQUESTION
-        $questionnaire_18_1_1 = $this->createSubquestion("QRU", $questionnaire_18_1, "XXX");
-        $questionnaire_18_1_2 = $this->createSubquestion("QRU", $questionnaire_18_1, "XXX");
-        $questionnaire_18_1_3 = $this->createSubquestion("QRU", $questionnaire_18_1, "XXX");
+        $questionnaire_18_1_1 = $this->createSubquestion("QRU", $questionnaire_18_1, "");
+        $questionnaire_18_1_2 = $this->createSubquestion("QRU", $questionnaire_18_1, "");
+        $questionnaire_18_1_3 = $this->createSubquestion("QRU", $questionnaire_18_1, "");
         // CREATION PROPOSITIONS
         $questionnaire_18_1_1_1 = $this->createProposition("1.1. dal", false, $questionnaire_18_1_1);
         $questionnaire_18_1_1_2 = $this->createProposition("1.2. in", true, $questionnaire_18_1_1);
@@ -412,13 +484,43 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         // CREATION QUESTION
         $questionnaire_19_1 = $this->createQuestion("TVF", $questionnaire_19);
         // CREATION SUBQUESTION
-        $questionnaire_19_1_1 = $this->createSubquestion("QRM", $questionnaire_19_1, "");
+        //$questionnaire_19_1_1 = $this->createSubquestion("QRM", $questionnaire_19_1, "");
         // CREATION PROPOSITIONS
         $questionnaire_19_1_1_1 = $this->createProposition("Anita esce spesso con Luca.", false, $questionnaire_19_1_1);
         $questionnaire_19_1_1_2 = $this->createProposition("Anita non va mai a correre.", true, $questionnaire_19_1_1);
         $questionnaire_19_1_1_3 = $this->createProposition("Le lezioni di Anita sono quasi sempre la mattina.", true, $questionnaire_19_1_1);
         $questionnaire_19_1_1_4 = $this->createProposition("Anita vede i genitori durante la settimana", false, $questionnaire_19_1_1);
         $questionnaire_19_1_1_1 = $this->createProposition("Anita lavora solo la sera.", false, $questionnaire_19_1_1);
+
+
+        // CREATION SUBQUESTION
+        $questionnaire_19_1_1 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Anita esce spesso con Luca.");
+        $questionnaire_19_1_2 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Anita non va mai a correre.");
+        $questionnaire_19_1_3 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Le lezioni di Anita sono quasi sempre la mattina.");
+        $questionnaire_19_1_3 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Anita vede i genitori durante la settimana");
+        $questionnaire_19_1_3 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Anita lavora solo la sera.");
+
+        // CREATION PROPOSITIONS
+        $questionnaire_19_1_1_1 = $this->createPropositionVF("", "VRAI", false, $questionnaire_19_1_1);
+        $questionnaire_19_1_1_1 = $this->createPropositionVF("", "FAUX", true, $questionnaire_19_1_1);
+
+        $questionnaire_19_1_1_2 = $this->createPropositionVF("", "VRAI", true, $questionnaire_19_1_2);
+        $questionnaire_19_1_1_2 = $this->createPropositionVF("", "FAUX", false, $questionnaire_19_1_2);
+
+        $questionnaire_19_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_19_1_3);
+        $questionnaire_19_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_19_1_3);
+
+        $questionnaire_19_1_1_4 = $this->createPropositionVF("", "VRAI", false, $questionnaire_19_1_4);
+        $questionnaire_19_1_1_4 = $this->createPropositionVF("", "FAUX", true, $questionnaire_19_1_4);
+
+        $questionnaire_19_1_1_5 = $this->createPropositionVF("", "VRAI", false, $questionnaire_19_1_5);
+        $questionnaire_19_1_1_5 = $this->createPropositionVF("", "FAUX", true, $questionnaire_19_1_5);
+
+
+
+
+
+
 
         /*******************************************
 
@@ -1357,6 +1459,33 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
     /**
      *
      */
+    protected function createSubquestionVF($typology, $question, $amorce, $media)
+    {
+        $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+
+        // Création du questionnaire
+        $subquestion = new Subquestion();
+
+        $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology);
+        $subquestion->setTypology($typo);
+
+        $subquestion->setQuestion($question);
+
+        if ($amorce != '') {
+            $subquestion->setMediaAmorce($this->mediaText("", $amorce, ""));
+        }
+        if ($media != '') {
+            $subquestion->setMedia($this->mediaText("", $media, ""));
+        }
+
+        $em->persist($subquestion);
+
+        return $subquestion;
+    }
+
+    /**
+     *
+     */
     protected function createProposition($text, $rightAnswer, Subquestion $subquestion)
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
@@ -1365,6 +1494,25 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
 
         $proposition->setSubquestion($subquestion);
         $proposition->setMedia($this->mediaText("", $text));
+        $proposition->setRightAnswer($rightAnswer);
+
+        $em->persist($proposition);
+
+        return $proposition;
+    }
+
+
+    /**
+     *createPropositionVF()
+     */
+    protected function createPropositionVF($text, $textAnswer, $rightAnswer, Subquestion $subquestion)
+    {
+        $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+
+        $proposition = new Proposition();
+
+        $proposition->setSubquestion($subquestion);
+        $proposition->setMedia($this->mediaText("", $textAnswer, ""));
         $proposition->setRightAnswer($rightAnswer);
 
         $em->persist($proposition);

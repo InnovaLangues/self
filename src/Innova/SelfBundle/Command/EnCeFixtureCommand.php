@@ -297,11 +297,29 @@ A local sect and assorted Hindu right-wingers opposed his law, which Maharashtra
         // CREATION QUESTION
         $questionnaire_12_1 = $this->createQuestion("TVF", $questionnaire_12);
         // CREATION SUBQUESTION
-        $questionnaire_12_1_1 = $this->createSubquestion("QRM", $questionnaire_12_1, "");
+        //$questionnaire_12_1_1 = $this->createSubquestion("QRM", $questionnaire_12_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_12_1_1_1 = $this->createProposition("The Maharashtra state government has passed the law that Mr Dabholkar fought for", true, $questionnaire_12_1_1);
-        $questionnaire_12_1_1_2 = $this->createProposition("One politician has condemned the murder", true, $questionnaire_12_1_1);
-        $questionnaire_12_1_1_3 = $this->createProposition("Mr Dabholkar was killed while he was walking", true, $questionnaire_12_1_1);
+        //$questionnaire_12_1_1_1 = $this->createProposition("The Maharashtra state government has passed the law that Mr Dabholkar fought for", true, $questionnaire_12_1_1);
+        //$questionnaire_12_1_1_2 = $this->createProposition("One politician has condemned the murder", true, $questionnaire_12_1_1);
+        //$questionnaire_12_1_1_3 = $this->createProposition("Mr Dabholkar was killed while he was walking", true, $questionnaire_12_1_1);
+
+        $questionnaire_12_1_1 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "The Maharashtra state government has passed the law that Mr Dabholkar fought for");
+        $questionnaire_12_1_2 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "One politician has condemned the murder");
+        $questionnaire_12_1_3 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "Mr Dabholkar was killed while he was walking");
+        // CREATION PROPOSITIONS
+        $questionnaire_12_1_1_1 = $this->createPropositionVF("", "VRAI", true, $questionnaire_12_1_1);
+        $questionnaire_12_1_1_1 = $this->createPropositionVF("", "FAUX", false, $questionnaire_12_1_1);
+
+        $questionnaire_12_1_1_2 = $this->createPropositionVF("", "VRAI", true, $questionnaire_12_1_2);
+        $questionnaire_12_1_1_2 = $this->createPropositionVF("", "FAUX", false, $questionnaire_12_1_2);
+
+        $questionnaire_12_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_12_1_3);
+        $questionnaire_12_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_12_1_3);
+
+
+
+
+
 
         /*******************************************
                     QUESTIONNAIRE 12 : QRU
