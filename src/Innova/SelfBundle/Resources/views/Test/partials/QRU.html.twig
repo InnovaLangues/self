@@ -5,6 +5,9 @@
     {% if subquestion.media is not null %}
         {{ macros.media("subquestion-" ~ subquestion.id, subquestion.media, subquestion.media.mediaType.name ~ ".png", 90, 0, "Proposition de réponse") }}
     {% endif %}
+    {% if subquestion.mediaAmorce is not null %}
+        {{ macros.media("amorce-"~ subquestion.id, subquestion.mediaAmorce, "audio.png", 90, 0, "Amorce") }}
+    {% endif %}
     {% for proposition in subquestion.propositions | shuffle %}
         {% set bulleCount = bulleCount + 1 %}
         <p>
