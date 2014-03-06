@@ -47,7 +47,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("CE English", "English");
+        $test = $this->createTest("SELF CE Anglais", "English");
 
 
         /*******************************************
@@ -331,9 +331,12 @@ Yet powerful groups remain to exploit superstition and religious fear. “Even n
         $questionnaire_13_1_1 = $this->createSubquestion("QRU", $questionnaire_13_1, "How can this extract be best summarized?");
 
         // CREATION PROPOSITIONS
-        $questionnaire_13_1_1_1 = $this->createProposition("The number of religious people in India is decreasing, yet they continue to be swayed by irrational beliefs", true, $questionnaire_13_1_1);
-        $questionnaire_13_1_1_2 = $this->createProposition("Powerful politicians in India are not religious, so all Indian atheists are treated reasonably well", false, $questionnaire_13_1_1);
-        $questionnaire_13_1_1_3 = $this->createProposition("A lot of imposters in India try to bribe innocent people by using precious stones with healing powers and other such tricks", false, $questionnaire_13_1_1);
+        $questionnaire_13_1_1_1 = $this->createProposition("The number of religious people in India is decreasing, yet they continue to be swayed by irrational beliefs",
+        true, $questionnaire_13_1_1);
+        $questionnaire_13_1_1_2 = $this->createProposition("Powerful politicians in India are not religious, so all Indian atheists are treated reasonably well",
+        false, $questionnaire_13_1_1);
+        $questionnaire_13_1_1_3 = $this->createProposition("A lot of imposters in India try to bribe innocent people by using precious stones with healing powers and other such tricks",
+        false, $questionnaire_13_1_1);
 
         /*******************************************
                     QUESTIONNAIRE 13 : QRM

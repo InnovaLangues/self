@@ -32,7 +32,7 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
     {
         $this
             ->setName('self:fixtures:itceb2')
-            ->setDescription('Italian CE B2')
+            ->setDescription('SELF CE Italien B2')
         ;
     }
 
