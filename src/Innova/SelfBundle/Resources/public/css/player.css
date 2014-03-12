@@ -169,11 +169,11 @@ hr {
 ***********************************/
 
 .propositions-CE {
-	margin: 40px 20px 0 70px;
+	margin: 20px 20px 0 80px;
 }
 
 input.proposition-input {
-	margin-right: 10px;
+	margin-right: 8px;
 }
 
 input.proposition-input, label{
