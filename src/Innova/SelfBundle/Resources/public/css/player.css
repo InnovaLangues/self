@@ -19,7 +19,7 @@
 #item-container {
 	border-radius: 10px;
 	border: 1px solid black;
-	margin-bottom: 20px;
+	margin: 0 10px 20px 10px;
 	position: relative;
 	font-size: 120%;
 	padding: 20px;
@@ -71,9 +71,17 @@ hr {
 #situation-CE {
 	margin-top: 20px;
 	padding-left: 20px;
+	padding-right: 20px;
 	max-height: 450px;
 	overflow:auto;
 	text-align: justify;
+}
+
+.situation img, .situation video {
+	max-width: 80%;
+	width:80%;
+	display:block;
+	margin:auto;
 }
 
 .title-situation {
@@ -125,7 +133,7 @@ hr {
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
-	padding:35px 20px 20px 20px;
+	padding:20px 20px 20px 20px;
 }
 
 .badge{
@@ -148,6 +156,7 @@ hr {
 
 .question-CE {
 	margin: 0 0 0 15px;
+	min-height: 85px;
 }
 
 .question-CO {
@@ -163,7 +172,7 @@ hr {
 	color: black;
 	border-radius: 2px;
 	padding: 5px 5px 5px 10px;
-	width: 80%;
+	width: 75%;
 }
 
 /**********************************
@@ -200,7 +209,7 @@ input.proposition-input, label{
 	background-color: white;
 	color: black;
 	border-radius: 2px;
-	width:80%;
+	width:85%;
 }
 
 /**********************************

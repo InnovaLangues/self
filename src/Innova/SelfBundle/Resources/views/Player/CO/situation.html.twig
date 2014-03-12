@@ -12,11 +12,17 @@
     {% set icon = "situation_monologue.png" %}
 {% endif %}
 
-{% if questionnaire.mediaText is not null %}
-    {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Situation de départ") }}
-    <div class="hidden" id="listens-counter">
-        Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span>
-        <span id="limit_listening_text">{{ limit_listening_text }}</span>
-        <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span>
-    </div>
-{% endif %}
+<div id="situation-CO" class="situation">
+    {% if questionnaire.mediaText is not null %}
+        {% if questionnaire.mediaText.mediaType == "audio" %}
+            {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Situation de départ") }}
+            <div class="hidden" id="listens-counter">
+                Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span>
+                <span id="limit_listening_text">{{ limit_listening_text }}</span>
+                <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span>
+            </div>
+        {% elseif questionnaire.mediaText.mediaType == "video" %}
+            {{ macros.video("situation", questionnaire.mediaText) }}
+        {% endif %}
+    {% endif %}
+</div>

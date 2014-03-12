@@ -21,6 +21,54 @@
     </audio>
 {% endmacro %}
 
+{% macro image(id, media, tooltip) %}
+    {% import _self as macros %}
+    {{ macros.modale(id, media, tooltip) }}
+    {#
+    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
+    #}
+    <img  data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="http://images.gs-cdn.net/static/artists/120_artist.png" />
+{% endmacro %}
+
+{% macro video(id, media) %}
+    <video id="{{ id }}">
+        <source src="{{ asset('upload/media/') ~ media.url }}" >
+        Your browser does not support the video tag.
+    </video>
+{% endmacro %}
+
+{% macro modale (id, media, title) %}
+    <div id="modal-{{ id }}" class="modal fade modales">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <!--
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ title }}</h4>
+                </div>
+            -->
+                <div class="modal-body">
+                {% if media.mediaType.name == "image" %}
+                    {# <img src="{{ asset('upload/media/') ~ media.url }}"/> #}
+                    <img src="http://images.gs-cdn.net/static/artists/120_artist.png" />
+                {% elseif media.mediaType.name == "texte" %}
+                    <div id="{{ id }}"> {{ media.description }} </div>
+                {% elseif media.mediaType.name == "video" %}
+                    <video id="{{ id }}">
+                        <source src="{{ asset('upload/media/') ~ media.url }}" >
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endmacro %}
+
+
 {% macro translateVF(description, language) %}
     {% set languageShorten = language | slice(0, 2) | lower %}
 

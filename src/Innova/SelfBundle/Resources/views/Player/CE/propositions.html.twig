@@ -1,5 +1,5 @@
 <div class="propositions-CE">
-    {% if subquestion.typology.name == "VF" or subquestion.typology == "VFNM" %}
+    {% if subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" %}
         {% set propositions = subquestion.propositions %}
     {% else %}
         {% set propositions = subquestion.propositions | shuffle %}

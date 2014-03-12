@@ -2,18 +2,13 @@
     {% for i, subquestion in question.subquestions %}
         <div class="tab-pane {% if i == 0 %} active {% endif %}" id="tab-{{ i }}" data-subquestion-id="{{ subquestion.id }}">
             <div class="row">
-                <div class="col-md-5 question-CO">
-                    {{ macros.audio("question", subquestion.media, "oignon.png", 100, 0, "Question") }}
-                </div>
-                <div class="col-md-7">
-                    {% for i, proposition in subquestion.propositions | shuffle %}
-                        {% set bulleCount = i + 1 %}
-                        <div class="proposition-CO">
-                            {{ macros.inputs(subquestion, proposition) }}
-                            {{ macros.audio("proposition-"~ proposition.id, proposition.media, "audio"~bulleCount~".png", 90, 0, "Proposition de réponse "~ bulleCount ) }}
-                        </div>
-                    {% endfor %}
-                </div>
+
+                {# CONSIGNE #}
+                {% include "InnovaSelfBundle:Player/CO:consigne.html.twig" %}
+
+                {# PROPOSITIONS #}
+                {% include "InnovaSelfBundle:Player/CO:propositions.html.twig" %}
+
             </div>
             {% include "InnovaSelfBundle:Player/common:countRightAnswer.html.twig" %}
         </div>

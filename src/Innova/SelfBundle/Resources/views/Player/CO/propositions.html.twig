@@ -1,0 +1,9 @@
+<div class="col-md-7">
+    {% for i, proposition in subquestion.propositions | shuffle %}
+        {% set bulleCount = i + 1 %}
+        <div class="proposition-CO">
+            {{ macros.inputs(subquestion, proposition) }}
+            {{ macros.audio("proposition-"~ proposition.id, proposition.media, "audio"~bulleCount~".png", 90, 0, "Proposition de réponse "~ bulleCount ) }}
+        </div>
+    {% endfor %}
+</div>
