@@ -142,7 +142,7 @@ hr {
 ***********************************/
 
 .question-CE {
-	padding: 0 0 0 15px;
+	margin: 0 0 0 15px;
 }
 
 .question-CO {
@@ -151,7 +151,8 @@ hr {
 
 .question-CE-text {
 	position:relative;
-	display:inline-block;
+	display: inline-block;
+	vertical-align: middle;
 	border: 1px solid black;
 	background-color: white;
 	color: black;
@@ -165,7 +166,7 @@ hr {
 ***********************************/
 
 .propositions-CE {
-	margin: 20px 20px 0 70px;
+	margin: 40px 20px 0 70px;
 }
 
 input.proposition-input {
