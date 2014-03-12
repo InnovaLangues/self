@@ -177,6 +177,11 @@ input.proposition-input {
 	margin-right: 10px;
 }
 
+input.proposition-input, label{
+	cursor: pointer; 
+	cursor: hand;
+}
+
 .proposition-CO {
 	margin-bottom:8px;
 }
