@@ -3,7 +3,7 @@
 ***********************************/
 
 #item-count-container {
-	margin-bottom: 10px;
+	margin-top: -15px;
 	
 }
 
@@ -125,7 +125,6 @@ hr {
 	border-bottom-left-radius: 5px;
 	padding:35px 20px 20px 20px;
 }
-
 
 .badge{
 	position:absolute;
