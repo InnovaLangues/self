@@ -73,11 +73,13 @@ hr {
 	padding-left: 20px;
 	max-height: 450px;
 	overflow:auto;
+	text-align:justify;
 }
 
 .title-situation {
 	display:block;
 	font-weight: bold;
+	margin-bottom: 5px;
 }
 /**********************************
 	LEFT CONTAINER
