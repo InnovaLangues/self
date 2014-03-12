@@ -75,6 +75,10 @@ hr {
 	overflow:auto;
 }
 
+.title-situation {
+	display:block;
+	font-weight: bold;
+}
 /**********************************
 	LEFT CONTAINER
 ***********************************/
