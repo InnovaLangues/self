@@ -49,6 +49,9 @@ class EnceFixtureCommand extends ContainerAwareCommand
         // CREATION TEST
         $test = $this->createTest("SELF CE Anglais", "English");
 
+        // To have CSS form title. #166
+        $startTitle = "<span class=\"title-situation\">";
+        $endTitle = "</span>";
 
         /*******************************************
 
@@ -457,9 +460,9 @@ Opinions abound about who the original Valentine was, with the most popular theo
 
 
     /**
-     *
+     * #167
      */
-    protected function createSubquestion($typology, $question, $amorce)
+    protected function createSubquestion($typology, $question, $media)
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
@@ -471,8 +474,8 @@ Opinions abound about who the original Valentine was, with the most popular theo
 
         $subquestion->setQuestion($question);
 
-        if ($amorce != '') {
-            $subquestion->setMediaAmorce($this->mediaText("", $amorce, ""));
+        if ($media != '') {
+            $subquestion->setMedia($this->mediaText("", $media, ""));
         }
 
         $em->persist($subquestion);

@@ -48,6 +48,10 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
         // CREATION TEST
         $test = $this->createTest("CE Italien B2", "Italian");
 
+        // To have CSS form title. #166
+        $startTitle = "<span class=\"title-situation\">";
+        $endTitle = "</span>";
+
         /*******************************************
 
                     NIVEAU : B2
@@ -62,7 +66,7 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
         $questionnaire_B2_1 = $this->createQuestionnaire("B2_CE_COMM_Come diventare famosi su internet", "B2", "CE", $test);
         $questionnaire_B2_1->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette.", ""));
         $questionnaire_B2_1->setMediaContext($this->mediaText("", "Post su blog", ""));
-        $questionnaire_B2_1->setMediaText($this->mediaText("Come diventare famosi su internet", "La celeberrima frase “Nel futuro, tutti avranno 15 minuti di celebrità”, pronunciata nel 1968 da Andy Warhol, diventa ogni giorno più profetica su internet. Ecco qualche consiglio su come diventare una web celebrity.@@@
+        $questionnaire_B2_1->setMediaText($this->mediaText($startTitle . "Come diventare famosi su internet" . $endTitle, "La celeberrima frase “Nel futuro, tutti avranno 15 minuti di celebrità”, pronunciata nel 1968 da Andy Warhol, diventa ogni giorno più profetica su internet. Ecco qualche consiglio su come diventare una web celebrity.@@@
 • Occhio a chi incontri su internet ed evita di condividere troppe informazioni personali.@@@
 • Gira un video su di te o sul tuo talento e pubblicalo su YouTube.@@@
 • Il successo va e viene. Però, se lavori duro, offri contenuti freschi ed incanti i tuoi lettori, follower e spettatori, sarà più facile mantenerti a galla. Punta ad una fama che ti permetta di avere un articolo dedicato a te su Wikipedia e che ti consenta di poter dire che hai raggiunto una certa notorietà. In questo modo, il tuo successo si terrà in piedi, a meno che qualcuno non ti cancelli ma, ehi, siamo su internet!
@@ -93,7 +97,7 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
         $questionnaire_B2_4 = $this->createQuestionnaire("B2_CE_COMM_come affrontare gli esami", "B2", "CE", $test);
         $questionnaire_B2_4->setMediaInstruction($this->mediaText("", "Rispondi alle domande. Una sola risposta è corretta.", ""));
         $questionnaire_B2_4->setMediaContext($this->mediaText("", "Post su blog studentesco", ""));
-        $questionnaire_B2_4->setMediaText($this->mediaText("Breve decalogo per gli studenti: prima di affrontare un esame",
+        $questionnaire_B2_4->setMediaText($this->mediaText($startTitle . "Breve decalogo per gli studenti: prima di affrontare un esame" . $endTitle,
         "• Il \"nemico\" va conosciuto. Andate ad assistere agli esami prima di darli.@@@
 • Siate gradevoli nell'aspetto. L'abito in questo caso fa il monaco.@@@
 • Sappiate ascoltare. Aspettate a rispondere finché il docente non ha concluso la domanda.@@@
@@ -124,7 +128,7 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
         $questionnaire_B2_6 = $this->createQuestionnaire("B2_CE_COMM_disdetta_contratto", "B1", "CE", $test);
         $questionnaire_B2_6->setMediaInstruction($this->mediaText("", "Seleziona il riassunto corretto", ""));
         $questionnaire_B2_6->setMediaContext($this->mediaText("", "Lettera di disdetta contratto di locazione", ""));
-        $questionnaire_B2_6->setMediaText($this->mediaText("Disdetta straordinaria del contratto di locazione",
+        $questionnaire_B2_6->setMediaText($this->mediaText($startTitle . "Disdetta straordinaria del contratto di locazione" . $endTitle,
         "Sig. Giacomo Verni@@@
 via Rodolfo Lanciani, 3@@@
 00100 Roma@@@
@@ -167,7 +171,7 @@ Luogo, data                           Firma del locatore
         $questionnaire_B2_7 = $this->createQuestionnaire("B1_CE_diner_ciel", "B1", "CE", $test);
         $questionnaire_B2_7->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false.", ""));
         $questionnaire_B2_7->setMediaContext($this->mediaText("", "Avviso in Comune", ""));
-        $questionnaire_B2_7->setMediaText($this->mediaText("Informazioni utili sulla tessera elettorale", "Tessera elettorale per le elezioni politiche
+        $questionnaire_B2_7->setMediaText($this->mediaText($startTitle . "Informazioni utili sulla tessera elettorale" . $endTitle, "Tessera elettorale per le elezioni politiche
 
 L’ufficio elettorale comunale resta a  disposizione per quanto segue:@@@
 
@@ -201,7 +205,7 @@ L’ufficio elettorale comunale resta a  disposizione per quanto segue:@@@
         $questionnaire_B2_9 = $this->createQuestionnaire("B2_CE_COMM_occhi su saturno", "B2", "CE", $test);
         $questionnaire_B2_9->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette.", ""));
         $questionnaire_B2_9->setMediaContext($this->mediaText("", "Articolo su rivista di eventi culturali", ""));
-        $questionnaire_B2_9->setMediaText($this->mediaText("Occhi su Saturno", "Sabato18 Maggio,una sera per mostrare Saturno all’Italia@@@
+        $questionnaire_B2_9->setMediaText($this->mediaText($startTitle . "Occhi su Saturno" . $endTitle, "Sabato18 Maggio,una sera per mostrare Saturno all’Italia@@@
 La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno, senza dubbio il più bel pianeta del Sistema Solare, generazioni di astronomi hanno posato gli occhi su di lui. Ora grazie alle sonde spaziali abbiamo una visione senza precedenti di Saturno, dei suoi anelli e dei suoi satelliti. Ma lo splendore di questo pianeta è folgorante anche se osservato con un piccolo telescopio.",
  ""));
         // CREATION QUESTION
@@ -230,7 +234,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_10 = $this->createQuestionnaire("B2_CE_COMM_candidatura", "B2", "CE", $test);
         $questionnaire_B2_10->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette.", ""));
         $questionnaire_B2_10->setMediaContext($this->mediaText("", "Lettera di motivazione", ""));
-        $questionnaire_B2_10->setMediaText($this->mediaText("Candidatura spontanea", "vorrei sottoporre alla Vostra cortese attenzione il mio interesse ad un’eventuale assunzione nella Vostra Azienda, leader nel settore della ristorazione. Come potete vedere dal Curriculum vitae che allego, dopo aver conseguito il diploma alberghiero ho svolto un tirocinio per approfondire le conoscenze nel servizio di sala e parlo abbastanza bene il tedesco e l’inglese. Sono disponibile fin da subito anche per un’assunzione a tempo determinato o con contratto di Formazione e Lavoro. Sono altresì disponibile a frequentare eventuali corsi di formazione ed a fare trasferte anche all’estero. Spero pertanto che vorrete considerare la mia candidatura.@@@"
+        $questionnaire_B2_10->setMediaText($this->mediaText($startTitle . "Candidatura spontanea" . $endTitle, "vorrei sottoporre alla Vostra cortese attenzione il mio interesse ad un’eventuale assunzione nella Vostra Azienda, leader nel settore della ristorazione. Come potete vedere dal Curriculum vitae che allego, dopo aver conseguito il diploma alberghiero ho svolto un tirocinio per approfondire le conoscenze nel servizio di sala e parlo abbastanza bene il tedesco e l’inglese. Sono disponibile fin da subito anche per un’assunzione a tempo determinato o con contratto di Formazione e Lavoro. Sono altresì disponibile a frequentare eventuali corsi di formazione ed a fare trasferte anche all’estero. Spero pertanto che vorrete considerare la mia candidatura.@@@"
         ,""));
         // CREATION QUESTION
         $questionnaire_B2_10_1 = $this->createQuestion("TVFNM", $questionnaire_B2_10);
@@ -258,7 +262,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_11 = $this->createQuestionnaire("B2_CE_bryan_may", "B2", "CE", $test);
         $questionnaire_B2_11->setMediaInstruction($this->mediaText("", "Completa il testo usando le parole suggerite", ""));
         $questionnaire_B2_11->setMediaContext($this->mediaText("", "Articolo su rivista di musica", ""));
-        $questionnaire_B2_11->setMediaText($this->mediaText("Brian May dei Queen avrebbe voluto suonare negli AC/DC",
+        $questionnaire_B2_11->setMediaText($this->mediaText($startTitle . "Brian May dei Queen avrebbe voluto suonare negli AC/DC" . $endTitle,
         "Il chitarrista dei Queen Brian May ha rivelato che 1.________________________ suonare negli AC/DC.@@@In un'intervista al quotidiano britannico The Independent May ha detto che se non fosse stato  per l'impegno con Freddy Mercury e compagni non gli 2.____________________ fare qualcosa con la band australiana, ma ha anche aggiunto che probabilmente non sarebbe stato adatto per il gruppo: \"Mi sarebbe piaciuto  lavorare con gli AC/DC [se non ci  3.__________________________ i Queen]. Ma sfortunatamente sono della forma e della taglia sbagliate\"",
         ""));
         // CREATION QUESTION
@@ -289,7 +293,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_12 = $this->createQuestionnaire("B2_CE_yeux_sur_saturne", "B2", "CE", $test);
         $questionnaire_B2_12->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette", ""));
         $questionnaire_B2_12->setMediaContext($this->mediaText("", "Articolo su rivista di eventi culturali", ""));
-        $questionnaire_B2_12->setMediaText($this->mediaText("Occhi su Saturno", "Sabato 18 Maggio, una sera per mostrare Saturno all’Italia@@@
+        $questionnaire_B2_12->setMediaText($this->mediaText($startTitle . "Occhi su Saturno" . $endTitle, "Sabato 18 Maggio, una sera per mostrare Saturno all’Italia@@@
 La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno, senza dubbio il più bel pianeta del Sistema Solare, generazioni di astronomi hanno posato gli occhi su di lui. Ora grazie alle sonde spaziali abbiamo una visione senza precedenti di Saturno, dei suoi anelli e dei suoi satelliti. Ma lo splendore di questo pianeta è folgorante anche se osservato con un piccolo telescopio.
 ", ""));
         // CREATION QUESTION
@@ -319,7 +323,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_15 = $this->createQuestionnaire("B2_CE_gerondif", "B2", "CE", $test);
         $questionnaire_B2_15->setMediaInstruction($this->mediaText("", "Completa il testo con le parole suggerite. Attenzione: ci sono due intrusi", ""));
         $questionnaire_B2_15->setMediaContext($this->mediaText("", "Estratto da un romanzo", ""));
-        $questionnaire_B2_15->setMediaText($this->mediaText("Un incidente", "1. ______ Maria rientrava a casa ha visto una macchina avvicinarsi a grande velocità da Piazza S.Silvestro.@@@
+        $questionnaire_B2_15->setMediaText($this->mediaText($startTitle . "Un incidente" . $endTitle, "1. ______ Maria rientrava a casa ha visto una macchina avvicinarsi a grande velocità da Piazza S.Silvestro.@@@
 2. _______ Maria aveva capito che la macchina non si sarebbe fermata per lasciarla passare, ha indietreggiato di qualche passo.@@@
 3.________ Maria avesse lasciato lo spazio sufficiente, il conducente ha perso per un istante il controllo della macchina e ha urtato contro il suo piede.@@@
 4. Il medico ha consigliato a Maria di usare le stampelle, spiegandole che ______ non le avesse utilizzate, avrebbe finito per peggiorare le condizioni della sua gamba.?",
@@ -345,7 +349,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_17 = $this->createQuestionnaire("B2_CE_superstitions_italie", "B2", "CE", $test);
         $questionnaire_B2_17->setMediaInstruction($this->mediaText("", "Ricostruisci le frasi", ""));
         $questionnaire_B2_17->setMediaContext($this->mediaText("", "Post su blog personale", ""));
-        $questionnaire_B2_17->setMediaText($this->mediaText("Superstizioni in Italia", "Le forme di superstizione sono numerosissime in Italia, spesso legate alla vita quotidiana e in molti casi bizzarre. Ecco una lista delle più comuni.@@@
+        $questionnaire_B2_17->setMediaText($this->mediaText($startTitle . "Superstizioni in Italia" . $endTitle, "Le forme di superstizione sono numerosissime in Italia, spesso legate alla vita quotidiana e in molti casi bizzarre. Ecco una lista delle più comuni.@@@
 1. Mangiare lenticchie a Capodanno porta fortuna per il nuovo anno@@@
 2. È presagio di sventura aprire l’ombrello in casa@@@
 3.Posare il pane a rovescio sulla tavola, porta carestia.@@@
@@ -412,7 +416,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_25 = $this->createQuestionnaire("B2_CE_vademecum", "B2", "CE", $test);
         $questionnaire_B2_25->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette", ""));
         $questionnaire_B2_25->setMediaContext($this->mediaText("", "Brochure informativa delle elezioni amministrative", ""));
-        $questionnaire_B2_25->setMediaText($this->mediaText("Vademecum delle elezioni amministrative", "**Come si vota nei comuni con popolazione superiore ai 15.000 abitanti**@@@La scheda per il rinnovo del Consiglio comunale č di colore azzurro. L'elettore ha a disposizione diverse modalitŕ per esprimere la propria preferenza.@@@1- Votare solo per un candidato sindaco, tracciando un segno sul nome, non scegliendo alcuna lista collegata. Il voto cosě espresso si intende attribuito solo al candidato sindaco.@@@2- Votare solo per una delle liste, tracciando un segno sul relativo simbolo. Il voto cosě espresso si intende attribuito anche al candidato sindaco collegato.@@@3- Votare per un candidato sindaco, tracciando un segno sul nome, e per una delle liste a esso collegate, tracciando un segno sul contrassegno della lista prescelta. Il voto cosě espresso si intende attribuito sia al candidato sindaco sia alla lista collegata.",
+        $questionnaire_B2_25->setMediaText($this->mediaText($startTitle . "Vademecum delle elezioni amministrative" . $endTitle, "**Come si vota nei comuni con popolazione superiore ai 15.000 abitanti**@@@La scheda per il rinnovo del Consiglio comunale č di colore azzurro. L'elettore ha a disposizione diverse modalitŕ per esprimere la propria preferenza.@@@1- Votare solo per un candidato sindaco, tracciando un segno sul nome, non scegliendo alcuna lista collegata. Il voto cosě espresso si intende attribuito solo al candidato sindaco.@@@2- Votare solo per una delle liste, tracciando un segno sul relativo simbolo. Il voto cosě espresso si intende attribuito anche al candidato sindaco collegato.@@@3- Votare per un candidato sindaco, tracciando un segno sul nome, e per una delle liste a esso collegate, tracciando un segno sul contrassegno della lista prescelta. Il voto cosě espresso si intende attribuito sia al candidato sindaco sia alla lista collegata.",
         ""));
         // CREATION QUESTION
         $questionnaire_B2_25_1 = $this->createQuestion("TVFNM", $questionnaire_B2_25);
@@ -442,7 +446,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_26 = $this->createQuestionnaire("B2_CE_voisin_greta", "B2", "CE", $test);
         $questionnaire_B2_26->setMediaInstruction($this->mediaText("", "Abbina ad ogni parola la definizione corretta. Ci sono due intrusi", ""));
         $questionnaire_B2_26->setMediaContext($this->mediaText("", "Post su un blog personale", ""));
-        $questionnaire_B2_26->setMediaText($this->mediaText("Riflessione in treno", "In treno mi piace chiudere gli occhi e ascoltare la gente che urla faccende private, intimi segreti a tutta la carrozza. Non per quello che dicono ma per come lo dicono. Per una rubrica come questa le ferrovie sono una grande fonte di ispirazione. Solo che dovremmo cambiare il Titolo: invece che tre minuti una parola, tre ore e migliaia di parole, nel viaggio solo da Milano a Roma. Molte sono superflue ma alcune sono sintomatiche. Il mio vicino nel corso interminabile di una telefonata, più o meno a distanza Parma - Firenze, continuava a ripetere agitato: ma si figuri, ma si figuri, ma si figuri! Non so cosa si figurasse il misterioso interlocutore: io mi figuravo un figuro che temeva una figuraccia", ""));
+        $questionnaire_B2_26->setMediaText($this->mediaText($startTitle . "Riflessione in treno" . $endTitle, "In treno mi piace chiudere gli occhi e ascoltare la gente che urla faccende private, intimi segreti a tutta la carrozza. Non per quello che dicono ma per come lo dicono. Per una rubrica come questa le ferrovie sono una grande fonte di ispirazione. Solo che dovremmo cambiare il Titolo: invece che tre minuti una parola, tre ore e migliaia di parole, nel viaggio solo da Milano a Roma. Molte sono superflue ma alcune sono sintomatiche. Il mio vicino nel corso interminabile di una telefonata, più o meno a distanza Parma - Firenze, continuava a ripetere agitato: ma si figuri, ma si figuri, ma si figuri! Non so cosa si figurasse il misterioso interlocutore: io mi figuravo un figuro che temeva una figuraccia", ""));
         // CREATION QUESTION
         $questionnaire_B2_26_1 = $this->createQuestion("APPTT", $questionnaire_B2_26);
         // CREATION SUBQUESTION
@@ -482,7 +486,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_27 = $this->createQuestionnaire("B2_CE_enfin_les_pierres_volent", "B2", "CE", $test);
         $questionnaire_B2_27->setMediaInstruction($this->mediaText("", "Rispondi alle domande. Una sola risposta è corretta.", ""));
         $questionnaire_B2_27->setMediaContext($this->mediaText("", "Post su blog di viaggi", ""));
-        $questionnaire_B2_27->setMediaText($this->mediaText("I sassi finalmente volano",
+        $questionnaire_B2_27->setMediaText($this->mediaText($startTitle . "I sassi finalmente volano" . $endTitle,
         "I sassi di Matera sono un’attrazione turistica da sempre molto forte. Ma avete mai provato a guardarli da una nuova prospettiva? L’evento “I Sassi finalmente volano”, dal 18 marzo al 1°aprile, propone voli in mongolfiera per ammirare il paesaggio antropologico di quella che è stata definita la città più antica del mondo. 30 mongolfiere che si librano in volo al soffio del vento e fanno vedere e vivere dall’alto l’inusuale paesaggio rupestre della Città dei Sassi, patrimonio dell’umanità Unesco. Inoltre, dal 18 al 24 marzo, è previsto un evento di Light Mobility a favore di una consapevole ed ecosostenibile mobilità turistica.", ""));
         // CREATION QUESTION
         $questionnaire_B2_27_1 = $this->createQuestion("TQRU", $questionnaire_B2_27);
@@ -594,9 +598,9 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
     }
 
     /**
-     *
+     * #167
      */
-    protected function createSubquestion($typology, $question, $amorce)
+    protected function createSubquestion($typology, $question, $media)
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
@@ -608,8 +612,8 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
 
         $subquestion->setQuestion($question);
 
-        if ($amorce != '') {
-            $subquestion->setMediaAmorce($this->mediaText("", $amorce, ""));
+        if ($media != '') {
+            $subquestion->setMedia($this->mediaText("", $media, ""));
         }
 
         $em->persist($subquestion);
