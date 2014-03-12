@@ -24,7 +24,7 @@ class TestController extends Controller
      *
      * @Route("student/test/start/{id}", name="test_start")
      * @Method("GET")
-     * @Template()
+     * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
     public function startAction(Test $test)
     {

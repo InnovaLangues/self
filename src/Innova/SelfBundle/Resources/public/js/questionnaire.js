@@ -219,31 +219,32 @@ $(document).ready(function() {
     });
 
     /**************
-        TQRU/M
+        GESTION DES BADGES SUR LES ONGLETS
     **************/
 
-    $(":radio").change(function(){
-        $( ".control-tab" ).each(function( index ) {
-            subquestionId = $( this ).attr("data-subquestionId");
-
+    $(":checkbox, :radio").change(function(){
+        var incomplete_tab = 0;
+        $( ".tab-pane" ).each(function( index ) {
+            subquestionId = $( this ).attr("data-subquestion-id");
             if ( $("[name='"+subquestionId+"[]']:checked").length > 0 ){
-                $( "#control-tab-" + subquestionId ).hide(300);
-                console.log( subquestionId );
+                $( "#badge-" + subquestionId ).css("background-color", "#5CB85C");
+                $( "#badge-" + subquestionId ).text("ok");
+                
             } else {
-                $( "#control-tab-" + subquestionId ).show();
+                $( "#badge-" + subquestionId ).css("background-color", "grey");
+                $( "#badge-" + subquestionId ).text(" ");
+                incomplete_tab++;
+
             } 
         });
+        
+        if (incomplete_tab == 0) {
+            $("#submit").removeAttr("disabled", "disabled");
+        } else {
+            $("#submit").attr("disabled", "disabled");
+        }
     });
-
-    $('#submit').click(function(event) {
-        $( ".control-tab" ).each(function( index ) {
-            if ( $(this).is(":visible") ){
-                $(this).toggle( "pulsate",  { times:2 } ).toggle( "pulsate", { times:2 } );
-            }
-        });
-    });
-
-
+   
 
     /**************
         Fix for checkboxes group required
@@ -265,6 +266,5 @@ $(document).ready(function() {
             cbx.attr('required','required');
         }
     });
-
 
 });

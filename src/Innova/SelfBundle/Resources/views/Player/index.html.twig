@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset("bundles/innovaself/css/player.css") }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body -%}
+    {% import "InnovaSelfBundle:Player:common/macros.html.twig" as macros %}
+
+    {# Compteur n° de la tâche #}
+    {% include "InnovaSelfBundle:Player/common:compteur.html.twig" %}
+
+    {# item #}
+    {% include "InnovaSelfBundle:Player/common:item.html.twig" %}
+
+    {# debug 
+    {% include "InnovaSelfBundle:Player/common:debug.html.twig" %}
+    #}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/questionnaire.js") }}"></script>
+{% endblock %}

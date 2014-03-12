@@ -1,0 +1,23 @@
+{% macro inputs(subquestion, proposition) %}
+    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" %}
+        {% set type = "radio" %}
+    {% else %}
+        {% set type = "checkbox" %}
+    {% endif %}
+    <input class="proposition-input" type="{{ type }}" name="{{ subquestion.id }}[]" id="input-proposition{{ proposition.id }}" value="{{ proposition.id }}" required />
+{% endmacro %}
+
+
+{% macro audio(id, media, icon, height, limitAudio, tooltip) %}
+    {% if id == "situation" %}
+        <!--#134 : appel de la modal uniquement dans le cas "audio/situation" -->
+        <img rel="tooltip" data-toggle="modal" data-target="#controlModal" data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+    {% else %}
+       <img rel="tooltip" data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+    {% endif %}
+    <audio preload="auto" id="{{ id }}" class="item_audio">
+        <source src="{{ asset('upload/media/') ~ media.url }}.mp3" type="audio/mp3">
+        <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
+        Votre navigateur est trop ancien.
+    </audio>
+{% endmacro %}

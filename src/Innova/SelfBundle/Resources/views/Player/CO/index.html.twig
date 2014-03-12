@@ -1,0 +1,22 @@
+<div id="contexte-icon">
+    {% include "InnovaSelfBundle:Player/CO:contexte.html.twig" %}
+</div>
+
+<div id="left-container-CO" class="col-md-5 left-container">
+    {% include "InnovaSelfBundle:Player/CO:situation.html.twig" %}
+</div>
+
+{% for question in questionnaire.questions %}
+<div id="right-container-CO" class="col-md-7 right-container">
+    <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+        {# ONGLETS #}
+        {% include "InnovaSelfBundle:Player/CO:tab-nav.html.twig" %}
+        
+        {# CONTENU DES ONGLETS #}
+        {% include "InnovaSelfBundle:Player/CO:tab-content.html.twig" %}
+        
+        {# SUBMIT BUTTON #}
+        {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
+    </form>
+</div>
+{% endfor %}

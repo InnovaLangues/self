@@ -1,0 +1,22 @@
+{% if questionnaire.ListeningLimit <= 1 %}
+    {% set limit_listening_text = "écoute" %}
+{% else %}
+    {% set limit_listening_text = "écoutes" %}
+{% endif %}
+{% set listening = app.session.get('listening') %}
+
+
+{% if questionnaire.dialogue == 1 %}
+    {% set icon = "situation_dialogue.png" %}
+{% else %}
+    {% set icon = "situation_monologue.png" %}
+{% endif %}
+
+{% if questionnaire.mediaText is not null %}
+    {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Situation de départ") }}
+    <div class="hidden" id="listens-counter">
+        Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span>
+        <span id="limit_listening_text">{{ limit_listening_text }}</span>
+        <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span>
+    </div>
+{% endif %}

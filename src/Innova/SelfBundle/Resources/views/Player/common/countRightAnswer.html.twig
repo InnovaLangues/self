@@ -1,0 +1,7 @@
+<div class="info-right-answer">
+    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" %}
+        Une réponse correcte
+    {% else %}
+        Plusieurs réponses correctes
+    {% endif %}
+</div>

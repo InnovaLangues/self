@@ -1,0 +1,7 @@
+<div id="item-container" class="row">
+    {% if questionnaire.skill.name == "CO" %}
+        {% include "InnovaSelfBundle:Player/CO:index.html.twig" %}
+    {% elseif questionnaire.skill.name == "CE" %}
+        {% include "InnovaSelfBundle:Player/CE:index.html.twig" %}
+    {% endif %}
+</div>
