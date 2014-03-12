@@ -1,0 +1,14 @@
+<div class="propositions-CE">
+    {% for i, proposition in subquestion.propositions | shuffle %}
+        {% set bulleCount = i + 1 %}
+        <div class="proposition-CE">
+            {{ macros.inputs(subquestion, proposition) }}
+            <label for="input-proposition{{ proposition.id }}" class="proposition-CE-text">
+                {{ macros.translateVF(proposition.media.description, test.language.name) }}
+            </label>
+        </div>
+    {% endfor %}
+</div>
+
+
+

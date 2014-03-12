@@ -1,12 +1,11 @@
 {% macro inputs(subquestion, proposition) %}
-    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" %}
+    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" %}
         {% set type = "radio" %}
     {% else %}
         {% set type = "checkbox" %}
     {% endif %}
     <input class="proposition-input" type="{{ type }}" name="{{ subquestion.id }}[]" id="input-proposition{{ proposition.id }}" value="{{ proposition.id }}" required />
 {% endmacro %}
-
 
 {% macro audio(id, media, icon, height, limitAudio, tooltip) %}
     {% if id == "situation" %}
@@ -20,4 +19,18 @@
         <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
         Votre navigateur est trop ancien.
     </audio>
+{% endmacro %}
+
+{% macro translateVF(description, language) %}
+    {% set languageShorten = language | slice(0, 2) | lower %}
+
+    {% if description == "VRAI" %}
+        {{ 'generic.boolTrue' | trans({}, "messages", languageShorten) }}
+    {% elseif description == "FAUX" %}
+        {{ 'generic.boolFalse' | trans({}, "messages", languageShorten) }}
+    {% elseif description == "ND" %}
+       {{ 'generic.boolND' | trans({}, "messages", languageShorten) }}
+    {% else %}
+        {{ description | raw }}
+    {% endif %}
 {% endmacro %}

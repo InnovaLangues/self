@@ -60,7 +60,6 @@ class TestController extends Controller
                         }
                     }
                 }
-
         }
 
         // Et j'affecte à la variable passée à la vue le premier questionnaire sans trace.

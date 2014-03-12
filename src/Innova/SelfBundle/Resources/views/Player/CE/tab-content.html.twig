@@ -2,24 +2,10 @@
     {% for i, subquestion in question.subquestions %}
         <div class="tab-pane {% if i == 0 %} active {% endif %}" id="tab-{{ i }}" data-subquestion-id="{{ subquestion.id }}">
             <div class="row">
-                <div class="question-CE">
-                    <img width="90px" src="{{ asset("bundles/innovaself/images/") }}oignon.png" />
-                    {% if subquestion.media.description is not null %}
-                    <div class="question-CE-text">
-                        {{ subquestion.media.description }}
-                    </div>
-                    {% endif %}
-
-                </div>
-                <div class="propositions-CE">
-                    {% for i, proposition in subquestion.propositions %}
-                        {% set bulleCount = i + 1 %}
-                        <div class="proposition-CE">
-                            {{ macros.inputs(subquestion, proposition) }}
-                            <label for="input-proposition{{ proposition.id }}" class="proposition-CE-text">{{ proposition.media.description }}</label>
-                        </div>
-                    {% endfor %}
-                </div>
+                {# CONSIGNE #}
+                {% include "InnovaSelfBundle:Player/CE:consigne.html.twig" %}
+                {# PROPOSITIONS #}
+                {% include "InnovaSelfBundle:Player/CE:propositions.html.twig" %}
             </div>
             {% include "InnovaSelfBundle:Player/common:countRightAnswer.html.twig" %}
         </div>

@@ -1,0 +1,12 @@
+<div class="question-CE">
+    <img width="90px" src="{{ asset("bundles/innovaself/images/") }}oignon.png" />
+    {% if subquestion.media is not null %}
+        <div class="question-CE-text">
+            {{ subquestion.media.description | raw }}
+        </div>
+    {% elseif questionnaire.mediaInstruction is not null %}
+        <div class="question-CE-text">
+            {{ questionnaire.mediaInstruction.description | raw }}
+        </div>
+    {% endif %}
+</div>

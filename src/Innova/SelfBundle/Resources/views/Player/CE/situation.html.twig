@@ -1,5 +1,5 @@
 <div id="situation-CE">
 {% if questionnaire.mediaText is not null %}
-    {{ questionnaire.mediaText.description }}
+    {{ questionnaire.mediaText.description | raw }}
 {% endif %}
 </div>
