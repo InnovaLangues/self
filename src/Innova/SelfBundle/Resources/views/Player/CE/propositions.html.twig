@@ -1,5 +1,11 @@
 <div class="propositions-CE">
-    {% for i, proposition in subquestion.propositions | shuffle %}
+    {% if subquestion.typology.name == "VF" or subquestion.typology == "VFNM" %}
+        {% set propositions = subquestion.propositions %}
+    {% else %}
+        {% set propositions = subquestion.propositions | shuffle %}
+    {% endif %}
+
+    {% for i, proposition in propositions %}
         {% set bulleCount = i + 1 %}
         <div class="proposition-CE">
             {{ macros.inputs(subquestion, proposition) }}
