@@ -58,7 +58,6 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
 
         ********************************************/
 
-
         /*******************************************
                     QUESTIONNAIRE 1 : TVFNM
         ********************************************/
@@ -163,7 +162,6 @@ Luogo, data                           Firma del locatore
         $questionnaire_B2_6_1_1_2 = $this->createProposition("2. Il Sig Verni scrive al sig.Pastani per rescindere il contratto d’affitto con ampio anticipo, e si impegna con il proprietario a inviargli il nome del futuro inquilino.", false, $questionnaire_B2_6_1_1);
         $questionnaire_B2_6_1_1_3 = $this->createProposition("3. Il Sig Verni scrive al sig.Pastani per richiedere la sospensione anticipata del contratto. Chiede inoltre di essere informato sulla data esatta in cui dovrà lasciare l’appartamento.", true, $questionnaire_B2_6_1_1);
 
-
         /*******************************************
                     QUESTIONNAIRE 7 : TVF
         ********************************************/
@@ -196,7 +194,6 @@ L’ufficio elettorale comunale resta a  disposizione per quanto segue:@@@
 
         $questionnaire_B2_7_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_B2_7_1_3);
         $questionnaire_B2_7_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_B2_7_1_3);
-
 
         /*******************************************
                     QUESTIONNAIRE 9 : TVFNM
@@ -285,7 +282,6 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_11_1_3_2 = $this->createProposition("3.2. sarebbero stati", false, $questionnaire_B2_11_1_3);
         $questionnaire_B2_11_1_3_3 = $this->createProposition("3.3. fossero stati ", true, $questionnaire_B2_11_1_3);
 
-
         /*******************************************
                     QUESTIONNAIRE 12 : TVFNM
         ********************************************/
@@ -315,7 +311,6 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_12_1_3_2 = $this->createProposition("FAUX", true, $questionnaire_B2_12_1_3);
         $questionnaire_B2_12_1_3_3 = $this->createProposition("ND", false, $questionnaire_B2_12_1_3);
 
-
         /*******************************************
                     QUESTIONNAIRE 15 : QRU
         ********************************************/
@@ -329,18 +324,41 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
 4. Il medico ha consigliato a Maria di usare le stampelle, spiegandole che ______ non le avesse utilizzate, avrebbe finito per peggiorare le condizioni della sua gamba.?",
 ""));
         // CREATION QUESTION
-        $questionnaire_B2_15_1 = $this->createQuestion("QRU", $questionnaire_B2_15);
+        $questionnaire_B2_15_1 = $this->createQuestion("TQRU", $questionnaire_B2_15);
         // CREATION SUBQUESTION
-        $questionnaire_B2_15_1_1 = $this->createSubquestion("QRU", $questionnaire_B2_15_1, "Il servizio permette di");
+        $questionnaire_B2_15_1_1 = $this->createSubquestion("QRU", $questionnaire_B2_15_1, "1. ______ Maria rientrava a casa ha visto una macchina avvicinarsi a grande velocità da Piazza S.Silvestro.");
+        $questionnaire_B2_15_1_2 = $this->createSubquestion("QRU", $questionnaire_B2_15_1, "2. _______ Maria aveva capito che la macchina non si sarebbe fermata per lasciarla passare, ha indietreggiato di qualche passo.");
+        $questionnaire_B2_15_1_3 = $this->createSubquestion("QRU", $questionnaire_B2_15_1, "3.________ Maria avesse lasciato lo spazio sufficiente, il conducente ha perso per un istante il controllo della macchina e ha urtato contro il suo piede.");
+        $questionnaire_B2_15_1_4 = $this->createSubquestion("QRU", $questionnaire_B2_15_1, "4. Il medico ha consigliato a Maria di usare le stampelle, spiegandole che ______ non le avesse utilizzate, avrebbe finito per peggiorare le condizioni della sua gamba.?");
 
         // CREATION PROPOSITIONS
         $questionnaire_B2_15_1_1_1 = $this->createProposition("dunque", false, $questionnaire_B2_15_1_1);
         $questionnaire_B2_15_1_1_2 = $this->createProposition("nonostante", true, $questionnaire_B2_15_1_1);
         $questionnaire_B2_15_1_1_3 = $this->createProposition("mentre", true, $questionnaire_B2_15_1_1);
-        $questionnaire_B2_15_1_1_3 = $this->createProposition("inoltre", false, $questionnaire_B2_15_1_1);
-        $questionnaire_B2_15_1_1_3 = $this->createProposition("se", true, $questionnaire_B2_15_1_1);
-        $questionnaire_B2_15_1_1_3 = $this->createProposition("siccome", true, $questionnaire_B2_15_1_1);
+        $questionnaire_B2_15_1_1_4 = $this->createProposition("inoltre", false, $questionnaire_B2_15_1_1);
+        $questionnaire_B2_15_1_1_5 = $this->createProposition("se", true, $questionnaire_B2_15_1_1);
+        $questionnaire_B2_15_1_1_6 = $this->createProposition("siccome", true, $questionnaire_B2_15_1_1);
 
+        $questionnaire_B2_15_1_2_1 = $this->createProposition("dunque", false, $questionnaire_B2_15_1_2);
+        $questionnaire_B2_15_1_2_2 = $this->createProposition("nonostante", true, $questionnaire_B2_15_1_2);
+        $questionnaire_B2_15_1_2_3 = $this->createProposition("mentre", true, $questionnaire_B2_15_1_2);
+        $questionnaire_B2_15_1_2_4 = $this->createProposition("inoltre", false, $questionnaire_B2_15_1_2);
+        $questionnaire_B2_15_1_2_5 = $this->createProposition("se", true, $questionnaire_B2_15_1_2);
+        $questionnaire_B2_15_1_2_6 = $this->createProposition("siccome", true, $questionnaire_B2_15_1_2);
+
+        $questionnaire_B2_15_1_3_1 = $this->createProposition("dunque", false, $questionnaire_B2_15_1_3);
+        $questionnaire_B2_15_1_3_2 = $this->createProposition("nonostante", true, $questionnaire_B2_15_1_3);
+        $questionnaire_B2_15_1_3_3 = $this->createProposition("mentre", true, $questionnaire_B2_15_1_3);
+        $questionnaire_B2_15_1_3_4 = $this->createProposition("inoltre", false, $questionnaire_B2_15_1_3);
+        $questionnaire_B2_15_1_3_5 = $this->createProposition("se", true, $questionnaire_B2_15_1_3);
+        $questionnaire_B2_15_1_3_6 = $this->createProposition("siccome", true, $questionnaire_B2_15_1_3);
+
+        $questionnaire_B2_15_1_4_1 = $this->createProposition("dunque", false, $questionnaire_B2_15_1_4);
+        $questionnaire_B2_15_1_4_2 = $this->createProposition("nonostante", true, $questionnaire_B2_15_1_4);
+        $questionnaire_B2_15_1_4_3 = $this->createProposition("mentre", true, $questionnaire_B2_15_1_4);
+        $questionnaire_B2_15_1_4_4 = $this->createProposition("inoltre", false, $questionnaire_B2_15_1_4);
+        $questionnaire_B2_15_1_4_5 = $this->createProposition("se", true, $questionnaire_B2_15_1_4);
+        $questionnaire_B2_15_1_4_6 = $this->createProposition("siccome", true, $questionnaire_B2_15_1_4);
 
         /*******************************************
                     QUESTIONNAIRE 17 : APPTT
@@ -437,8 +455,6 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_25_1_3_2 = $this->createProposition("FAUX", true, $questionnaire_B2_25_1_3);
         $questionnaire_B2_25_1_3_3 = $this->createProposition("ND", false, $questionnaire_B2_25_1_3);
 
-
-
         /*******************************************
                     QUESTIONNAIRE 26 : APPTT
         ********************************************/
@@ -477,7 +493,6 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_26_1_6_1 = $this->createProposition("Immaginare", true, $questionnaire_B2_26_1_1);
         $questionnaire_B2_26_1_6_2 = $this->createProposition("Immaginare", false, $questionnaire_B2_26_1_2);
         $questionnaire_B2_26_1_6_3 = $this->createProposition("Immaginare", false, $questionnaire_B2_26_1_3);
-
 
         /*******************************************
                     QUESTIONNAIRE 27 : TQRU
