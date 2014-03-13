@@ -1,5 +1,5 @@
 {% macro inputs(subquestion, proposition) %}
-    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" %}
+    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVFNM" or subquestion.typology.name == "TVF" %}
         {% set type = "radio" %}
     {% else %}
         {% set type = "checkbox" %}
@@ -24,10 +24,8 @@
 {% macro image(id, media, tooltip) %}
     {% import _self as macros %}
     {{ macros.modale(id, media, tooltip) }}
-    {#
-    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
-    #}
-    <img  data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="http://images.gs-cdn.net/static/artists/120_artist.png" />
+    {# <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" /> #}
+    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="http://images.gs-cdn.net/static/artists/120_artist.png" />
 {% endmacro %}
 
 {% macro video(id, media) %}
@@ -63,9 +61,9 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
 {% endmacro %}
 
 
