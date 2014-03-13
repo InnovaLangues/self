@@ -268,10 +268,10 @@ She took a deep breath and started.
         // CREATION QUESTION
         $questionnaire_11_1 = $this->createQuestion("TVFNM", $questionnaire_11);
         // CREATION SUBQUESTION
-        $questionnaire_11_1_1 = $this->createSubquestion("TVFNM", $questionnaire_11_1, "The woman looked calmer than the man");
-        $questionnaire_11_1_2 = $this->createSubquestion("TVFNM", $questionnaire_11_1, "A few objects were missing according to the woman");
-        $questionnaire_11_1_3 = $this->createSubquestion("TVFNM", $questionnaire_11_1, "The narrator of this story is a policeman");
-        $questionnaire_11_1_4 = $this->createSubquestion("TVFNM", $questionnaire_11_1, "The man and woman had been drinking before they met the narrator");
+        $questionnaire_11_1_1 = $this->createSubquestion("VFNM", $questionnaire_11_1, "The woman looked calmer than the man");
+        $questionnaire_11_1_2 = $this->createSubquestion("VFNM", $questionnaire_11_1, "A few objects were missing according to the woman");
+        $questionnaire_11_1_3 = $this->createSubquestion("VFNM", $questionnaire_11_1, "The narrator of this story is a policeman");
+        $questionnaire_11_1_4 = $this->createSubquestion("VFNM", $questionnaire_11_1, "The man and woman had been drinking before they met the narrator");
         // CREATION PROPOSITIONS
         $questionnaire_11_1_1_1 = $this->createProposition("VRAI", true, $questionnaire_11_1_1);
         $questionnaire_11_1_1_2 = $this->createProposition("FAUX", false, $questionnaire_11_1_1);
