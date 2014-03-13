@@ -155,21 +155,21 @@ Per maggiori informazioni visita anche il nostro sito www.pizzaitalianaacademy.c
         $questionnaire_7_1_3 = $this->createSubquestion("QRU", $questionnaire_7_1, "");
         $questionnaire_7_1_4 = $this->createSubquestion("QRU", $questionnaire_7_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_7_1_1_1 = $this->createProposition("1.1. Lavorare", false, $questionnaire_7_1_1);
-        $questionnaire_7_1_1_2 = $this->createProposition("1.2. Apprendere", false, $questionnaire_7_1_1);
-        $questionnaire_7_1_1_3 = $this->createProposition("1.3. Diventare", true, $questionnaire_7_1_1);
+        $questionnaire_7_1_1_1 = $this->createProposition("Lavorare", false, $questionnaire_7_1_1);
+        $questionnaire_7_1_1_2 = $this->createProposition("Apprendere", false, $questionnaire_7_1_1);
+        $questionnaire_7_1_1_3 = $this->createProposition("Diventare", true, $questionnaire_7_1_1);
 
-        $questionnaire_7_1_2_1 = $this->createProposition("2.1. Diploma", true, $questionnaire_7_1_2);
-        $questionnaire_7_1_2_2 = $this->createProposition("2.2. Documento", false, $questionnaire_7_1_2);
-        $questionnaire_7_1_2_3 = $this->createProposition("2.3. Libretto", false, $questionnaire_7_1_2);
+        $questionnaire_7_1_2_1 = $this->createProposition("Diploma", true, $questionnaire_7_1_2);
+        $questionnaire_7_1_2_2 = $this->createProposition("Documento", false, $questionnaire_7_1_2);
+        $questionnaire_7_1_2_3 = $this->createProposition("Libretto", false, $questionnaire_7_1_2);
 
-        $questionnaire_7_1_3_1 = $this->createProposition("3.1. Chiuso", true, $questionnaire_7_1_3);
-        $questionnaire_7_1_3_2 = $this->createProposition("3.2. Stretto", false, $questionnaire_7_1_3);
-        $questionnaire_7_1_3_3 = $this->createProposition("3.3 Corto", false, $questionnaire_7_1_3);
+        $questionnaire_7_1_3_1 = $this->createProposition("Chiuso", true, $questionnaire_7_1_3);
+        $questionnaire_7_1_3_2 = $this->createProposition("Stretto", false, $questionnaire_7_1_3);
+        $questionnaire_7_1_3_3 = $this->createProposition("Corto", false, $questionnaire_7_1_3);
 
-        $questionnaire_7_1_4_1 = $this->createProposition("4.1. Assicurazione", false, $questionnaire_7_1_4);
-        $questionnaire_7_1_4_2 = $this->createProposition("4.2. Garanzia", true, $questionnaire_7_1_4);
-        $questionnaire_7_1_4_3 = $this->createProposition("4.3. Celebrità", false, $questionnaire_7_1_4);
+        $questionnaire_7_1_4_1 = $this->createProposition("Assicurazione", false, $questionnaire_7_1_4);
+        $questionnaire_7_1_4_2 = $this->createProposition("Garanzia", true, $questionnaire_7_1_4);
+        $questionnaire_7_1_4_3 = $this->createProposition("Celebrità", false, $questionnaire_7_1_4);
 
         /*******************************************
                     QUESTIONNAIRE 8 : QRU
@@ -337,21 +337,21 @@ Johanna Viggosdottir – ***Fare famiglia in Italia***", ""));
         $questionnaire_15_1_3 = $this->createSubquestion("QRU", $questionnaire_15_1, "");
         $questionnaire_15_1_4 = $this->createSubquestion("QRU", $questionnaire_15_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_15_1_1_1 = $this->createProposition("1.1. si sviluppa", true, $questionnaire_15_1_1);
-        $questionnaire_15_1_1_2 = $this->createProposition("1.2. è sviluppata", false, $questionnaire_15_1_1);
-        $questionnaire_15_1_1_3 = $this->createProposition("1.3. ha sviluppato", false, $questionnaire_15_1_1);
+        $questionnaire_15_1_1_1 = $this->createProposition("si sviluppa", true, $questionnaire_15_1_1);
+        $questionnaire_15_1_1_2 = $this->createProposition("è sviluppata", false, $questionnaire_15_1_1);
+        $questionnaire_15_1_1_3 = $this->createProposition("ha sviluppato", false, $questionnaire_15_1_1);
 
-        $questionnaire_15_1_2_1 = $this->createProposition("2.1. Da sempre", true, $questionnaire_15_1_2);
-        $questionnaire_15_1_2_2 = $this->createProposition("2.2. Quindi", false, $questionnaire_15_1_2);
-        $questionnaire_15_1_2_3 = $this->createProposition("2.3. Comunque", false, $questionnaire_15_1_2);
+        $questionnaire_15_1_2_1 = $this->createProposition("Da sempre", true, $questionnaire_15_1_2);
+        $questionnaire_15_1_2_2 = $this->createProposition("Quindi", false, $questionnaire_15_1_2);
+        $questionnaire_15_1_2_3 = $this->createProposition("Comunque", false, $questionnaire_15_1_2);
 
-        $questionnaire_15_1_3_1 = $this->createProposition("3.1. si è allontanata", true, $questionnaire_15_1_3);
-        $questionnaire_15_1_3_2 = $this->createProposition("3.2. ha allontanato", false, $questionnaire_15_1_3);
-        $questionnaire_15_1_3_3 = $this->createProposition("3.3. è allontanato", false, $questionnaire_15_1_3);
+        $questionnaire_15_1_3_1 = $this->createProposition("si è allontanata", true, $questionnaire_15_1_3);
+        $questionnaire_15_1_3_2 = $this->createProposition("ha allontanato", false, $questionnaire_15_1_3);
+        $questionnaire_15_1_3_3 = $this->createProposition("è allontanato", false, $questionnaire_15_1_3);
 
-        $questionnaire_15_1_4_1 = $this->createProposition("4.1. ne", true, $questionnaire_15_1_4);
-        $questionnaire_15_1_4_2 = $this->createProposition("4.2. ci", false, $questionnaire_15_1_4);
-        $questionnaire_15_1_4_3 = $this->createProposition("4.3. vi", false, $questionnaire_15_1_4);
+        $questionnaire_15_1_4_1 = $this->createProposition("ne", true, $questionnaire_15_1_4);
+        $questionnaire_15_1_4_2 = $this->createProposition("ci", false, $questionnaire_15_1_4);
+        $questionnaire_15_1_4_3 = $this->createProposition("vi", false, $questionnaire_15_1_4);
 
         /*******************************************
                     QUESTIONNAIRE 16 : TQRU
@@ -370,21 +370,21 @@ Johanna Viggosdottir – ***Fare famiglia in Italia***", ""));
         $questionnaire_16_1_3 = $this->createSubquestion("QRU", $questionnaire_16_1, "");
         $questionnaire_16_1_4 = $this->createSubquestion("QRU", $questionnaire_16_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_16_1_1_1 = $this->createProposition("1.1. lo faranno", false, $questionnaire_16_1_1);
-        $questionnaire_16_1_1_2 = $this->createProposition("1.2. l'hanno fatto", true, $questionnaire_16_1_1);
-        $questionnaire_16_1_1_3 = $this->createProposition("1.3. lo facevano", false, $questionnaire_16_1_1);
+        $questionnaire_16_1_1_1 = $this->createProposition("lo faranno", false, $questionnaire_16_1_1);
+        $questionnaire_16_1_1_2 = $this->createProposition("l'hanno fatto", true, $questionnaire_16_1_1);
+        $questionnaire_16_1_1_3 = $this->createProposition("lo facevano", false, $questionnaire_16_1_1);
 
-        $questionnaire_16_1_2_1 = $this->createProposition("2.1. sia", true, $questionnaire_16_1_2);
-        $questionnaire_16_1_2_2 = $this->createProposition("2.2. è", false, $questionnaire_16_1_2);
-        $questionnaire_16_1_2_3 = $this->createProposition("2.3. sarà", false, $questionnaire_16_1_2);
+        $questionnaire_16_1_2_1 = $this->createProposition("sia", true, $questionnaire_16_1_2);
+        $questionnaire_16_1_2_2 = $this->createProposition("è", false, $questionnaire_16_1_2);
+        $questionnaire_16_1_2_3 = $this->createProposition("sarà", false, $questionnaire_16_1_2);
 
-        $questionnaire_16_1_3_1 = $this->createProposition("3.1. offra", true, $questionnaire_16_1_3);
-        $questionnaire_16_1_3_2 = $this->createProposition("3.2. offre", false, $questionnaire_16_1_3);
-        $questionnaire_16_1_3_3 = $this->createProposition("3.3. abbia offerto", false, $questionnaire_16_1_3);
+        $questionnaire_16_1_3_1 = $this->createProposition("offra", true, $questionnaire_16_1_3);
+        $questionnaire_16_1_3_2 = $this->createProposition("offre", false, $questionnaire_16_1_3);
+        $questionnaire_16_1_3_3 = $this->createProposition("abbia offerto", false, $questionnaire_16_1_3);
 
-        $questionnaire_16_1_4_1 = $this->createProposition("4.1. permetta", true, $questionnaire_16_1_4);
-        $questionnaire_16_1_4_2 = $this->createProposition("4.2. permette", false, $questionnaire_16_1_4);
-        $questionnaire_16_1_4_3 = $this->createProposition("4.3. ha permesso", false, $questionnaire_16_1_4);
+        $questionnaire_16_1_4_1 = $this->createProposition("permetta", true, $questionnaire_16_1_4);
+        $questionnaire_16_1_4_2 = $this->createProposition("permette", false, $questionnaire_16_1_4);
+        $questionnaire_16_1_4_3 = $this->createProposition("ha permesso", false, $questionnaire_16_1_4);
 
 
         /*******************************************
@@ -422,25 +422,25 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         $questionnaire_27_1_5 = $this->createSubquestion("QRU", $questionnaire_27_1, "");
 
         // CREATION PROPOSITIONS
-        $questionnaire_27_1_1_1 = $this->createProposition("1.1. sarà sciolto", true, $questionnaire_27_1_1);
-        $questionnaire_27_1_1_2 = $this->createProposition("1.2. sarebbe sciolto", false, $questionnaire_27_1_1);
-        $questionnaire_27_1_1_3 = $this->createProposition("1.3. scioglierà", false, $questionnaire_27_1_1);
+        $questionnaire_27_1_1_1 = $this->createProposition("sarà sciolto", true, $questionnaire_27_1_1);
+        $questionnaire_27_1_1_2 = $this->createProposition("sarebbe sciolto", false, $questionnaire_27_1_1);
+        $questionnaire_27_1_1_3 = $this->createProposition("scioglierà", false, $questionnaire_27_1_1);
 
-        $questionnaire_27_1_2_1 = $this->createProposition("2.1. avrete ottenuto", true, $questionnaire_27_1_2);
-        $questionnaire_27_1_2_2 = $this->createProposition("2.2. avrebbe ottenuto", false, $questionnaire_27_1_2);
-        $questionnaire_27_1_2_3 = $this->createProposition("2.3. otterrà", false, $questionnaire_27_1_2);
+        $questionnaire_27_1_2_1 = $this->createProposition("avrete ottenuto", true, $questionnaire_27_1_2);
+        $questionnaire_27_1_2_2 = $this->createProposition("avrebbe ottenuto", false, $questionnaire_27_1_2);
+        $questionnaire_27_1_2_3 = $this->createProposition("otterrà", false, $questionnaire_27_1_2);
 
-        $questionnaire_27_1_3_1 = $this->createProposition("3.1. 1. avrete scaldato ", true, $questionnaire_27_1_3);
-        $questionnaire_27_1_3_2 = $this->createProposition("3.2. avrebbe scaldato", false, $questionnaire_27_1_3);
-        $questionnaire_27_1_3_3 = $this->createProposition("3.3. avreste scaldato", false, $questionnaire_27_1_3);
+        $questionnaire_27_1_3_1 = $this->createProposition("avrete scaldato ", true, $questionnaire_27_1_3);
+        $questionnaire_27_1_3_2 = $this->createProposition("avrebbe scaldato", false, $questionnaire_27_1_3);
+        $questionnaire_27_1_3_3 = $this->createProposition("avreste scaldato", false, $questionnaire_27_1_3);
 
-        $questionnaire_27_1_4_1 = $this->createProposition("4.1. sarà evaporato ", true, $questionnaire_27_1_4);
-        $questionnaire_27_1_4_2 = $this->createProposition("4.2. sarebbe evaporato", false, $questionnaire_27_1_4);
-        $questionnaire_27_1_4_3 = $this->createProposition("4.3. evaporerà", false, $questionnaire_27_1_4);
+        $questionnaire_27_1_4_1 = $this->createProposition("sarà evaporato ", true, $questionnaire_27_1_4);
+        $questionnaire_27_1_4_2 = $this->createProposition("sarebbe evaporato", false, $questionnaire_27_1_4);
+        $questionnaire_27_1_4_3 = $this->createProposition("evaporerà", false, $questionnaire_27_1_4);
 
-        $questionnaire_27_1_5_1 = $this->createProposition("5.1. avrete riempito", true, $questionnaire_27_1_5);
-        $questionnaire_27_1_5_2 = $this->createProposition("5.2. avrebbe riempito", false, $questionnaire_27_1_5);
-        $questionnaire_27_1_5_3 = $this->createProposition("5.3. avreste riempito", false, $questionnaire_27_1_5);
+        $questionnaire_27_1_5_1 = $this->createProposition("avrete riempito", true, $questionnaire_27_1_5);
+        $questionnaire_27_1_5_2 = $this->createProposition("avrebbe riempito", false, $questionnaire_27_1_5);
+        $questionnaire_27_1_5_3 = $this->createProposition("avreste riempito", false, $questionnaire_27_1_5);
 
 
         /*******************************************
@@ -461,25 +461,25 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         $questionnaire_18_1_5 = $this->createSubquestion("QRU", $questionnaire_18_1, "");
 
         // CREATION PROPOSITIONS
-        $questionnaire_18_1_1_1 = $this->createProposition("1.1. infatti", false, $questionnaire_18_1_1);
-        $questionnaire_18_1_1_2 = $this->createProposition("1.2. inoltre", false, $questionnaire_18_1_1);
-        $questionnaire_18_1_1_3 = $this->createProposition("1.3. anche se", true, $questionnaire_18_1_1);
+        $questionnaire_18_1_1_1 = $this->createProposition("infatti", false, $questionnaire_18_1_1);
+        $questionnaire_18_1_1_2 = $this->createProposition("inoltre", false, $questionnaire_18_1_1);
+        $questionnaire_18_1_1_3 = $this->createProposition("anche se", true, $questionnaire_18_1_1);
 
-        $questionnaire_18_1_2_1 = $this->createProposition("2.1. nonostante", true, $questionnaire_18_1_2);
-        $questionnaire_18_1_2_2 = $this->createProposition("2.2. comunque", false, $questionnaire_18_1_2);
-        $questionnaire_18_1_2_3 = $this->createProposition("2.3. però", false, $questionnaire_18_1_2);
+        $questionnaire_18_1_2_1 = $this->createProposition("nonostante", true, $questionnaire_18_1_2);
+        $questionnaire_18_1_2_2 = $this->createProposition("comunque", false, $questionnaire_18_1_2);
+        $questionnaire_18_1_2_3 = $this->createProposition("però", false, $questionnaire_18_1_2);
 
-        $questionnaire_18_1_3_1 = $this->createProposition("3.1. inoltre", true, $questionnaire_18_1_3);
-        $questionnaire_18_1_3_2 = $this->createProposition("3.2. dunque", false, $questionnaire_18_1_3);
-        $questionnaire_18_1_3_3 = $this->createProposition("3.3. quindi", false, $questionnaire_18_1_3);
+        $questionnaire_18_1_3_1 = $this->createProposition("inoltre", true, $questionnaire_18_1_3);
+        $questionnaire_18_1_3_2 = $this->createProposition("dunque", false, $questionnaire_18_1_3);
+        $questionnaire_18_1_3_3 = $this->createProposition("quindi", false, $questionnaire_18_1_3);
 
-        $questionnaire_18_1_4_1 = $this->createProposition("4.1. purtroppo", true, $questionnaire_18_1_4);
-        $questionnaire_18_1_4_2 = $this->createProposition("4.2. ma", false, $questionnaire_18_1_4);
-        $questionnaire_18_1_4_3 = $this->createProposition("4.3. eppure", false, $questionnaire_18_1_4);
+        $questionnaire_18_1_4_1 = $this->createProposition("purtroppo", true, $questionnaire_18_1_4);
+        $questionnaire_18_1_4_2 = $this->createProposition("ma", false, $questionnaire_18_1_4);
+        $questionnaire_18_1_4_3 = $this->createProposition("eppure", false, $questionnaire_18_1_4);
 
-        $questionnaire_18_1_5_1 = $this->createProposition("5.1. infatti", true, $questionnaire_18_1_5);
-        $questionnaire_18_1_5_2 = $this->createProposition("5.2. oppure", false, $questionnaire_18_1_5);
-        $questionnaire_18_1_5_3 = $this->createProposition("5.3. sebbene", false, $questionnaire_18_1_5);
+        $questionnaire_18_1_5_1 = $this->createProposition("infatti", true, $questionnaire_18_1_5);
+        $questionnaire_18_1_5_2 = $this->createProposition("oppure", false, $questionnaire_18_1_5);
+        $questionnaire_18_1_5_3 = $this->createProposition("sebbene", false, $questionnaire_18_1_5);
 
         /*******************************************
                     QUESTIONNAIRE 21 : TVF
@@ -530,17 +530,17 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         $questionnaire_22_1_2 = $this->createSubquestion("QRU", $questionnaire_22_1, "");
         $questionnaire_22_1_3 = $this->createSubquestion("QRU", $questionnaire_22_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_22_1_1_1 = $this->createProposition("1.1. Però", true, $questionnaire_22_1_1);
-        $questionnaire_22_1_1_2 = $this->createProposition("1.2. nonostante", false, $questionnaire_22_1_1);
-        $questionnaire_22_1_1_3 = $this->createProposition("1.3. quindi", false, $questionnaire_22_1_1);
+        $questionnaire_22_1_1_1 = $this->createProposition("Però", true, $questionnaire_22_1_1);
+        $questionnaire_22_1_1_2 = $this->createProposition("nonostante", false, $questionnaire_22_1_1);
+        $questionnaire_22_1_1_3 = $this->createProposition("quindi", false, $questionnaire_22_1_1);
 
-        $questionnaire_22_1_2_1 = $this->createProposition("2.1. invece", true, $questionnaire_22_1_2);
-        $questionnaire_22_1_2_2 = $this->createProposition("2.2. nemmeno ", false, $questionnaire_22_1_2);
-        $questionnaire_22_1_2_3 = $this->createProposition("2.3. anche", false, $questionnaire_22_1_2);
+        $questionnaire_22_1_2_1 = $this->createProposition("invece", true, $questionnaire_22_1_2);
+        $questionnaire_22_1_2_2 = $this->createProposition("nemmeno ", false, $questionnaire_22_1_2);
+        $questionnaire_22_1_2_3 = $this->createProposition("anche", false, $questionnaire_22_1_2);
 
-        $questionnaire_22_1_3_1 = $this->createProposition("3.1. affiché", true, $questionnaire_22_1_3);
-        $questionnaire_22_1_3_2 = $this->createProposition("3.2. dunque", false, $questionnaire_22_1_3);
-        $questionnaire_22_1_3_3 = $this->createProposition("3.3. perciò", false, $questionnaire_22_1_3);
+        $questionnaire_22_1_3_1 = $this->createProposition("affiché", true, $questionnaire_22_1_3);
+        $questionnaire_22_1_3_2 = $this->createProposition("dunque", false, $questionnaire_22_1_3);
+        $questionnaire_22_1_3_3 = $this->createProposition("perciò", false, $questionnaire_22_1_3);
 
         /*******************************************
                     QUESTIONNAIRE 23 : TVF
@@ -619,25 +619,25 @@ Dott.ssa Angela Pitti
         $questionnaire_25_1_4 = $this->createSubquestion("QRU", $questionnaire_25_1, "");
         $questionnaire_25_1_5 = $this->createSubquestion("QRU", $questionnaire_25_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_25_1_1_1 = $this->createProposition("1.1. però", true, $questionnaire_25_1_1);
-        $questionnaire_25_1_1_2 = $this->createProposition("1.2. infatti", false, $questionnaire_25_1_1);
-        $questionnaire_25_1_1_3 = $this->createProposition("1.3. inoltre", false, $questionnaire_25_1_1);
+        $questionnaire_25_1_1_1 = $this->createProposition("però", true, $questionnaire_25_1_1);
+        $questionnaire_25_1_1_2 = $this->createProposition("infatti", false, $questionnaire_25_1_1);
+        $questionnaire_25_1_1_3 = $this->createProposition("inoltre", false, $questionnaire_25_1_1);
 
-        $questionnaire_25_1_2_1 = $this->createProposition("2.1. ma", true, $questionnaire_25_1_2);
-        $questionnaire_25_1_2_2 = $this->createProposition("2.2. di conseguenza", false, $questionnaire_25_1_2);
-        $questionnaire_25_1_2_3 = $this->createProposition("2.3. in particolare", false, $questionnaire_25_1_2);
+        $questionnaire_25_1_2_1 = $this->createProposition("ma", true, $questionnaire_25_1_2);
+        $questionnaire_25_1_2_2 = $this->createProposition("di conseguenza", false, $questionnaire_25_1_2);
+        $questionnaire_25_1_2_3 = $this->createProposition("in particolare", false, $questionnaire_25_1_2);
 
-        $questionnaire_25_1_3_1 = $this->createProposition("3.1. tuttavia", true, $questionnaire_25_1_3);
-        $questionnaire_25_1_3_2 = $this->createProposition("3.2. sebbene", false, $questionnaire_25_1_3);
-        $questionnaire_25_1_3_3 = $this->createProposition("3.3. come", false, $questionnaire_25_1_3);
+        $questionnaire_25_1_3_1 = $this->createProposition("tuttavia", true, $questionnaire_25_1_3);
+        $questionnaire_25_1_3_2 = $this->createProposition("sebbene", false, $questionnaire_25_1_3);
+        $questionnaire_25_1_3_3 = $this->createProposition("come", false, $questionnaire_25_1_3);
 
-        $questionnaire_25_1_4_1 = $this->createProposition("4.1. da un lato", true, $questionnaire_25_1_4);
-        $questionnaire_25_1_4_2 = $this->createProposition("4.2. anzi", false, $questionnaire_25_1_4);
-        $questionnaire_25_1_4_3 = $this->createProposition("4.3. qualora", false, $questionnaire_25_1_4);
+        $questionnaire_25_1_4_1 = $this->createProposition("da un lato", true, $questionnaire_25_1_4);
+        $questionnaire_25_1_4_2 = $this->createProposition("anzi", false, $questionnaire_25_1_4);
+        $questionnaire_25_1_4_3 = $this->createProposition("qualora", false, $questionnaire_25_1_4);
 
-        $questionnaire_25_1_5_1 = $this->createProposition("5.1. dall'altro", true, $questionnaire_25_1_5);
-        $questionnaire_25_1_5_2 = $this->createProposition("5.2. perché", false, $questionnaire_25_1_5);
-        $questionnaire_25_1_3_3 = $this->createProposition("5.3. quindi", false, $questionnaire_25_1_5);
+        $questionnaire_25_1_5_1 = $this->createProposition("dall'altro", true, $questionnaire_25_1_5);
+        $questionnaire_25_1_5_2 = $this->createProposition("perché", false, $questionnaire_25_1_5);
+        $questionnaire_25_1_3_3 = $this->createProposition("quindi", false, $questionnaire_25_1_5);
 
         /*******************************************
                     QUESTIONNAIRE 26 : TQRU
@@ -662,21 +662,21 @@ Cordiali saluti,@@@Gianni Rossi
         $questionnaire_26_1_4 = $this->createSubquestion("QRU", $questionnaire_26_1, "");
 
         // CREATION PROPOSITIONS
-        $questionnaire_26_1_1_1 = $this->createProposition("1.1. in merito", true, $questionnaire_26_1_1);
-        $questionnaire_26_1_1_2 = $this->createProposition("1.2. a proposito", false, $questionnaire_26_1_1);
-        $questionnaire_26_1_1_3 = $this->createProposition("1.3. circa", false, $questionnaire_26_1_1);
+        $questionnaire_26_1_1_1 = $this->createProposition("in merito", true, $questionnaire_26_1_1);
+        $questionnaire_26_1_1_2 = $this->createProposition("a proposito", false, $questionnaire_26_1_1);
+        $questionnaire_26_1_1_3 = $this->createProposition("circa", false, $questionnaire_26_1_1);
 
-        $questionnaire_26_1_2_1 = $this->createProposition("2.1. in realtà", true, $questionnaire_26_1_2);
-        $questionnaire_26_1_2_2 = $this->createProposition("2.2. dunque", false, $questionnaire_26_1_2);
-        $questionnaire_26_1_2_3 = $this->createProposition("2.3. comunque", false, $questionnaire_26_1_2);
+        $questionnaire_26_1_2_1 = $this->createProposition("in realtà", true, $questionnaire_26_1_2);
+        $questionnaire_26_1_2_2 = $this->createProposition("dunque", false, $questionnaire_26_1_2);
+        $questionnaire_26_1_2_3 = $this->createProposition("comunque", false, $questionnaire_26_1_2);
 
-        $questionnaire_26_1_3_1 = $this->createProposition("3.1. inoltre", true, $questionnaire_26_1_3);
-        $questionnaire_26_1_3_2 = $this->createProposition("3.2. al contrario", false, $questionnaire_26_1_3);
-        $questionnaire_26_1_3_3 = $this->createProposition("3.3. poiché", false, $questionnaire_26_1_3);
+        $questionnaire_26_1_3_1 = $this->createProposition("inoltre", true, $questionnaire_26_1_3);
+        $questionnaire_26_1_3_2 = $this->createProposition("al contrario", false, $questionnaire_26_1_3);
+        $questionnaire_26_1_3_3 = $this->createProposition("poiché", false, $questionnaire_26_1_3);
 
-        $questionnaire_26_1_4_1 = $this->createProposition("4.1. per questo", true, $questionnaire_26_1_4);
-        $questionnaire_26_1_4_2 = $this->createProposition("4.2. in realtà", false, $questionnaire_26_1_4);
-        $questionnaire_26_1_4_3 = $this->createProposition("4.3. in alternativa", false, $questionnaire_26_1_4);
+        $questionnaire_26_1_4_1 = $this->createProposition("per questo", true, $questionnaire_26_1_4);
+        $questionnaire_26_1_4_2 = $this->createProposition("in realtà", false, $questionnaire_26_1_4);
+        $questionnaire_26_1_4_3 = $this->createProposition("in alternativa", false, $questionnaire_26_1_4);
 
 
         /*******************************************
