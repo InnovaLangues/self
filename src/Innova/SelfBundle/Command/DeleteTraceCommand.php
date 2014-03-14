@@ -6,12 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Innova\SelfBundle\Entity\Answer;
-use Innova\SelfBundle\Entity\Trace;
-
-use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Helper\HelperSet;
-
 class DeleteTraceCommand extends ContainerAwareCommand
 {
 

@@ -13,7 +13,6 @@ use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Proposition;
-use Innova\SelfBundle\Form\TestType;
 use Innova\SelfBundle\Entity\Typology;
 
 class ImportController extends Controller
