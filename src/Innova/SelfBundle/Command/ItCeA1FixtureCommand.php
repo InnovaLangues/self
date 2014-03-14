@@ -547,7 +547,10 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        $test = new Test();
+        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)){
+            $test = new Test();
+        }
+
         $test->setName($name);
         $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName($language);
         $test->setLanguage($language);
