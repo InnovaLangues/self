@@ -1,9 +1,21 @@
-<div class="col-md-7">
-    {% for i, proposition in subquestion.propositions | shuffle %}
+{% if subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" %}
+    {% set propositions = subquestion.propositions %}
+{% else %}
+    {% set propositions = subquestion.propositions | shuffle %}
+{% endif %}
+
+<div class="col-md-7 propositions-CO">
+    {% for i, proposition in propositions %}
         {% set bulleCount = i + 1 %}
         <div class="proposition-CO">
             {{ macros.inputs(subquestion, proposition) }}
-            {{ macros.audio("proposition-"~ proposition.id, proposition.media, "audio"~bulleCount~".png", 90, 0, "Proposition de réponse "~ bulleCount ) }}
+            {% if proposition.media.mediaType.name == "audio" %}
+                {{ macros.audio("proposition-"~ proposition.id, proposition.media, "audio"~bulleCount~".png", 90, 0, "Proposition de réponse "~ bulleCount ) }}
+            {% elseif proposition.media.mediaType.name == "texte" %}
+                <label for="input-proposition{{ proposition.id }}" class="proposition-CO-text">
+                {{ macros.translateVF(proposition.media.description, test.language.name) }}
+            </label>
+            {% endif %}
         </div>
     {% endfor %}
 </div>

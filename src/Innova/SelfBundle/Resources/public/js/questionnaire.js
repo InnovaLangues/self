@@ -62,6 +62,7 @@ $(document).ready(function() {
             // Cas du clic sur "Situation de départ".
             if (sound === "situation"){
 
+                /*
                 var consigne = 0;
 
                 $.ajax({
@@ -78,11 +79,12 @@ $(document).ready(function() {
                 });
 
                 if (consigne > 0){
+               
                     // Si j'ai déjà cliqué sur la consigne didactique
                     // alors j'initialise l'attribut "data-toggle"
                     // afin de ne plus afficher la modal de contrôle.
                     $(".item_audio_button").attr("data-toggle", "");
-
+                 */
                     play_in_progress = true;
                     $("#limit_listening_text").html(
                         pluralizeListen(limit, listened)
@@ -113,7 +115,9 @@ $(document).ready(function() {
                     .fail(function() {
                         alert('Ajax error 3');
                     });
+                /*
                 };
+                */
             }
         }
     });
@@ -122,10 +126,12 @@ $(document).ready(function() {
     /**************
         Handle video
     **************/
+
+    /*
     $("video").click(function(){
         $(this).get(0).play();
     });
-
+*/
     $('.modal').on('hidden.bs.modal', function () {
         $("video").each(function(){
             $(this).get(0).pause();
@@ -201,6 +207,7 @@ $(document).ready(function() {
         Allow or not to listen "Situation de départ". We must listen "Consigne didactique" before.". EV, 20/12/2013
     **************/
 
+    /*
     $(".consigne, .contexte").click(function(){
         //Increment session
         $.ajax({
@@ -217,6 +224,7 @@ $(document).ready(function() {
             alert('Ajax error 4');
         });
     });
+    */
 
     /**************
         GESTION DES BADGES SUR LES ONGLETS

@@ -128,15 +128,16 @@ class ImportController extends Controller
         $csvName = 'CE_pilote.csv'; // CE Italien à partir du serveur "commun"
         $csvName = 'CE_piloteII-27-01-14-re.csv'; // CE Italien
         $csvName = 'QRU.csv'; // Suite réception MP.
+        $csvName = 'test.csv'; // Suite réception MP.
 
         // Symfony
-        $urlCSVRelativeToWeb = 'upload/import/csv/';
+        $urlCSVRelativeToWeb = 'upload/import/test-csv/';
         // Path + Name:wq
         $csvPath = $csvPathImport . $csvName;
 
         // File import path
         // Répertoire où seront stockés les fichiers
-        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3/'; // A modifier quand on aura l'adresse
+        $dir2copy =__DIR__.'/../../../../web/upload/import/test-mp3/'; // A modifier quand on aura l'adresse
 
         // File copy path
         // Répertoire où seront copiés les fichiers
