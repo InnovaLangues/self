@@ -3,7 +3,7 @@
     <li class="nav-tab {% if i == 0 %} active{% endif %}">
         <a href="#tab-{{ i }}" data-toggle="tab">
             {{ i + 1 }}/{{ question.subquestions|length }}
-            <span id="badge-{{ subquestion.id }}" class="badge pull-right">&nbsp;</span>
+            <span id="badge-{{ subquestion.id }}" class="badge pull-right subquestion-not-ok">ok</span>
         </a>
     </li>
     {% endfor %}

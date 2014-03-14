@@ -59,14 +59,12 @@ $(document).ready(function() {
         $( ".tab-pane" ).each(function( index ) {
             subquestionId = $( this ).attr("data-subquestion-id");
             if ( $("[name='"+subquestionId+"[]']:checked").length > 0 ){
-                $( "#badge-" + subquestionId ).css("background-color", "#5CB85C");
-                $( "#badge-" + subquestionId ).text("ok");
-                
+                $( "#badge-" + subquestionId ).removeClass("subquestion-not-ok");
+                $( "#badge-" + subquestionId ).addClass("subquestion-ok");
             } else {
-                $( "#badge-" + subquestionId ).css("background-color", "grey");
-                $( "#badge-" + subquestionId ).text(" ");
+                $( "#badge-" + subquestionId ).removeClass("subquestion-ok");
+                $( "#badge-" + subquestionId ).addClass("subquestion-not-ok");
                 incomplete_tab++;
-
             } 
         });
         
@@ -96,6 +94,15 @@ $(document).ready(function() {
 
         }else{
             cbx.attr('required','required');
+        }
+    });
+
+    /**************
+        bounce the badges if 
+    **************/
+    $(".submit-container").click(function(){
+        if($("#submit").is(":disabled")) {
+            $(".subquestion-not-ok").hide(200).show(200);
         }
     });
 
@@ -195,7 +202,7 @@ $(document).ready(function() {
     /**************
         Timestamp function
     **************/
-    
+
     function timestamp(){
         return Math.round((new Date()).getTime() / 1000);
     }

@@ -151,6 +151,15 @@ hr {
     -khtml-transform: rotate(-25deg);
 }
 
+.subquestion-not-ok {
+	background-color : grey;
+	color:grey;
+}
+
+.subquestion-ok {
+	background-color: #5CB85C;
+	color:white;
+}
 
 /**********************************
 	QUESTION
