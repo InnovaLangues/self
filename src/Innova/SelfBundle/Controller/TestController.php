@@ -649,14 +649,14 @@ class TestController extends Controller
      * importCsvSQL function
      *
      * @Route(
-     *     "/admin/csv-import/{language}",
+     *     "/admin/csv-import/{language}/{level}",
      *     name = "csv-import",
-     *     requirements={"language" = "en|it"}
+     *     requirements={"language" = "en|it", "level" = "a1|b1|b2"}
      * )
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function importCsvSQLAction($language)
+    public function importCsvSQLAction($language, $level)
     {
         $em = $this->getDoctrine()->getManager();
 
