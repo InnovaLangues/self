@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     getListenCount();
+    checkBadges();
 
     /**************
         GESTION AUDIO
@@ -55,24 +56,7 @@ $(document).ready(function() {
     **************/
 
     $(":checkbox, :radio").change(function(){
-        var incomplete_tab = 0;
-        $( ".tab-pane" ).each(function( index ) {
-            subquestionId = $( this ).attr("data-subquestion-id");
-            if ( $("[name='"+subquestionId+"[]']:checked").length > 0 ){
-                $( "#badge-" + subquestionId ).removeClass("subquestion-not-ok");
-                $( "#badge-" + subquestionId ).addClass("subquestion-ok");
-            } else {
-                $( "#badge-" + subquestionId ).removeClass("subquestion-ok");
-                $( "#badge-" + subquestionId ).addClass("subquestion-not-ok");
-                incomplete_tab++;
-            } 
-        });
-        
-        if (incomplete_tab == 0) {
-            $("#submit").removeAttr("disabled", "disabled");
-        } else {
-            $("#submit").attr("disabled", "disabled");
-        }
+        checkBadges();
     });
    
 
@@ -98,7 +82,7 @@ $(document).ready(function() {
     });
 
     /**************
-        bounce the badges if 
+        bounce the badges 
     **************/
     $(".submit-container").click(function(){
         if($("#submit").is(":disabled")) {
@@ -123,6 +107,29 @@ $(document).ready(function() {
         return 'écoutes';
     }
 
+    /**************
+       CHECK BADGES
+    **************/
+
+    function checkBadges(){
+        var incomplete_tab = 0;
+        $( ".tab-pane" ).each(function( index ) {
+            subquestionId = $( this ).attr("data-subquestion-id");
+            var badge = $( "#badge-" + subquestionId );
+            if ( $("[name='"+subquestionId+"[]']:checked").length > 0 ) {
+                badge.removeClass("subquestion-not-ok").addClass("subquestion-ok");
+            } else {
+                badge.removeClass("subquestion-ok").addClass("subquestion-not-ok");
+                incomplete_tab++;
+            } 
+        });
+        
+        if (incomplete_tab == 0) {
+            $("#submit").removeAttr("disabled", "disabled");
+        } else {
+            $("#submit").attr("disabled", "disabled");
+        }
+    }
 
     /**************
        AJAX REQUEST TO GET LISTENING COUNT
