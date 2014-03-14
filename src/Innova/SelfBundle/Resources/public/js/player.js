@@ -61,82 +61,40 @@ $(document).ready(function() {
 
             // Cas du clic sur "Situation de départ".
             if (sound === "situation"){
+                play_in_progress = true;
+                $("#limit_listening_text").html(
+                    pluralizeListen(limit, listened)
+                );
 
-                /*
-                var consigne = 0;
+                $(".item_audio_button").css("opacity","0.5");
+                $(this).css("opacity","1");
+                audio.play();
 
+                //Increment session
                 $.ajax({
-                        url: Routing.generate('sessionConsigneOrContextListenNumber'),
-                        async: false,
-                        type: 'GET',
-                        dataType: 'json'
+                    url: Routing.generate('incrementeSessionSituationListenNumber'),
+                    type: 'PUT',
+                    dataType: 'json'
                 })
-                .done(function(data) {
-                    consigne = data.consigneOrContextListenNumber;
-                })
-                .fail(function() {
-                    alert('Ajax error 2');
-                });
 
-                if (consigne > 0){
-               
-                    // Si j'ai déjà cliqué sur la consigne didactique
-                    // alors j'initialise l'attribut "data-toggle"
-                    // afin de ne plus afficher la modal de contrôle.
-                    $(".item_audio_button").attr("data-toggle", "");
-                 */
-                    play_in_progress = true;
+                .done(function(data) {
+                    var limitListening = $("#limit_listening").html();
+                    var reste = $("#limit_listening").html() - data.situationListenNumber;
+                    var consigne = data.consigneListenNumber;
+                    $("#listening_number").html(reste);
+                    var limit = $("#limit_listening").html();
+                    var listened = data.situationListenNumber;
                     $("#limit_listening_text").html(
                         pluralizeListen(limit, listened)
                     );
-
-                    $(".item_audio_button").css("opacity","0.5");
-                    $(this).css("opacity","1");
-                    audio.play();
-
-                    //Increment session
-                    $.ajax({
-                        url: Routing.generate('incrementeSessionSituationListenNumber'),
-                        type: 'PUT',
-                        dataType: 'json'
-                    })
-
-                    .done(function(data) {
-                        var limitListening = $("#limit_listening").html();
-                        var reste = $("#limit_listening").html() - data.situationListenNumber;
-                        var consigne = data.consigneListenNumber;
-                        $("#listening_number").html(reste);
-                        var limit = $("#limit_listening").html();
-                        var listened = data.situationListenNumber;
-                        $("#limit_listening_text").html(
-                            pluralizeListen(limit, listened)
-                        );
-                    })
-                    .fail(function() {
-                        alert('Ajax error 3');
-                    });
-                /*
-                };
-                */
+                })
+                .fail(function() {
+                    alert('Ajax error 3');
+                });
+            
             }
         }
     });
-
-
-    /**************
-        Handle video
-    **************/
-
-    /*
-    $("video").click(function(){
-        $(this).get(0).play();
-    });
-*/
-    $('.modal').on('hidden.bs.modal', function () {
-        $("video").each(function(){
-            $(this).get(0).pause();
-        });
-    })
 
     /**************
         WORD "ECOUTE" DISPLAY WITH OR WITHOUT "s"
@@ -188,43 +146,8 @@ $(document).ready(function() {
       .fail(function() {
          alert('Ajax error session');
       });
-
-      $.ajax({
-         url: Routing.generate('resetSessionConsigneOrContextListenNumber'),
-         async: false,
-         type: 'PUT',
-         dataType: 'json'
-      })
-      .done(function(data) {
-         var reste = data.consigneOrContextListenNumber;
-      })
-      .fail(function() {
-         alert('Ajax error consigne');
-      });
     });
 
-    /**************
-        Allow or not to listen "Situation de départ". We must listen "Consigne didactique" before.". EV, 20/12/2013
-    **************/
-
-    /*
-    $(".consigne, .contexte").click(function(){
-        //Increment session
-        $.ajax({
-            url: Routing.generate('incrementeSessionConsigneOrContextListenNumber'),
-            type: 'PUT',
-            dataType: 'json'
-        })
-
-        .done(function(data) {
-            var consigne = data.consigneOrContextListenNumber;
-        })
-
-        .fail(function() {
-            alert('Ajax error 4');
-        });
-    });
-    */
 
     /**************
         GESTION DES BADGES SUR LES ONGLETS
