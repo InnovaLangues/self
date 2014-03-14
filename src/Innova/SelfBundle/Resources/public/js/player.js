@@ -86,7 +86,7 @@ $(document).ready(function() {
     **************/
     $(".submit-container").click(function(){
         if($("#submit").is(":disabled")) {
-            $(".subquestion-not-ok").hide(200).show(200);
+            $(".subquestion-not-ok").toggle( "pulsate" ).toggle( "pulsate" );
         }
     });
 
