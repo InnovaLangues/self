@@ -29,24 +29,20 @@ use Symfony\Component\Console\Helper\HelperSet;
 /**
  * Symfony command to delete tests. EV. 12/03/2014
  * We must execute this command with parameter "sql" like :
- * php app/console self:fixtures:delete sql
+ * php app/console self:delete:all sql
 */
-class DeleteFixtureCommand extends ContainerAwareCommand
+class DeleteAllCommand extends ContainerAwareCommand
 {
 
     protected function configure()
     {
         $this
-            ->setName('self:fixtures:delete')
+            ->setName('self:delete:all')
             ->setDescription('Delete test SELF')
             ->addArgument('name')
            ;
     }
 
-    /**
-     * If I have any data in database, then I don't execute fixtures. EV.
-     *
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
@@ -108,19 +104,6 @@ class DeleteFixtureCommand extends ContainerAwareCommand
         }
 
         $em->flush();
-
-        /* il faut exécuter ces requêtes.
-delete from answer;# 4 lignes affectées.
-delete from trace;# 1 ligne affectée.
-delete from proposition;# MySQL a retourné un résultat vide (aucune ligne).
-delete from subquestion;# 6 lignes affectées.
-delete from question;# 2 lignes affectées.
-delete from questionnaire;# 2 lignes affectées.
-delete from media;# 4 lignes affectées.
-delete from test;
-delete from test_questionnaire;
-*/
-
 
     }
 

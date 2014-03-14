@@ -665,15 +665,12 @@ class TestController extends Controller
         //
 
         // File import path
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/it/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/'; // Symfony
-
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/en/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/en/'; // Symfony
+        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv/'; // Symfony
+        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3/en/'; // Symfony
 
 
         // File import name
-        $csvName = 'ok-27-02-en.csv'; // Suite réception MP.
+        $csvName = 'en.csv'; // Suite réception MP.
 
         // Symfony
         $urlCSVRelativeToWeb = 'upload/import/csv/';
@@ -682,7 +679,7 @@ class TestController extends Controller
 
         // File import path
         // Répertoire où seront stockés les fichiers
-        $dir2copy =__DIR__.'/../../../../web/upload/import/mp3-p2/en/'; // A modifier quand on aura l'adresse
+        $dir2copy = $csvPathImportMp3; // A modifier quand on aura l'adresse
 
         // File copy path
         // Répertoire où seront copiés les fichiers

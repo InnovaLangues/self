@@ -12,10 +12,9 @@
 
     {# Compteur n° de la tâche #}
     {% include "InnovaSelfBundle:Player/common:compteur.html.twig" %}
-    
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/questionnaire.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/player.js") }}"></script>
 {% endblock %}

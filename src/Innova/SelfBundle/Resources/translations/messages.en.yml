@@ -1,4 +1,4 @@
 generic:
-    boolTrue: "True"
-    boolFalse: "False"
-    boolND: "Not told"
+    boolTrue: "Vrai"
+    boolFalse: "Faux"
+    boolND: "On ne peut pas dire"
