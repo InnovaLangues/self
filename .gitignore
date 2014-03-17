@@ -26,3 +26,4 @@ build/code-browser/
 *.php~
 *.orig
 composer.phar
+composer.lock
