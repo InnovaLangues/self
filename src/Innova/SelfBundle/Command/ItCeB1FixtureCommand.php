@@ -74,9 +74,9 @@ Il comfort e l’eccezionale servizio della nostra nave saprà come sorprenderti
         // CREATION SUBQUESTION
         $questionnaire_3_1_1 = $this->createSubquestion("QRM", $questionnaire_3_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_3_1_1_1 = $this->createProposition("Con Crociere nel Mondo puoi continuare a fare gli sport che ti  piacciono anche in vacanza.", true, $questionnaire_3_1_1);
-        $questionnaire_3_1_1_2 = $this->createProposition("Il punto di forza dell’azienda è la capacità di offrire servizi per  tutte le esigenze.", true, $questionnaire_3_1_1);
-        $questionnaire_3_1_1_3 = $this->createProposition("L’offerta è accessibile ad un pubblico ristretto", false, $questionnaire_3_1_1);
+        $this->createProposition("Con Crociere nel Mondo puoi continuare a fare gli sport che ti  piacciono anche in vacanza.", true, $questionnaire_3_1_1);
+        $this->createProposition("Il punto di forza dell’azienda è la capacità di offrire servizi per  tutte le esigenze.", true, $questionnaire_3_1_1);
+        $this->createProposition("L’offerta è accessibile ad un pubblico ristretto", false, $questionnaire_3_1_1);
 
 
         /*******************************************
@@ -96,9 +96,9 @@ Si consiglia inoltre di registrare i dati relativi al viaggio che si intende eff
         // CREATION SUBQUESTION
         //$questionnaire_4_1_1 = $this->createSubquestion("QRM", $questionnaire_4_1, "");
         // CREATION PROPOSITIONS
-        //$questionnaire_4_1_1_1 = $this->createProposition("Il messaggio intende mettere in guardia i turisti da siti internet poco sicuri.", true, $questionnaire_4_1_1);
-        //$questionnaire_4_1_1_2 = $this->createProposition("Nel messaggio si consiglia di contattare le società di prenotazione alberghiera una volta arrivati sul posto.", false, $questionnaire_4_1_1);
-        //$questionnaire_4_1_1_3 = $this->createProposition("Prima di partire è obbligatorio acquistare un'assicurazione per le spese mediche.", false, $questionnaire_4_1_1);
+        //$this->createProposition("Il messaggio intende mettere in guardia i turisti da siti internet poco sicuri.", true, $questionnaire_4_1_1);
+        //$this->createProposition("Nel messaggio si consiglia di contattare le società di prenotazione alberghiera una volta arrivati sul posto.", false, $questionnaire_4_1_1);
+        //$this->createProposition("Prima di partire è obbligatorio acquistare un'assicurazione per le spese mediche.", false, $questionnaire_4_1_1);
 
         // CREATION SUBQUESTION
         $questionnaire_4_1_1 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "Il messaggio intende mettere in guardia i turisti da siti internet poco sicuri.");
@@ -106,14 +106,14 @@ Si consiglia inoltre di registrare i dati relativi al viaggio che si intende eff
         $questionnaire_4_1_3 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "Prima di partire è obbligatorio acquistare un'assicurazione per le spese mediche.");
 
         // CREATION PROPOSITIONS
-        $questionnaire_4_1_1_1 = $this->createPropositionVF("", "VRAI", true, $questionnaire_4_1_1);
-        $questionnaire_4_1_1_1 = $this->createPropositionVF("", "FAUX", false, $questionnaire_4_1_1);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_4_1_1);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_4_1_1);
 
-        $questionnaire_4_1_1_2 = $this->createPropositionVF("", "VRAI", false, $questionnaire_4_1_2);
-        $questionnaire_4_1_1_2 = $this->createPropositionVF("", "FAUX", true, $questionnaire_4_1_2);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_4_1_2);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_4_1_2);
 
-        $questionnaire_4_1_1_3 = $this->createPropositionVF("", "VRAI", false, $questionnaire_4_1_3);
-        $questionnaire_4_1_1_3 = $this->createPropositionVF("", "FAUX", true, $questionnaire_4_1_3);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_4_1_3);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_4_1_3);
 
 
 
@@ -130,10 +130,10 @@ Si consiglia inoltre di registrare i dati relativi al viaggio che si intende eff
         // CREATION SUBQUESTION
         $questionnaire_6_1_1 = $this->createSubquestion("QRM", $questionnaire_6_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_6_1_1_1 = $this->createProposition("Al villaggio turistico Marina Village propongono animazione serale.", true, $questionnaire_6_1_1);
-        $questionnaire_6_1_1_2 = $this->createProposition("L’appartamento dispone di 5 camere da letto.", false, $questionnaire_6_1_1);
-        $questionnaire_6_1_1_3 = $this->createProposition("Il terrazzo è arredato con ombrelloni e sdraio.", false, $questionnaire_6_1_1);
-        $questionnaire_6_1_1_4 = $this->createProposition("La spiaggia privata non è raggiungibile da veicoli a motore", true, $questionnaire_6_1_1);
+        $this->createProposition("Al villaggio turistico Marina Village propongono animazione serale.", true, $questionnaire_6_1_1);
+        $this->createProposition("L’appartamento dispone di 5 camere da letto.", false, $questionnaire_6_1_1);
+        $this->createProposition("Il terrazzo è arredato con ombrelloni e sdraio.", false, $questionnaire_6_1_1);
+        $this->createProposition("La spiaggia privata non è raggiungibile da veicoli a motore", true, $questionnaire_6_1_1);
 
         /*******************************************
                     QUESTIONNAIRE 7 : QRU
@@ -155,21 +155,21 @@ Per maggiori informazioni visita anche il nostro sito www.pizzaitalianaacademy.c
         $questionnaire_7_1_3 = $this->createSubquestion("QRU", $questionnaire_7_1, "");
         $questionnaire_7_1_4 = $this->createSubquestion("QRU", $questionnaire_7_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_7_1_1_1 = $this->createProposition("Lavorare", false, $questionnaire_7_1_1);
-        $questionnaire_7_1_1_2 = $this->createProposition("Apprendere", false, $questionnaire_7_1_1);
-        $questionnaire_7_1_1_3 = $this->createProposition("Diventare", true, $questionnaire_7_1_1);
+        $this->createProposition("Lavorare", false, $questionnaire_7_1_1);
+        $this->createProposition("Apprendere", false, $questionnaire_7_1_1);
+        $this->createProposition("Diventare", true, $questionnaire_7_1_1);
 
-        $questionnaire_7_1_2_1 = $this->createProposition("Diploma", true, $questionnaire_7_1_2);
-        $questionnaire_7_1_2_2 = $this->createProposition("Documento", false, $questionnaire_7_1_2);
-        $questionnaire_7_1_2_3 = $this->createProposition("Libretto", false, $questionnaire_7_1_2);
+        $this->createProposition("Diploma", true, $questionnaire_7_1_2);
+        $this->createProposition("Documento", false, $questionnaire_7_1_2);
+        $this->createProposition("Libretto", false, $questionnaire_7_1_2);
 
-        $questionnaire_7_1_3_1 = $this->createProposition("Chiuso", true, $questionnaire_7_1_3);
-        $questionnaire_7_1_3_2 = $this->createProposition("Stretto", false, $questionnaire_7_1_3);
-        $questionnaire_7_1_3_3 = $this->createProposition("Corto", false, $questionnaire_7_1_3);
+        $this->createProposition("Chiuso", true, $questionnaire_7_1_3);
+        $this->createProposition("Stretto", false, $questionnaire_7_1_3);
+        $this->createProposition("Corto", false, $questionnaire_7_1_3);
 
-        $questionnaire_7_1_4_1 = $this->createProposition("Assicurazione", false, $questionnaire_7_1_4);
-        $questionnaire_7_1_4_2 = $this->createProposition("Garanzia", true, $questionnaire_7_1_4);
-        $questionnaire_7_1_4_3 = $this->createProposition("Celebrità", false, $questionnaire_7_1_4);
+        $this->createProposition("Assicurazione", false, $questionnaire_7_1_4);
+        $this->createProposition("Garanzia", true, $questionnaire_7_1_4);
+        $this->createProposition("Celebrità", false, $questionnaire_7_1_4);
 
         /*******************************************
                     QUESTIONNAIRE 8 : QRU
@@ -188,9 +188,9 @@ Per maggiori informazioni visita anche il nostro sito www.pizzaitalianaacademy.c
         // CREATION SUBQUESTION
         $questionnaire_8_1_1 = $this->createSubquestion("QRU", $questionnaire_8_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_8_1_1_1 = $this->createProposition("L’annuncio promuove gli eventi estivi organizzati dall’associazione ***Fiesta*** nel Parco Rosati. Per partecipare è necessario prenotare i biglietti sul sito internet.", true, $questionnaire_8_1_1);
-        $questionnaire_8_1_1_2 = $this->createProposition("L’annuncio promuove i corsi estivi di ballo latino-americano dell’associazione ***Fiesta***. Per partecipare è necessario iscriversi presso la sede dell’associazione situata nel Parco Rosati.", false, $questionnaire_8_1_1);
-        $questionnaire_8_1_1_3 = $this->createProposition("L’annuncio promuove i corsi estivi di lingua e cultura latino-americana tenuti presso l’associazione ***Fiesta***, situata nello splendido Parco Rosati.", false, $questionnaire_8_1_1);
+        $this->createProposition("L’annuncio promuove gli eventi estivi organizzati dall’associazione ***Fiesta*** nel Parco Rosati. Per partecipare è necessario prenotare i biglietti sul sito internet.", true, $questionnaire_8_1_1);
+        $this->createProposition("L’annuncio promuove i corsi estivi di ballo latino-americano dell’associazione ***Fiesta***. Per partecipare è necessario iscriversi presso la sede dell’associazione situata nel Parco Rosati.", false, $questionnaire_8_1_1);
+        $this->createProposition("L’annuncio promuove i corsi estivi di lingua e cultura latino-americana tenuti presso l’associazione ***Fiesta***, situata nello splendido Parco Rosati.", false, $questionnaire_8_1_1);
 
         /*******************************************
                     QUESTIONNAIRE 9 : TVF
@@ -206,9 +206,9 @@ Per maggiori informazioni visita anche il nostro sito www.pizzaitalianaacademy.c
         // CREATION SUBQUESTION
         //$questionnaire_9_1_1 = $this->createSubquestion("QRM", $questionnaire_9_1, "");
         // CREATION PROPOSITIONS
-        //$questionnaire_9_1_1_1 = $this->createProposition("Le visite guidate si tengono una volta a settimana.", true, $questionnaire_9_1_1);
-        //$questionnaire_9_1_1_2 = $this->createProposition("Le visite guidate cambiano in base alla stagione.", true, $questionnaire_9_1_1);
-        //$questionnaire_9_1_1_3 = $this->createProposition("I gruppi devono essere composti da almeno 10 partecipanti.", false, $questionnaire_9_1_1);
+        //$this->createProposition("Le visite guidate si tengono una volta a settimana.", true, $questionnaire_9_1_1);
+        //$this->createProposition("Le visite guidate cambiano in base alla stagione.", true, $questionnaire_9_1_1);
+        //$this->createProposition("I gruppi devono essere composti da almeno 10 partecipanti.", false, $questionnaire_9_1_1);
 
 
         // CREATION SUBQUESTION
@@ -217,14 +217,14 @@ Per maggiori informazioni visita anche il nostro sito www.pizzaitalianaacademy.c
         $questionnaire_9_1_3 = $this->createSubquestionVF("VF", $questionnaire_9_1, "", "I gruppi devono essere composti da almeno 10 partecipanti.");
 
         // CREATION PROPOSITIONS
-        $questionnaire_9_1_1_1 = $this->createPropositionVF("", "VRAI", true, $questionnaire_9_1_1);
-        $questionnaire_9_1_1_1 = $this->createPropositionVF("", "FAUX", false, $questionnaire_9_1_1);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_9_1_1);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_9_1_1);
 
-        $questionnaire_9_1_1_2 = $this->createPropositionVF("", "VRAI", true, $questionnaire_9_1_2);
-        $questionnaire_9_1_1_2 = $this->createPropositionVF("", "FAUX", false, $questionnaire_9_1_2);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_9_1_2);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_9_1_2);
 
-        $questionnaire_9_1_1_3 = $this->createPropositionVF("", "VRAI", false, $questionnaire_9_1_3);
-        $questionnaire_9_1_1_3 = $this->createPropositionVF("", "FAUX", true, $questionnaire_9_1_3);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_9_1_3);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_9_1_3);
 
         /*******************************************
                     QUESTIONNAIRE 11 : TVF
@@ -242,9 +242,9 @@ Ometterò quindi aspetti puramente pratici, concentrandomi sulle sensazioni che 
         // CREATION SUBQUESTION
         //$questionnaire_11_1_1 = $this->createSubquestion("QRM", $questionnaire_11_1, "");
         // CREATION PROPOSITIONS
-        //$questionnaire_11_1_1_1 = $this->createProposition("Il racconto di viaggio descrive principalmente gli aspetti pratici dell’organizzazione.", false, $questionnaire_11_1_1);
-        //$questionnaire_11_1_1_2 = $this->createProposition("L’autrice sostiene che sia complesso descrivere le forti emozioni provate durante il viaggio.   ", true, $questionnaire_11_1_1);
-        //$questionnaire_11_1_1_3 = $this->createProposition("Per l’autrice i motivi che spronano a partire sono profondi, inconsci e forti.", true, $questionnaire_11_1_1);
+        //$this->createProposition("Il racconto di viaggio descrive principalmente gli aspetti pratici dell’organizzazione.", false, $questionnaire_11_1_1);
+        //$this->createProposition("L’autrice sostiene che sia complesso descrivere le forti emozioni provate durante il viaggio.   ", true, $questionnaire_11_1_1);
+        //$this->createProposition("Per l’autrice i motivi che spronano a partire sono profondi, inconsci e forti.", true, $questionnaire_11_1_1);
 
         // CREATION SUBQUESTION
         $questionnaire_B1_11_1_1 = $this->createSubquestionVF("VF", $questionnaire_B1_11_1, "", "Il racconto di viaggio descrive principalmente gli aspetti pratici dell’organizzazione.");
@@ -252,14 +252,14 @@ Ometterò quindi aspetti puramente pratici, concentrandomi sulle sensazioni che 
         $questionnaire_B1_11_1_3 = $this->createSubquestionVF("VF", $questionnaire_B1_11_1, "", "Per l’autrice i motivi che spronano a partire sono profondi, inconsci e forti.");
 
         // CREATION PROPOSITIONS
-        $questionnaire_B1_11_1_1_1 = $this->createPropositionVF("", "VRAI", false, $questionnaire_B1_11_1_1);
-        $questionnaire_B1_11_1_1_1 = $this->createPropositionVF("", "FAUX", true, $questionnaire_B1_11_1_1);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_B1_11_1_1);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_B1_11_1_1);
 
-        $questionnaire_B1_11_1_1_2 = $this->createPropositionVF("", "VRAI", true, $questionnaire_B1_11_1_2);
-        $questionnaire_B1_11_1_1_2 = $this->createPropositionVF("", "FAUX", false, $questionnaire_B1_11_1_2);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_B1_11_1_2);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_B1_11_1_2);
 
-        $questionnaire_B1_11_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_B1_11_1_3);
-        $questionnaire_B1_11_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_B1_11_1_3);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_B1_11_1_3);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_B1_11_1_3);
 
         /*******************************************
                     QUESTIONNAIRE 13 : QRU
@@ -277,9 +277,9 @@ Il gruppo di lavoro di ***Pubblicità Progresso*** ha rilevato che il problema d
         // CREATION SUBQUESTION
         $questionnaire_13_1_1 = $this->createSubquestion("QRU", $questionnaire_13_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_13_1_1_1 = $this->createProposition("***Pubblicità Progresso***, dopo aver constatato lo scarso utilizzo del computer da parte degli italiani, si è impegnata nella creazione di una campagna pubblicitaria chiara e semplice che promuova l’utilizzo e l’utilità di questo strumento.", true, $questionnaire_13_1_1);
-        $questionnaire_13_1_1_2 = $this->createProposition("***Pubblicità Progresso***, dopo aver constatato che, nella società attuale l’informatica è diventata una sorta di religione, si è impegnata a lanciare una campagna pubblicitaria ad effetto che inviti ad un uso più moderato di questo strumento.", false, $questionnaire_13_1_1);
-        $questionnaire_13_1_1_3 = $this->createProposition("***Pubblicità Progresso***, dopo aver constatato la drammatica situazione legata allo scarso utilizzo dei computer da parte dei cittadini italiani, si è impegnata nell’ideazione di una campagna promozionale di corsi di informatica.", false, $questionnaire_13_1_1);
+        $this->createProposition("***Pubblicità Progresso***, dopo aver constatato lo scarso utilizzo del computer da parte degli italiani, si è impegnata nella creazione di una campagna pubblicitaria chiara e semplice che promuova l’utilizzo e l’utilità di questo strumento.", true, $questionnaire_13_1_1);
+        $this->createProposition("***Pubblicità Progresso***, dopo aver constatato che, nella società attuale l’informatica è diventata una sorta di religione, si è impegnata a lanciare una campagna pubblicitaria ad effetto che inviti ad un uso più moderato di questo strumento.", false, $questionnaire_13_1_1);
+        $this->createProposition("***Pubblicità Progresso***, dopo aver constatato la drammatica situazione legata allo scarso utilizzo dei computer da parte dei cittadini italiani, si è impegnata nell’ideazione di una campagna promozionale di corsi di informatica.", false, $questionnaire_13_1_1);
 
         /*******************************************
                     QUESTIONNAIRE 14 : TVF
@@ -301,9 +301,9 @@ Grazie per la collaborazione.", ""));
         // CREATION SUBQUESTION
         //$questionnaire_14_1_1 = $this->createSubquestion("QRM", $questionnaire_14_1, "");
         // CREATION PROPOSITIONS
-        //$questionnaire_14_1_1_1 = $this->createProposition("Durante la visita al parco è obbligatorio tenere sempre sotto controllo i propri cani per evitare sanzioni da parte dei guardaparco e degli agenti forestali.", true, $questionnaire_11_1_1);
-        //$questionnaire_14_1_1_2 = $this->createProposition("In tutte le aree del parco è concessa la raccolta dei funghi ai visitatori provvisti di permesso.", false, $questionnaire_11_1_1);
-        //$questionnaire_14_1_1_3 = $this->createProposition("Per ragioni ambientali il campeggio nel parco non è permesso", true, $questionnaire_11_1_1);
+        //$this->createProposition("Durante la visita al parco è obbligatorio tenere sempre sotto controllo i propri cani per evitare sanzioni da parte dei guardaparco e degli agenti forestali.", true, $questionnaire_11_1_1);
+        //$this->createProposition("In tutte le aree del parco è concessa la raccolta dei funghi ai visitatori provvisti di permesso.", false, $questionnaire_11_1_1);
+        //$this->createProposition("Per ragioni ambientali il campeggio nel parco non è permesso", true, $questionnaire_11_1_1);
 
         // CREATION SUBQUESTION
         $questionnaire_14_1_1 = $this->createSubquestionVF("VF", $questionnaire_14_1, "", "Durante la visita al parco è obbligatorio tenere sempre sotto controllo i propri cani per evitare sanzioni da parte dei guardaparco e degli agenti forestali.");
@@ -311,14 +311,14 @@ Grazie per la collaborazione.", ""));
         $questionnaire_14_1_3 = $this->createSubquestionVF("VF", $questionnaire_14_1, "", "Per ragioni ambientali il campeggio nel parco non è permesso");
 
         // CREATION PROPOSITIONS
-        $questionnaire_14_1_1_1 = $this->createPropositionVF("", "VRAI", true, $questionnaire_14_1_1);
-        $questionnaire_14_1_1_1 = $this->createPropositionVF("", "FAUX", false, $questionnaire_14_1_1);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_14_1_1);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_14_1_1);
 
-        $questionnaire_14_1_1_2 = $this->createPropositionVF("", "VRAI", false, $questionnaire_14_1_2);
-        $questionnaire_14_1_1_2 = $this->createPropositionVF("", "FAUX", true, $questionnaire_14_1_2);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_14_1_2);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_14_1_2);
 
-        $questionnaire_14_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_14_1_3);
-        $questionnaire_14_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_14_1_3);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_14_1_3);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_14_1_3);
 
         /*******************************************
                     QUESTIONNAIRE 15 : TQRU
@@ -337,21 +337,21 @@ Johanna Viggosdottir – ***Fare famiglia in Italia***", ""));
         $questionnaire_15_1_3 = $this->createSubquestion("QRU", $questionnaire_15_1, "");
         $questionnaire_15_1_4 = $this->createSubquestion("QRU", $questionnaire_15_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_15_1_1_1 = $this->createProposition("si sviluppa", true, $questionnaire_15_1_1);
-        $questionnaire_15_1_1_2 = $this->createProposition("è sviluppata", false, $questionnaire_15_1_1);
-        $questionnaire_15_1_1_3 = $this->createProposition("ha sviluppato", false, $questionnaire_15_1_1);
+        $this->createProposition("si sviluppa", true, $questionnaire_15_1_1);
+        $this->createProposition("è sviluppata", false, $questionnaire_15_1_1);
+        $this->createProposition("ha sviluppato", false, $questionnaire_15_1_1);
 
-        $questionnaire_15_1_2_1 = $this->createProposition("Da sempre", true, $questionnaire_15_1_2);
-        $questionnaire_15_1_2_2 = $this->createProposition("Quindi", false, $questionnaire_15_1_2);
-        $questionnaire_15_1_2_3 = $this->createProposition("Comunque", false, $questionnaire_15_1_2);
+        $this->createProposition("Da sempre", true, $questionnaire_15_1_2);
+        $this->createProposition("Quindi", false, $questionnaire_15_1_2);
+        $this->createProposition("Comunque", false, $questionnaire_15_1_2);
 
-        $questionnaire_15_1_3_1 = $this->createProposition("si è allontanata", true, $questionnaire_15_1_3);
-        $questionnaire_15_1_3_2 = $this->createProposition("ha allontanato", false, $questionnaire_15_1_3);
-        $questionnaire_15_1_3_3 = $this->createProposition("è allontanato", false, $questionnaire_15_1_3);
+        $this->createProposition("si è allontanata", true, $questionnaire_15_1_3);
+        $this->createProposition("ha allontanato", false, $questionnaire_15_1_3);
+        $this->createProposition("è allontanato", false, $questionnaire_15_1_3);
 
-        $questionnaire_15_1_4_1 = $this->createProposition("ne", true, $questionnaire_15_1_4);
-        $questionnaire_15_1_4_2 = $this->createProposition("ci", false, $questionnaire_15_1_4);
-        $questionnaire_15_1_4_3 = $this->createProposition("vi", false, $questionnaire_15_1_4);
+        $this->createProposition("ne", true, $questionnaire_15_1_4);
+        $this->createProposition("ci", false, $questionnaire_15_1_4);
+        $this->createProposition("vi", false, $questionnaire_15_1_4);
 
         /*******************************************
                     QUESTIONNAIRE 16 : TQRU
@@ -370,21 +370,21 @@ Johanna Viggosdottir – ***Fare famiglia in Italia***", ""));
         $questionnaire_16_1_3 = $this->createSubquestion("QRU", $questionnaire_16_1, "");
         $questionnaire_16_1_4 = $this->createSubquestion("QRU", $questionnaire_16_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_16_1_1_1 = $this->createProposition("lo faranno", false, $questionnaire_16_1_1);
-        $questionnaire_16_1_1_2 = $this->createProposition("l'hanno fatto", true, $questionnaire_16_1_1);
-        $questionnaire_16_1_1_3 = $this->createProposition("lo facevano", false, $questionnaire_16_1_1);
+        $this->createProposition("lo faranno", false, $questionnaire_16_1_1);
+        $this->createProposition("l'hanno fatto", true, $questionnaire_16_1_1);
+        $this->createProposition("lo facevano", false, $questionnaire_16_1_1);
 
-        $questionnaire_16_1_2_1 = $this->createProposition("sia", true, $questionnaire_16_1_2);
-        $questionnaire_16_1_2_2 = $this->createProposition("è", false, $questionnaire_16_1_2);
-        $questionnaire_16_1_2_3 = $this->createProposition("sarà", false, $questionnaire_16_1_2);
+        $this->createProposition("sia", true, $questionnaire_16_1_2);
+        $this->createProposition("è", false, $questionnaire_16_1_2);
+        $this->createProposition("sarà", false, $questionnaire_16_1_2);
 
-        $questionnaire_16_1_3_1 = $this->createProposition("offra", true, $questionnaire_16_1_3);
-        $questionnaire_16_1_3_2 = $this->createProposition("offre", false, $questionnaire_16_1_3);
-        $questionnaire_16_1_3_3 = $this->createProposition("abbia offerto", false, $questionnaire_16_1_3);
+        $this->createProposition("offra", true, $questionnaire_16_1_3);
+        $this->createProposition("offre", false, $questionnaire_16_1_3);
+        $this->createProposition("abbia offerto", false, $questionnaire_16_1_3);
 
-        $questionnaire_16_1_4_1 = $this->createProposition("permetta", true, $questionnaire_16_1_4);
-        $questionnaire_16_1_4_2 = $this->createProposition("permette", false, $questionnaire_16_1_4);
-        $questionnaire_16_1_4_3 = $this->createProposition("ha permesso", false, $questionnaire_16_1_4);
+        $this->createProposition("permetta", true, $questionnaire_16_1_4);
+        $this->createProposition("permette", false, $questionnaire_16_1_4);
+        $this->createProposition("ha permesso", false, $questionnaire_16_1_4);
 
 
         /*******************************************
@@ -422,25 +422,25 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         $questionnaire_27_1_5 = $this->createSubquestion("QRU", $questionnaire_27_1, "");
 
         // CREATION PROPOSITIONS
-        $questionnaire_27_1_1_1 = $this->createProposition("sarà sciolto", true, $questionnaire_27_1_1);
-        $questionnaire_27_1_1_2 = $this->createProposition("sarebbe sciolto", false, $questionnaire_27_1_1);
-        $questionnaire_27_1_1_3 = $this->createProposition("scioglierà", false, $questionnaire_27_1_1);
+        $this->createProposition("sarà sciolto", true, $questionnaire_27_1_1);
+        $this->createProposition("sarebbe sciolto", false, $questionnaire_27_1_1);
+        $this->createProposition("scioglierà", false, $questionnaire_27_1_1);
 
-        $questionnaire_27_1_2_1 = $this->createProposition("avrete ottenuto", true, $questionnaire_27_1_2);
-        $questionnaire_27_1_2_2 = $this->createProposition("avrebbe ottenuto", false, $questionnaire_27_1_2);
-        $questionnaire_27_1_2_3 = $this->createProposition("otterrà", false, $questionnaire_27_1_2);
+        $this->createProposition("avrete ottenuto", true, $questionnaire_27_1_2);
+        $this->createProposition("avrebbe ottenuto", false, $questionnaire_27_1_2);
+        $this->createProposition("otterrà", false, $questionnaire_27_1_2);
 
-        $questionnaire_27_1_3_1 = $this->createProposition("avrete scaldato ", true, $questionnaire_27_1_3);
-        $questionnaire_27_1_3_2 = $this->createProposition("avrebbe scaldato", false, $questionnaire_27_1_3);
-        $questionnaire_27_1_3_3 = $this->createProposition("avreste scaldato", false, $questionnaire_27_1_3);
+        $this->createProposition("avrete scaldato ", true, $questionnaire_27_1_3);
+        $this->createProposition("avrebbe scaldato", false, $questionnaire_27_1_3);
+        $this->createProposition("avreste scaldato", false, $questionnaire_27_1_3);
 
-        $questionnaire_27_1_4_1 = $this->createProposition("sarà evaporato ", true, $questionnaire_27_1_4);
-        $questionnaire_27_1_4_2 = $this->createProposition("sarebbe evaporato", false, $questionnaire_27_1_4);
-        $questionnaire_27_1_4_3 = $this->createProposition("evaporerà", false, $questionnaire_27_1_4);
+        $this->createProposition("sarà evaporato ", true, $questionnaire_27_1_4);
+        $this->createProposition("sarebbe evaporato", false, $questionnaire_27_1_4);
+        $this->createProposition("evaporerà", false, $questionnaire_27_1_4);
 
-        $questionnaire_27_1_5_1 = $this->createProposition("avrete riempito", true, $questionnaire_27_1_5);
-        $questionnaire_27_1_5_2 = $this->createProposition("avrebbe riempito", false, $questionnaire_27_1_5);
-        $questionnaire_27_1_5_3 = $this->createProposition("avreste riempito", false, $questionnaire_27_1_5);
+        $this->createProposition("avrete riempito", true, $questionnaire_27_1_5);
+        $this->createProposition("avrebbe riempito", false, $questionnaire_27_1_5);
+        $this->createProposition("avreste riempito", false, $questionnaire_27_1_5);
 
 
         /*******************************************
@@ -461,25 +461,25 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         $questionnaire_18_1_5 = $this->createSubquestion("QRU", $questionnaire_18_1, "");
 
         // CREATION PROPOSITIONS
-        $questionnaire_18_1_1_1 = $this->createProposition("infatti", false, $questionnaire_18_1_1);
-        $questionnaire_18_1_1_2 = $this->createProposition("inoltre", false, $questionnaire_18_1_1);
-        $questionnaire_18_1_1_3 = $this->createProposition("anche se", true, $questionnaire_18_1_1);
+        $this->createProposition("infatti", false, $questionnaire_18_1_1);
+        $this->createProposition("inoltre", false, $questionnaire_18_1_1);
+        $this->createProposition("anche se", true, $questionnaire_18_1_1);
 
-        $questionnaire_18_1_2_1 = $this->createProposition("nonostante", true, $questionnaire_18_1_2);
-        $questionnaire_18_1_2_2 = $this->createProposition("comunque", false, $questionnaire_18_1_2);
-        $questionnaire_18_1_2_3 = $this->createProposition("però", false, $questionnaire_18_1_2);
+        $this->createProposition("nonostante", true, $questionnaire_18_1_2);
+        $this->createProposition("comunque", false, $questionnaire_18_1_2);
+        $this->createProposition("però", false, $questionnaire_18_1_2);
 
-        $questionnaire_18_1_3_1 = $this->createProposition("inoltre", true, $questionnaire_18_1_3);
-        $questionnaire_18_1_3_2 = $this->createProposition("dunque", false, $questionnaire_18_1_3);
-        $questionnaire_18_1_3_3 = $this->createProposition("quindi", false, $questionnaire_18_1_3);
+        $this->createProposition("inoltre", true, $questionnaire_18_1_3);
+        $this->createProposition("dunque", false, $questionnaire_18_1_3);
+        $this->createProposition("quindi", false, $questionnaire_18_1_3);
 
-        $questionnaire_18_1_4_1 = $this->createProposition("purtroppo", true, $questionnaire_18_1_4);
-        $questionnaire_18_1_4_2 = $this->createProposition("ma", false, $questionnaire_18_1_4);
-        $questionnaire_18_1_4_3 = $this->createProposition("eppure", false, $questionnaire_18_1_4);
+        $this->createProposition("purtroppo", true, $questionnaire_18_1_4);
+        $this->createProposition("ma", false, $questionnaire_18_1_4);
+        $this->createProposition("eppure", false, $questionnaire_18_1_4);
 
-        $questionnaire_18_1_5_1 = $this->createProposition("infatti", true, $questionnaire_18_1_5);
-        $questionnaire_18_1_5_2 = $this->createProposition("oppure", false, $questionnaire_18_1_5);
-        $questionnaire_18_1_5_3 = $this->createProposition("sebbene", false, $questionnaire_18_1_5);
+        $this->createProposition("infatti", true, $questionnaire_18_1_5);
+        $this->createProposition("oppure", false, $questionnaire_18_1_5);
+        $this->createProposition("sebbene", false, $questionnaire_18_1_5);
 
         /*******************************************
                     QUESTIONNAIRE 21 : TVF
@@ -494,9 +494,9 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         // CREATION SUBQUESTION
         //$questionnaire_21_1_1 = $this->createSubquestion("QRM", $questionnaire_21_1, "");
         // CREATION PROPOSITIONS
-        //$questionnaire_21_1_1_1 = $this->createProposition("Il tirocinio all’estero è un’opportunità per cominciare la propria esperienza lavorativa in un contesto internazionale", true, $questionnaire_21_1_1);
-        //$questionnaire_21_1_1_2 = $this->createProposition("I tirocini all’estero hanno sempre la stessa durata, in ogni settore lavorativo ", false, $questionnaire_21_1_1);
-        //$questionnaire_21_1_1_3 = $this->createProposition("Il tirocinio all’estero consente di accumulare crediti universitari per il piano di studio", false, $questionnaire_21_1_1);
+        //$this->createProposition("Il tirocinio all’estero è un’opportunità per cominciare la propria esperienza lavorativa in un contesto internazionale", true, $questionnaire_21_1_1);
+        //$this->createProposition("I tirocini all’estero hanno sempre la stessa durata, in ogni settore lavorativo ", false, $questionnaire_21_1_1);
+        //$this->createProposition("Il tirocinio all’estero consente di accumulare crediti universitari per il piano di studio", false, $questionnaire_21_1_1);
 
         // CREATION SUBQUESTION
         $questionnaire_21_1_1 = $this->createSubquestionVF("VF", $questionnaire_21_1, "", "Il tirocinio all’estero è un’opportunità per cominciare la propria esperienza lavorativa in un contesto internazionale");
@@ -504,14 +504,14 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         $questionnaire_21_1_3 = $this->createSubquestionVF("VF", $questionnaire_21_1, "", "Il tirocinio all’estero consente di accumulare crediti universitari per il piano di studio");
 
         // CREATION PROPOSITIONS
-        $questionnaire_21_1_1_1 = $this->createPropositionVF("", "VRAI", true, $questionnaire_21_1_1);
-        $questionnaire_21_1_1_1 = $this->createPropositionVF("", "FAUX", false, $questionnaire_21_1_1);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_21_1_1);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_21_1_1);
 
-        $questionnaire_21_1_1_2 = $this->createPropositionVF("", "VRAI", false, $questionnaire_21_1_2);
-        $questionnaire_21_1_1_2 = $this->createPropositionVF("", "FAUX", true, $questionnaire_21_1_2);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_21_1_2);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_21_1_2);
 
-        $questionnaire_21_1_1_3 = $this->createPropositionVF("", "VRAI", false, $questionnaire_21_1_3);
-        $questionnaire_21_1_1_3 = $this->createPropositionVF("", "FAUX", true, $questionnaire_21_1_3);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_21_1_3);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_21_1_3);
 
 
 
@@ -530,17 +530,17 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         $questionnaire_22_1_2 = $this->createSubquestion("QRU", $questionnaire_22_1, "");
         $questionnaire_22_1_3 = $this->createSubquestion("QRU", $questionnaire_22_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_22_1_1_1 = $this->createProposition("Però", true, $questionnaire_22_1_1);
-        $questionnaire_22_1_1_2 = $this->createProposition("nonostante", false, $questionnaire_22_1_1);
-        $questionnaire_22_1_1_3 = $this->createProposition("quindi", false, $questionnaire_22_1_1);
+        $this->createProposition("Però", true, $questionnaire_22_1_1);
+        $this->createProposition("nonostante", false, $questionnaire_22_1_1);
+        $this->createProposition("quindi", false, $questionnaire_22_1_1);
 
-        $questionnaire_22_1_2_1 = $this->createProposition("invece", true, $questionnaire_22_1_2);
-        $questionnaire_22_1_2_2 = $this->createProposition("nemmeno ", false, $questionnaire_22_1_2);
-        $questionnaire_22_1_2_3 = $this->createProposition("anche", false, $questionnaire_22_1_2);
+        $this->createProposition("invece", true, $questionnaire_22_1_2);
+        $this->createProposition("nemmeno ", false, $questionnaire_22_1_2);
+        $this->createProposition("anche", false, $questionnaire_22_1_2);
 
-        $questionnaire_22_1_3_1 = $this->createProposition("affiché", true, $questionnaire_22_1_3);
-        $questionnaire_22_1_3_2 = $this->createProposition("dunque", false, $questionnaire_22_1_3);
-        $questionnaire_22_1_3_3 = $this->createProposition("perciò", false, $questionnaire_22_1_3);
+        $this->createProposition("affiché", true, $questionnaire_22_1_3);
+        $this->createProposition("dunque", false, $questionnaire_22_1_3);
+        $this->createProposition("perciò", false, $questionnaire_22_1_3);
 
         /*******************************************
                     QUESTIONNAIRE 23 : TVF
@@ -559,9 +559,9 @@ Se hai tra 14 e 30 anni, puoi entrare a far parte di ***Younicef***, il moviment
         // CREATION SUBQUESTION
         //$questionnaire_23_1_1 = $this->createSubquestion("QRM", $questionnaire_23_1, "");
         // CREATION PROPOSITIONS
-        //$questionnaire_23_1_1_1 = $this->createProposition("Il volontario Unicef svolge la sua azione unicamente nei paesi in via di sviluppo", false, $questionnaire_23_1_1);
-        //$questionnaire_23_1_1_2 = $this->createProposition("I volontari Unicef sono impiegati nella raccolta di denaro per finanziare i progetti", true, $questionnaire_23_1_1);
-        //$questionnaire_23_1_1_3 = $this->createProposition("***Younicef*** accoglie tra i suoi volontari persone di tutte le età", false, $questionnaire_23_1_1);
+        //$this->createProposition("Il volontario Unicef svolge la sua azione unicamente nei paesi in via di sviluppo", false, $questionnaire_23_1_1);
+        //$this->createProposition("I volontari Unicef sono impiegati nella raccolta di denaro per finanziare i progetti", true, $questionnaire_23_1_1);
+        //$this->createProposition("***Younicef*** accoglie tra i suoi volontari persone di tutte le età", false, $questionnaire_23_1_1);
 
         // CREATION SUBQUESTION
         $questionnaire_23_1_1 = $this->createSubquestionVF("VF", $questionnaire_23_1, "", "Il volontario Unicef svolge la sua azione unicamente nei paesi in via di sviluppo");
@@ -569,14 +569,14 @@ Se hai tra 14 e 30 anni, puoi entrare a far parte di ***Younicef***, il moviment
         $questionnaire_23_1_3 = $this->createSubquestionVF("VF", $questionnaire_23_1, "", "***Younicef*** accoglie tra i suoi volontari persone di tutte le età");
 
         // CREATION PROPOSITIONS
-        $questionnaire_23_1_1_1 = $this->createPropositionVF("", "VRAI", false, $questionnaire_23_1_1);
-        $questionnaire_23_1_1_1 = $this->createPropositionVF("", "FAUX", true, $questionnaire_23_1_1);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_23_1_1);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_23_1_1);
 
-        $questionnaire_23_1_1_2 = $this->createPropositionVF("", "VRAI", true, $questionnaire_23_1_2);
-        $questionnaire_23_1_1_2 = $this->createPropositionVF("", "FAUX", false, $questionnaire_23_1_2);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_23_1_2);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_23_1_2);
 
-        $questionnaire_23_1_1_3 = $this->createPropositionVF("", "VRAI", false, $questionnaire_23_1_3);
-        $questionnaire_23_1_1_3 = $this->createPropositionVF("", "FAUX", true, $questionnaire_23_1_3);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_23_1_3);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_23_1_3);
 
         /*******************************************
                     QUESTIONNAIRE 24 : QRU
@@ -593,9 +593,9 @@ Se hai tra 14 e 30 anni, puoi entrare a far parte di ***Younicef***, il moviment
         // CREATION SUBQUESTION
         $questionnaire_24_1_1 = $this->createSubquestion("QRU", $questionnaire_24_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_24_1_1_1 = $this->createProposition("Leggere i grandi romanzi aiuta i giovani a non sentirsi soli nelle disavventure della vita, poiché i problemi affrontati dai protagonisti della letteratura sono simili a quelli degli adolescenti del giorno d’oggi.", true, $questionnaire_24_1_1);
-        $questionnaire_24_1_1_2 = $this->createProposition("I romanzi di formazione raccontano tutte le tappe della vita, per questo, leggerli può aiutare i personaggi immaginari a affrontare i momento più complessi della vita.", false, $questionnaire_24_1_1);
-        $questionnaire_24_1_1_3 = $this->createProposition("I romanzi di formazione raccontando l’amore, l’odio, la rabbia ed altri sentimenti, indeboliscono l’animo degli adolescenti che purtroppo è già fragile.", false, $questionnaire_24_1_1);
+        $this->createProposition("Leggere i grandi romanzi aiuta i giovani a non sentirsi soli nelle disavventure della vita, poiché i problemi affrontati dai protagonisti della letteratura sono simili a quelli degli adolescenti del giorno d’oggi.", true, $questionnaire_24_1_1);
+        $this->createProposition("I romanzi di formazione raccontano tutte le tappe della vita, per questo, leggerli può aiutare i personaggi immaginari a affrontare i momento più complessi della vita.", false, $questionnaire_24_1_1);
+        $this->createProposition("I romanzi di formazione raccontando l’amore, l’odio, la rabbia ed altri sentimenti, indeboliscono l’animo degli adolescenti che purtroppo è già fragile.", false, $questionnaire_24_1_1);
 
         /*******************************************
                     QUESTIONNAIRE 25 : TQRU
@@ -619,25 +619,25 @@ Dott.ssa Angela Pitti
         $questionnaire_25_1_4 = $this->createSubquestion("QRU", $questionnaire_25_1, "");
         $questionnaire_25_1_5 = $this->createSubquestion("QRU", $questionnaire_25_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_25_1_1_1 = $this->createProposition("però", true, $questionnaire_25_1_1);
-        $questionnaire_25_1_1_2 = $this->createProposition("infatti", false, $questionnaire_25_1_1);
-        $questionnaire_25_1_1_3 = $this->createProposition("inoltre", false, $questionnaire_25_1_1);
+        $this->createProposition("però", true, $questionnaire_25_1_1);
+        $this->createProposition("infatti", false, $questionnaire_25_1_1);
+        $this->createProposition("inoltre", false, $questionnaire_25_1_1);
 
-        $questionnaire_25_1_2_1 = $this->createProposition("ma", true, $questionnaire_25_1_2);
-        $questionnaire_25_1_2_2 = $this->createProposition("di conseguenza", false, $questionnaire_25_1_2);
-        $questionnaire_25_1_2_3 = $this->createProposition("in particolare", false, $questionnaire_25_1_2);
+        $this->createProposition("ma", true, $questionnaire_25_1_2);
+        $this->createProposition("di conseguenza", false, $questionnaire_25_1_2);
+        $this->createProposition("in particolare", false, $questionnaire_25_1_2);
 
-        $questionnaire_25_1_3_1 = $this->createProposition("tuttavia", true, $questionnaire_25_1_3);
-        $questionnaire_25_1_3_2 = $this->createProposition("sebbene", false, $questionnaire_25_1_3);
-        $questionnaire_25_1_3_3 = $this->createProposition("come", false, $questionnaire_25_1_3);
+        $this->createProposition("tuttavia", true, $questionnaire_25_1_3);
+        $this->createProposition("sebbene", false, $questionnaire_25_1_3);
+        $this->createProposition("come", false, $questionnaire_25_1_3);
 
-        $questionnaire_25_1_4_1 = $this->createProposition("da un lato", true, $questionnaire_25_1_4);
-        $questionnaire_25_1_4_2 = $this->createProposition("anzi", false, $questionnaire_25_1_4);
-        $questionnaire_25_1_4_3 = $this->createProposition("qualora", false, $questionnaire_25_1_4);
+        $this->createProposition("da un lato", true, $questionnaire_25_1_4);
+        $this->createProposition("anzi", false, $questionnaire_25_1_4);
+        $this->createProposition("qualora", false, $questionnaire_25_1_4);
 
-        $questionnaire_25_1_5_1 = $this->createProposition("dall'altro", true, $questionnaire_25_1_5);
-        $questionnaire_25_1_5_2 = $this->createProposition("perché", false, $questionnaire_25_1_5);
-        $questionnaire_25_1_3_3 = $this->createProposition("quindi", false, $questionnaire_25_1_5);
+        $this->createProposition("dall'altro", true, $questionnaire_25_1_5);
+        $this->createProposition("perché", false, $questionnaire_25_1_5);
+        $this->createProposition("quindi", false, $questionnaire_25_1_5);
 
         /*******************************************
                     QUESTIONNAIRE 26 : TQRU
@@ -662,21 +662,21 @@ Cordiali saluti,@@@Gianni Rossi
         $questionnaire_26_1_4 = $this->createSubquestion("QRU", $questionnaire_26_1, "");
 
         // CREATION PROPOSITIONS
-        $questionnaire_26_1_1_1 = $this->createProposition("in merito", true, $questionnaire_26_1_1);
-        $questionnaire_26_1_1_2 = $this->createProposition("a proposito", false, $questionnaire_26_1_1);
-        $questionnaire_26_1_1_3 = $this->createProposition("circa", false, $questionnaire_26_1_1);
+        $this->createProposition("in merito", true, $questionnaire_26_1_1);
+        $this->createProposition("a proposito", false, $questionnaire_26_1_1);
+        $this->createProposition("circa", false, $questionnaire_26_1_1);
 
-        $questionnaire_26_1_2_1 = $this->createProposition("in realtà", true, $questionnaire_26_1_2);
-        $questionnaire_26_1_2_2 = $this->createProposition("dunque", false, $questionnaire_26_1_2);
-        $questionnaire_26_1_2_3 = $this->createProposition("comunque", false, $questionnaire_26_1_2);
+        $this->createProposition("in realtà", true, $questionnaire_26_1_2);
+        $this->createProposition("dunque", false, $questionnaire_26_1_2);
+        $this->createProposition("comunque", false, $questionnaire_26_1_2);
 
-        $questionnaire_26_1_3_1 = $this->createProposition("inoltre", true, $questionnaire_26_1_3);
-        $questionnaire_26_1_3_2 = $this->createProposition("al contrario", false, $questionnaire_26_1_3);
-        $questionnaire_26_1_3_3 = $this->createProposition("poiché", false, $questionnaire_26_1_3);
+        $this->createProposition("inoltre", true, $questionnaire_26_1_3);
+        $this->createProposition("al contrario", false, $questionnaire_26_1_3);
+        $this->createProposition("poiché", false, $questionnaire_26_1_3);
 
-        $questionnaire_26_1_4_1 = $this->createProposition("per questo", true, $questionnaire_26_1_4);
-        $questionnaire_26_1_4_2 = $this->createProposition("in realtà", false, $questionnaire_26_1_4);
-        $questionnaire_26_1_4_3 = $this->createProposition("in alternativa", false, $questionnaire_26_1_4);
+        $this->createProposition("per questo", true, $questionnaire_26_1_4);
+        $this->createProposition("in realtà", false, $questionnaire_26_1_4);
+        $this->createProposition("in alternativa", false, $questionnaire_26_1_4);
 
 
         /*******************************************
@@ -695,9 +695,9 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         // CREATION SUBQUESTION
         //$questionnaire_17_1_1 = $this->createSubquestion("QRM", $questionnaire_17_1, "");
         // CREATION PROPOSITIONS
-        //$questionnaire_17_1_1_1 = $this->createProposition("***Cene in cielo*** propone delle serate speciali in ristoranti dove cuochi di alto livello promuovono ingredienti di alta qualità", false, $questionnaire_17_1_1);
-        //$questionnaire_17_1_1_2 = $this->createProposition("Il servizio proposto è adatto anche alle persone che soffrono di vertigini", false, $questionnaire_17_1_1);
-        //$questionnaire_17_1_1_3 = $this->createProposition("Gli eventi proposti avvengono sempre nel massimo della sicurezza per il cliente e per i dipendenti dell’organizzazione", true, $questionnaire_17_1_1);
+        //$this->createProposition("***Cene in cielo*** propone delle serate speciali in ristoranti dove cuochi di alto livello promuovono ingredienti di alta qualità", false, $questionnaire_17_1_1);
+        //$this->createProposition("Il servizio proposto è adatto anche alle persone che soffrono di vertigini", false, $questionnaire_17_1_1);
+        //$this->createProposition("Gli eventi proposti avvengono sempre nel massimo della sicurezza per il cliente e per i dipendenti dell’organizzazione", true, $questionnaire_17_1_1);
 
         // CREATION SUBQUESTION
         $questionnaire_27_1_1 = $this->createSubquestionVF("VF", $questionnaire_27_1, "", "***Cene in cielo*** propone delle serate speciali in ristoranti dove cuochi di alto livello promuovono ingredienti di alta qualità");
@@ -705,14 +705,14 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         $questionnaire_27_1_3 = $this->createSubquestionVF("VF", $questionnaire_27_1, "", "Gli eventi proposti avvengono sempre nel massimo della sicurezza per il cliente e per i dipendenti dell’organizzazione");
 
         // CREATION PROPOSITIONS
-        $questionnaire_27_1_1_1 = $this->createPropositionVF("", "VRAI", false, $questionnaire_27_1_1);
-        $questionnaire_27_1_1_1 = $this->createPropositionVF("", "FAUX", true, $questionnaire_27_1_1);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_27_1_1);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_27_1_1);
 
-        $questionnaire_27_1_1_2 = $this->createPropositionVF("", "VRAI", false, $questionnaire_27_1_2);
-        $questionnaire_27_1_1_2 = $this->createPropositionVF("", "FAUX", true, $questionnaire_27_1_2);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_27_1_2);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_27_1_2);
 
-        $questionnaire_27_1_1_3 = $this->createPropositionVF("", "VRAI", true, $questionnaire_27_1_3);
-        $questionnaire_27_1_1_3 = $this->createPropositionVF("", "FAUX", false, $questionnaire_27_1_3);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_27_1_3);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_27_1_3);
 
 
 
@@ -739,11 +739,11 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         // CREATION SUBQUESTION
         $questionnaire_28_1_1 = $this->createSubquestion("QRM", $questionnaire_28_1, "");
         // CREATION PROPOSITIONS
-        $questionnaire_28_1_1_1 = $this->createProposition("All’interno della palestra non è permesso mangiare", false, $questionnaire_28_1_1);
-        $questionnaire_28_1_1_2 = $this->createProposition("L’ingresso agli animali è vietato nei locali della palestra", true, $questionnaire_28_1_1);
-        $questionnaire_28_1_1_3 = $this->createProposition("Per accedere ai locali della palestra è obbligatorio  timbrare la tessera", true, $questionnaire_28_1_1);
-        $questionnaire_28_1_1_4 = $this->createProposition("L’accesso ai locali della palestra è consentito solo con scarpe con suola di gomma", false, $questionnaire_28_1_1);
-        $questionnaire_28_1_1_5 = $this->createProposition("I bambini possono utilizzare la palestra ma solo negli spazi previsti", true, $questionnaire_28_1_1);
+        $this->createProposition("All’interno della palestra non è permesso mangiare", false, $questionnaire_28_1_1);
+        $this->createProposition("L’ingresso agli animali è vietato nei locali della palestra", true, $questionnaire_28_1_1);
+        $this->createProposition("Per accedere ai locali della palestra è obbligatorio  timbrare la tessera", true, $questionnaire_28_1_1);
+        $this->createProposition("L’accesso ai locali della palestra è consentito solo con scarpe con suola di gomma", false, $questionnaire_28_1_1);
+        $this->createProposition("I bambini possono utilizzare la palestra ma solo negli spazi previsti", true, $questionnaire_28_1_1);
 
 
         /*******************************************
