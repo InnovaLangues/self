@@ -15,7 +15,9 @@
 {% macro texte(id, media, icon, height, limitAudio, tooltip) %}
     {% import _self as macros %}
     {% if id == "situation" %}
-        {{ media.description|raw }} {# Pour interpréter le code HTML de la base de données/markdown. #}
+        {% autoescape %}
+            {{ media.description | raw }} {# Pour interpréter le code HTML de la base de données/markdown. #}
+        {% endautoescape %}
     {% else %}
         {% if id != "context" and id != "instruction" %}
             {% set tooltip = media.description | truncate(120, true, '...') %}
