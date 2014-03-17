@@ -74,6 +74,6 @@
     {% elseif description == "ND" %}
        {{ 'generic.boolND' | trans({}, "messages", languageShorten) }}
     {% else %}
-        {{ description | raw }}
+            {{ description }}
     {% endif %}
 {% endmacro %}

@@ -1,7 +1,9 @@
 <div id="situation-CE" class="situation">
 {% if questionnaire.mediaText is not null %}
     {% if questionnaire.mediaText.mediaType.name == "texte" %}
-        {{ questionnaire.mediaText.description | raw }}
+        {% autoescape %}
+            {{ questionnaire.mediaText.description | raw }}
+        {% endautoescape %}
     {% elseif questionnaire.mediaText.mediaType.name == "image" %}
         {{ macros.image("situation-image", questionnaire.mediaText, "Cliquer pour agrandir" ) }}
     {% endif %}
