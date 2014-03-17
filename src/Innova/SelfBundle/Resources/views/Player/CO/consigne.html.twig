@@ -6,5 +6,5 @@
     {% else %}
         {% set question = questionnaire.mediaInstruction %}
     {% endif %}
-    {{ macros.audio("question", question, "oignon.png", 100, 0, "Question") }}
+    {{ macros.audio(subquestion.id, question, "oignon.png", 100, 0, "Question") }}
 </div>
