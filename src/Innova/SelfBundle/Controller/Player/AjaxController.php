@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller;
+namespace Innova\SelfBundle\Controller\Player;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

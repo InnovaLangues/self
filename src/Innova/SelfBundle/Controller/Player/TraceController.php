@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller;
+namespace Innova\SelfBundle\Controller\Player;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,7 +17,7 @@ class TraceController extends Controller
      *
      * @Route("trace_submit", name="trace_submit")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Trace:difficulty.html.twig")
+     * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
      */
     public function saveTraceAction()
     {
@@ -79,7 +79,6 @@ class TraceController extends Controller
         $em->flush();
 
         return array("traceId" => $traceId, "testId" => $post["testId"]);
-
     }
 
     /**
