@@ -1,0 +1,13 @@
+<div id="situation-APP" class="situation">
+{% if questionnaire.mediaText is not null %}
+    {% if questionnaire.mediaText.mediaType.name == "texte" %}
+        {% autoescape 'html' %}
+            {{ questionnaire.mediaText.description | raw }}
+        {% endautoescape %}
+    {% elseif questionnaire.mediaText.mediaType.name == "image" %}
+        {{ macros.image("situation-image", questionnaire.mediaText, "Cliquer pour agrandir" ) }}
+    {% elseif questionnaire.mediaText.mediaType.name == "audio" %}
+        {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Situation de départ") }}
+    {% endif %}
+{% endif %}
+</div>

@@ -92,7 +92,7 @@ class PlayerController extends Controller
      * Pick a questionnaire entity for a given test not done yet by the user.
      *
      * @Route("/test_end/{id}", name="test_end")
-     * @Template()
+     * @Template("InnovaSelfBundle:Player:common/end.html.twig")
      */
     public function endAction(Test $test)
     {
