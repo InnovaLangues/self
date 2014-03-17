@@ -1,8 +1,10 @@
 <div class="col-md-5 question-CO">
     {% if subquestion.mediaAmorce is not null %}
         {% set question = subquestion.mediaAmorce %}
-    {% else %}
+    {% elseif subquestion.media is not null %}
         {% set question = subquestion.media %}
+    {% else %}
+        {% set question = questionnaire.mediaInstruction %}
     {% endif %}
     {{ macros.audio("question", question, "oignon.png", 100, 0, "Question") }}
 </div>

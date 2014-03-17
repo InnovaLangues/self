@@ -47,7 +47,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("SELF CE Anglais", "English");
+        $test = $this->createTest("Anglais", "English");
 
         // To have CSS form title. #166
         $startTitle = "<span class=\"title-situation\">";
@@ -390,7 +390,10 @@ Opinions abound about who the original Valentine was, with the most popular theo
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        $test = new Test();
+        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)) {
+            $test = new Test();
+        }
+
         $test->setName($name);
         $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName($language);
         $test->setLanguage($language);
