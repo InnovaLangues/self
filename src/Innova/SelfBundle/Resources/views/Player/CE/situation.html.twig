@@ -1,7 +1,7 @@
 <div id="situation-CE" class="situation">
 {% if questionnaire.mediaText is not null %}
     {% if questionnaire.mediaText.mediaType.name == "texte" %}
-        {% autoescape %}
+        {% autoescape 'html' %}
             {{ questionnaire.mediaText.description | raw }}
         {% endautoescape %}
     {% elseif questionnaire.mediaText.mediaType.name == "image" %}
