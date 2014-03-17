@@ -1,9 +1,9 @@
 <div id="contexte-icon">
-    {% include "InnovaSelfBundle:Player/CE:contexte-icon.html.twig" %}
+    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" />
 </div>
 
 <div id="situation-icon">
-    {% include "InnovaSelfBundle:Player/CE:situation-icon.html.twig" %}
+    <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" />
 </div>
 
 
@@ -16,7 +16,7 @@
 <div id="right-container-CO" class="col-md-6 right-container">
     <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
         {# ONGLETS #}
-        {% include "InnovaSelfBundle:Player/CO:tab-nav.html.twig" %}
+        {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
         
         {# CONTENU DES ONGLETS #}
         {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
