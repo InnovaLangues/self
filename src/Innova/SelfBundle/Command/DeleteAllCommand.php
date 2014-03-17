@@ -6,26 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Innova\SelfBundle\Entity\MediaType;
-use Innova\SelfBundle\Entity\Duration;
-use Innova\SelfBundle\Entity\Level;
-use Innova\SelfBundle\Entity\Skill;
-use Innova\SelfBundle\Entity\Typology;
-use Innova\SelfBundle\Entity\OriginStudent;
-use Innova\SelfBundle\Entity\Language;
-use Innova\SelfBundle\Entity\LevelLansad;
-use Innova\SelfBundle\Entity\Test;
-use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Entity\Question;
-use Innova\SelfBundle\Entity\Subquestion;
-use Innova\SelfBundle\Entity\Proposition;
-use Innova\SelfBundle\Entity\Media;
-use Innova\SelfBundle\Entity\Answer;
-use Innova\SelfBundle\Entity\Trace;
-
-use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Helper\HelperSet;
-
 /**
  * Symfony command to delete tests. EV. 12/03/2014
  * We must execute this command with parameter "sql" like :
@@ -49,8 +29,8 @@ class DeleteAllCommand extends ContainerAwareCommand
 
         $name = $input->getArgument('name');
         if ($name != 'sql') {
-        $output->writeln("Absence de paramètres. Impossible d'exécuter les requêtes.");
-        exit;
+            $output->writeln("Absence de paramètres. Impossible d'exécuter les requêtes.");
+            exit;
         }
 
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
