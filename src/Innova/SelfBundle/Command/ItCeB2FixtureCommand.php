@@ -46,7 +46,7 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("CE Italien B2", "Italian");
+        $test = $this->createTest("Italien b2", "Italian");
 
         // To have CSS form title. #166
         $startTitle = "<span class=\"title-situation\">";
@@ -124,7 +124,7 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 6 : QRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_B2_6 = $this->createQuestionnaire("B2_CE_COMM_disdetta_contratto", "B1", "CE", $test);
+        $questionnaire_B2_6 = $this->createQuestionnaire("B2_CE_COMM_disdetta_contratto", "B2", "CE", $test);
         $questionnaire_B2_6->setMediaInstruction($this->mediaText("", "Seleziona il riassunto corretto", ""));
         $questionnaire_B2_6->setMediaContext($this->mediaText("", "Lettera di disdetta contratto di locazione", ""));
         $questionnaire_B2_6->setMediaText($this->mediaText($startTitle . "Disdetta straordinaria del contratto di locazione" . $endTitle,
@@ -166,7 +166,7 @@ Luogo, data                           Firma del locatore
                     QUESTIONNAIRE 7 : TVF
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_B2_7 = $this->createQuestionnaire("B1_CE_diner_ciel", "B1", "CE", $test);
+        $questionnaire_B2_7 = $this->createQuestionnaire("B2_CE_COMM_tessera elettorale", "B2", "CE", $test);
         $questionnaire_B2_7->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false.", ""));
         $questionnaire_B2_7->setMediaContext($this->mediaText("", "Avviso in Comune", ""));
         $questionnaire_B2_7->setMediaText($this->mediaText($startTitle . "Informazioni utili sulla tessera elettorale" . $endTitle, "Tessera elettorale per le elezioni politiche
@@ -270,17 +270,17 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_11_1_3 = $this->createSubquestion("QRU", $questionnaire_B2_11_1, "");
 
         // CREATION PROPOSITIONS
-        $this->createProposition("1.1. avrebbe voluto", true, $questionnaire_B2_11_1_1);
-        $this->createProposition("1.2. avesse voluto", false, $questionnaire_B2_11_1_1);
-        $this->createProposition("1.3. volle", false, $questionnaire_B2_11_1_1);
+        $this->createProposition("avrebbe voluto", true, $questionnaire_B2_11_1_1);
+        $this->createProposition("avesse voluto", false, $questionnaire_B2_11_1_1);
+        $this->createProposition("volle", false, $questionnaire_B2_11_1_1);
 
-        $this->createProposition("2.1. sarebbe dispiaciuto", true, $questionnaire_B2_11_1_2);
-        $this->createProposition("2.2. fosse dispiaciuto", false, $questionnaire_B2_11_1_2);
-        $this->createProposition("2.3. dispiacesse", false, $questionnaire_B2_11_1_2);
+        $this->createProposition("sarebbe dispiaciuto", true, $questionnaire_B2_11_1_2);
+        $this->createProposition("fosse dispiaciuto", false, $questionnaire_B2_11_1_2);
+        $this->createProposition("dispiacesse", false, $questionnaire_B2_11_1_2);
 
-        $this->createProposition("3.1. furono", false, $questionnaire_B2_11_1_3);
-        $this->createProposition("3.2. sarebbero stati", false, $questionnaire_B2_11_1_3);
-        $this->createProposition("3.3. fossero stati ", true, $questionnaire_B2_11_1_3);
+        $this->createProposition("furono", false, $questionnaire_B2_11_1_3);
+        $this->createProposition("sarebbero stati", false, $questionnaire_B2_11_1_3);
+        $this->createProposition("fossero stati ", true, $questionnaire_B2_11_1_3);
 
         /*******************************************
                     QUESTIONNAIRE 12 : TVFNM
@@ -387,20 +387,20 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_17_1_7 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "Quando si è a tavola è importante controllare che");
         // CREATION PROPOSITIONS
         $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_2);
+        $this->createProposition("a. il nuovo anno sia ricco.", true, $questionnaire_B2_17_1_2);
         $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_3);
         $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_4);
         $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("a. il nuovo anno sia ricco.", true, $questionnaire_B2_17_1_6);
+        $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_6);
         $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_7);
 
-        $this->createProposition("b. il pane non sia al rovescio.", true, $questionnaire_B2_17_1_1);
+        $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_1);
         $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_2);
         $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_3);
         $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_4);
         $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_5);
         $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_7);
+        $this->createProposition("b. il pane non sia al rovescio.", true, $questionnaire_B2_17_1_7);
 
         $this->createProposition("c. porta sfortuna.", false, $questionnaire_B2_17_1_1);
         $this->createProposition("c. porta sfortuna.", false, $questionnaire_B2_17_1_2);
@@ -415,17 +415,32 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_3);
         $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_4);
         $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("d. lo si lasci al suo posto", true, $questionnaire_B2_17_1_7);
+        $this->createProposition("d. lo si lasci al suo posto", true, $questionnaire_B2_17_1_6);
+        $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_7);
 
         $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_1);
         $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_3);
+        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", true, $questionnaire_B2_17_1_3);
         $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_4);
         $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_5);
         $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", true, $questionnaire_B2_17_1_7);
+        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_7);
 
+        $this->createProposition("f. preannunci un lungo periodo di problemi", true, $questionnaire_B2_17_1_1);
+        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_2);
+        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_3);
+        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_4);
+        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_5);
+        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_6);
+        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_7);
+
+        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_1);
+        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_2);
+        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_3);
+        $this->createProposition("g. non è di buon augurio", true, $questionnaire_B2_17_1_4);
+        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_5);
+        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_6);
+        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_7);
 
         /*******************************************
                     QUESTIONNAIRE 25 : TVFNM
@@ -526,7 +541,6 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $this->createProposition("un evento che promuove  un risparmio delle risorse energetiche.", false, $questionnaire_B2_27_1_3);
         $this->createProposition("un evento che promuove  una gestione ecologica dei visitatori.", true, $questionnaire_B2_27_1_3);
 
-
         /*******************************************
                     MISE EN BASE
         ********************************************/
@@ -544,7 +558,10 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        $test = new Test();
+        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)){
+            $test = new Test();
+        }
+
         $test->setName($name);
         $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName($language);
         $test->setLanguage($language);

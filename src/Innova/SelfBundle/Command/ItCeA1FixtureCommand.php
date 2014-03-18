@@ -46,7 +46,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("CE Italien A1", "Italian");
+        $test = $this->createTest("Italien a1", "Italian");
 
         // To have CSS form title. #166
         $startTitle = "<span class=\"title-situation\">";

@@ -46,7 +46,7 @@ class Itceb1FixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("CE Italien B1", "Italian");
+        $test = $this->createTest("Italien b1", "Italian");
 
         // To have CSS form title. #166
         $startTitle = "<span class=\"title-situation\">";
@@ -763,7 +763,10 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        $test = new Test();
+        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)){
+            $test = new Test();
+        }
+
         $test->setName($name);
         $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName($language);
         $test->setLanguage($language);
