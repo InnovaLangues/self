@@ -43,8 +43,7 @@
             -->
                 <div class="modal-body">
                 {% if media.mediaType.name == "image" %}
-                    {# <img src="{{ asset('upload/media/') ~ media.url }}"/> #}
-                    <img src="http://images.gs-cdn.net/static/artists/120_artist.png" />
+                    <img src="{{ asset('upload/media/') ~ media.url }}"/> 
                 {% elseif media.mediaType.name == "texte" %}
                     <div id="{{ id }}"> {{ media.description }} </div>
                 {% elseif media.mediaType.name == "video" %}
