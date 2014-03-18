@@ -1,28 +1,49 @@
 $(document).ready(function() {
+	drpbl(".droppable");
+
 	$( ".draggable" ).draggable({
 		revert: "invalid",
-		zIndex: 100,
-		start: function (){
-			$(this).addClass('draggable-in-black');
-		},
-		stop: function (){
-			$(this).removeClass('draggable-in-black');
-		}
+		zIndex: 1000,
 	});	
+});
 
-	$( ".droppable" ).droppable({
+
+function drpbl(selector){
+	$( selector ).droppable({
 		accept: '.draggable',
-		activeClass: "ui-state-highlight",
 		hoverClass: "droppable-hover",
 		drop: function( event, ui ) {
-			$(this).droppable('option', 'accept', ui.draggable);
-			var propositionId = ui.draggable.attr('propositionId');
-			$("input[equivalence='"+propositionId+"']").prop("checked", false);
-			$(this).find("input[equivalence='"+propositionId+"']").prop("checked", "checked");
-			$(this).addClass("answered");
-			$("[subquestionId='"+ui.draggable.attr("last-position")+"']").droppable('option', 'accept', '.draggable');
-			$("[subquestionId='"+ui.draggable.attr("last-position")+"']").removeClass("answered");
-			ui.draggable.attr("last-position", $(this).attr("subquestionId"));
+			var proposition = ui.draggable;
+			var propositionId = proposition.attr('propositionId');
+			var lastPositionId = proposition.attr("last-position");
+			var lastPositionZone = $("[dropzoneId='"+lastPositionId+"']");
+			var dropzone = $(this);
+
+			if ($("#droppable-"+propositionId).length) {
+				$("#droppable-"+propositionId).addClass("droppable");
+
+				drpbl("#droppable-"+propositionId);
+				$("#droppable-"+propositionId).removeAttr("id");
+			}
+			
+			dropzone.droppable('option', 'accept', proposition);
+			//console.log("1. la dropzone n'accepte plus que l'élément présent");
+
+			lastPositionZone.find("input[equivalence='"+propositionId+"']").prop("checked", false);
+			//console.log("2. on décoche le bouton radio ailleurs");
+
+			dropzone.find("input[equivalence='"+propositionId+"']").prop("checked", "checked");
+			//console.log("3. on coche dans la dropzone");
+
+			lastPositionZone.droppable('option', 'accept', '.draggable');
+			//console.log("4. La case d'ou vient l'élement accepte tout maintenant");
+
+			proposition.attr("last-position", dropzone.attr("dropzoneId"));
+			//console.log("5. on enregistre dans l'élément courant sa position");
 		}
 	});
-});
+}
+
+
+
+
