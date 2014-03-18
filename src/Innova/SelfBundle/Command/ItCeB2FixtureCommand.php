@@ -454,9 +454,9 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         // CREATION QUESTION
         $questionnaire_B2_25_1 = $this->createQuestion("TVFNM", $questionnaire_B2_25);
         // CREATION SUBQUESTION
-        $questionnaire_B2_25_1_1 = $this->createSubquestion("VFNM", $questionnaire_B2_25_1, "Č possibile votare per il sindaco e per le liste scegliendo solo il simbolo del partito di cui č a capo.");
-        $questionnaire_B2_25_1_2 = $this->createSubquestion("VFNM", $questionnaire_B2_25_1, "Č possibile votare per due partiti che fanno parte della stessa coalizione.");
-        $questionnaire_B2_25_1_3 = $this->createSubquestion("VFNM", $questionnaire_B2_25_1, "Č possibile votare per un solo candidato scrivendo il suo nome sulla scheda");
+        $questionnaire_B2_25_1_1 = $this->createSubquestion("VFNM", $questionnaire_B2_25_1, "È possibile votare per il sindaco e per le liste scegliendo solo il simbolo del partito di cui è a capo.");
+        $questionnaire_B2_25_1_2 = $this->createSubquestion("VFNM", $questionnaire_B2_25_1, "È possibile votare per due partiti che fanno parte della stessa coalizione.");
+        $questionnaire_B2_25_1_3 = $this->createSubquestion("VFNM", $questionnaire_B2_25_1, "È possibile votare per un solo candidato scrivendo il suo nome sulla scheda");
         // CREATION PROPOSITIONS
         $this->createProposition("VRAI", true, $questionnaire_B2_25_1_1);
         $this->createProposition("FAUX", false, $questionnaire_B2_25_1_1);
