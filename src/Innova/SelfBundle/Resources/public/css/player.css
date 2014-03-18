@@ -36,9 +36,10 @@
 	padding:25px;
 }
 
-hr {
+.hr {
 	margin:30px 0;
-	border-color:black;
+	border-top:1px solid black;
+	height:1px;
 }
 
 #contexte-icon {
@@ -222,6 +223,17 @@ input.proposition-input, label{
 	border-radius: 2px;
 	width:85%;
 }
+.propositions-APPT {
+
+}
+
+.proposition-APPT, .answer-APPT {
+	border-radius:3px;
+	margin-bottom:4px;
+	border:1px solid white;
+	padding: 5px;
+	text-align:center;
+}
 
 
 /**********************************
@@ -264,3 +276,31 @@ input.proposition-input, label{
 .nav-tab a:focus{
 	outline:none;
 }
+
+
+/**************************
+ Drag and drop
+***************************/
+.touch-me{
+	cursor:move;
+	height:30px;
+}
+
+.dropzone, .answer-APPT{
+	border-radius:3px;
+	border:1px dotted black;
+	min-height: 100px;
+}
+
+.drag-and-drop-input {
+	//visibility: hidden;
+}
+
+.draggable-in-black {
+	color:black;
+}
+
+.droppable-hover {
+	border: 2px solid black;
+}
+/* End Drag and Drop */

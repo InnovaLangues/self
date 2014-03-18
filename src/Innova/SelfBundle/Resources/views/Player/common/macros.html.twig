@@ -21,8 +21,7 @@
 {% macro image(id, media, tooltip) %}
     {% import _self as macros %}
     {{ macros.modale(id, media, tooltip) }}
-    {# <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" /> #}
-    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="http://images.gs-cdn.net/static/artists/120_artist.png" />
+    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
 {% endmacro %}
 
 {% macro video(id, media) %}

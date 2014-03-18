@@ -1,0 +1,7 @@
+<div class="col-md-3">
+    <div subquestionId="{{ subquestion.id }}" class="dropzone droppable">
+        {% for i, proposition in subquestion.propositions %}
+            <input  required id="input-proposition{{ proposition.id }}" type="radio" equivalence = {{ question.subquestions[0].propositions[i].id }} value = {{ proposition.id }} name="{{ subquestion.id }}[]" class="drag-and-drop-input"/>
+        {% endfor %}
+    </div>
+</div>

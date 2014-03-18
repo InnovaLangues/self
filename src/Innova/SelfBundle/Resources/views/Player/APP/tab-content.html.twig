@@ -1,0 +1,25 @@
+<div class="tab-content">
+    <div class="tab-pane active" id="tab" data-subquestion-id="{{ question.subquestions[0].id }}">
+        <div class="row propositions-APPT">
+            {% set propWidth = (12 / question.subquestions |length) | round %}
+                {% for subquestion in question.subquestions %}
+                    {% if questionnaire.skill.name == "CO" %}
+                        {% include "InnovaSelfBundle:Player/APP:prop-CO.html.twig" %}
+                    {% elseif questionnaire.skill.name == "CE" %}
+                        {% include "InnovaSelfBundle:Player/APP:prop-CE.html.twig" %}
+                    {% endif %}
+                {% endfor %}
+        </div>
+        <div class="row propositions-assoc-APPT">
+            {% for subquestion in question.subquestions %}
+                {% include "InnovaSelfBundle:Player/APP:prop-assoc.html.twig" %}
+            {% endfor %}
+        </div>
+         <div class="hr"></div>
+         <div class="row answers-APPT source">
+            {% for proposition in question.subquestions[0].propositions %}
+                {% include "InnovaSelfBundle:Player/APP:answers-CE.html.twig" %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 <div id="contexte-icon">
-    {% include "InnovaSelfBundle:Player/CO:contexte-icon.html.twig" %}
+    
 </div>
 
 <div id="left-container-APP" class="col-md-3 left-container">
@@ -10,7 +10,7 @@
 <div id="right-container-APP" class="col-md-9 right-container">
     <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
         {# ONGLETS #}
-        {% include "InnovaSelfBundle:Player/CO:tab-nav.html.twig" %}
+        {% include "InnovaSelfBundle:Player/APP:tab-nav.html.twig" %}
         
         {# CONTENU DES ONGLETS #}
         {% include "InnovaSelfBundle:Player/APP:tab-content.html.twig" %}

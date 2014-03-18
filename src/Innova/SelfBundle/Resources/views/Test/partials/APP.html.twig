@@ -5,7 +5,6 @@
 		{% for i, proposition in subquestion.propositions %}
 			<input  required id="input-proposition{{ proposition.id }}" type="radio" equivalence = {{ subquestion0.propositions[i].id }} value = {{ proposition.id }} name="{{ subquestion.id }}[]" class="drag-and-drop-input"/>
 		{% endfor %}
-
 	</span>
 </div>
 {% if i == 0 %}
