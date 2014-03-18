@@ -547,6 +547,8 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $em->flush();
 
         $output->writeln("Fixtures Italian CE B2 exécutées.");
+        $output->writeln("");
+        $output->writeln("IMPORTANT : copier les images dans media.");
 
 
     }

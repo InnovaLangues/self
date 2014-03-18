@@ -181,7 +181,7 @@ Per maggiori informazioni visita anche il nostro sito www.pizzaitalianaacademy.c
         $questionnaire_8->setMediaText(
         $this->mediaText($startTitle .
             "Rappresentazioni ed eventi teatrali a Roma" . $endTitle,
-            "Arriva l’estate e ricomincia la stagione d’eventi proposta come ogni anno dall’associazione Fiesta. Nelle calde estati romane, l’associazione promuove il Festival Internazionale di Musica e Cultura Latino Americana. Gli eventi si terranno da giugno a settembre e  il calendario è già disponibile sul sito $$$$$$ per prenotazioni. Come ogni anno gli spettacoli si terranno nello splendido Parco Rosati.",
+            "Arriva l’estate e ricomincia la stagione d’eventi proposta come ogni anno dall’associazione Fiesta. Nelle calde estati romane, l’associazione promuove il Festival Internazionale di Musica e Cultura Latino Americana. Gli eventi si terranno da giugno a settembre e  il calendario è già disponibile sul sito $$$www.fiesta.org$$$ per prenotazioni. Come ogni anno gli spettacoli si terranno nello splendido Parco Rosati.",
             ""));
         // CREATION QUESTION
         $questionnaire_8_1 = $this->createQuestion("TQRU", $questionnaire_8);
@@ -530,7 +530,7 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         $questionnaire_22_1_2 = $this->createSubquestion("QRU", $questionnaire_22_1, "");
         $questionnaire_22_1_3 = $this->createSubquestion("QRU", $questionnaire_22_1, "");
         // CREATION PROPOSITIONS
-        $this->createProposition("Però", true, $questionnaire_22_1_1);
+        $this->createProposition("però", true, $questionnaire_22_1_1);
         $this->createProposition("nonostante", false, $questionnaire_22_1_1);
         $this->createProposition("quindi", false, $questionnaire_22_1_1);
 
@@ -538,7 +538,7 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         $this->createProposition("nemmeno ", false, $questionnaire_22_1_2);
         $this->createProposition("anche", false, $questionnaire_22_1_2);
 
-        $this->createProposition("affiché", true, $questionnaire_22_1_3);
+        $this->createProposition("affinché", true, $questionnaire_22_1_3);
         $this->createProposition("dunque", false, $questionnaire_22_1_3);
         $this->createProposition("perciò", false, $questionnaire_22_1_3);
 
@@ -752,7 +752,8 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         $em->flush();
 
         $output->writeln("Fixtures Italian CE B1 exécutées.");
-
+        $output->writeln("");
+        $output->writeln("IMPORTANT : copier les images dans media.");
 
     }
 

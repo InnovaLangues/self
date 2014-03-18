@@ -380,6 +380,8 @@ Opinions abound about who the original Valentine was, with the most popular theo
         $em->flush();
 
         $output->writeln("Fixtures English CE exécutées.");
+        $output->writeln("");
+        $output->writeln("IMPORTANT : copier les images dans media.");
 
     }
 

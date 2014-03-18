@@ -99,23 +99,25 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $questionnaire_2 = $this->createQuestionnaire("A1_CE_shopping_florence_1_2", "A1", "CE", $test);
         $questionnaire_2->setMediaInstruction($this->mediaText("", "Completa il testo usando le parole suggerite", ""));
         $questionnaire_2->setMediaContext($this->mediaText("", "Breve articolo su rivista femminile", ""));
-        $questionnaire_2->setMediaText($this->mediaText($startTitle . "Le vie dello shopping a Firenze" . $endTitle, "**1.** _________ davvero tanti i luoghi dove turisti e cittadini fiorentini **2.** __________ trascorrere una bella giornata di shopping all'aria aperta. Partendo dal centro storico, Via Tornabuoni **3.**  _______ sicuramente il posto ideale dove poter fare acquisti chic ed eleganti.", "Le vie dello shopping a Firenze", ""));
+        $questionnaire_2->setMediaText($this->mediaText($startTitle . "Le vie dello shopping a Firenze" . $endTitle,
+        "**1.** _________ davvero tanti i luoghi dove turisti e cittadini fiorentini **2.** __________ trascorrere una bella giornata di shopping all'aria aperta. Partendo dal centro storico, Via Tornabuoni **3.**  _______ sicuramente il posto ideale dove poter fare acquisti chic ed eleganti.",
+        ""));
         // CREATION QUESTION
         $questionnaire_2_1 = $this->createQuestion("TQRU", $questionnaire_2);
         // CREATION SUBQUESTION
-        $questionnaire_2_1_1 = $this->createSubquestion("QRU", $questionnaire_2_1, "**1.** _________ davvero tanti i luoghi dove turisti e cittadini fiorentini");
-        $questionnaire_2_1_2 = $this->createSubquestion("QRU", $questionnaire_2_1, "**2.** __________ trascorrere una bella giornata di shopping all'aria aperta. Partendo dal centro storico, Via Tornabuoni ");
-        $questionnaire_2_1_3 = $this->createSubquestion("QRU", $questionnaire_2_1, "**3.**  _______ sicuramente il posto ideale dove poter fare acquisti chic ed eleganti.");
+        $questionnaire_2_1_1 = $this->createSubquestion("QRU", $questionnaire_2_1, "");
+        $questionnaire_2_1_2 = $this->createSubquestion("QRU", $questionnaire_2_1, "");
+        $questionnaire_2_1_3 = $this->createSubquestion("QRU", $questionnaire_2_1, "");
         // CREATION PROPOSITIONS
-        $this->createProposition("Sono", true, $questionnaire_2_1_1);
-        $this->createProposition("Siamo", false, $questionnaire_2_1_1);
+        $this->createProposition("sono", true, $questionnaire_2_1_1);
+        $this->createProposition("siamo", false, $questionnaire_2_1_1);
         $this->createProposition("é", false, $questionnaire_2_1_1);
 
         $this->createProposition("possiamo", false, $questionnaire_2_1_2);
         $this->createProposition("possono", true, $questionnaire_2_1_2);
         $this->createProposition("posso", false, $questionnaire_2_1_2);
 
-        $this->createProposition("č", true, $questionnaire_2_1_3);
+        $this->createProposition("è", true, $questionnaire_2_1_3);
         $this->createProposition("sono", false, $questionnaire_2_1_3);
         $this->createProposition("siamo ", false, $questionnaire_2_1_3);
 
@@ -264,7 +266,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $this->createProposition("apranzo", false, $questionnaire_10_1_1);
         $this->createProposition("merenda", false, $questionnaire_10_1_1);
 
-        $this->createProposition("č in vacanza.", false, $questionnaire_10_1_2);
+        $this->createProposition("è in vacanza.", false, $questionnaire_10_1_2);
         $this->createProposition("deve andare a scuola.", true, $questionnaire_10_1_2);
         $this->createProposition("esce con Paolo.", false, $questionnaire_10_1_2);
 
@@ -281,7 +283,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION SUBQUESTION
         $questionnaire_11_1_1 = $this->createSubquestion("QRM", $questionnaire_11_1, "");
         // CREATION PROPOSITIONS
-        $this->createProposition("Giulio č in vacanza al mare.", true, $questionnaire_11_1_1);
+        $this->createProposition("Giulio è in vacanza al mare.", true, $questionnaire_11_1_1);
         $this->createProposition("Giulio la mattina prende il cappuccino", false, $questionnaire_11_1_1);
         $this->createProposition("Giulio dopo pranzo controlla le sue mail.", false, $questionnaire_11_1_1);
         $this->createProposition("Giulio ha trovato dei nuovi amici in vacanza.", true, $questionnaire_11_1_1);
@@ -497,7 +499,7 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         $questionnaire_19 = $this->createQuestionnaire("A1_CE_agenda_anita", "A1", "CE", $test);
         $questionnaire_19->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false", ""));
         $questionnaire_19->setMediaContext($this->mediaText("", "L’agenda di Anita", ""));
-        $questionnaire_19->setMediaText($this->mediaText($startTitle . "Appuntamenti della settimana" . $endTitle, "Le tableau vous sera donner dans un dossier  à part", ""));
+        $questionnaire_19->setMediaText($this->mediaText($startTitle . "Appuntamenti della settimana" . $endTitle, "", ""));
         // CREATION QUESTION
         $questionnaire_19_1 = $this->createQuestion("TVF", $questionnaire_19);
         // CREATION SUBQUESTION
@@ -538,6 +540,8 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         $em->flush();
 
         $output->writeln("Fixtures Italian CE A1 exécutées.");
+        $output->writeln("");
+        $output->writeln("IMPORTANT : copier les images dans media.");
     }
 
     /**
@@ -580,18 +584,16 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skill);
         $questionnaire->setSkill($skill);
 
-
         $questionnaire->setAuthor();
         $questionnaire->setInstruction();
-                        $questionnaire->setDuration();
-                        $questionnaire->setDomain();
-                        $questionnaire->setSupport();
-                        $questionnaire->setFlow();
-                        $questionnaire->setFocus();
-                        $questionnaire->setSource();
-                        $questionnaire->setListeningLimit(0); //ListeningLimit
-                        $questionnaire->setDialogue(0);
-
+        $questionnaire->setDuration();
+        $questionnaire->setDomain();
+        $questionnaire->setSupport();
+        $questionnaire->setFlow();
+        $questionnaire->setFocus();
+        $questionnaire->setSource();
+        $questionnaire->setListeningLimit(0); //ListeningLimit
+        $questionnaire->setDialogue(0);
 
         $em->persist($questionnaire);
 
