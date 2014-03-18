@@ -293,7 +293,7 @@ input.proposition-input, label{
 }
 
 .drag-and-drop-input {
-	//visibility: hidden;
+	visibility: hidden;
 }
 
 .draggable-in-black {
