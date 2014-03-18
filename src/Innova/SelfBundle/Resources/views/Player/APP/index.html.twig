@@ -2,12 +2,12 @@
     
 </div>
 
-<div id="left-container-APP" class="col-md-3 left-container">
+<div id="left-container-APP" class="col-md-4 left-container">
     {% include "InnovaSelfBundle:Player/APP:situation.html.twig" %}
 </div>
 
 {% for question in questionnaire.questions %}
-<div id="right-container-APP" class="col-md-9 right-container">
+<div id="right-container-APP" class="col-md-8 right-container">
     <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
         {# ONGLETS #}
         {% include "InnovaSelfBundle:Player/APP:tab-nav.html.twig" %}

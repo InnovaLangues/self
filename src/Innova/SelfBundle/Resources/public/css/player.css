@@ -282,13 +282,12 @@ input.proposition-input, label{
  Drag and drop
 ***************************/
 .touch-me{
-	cursor:move;
 	height:30px;
 }
 
-.dropzone, .answer-APPT{
+.dropzone {
 	border-radius:3px;
-	border:1px dotted black;
+	border:1px dashed #931E11;
 	min-height: 100px;
 }
 
@@ -296,11 +295,26 @@ input.proposition-input, label{
 	visibility: hidden;
 }
 
-.draggable-in-black {
-	color:black;
-}
 
 .droppable-hover {
 	border: 2px solid black;
 }
 /* End Drag and Drop */
+
+
+.source{
+	vertical-align:middle;
+}
+
+.answer-APP {
+	display:inline-block;
+	vertical-align:middle;
+	background-color:#FCF6BC;
+	padding:3px;
+	width:100%;
+	color:black;
+}
+
+.draggable{
+	cursor:move;
+}
