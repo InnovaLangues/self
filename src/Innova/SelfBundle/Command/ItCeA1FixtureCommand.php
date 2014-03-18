@@ -308,7 +308,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
 
         // CREATION SUBQUESTION
         $questionnaire_12_1_1 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "L’annuncio è rivolto agli studenti che hanno problemi con le materie letterarie.");
-        $questionnaire_12_1_2 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "DL’annuncio pubblicizza i servizi di una scuola.");
+        $questionnaire_12_1_2 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "L’annuncio pubblicizza i servizi di una scuola.");
         $questionnaire_12_1_3 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "Fabrizio propone lezioni individuali.");
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", false, $questionnaire_12_1_1);
