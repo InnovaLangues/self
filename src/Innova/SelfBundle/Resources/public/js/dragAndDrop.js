@@ -21,8 +21,8 @@ function drpbl(selector){
 
 			if(dropzone != lastPositionZone) {
 				//console.log("On ajoute/enlève une classe aux dropzones");
-				dropzone.addClass("answered");
 				lastPositionZone.removeClass("answered");
+				dropzone.addClass("answered");
 			
 				//on gère le cas de la position initiale qui peut
 				//désormais accueillir d'autres draggable
@@ -31,7 +31,8 @@ function drpbl(selector){
 					drpbl("#droppable-"+propositionId);
 					$("#droppable-"+propositionId).removeAttr("id");
 				}
-			
+				
+				//console.log("la nouvelle zone n'accepte que la proposition qu'elle contient")
 				dropzone.droppable('option', 'accept', proposition);
 
 				//console.log("2. on décoche le bouton radio ailleurs");
