@@ -1,6 +1,6 @@
 $(document).ready(function() {
-
     getListenCount();
+    uncheckEverything();
     checkBadges();
 
     /**************
@@ -214,4 +214,11 @@ function resetListenCount() {
 
 function timestamp(){
     return Math.round((new Date()).getTime() / 1000);
+}
+
+/**************
+    Uncheck Everything function
+**************/
+function uncheckEverything(){
+    $('input[type="radio"],input[type="checkbox"]').prop('checked', false);
 }
