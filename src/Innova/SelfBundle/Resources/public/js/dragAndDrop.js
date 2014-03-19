@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 	$( ".draggable" ).draggable({
 		revert: "invalid",
-		zIndex: 1000,
+		stack:".droppable"
 	});	
 });
 
@@ -19,27 +19,35 @@ function drpbl(selector){
 			var lastPositionZone = $("[dropzoneId='"+lastPositionId+"']");
 			var dropzone = $(this);
 
-			if ($("#droppable-"+propositionId).length) {
-				$("#droppable-"+propositionId).addClass("droppable");
-
-				drpbl("#droppable-"+propositionId);
-				$("#droppable-"+propositionId).removeAttr("id");
-			}
+			if(dropzone != lastPositionZone) {
+				//console.log("On ajoute/enlève une classe aux dropzones");
+				dropzone.addClass("answered");
+				lastPositionZone.removeClass("answered");
 			
-			dropzone.droppable('option', 'accept', proposition);
-			//console.log("1. la dropzone n'accepte plus que l'élément présent");
+				//on gère le cas de la position initiale qui peut
+				//désormais accueillir d'autres draggable
+				if ($("#droppable-"+propositionId).length) {
+					$("#droppable-"+propositionId).addClass("droppable");
+					drpbl("#droppable-"+propositionId);
+					$("#droppable-"+propositionId).removeAttr("id");
+				}
+			
+				dropzone.droppable('option', 'accept', proposition);
 
-			lastPositionZone.find("input[equivalence='"+propositionId+"']").prop("checked", false);
-			//console.log("2. on décoche le bouton radio ailleurs");
+				//console.log("2. on décoche le bouton radio ailleurs");
+				lastPositionZone.find("input[equivalence='"+propositionId+"']").prop("checked", false);
 
-			dropzone.find("input[equivalence='"+propositionId+"']").prop("checked", "checked");
-			//console.log("3. on coche dans la dropzone");
+				//console.log("3. on coche dans la dropzone");
+				dropzone.find("input[equivalence='"+propositionId+"']").prop("checked", "checked");
 
-			lastPositionZone.droppable('option', 'accept', '.draggable');
-			//console.log("4. La case d'ou vient l'élement accepte tout maintenant");
+				//console.log("4. La case d'ou vient l'élement accepte tout maintenant");
+				lastPositionZone.droppable('option', 'accept', '.draggable');
 
-			proposition.attr("last-position", dropzone.attr("dropzoneId"));
-			//console.log("5. on enregistre dans l'élément courant sa position");
+				//console.log("5. on enregistre dans l'élément courant sa position");
+				proposition.attr("last-position", dropzone.attr("dropzoneId"));
+			}
+
+			checkBadges();
 		}
 	});
 }

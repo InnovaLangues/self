@@ -281,9 +281,6 @@ input.proposition-input, label{
 /**************************
  Drag and drop
 ***************************/
-.touch-me{
-	height:30px;
-}
 
 .dropzone {
 	border-radius:3px;
@@ -299,17 +296,8 @@ input.proposition-input, label{
 .droppable-hover {
 	border: 2px solid black;
 }
-/* End Drag and Drop */
-
-
-.source{
-	vertical-align:middle;
-}
 
 .answer-APP {
-	display:inline-block;
-	vertical-align:middle;
-	background-color:#FCF6BC;
 	padding:3px;
 	width:100%;
 	color:black;
@@ -317,4 +305,8 @@ input.proposition-input, label{
 
 .draggable{
 	cursor:move;
+}
+
+.cible.answered {
+	background-color:#FCF6BC;
 }
