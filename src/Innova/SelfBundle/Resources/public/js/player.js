@@ -91,8 +91,6 @@ $(document).ready(function() {
 
 });
 
-
-
 /**************
    CHECK BADGES
 **************/

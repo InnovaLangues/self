@@ -11,7 +11,6 @@
 	padding:4px;
 }
 
-
 /**********************************
 	CONTAINER ITEM
 ***********************************/
@@ -24,8 +23,6 @@
 	font-size: 120%;
 	padding: 20px;
 }
-
-
 
 /**********************************
 	CONTEXTE
@@ -53,10 +50,10 @@
 	opacity: 0.5;
 }
 
-
 /**********************************
 	SITUATION
 ***********************************/
+
 #situation-icon {
 	position:absolute;
 	top:120px;
@@ -68,12 +65,10 @@
 	margin-top:-10px;
 }
 
-#situation-CE {
-	margin-top: 20px;
-	padding-left: 20px;
-	padding-right: 20px;
-	max-height: 450px;
-	overflow:auto;
+#situation-CE, #situation-APP {
+	padding: 5px 5px 0 5px;
+	max-height: 500px;
+	overflow: auto;
 	text-align: justify;
 }
 
@@ -89,6 +84,7 @@
 	font-weight: bold;
 	margin-bottom: 5px;
 }
+
 /**********************************
 	LEFT CONTAINER
 ***********************************/
@@ -235,7 +231,6 @@ input.proposition-input, label{
 	text-align:center;
 }
 
-
 /**********************************
 	SUBMIT
 ***********************************/
@@ -253,7 +248,6 @@ input.proposition-input, label{
 .btn-default.disabled, .btn-default[disabled], .btn-default.disabled:hover, .btn-default[disabled]:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default.active[disabled], fieldset[disabled] .btn-default.active{
     background-color: lightgrey;
 }
-
 
 /**********************************
 	Plusieurs ou une seule réponses correctes 
@@ -276,7 +270,6 @@ input.proposition-input, label{
 .nav-tab a:focus{
 	outline:none;
 }
-
 
 /**************************
  Drag and drop
