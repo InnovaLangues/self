@@ -1,8 +1,13 @@
 <div id="contexte-icon">
-    
+    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" />
+</div>
+
+<div id="situation-icon">
+    <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" />
 </div>
 
 <div id="left-container-APP" class="col-md-4 left-container">
+    {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
     {% include "InnovaSelfBundle:Player/APP:situation.html.twig" %}
 </div>
 
