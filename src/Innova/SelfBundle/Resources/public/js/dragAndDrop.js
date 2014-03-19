@@ -52,7 +52,3 @@ function drpbl(selector){
 		}
 	});
 }
-
-
-
-

@@ -98,7 +98,7 @@ $(document).ready(function() {
 function checkBadges(){
     var incomplete_tab = 0;
     $( ".tab-pane" ).each(function( index ) {
-        subquestionId = $( this ).attr("data-subquestion-id");
+        var subquestionId = $( this ).attr("data-subquestion-id");
         var badge = $( "#badge-" + subquestionId );
         if ( $("[name='"+subquestionId+"[]']:checked").length > 0 ) {
             badge.removeClass("subquestion-not-ok").addClass("subquestion-ok");

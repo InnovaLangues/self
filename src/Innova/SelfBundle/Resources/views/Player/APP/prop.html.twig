@@ -1,0 +1,12 @@
+{% set mediaType = subquestion.media.mediaType.name %}
+<div class="col-md-{{ propWidth }} proposition-APPT-container">
+    <div class="proposition-APP">
+    {% if mediaType == "texte" %}
+            {{ subquestion.media.description }}
+    {% elseif mediaType == "audio" %}
+        {{ macros.audio(proposition.id, proposition.media, "audio.png", 100, 0, "") }}
+    {% elseif mediaType == "image" %}
+        {{ macros.image(proposition.id, proposition.media, "CLiquez pour agrandir") }}
+    {% endif %}
+    </div>
+</div>
