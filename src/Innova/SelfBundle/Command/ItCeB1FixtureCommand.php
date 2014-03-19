@@ -181,7 +181,7 @@ Per maggiori informazioni visita anche il nostro sito www.pizzaitalianaacademy.c
         $questionnaire_8->setMediaText(
         $this->mediaText($startTitle .
             "Rappresentazioni ed eventi teatrali a Roma" . $endTitle,
-            "Arriva l’estate e ricomincia la stagione d’eventi proposta come ogni anno dall’associazione Fiesta. Nelle calde estati romane, l’associazione promuove il Festival Internazionale di Musica e Cultura Latino Americana. Gli eventi si terranno da giugno a settembre e  il calendario è già disponibile sul sito $$$www.fiesta.org$$$ per prenotazioni. Come ogni anno gli spettacoli si terranno nello splendido Parco Rosati.",
+            "Arriva l’estate e ricomincia la stagione d’eventi proposta come ogni anno dall’associazione Fiesta. Nelle calde estati romane, l’associazione promuove il Festival Internazionale di Musica e Cultura Latino Americana. Gli eventi si terranno da giugno a settembre e  il calendario è già disponibile sul sito $$$ www.fiesta.org$$$ per prenotazioni. Come ogni anno gli spettacoli si terranno nello splendido Parco Rosati.",
             ""));
         // CREATION QUESTION
         $questionnaire_8_1 = $this->createQuestion("TQRU", $questionnaire_8);
