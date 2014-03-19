@@ -381,7 +381,8 @@ Opinions abound about who the original Valentine was, with the most popular theo
 
         $output->writeln("Fixtures English CE exécutées.");
         $output->writeln("");
-        $output->writeln("IMPORTANT : copier les images dans media.");
+        $output->writeln("IMPORTANT : copier l'image B1_CE_Porsche.png dans media.");
+        $output->writeln("");
 
     }
 
