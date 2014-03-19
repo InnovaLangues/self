@@ -6,7 +6,6 @@ $(document).ready(function() {
     /**************
         GESTION AUDIO
     **************/
-
     play_in_progress = false;
 
     $("audio").bind("ended", function(){
@@ -90,127 +89,131 @@ $(document).ready(function() {
         }
     });
 
-
-    /**************
-        WORD "ECOUTE" DISPLAY WITH OR WITHOUT "s"
-    **************/
-
-    function pluralizeListen(limit, listened) {
-        if ((limit - listened) < 0){
-            var diff = listened - limit;
-        } else {
-            var diff = limit - listened;
-        }
-        if(diff < 2){
-            return 'écoute';
-        };
-        return 'écoutes';
-    }
-
-    /**************
-       CHECK BADGES
-    **************/
-
-    function checkBadges(){
-        var incomplete_tab = 0;
-        $( ".tab-pane" ).each(function( index ) {
-            subquestionId = $( this ).attr("data-subquestion-id");
-            var badge = $( "#badge-" + subquestionId );
-            if ( $("[name='"+subquestionId+"[]']:checked").length > 0 ) {
-                badge.removeClass("subquestion-not-ok").addClass("subquestion-ok");
-            } else {
-                badge.removeClass("subquestion-ok").addClass("subquestion-not-ok");
-                incomplete_tab++;
-            } 
-        });
-        
-        if (incomplete_tab == 0) {
-            $("#submit").removeAttr("disabled", "disabled");
-        } else {
-            $("#submit").attr("disabled", "disabled");
-        }
-    }
-
-    /**************
-       AJAX REQUEST TO GET LISTENING COUNT
-    **************/
-
-    function getListenCount() {
-        $.ajax({
-            url: Routing.generate('sessionSituationListenNumber'),
-            type: 'GET',
-            dataType: 'json'
-        })
-        .done(function(data) {
-            var number = $("#listening_number").html();
-            if (data.situationListenNumber !== null) {
-                var limit = $('#listening_number').html()
-                var listened = data.situationListenNumber;
-
-                $("#listening_number").html(limit - listened);
-
-                $("#limit_listening_text").html(
-                    pluralizeListen(limit, listened)
-                );
-            };
-
-            $('#listens-counter').removeClass('hidden');
-        })
-        .fail(function() {
-            // console.log('Ajax error 1');
-        });
-    }
-
-    /**************
-       AJAX REQUEST TO INCREMENT LISTENING COUNT
-    **************/
-
-    function updateListenCount() {
-        $.ajax({
-            url: Routing.generate('incrementeSessionSituationListenNumber'),
-            type: 'PUT',
-            dataType: 'json'
-        })
-        .done(function(data) {
-            var limitListening = $("#limit_listening").html();
-            var reste = $("#limit_listening").html() - data.situationListenNumber;
-            var consigne = data.consigneListenNumber;
-            $("#listening_number").html(reste);
-            var limit = $("#limit_listening").html();
-            var listened = data.situationListenNumber;
-            $("#limit_listening_text").html( pluralizeListen(limit, listened));
-        })
-        .fail(function() {
-            // console.log('Ajax error 3');
-        });
-    }
-
-
-    /**************
-       AJAX REQUEST TO RESET LISTENING COUNT
-    **************/
-
-    function resetListenCount() {
-        $.ajax({
-             url: Routing.generate('resetSessionSituationListenNumber'),
-             async: false,
-             type: 'PUT',
-             dataType: 'json'
-        })
-        .done(function(data) {
-            var reste = data.situationListenNumber;
-        })
-        .fail(function() {
-            // console.log('Ajax error session');
-        });
-    }
-
-
-    /**************
-        Timestamp function
-    **************/
-
-    function timestamp(){
-        return Math.round((new Date()).getTime() / 1000);
-    }
 });
+
+
+
+/**************
+   CHECK BADGES
+**************/
+
+function checkBadges(){
+    var incomplete_tab = 0;
+    $( ".tab-pane" ).each(function( index ) {
+        subquestionId = $( this ).attr("data-subquestion-id");
+        var badge = $( "#badge-" + subquestionId );
+        if ( $("[name='"+subquestionId+"[]']:checked").length > 0 ) {
+            badge.removeClass("subquestion-not-ok").addClass("subquestion-ok");
+        } else {
+            badge.removeClass("subquestion-ok").addClass("subquestion-not-ok");
+            incomplete_tab++;
+        } 
+    });
+    
+    if (incomplete_tab == 0) {
+        $("#submit").removeAttr("disabled", "disabled");
+    } else {
+        $("#submit").attr("disabled", "disabled");
+    }
+}
+
+
+/**************
+    WORD "ECOUTE" DISPLAY WITH OR WITHOUT "s"
+**************/
+
+function pluralizeListen(limit, listened) {
+    if ((limit - listened) < 0){
+        var diff = listened - limit;
+    } else {
+        var diff = limit - listened;
+    }
+    if(diff < 2){
+        return 'écoute';
+    };
+    return 'écoutes';
+}
+
+
+/**************
+   AJAX REQUEST TO GET LISTENING COUNT
+**************/
+
+function getListenCount() {
+    $.ajax({
+        url: Routing.generate('sessionSituationListenNumber'),
+        type: 'GET',
+        dataType: 'json'
+    })
+    .done(function(data) {
+        var number = $("#listening_number").html();
+        if (data.situationListenNumber !== null) {
+            var limit = $('#listening_number').html()
+            var listened = data.situationListenNumber;
+
+            $("#listening_number").html(limit - listened);
+
+            $("#limit_listening_text").html(
+                pluralizeListen(limit, listened)
+            );
+        };
+
+        $('#listens-counter').removeClass('hidden');
+    })
+    .fail(function() {
+        // console.log('Ajax error 1');
+    });
+}
+
+/**************
+   AJAX REQUEST TO INCREMENT LISTENING COUNT
+**************/
+
+function updateListenCount() {
+    $.ajax({
+        url: Routing.generate('incrementeSessionSituationListenNumber'),
+        type: 'PUT',
+        dataType: 'json'
+    })
+    .done(function(data) {
+        var limitListening = $("#limit_listening").html();
+        var reste = $("#limit_listening").html() - data.situationListenNumber;
+        var consigne = data.consigneListenNumber;
+        $("#listening_number").html(reste);
+        var limit = $("#limit_listening").html();
+        var listened = data.situationListenNumber;
+        $("#limit_listening_text").html( pluralizeListen(limit, listened));
+    })
+    .fail(function() {
+        // console.log('Ajax error 3');
+    });
+}
+
+
+/**************
+   AJAX REQUEST TO RESET LISTENING COUNT
+**************/
+
+function resetListenCount() {
+    $.ajax({
+         url: Routing.generate('resetSessionSituationListenNumber'),
+         async: false,
+         type: 'PUT',
+         dataType: 'json'
+    })
+    .done(function(data) {
+        var reste = data.situationListenNumber;
+    })
+    .fail(function() {
+        // console.log('Ajax error session');
+    });
+}
+
+
+/**************
+    Timestamp function
+**************/
+
+function timestamp(){
+    return Math.round((new Date()).getTime() / 1000);
+}
