@@ -7,11 +7,13 @@
             {% if mediaType == "texte" %}
                     <div class="answer-APP-text">{{ proposition.media.description }}</div>
             {% elseif mediaType == "audio" %}
-                    {{ macros.audio(subquestion.id, subquestion.media, "audio.png", 100, 0, "") }}
+                    {{ macros.audio(proposition.id, proposition.media, "audio.png", 100, 0, "") }}
+            {% elseif mediaType == "image" %}
+                {{ macros.image(proposition.media.id, proposition.media, "Cliquez pour agrandir") }}
             {% endif %}
         </div>
+        {% if mediaType == "image" %}
+            {{ macros.modale(proposition.media.id, proposition.media, "Cliquez pour agrandir") }}
+        {% endif %}
     </div>
 </div>
-
-
-

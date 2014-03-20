@@ -1,27 +1,36 @@
-<div id="contexte-icon">
-    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" />
-</div>
+{% if questionnaire.skill.name == "CE" %}
+    <div id="contexte-icon">
+        <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" />
+    </div>
 
-<div id="situation-icon">
-    <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" />
-</div>
+    <div id="situation-icon">
+        <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" />
+    </div>
 
-<div id="left-container-APP" class="col-md-4 left-container">
-    {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
-    {% include "InnovaSelfBundle:Player/APP:situation.html.twig" %}
-</div>
+    <div id="left-container-CE" class="col-md-4 left-container">
+        {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
+        {% include "InnovaSelfBundle:Player/CE:situation.html.twig" %}
+    </div>
+{% elseif questionnaire.skill.name == "CO" %}
+    {% include "InnovaSelfBundle:Player/CO:contexte.html.twig" %}
+
+    {% include "InnovaSelfBundle:Player/CO:situation.html.twig" %}
+{% endif %}
+
 
 {% for question in questionnaire.questions %}
-<div id="right-container-APP" class="col-md-8 right-container">
-    <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
-        {# ONGLETS #}
-        {% include "InnovaSelfBundle:Player/APP:tab-nav.html.twig" %}
-        
-        {# CONTENU DES ONGLETS #}
-        {% include "InnovaSelfBundle:Player/APP:tab-content.html.twig" %}
-        
-        {# SUBMIT BUTTON #}
-        {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
-    </form>
-</div>
+    <div id="right-container-APP" class="col-md-8 right-container">
+        <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+            {# ONGLETS #}
+            {% include "InnovaSelfBundle:Player/APP:tab-nav.html.twig" %}
+            
+            {# CONTENU DES ONGLETS #}
+            {% include "InnovaSelfBundle:Player/APP:tab-content.html.twig" %}
+            
+            {# SUBMIT BUTTON #}
+            {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
+        </form>
+    </div>
 {% endfor %}
+
+

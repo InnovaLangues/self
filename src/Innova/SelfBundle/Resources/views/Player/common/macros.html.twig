@@ -20,7 +20,7 @@
 
 {% macro image(id, media, tooltip) %}
     {% import _self as macros %}
-    {{ macros.modale(id, media, tooltip) }}
+    {# {{ macros.modale(id, media, tooltip) }} #}
     <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
 {% endmacro %}
 

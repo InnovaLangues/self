@@ -3,7 +3,8 @@ $(document).ready(function() {
 
 	$( ".draggable" ).draggable({
 		revert: "invalid",
-		stack:".droppable"
+		stack:".droppable",
+		cancel: '.modal'
 	});	
 });
 
