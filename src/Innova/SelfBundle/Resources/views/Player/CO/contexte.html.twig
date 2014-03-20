@@ -1,5 +1,8 @@
-{% if questionnaire.mediaContext is not null %}
-    {{ macros.audio("context", questionnaire.mediaContext, "contexte.png", "", 0, "Contexte dans lequel se déroule cette situation") }}
-{% else %}
-    <img class="plop" src="{{ asset("bundles/innovaself/images/") }}contexte.png" />
-{% endif %}
+<div id="contexte-icon">
+    {% if questionnaire.mediaContext is not null %}
+        {{ macros.audio("context", questionnaire.mediaContext, "contexte.png", "", 0, "Contexte dans lequel se déroule cette situation") }}
+    {% else %}
+        <img class="plop" src="{{ asset("bundles/innovaself/images/") }}contexte.png" />
+    {% endif %}
+</div>
+

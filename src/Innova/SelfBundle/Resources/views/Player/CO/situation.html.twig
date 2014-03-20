@@ -1,28 +1,30 @@
-{% if questionnaire.ListeningLimit <= 1 %}
-    {% set limit_listening_text = "écoute" %}
-{% else %}
-    {% set limit_listening_text = "écoutes" %}
-{% endif %}
-{% set listening = app.session.get('listening') %}
-
-
-{% if questionnaire.dialogue == 1 %}
-    {% set icon = "situation_dialogue.png" %}
-{% else %}
-    {% set icon = "situation_monologue.png" %}
-{% endif %}
-
-<div id="situation-CO" class="situation">
-    {% if questionnaire.mediaText is not null %}
-        {% if questionnaire.mediaText.mediaType.name == "audio" %}
-            {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Situation de départ") }}
-            <div class="hidden" id="listens-counter">
-                Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span>
-                <span id="limit_listening_text">{{ limit_listening_text }}</span>
-                <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span>
-            </div>
-        {% elseif questionnaire.mediaText.mediaType.name == "video" %}
-            {{ macros.video("situation", questionnaire.mediaText) }}
-        {% endif %}
+<div id="left-container-CO" class="col-md-4 left-container">
+    {% if questionnaire.ListeningLimit <= 1 %}
+        {% set limit_listening_text = "écoute" %}
+    {% else %}
+        {% set limit_listening_text = "écoutes" %}
     {% endif %}
+    {% set listening = app.session.get('listening') %}
+
+
+    {% if questionnaire.dialogue == 1 %}
+        {% set icon = "situation_dialogue.png" %}
+    {% else %}
+        {% set icon = "situation_monologue.png" %}
+    {% endif %}
+
+    <div id="situation-CO" class="situation">
+        {% if questionnaire.mediaText is not null %}
+            {% if questionnaire.mediaText.mediaType.name == "audio" %}
+                {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Situation de départ") }}
+                <div class="hidden" id="listens-counter">
+                    Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span>
+                    <span id="limit_listening_text">{{ limit_listening_text }}</span>
+                    <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span>
+                </div>
+            {% elseif questionnaire.mediaText.mediaType.name == "video" %}
+                {{ macros.video("situation", questionnaire.mediaText) }}
+            {% endif %}
+        {% endif %}
+    </div>
 </div>

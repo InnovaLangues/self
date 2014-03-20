@@ -4,9 +4,9 @@
     {% if mediaType == "texte" %}
             {{ subquestion.media.description }}
     {% elseif mediaType == "audio" %}
-        {{ macros.audio(proposition.id, proposition.media, "audio.png", 100, 0, "") }}
+        {{ macros.audio(subquestion.media.id, subquestion.media, "audio.png", 100, 0, "") }}
     {% elseif mediaType == "image" %}
-        {{ macros.image(proposition.id, proposition.media, "CLiquez pour agrandir") }}
+        {{ macros.image(subquestion.media.id, subquestion.media, "Cliquez pour agrandir") }}
     {% endif %}
     </div>
 </div>
