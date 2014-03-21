@@ -13,8 +13,9 @@
     </div>
 {% elseif questionnaire.skill.name == "CO" %}
     {% include "InnovaSelfBundle:Player/CO:contexte.html.twig" %}
-
-    {% include "InnovaSelfBundle:Player/CO:situation.html.twig" %}
+    <div id="left-container-CO" class="col-md-4 left-container">
+        {% include "InnovaSelfBundle:Player/CO:situation.html.twig" %}
+    </div>
 {% endif %}
 
 

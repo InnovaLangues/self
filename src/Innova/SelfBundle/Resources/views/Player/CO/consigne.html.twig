@@ -1,8 +1,8 @@
 <div class="col-md-5 question-CO">
-    {% if subquestion.mediaAmorce is not null %}
-        {% set question = subquestion.mediaAmorce %}
-    {% elseif subquestion.media is not null %}
+    {% if subquestion.media is not null %}
         {% set question = subquestion.media %}
+    {% elseif subquestion.mediaAmorce is not null %}
+        {% set question = subquestion.mediaAmorce %}
     {% else %}
         {% set question = questionnaire.mediaInstruction %}
     {% endif %}
