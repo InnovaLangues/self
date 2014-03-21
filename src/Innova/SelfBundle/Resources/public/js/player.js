@@ -14,6 +14,17 @@ $(document).ready(function() {
         $(".item_audio_button, video").css("opacity","1");
     });
 
+    if($("#situation").length > 0){
+        var progress = $("#progress-bar");
+        var situation = $("#situation").get("0");
+        situation.addEventListener("timeupdate", function() {
+            // Calculate the slider value
+            var value = (100 / situation.duration) * situation.currentTime;
+            // Update the slider value
+            progress.attr("aria-valuenow",value).css("width",value+"%");
+        });
+    }
+
     $(".item_audio_button").click(function(){
         // Number of possible listens
         var limit = Number($(this).attr("data-limit"));

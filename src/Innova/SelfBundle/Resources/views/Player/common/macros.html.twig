@@ -9,12 +9,21 @@
 
 {% macro audio(id, media, icon, height, limitAudio, tooltip) %}
     <img rel="tooltip" data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
-
+    
     <audio preload="auto" id="{{ id }}" class="item_audio">
         <source src="{{ asset('upload/media/') ~ media.url }}.mp3" type="audio/mp3">
         <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
         Votre navigateur est trop ancien.
     </audio>
+
+    {% if id == "situation" %}
+        <div style="width:164px; margin:auto;">
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endmacro %}
 
 {% macro image(id, media, tooltip) %}
