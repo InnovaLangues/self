@@ -6,6 +6,7 @@
         {% endautoescape %}
     {% elseif questionnaire.mediaText.mediaType.name == "image" %}
         {{ macros.image("situation-image", questionnaire.mediaText, "Cliquer pour agrandir" ) }}
+        {{ macros.modale("situation-image", questionnaire.mediaText, "Cliquer pour agrandir") }}
     {% endif %}
 {% endif %}
 </div>
