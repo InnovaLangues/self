@@ -136,6 +136,9 @@
 	padding:20px 20px 20px 20px;
 }
 
+.tab-pane {
+}
+
 .badge {
 	position:absolute;
 	top:3px;
@@ -271,7 +274,7 @@ input.proposition-input, label{
 }
 
 /**************************
- Drag and drop
+ 	Drag and drop
 ***************************/
 
 .dropzone {
@@ -313,4 +316,16 @@ input.proposition-input, label{
 
 .cible.answered {
 	background-color:#FCF6BC;
+}
+
+/**************************
+ 		Video
+***************************/
+
+#video-controls {
+	margin-top:3px;
+}
+
+.progress{
+	margin-top:5px;
 }

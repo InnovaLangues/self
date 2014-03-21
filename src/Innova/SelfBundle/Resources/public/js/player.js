@@ -11,7 +11,7 @@ $(document).ready(function() {
     $("audio").bind("ended", function(){
         play_in_progress = false;
         sound = $(this).attr('id');
-        $(".item_audio_button").css("opacity","1");
+        $(".item_audio_button, video").css("opacity","1");
     });
 
     $(".item_audio_button").click(function(){
@@ -25,9 +25,8 @@ $(document).ready(function() {
         var audio = document.getElementById(sound);
 
         if(((listened === null || listened <= limit) && listened > 0 || sound != "situation") && !play_in_progress) {
-
             play_in_progress = true;
-            $(".item_audio_button").css("opacity","0.5");
+            $(".item_audio_button, video").css("opacity","0.5");
             $(this).css("opacity","1");
             audio.play();
 
@@ -88,6 +87,56 @@ $(document).ready(function() {
             $(".subquestion-not-ok").toggle( "pulsate" ).toggle( "pulsate" );
         }
     });
+
+
+
+    /**************
+        VIDEO 
+    **************/
+    if($("#video").length > 0){
+        var progress = $("#progress-bar");
+        var video = $("#video").get(0);
+        var videoContainer = $("#video");
+        var playButton = $("#play");
+
+        // Event listener for the play/pause button
+        playButton.click(function(){
+            var limit = Number(videoContainer.attr("data-limit"));
+            var listened = $("#listening_number").html();
+
+            if(((listened === null || listened <= limit) && listened > 0 ) && !play_in_progress) {
+                playButton.attr("disabled", "disabled");
+                play_in_progress = true;
+                video.play();
+                $(".item_audio_button").css("opacity","0.5");
+                $("#video").css("opacity","1");
+                updateListenCount();
+            }
+        });
+
+        video.addEventListener("timeupdate", function() {
+            // Calculate the slider value
+            var value = (100 / video.duration) * video.currentTime;
+            // Update the slider value
+            progress.attr("aria-valuenow",value).css("width",value+"%");
+        });
+
+        $("#video").bind("ended", function(){
+            var limit = Number(videoContainer.attr("data-limit"));
+            var listened = $("#listening_number").html();
+
+            play_in_progress = false;
+            $(".item_audio_button").css("opacity","1");
+            progress.attr("aria-valuenow",0).css("width","0%");
+
+            if (listened <= limit) {
+                playButton.removeAttr("disabled", "disabled");
+            };
+            
+        });
+
+        videoContainer.bind('contextmenu',function() { return false; });
+    }
 
 });
 
@@ -222,3 +271,8 @@ function timestamp(){
 function uncheckEverything(){
     $('input[type="radio"],input[type="checkbox"]').prop('checked', false);
 }
+
+
+
+
+

@@ -1,7 +1,6 @@
-<div class="info-right-answer">
-    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" %}
-        Une réponse correcte
-    {% else %}
+{% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" %}
+{% else %}
+    <div class="info-right-answer">
         Plusieurs réponses correctes
-    {% endif %}
-</div>
+    </div>
+{% endif %}
