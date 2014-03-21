@@ -160,7 +160,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
 
         $questionnaire_4_1_1 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca chiude per la pausa pranzo");
         $questionnaire_4_1_2 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca č aperta tutte le mattine.");
-        $questionnaire_4_1_3 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "In biblioteca č possibile navigare su internet senza pagare.");
+        $questionnaire_4_1_3 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "In biblioteca è possibile navigare su internet senza pagare.");
         $questionnaire_4_1_4 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "Non è permesso restare in biblioteca a studiare");
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", true, $questionnaire_4_1_1);
@@ -235,7 +235,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION QUESTIONNAIRE
         $questionnaire_9 = $this->createQuestionnaire("A1_CE_train_enfants", "A1", "CE", $test);
         $questionnaire_9->setMediaInstruction($this->mediaText("", "Quale informazione č presente nel testo?", ""));
-        $questionnaire_9->setMediaContext($this->mediaText("", "Pubblicitŕ informativa in stazione", ""));
+        $questionnaire_9->setMediaContext($this->mediaText("", "Pubblicità informativa in stazione", ""));
         $questionnaire_9->setMediaText($this->mediaText($startTitle . "Su Italo i bambini fino a 4 anni viaggiano gratuitamente  e devono essere accompagnati da  un adulto. Quelli dai 5 ai 14 anni possono viaggiare da soli ma  i genitori devono richiedere il Servizio Hostess. Per i ragazzi dai 15 anni ai 18 anni sono previsti ottimi sconti sulle offerte Base ed Economy.
 " . $endTitle, "Su Italo grandi vantaggi per i piccoli!", ""));
         // CREATION QUESTION
@@ -253,7 +253,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         ********************************************/
         // CREATION QUESTIONNAIRE
         $questionnaire_10 = $this->createQuestionnaire("A1_CE_SMS_pizza", "A1", "CE", $test);
-        $questionnaire_10->setMediaInstruction($this->mediaText("", "Rispondi alle domande. Una sola risposta č corretta", ""));
+        $questionnaire_10->setMediaInstruction($this->mediaText("", "Rispondi alle domande. Una sola risposta è corretta", ""));
         $questionnaire_10->setMediaContext($this->mediaText("", "SMS tra madre e figlia", ""));
         $questionnaire_10->setMediaText($this->mediaText("", "Mamma, stasera non ci sono, vado a mangiare la pizza con Paolo. Tranquilla non faccio tardi, lo so che domani cč scuola, torno verso le 1**1.**30. A dopo, Francy", ""));
         // CREATION QUESTION
@@ -403,7 +403,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $questionnaire_16 = $this->createQuestionnaire("A1_CE_nouvelles_londres", "A1", "CE", $test);
         $questionnaire_16->setMediaInstruction($this->mediaText("", "Completa il testo usando le parole suggerite", ""));
         $questionnaire_16->setMediaContext($this->mediaText("", "E-mail ad un amico", ""));
-        $questionnaire_16->setMediaText($this->mediaText($startTitle . "Notizie da Londra" . $endTitle, "Ciao Luca, scusa il ritardo ma** 1.** _______ancora abituarmi ai ritmi della nuova vita. @@@ Sai dove vivo adesso? Sono a Londra e finalmente posso fare il lavoro dei miei sogni! @@@Lavoro come stilista per una grande marca.** 2.** ________ assolutamente venire a trovarmi!@@@In questa cittŕ **3.** ________ fare davvero quello che ti piace.
+        $questionnaire_16->setMediaText($this->mediaText($startTitle . "Notizie da Londra" . $endTitle, "Ciao Luca, scusa il ritardo ma** 1.** _______ancora abituarmi ai ritmi della nuova vita. @@@ Sai dove vivo adesso? Sono a Londra e finalmente posso fare il lavoro dei miei sogni! @@@Lavoro come stilista per una grande marca.** 2.** ________ assolutamente venire a trovarmi!@@@In questa città **3.** ________ fare davvero quello che ti piace.
 I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso **4.**_______ andare! Ciao@@@Giovanni @@@P. S. Dobbiamo sentirci piů spesso!", ""));
         // CREATION QUESTION
         $questionnaire_16_1 = $this->createQuestion("TQRU", $questionnaire_16);
