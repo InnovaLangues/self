@@ -386,61 +386,61 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $questionnaire_B2_17_1_6 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "Trovare un quadrifoglio è segno di felicità e fortuna, purché");
         $questionnaire_B2_17_1_7 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "Quando si è a tavola è importante controllare che");
         // CREATION PROPOSITIONS
-        $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("a. il nuovo anno sia ricco.", true, $questionnaire_B2_17_1_2);
-        $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("a. il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_7);
+        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_1);
+        $this->createProposition("il nuovo anno sia ricco.", true, $questionnaire_B2_17_1_2);
+        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_3);
+        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_4);
+        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_5);
+        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_6);
+        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_7);
 
-        $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("b. il pane non sia al rovescio.", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("b. il pane non sia al rovescio.", true, $questionnaire_B2_17_1_7);
+        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_1);
+        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_2);
+        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_3);
+        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_4);
+        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_5);
+        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_6);
+        $this->createProposition("il pane non sia al rovescio.", true, $questionnaire_B2_17_1_7);
 
-        $this->createProposition("c. porta sfortuna.", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("c. porta sfortuna.", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("c. porta sfortuna.", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("c. porta sfortuna.", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("c. porta sfortuna.", true, $questionnaire_B2_17_1_5);
-        $this->createProposition("c. porta sfortuna.", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("c. porta sfortuna.", false, $questionnaire_B2_17_1_7);
+        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_1);
+        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_2);
+        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_3);
+        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_4);
+        $this->createProposition("porta sfortuna.", true, $questionnaire_B2_17_1_5);
+        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_6);
+        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_7);
 
-        $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("d. lo si lasci al suo posto", true, $questionnaire_B2_17_1_6);
-        $this->createProposition("d. lo si lasci al suo posto", false, $questionnaire_B2_17_1_7);
+        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_1);
+        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_2);
+        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_3);
+        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_4);
+        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_5);
+        $this->createProposition("lo si lasci al suo posto", true, $questionnaire_B2_17_1_6);
+        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_7);
 
-        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", true, $questionnaire_B2_17_1_3);
-        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("e. rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_7);
+        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_1);
+        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_2);
+        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", true, $questionnaire_B2_17_1_3);
+        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_4);
+        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_5);
+        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_6);
+        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_7);
 
-        $this->createProposition("f. preannunci un lungo periodo di problemi", true, $questionnaire_B2_17_1_1);
-        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("f. preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_7);
+        $this->createProposition("preannunci un lungo periodo di problemi", true, $questionnaire_B2_17_1_1);
+        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_2);
+        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_3);
+        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_4);
+        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_5);
+        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_6);
+        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_7);
 
-        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("g. non è di buon augurio", true, $questionnaire_B2_17_1_4);
-        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("g. non è di buon augurio", false, $questionnaire_B2_17_1_7);
+        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_1);
+        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_2);
+        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_3);
+        $this->createProposition("non è di buon augurio", true, $questionnaire_B2_17_1_4);
+        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_5);
+        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_6);
+        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_7);
 
         /*******************************************
                     QUESTIONNAIRE 25 : TVFNM
