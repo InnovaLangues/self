@@ -14,6 +14,10 @@
             {% elseif proposition.media.mediaType.name == "texte" %}
                 <label for="input-proposition{{ proposition.id }}" class="proposition-CO-text">
                 {{ macros.translateVF(proposition.media.description, test.language.name) }}
+                </label>
+            {% elseif proposition.media.mediaType.name == "image" %}
+                {{ macros.image(proposition.media.id, proposition.media, "Cliquez pour agrandir") }}
+                {{ macros.modale(proposition.media.id, proposition.media, "Cliquez pour agrandir") }}
             </label>
             {% endif %}
         </div>
