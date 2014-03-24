@@ -27,3 +27,8 @@ build/code-browser/
 *.orig
 composer.phar
 composer.lock
+
+
+# Session
+app/sessions/*
+!app/sessions/.gitkeep
