@@ -1,5 +1,0 @@
-{% if questionnaire.mediaInstruction is not null %}
-    {{ macros.media("instruction", questionnaire.mediaInstruction, "oignon.png", 90, 0, "Consigne didactique") }}
-{% elseif questionnaire.questions[0].subquestions|length == 1 and questionnaire.questions[0].subquestions[0].mediaAmorce is not null %}
-    {{ macros.media("instruction", questionnaire.questions[0].subquestions[0].mediaAmorce, "oignon.png", 90, 0, "Consigne didactique") }}
-{% endif %}
