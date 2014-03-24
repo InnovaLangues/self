@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+  	<h3>Traces</h3>
+
+    <!-- Dans le controller "Import", un tableau de traces se remplit au fur et à mesure. -->
+    <!-- Une fois dans le vue, j'affiche les traces en parcourant ce tableau. -->
+    <!-- Ainsi, la vue de fin de traitement existe comme dans la version d'avant. -->
+    <!-- Et ceci permet de supprimer le "die" dans le controller #181. ERV. -->
+    {% for i, tabTrace in tabTraces %}
+        <li>{{ tabTraces[i] }}</li>
+    {% endfor %}
+
+    <h3>Traitement du fichier <u>{{ csvName }}</u> terminé</h3>
+
+{% endblock %}

@@ -15,11 +15,8 @@ use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\Typology;
 
-use Innova\SelfBundle;
-
 class ImportController extends Controller
 {
-
     /**
      * importCsvSQL function
      *
@@ -33,7 +30,6 @@ class ImportController extends Controller
      */
     public function importCsvSQLAction($language, $level)
     {
-
         $em = $this->getDoctrine()->getManager();
 
 
@@ -60,7 +56,6 @@ class ImportController extends Controller
         $urlCSVRelativeToWeb = 'upload/import/csv/';
         // Path + Name:wq
         $csvPath = $csvPathImport . $csvName;
-        echo $csvName . " -<br /> " . $csvPathImportMp3 . " -<br /> " . $csvPath;
 
 
         // File import path
@@ -70,7 +65,9 @@ class ImportController extends Controller
         // File copy path
         // Répertoire où seront copiés les fichiers
         $dir_paste = $absolutePath.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
-
+		// Tableau de trace.
+        $nbTrace = 0;
+        $tabTrace = array();
 // Traitement des fichiers reçus
 // DEBUT
 //
@@ -84,8 +81,7 @@ class ImportController extends Controller
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier)) && !$existeDir) {
                 if ($fichier != '.' && $fichier != '..' && is_dir($csvPathImportMp3.$fichier)) {
-                    echo "<br />C'est un répertoire : " . $fichier;
-                    $existeDir = true;
+                $existeDir = true;
                 }
             }
         }
@@ -253,7 +249,9 @@ class ImportController extends Controller
                         // Création du répertoire (s'il n'est pas déjà créé)
                         if(!is_dir($repertoryMkDir)) mkdir ($repertoryMkDir, 0777);
 
-                        echo "## creation repertoire : ".$repertoryName."<br/>";
+                        $nbTrace++;
+                        $tabTrace[$nbTrace] = "## creation repertoire : ".$repertoryName;
+
                         $number = $indice_fileName+1;
 
                         $nb[0] = null;
@@ -380,13 +378,11 @@ class ImportController extends Controller
             }
         }
 
-echo "<br />csvName : " . $csvName;
-echo "<br />csvPath : " . $csvPath;
-
 // FIN
 //
 
-        echo "<br/> ************  TRAITEMENT CSV ************<br/>";
+        $nbTrace++;
+        $tabTrace[$nbTrace] = "************  TRAITEMENT CSV ************";
         // Traitement du fichier d'entrée afin de ne pas prendre la ou les premières lignes.
         // Contrainte : dans la colonne "A", il faut une donnée de type "entier" séquentielle (1 puis 2 ...)
         // Cette contrainte a été prise en compte par rapport au fichier reçu.
@@ -461,7 +457,8 @@ echo "<br />csvPath : " . $csvPath;
                     $questionnaire->setFlow();
                     $questionnaire->setFocus();
                     $questionnaire->setTheme($data[1]); // Thême
-                    echo "## creation questionnaire : ".$data[1]."<br/>";
+                    $nbTrace++;
+                    $tabTrace[$nbTrace] = "## creation questionnaire : ".$data[1];
 
                     //Dialogue
                     $questionnaire->setDialogue(0);
@@ -549,14 +546,14 @@ echo "<br />csvPath : " . $csvPath;
         }
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
         shell_exec($absolutePath.'/../../../../import/import.sh > ' . $absolutePath . '/../../../../import/logs/import.log');
-die();
+
 
         //
         // To view
         //
         return array(
-            "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
-            "csvName"             => $csvName
+            "tabTraces"  => $tabTrace,
+            "csvName"    => $csvName
         );
     }
 
@@ -1006,10 +1003,8 @@ die();
 
         $tab = explode("#", $data[12]);
         $type = $tab[0];
-        echo "<br>" . $type;
         if ($type == "QRU") {
             $countTab = count($tab);
-            echo "<br>dans boucle";
             for ($compteurTab = 1; $compteurTab < $countTab; $compteurTab++)
             {
                 $this->vfPropositionProcess($rightAnswer, $tab[$compteurTab], $compteurTab, $subQuestion);
@@ -1017,8 +1012,6 @@ die();
         }
         else
         {
-            echo "<br>PAS dans boucle";
-            echo "<br>" . $nbProposition;
             for ($j=1; $j <= $nbProposition; $j++) {
                 $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
             }
@@ -1441,7 +1434,6 @@ die();
 
         $extension = ".mp3";
 
-        echo "<br>pathFileName : " . $pathFileName . $extension;
         if (file_exists($pathFileName . $extension)) {
             if (preg_match("/".$j."/", $rightAnswer)) {
                 $proposition->setRightAnswer(true);
@@ -1463,8 +1455,6 @@ die();
 
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
-        } else {
-            echo "<br>pas trouvé MP3";
         }
 
         $extension = ".jpg";
@@ -1490,10 +1480,7 @@ die();
 
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
-        } else {
-            echo "<br>pas trouvé JPG";
         }
-
 
         $extension = ".flv";
 
@@ -1518,13 +1505,9 @@ die();
 
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
-        } else {
-            echo "<br>pas trouvé FLV";
         }
-
         // Enregistrement en base
         $em->persist($proposition);
-
     }
 
     /**
