@@ -77,10 +77,10 @@ class ImportController extends Controller
         // Donc, je ne le relance pas. ERV. 17/03/2014.
         $existeDir = false;
         if ($dossier = opendir($csvPathImportMp3)) {
-            while (false !== ($fichier = readdir($dossier)) and !$existeDir) {
+            while (false !== ($fichier = readdir($dossier)) && !$existeDir) {
                 if ($fichier != '.' && $fichier != '..' && is_dir($csvPathImportMp3.$fichier)) {
-                echo "<br />C'est un répertoire : " . $fichier;
-                $existeDir = true;
+                    echo "<br />C'est un répertoire : " . $fichier;
+                    $existeDir = true;
                 }
             }
         }
