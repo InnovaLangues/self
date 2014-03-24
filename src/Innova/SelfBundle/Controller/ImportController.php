@@ -52,8 +52,6 @@ class ImportController extends Controller
             $csvName = $language . "-co-" . $level . ".csv"; // it-co-a1.csv ou it-co-b1.csv ou it-co-b2.csv
         }
 
-        // Symfony
-        $urlCSVRelativeToWeb = 'upload/import/csv/';
         // Path + Name:wq
         $csvPath = $csvPathImport . $csvName;
 
@@ -955,7 +953,6 @@ class ImportController extends Controller
 
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
-        //    $em->flush();
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 10+(2*$i);
@@ -1252,7 +1249,6 @@ class ImportController extends Controller
 
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
-        //    $em->flush();
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
@@ -1354,7 +1350,6 @@ class ImportController extends Controller
 
         // Voir le traitement de l'amorce // AB.
         $em->persist($subQuestion);
-        // $em->flush();
 
         // Créer une occurrence dans la table "Proposition"
         $nbProposition = $data[13];
