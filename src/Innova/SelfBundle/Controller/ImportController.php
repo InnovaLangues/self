@@ -941,7 +941,6 @@ class ImportController extends Controller
         $question->setTypology($typo);
 
         $em->persist($question);
-      //  $em->flush();
 
         // Traitement sur le nombre d'items
         for ($i = 1; $i <= $nbItems; $i++) {
@@ -1346,7 +1345,6 @@ class ImportController extends Controller
         $question->setTypology($typo);
 
         $em->persist($question);
-      //  $em->flush();
 
         // Créer une occurrence dans la table "SubQuestion"
         $subQuestion = new Subquestion();
