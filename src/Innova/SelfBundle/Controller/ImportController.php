@@ -15,8 +15,11 @@ use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\Typology;
 
+use Innova\SelfBundle;
+
 class ImportController extends Controller
 {
+
     /**
      * importCsvSQL function
      *
@@ -30,6 +33,7 @@ class ImportController extends Controller
      */
     public function importCsvSQLAction($language, $level)
     {
+
         $em = $this->getDoctrine()->getManager();
 
 
@@ -38,8 +42,9 @@ class ImportController extends Controller
         //
 
         // File import path
-        $csvPathImport    =__DIR__.'/../../../../web/upload/import/csv-p2/' . $language . '/'; // Symfony
-        $csvPathImportMp3 =__DIR__.'/../../../../web/upload/import/mp3-p2/' . $language . '/'; // Symfony
+        $absolutePath = __DIR__;
+        $csvPathImport    = $absolutePath.'/../../../../web/upload/import/csv-p2/' . $language . '/'; // Symfony
+        $csvPathImportMp3 = $absolutePath.'/../../../../web/upload/import/mp3-p2/' . $language . '/'; // Symfony
 
         // File import name
         // Spécificité Anglais : on a un seul test pour le pilote 2.
@@ -64,7 +69,7 @@ class ImportController extends Controller
 
         // File copy path
         // Répertoire où seront copiés les fichiers
-        $dir_paste =__DIR__.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
+        $dir_paste = $absolutePath.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
 
 // Traitement des fichiers reçus
 // DEBUT
@@ -543,7 +548,7 @@ echo "<br />csvPath : " . $csvPath;
             fclose($handle);
         }
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
-        shell_exec(__DIR__.'/../../../../import/import.sh > ' . __DIR__ . '/../../../../import/logs/import.log');
+        shell_exec($absolutePath.'/../../../../import/import.sh > ' . $absolutePath . '/../../../../import/logs/import.log');
 die();
 
         //
