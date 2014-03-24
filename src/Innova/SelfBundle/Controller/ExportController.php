@@ -20,7 +20,7 @@ class ExportController extends Controller
      *     options = {"expose"=true}
      * )
      *
-     * @Method({"GET", "POST"})
+     * @Method("GET")
      * @Template()
      */
     public function exportCsvSQLAction()
