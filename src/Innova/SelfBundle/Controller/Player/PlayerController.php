@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 
@@ -80,11 +81,14 @@ class PlayerController extends Controller
         $language = $em->getRepository('InnovaSelfBundle:Language')->findBy(array('id' => $test->getLanguage()->getId()));
         $languageColor = $language[0]->getColor();
 
+        $questionnaires = $test->getQuestionnaires();
+
         return array(
             'questionnaire' => $questionnaire,
             'language' => $languageColor,
             'test' => $test,
             'counQuestionnaireDone' => $countQuestionnaireDone,
+            'questionnaires' => $questionnaires
         );
     }
 
@@ -109,4 +113,48 @@ class PlayerController extends Controller
 
         return array("pourcentRightAnswer" => $pourcentRightAnswer);
     }
+
+
+
+    /**
+     *
+     * @Route(
+     *      "admin/test/{testId}/questionnaire/{questionnaireId}", 
+     *      name="questionnaire_pick"
+     * )
+     * @ParamConverter("test", class="InnovaSelfBundle:Test", options={"mapping": {"testId": "id" }})
+     * @ParamConverter("questionnairePicked", class="InnovaSelfBundle:Questionnaire", options={"mapping": {"questionnaireId": "id"}})
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Player:index.html.twig")
+     */
+    public function PickAQuestionnaireAction(Test $test, Questionnaire $questionnairePicked)
+    {
+
+        $session = $this->container->get('request')->getSession();
+        $session->set('listening', $questionnairePicked->getListeningLimit());
+        $em = $this->getDoctrine()->getManager();
+
+        $language = $em->getRepository('InnovaSelfBundle:Language')->findBy(array('id' => $test->getLanguage()->getId()));
+        $languageColor = $language[0]->getColor();
+
+        $questionnaires = $test->getQuestionnaires();
+
+        $i = 0;
+        foreach ($questionnaires as $q) {
+            if ($q == $questionnairePicked) {
+                $countQuestionnaireDone = $i;
+                break;
+            }
+            $i++;
+        }
+
+        return array(
+            'questionnaire' => $questionnairePicked,
+            'language' => $languageColor,
+            'test' => $test,
+            'counQuestionnaireDone' => $countQuestionnaireDone,
+            'questionnaires' => $questionnaires
+        );
+    }
+
 }

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	/* TOOLTIP */
-	$('img').tooltip({placement:'top'});
+	$('*').tooltip({placement:'top'});
 
     /*Login form validation*/
     $('.fos_user_registration_register #_submit').click(function(event) {
