@@ -683,7 +683,6 @@ die();
 
         // Enregistrement en base
         $em->persist($proposition);
-        //$em->flush();
     }
 
     /**
@@ -808,7 +807,6 @@ die();
 
         // Enregistrement en base
         $em->persist($proposition);
-        //$em->flush();
     }
 
     /**
@@ -1044,7 +1042,6 @@ die();
         $question->setTypology($typo);
 
         $em->persist($question);
-        //$em->flush();
 
         $dirName = $data[1];
 
@@ -1131,7 +1128,6 @@ die();
         $question->setTypology($typo);
 
         $em->persist($question);
-        //$em->flush();
 
         $dirName = $data[1];
 
@@ -1235,7 +1231,6 @@ die();
         $question->setTypology($typo);
 
         $em->persist($question);
-        //$em->flush();
 
         $medias = array();
 /*
@@ -1316,7 +1311,6 @@ die();
 
         // Enregistrement en base
         $em->persist($subQuestion);
-        //$em->flush();
     }
 
 
@@ -1342,7 +1336,6 @@ die();
 
         // Enregistrement en base
         $em->persist($proposition);
-        //$em->flush();
     }
 
     /**
@@ -1423,7 +1416,6 @@ die();
 
         // Enregistrement en base
         $em->persist($proposition);
-        //$em->flush();
     }
 
     /**
@@ -1532,7 +1524,6 @@ die();
 
         // Enregistrement en base
         $em->persist($proposition);
-        //$em->flush();
 
     }
 
