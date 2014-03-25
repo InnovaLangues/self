@@ -122,8 +122,7 @@ class PlayerController extends Controller
         $session->set('listening', $questionnairePicked->getListeningLimit());
         $em = $this->getDoctrine()->getManager();
 
-        $language = $em->getRepository('InnovaSelfBundle:Language')->findBy(array('id' => $test->getLanguage()->getId()));
-        $languageColor = $language[0]->getColor();
+        $languageColor = $test->getLanguage()->getColor();
 
         $questionnaires = $test->getQuestionnaires();
 
