@@ -2,7 +2,11 @@
 
 namespace Innova\SelfBundle\Controller\Player;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -11,10 +15,38 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 
 
-class PlayerController extends Controller
+/**
+ * Class PlayerController
+ *
+ * @Route(
+ *      "",
+ *      name = "Innova Player",
+ *      service = "innova_player"
+ * )
+ */
+class PlayerController
 {
+
+    protected $securityContext;
+    protected $entityManager;
+    protected $session;
+
+    public function __construct(
+        SecurityContextInterface $securityContext, 
+        EntityManager $entityManager, 
+        SessionInterface $session
+    )
+    {
+        $this->securityContext = $securityContext;
+        $this->entityManager = $entityManager;
+        $this->session = $session;
+        $this->user = $this->securityContext->getToken()->getUser();
+    }
+
+
     /**
-     * Pick a questionnaire entity for a given test not done yet by the user.
+     * Try to pick a questionnaire entity for a given test not done yet by the user 
+     * and display it if possible.
      *
      * @Route("student/test/start/{id}", name="test_start")
      * @Method("GET")
@@ -22,22 +54,20 @@ class PlayerController extends Controller
      */
     public function startAction(Test $test)
     {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $session = $this->container->get('request')->getSession();
+        $em = $this->entityManager;
 
         // on récupère un questionnaire sans trace pour un test et un utilisateur donné
-        $questionnaire = $this->findAQuestionnaireWithoutTrace($test, $user);
+        $questionnaire = $this->findAQuestionnaireWithoutTrace($test, $this->user);
 
         // s'il n'y a pas de questionnaire dispo, on renvoie vers la fonction qui gère la fin de test
         if (is_null($questionnaire)) {
             return $this->redirect($this->generateUrl('test_end',array("id"=>$test->getId())));
         } else {
-        // sinon on envoie le questionnaire en question à la vue
-            $session->set('listening', $questionnaire->getListeningLimit());
+        // sinon on envoie le questionnaire à la vue
+            $this->session->set('listening', $questionnaire->getListeningLimit());
 
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                ->countDoneYetByUserByTest($test->getId(), $user->getId());
+                ->countDoneYetByUserByTest($test->getId(), $this->user->getId());
 
             return array(
                 'questionnaire' => $questionnaire,
@@ -47,12 +77,13 @@ class PlayerController extends Controller
         }
     }
 
+
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.
      */
-    public function findAQuestionnaireWithoutTrace($test, $user)
+    protected function findAQuestionnaireWithoutTrace($test, $user)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->entityManager;
 
         $questionnaireWithoutTrace = null;
 
@@ -82,14 +113,13 @@ class PlayerController extends Controller
      */
     public function endAction(Test $test)
     {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->entityManager;
 
         $nbRightAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countRightAnswerByUserByTest($test->getId(), $user->getId());
+                            ->countRightAnswerByUserByTest($test->getId(), $this->user->getId());
 
         $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countAnswerByUserByTest($test->getId(), $user->getId());
+                            ->countAnswerByUserByTest($test->getId(), $this->user->getId());
 
         $pourcentRightAnswer = number_format(($nbRightAnswer/$nbAnswer)*100, 0);
 
@@ -110,9 +140,7 @@ class PlayerController extends Controller
     public function PickAQuestionnaireAction(Test $test, Questionnaire $questionnairePicked)
     {
 
-        $session = $this->container->get('request')->getSession();
-        $session->set('listening', $questionnairePicked->getListeningLimit());
-        $em = $this->getDoctrine()->getManager();
+        $this->session->set('listening', $questionnairePicked->getListeningLimit());
 
         $questionnaires = $test->getQuestionnaires();
 
