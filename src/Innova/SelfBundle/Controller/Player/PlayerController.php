@@ -22,78 +22,67 @@ class PlayerController extends Controller
      */
     public function startAction(Test $test)
     {
-
-        $session = $this->container->get('request')->getSession();
-
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
-        // Je parcours tous les questionnaires du test X
-        // et je m'arrête au premier questionnaire qui n'a pas de trace.
-        $findQuestionnaireWithoutTrace = false;
-        $questionnaireWithoutTrace = new Questionnaire();
+        $questionnaire = $this->findAQuestionnaireWithoutTrace($test, $user);
 
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+        if (is_null($questionnaire)) {
+            return $this->redirect($this->generateUrl('test_end',array("id"=>$test->getId())));
+        } else {
+            $languageColor = $test->getLanguage()->getColor();
+
+            $questionnaires = $test->getQuestionnaires();
+
+            $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                ->countDoneYetByUserByTest($test->getId(), $user->getId());
+
+            return array(
+                'questionnaire' => $questionnaire,
+                'language' => $languageColor,
+                'test' => $test,
+                'counQuestionnaireDone' => $countQuestionnaireDone,
+                'questionnaires' => $questionnaires
+            );
+        }
+    }
+
+
+    /**
+     * Pick a questionnaire entity for a given test not done yet by the user.
+     */
+    public function findAQuestionnaireWithoutTrace($test, $user)
+    {
+        $session = $this->container->get('request')->getSession();
+        $em = $this->getDoctrine()->getManager();
+
+        $questionnaireWithoutTrace = null;
+
+        $questionnaires = $test->getQuestionnaires();
+
         foreach ($questionnaires as $questionnaire) {
 
-            $tests = $questionnaire->getTests();
-            $testQ = $tests[0];
-
-            if ($test->getId() === $testQ->getId()) {
-                // Recherche des traces pour UN utilisateur UN test et UN questionnaire.
-                $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(), 'test' => $test->getId(),
-                                            'questionnaire' => $questionnaire->getId()
-                                            )
-                                        );
-
-                    // Si je n'ai pas de traces, alors il faut que j'affiche ce questionnaire. Car il n'est pas encore été "répondu".
-                    if (count($traces) == 0) {
-                        if (!$findQuestionnaireWithoutTrace) {
-                            $questionnaireWithoutTrace = $questionnaire;
-                            $findQuestionnaireWithoutTrace = true;
-                        }
-                    }
-                }
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
+                array('user' => $user->getId(), 
+                        'test' => $test->getId(),
+                        'questionnaire' => $questionnaire->getId()
+                ));
+            if (count($traces) == 0) {
+                $questionnaireWithoutTrace = $questionnaire;
+                break;
+            }
         }
-
-        // Et j'affecte à la variable passée à la vue le premier questionnaire sans trace.
-        $questionnaire = $questionnaireWithoutTrace;
-
-        $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-            ->countDoneYetByUserByTest($test->getId(), $user->getId());
 
         // Session to F5 key and sesion.
         $session->set('listening', $questionnaire->getListeningLimit());
 
-        // Renvoi vers la méthode indiquant la fin du test.
-        if (!$findQuestionnaireWithoutTrace) {
-            return $this->redirect(
-                $this->generateUrl(
-                    'test_end',
-                    array("id"=>$test->getId())
-                )
-            );
-        }
-
-        // One color per language. Two languages for the moment : ang and it.
-        // In database, we must have one color per test. Table : language.
-        // See main.css for more information.
-        $language = $em->getRepository('InnovaSelfBundle:Language')->findBy(array('id' => $test->getLanguage()->getId()));
-        $languageColor = $language[0]->getColor();
-
-        $questionnaires = $test->getQuestionnaires();
-
-        return array(
-            'questionnaire' => $questionnaire,
-            'language' => $languageColor,
-            'test' => $test,
-            'counQuestionnaireDone' => $countQuestionnaireDone,
-            'questionnaires' => $questionnaires
-        );
+        return $questionnaireWithoutTrace;
     }
 
+
+
      /**
-     * Pick a questionnaire entity for a given test not done yet by the user.
+     * Gère la vue de fin de test
      *
      * @Route("/test_end/{id}", name="test_end")
      * @Template("InnovaSelfBundle:Player:common/end.html.twig")
