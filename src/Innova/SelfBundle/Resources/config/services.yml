@@ -11,3 +11,9 @@ services:
             om: @doctrine.orm.entity_manager
         tags:
             - { name: form.type, alias: innova_selfbundle_user }
+
+    innova_import:
+        class: Innova\SelfBundle\Controller\ImportController
+        arguments: 
+            kernelRoot: %kernel.root_dir%
+            entityManager: @doctrine.orm.entity_manager

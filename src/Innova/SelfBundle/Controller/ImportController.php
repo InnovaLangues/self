@@ -15,8 +15,28 @@ use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\Typology;
 
-class ImportController extends Controller
+
+/**
+ * Class StepController
+ *
+ * @Route(
+ *      "",
+ *      name = "",
+ *      service = "innova_import"
+ * )
+ */
+class ImportController
 {
+
+    protected $kernelRoot;
+    protected $entityManager;
+    
+    public function __construct($kernelRoot, $entityManager)
+    {
+        $this->kernelRoot = $kernelRoot;
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * importCsvSQL function
      *
@@ -30,17 +50,16 @@ class ImportController extends Controller
      */
     public function importCsvSQLAction($language, $level)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
 
         //
         // CSV Import part
         //
 
         // File import path
-        $absolutePath = __DIR__;
-        $csvPathImport    = $absolutePath.'/../../../../web/upload/import/csv-p2/' . $language . '/'; // Symfony
-        $csvPathImportMp3 = $absolutePath.'/../../../../web/upload/import/mp3-p2/' . $language . '/'; // Symfony
+        $rootPath = $this->kernelRoot . "/../";
+        $csvPathImport    = $rootPath . 'web/upload/import/csv-p2/' . $language . '/'; // Symfony
+        $csvPathImportMp3 = $rootPath . 'web/upload/import/mp3-p2/' . $language . '/'; // Symfony
 
         // File import name
         // Spécificité Anglais : on a un seul test pour le pilote 2.
@@ -62,7 +81,7 @@ class ImportController extends Controller
 
         // File copy path
         // Répertoire où seront copiés les fichiers
-        $dir_paste = $absolutePath.'/../../../../web/upload/media/'; // A modifier quand on aura l'adresse
+        $dir_paste = $rootPath . 'web/upload/media/'; // A modifier quand on aura l'adresse
 		// Tableau de trace.
         $nbTrace = 0;
         $tabTrace = array();
@@ -543,7 +562,7 @@ class ImportController extends Controller
             fclose($handle);
         }
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
-        shell_exec($absolutePath.'/../../../../import/import.sh > ' . $absolutePath . '/../../../../import/logs/import.log');
+        shell_exec($rootPath.'import/import.sh > ' . $rootPath . 'import/logs/import.log');
 
 
         //
@@ -561,8 +580,7 @@ class ImportController extends Controller
      */
     private function appaiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"
         $question = new Question();
 
@@ -602,8 +620,7 @@ class ImportController extends Controller
      */
     private function mediaAppaiPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         $i = 1;
 
         while (file_exists($dir2copy . $dirName . "/reponse_" . $i . ".jpg")) {
@@ -631,8 +648,7 @@ class ImportController extends Controller
      */
     private function mediaAppaiSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, Subquestion $subQuestion)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         $indice = $i+1;
 
         $testFile = $dir2copy . $dirName . "/option_" . $indice . ".mp3";
@@ -662,8 +678,7 @@ class ImportController extends Controller
      */
     private function propositionAppaiProcess($i, $j, $subQuestion, $media)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Proposition"
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
@@ -686,8 +701,7 @@ class ImportController extends Controller
      */
     private function appaaProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"
         $question = new Question();
 
@@ -727,8 +741,7 @@ class ImportController extends Controller
      */
     private function mediaAppaaSubQuestionProcess($dirName, $i, $dir2copy, $dir_paste, Subquestion $subQuestion)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         $indice = $i+1;
         $testFile = $dir2copy . $dirName . "/option_" . $indice . ".mp3";
 
@@ -757,8 +770,7 @@ class ImportController extends Controller
      */
     private function mediaAppaaPropositionProcess($dirName, &$medias, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         $i = 1;
 
         while (file_exists($dir2copy . $dirName . "/reponse_" . $i . ".mp3")) {
@@ -786,8 +798,7 @@ class ImportController extends Controller
      */
     private function propositionAppaaProcess($i, $j, $subQuestion, $media)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Proposition"
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
@@ -812,8 +823,7 @@ class ImportController extends Controller
     private function copieFileDir($mediaDir, $itemExtention, Questionnaire $questionnaire, $dir2copy, $dir_paste)
     {
 
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // File import path
         // Répertoire où seront stockés les fichiers
         //$dir2copy =__DIR__.'/../../../../web/upload/test_eric/'; // A modifier quand on aura l'adresse
@@ -896,14 +906,13 @@ class ImportController extends Controller
        }
     }
 
-    /**
+    /**;
      * processAmorceSubquestion function
      *
      */
     private function processAmorceSubquestion($i, Subquestion $subQuestion, $dir2copy, $dir_paste, $data)
     {
-        $em = $this->getDoctrine()->getManager();
-        $mediaDir = $data[1];
+        $em = $this->entityManager;        $mediaDir = $data[1];
         $typo = $data[4];
 
         if ($typo[0] == "T" && $typo != "TVF" && $typo != "TVFPM") {
@@ -930,8 +939,7 @@ class ImportController extends Controller
      */
     private function tqrProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"
         $question = new Question();
 
@@ -972,8 +980,7 @@ class ImportController extends Controller
      */
     private function qrProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"
         $question = new Question();
 
@@ -1021,8 +1028,7 @@ class ImportController extends Controller
      */
     private function vfProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
 
         // Créer une occurrence dans la table "Question"
         $question = new Question();
@@ -1107,8 +1113,7 @@ class ImportController extends Controller
      */
     private function tvfnmProcess(Typology $typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
 
         // Créer une occurrence dans la table "Question"
         $question = new Question();
@@ -1177,8 +1182,7 @@ class ImportController extends Controller
      */
     private function vfPropositionProcess($rightAnswer, $nameProposition, $expectedAnswer, $subQuestion)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Proposition"
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
@@ -1211,8 +1215,7 @@ class ImportController extends Controller
      */
     private function appatProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"
         $question = new Question();
 
@@ -1275,8 +1278,7 @@ class ImportController extends Controller
     private function processMediaSubquestion($i, $subQuestion,  $dir2copy, $dir_paste, $data)
     {
 
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         $dirName = trim($data[1]);
         $fileName = "option_" . $i;
         $testFile = $dir2copy . $dirName . '/' . $fileName . ".mp3";
@@ -1308,8 +1310,7 @@ class ImportController extends Controller
      */
     private function propositionAppatProcess($i, $j, $subQuestion, $media)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Proposition"
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
@@ -1332,8 +1333,7 @@ class ImportController extends Controller
      */
     private function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"
         $question = new Question();
 
@@ -1366,8 +1366,7 @@ class ImportController extends Controller
      */
     private function propositionQruiProcess($j, $subQuestion, $rightAnswer, $dir2copy, $dirName, $dir_paste)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Proposition"
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
@@ -1410,8 +1409,7 @@ class ImportController extends Controller
      */
     private function propositionProcess($i, $j, $rightAnswer, $dirName, $subQuestion, $dir2copy, $dir_paste, $nbItems)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em = $this->entityManager;
         // Créer une occurrence dans la table "Proposition"
         $proposition = new Proposition();
         $proposition->setSubquestion($subQuestion);
@@ -1510,8 +1508,7 @@ class ImportController extends Controller
     private function mediaAppatProcess($texte, &$medias)
     {
 
-        $em = $this->getDoctrine()->getManager();
-        // Création dans "Media"
+        $em = $this->entityManager;        // Création dans "Media"
         $media = new Media();
         $media->setName($texte);
         $media->setDescription($texte);
