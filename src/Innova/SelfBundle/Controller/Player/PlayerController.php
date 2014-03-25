@@ -6,6 +6,8 @@ namespace Innova\SelfBundle\Controller\Player;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,7 +22,7 @@ use Innova\SelfBundle\Entity\Questionnaire;
  *
  * @Route(
  *      "",
- *      name = "Innova Player",
+ *      name = "innova_player",
  *      service = "innova_player"
  * )
  */
@@ -30,17 +32,23 @@ class PlayerController
     protected $securityContext;
     protected $entityManager;
     protected $session;
+    protected $router;
 
+    /**
+     * Class constructor
+     */
     public function __construct(
         SecurityContextInterface $securityContext, 
         EntityManager $entityManager, 
-        SessionInterface $session
+        SessionInterface $session,
+        RouterInterface $router
     )
     {
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
         $this->session = $session;
         $this->user = $this->securityContext->getToken()->getUser();
+        $this->router = $router;
     }
 
 
@@ -61,7 +69,7 @@ class PlayerController
 
         // s'il n'y a pas de questionnaire dispo, on renvoie vers la fonction qui gère la fin de test
         if (is_null($questionnaire)) {
-            return $this->redirect($this->generateUrl('test_end',array("id"=>$test->getId())));
+            return new RedirectResponse($this->router->generate('test_end',array("id"=>$test->getId())));
         } else {
         // sinon on envoie le questionnaire à la vue
             $this->session->set('listening', $questionnaire->getListeningLimit());

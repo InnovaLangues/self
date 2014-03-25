@@ -35,3 +35,4 @@ services:
             securityContext: @security.context
             entityManager: @doctrine.orm.entity_manager
             session: @session
+            router: @router
