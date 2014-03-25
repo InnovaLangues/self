@@ -19,6 +19,7 @@ framework:
     trusted_proxies: ~
     session:
         save_path: "%kernel.root_dir%/sessions"
+        name: "self"
     fragments:       ~
     http_method_override: true
 
