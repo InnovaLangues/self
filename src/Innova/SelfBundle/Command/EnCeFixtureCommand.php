@@ -579,7 +579,6 @@ Opinions abound about who the original Valentine was, with the most popular theo
         return $media;
     }
 
-
     /**
      * textSource function
      *
@@ -594,24 +593,13 @@ Opinions abound about who the original Valentine was, with the most popular theo
         //
         //
         // For more explications : http://www.php.net/manual/fr/reference.pcre.pattern.modifiers.php
-        // echo "<br /><br />Texte AVANT = " . $textSource;
-        //$rule = '($$$).*?($$$)';
-        //$final = '<i>.*?</i>';
+        $textDisplay = preg_replace('/\*{3}(.*?)\*{3}/s', '<i>$1</i>', $textSource); // Texte italique
 
-        $textDisplay = preg_replace('/\*{3}(.*?)\*{3}/s', '<i>$1</i>', $textSource);
-        // echo "<br /><br />Texte APRES = " . $textDisplay;
-
-        // echo "<br /><br />Texte AVANT = " . $textSource;
-        $textDisplay = preg_replace('/\${3}(.*?)\${3}/s', '<u>$1</u>', $textDisplay);
-        //$textDisplay = preg_replace('/***(.*?)***/s', '<i>$1</i>', $textSource); // Texte italique
+        $textDisplay = preg_replace('/\${3}(.*?)\${3}/s', '<u>$1</u>', $textDisplay); // Texte souligné
 
         $textDisplay = str_replace('@@@', '<br>', $textDisplay); // Saut de ligne
 
-        // echo "<br /><br />Texte APRES = " . $textDisplay;
-
         return $textDisplay;
     }
-
-
 
 }
