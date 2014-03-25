@@ -571,35 +571,12 @@ Opinions abound about who the original Valentine was, with the most popular theo
             $media->setUrl(NULL);
         }
 
-        $media->setName($this->textSource($title.$name));
-        $media->setDescription($this->textSource($title.$name)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
+        $media->setName(StaticCommand::textSource($title.$name));
+        $media->setDescription(StaticCommand::textSource($title.$name)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
 
         $em->persist($media);
 
         return $media;
-    }
-
-    /**
-     * textSource function
-     *
-     */
-    private function textSource($textSource)
-    {
-
-        // Règles :
-        // *** pour un texte italique
-        // $$$ pour un texte souligné
-        // @@@ pour aller à la ligne
-        //
-        //
-        // For more explications : http://www.php.net/manual/fr/reference.pcre.pattern.modifiers.php
-        $textDisplay = preg_replace('/\*{3}(.*?)\*{3}/s', '<i>$1</i>', $textSource); // Texte italique
-
-        $textDisplay = preg_replace('/\${3}(.*?)\${3}/s', '<u>$1</u>', $textDisplay); // Texte souligné
-
-        $textDisplay = str_replace('@@@', '<br>', $textDisplay); // Saut de ligne
-
-        return $textDisplay;
     }
 
 }

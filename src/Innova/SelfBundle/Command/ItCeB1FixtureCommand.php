@@ -943,44 +943,12 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
             $media->setUrl(NULL);
         }
 
-        $media->setName($this->textSource($title.$name));
-        $media->setDescription($this->textSource($title.$name)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
+        $media->setName(StaticCommand::textSource($title.$name));
+        $media->setDescription(StaticCommand::textSource($title.$name)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
 
         $em->persist($media);
 
         return $media;
-    }
-
-    /**
-     * textSource function
-     *
-     */
-    private function textSource($textSource)
-    {
-
-        // Règles :
-        // *** pour un texte italique
-        // $$$ pour un texte souligné
-        // @@@ pour aller à la ligne
-        //
-        //
-        // For more explications : http://www.php.net/manual/fr/reference.pcre.pattern.modifiers.php
-        // echo "<br /><br />Texte AVANT = " . $textSource;
-        //$rule = '($$$).*?($$$)';
-        //$final = '<i>.*?</i>';
-
-        $textDisplay = preg_replace('/\*{3}(.*?)\*{3}/s', '<i>$1</i>', $textSource);
-        // echo "<br /><br />Texte APRES = " . $textDisplay;
-
-        // echo "<br /><br />Texte AVANT = " . $textSource;
-        $textDisplay = preg_replace('/\${3}(.*?)\${3}/s', '<u>$1</u>', $textDisplay);
-        //$textDisplay = preg_replace('/***(.*?)***/s', '<i>$1</i>', $textSource); // Texte italique
-
-        $textDisplay = str_replace('@@@', '<br>', $textDisplay); // Saut de ligne
-
-        // echo "<br /><br />Texte APRES = " . $textDisplay;
-
-        return $textDisplay;
     }
 
 }
