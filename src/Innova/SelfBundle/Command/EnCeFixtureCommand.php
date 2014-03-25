@@ -559,7 +559,6 @@ Opinions abound about who the original Valentine was, with the most popular theo
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        // TODO : l'appel à la fonction qui traite le markdown !!
         // Création dans "Media"
         $media = new Media();
 

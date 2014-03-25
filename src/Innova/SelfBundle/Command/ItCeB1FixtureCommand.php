@@ -930,7 +930,6 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        // TODO : l'appel à la fonction qui traite le markdown !!
         // Création dans "Media"
         $media = new Media();
 

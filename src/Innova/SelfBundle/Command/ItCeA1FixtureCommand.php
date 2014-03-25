@@ -715,7 +715,6 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        // TODO : l'appel à la fonction qui traite le markdown !!
         // Création dans "Media"
         $media = new Media();
 
