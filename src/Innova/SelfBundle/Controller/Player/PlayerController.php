@@ -24,25 +24,25 @@ class PlayerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
+        $session = $this->container->get('request')->getSession();
 
+        // on récupère un questionnaire sans trace pour un test et un utilisateur donné
         $questionnaire = $this->findAQuestionnaireWithoutTrace($test, $user);
 
+        // s'il n'y a pas de questionnaire dispo, on renvoie vers la fonction qui gère la fin de test
         if (is_null($questionnaire)) {
             return $this->redirect($this->generateUrl('test_end',array("id"=>$test->getId())));
         } else {
-            $languageColor = $test->getLanguage()->getColor();
-
-            $questionnaires = $test->getQuestionnaires();
+        // sinon on envoie le questionnaire en question à la vue
+            $session->set('listening', $questionnaire->getListeningLimit());
 
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $user->getId());
 
             return array(
                 'questionnaire' => $questionnaire,
-                'language' => $languageColor,
                 'test' => $test,
-                'counQuestionnaireDone' => $countQuestionnaireDone,
-                'questionnaires' => $questionnaires
+                'counQuestionnaireDone' => $countQuestionnaireDone
             );
         }
     }
@@ -52,7 +52,6 @@ class PlayerController extends Controller
      */
     public function findAQuestionnaireWithoutTrace($test, $user)
     {
-        $session = $this->container->get('request')->getSession();
         $em = $this->getDoctrine()->getManager();
 
         $questionnaireWithoutTrace = null;
@@ -60,7 +59,6 @@ class PlayerController extends Controller
         $questionnaires = $test->getQuestionnaires();
 
         foreach ($questionnaires as $questionnaire) {
-
             $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
                 array('user' => $user->getId(), 
                         'test' => $test->getId(),
@@ -72,12 +70,8 @@ class PlayerController extends Controller
             }
         }
 
-        // Session to F5 key and sesion.
-        $session->set('listening', $questionnaire->getListeningLimit());
-
         return $questionnaireWithoutTrace;
     }
-
 
 
      /**
@@ -102,8 +96,6 @@ class PlayerController extends Controller
         return array("pourcentRightAnswer" => $pourcentRightAnswer);
     }
 
-
-
     /**
      *
      * @Route(
@@ -122,8 +114,6 @@ class PlayerController extends Controller
         $session->set('listening', $questionnairePicked->getListeningLimit());
         $em = $this->getDoctrine()->getManager();
 
-        $languageColor = $test->getLanguage()->getColor();
-
         $questionnaires = $test->getQuestionnaires();
 
         $i = 0;
@@ -137,10 +127,8 @@ class PlayerController extends Controller
 
         return array(
             'questionnaire' => $questionnairePicked,
-            'language' => $languageColor,
             'test' => $test,
             'counQuestionnaireDone' => $countQuestionnaireDone,
-            'questionnaires' => $questionnaires
         );
     }
 
