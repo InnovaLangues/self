@@ -196,6 +196,11 @@ class ExportController
                     $csv .= $user->getCeLevel() . ";";
                     $csv .= $user->getEeLevel() . ";";*/
                     //
+                    $csv .= ";";
+                    $csv .= ";";
+                    $csv .= ";";
+                    $csv .= ";";
+                    $csv .= ";";
                     $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
                     foreach ($questionnaires as $questionnaire) {
 
