@@ -8,8 +8,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class ExportController extends Controller
+/**
+ * Class ExportController
+ *
+ * @Route(
+ *      "",
+ *      name = "",
+ *      service = "innova_export"
+ * )
+ */
+class ExportController
 {
+    protected $kernelRoot;
+    protected $entityManager;
+    
+    public function __construct($kernelRoot, $entityManager)
+    {
+        $this->kernelRoot = $kernelRoot;
+        $this->entityManager = $entityManager;
+    }
+
+
     /**
      * exportCsvSQL function
      * Update : 16/10/2013 by EV email Cristiana
@@ -25,14 +44,15 @@ class ExportController extends Controller
      */
     public function exportCsvSQLAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->entityManager;
 
         //
         // CSV Export part
         //
 
+        $rootPath = $this->kernelRoot . "/../";
         // File export path
-        $csvPathExport =__DIR__.'/../../../../web/upload/export/csv/'; // Symfony
+        $csvPathExport = $rootPath . 'web/upload/export/csv/'; 
 
         // File export name
         $csvName = 'export-' . date("Ymd_d-m-Y_H:i:s") . '.csv';

@@ -17,7 +17,7 @@ use Innova\SelfBundle\Entity\Typology;
 
 
 /**
- * Class StepController
+ * Class ImportController
  *
  * @Route(
  *      "",
