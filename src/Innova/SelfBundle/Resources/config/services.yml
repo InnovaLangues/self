@@ -17,3 +17,9 @@ services:
         arguments: 
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
+
+    innova_export:
+        class: Innova\SelfBundle\Controller\ExportController
+        arguments: 
+            kernelRoot: %kernel.root_dir%
+            entityManager: @doctrine.orm.entity_manager
