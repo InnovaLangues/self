@@ -38,7 +38,7 @@ class TraceController extends Controller
 
         $trace = $this->createTrace($questionnaire, $test, $user, $post["totalTime"]);    
 
-        $this->parsePost($post);
+        $this->parsePost($post, $trace);
         
         $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
@@ -49,7 +49,7 @@ class TraceController extends Controller
     /**
      * Parse post var
      */
-    private function parsePost($post)
+    private function parsePost($post, $trace)
     {
         foreach ($post as $subquestionId => $postVar) {
             if (is_array($postVar)) {
