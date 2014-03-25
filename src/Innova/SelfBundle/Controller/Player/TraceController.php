@@ -24,7 +24,6 @@ class TraceController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $post = $this->get('request')->request->all();
-
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($post["questionnaireId"]);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($post["testId"]);
         $user = $this->get('security.context')->getToken()->getUser();
@@ -35,11 +34,36 @@ class TraceController extends Controller
         /* If I already have a TRACE, the validation is not allowed.*/
         if ($countTrace > 0) {
             $this->get('session')->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
-
             $traceId = 0;
 
             return array("traceId" => $traceId, "testId" => $test->getId());
         }
+
+        $trace = $this->createTrace($questionnaire, $test, $user, $post["totalTime"]);    
+
+        foreach ($post as $subquestionId => $postVar) {
+            if (is_array($postVar)) {
+                foreach ($postVar as $key => $propositionId) {
+                    $this->createAnswer($trace, $propositionId, $subquestionId);
+                }
+            }
+        }
+        
+        $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été prise en compte.');
+
+        $traceId = $trace->getId();
+
+        return array("traceId" => $traceId, "testId" => $post["testId"]);
+    }
+
+
+
+    /**
+     * create and return a trace
+     */
+    private function createTrace($questionnaire, $test, $user, $totalTime)
+    {
+        $em = $this->getDoctrine()->getManager();
 
         $trace = new Trace();
 
@@ -47,7 +71,7 @@ class TraceController extends Controller
         $trace->setQuestionnaire($questionnaire);
         $trace->setTest($test);
         $trace->setUser($user);
-        $trace->setTotalTime($post["totalTime"]);
+        $trace->setTotalTime($totalTime);
         $trace->setListeningTime("");
         $trace->setListeningAfterAnswer("");
         $trace->setClickCorrectif("");
@@ -58,28 +82,32 @@ class TraceController extends Controller
         $em->persist($trace);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été prise en compte.');
+        return $trace;
+    }
 
-        $traceId = $trace->getId();
 
-        foreach ($post as $subquestionId => $postVar) {
-            if (is_array($postVar)) {
-                foreach ($postVar as $key => $propositionId) {
-                    $answer = new Answer();
-                    $answer->setTrace($trace);
-                    $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
-                    $answer->setProposition($proposition);
-                    $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
-                    $answer->setSubquestion($subquestion);
-                    $em->persist($answer);
-                }
-            }
-        }
+    /**
+     * create and return an answer
+     */
+    private function createAnswer($trace, $propositionId, $subquestionId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $answer = new Answer();
+
+        $answer->setTrace($trace);
+        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
+        $answer->setProposition($proposition);
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
+        $answer->setSubquestion($subquestion);
+        $em->persist($answer);
 
         $em->flush();
 
-        return array("traceId" => $traceId, "testId" => $post["testId"]);
+        return $answer; 
     }
+
+
 
     /**
      * update a trace to set the difficulty
