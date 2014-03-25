@@ -11,7 +11,6 @@ use Innova\SelfBundle\Entity\Answer;
 
 class TraceController extends Controller
 {
-
     /**
      * Save Trace and display a form to set the difficulty
      *
@@ -31,16 +30,27 @@ class TraceController extends Controller
         $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')
             ->countTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
 
-        /* If I already have a TRACE, the validation is not allowed.*/
         if ($countTrace > 0) {
             $this->get('session')->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
-            $traceId = 0;
 
-            return array("traceId" => $traceId, "testId" => $test->getId());
+            return array("traceId" => 0, "testId" => $test->getId());
         }
 
         $trace = $this->createTrace($questionnaire, $test, $user, $post["totalTime"]);    
 
+        $this->parsePost($post);
+        
+        $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
+
+        return array("traceId" => $trace->getId(), "testId" => $post["testId"]);
+    }
+
+
+    /**
+     * Parse post var
+     */
+    private function parsePost($post)
+    {
         foreach ($post as $subquestionId => $postVar) {
             if (is_array($postVar)) {
                 foreach ($postVar as $key => $propositionId) {
@@ -48,18 +58,11 @@ class TraceController extends Controller
                 }
             }
         }
-        
-        $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été prise en compte.');
-
-        $traceId = $trace->getId();
-
-        return array("traceId" => $traceId, "testId" => $post["testId"]);
     }
 
 
-
     /**
-     * create and return a trace
+     * Create and return a trace
      */
     private function createTrace($questionnaire, $test, $user, $totalTime)
     {
@@ -106,7 +109,6 @@ class TraceController extends Controller
 
         return $answer; 
     }
-
 
 
     /**
