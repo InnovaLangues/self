@@ -30,7 +30,7 @@ class ImportController
 
     protected $kernelRoot;
     protected $entityManager;
-    
+
     public function __construct($kernelRoot, $entityManager)
     {
         $this->kernelRoot = $kernelRoot;
@@ -328,28 +328,6 @@ class ImportController
                             }
                         }
 
-    /*
-                        // Traitement de la partie "option".
-                        if (preg_match("/option/i", $fileName)) {
-                            // Ajout 13/12/2013 : traitement du cas TQRU.
-                            // Les fichiers "option" sont nommés par exemple <XXX_option_1_1.mp3>
-                            // alors que dans les autres cas, ils sont de type <XXX_option_1.mp3>
-                            // #118
-                            if (!is_numeric($exp[2])) {
-                                $number = explode(".", $exp[2]);
-                                copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $number[0] . ".mp3");
-                            } else {
-                                $number = explode(".", $exp[3]);
-                                $number = $number[0];
-                                if (!is_numeric($number)) {
-                                    copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . ".mp3");
-                                } else {
-                                    copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_" . $exp[2] . "_" . $number . ".mp3");
-                                }
-
-                            }
-                        }
-    */
                         if (preg_match("/amorce/i", $fileName)) {
                             if ($numberExist) {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce_". $nb[0] . ".mp3");

@@ -65,7 +65,6 @@ class EnceFixtureCommand extends ContainerAwareCommand
         // CREATION QUESTIONNAIRE
         $questionnaire_1 = $this->createQuestionnaire("B1_CE_AgathaChristie", "B1", "CE", $test);
         $questionnaire_1->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
-        //$questionnaire_1->setMediaContext($this->mediaText(NULL, NULL));
         $questionnaire_1->setMediaText(
             $this->mediaText("",
             "Dame Agatha Mary Clarissa Christie, DBE (born Miller; 15 September 1890 – 12 January 1976) was an English crime writer of novels, short stories, and plays. She also wrote six romances under the name Mary Westmacott, but she is best remembered for the 66 detective novels and 14 short story collections she wrote under her own name, most of which revolve around the investigations of such characters as Hercule Poirot, Miss Jane Marple and Tommy and Tuppence. She also wrote the world's longest-running play, The Mousetrap.",
