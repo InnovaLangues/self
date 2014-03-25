@@ -53,7 +53,6 @@ class TestController extends Controller
         // Par défaut pour la V1, on crée le premier test quand un utilisateur est nouveau
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
-        // TODO
         $test = $tests[0];
 
         if (!$test) {

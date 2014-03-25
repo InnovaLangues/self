@@ -202,8 +202,6 @@ jQuery(document).ready(function($){
 });
 </script>
 
-
-
     </head>
     <body>
 		<nav class="navbar navbar-inverse navbar-static-top">
@@ -216,14 +214,11 @@ jQuery(document).ready(function($){
                 <ul class="nav navbar-nav">
                 {% if is_granted('ROLE_ADMIN') %}
                     <li><a href="{{ path('admin_user') }}">Users</a></li>
-                    <!-- TODO Comment for V1
-                    <li><a href="#">Statistiques</a></li>
-                     -->
                     <!-- Add Questionnaire menu for evolution -->
                     <li><a href="{{ path('admin_questionnaire') }}">Questionnaire</a></li>
                     <li><a href="{{ path('csv-export') }}">Export CSV</a></li>
                 {% endif %}
-                  <!-- Help with Modal Bootstrap : http://getbootstrap.com/javascript/#modals -->
+                    <!-- Help with Modal Bootstrap : http://getbootstrap.com/javascript/#modals -->
                     <li><a data-toggle="modal" href="#helpModal">{{ 'generic.help' | trans }}</a></li>
                     <li><a href="{{ path('fos_user_security_logout') }}">{{ 'generic.logout' | trans }}</a></li>
                 </ul>
