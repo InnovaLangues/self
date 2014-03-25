@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block body %}
-    {# TODO: BR to remove !!!!#}
             <br/>
             {% for type, messages in app.session.flashbag.all() %}
                 {% for key, message in messages %}

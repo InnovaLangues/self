@@ -298,8 +298,6 @@ class AdminUserController extends Controller
         // Insertion en base de données;
         $em->flush();
 
-        //TODO:  gestion d'un flash message SUCCESS
-
         // Redirection
         return $this->redirect($this->generateUrl('admin_user'));
     }

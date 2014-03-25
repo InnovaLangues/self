@@ -22,9 +22,6 @@
                     <ul class="nav navbar-nav">
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="{{ path('admin_user') }}">Users</a></li>
-                            <!-- TODO Comment for V1
-                            <li><a href="#">Statistiques</a></li>
-                             -->
                             <!-- Add Questionnaire menu for evolution -->
                             <li><a href="{{ path('admin_questionnaire') }}">Questionnaire</a></li>
                             <li><a href="{{ path('csv_export') }}">Export CSV</a></li>
