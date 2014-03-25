@@ -28,7 +28,10 @@ build/code-browser/
 composer.phar
 composer.lock
 
-
 # Session
 app/sessions/*
 !app/sessions/.gitkeep
+
+# Session
+web/upload/export/csv/*
+!web/upload/export/csv/.gitkeep
