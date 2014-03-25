@@ -47,7 +47,6 @@ class PlayerController extends Controller
         }
     }
 
-
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.
      */
