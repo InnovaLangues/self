@@ -28,3 +28,10 @@ services:
         arguments: 
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
+
+    innova_player:
+        class: Innova\SelfBundle\Controller\Player\PlayerController
+        arguments:
+            securityContext: @security.context
+            entityManager: @doctrine.orm.entity_manager
+            session: @session
