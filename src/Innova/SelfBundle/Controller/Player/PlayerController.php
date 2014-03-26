@@ -2,8 +2,6 @@
 
 namespace Innova\SelfBundle\Controller\Player;
 
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Routing\RouterInterface;
