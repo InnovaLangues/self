@@ -523,7 +523,7 @@ class ImportController
                             $this->appatProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                         case "QRU_I";
-                            $this->qruiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            $this->qruiProcess($typo, $questionnaire, $data, $dir2copy, $dir_paste);
                             break;
                         case "APPAA";
                             $this->appaaProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
@@ -1065,8 +1065,7 @@ class ImportController
             $Vrai = "VRAI";
 
             $tab = explode("#", $data[12]);
-            //var_dump($tab);
-            $type = $tab[0];
+
             if ($data[12] != "VF") {
                 $vrai = $tab[1];
                 $this->vfPropositionProcess($rightAnswer, $vrai, "V", $subQuestion);
@@ -1232,7 +1231,6 @@ class ImportController
             $em->persist($subQuestion);
 
             // Créer une occurrence dans la table "Proposition"
-            $indice = 11+(2*$i);
 /*
             $nbMedias = count($medias); #80
             for ($j=0; $j < $nbMedias; $j++) {
@@ -1309,7 +1307,7 @@ class ImportController
      * qruiProcess function
      *
      */
-    private function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function qruiProcess($typo, $questionnaire, $data, $dir2copy, $dir_paste)
     {
         $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"

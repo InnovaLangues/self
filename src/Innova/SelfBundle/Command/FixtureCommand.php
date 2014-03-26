@@ -14,12 +14,7 @@ use Innova\SelfBundle\Entity\Typology;
 use Innova\SelfBundle\Entity\OriginStudent;
 use Innova\SelfBundle\Entity\Language;
 use Innova\SelfBundle\Entity\LevelLansad;
-use Innova\SelfBundle\Entity\Test;
-use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Entity\Question;
-use Innova\SelfBundle\Entity\Subquestion;
-use Innova\SelfBundle\Entity\Proposition;
-use Innova\SelfBundle\Entity\Media;
+
 
 class FixtureCommand extends ContainerAwareCommand
 {

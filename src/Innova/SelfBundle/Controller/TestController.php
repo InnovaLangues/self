@@ -8,13 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
-use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Entity\Question;
-use Innova\SelfBundle\Entity\Subquestion;
-use Innova\SelfBundle\Entity\Media;
-use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Form\TestType;
-use Innova\SelfBundle\Entity\Typology;
 
 class TestController extends Controller
 {
