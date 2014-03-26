@@ -85,17 +85,9 @@ Si consiglia inoltre di registrare i dati relativi al viaggio che si intende eff
         // CREATION QUESTION
         $questionnaire_4_1 = $this->createQuestion("TVF", $questionnaire_4);
         // CREATION SUBQUESTION
-        //$questionnaire_4_1_1 = $this->createSubquestion("QRM", $questionnaire_4_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("Il messaggio intende mettere in guardia i turisti da siti internet poco sicuri.", true, $questionnaire_4_1_1);
-        //$this->createProposition("Nel messaggio si consiglia di contattare le società di prenotazione alberghiera una volta arrivati sul posto.", false, $questionnaire_4_1_1);
-        //$this->createProposition("Prima di partire è obbligatorio acquistare un'assicurazione per le spese mediche.", false, $questionnaire_4_1_1);
-
-        // CREATION SUBQUESTION
         $questionnaire_4_1_1 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "Il messaggio intende mettere in guardia i turisti da siti internet poco sicuri.");
         $questionnaire_4_1_2 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "Nel messaggio si consiglia di contattare le società di prenotazione alberghiera una volta arrivati sul posto.");
         $questionnaire_4_1_3 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "Prima di partire è obbligatorio acquistare un'assicurazione per le spese mediche.");
-
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", true, $questionnaire_4_1_1);
         $this->createPropositionVF("", "FAUX", false, $questionnaire_4_1_1);
@@ -195,14 +187,6 @@ Per maggiori informazioni visita anche il nostro sito www.pizzaitalianaacademy.c
         // CREATION QUESTION
         $questionnaire_9_1 = $this->createQuestion("TVF", $questionnaire_9);
         // CREATION SUBQUESTION
-        //$questionnaire_9_1_1 = $this->createSubquestion("QRM", $questionnaire_9_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("Le visite guidate si tengono una volta a settimana.", true, $questionnaire_9_1_1);
-        //$this->createProposition("Le visite guidate cambiano in base alla stagione.", true, $questionnaire_9_1_1);
-        //$this->createProposition("I gruppi devono essere composti da almeno 10 partecipanti.", false, $questionnaire_9_1_1);
-
-
-        // CREATION SUBQUESTION
         $questionnaire_9_1_1 = $this->createSubquestionVF("VF", $questionnaire_9_1, "", "Le visite guidate si tengono una volta a settimana.");
         $questionnaire_9_1_2 = $this->createSubquestionVF("VF", $questionnaire_9_1, "", "Le visite guidate cambiano in base alla stagione.");
         $questionnaire_9_1_3 = $this->createSubquestionVF("VF", $questionnaire_9_1, "", "I gruppi devono essere composti da almeno 10 partecipanti.");
@@ -230,13 +214,6 @@ Per maggiori informazioni visita anche il nostro sito www.pizzaitalianaacademy.c
 Ometterò quindi aspetti puramente pratici, concentrandomi sulle sensazioni che crescevano in me, mentre vivevo uno dei capitoli più belli della mia vita.", ""));
         // CREATION QUESTION
         $questionnaire_B1_11_1 = $this->createQuestion("TVF", $questionnaire_B1_11);
-        // CREATION SUBQUESTION
-        //$questionnaire_11_1_1 = $this->createSubquestion("QRM", $questionnaire_11_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("Il racconto di viaggio descrive principalmente gli aspetti pratici dell’organizzazione.", false, $questionnaire_11_1_1);
-        //$this->createProposition("L’autrice sostiene che sia complesso descrivere le forti emozioni provate durante il viaggio.   ", true, $questionnaire_11_1_1);
-        //$this->createProposition("Per l’autrice i motivi che spronano a partire sono profondi, inconsci e forti.", true, $questionnaire_11_1_1);
-
         // CREATION SUBQUESTION
         $questionnaire_B1_11_1_1 = $this->createSubquestionVF("VF", $questionnaire_B1_11_1, "", "Il racconto di viaggio descrive principalmente gli aspetti pratici dell’organizzazione.");
         $questionnaire_B1_11_1_2 = $this->createSubquestionVF("VF", $questionnaire_B1_11_1, "", "L’autrice sostiene che sia complesso descrivere le forti emozioni provate durante il viaggio.");
@@ -290,17 +267,9 @@ Grazie per la collaborazione.", ""));
         // CREATION QUESTION
         $questionnaire_14_1 = $this->createQuestion("TVF", $questionnaire_14);
         // CREATION SUBQUESTION
-        //$questionnaire_14_1_1 = $this->createSubquestion("QRM", $questionnaire_14_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("Durante la visita al parco è obbligatorio tenere sempre sotto controllo i propri cani per evitare sanzioni da parte dei guardaparco e degli agenti forestali.", true, $questionnaire_11_1_1);
-        //$this->createProposition("In tutte le aree del parco è concessa la raccolta dei funghi ai visitatori provvisti di permesso.", false, $questionnaire_11_1_1);
-        //$this->createProposition("Per ragioni ambientali il campeggio nel parco non è permesso", true, $questionnaire_11_1_1);
-
-        // CREATION SUBQUESTION
         $questionnaire_14_1_1 = $this->createSubquestionVF("VF", $questionnaire_14_1, "", "Durante la visita al parco è obbligatorio tenere sempre sotto controllo i propri cani per evitare sanzioni da parte dei guardaparco e degli agenti forestali.");
         $questionnaire_14_1_2 = $this->createSubquestionVF("VF", $questionnaire_14_1, "", "In tutte le aree del parco è concessa la raccolta dei funghi ai visitatori provvisti di permesso.");
         $questionnaire_14_1_3 = $this->createSubquestionVF("VF", $questionnaire_14_1, "", "Per ragioni ambientali il campeggio nel parco non è permesso");
-
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", true, $questionnaire_14_1_1);
         $this->createPropositionVF("", "FAUX", false, $questionnaire_14_1_1);
@@ -483,13 +452,6 @@ Imburrate una teglia da forno e disponete la pasta, i carciofi, la besciamella e
         // CREATION QUESTION
         $questionnaire_21_1 = $this->createQuestion("TVF", $questionnaire_21);
         // CREATION SUBQUESTION
-        //$questionnaire_21_1_1 = $this->createSubquestion("QRM", $questionnaire_21_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("Il tirocinio all’estero è un’opportunità per cominciare la propria esperienza lavorativa in un contesto internazionale", true, $questionnaire_21_1_1);
-        //$this->createProposition("I tirocini all’estero hanno sempre la stessa durata, in ogni settore lavorativo ", false, $questionnaire_21_1_1);
-        //$this->createProposition("Il tirocinio all’estero consente di accumulare crediti universitari per il piano di studio", false, $questionnaire_21_1_1);
-
-        // CREATION SUBQUESTION
         $questionnaire_21_1_1 = $this->createSubquestionVF("VF", $questionnaire_21_1, "", "Il tirocinio all’estero è un’opportunità per cominciare la propria esperienza lavorativa in un contesto internazionale");
         $questionnaire_21_1_2 = $this->createSubquestionVF("VF", $questionnaire_21_1, "", "I tirocini all’estero hanno sempre la stessa durata, in ogni settore lavorativo");
         $questionnaire_21_1_3 = $this->createSubquestionVF("VF", $questionnaire_21_1, "", "Il tirocinio all’estero consente di accumulare crediti universitari per il piano di studio");
@@ -547,13 +509,6 @@ Se hai tra 14 e 30 anni, puoi entrare a far parte di ***Younicef***, il moviment
 ", ""));
         // CREATION QUESTION
         $questionnaire_23_1 = $this->createQuestion("TVF", $questionnaire_23);
-        // CREATION SUBQUESTION
-        //$questionnaire_23_1_1 = $this->createSubquestion("QRM", $questionnaire_23_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("Il volontario Unicef svolge la sua azione unicamente nei paesi in via di sviluppo", false, $questionnaire_23_1_1);
-        //$this->createProposition("I volontari Unicef sono impiegati nella raccolta di denaro per finanziare i progetti", true, $questionnaire_23_1_1);
-        //$this->createProposition("***Younicef*** accoglie tra i suoi volontari persone di tutte le età", false, $questionnaire_23_1_1);
-
         // CREATION SUBQUESTION
         $questionnaire_23_1_1 = $this->createSubquestionVF("VF", $questionnaire_23_1, "", "Il volontario Unicef svolge la sua azione unicamente nei paesi in via di sviluppo");
         $questionnaire_23_1_2 = $this->createSubquestionVF("VF", $questionnaire_23_1, "", "I volontari Unicef sono impiegati nella raccolta di denaro per finanziare i progetti");
@@ -683,13 +638,6 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
 ", ""));
         // CREATION QUESTION
         $questionnaire_27_1 = $this->createQuestion("TVF", $questionnaire_27);
-        // CREATION SUBQUESTION
-        //$questionnaire_17_1_1 = $this->createSubquestion("QRM", $questionnaire_17_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("***Cene in cielo*** propone delle serate speciali in ristoranti dove cuochi di alto livello promuovono ingredienti di alta qualità", false, $questionnaire_17_1_1);
-        //$this->createProposition("Il servizio proposto è adatto anche alle persone che soffrono di vertigini", false, $questionnaire_17_1_1);
-        //$this->createProposition("Gli eventi proposti avvengono sempre nel massimo della sicurezza per il cliente e per i dipendenti dell’organizzazione", true, $questionnaire_17_1_1);
-
         // CREATION SUBQUESTION
         $questionnaire_27_1_1 = $this->createSubquestionVF("VF", $questionnaire_27_1, "", "***Cene in cielo*** propone delle serate speciali in ristoranti dove cuochi di alto livello promuovono ingredienti di alta qualità");
         $questionnaire_27_1_2 = $this->createSubquestionVF("VF", $questionnaire_27_1, "", "Il servizio proposto è adatto anche alle persone che soffrono di vertigini");

@@ -63,12 +63,6 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION QUESTION
         $questionnaire_1_1 = $this->createQuestion("TVF", $questionnaire_1);
         // CREATION SUBQUESTION
-        //$questionnaire_1_1_1 = $this->createSubquestion("QRM", $questionnaire_1_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("L’offerta è valida solo in alcune città.", true, $questionnaire_1_1_1);
-        //$this->createProposition("Con il biglietto del treno il parcheggio per l’automobile è gratuito.", true, $questionnaire_1_1_1);
-        //$this->createProposition("Per avere tariffa speciale è necessario presentare il biglietto del treno.", true, $questionnaire_1_1_1);
-        // CREATION SUBQUESTION
         $questionnaire_1_1_1 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "L’offerta è valida solo in alcune città.");
         $questionnaire_1_1_2 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "Con il biglietto del treno il parcheggio per l’automobile è gratuito.");
         $questionnaire_1_1_3 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "Per avere tariffa speciale è necessario presentare il biglietto del treno.");
@@ -138,17 +132,9 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $questionnaire_4->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false", ""));
         $questionnaire_4->setMediaContext($this->mediaText("", "Avviso in biblioteca", ""));
         $questionnaire_4->setMediaText($this->mediaText($startTitle . "Orari e servizi della biblioteca" . $endTitle, "A1_CE_services_bibliotheque", "image"));
-
         // CREATION QUESTION
         $questionnaire_4_1 = $this->createQuestion("TVF", $questionnaire_4);
         // CREATION SUBQUESTION
-        //$questionnaire_4_1_1 = $this->createSubquestion("QRM", $questionnaire_4_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("La biblioteca chiude per la pausa pranzo", true, $questionnaire_4_1_1);
-        //$this->createProposition("La biblioteca č aperta tutte le mattine.", false, $questionnaire_4_1_1);
-        //$this->createProposition("In biblioteca č possibile navigare su internet senza pagare.", true, $questionnaire_4_1_1);
-        //$this->createProposition("XXXXXXXXXXXXXXXXXX", true, $questionnaire_4_1_1);
-
         $questionnaire_4_1_1 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca chiude per la pausa pranzo");
         $questionnaire_4_1_2 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca č aperta tutte le mattine.");
         $questionnaire_4_1_3 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "In biblioteca è possibile navigare su internet senza pagare.");
@@ -290,14 +276,6 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION QUESTION
         $questionnaire_12_1 = $this->createQuestion("TVF", $questionnaire_12);
         // CREATION SUBQUESTION
-        //$questionnaire_12_1_1 = $this->createSubquestion("QRM", $questionnaire_12_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("Lannuncio č rivolto agli studenti che hanno problemi con le materie letterarie.", false, $questionnaire_12_1_1);
-        //$this->createProposition("Lannuncio pubblicizza i servizi di una scuola.", false, $questionnaire_12_1_1);
-        //$this->createProposition("Fabrizio propone lezioni individuali.", true, $questionnaire_12_1_1);
-
-
-        // CREATION SUBQUESTION
         $questionnaire_12_1_1 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "L’annuncio è rivolto agli studenti che hanno problemi con le materie letterarie.");
         $questionnaire_12_1_2 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "L’annuncio pubblicizza i servizi di una scuola.");
         $questionnaire_12_1_3 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "Fabrizio propone lezioni individuali.");
@@ -367,13 +345,6 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION QUESTION
         $questionnaire_15_1 = $this->createQuestion("TVF", $questionnaire_15);
         // CREATION SUBQUESTION
-        //$questionnaire_15_1_1 = $this->createSubquestion("TVF", $questionnaire_15_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("Al campus sono iniziate le competizioni sportive.", true, $questionnaire_15_1_1);
-        //$this->createProposition("Riccardo ha finito le sue gare.", false, $questionnaire_15_1_1);
-        //$this->createProposition("Laura ha dormito tutto il pomeriggio.", false, $questionnaire_15_1_1);
-
-        // CREATION SUBQUESTION
         $questionnaire_15_1_1 = $this->createSubquestionVF("VF", $questionnaire_15_1, "", "Al campus sono iniziate le competizioni sportive.");
         $questionnaire_15_1_2 = $this->createSubquestionVF("VF", $questionnaire_15_1, "", "Riccardo ha finito le sue gare.");
         $questionnaire_15_1_3 = $this->createSubquestionVF("VF", $questionnaire_15_1, "", "Laura ha dormito tutto il pomeriggio.");
@@ -431,14 +402,6 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         // CREATION QUESTION
         $questionnaire_17_1 = $this->createQuestion("TVF", $questionnaire_17);
         // CREATION SUBQUESTION
-        //$questionnaire_17_1_1 = $this->createSubquestion("QRM", $questionnaire_17_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("La casa di Giorgio è lontana da quella di Lucia e Sara", false, $questionnaire_17_1_1);
-        //$this->createProposition("Per andare alla festa Sara deve prendere il tram", false, $questionnaire_17_1_1);
-        //$this->createProposition("Il Bar Sport si trova dopo piazza Verdi", true, $questionnaire_17_1_1);
-        //$this->createProposition("La casa di Giorgio si trova al lato del panificio", true, $questionnaire_17_1_1);
-
-        // CREATION SUBQUESTION
         $questionnaire_17_1_1 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "La casa di Giorgio è lontana da quella di Lucia e Sara");
         $questionnaire_17_1_2 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "Per andare alla festa Sara deve prendere il tram");
         $questionnaire_17_1_3 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "Il Bar Sport si trova dopo piazza Verdi");
@@ -493,15 +456,6 @@ I miei genitori ancora non sanno che ho una ragazza, incredibile vero? @@@Adesso
         $questionnaire_19->setMediaText($this->mediaText($startTitle . "Appuntamenti della settimana" . $endTitle, "", ""));
         // CREATION QUESTION
         $questionnaire_19_1 = $this->createQuestion("TVF", $questionnaire_19);
-        // CREATION SUBQUESTION
-        //$questionnaire_19_1_1 = $this->createSubquestion("QRM", $questionnaire_19_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("Anita esce spesso con Luca.", false, $questionnaire_19_1_1);
-        //$this->createProposition("Anita non va mai a correre.", true, $questionnaire_19_1_1);
-        //$this->createProposition("Le lezioni di Anita sono quasi sempre la mattina.", true, $questionnaire_19_1_1);
-        //$this->createProposition("Anita vede i genitori durante la settimana", false, $questionnaire_19_1_1);
-        //$this->createProposition("Anita lavora solo la sera.", false, $questionnaire_19_1_1);
-
         // CREATION SUBQUESTION
         $questionnaire_19_1_1 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Anita esce spesso con Luca.");
         $questionnaire_19_1_2 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Anita non va mai a correre.");

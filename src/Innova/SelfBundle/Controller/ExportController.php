@@ -94,7 +94,6 @@ class ExportController
         }
 
         $csv .= "\n";
-        //$csv .= "\n";
 
         // Difficulty part
         $csv .= "Difficulté" . ";" ;
@@ -187,13 +186,13 @@ class ExportController
                 if ($countQuestionnaireDone > 0) {
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
                     // Add 5 colums for Level
-                    //
-                    /*$csv .= $user->getStudentType() . ";";
+                    /*
+                    $csv .= $user->getStudentType() . ";";
                     $csv .= $user->getLastLevel() . ";";
                     $csv .= $user->getCoLevel() . ";";
                     $csv .= $user->getCeLevel() . ";";
-                    $csv .= $user->getEeLevel() . ";";*/
-                    //
+                    $csv .= $user->getEeLevel() . ";";
+                    */
                     $csv .= ";";
                     $csv .= ";";
                     $csv .= ";";
