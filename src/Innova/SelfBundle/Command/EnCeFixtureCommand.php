@@ -290,12 +290,6 @@ A local sect and assorted Hindu right-wingers opposed his law, which Maharashtra
         // CREATION QUESTION
         $questionnaire_12_1 = $this->createQuestion("TVF", $questionnaire_12);
         // CREATION SUBQUESTION
-        //$questionnaire_12_1_1 = $this->createSubquestion("QRM", $questionnaire_12_1, "");
-        // CREATION PROPOSITIONS
-        //$this->createProposition("The Maharashtra state government has passed the law that Mr Dabholkar fought for", true, $questionnaire_12_1_1);
-        //$this->createProposition("One politician has condemned the murder", true, $questionnaire_12_1_1);
-        //$this->createProposition("Mr Dabholkar was killed while he was walking", true, $questionnaire_12_1_1);
-
         $questionnaire_12_1_1 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "The Maharashtra state government has passed the law that Mr Dabholkar fought for");
         $questionnaire_12_1_2 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "One politician has condemned the murder");
         $questionnaire_12_1_3 = $this->createSubquestionVF("VF", $questionnaire_12_1, "", "Mr Dabholkar was killed while he was walking");
@@ -416,18 +410,16 @@ Opinions abound about who the original Valentine was, with the most popular theo
         $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skill);
         $questionnaire->setSkill($skill);
 
-
         $questionnaire->setAuthor();
         $questionnaire->setInstruction();
-                        $questionnaire->setDuration();
-                        $questionnaire->setDomain();
-                        $questionnaire->setSupport();
-                        $questionnaire->setFlow();
-                        $questionnaire->setFocus();
-                        $questionnaire->setSource();
-                        $questionnaire->setListeningLimit(0); //ListeningLimit
-                        $questionnaire->setDialogue(0);
-
+        $questionnaire->setDuration();
+        $questionnaire->setDomain();
+        $questionnaire->setSupport();
+        $questionnaire->setFlow();
+        $questionnaire->setFocus();
+        $questionnaire->setSource();
+        $questionnaire->setListeningLimit(0);
+        $questionnaire->setDialogue(0);
 
         $em->persist($questionnaire);
 

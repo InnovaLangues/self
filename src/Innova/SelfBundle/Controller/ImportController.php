@@ -134,7 +134,6 @@ class ImportController
                         if (isset($exp[7])) {
                             $exp[7] = strtolower($exp[7]);
                         }
-                        //$repertoryName = strtolower($exp[0]);
 
                         $indice_fileName = 0;
                         if (isset($exp[0])) {
@@ -1059,7 +1058,6 @@ class ImportController
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
-            //$rightAnswer = $data[$indice-1];
             $rightAnswer = $data[$indice]; // Changement 14/02/2014 car décalage du fichier.
 
             $Vrai = "VRAI";
@@ -1202,14 +1200,7 @@ class ImportController
         $em->persist($question);
 
         $medias = array();
-/*
-        $nbItems = $data[11];
-        for ($i=0; $i < $nbItems; $i++) {
-            $indice = 12+(2*$i);
-            $this->mediaAppatProcess($data[$indice], $medias);
-        }
 
-*/
         $tab = explode("#", $data[12]);
         $countTab = count($tab);
         for ($j = 1; $j < $countTab; $j++)
@@ -1231,14 +1222,6 @@ class ImportController
             $em->persist($subQuestion);
 
             // Créer une occurrence dans la table "Proposition"
-/*
-            $nbMedias = count($medias); #80
-            for ($j=0; $j < $nbMedias; $j++) {
-                $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
-            }
-*/
-//            $tab = explode("#", $data[12]);
-//            $countTab = count($tab);
             $nbMedias = count($medias); #80
             for ($j=0; $j < $nbMedias; $j++)
             {
