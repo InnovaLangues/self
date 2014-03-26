@@ -53,8 +53,9 @@ class TraceController extends Controller
      *
      * @Route("display_difficulty", name="display_difficulty")
      * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
+     * @Method("GET")
      */
-    public function DisplayDifficultyFormAction()
+    public function displayDifficultyFormAction()
     {
 
         $session = $this->container->get('request')->getSession();
@@ -71,7 +72,7 @@ class TraceController extends Controller
     private function parsePost($post, $trace)
     {
         $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
-        
+
         foreach ($post as $subquestionId => $postVar) {
             if (is_array($postVar)) {
                 foreach ($postVar as $key => $propositionId) {

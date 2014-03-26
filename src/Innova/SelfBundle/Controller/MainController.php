@@ -5,6 +5,7 @@ namespace Innova\SelfBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Main controller.
@@ -15,22 +16,9 @@ class MainController extends Controller
 {
 
     /**
-     * @Route("/help", name="show_help")
-     * @Template()
-     */
-    public function showHelpAction()
-    {
-
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        return array(
-        'user' => $user,
-        );
-    }
-
-    /**
      * @Route("/", name="show_tests")
      * @Template()
+     * @Method("GET")
      */
     public function showTestsAction()
     {
@@ -40,8 +28,6 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->get('security.context')->getToken()->getUser();
-
-//      $userTests = $user->getTests(); // Tous les tests de l'utilisateur X.
         $userTests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
         $testsProgress = array();
@@ -55,7 +41,6 @@ class MainController extends Controller
             $testsProgress[] = number_format($number, 2, '.', ' ');
         }
 
-//var_dump($userTests);die();
         return array(
             'user' => $user,
             'tests' => $userTests,

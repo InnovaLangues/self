@@ -118,6 +118,7 @@ class PlayerController
      *
      * @Route("/test_end/{id}", name="test_end")
      * @Template("InnovaSelfBundle:Player:common/end.html.twig")
+     * @Method("GET")
      */
     public function endAction(Test $test)
     {
@@ -145,7 +146,7 @@ class PlayerController
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
-    public function PickAQuestionnaireAction(Test $test, Questionnaire $questionnairePicked)
+    public function pickAQuestionnaireAction(Test $test, Questionnaire $questionnairePicked)
     {
 
         $this->session->set('listening', $questionnairePicked->getListeningLimit());
