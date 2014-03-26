@@ -16,7 +16,7 @@ class TraceController extends Controller
      *
      * @Route("trace_submit", name="trace_submit")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
+     * @Template("")
      */
     public function saveTraceAction()
     {
@@ -42,7 +42,29 @@ class TraceController extends Controller
         
         $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
-        return array("traceId" => $trace->getId(), "testId" => $post["testId"]);
+
+        $response = $this->forward('InnovaSelfBundle:Player/Trace:DisplayDifficultyForm', array(
+            "traceId" => $trace->getId(),
+            "testId" => $post["testId"]
+        ));
+
+        return $response;
+    }
+
+
+
+
+    /**
+     * display a form to set the difficulty
+     *
+     * @Route("display_difficulty", name="display_difficulty")
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
+     */
+    public function DisplayDifficultyFormAction($traceId, $testId)
+    {
+
+        return array("traceId" => $traceId, "testId" => $testId);
     }
 
 
