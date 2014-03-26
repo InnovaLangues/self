@@ -39,30 +39,27 @@ class TraceController extends Controller
         $trace = $this->createTrace($questionnaire, $test, $user, $post["totalTime"]);    
 
         $this->parsePost($post, $trace);
-        
-        $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
+        $session = $this->container->get('request')->getSession();
+        $session->set('traceId', $trace->getId());
+        $session->set('testId', $post["testId"]);
 
-        $response = $this->forward('InnovaSelfBundle:Player/Trace:DisplayDifficultyForm', array(
-            "traceId" => $trace->getId(),
-            "testId" => $post["testId"]
-        ));
-
-        return $response;
+        return $this->redirect($this->generateUrl('display_difficulty'));
     }
-
-
 
 
     /**
      * display a form to set the difficulty
      *
      * @Route("display_difficulty", name="display_difficulty")
-     * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
      */
-    public function DisplayDifficultyFormAction($traceId, $testId)
+    public function DisplayDifficultyFormAction()
     {
+
+        $session = $this->container->get('request')->getSession();
+        $traceId = $session->get('traceId');
+        $testId = $session->get('testId');
 
         return array("traceId" => $traceId, "testId" => $testId);
     }
@@ -73,6 +70,8 @@ class TraceController extends Controller
      */
     private function parsePost($post, $trace)
     {
+        $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
+        
         foreach ($post as $subquestionId => $postVar) {
             if (is_array($postVar)) {
                 foreach ($postVar as $key => $propositionId) {
