@@ -45,7 +45,7 @@ php app/console fos:user:create admin --super-admin
 ``` bash
 cd web/upload/import/mp3..
 find . -iname "*.wav" -exec sox {} {}.mp3 \;
-rename "s/wav.//g" *wav.mp3
+rename "s/wav\.//g" *wav.mp3
 ``` 
 
 ### Connect with admin user and go to /admin/csv-import
@@ -55,9 +55,9 @@ rename "s/wav.//g" *wav.mp3
 ``` bash
 cd web/upload/media/
 find . -iname "*.mp3" -exec sox {} {}.ogg \;
-rename "s/mp3.//g" *mp3.ogg
+rename "s/mp3\.//g" *mp3.ogg
 find . -iname "*.flv" -exec avconv -i {} {}.webm \; 
-rename "s/flv.//g" *flv.webm
+rename "s/flv\.//g" *flv.webm
 rm *.flv
 ```
 
