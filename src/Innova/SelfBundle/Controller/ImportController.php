@@ -58,8 +58,8 @@ class ImportController
 
         // File import path
         $rootPath = $this->kernelRoot . "/../";
-        $csvPathImport    = $rootPath . 'web/upload/import/csv-p2/' . $language . '/'; // Symfony
-        $csvPathImportMp3 = $rootPath . 'web/upload/import/mp3-p2/' . $language . '/'; // Symfony
+        $csvPathImport    = $rootPath . 'web/upload/import/csv-p2/' . $language . '/avril/'; // Symfony
+        $csvPathImportMp3 = $rootPath . 'web/upload/import/mp3-p2/' . $language . '/avril/'; // Symfony
 
         // File import name
         // Spécificité Anglais : on a un seul test pour le pilote 2.
@@ -134,6 +134,7 @@ class ImportController
                         if (isset($exp[7])) {
                             $exp[7] = strtolower($exp[7]);
                         }
+                        //$repertoryName = strtolower($exp[0]);
 
                         $indice_fileName = 0;
                         if (isset($exp[0])) {
@@ -410,7 +411,6 @@ class ImportController
                     $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName($nameLanguage);
                     $testName = $nameTestLanguage; // For tests.
 
-//                    if (!$test =  $em->getRepository('InnovaSelfBundle:Test')->findOneByName($testName)) {
                     if ($row == 1) {
                         $test = new Test();
                         $test->setName($testName);
@@ -455,22 +455,32 @@ class ImportController
                     $tabTrace[$nbTrace] = "## creation questionnaire : ".$data[1];
 
                     //Dialogue
-                    $questionnaire->setDialogue(0);
-                    // Vu avec Arnaud : 1 pour Dialogue / 0 pour Monologue
-                    $libDialogue = $data[8];
+                    $questionnaire->setDialogue('0');
+                    // Vu avec Arnaud : 1 pour "Dialogue" / 0 pour "Monologue"
+                    // Changement pilote avril : 2 pour "dialogue interrompu"
+                    $libDialogue = trim($data[8]);
                     $pos = strripos($libDialogue, 'dialogue');
 
                     if ($pos === false) {
-                        $pos = strripos($libDialogue, 'monologue');
-                        if (!($pos === false)) {
+                        $posM = strripos($libDialogue, 'monologue');
+                        if (!($posM === false)) {
                             $questionnaire->setDialogue(0);
                         }
                     } else {
-                        $questionnaire->setDialogue(1);
+                        $posI = strripos($libDialogue, 'interrompu');
+                        if ($posI === false) {
+                            $questionnaire->setDialogue(1);
+                        } else {
+                            $questionnaire->setDialogue(2);
+                        }
                     }
 
                     //ListeningLimit
                     $questionnaire->setListeningLimit($data[9]);
+
+                    //Ordre fixe
+                    //Ajout avril 2014 pour ne pas afficher l'ordre aléatoire. EV.
+                    $questionnaire->setFixedOrder($data[7]);
 
                     //Autres colonnes
                     $questionnaire->setMediaInstruction();
@@ -480,6 +490,7 @@ class ImportController
                     $indice++;
                     $data[4] = trim($data[4]);
                     $data[12] = trim($data[12]);
+
                     // Enregistrement en base
                     $em->persist($questionnaire);
 
@@ -522,7 +533,7 @@ class ImportController
                             $this->appatProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                         case "QRU_I";
-                            $this->qruiProcess($typo, $questionnaire, $data, $dir2copy, $dir_paste);
+                            $this->qruiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                         case "APPAA";
                             $this->appaaProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
@@ -540,7 +551,6 @@ class ImportController
         }
         //SOX. To execute shell SOX command to have Ogg files. 13/01/2014.
         shell_exec($rootPath.'import/import.sh > ' . $rootPath . 'import/logs/import.log');
-
 
         //
         // To view
@@ -883,7 +893,7 @@ class ImportController
        }
     }
 
-    /**;
+    /**
      * processAmorceSubquestion function
      *
      */
@@ -1058,11 +1068,14 @@ class ImportController
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
+            //$rightAnswer = $data[$indice-1];
             $rightAnswer = $data[$indice]; // Changement 14/02/2014 car décalage du fichier.
 
             $Vrai = "VRAI";
 
             $tab = explode("#", $data[12]);
+            //var_dump($tab);
+            $type = $tab[0];
 
             if ($data[12] != "VF") {
                 $vrai = $tab[1];
@@ -1222,6 +1235,8 @@ class ImportController
             $em->persist($subQuestion);
 
             // Créer une occurrence dans la table "Proposition"
+            $indice = 11+(2*$i);
+
             $nbMedias = count($medias); #80
             for ($j=0; $j < $nbMedias; $j++)
             {
@@ -1290,7 +1305,7 @@ class ImportController
      * qruiProcess function
      *
      */
-    private function qruiProcess($typo, $questionnaire, $data, $dir2copy, $dir_paste)
+    private function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
     {
         $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"

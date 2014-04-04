@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * Questionnaire
  * 15/10/2013 : Add "originText" and "exerciceText" columns. EV.
  * 04/11/2013 : Add "skill" columns and Skill.php (for Entity). EV.
+ * 04/04/2014 : Modify "dialogue" type from "boolean" to "integer". EV.
+ * 04/04/2014 : Add "fixedOrder" column (for Entity). EV.
  *
  * @ORM\Table("questionnaire")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\QuestionnaireRepository")
@@ -110,9 +112,17 @@ class Questionnaire
      /**
      * @var string
      *
-     * @ORM\Column(name="dialogue", type="boolean")
+     * @ORM\Column(name="dialogue", type="integer")
      */
     private $dialogue;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="fixedOrder", type="boolean")
+     *
+     */
+    private $fixedOrder;
 
     /**
     * @ORM\ManyToOne(targetEntity="Media")
@@ -810,5 +820,28 @@ class Questionnaire
     public function getMediaText()
     {
         return $this->mediaText;
+    }
+
+    /**
+     * Set fixedOrder
+     *
+     * @param boolean $fixedOrder
+     * @return Questionnaire
+     */
+    public function setFixedOrder($fixedOrder)
+    {
+        $this->fixedOrder = $fixedOrder;
+    
+        return $this;
+    }
+
+    /**
+     * Get fixedOrder
+     *
+     * @return boolean 
+     */
+    public function getFixedOrder()
+    {
+        return $this->fixedOrder;
     }
 }

@@ -1,5 +1,8 @@
 <div class="propositions-CE">
-    {% if subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" %}
+
+    <!-- Avril 2014 : affichage en ordre fixe ou pas. EV. -->
+    <!-- {% if subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" %} -->
+    {% if questionnaire.fixedOrder %}
         {% set propositions = subquestion.propositions %}
     {% else %}
         {% set propositions = subquestion.propositions | shuffle %}
