@@ -98,7 +98,7 @@ class ImportController
         if ($dossier = opendir($csvPathImportMp3)) {
             while (false !== ($fichier = readdir($dossier)) && !$existeDir) {
                 if ($fichier != '.' && $fichier != '..' && is_dir($csvPathImportMp3.$fichier)) {
-                $existeDir = true;
+                   $existeDir = true;
                 }
             }
         }
@@ -134,8 +134,7 @@ class ImportController
                         if (isset($exp[7])) {
                             $exp[7] = strtolower($exp[7]);
                         }
-                        //$repertoryName = strtolower($exp[0]);
-
+ 
                         $indice_fileName = 0;
                         if (isset($exp[0])) {
                             if ((preg_match("/consigne/i", $exp[0])) || (preg_match("/option/i", $exp[0]))
@@ -1068,13 +1067,11 @@ class ImportController
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 11+(2*$i);
-            //$rightAnswer = $data[$indice-1];
             $rightAnswer = $data[$indice]; // Changement 14/02/2014 car décalage du fichier.
 
             $Vrai = "VRAI";
 
             $tab = explode("#", $data[12]);
-            //var_dump($tab);
             $type = $tab[0];
 
             if ($data[12] != "VF") {
@@ -1471,6 +1468,7 @@ class ImportController
             // Copie du fichier
             copy($pathFileName . $extension, $dir_paste . '/' . $media->getUrl() . $extension);
         }
+
         // Enregistrement en base
         $em->persist($proposition);
     }
