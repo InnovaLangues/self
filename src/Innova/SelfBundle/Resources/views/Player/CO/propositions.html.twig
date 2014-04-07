@@ -1,3 +1,4 @@
+<!-- Avril 2014 : affichage en ordre fixe ou pas. EV. -->
 {% if questionnaire.fixedOrder %}
     {% set propositions = subquestion.propositions %}
 {% else %}
@@ -16,7 +17,7 @@
                 {{ macros.translateVF(proposition.media.description, test.language.name) }}
                 </label>
             {% elseif proposition.media.mediaType.name == "image" %}
-                {{ macros.image(proposition.media.id, proposition.media, "Cliquez pour agrandir") }}
+                {{ macros.image(proposition.media.id, proposition.media, "Cliquez pour agrandir", 110) }}
                 {{ macros.modale(proposition.media.id, proposition.media, "Cliquez pour agrandir") }}
             </label>
             {% endif %}

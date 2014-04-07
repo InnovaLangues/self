@@ -5,7 +5,7 @@
             {{ questionnaire.mediaText.description | raw }}
         {% endautoescape %}
     {% elseif questionnaire.mediaText.mediaType.name == "image" %}
-        {{ macros.image("situation-image", questionnaire.mediaText, "Cliquer pour agrandir" ) }}
+        {{ macros.image("situation-image", questionnaire.mediaText, "Cliquer pour agrandir", "" ) }}
         {{ macros.modale("situation-image", questionnaire.mediaText, "Cliquer pour agrandir") }}
     {% elseif questionnaire.mediaText.mediaType.name == "audio" %}
         {{ macros.audio("situation", questionnaire.mediaText, "situation_dialogue.png", 120, questionnaire.ListeningLimit, "Situation de départ") }}
