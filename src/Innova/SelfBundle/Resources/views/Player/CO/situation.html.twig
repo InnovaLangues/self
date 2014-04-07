@@ -6,10 +6,12 @@
 {% set listening = app.session.get('listening') %}
 
 
-{% if questionnaire.dialogue == 1 %}
+{% if questionnaire.dialogue == 0 %}
+    {% set icon = "situation_monologue.png" %}
+{% elseif questionnaire.dialogue == 1 %}
     {% set icon = "situation_dialogue.png" %}
 {% else %}
-    {% set icon = "situation_monologue.png" %}
+    {% set icon = "situation_interrompue.png" %}
 {% endif %}
 
 <div id="situation-CO" class="situation">
