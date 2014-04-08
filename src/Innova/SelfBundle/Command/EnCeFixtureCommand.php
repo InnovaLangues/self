@@ -420,6 +420,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
         $questionnaire->setSource();
         $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);
+        $questionnaire->setFixedOrder(0);
 
         $em->persist($questionnaire);
 
