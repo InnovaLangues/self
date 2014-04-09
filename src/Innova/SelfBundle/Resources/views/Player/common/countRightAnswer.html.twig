@@ -1,6 +1,5 @@
-{% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" %}
-{% else %}
+{% if questionnaire.originText|length > 0  %}
     <div class="info-right-answer">
-        Plusieurs réponses correctes
+        {{ questionnaire.originText }}
     </div>
 {% endif %}

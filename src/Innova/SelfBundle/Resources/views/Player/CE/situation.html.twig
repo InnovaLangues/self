@@ -5,6 +5,7 @@
             {{ questionnaire.mediaText.description | raw }}
         {% endautoescape %}
     {% elseif questionnaire.mediaText.mediaType.name == "image" %}
+            {{ questionnaire.mediaText.description|raw }}
         {{ macros.image("situation-image", questionnaire.mediaText, "Cliquer pour agrandir", "" ) }}
         {{ macros.modale("situation-image", questionnaire.mediaText, "Cliquer pour agrandir") }}
     {% endif %}

@@ -54,7 +54,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 1 : QRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_1 = $this->createQuestionnaire("B1_CE_AgathaChristie", "B1", "CE", $test);
+        $questionnaire_1 = $this->createQuestionnaire("B1_CE_AgathaChristie", "B1", "CE", $test, 0);
         $questionnaire_1->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
         $questionnaire_1->setMediaText(
             $this->mediaText("",
@@ -75,7 +75,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 2 : TQRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_2 = $this->createQuestionnaire("B1_CE_Parmesanchicken", "B1", "CE", $test);
+        $questionnaire_2 = $this->createQuestionnaire("B1_CE_Parmesanchicken", "B1", "CE", $test, 0);
         $questionnaire_2->setMediaInstruction($this->mediaText("", "Read the text and answer the questions.", ""));
         $questionnaire_2->setMediaText(
             $this->mediaText("",
@@ -104,7 +104,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 3 : TQRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_3 = $this->createQuestionnaire("B1_CE_Porsche", "B1", "CE", $test);
+        $questionnaire_3 = $this->createQuestionnaire("B1_CE_Porsche", "B1", "CE", $test, 0);
         $questionnaire_3->setMediaInstruction($this->mediaText("", "Read the text and answer the questions.", ""));
         $questionnaire_3->setMediaText($this->mediaText("B1_CE_Porsche", "B1_CE_Porsche", "image"));
         // CREATION QUESTION
@@ -125,7 +125,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 4 : TQRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_4 = $this->createQuestionnaire("B1_CE_Renewableenergy", "B1", "CE", $test);
+        $questionnaire_4 = $this->createQuestionnaire("B1_CE_Renewableenergy", "B1", "CE", $test, 0);
         $questionnaire_4->setMediaInstruction($this->mediaText("", "Read the text and answer the questions.", ""));
         $questionnaire_4->setMediaText(
         $this->mediaText("",
@@ -149,7 +149,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 5 : QRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_5 = $this->createQuestionnaire("B1_CE_Valentinesales", "B1", "CE", $test);
+        $questionnaire_5 = $this->createQuestionnaire("B1_CE_Valentinesales", "B1", "CE", $test, 0);
         $questionnaire_5->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
         $questionnaire_5->setMediaText($this->mediaText("", "Today couples tend to celebrate by exchanging gifts, from greeting cards to chocolates to weekend getaways.
 According to the National Retail Federation’s 2008 Valentine’s Day Consumer Intentions and Actions Survey, conducted by Columbus-based BIGresearch, the average consumer plans to spend $122.98 on this day – an increase of about $3 over last year.", ""));
@@ -167,7 +167,7 @@ According to the National Retail Federation’s 2008 Valentine’s Day Consumer 
                     QUESTIONNAIRE 6 : QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_6 = $this->createQuestionnaire("B1_CE_Doves", "B1", "CE", $test);
+        $questionnaire_6 = $this->createQuestionnaire("B1_CE_Doves", "B1", "CE", $test, 0);
         $questionnaire_6->setMediaInstruction($this->mediaText("", "Read the text and find the 2 correct answers.", ""));
         $questionnaire_6->setMediaText($this->mediaText("", "White doves are a traditional symbol of love and peace, so the idea of releasing doves at a wedding, christening or funeral may seem like an innocent expression of affection. But what about the animals involved?
 The theory is that the doves should automatically return to their place of origin using their innate homing instinct but the ISPCA is seeing a different picture emerge. After a release of doves at a wedding in Athlone, 3 young birds remained around the hotel disorientated and confused. By the time ISPCA Inspector Karen Lyons captured the last of the birds they were severely underweight.", ""));
@@ -184,7 +184,7 @@ The theory is that the doves should automatically return to their place of origi
                     QUESTIONNAIRE 7 : TVF
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_8 = $this->createQuestionnaire("B1_CE_Scubadiving", "B1", "CE", $test);
+        $questionnaire_8 = $this->createQuestionnaire("B1_CE_Scubadiving", "B1", "CE", $test, 1);
         $questionnaire_8->setMediaInstruction($this->mediaText("", "According to the text, are the following statements true or false ?", ""));
         $questionnaire_8->setMediaText($this->mediaText("", "Scuba diving is a form of underwater diving in which a diver uses a self contained underwater breathing apparatus (scuba) to breathe underwater. Unlike other modes of diving, which rely either on breath-hold or on air pumped from the surface, scuba divers carry their own source of breathing gas, (usually compressed air), allowing them greater freedom of movement than with an air line or diver's umbilical and longer underwater endurance than breath-hold.", ""));
         // CREATION QUESTION
@@ -207,7 +207,7 @@ The theory is that the doves should automatically return to their place of origi
                     QUESTIONNAIRE 8 : QRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_9 = $this->createQuestionnaire("A2_CE_Schoolbadboys", "A2", "CE", $test);
+        $questionnaire_9 = $this->createQuestionnaire("A2_CE_Schoolbadboys", "A2", "CE", $test, 0);
         $questionnaire_9->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
         $questionnaire_9->setMediaText($this->mediaText("",
         "The point is, though, that after six months on the course the kids all claim - and the school agrees - that their behaviour has improved beyond all recognition. \"I've only had one detention and I haven't felt like bunking off,\" says Mather. \"I thought it was about time I sorted myself out.\" There has also been a further knock-on benefit of improvements in their GCSE curricular work. So what is the secret ?", ""));
@@ -226,7 +226,7 @@ The theory is that the doves should automatically return to their place of origi
                     QUESTIONNAIRE 9 : QRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_10 = $this->createQuestionnaire("B2_CE_Schoolskiveoff", "B2", "CE", $test);
+        $questionnaire_10 = $this->createQuestionnaire("B2_CE_Schoolskiveoff", "B2", "CE", $test, 0);
         $questionnaire_10->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
         $questionnaire_10->setMediaText($this->mediaText("",
         "The kids enjoy the work - \"less boring, more useful\" - and the sanction of being slung off the course is a great deal more effective than being banned from maths, but what they really seem to appreciate is being treated as adults. \"If you get wound up and think you're going to lose your temper they let you take five minutes out,\" says Mather. \"A teacher would think you were trying to skive off if you asked for time out.\" \"They don't say 'Do this' or 'Do that',\" says Mather. \"They tell you what's expected and let you get on with it. If you need help they'll give it but they let you complete the work to your standard, not some curriculum standard. So you feel like putting more effort in.\"", ""));
@@ -245,7 +245,7 @@ The theory is that the doves should automatically return to their place of origi
                     QUESTIONNAIRE 10 : TVFNM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_11= $this->createQuestionnaire("B1_CE_Copsstory", "B1", "CE", $test);
+        $questionnaire_11= $this->createQuestionnaire("B1_CE_Copsstory", "B1", "CE", $test, 1);
         $questionnaire_11->setMediaInstruction($this->mediaText("", "According to the text, are the following statements true or false, or is the information not mentioned ?", ""));
         $questionnaire_11->setMediaText($this->mediaText("", "\"Called the cops?\" I asked.@@@
 They nodded. @@@
@@ -283,7 +283,7 @@ She took a deep breath and started.
                     QUESTIONNAIRE 11 : TVF
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_12 = $this->createQuestionnaire("B2_CE_Indiashotdead", "B2", "CE", $test);
+        $questionnaire_12 = $this->createQuestionnaire("B2_CE_Indiashotdead", "B2", "CE", $test, 1);
         $questionnaire_12->setMediaInstruction($this->mediaText("", "According to the text, are the following statements true or false ?", ""));
         $questionnaire_12->setMediaText($this->mediaText("", "Narendra Dabholkar was on a regular morning stroll, in Pune, Maharashtra, when a pair of hitmen parked their motorbike and shot him dead. He had campaigned for 18 years against those who pretend to use, or offer protection from, the arts of black magic or other religious or mystical harassment. He wanted a law to prosecute such con artists and to protect their victims from extortion and bullying.
 A local sect and assorted Hindu right-wingers opposed his law, which Maharashtra’s state government finally agreed to enact, in Mr Dabholkar’s memory, on August 21st. He had received death threats before. The chief minister, Prithviraj Chavan, compared the killing of the rationalist to the murder of India’s most revered figure, saying that \"just as Gandhi was killed by those who could not digest his thoughts…[Mr Dabholkar] too was eliminated\"", ""));
@@ -307,7 +307,7 @@ A local sect and assorted Hindu right-wingers opposed his law, which Maharashtra
                     QUESTIONNAIRE 12 : QRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_13 = $this->createQuestionnaire("B2_CE_AtheismIndia", "B2", "CE", $test);
+        $questionnaire_13 = $this->createQuestionnaire("B2_CE_AtheismIndia", "B2", "CE", $test, 0);
         $questionnaire_13->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
         $questionnaire_13->setMediaText($this->mediaText("",
         "Indian atheists generally have an easier time than those elsewhere in South Asia. Prominent figures including the first prime minister, Jawaharlal Nehru, and the current defence and home ministers, plus the chief minister of Karnataka state, are cheerily irreligious. Buddhists, Jains and many Hindus hold no particular belief in God. Humanist groups abound and the taboo against refusing to express religious belief is falling. A survey in May found 81% of Indians were religious, a fall from 87% in 2005.
@@ -329,7 +329,7 @@ Yet powerful groups remain to exploit superstition and religious fear. “Even n
                     QUESTIONNAIRE 13 : QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_14 = $this->createQuestionnaire("B2_CE_Valentineorigin", "B2", "CE", $test);
+        $questionnaire_14 = $this->createQuestionnaire("B2_CE_Valentineorigin", "B2", "CE", $test, 0);
         $questionnaire_14->setMediaInstruction($this->mediaText("", "Read the text and find the 2 correct answers.", ""));
         $questionnaire_14->setMediaText($this->mediaText("", "This year, consumers are expected to spend more than $17 billion on this special day that traces its roots to ancient Rome.
 Opinions abound about who the original Valentine was, with the most popular theory that he was a clergyman who was executed for secretly marrying couples in Rome even though the emperor at the time thought marriage weakened his soldiers. In AD 496, Pope Gelasius set aside Feb 14 to honor St. Valentine.", ""));
@@ -346,7 +346,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
                     QUESTIONNAIRE 14 : QRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_15 = $this->createQuestionnaire("B2_CE_Brfailingschools", "B2", "CE", $test);
+        $questionnaire_15 = $this->createQuestionnaire("B2_CE_Brfailingschools", "B2", "CE", $test, 0);
         $questionnaire_15->setMediaInstruction($this->mediaText("", "Read the text and complete the statement.", ""));
         $questionnaire_15->setMediaText($this->mediaText("",
         "The new government wants to rely on methods other than overt selection to improve results in state schools. The education secretary, has rushed through two main sorts of supply-side reforms. The previous government had come up with “academies” to revive failing, mainly inner-city schools and given them certain freedoms. Academies do not have to stick zealously to the national curriculum, for example, and they are not constrained by the national pay deals for teachers that hobble their counterparts elsewhere in the state sector. They may not, however, select students: they are required to take the most local ones, even when an academy replaces that vanishingly rare thing, a failing church school.", ""));
@@ -392,7 +392,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
     /**
      *
      */
-    protected function createQuestionnaire($title, $level, $skill, $test)
+    protected function createQuestionnaire($title, $level, $skill, $test, $fixedOrder)
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
@@ -420,7 +420,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
         $questionnaire->setSource();
         $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);
-        $questionnaire->setFixedOrder(0);
+        $questionnaire->setFixedOrder($fixedOrder);
 
         $em->persist($questionnaire);
 
