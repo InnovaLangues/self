@@ -68,7 +68,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
 
         // CREATION PROPOSITIONS
         $this->createProposition("Agatha Christie", true, $questionnaire_1_1_1);
-        $this->createProposition("A friend writer of Agatha Christie", false, $questionnaire_1_1_1);
+        $this->createProposition("A writer friend of Agatha Christie", false, $questionnaire_1_1_1);
         $this->createProposition("A character in one of Agatha Christie’s novels", false, $questionnaire_1_1_1);
 
         /*******************************************
@@ -90,7 +90,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
         // CREATION PROPOSITIONS
         $this->createProposition("As you start the recipe", true, $questionnaire_2_1_1);
         $this->createProposition("When the chicken is no longer pink", false, $questionnaire_2_1_1);
-        $this->createProposition("After putting the breadcrumb mixture", false, $questionnaire_2_1_1);
+        $this->createProposition("After putting on the breadcrumb mixture", false, $questionnaire_2_1_1);
 
         $this->createProposition("Over the chicken breast at the end", true, $questionnaire_2_1_2);
         $this->createProposition("At the bottom of the baking dish", false, $questionnaire_2_1_2);
@@ -139,7 +139,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
         // CREATION PROPOSITIONS
         $this->createProposition("They are very expensive in comparison to non-renewable sources", true, $questionnaire_4_1_1);
         $this->createProposition("Governments argue over which renewable source of energy is better", false, $questionnaire_4_1_1);
-        $this->createProposition("No-one knows if they will really reduce climate change", false, $questionnaire_4_1_1);
+        $this->createProposition("No one knows if they will really reduce climate change", false, $questionnaire_4_1_1);
 
         $this->createProposition("Solar energy is very expensive", true, $questionnaire_4_1_2);
         $this->createProposition("Solar energy is required in Britain", false, $questionnaire_4_1_2);
@@ -156,7 +156,7 @@ According to the National Retail Federation’s 2008 Valentine’s Day Consumer 
         // CREATION QUESTION
         $questionnaire_5_1 = $this->createQuestion("QRU", $questionnaire_5);
         // CREATION SUBQUESTION
-        $questionnaire_5_1_1 = $this->createSubquestion("QRU", $questionnaire_5_1, "According to the survey, how would the sales be this year?");
+        $questionnaire_5_1_1 = $this->createSubquestion("QRU", $questionnaire_5_1, "According to the survey, how will sales be this year?");
 
         // CREATION PROPOSITIONS
         $this->createProposition("Better than last year", true, $questionnaire_5_1_1);
@@ -177,7 +177,7 @@ The theory is that the doves should automatically return to their place of origi
         $questionnaire_6_1_1 = $this->createSubquestion("QRM", $questionnaire_6_1, "What did the ISPCA observe?");
         // CREATION PROPOSITIONS
         $this->createProposition("Doves are not always able to return to their home", true, $questionnaire_6_1_1);
-        $this->createProposition("Doves didn’t know how to provide nourishment for themselves", true, $questionnaire_6_1_1);
+        $this->createProposition("Doves don’t know how to provide nourishment for themselves", true, $questionnaire_6_1_1);
         $this->createProposition("Some of the birds died", false, $questionnaire_6_1_1);
 
         /*******************************************
@@ -252,7 +252,7 @@ They nodded. @@@
 \"Anything missing?\"@@@
 \"His gold Rolex,\" the woman said. \"He loved it like his own child. And the other silver icepick. Both were part of a set he treasured.\"@@@
 I walked out of the cabin into the reception and gestured to the couple to follow me. I sat down in a chair and the two of them slumped into a deep sofa. The smell of weed followed them. @@@
-\"Why don't you tell me about it while we wait for the cops?\" I said to the woman. She looked more composed of the two. @@@
+\"Why don't you tell me about it while we wait for the cops?\" I said to the woman. She looked the more composed of the two. @@@
 She took a deep breath and started.
 ", ""));
         // CREATION QUESTION
