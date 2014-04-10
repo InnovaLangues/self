@@ -23,7 +23,7 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
     {
         $this
             ->setName('self:fixtures:itceb2')
-            ->setDescription('SELF CE Italien B2')
+            ->setDescription('SELF CE Italien B2 Pilote 2')
         ;
     }
 
@@ -50,158 +50,22 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
         ********************************************/
 
         /*******************************************
-                    QUESTIONNAIRE 1 : TVFNM
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_1 = $this->createQuestionnaire("B2_CE_COMM_Come diventare famosi su internet", "B2", "CE", $test);
-        $questionnaire_B2_1->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette.", ""));
-        $questionnaire_B2_1->setMediaContext($this->mediaText("", "Post su blog", ""));
-        $questionnaire_B2_1->setMediaText($this->mediaText($startTitle . "Come diventare famosi su internet" . $endTitle, "La celeberrima frase “Nel futuro, tutti avranno 15 minuti di celebrità”, pronunciata nel 1968 da Andy Warhol, diventa ogni giorno più profetica su internet. Ecco qualche consiglio su come diventare una web celebrity.@@@
-• Occhio a chi incontri su internet ed evita di condividere troppe informazioni personali.@@@
-• Gira un video su di te o sul tuo talento e pubblicalo su YouTube.@@@
-• Il successo va e viene. Però, se lavori duro, offri contenuti freschi ed incanti i tuoi lettori, follower e spettatori, sarà più facile mantenerti a galla. Punta ad una fama che ti permetta di avere un articolo dedicato a te su Wikipedia e che ti consenta di poter dire che hai raggiunto una certa notorietà. In questo modo, il tuo successo si terrà in piedi, a meno che qualcuno non ti cancelli ma, ehi, siamo su internet!
-", ""));
-        // CREATION QUESTION
-        $questionnaire_B2_1_1 = $this->createQuestion("TVFNM", $questionnaire_B2_1);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_1_1_1 = $this->createSubquestion("VFNM", $questionnaire_B2_1_1, "La celebre frase di Andy Warhol è stata letta da milioni di utenti su internet.");
-        $questionnaire_B2_1_1_2 = $this->createSubquestion("VFNM", $questionnaire_B2_1_1, "Secondo l’autore il successo su internet è un fenomeno duraturo.");
-        $questionnaire_B2_1_1_3 = $this->createSubquestion("VFNM", $questionnaire_B2_1_1, "Il testo consiglia di pubblicare sempre articoli attuali per conservare il successo ottenuto");
-        // CREATION PROPOSITIONS
-        $this->createProposition("VRAI", false, $questionnaire_B2_1_1_1);
-        $this->createProposition("FAUX", false, $questionnaire_B2_1_1_1);
-        $this->createProposition("ND", true, $questionnaire_B2_1_1_1);
-
-        $this->createProposition("VRAI", false, $questionnaire_B2_1_1_2);
-        $this->createProposition("FAUX", true, $questionnaire_B2_1_1_2);
-        $this->createProposition("ND", false, $questionnaire_B2_1_1_2);
-
-        $this->createProposition("VRAI", true, $questionnaire_B2_1_1_3);
-        $this->createProposition("FAUX", false, $questionnaire_B2_1_1_3);
-        $this->createProposition("ND", false, $questionnaire_B2_1_1_3);
-
-        /*******************************************
-                    QUESTIONNAIRE 4 : TQRU
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_4 = $this->createQuestionnaire("B2_CE_COMM_come affrontare gli esami", "B2", "CE", $test);
-        $questionnaire_B2_4->setMediaInstruction($this->mediaText("", "Rispondi alle domande. Una sola risposta è corretta.", ""));
-        $questionnaire_B2_4->setMediaContext($this->mediaText("", "Post su blog studentesco", ""));
-        $questionnaire_B2_4->setMediaText($this->mediaText($startTitle . "Breve decalogo per gli studenti: prima di affrontare un esame" . $endTitle,
-        "• Il \"nemico\" va conosciuto. Andate ad assistere agli esami prima di darli.@@@
-• Siate gradevoli nell'aspetto. L'abito in questo caso fa il monaco.@@@
-• Sappiate ascoltare. Aspettate a rispondere finché il docente non ha concluso la domanda.@@@
-• Siate precisi, non arrampicatevi sugli specchi. Se non sapete la risposta non dite cose inesatte.@@@
-• Se avete un vuoto mentale, ammettetelo. Chiedete poi al professore di riproporvi successivamente la domanda.", ""));
-        // CREATION QUESTION
-        $questionnaire_B2_4_1 = $this->createQuestion("TQRU", $questionnaire_B2_4);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_4_1_1 = $this->createSubquestion("QRU", $questionnaire_B2_4_1, "**Il decalogo suggerisce di:**");
-        $questionnaire_B2_4_1_2 = $this->createSubquestion("QRU", $questionnaire_B2_4_1, "**Se non si conosce la risposta, il decalogo suggerisce di:**");
-
-        // CREATION PROPOSITIONS
-        $this->createProposition("studiare le domande più frequenti poste durante gli esami.", false, $questionnaire_B2_4_1_1);
-        $this->createProposition("osservare gli esami sostenuti da altri studenti.", true, $questionnaire_B2_4_1_1);
-        $this->createProposition("anticipare le risposte per fare una buona impressione", false, $questionnaire_B2_4_1_1);
-        $this->createProposition("assistere agli esami dei colleghi per poter scegliere il giusto abbigliamento.", false, $questionnaire_B2_4_1_1);
-
-        $this->createProposition("dare comunque una risposta vaga ma il più possibile verosimile.", false, $questionnaire_B2_4_1_2);
-        $this->createProposition("ragionare sulle domande ed arrivare ad una soluzione logica.", false, $questionnaire_B2_4_1_2);
-        $this->createProposition("rinunciare a rispondere subito per evitare un’espressione vaga e incompleta.", true, $questionnaire_B2_4_1_2);
-        $this->createProposition("evitare di tacere cercando però di non dare risposte totalmente inesatte.", false, $questionnaire_B2_4_1_2);
-
-
-        /*******************************************
-                    QUESTIONNAIRE 6 : QRU
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_6 = $this->createQuestionnaire("B2_CE_COMM_disdetta_contratto", "B2", "CE", $test);
-        $questionnaire_B2_6->setMediaInstruction($this->mediaText("", "Seleziona il riassunto corretto", ""));
-        $questionnaire_B2_6->setMediaContext($this->mediaText("", "Lettera di disdetta contratto di locazione", ""));
-        $questionnaire_B2_6->setMediaText($this->mediaText($startTitle . "Disdetta straordinaria del contratto di locazione" . $endTitle,
-        "Sig. Giacomo Verni@@@
-via Rodolfo Lanciani, 3@@@
-00100 Roma@@@
-
-Raccomandata@@@
-
-Roma, 12.10:2012@@@
-
-Disdetta straordinaria del contratto di locazione@@@
-
-Gentile sig. Pastani,
-con la presente le comunico la mia intenzione di recedere dal contratto di locazione stipulato in data 09/10/2010 fuori dai termini stabiliti per il 30/10/2012. Dato che per motivi lavorativi devo traslocare non mi è possibile dare la disdetta nei termini fissati.@@@
-Mi preoccuperò di cercare un inquilino subentrante adeguato e di inviarle i relativi documenti per la candidatura.@@@
-La prego di informarmi al più presto sul termine di consegna dell’appartamento.@@@
-
-Colgo l’occasione per ringraziarla del piacevole rapporto di locazione.@@@
-
-Cordiali saluti@@@
-
-Giacomo Verni@@@
-
-____________________  ______________________
-Luogo, data                           Firma del locatore
-", ""));
-
-        // CREATION QUESTION
-        $questionnaire_B2_6_1 = $this->createQuestion("QRU", $questionnaire_B2_6);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_6_1_1 = $this->createSubquestion("QRU", $questionnaire_B2_6_1, "");
-        // CREATION PROPOSITIONS
-        $this->createProposition("Il Sig. Verni scrive al Sig. Pastani per chiedere la sospensione temporanea del contratto di affitto. Si impegna comunque a trovare un sostituto per i mesi in cui sarà assente.", false, $questionnaire_B2_6_1_1);
-        $this->createProposition("Il Sig Verni scrive al sig.Pastani per rescindere il contratto d’affitto con ampio anticipo, e si impegna con il proprietario a inviargli il nome del futuro inquilino.", false, $questionnaire_B2_6_1_1);
-        $this->createProposition("Il Sig Verni scrive al sig.Pastani per richiedere la sospensione anticipata del contratto. Chiede inoltre di essere informato sulla data esatta in cui dovrà lasciare l’appartamento.", true, $questionnaire_B2_6_1_1);
-
-        /*******************************************
-                    QUESTIONNAIRE 7 : TVF
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_7 = $this->createQuestionnaire("B2_CE_COMM_tessera elettorale", "B2", "CE", $test);
-        $questionnaire_B2_7->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false.", ""));
-        $questionnaire_B2_7->setMediaContext($this->mediaText("", "Avviso in Comune", ""));
-        $questionnaire_B2_7->setMediaText($this->mediaText($startTitle . "Informazioni utili sulla tessera elettorale" . $endTitle, "Tessera elettorale per le elezioni politiche
-
-L’ufficio elettorale comunale resta a  disposizione per quanto segue:@@@
-
-• coloro che non avessero ricevuto la tessera elettorale a domicilio, possono ritirarla presso l’ufficio elettorale-;@@@
-• coloro che avessero smarrito, deteriorato o subito il furto della tessera elettorale, possono ottenere un duplicato presentandosi all’ufficio elettorale.@@@
-• Nel caso di smarrimento la domanda di duplicato deve essere corredata da denuncia presentata ai competenti uffici di pubblica sicurezza.@@@
-", ""));
-        // CREATION QUESTION
-        $questionnaire_B2_7_1 = $this->createQuestion("TVF", $questionnaire_B2_7);
-
-        // CREATION SUBQUESTION
-        $questionnaire_B2_7_1_1 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "Nel caso in cui la tessera non fosse arrivata per posta, bisogna recarsi all’ufficio elettorale");
-        $questionnaire_B2_7_1_2 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "Coloro, la cui tessera elettorale fosse rovinata, possono chiedere di riceverne una copia a casa.");
-        $questionnaire_B2_7_1_3 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "Coloro che avessero perso la tessera elettorale, devono avvertire la polizia della perdita");
-
-        // CREATION PROPOSITIONS
-        $this->createPropositionVF("", "VRAI", true, $questionnaire_B2_7_1_1);
-        $this->createPropositionVF("", "FAUX", false, $questionnaire_B2_7_1_1);
-
-        $this->createPropositionVF("", "VRAI", false, $questionnaire_B2_7_1_2);
-        $this->createPropositionVF("", "FAUX", true, $questionnaire_B2_7_1_2);
-
-        $this->createPropositionVF("", "VRAI", true, $questionnaire_B2_7_1_3);
-        $this->createPropositionVF("", "FAUX", false, $questionnaire_B2_7_1_3);
-
-        /*******************************************
                     QUESTIONNAIRE 9 : TVFNM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_B2_9 = $this->createQuestionnaire("B2_CE_COMM_occhi su saturno", "B2", "CE", $test);
-        $questionnaire_B2_9->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette.", ""));
-        $questionnaire_B2_9->setMediaContext($this->mediaText("", "Articolo su rivista di eventi culturali", ""));
-        $questionnaire_B2_9->setMediaText($this->mediaText($startTitle . "Occhi su Saturno" . $endTitle, "Sabato18 Maggio,una sera per mostrare Saturno all’Italia@@@
-La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno, senza dubbio il più bel pianeta del Sistema Solare, generazioni di astronomi hanno posato gli occhi su di lui. Ora grazie alle sonde spaziali abbiamo una visione senza precedenti di Saturno, dei suoi anelli e dei suoi satelliti. Ma lo splendore di questo pianeta è folgorante anche se osservato con un piccolo telescopio.",
- ""));
+        $questionnaire_B2_9 = $this->createQuestionnaire("B2_CE_yeux_sur_saturne", "B2", "CE", $test, 1);
+        $questionnaire_B2_9->setOriginText("");
+        $questionnaire_B2_9->setMediaInstruction($this->mediaText("", "", ""));
+        $questionnaire_B2_9->setMediaContext($this->mediaText("", "Articolo su sito internet", ""));
+        $questionnaire_B2_9->setMediaText($this->mediaText($startTitle . "Occhi su Saturno" . $endTitle, "Sabato18 Maggio,una sera per mostrare Saturno all’Italia
+La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno, senza dubbio il più bel pianeta del Sistema Solare, generazioni di astronomi hanno posato gli occhi su di lui. Ora grazie alle sonde spaziali abbiamo una visione senza precedenti di Saturno, dei suoi anelli e dei suoi satelliti. Ma lo splendore di questo pianeta è folgorante anche se osservato con un piccolo telescopio.@@@Tratto da: www.occhisusaturno.it",
+""));
         // CREATION QUESTION
         $questionnaire_B2_9_1 = $this->createQuestion("TVFNM", $questionnaire_B2_9);
         // CREATION SUBQUESTION
         $questionnaire_B2_9_1_1 = $this->createSubquestion("VFNM", $questionnaire_B2_9_1, "“Occhi su Saturno” è un’iniziativa organizzata da un gruppo di astronomi");
-        $questionnaire_B2_9_1_2 = $this->createSubquestion("VFNM", $questionnaire_B2_9_1, "L’iniziativa non sarà solo locale, ma avrà luogo anche in diverse regioni italiane.");
-        $questionnaire_B2_9_1_3 = $this->createSubquestion("VFNM", $questionnaire_B2_9_1, "Il pianeta sarà visibile ad occhio nudo.");
+        $questionnaire_B2_9_1_2 = $this->createSubquestion("VFNM", $questionnaire_B2_9_1, "L’iniziativa non sarà solo locale, ma avrà luogo anche in diverse regioni italiane");
+        $questionnaire_B2_9_1_3 = $this->createSubquestion("VFNM", $questionnaire_B2_9_1, "Il pianeta sarà visibile ad occhio nudo");
         // CREATION PROPOSITIONS
         $this->createProposition("VRAI", false, $questionnaire_B2_9_1_1);
         $this->createProposition("FAUX", false, $questionnaire_B2_9_1_1);
@@ -216,263 +80,18 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $this->createProposition("ND", false, $questionnaire_B2_9_1_3);
 
         /*******************************************
-                    QUESTIONNAIRE 10 : TVFNM
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_10 = $this->createQuestionnaire("B2_CE_COMM_candidatura", "B2", "CE", $test);
-        $questionnaire_B2_10->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette.", ""));
-        $questionnaire_B2_10->setMediaContext($this->mediaText("", "Lettera di motivazione", ""));
-        $questionnaire_B2_10->setMediaText($this->mediaText($startTitle . "Candidatura spontanea" . $endTitle, "vorrei sottoporre alla Vostra cortese attenzione il mio interesse ad un’eventuale assunzione nella Vostra Azienda, leader nel settore della ristorazione. Come potete vedere dal Curriculum vitae che allego, dopo aver conseguito il diploma alberghiero ho svolto un tirocinio per approfondire le conoscenze nel servizio di sala e parlo abbastanza bene il tedesco e l’inglese. Sono disponibile fin da subito anche per un’assunzione a tempo determinato o con contratto di Formazione e Lavoro. Sono altresì disponibile a frequentare eventuali corsi di formazione ed a fare trasferte anche all’estero. Spero pertanto che vorrete considerare la mia candidatura.@@@"
-        ,""));
-        // CREATION QUESTION
-        $questionnaire_B2_10_1 = $this->createQuestion("TVFNM", $questionnaire_B2_10);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_10_1_1 = $this->createSubquestion("VFNM", $questionnaire_B2_10_1, "Nella lettera di candidatura, Luca scrive di avere conseguito un’esperienza formativa come cameriere di sala.");
-        $questionnaire_B2_10_1_2 = $this->createSubquestion("VFNM", $questionnaire_B2_10_1, "Luca ha già operato nel settore del servizio di sala.");
-        $questionnaire_B2_10_1_3 = $this->createSubquestion("VFNM", $questionnaire_B2_10_1, "Luca scrive di volere solo un impiego a lungo termine.");
-        // CREATION PROPOSITIONS
-        $this->createProposition("VRAI", true, $questionnaire_B2_10_1_1);
-        $this->createProposition("FAUX", false, $questionnaire_B2_10_1_1);
-        $this->createProposition("ND", false, $questionnaire_B2_10_1_1);
-
-        $this->createProposition("VRAI", true, $questionnaire_B2_10_1_2);
-        $this->createProposition("FAUX", false, $questionnaire_B2_10_1_2);
-        $this->createProposition("ND", false, $questionnaire_B2_10_1_2);
-
-        $this->createProposition("VRAI", false, $questionnaire_B2_10_1_3);
-        $this->createProposition("FAUX", true, $questionnaire_B2_10_1_3);
-        $this->createProposition("ND", false, $questionnaire_B2_10_1_3);
-
-        /*******************************************
-                    QUESTIONNAIRE 11 : TQRU
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_11 = $this->createQuestionnaire("B2_CE_bryan_may", "B2", "CE", $test);
-        $questionnaire_B2_11->setMediaInstruction($this->mediaText("", "Completa il testo usando le parole suggerite", ""));
-        $questionnaire_B2_11->setMediaContext($this->mediaText("", "Articolo su rivista di musica", ""));
-        $questionnaire_B2_11->setMediaText($this->mediaText($startTitle . "Brian May dei Queen avrebbe voluto suonare negli AC/DC" . $endTitle,
-        "Il chitarrista dei Queen Brian May ha rivelato che 1.________________________ suonare negli AC/DC.@@@In un'intervista al quotidiano britannico The Independent May ha detto che se non fosse stato  per l'impegno con Freddy Mercury e compagni non gli 2.____________________ fare qualcosa con la band australiana, ma ha anche aggiunto che probabilmente non sarebbe stato adatto per il gruppo: \"Mi sarebbe piaciuto  lavorare con gli AC/DC [se non ci  3.__________________________ i Queen]. Ma sfortunatamente sono della forma e della taglia sbagliate\"",
-        ""));
-        // CREATION QUESTION
-        $questionnaire_B2_11_1 = $this->createQuestion("TQRU", $questionnaire_B2_11);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_11_1_1 = $this->createSubquestion("QRU", $questionnaire_B2_11_1, "");
-        $questionnaire_B2_11_1_2 = $this->createSubquestion("QRU", $questionnaire_B2_11_1, "");
-        $questionnaire_B2_11_1_3 = $this->createSubquestion("QRU", $questionnaire_B2_11_1, "");
-
-        // CREATION PROPOSITIONS
-        $this->createProposition("avrebbe voluto", true, $questionnaire_B2_11_1_1);
-        $this->createProposition("avesse voluto", false, $questionnaire_B2_11_1_1);
-        $this->createProposition("volle", false, $questionnaire_B2_11_1_1);
-
-        $this->createProposition("sarebbe dispiaciuto", true, $questionnaire_B2_11_1_2);
-        $this->createProposition("fosse dispiaciuto", false, $questionnaire_B2_11_1_2);
-        $this->createProposition("dispiacesse", false, $questionnaire_B2_11_1_2);
-
-        $this->createProposition("furono", false, $questionnaire_B2_11_1_3);
-        $this->createProposition("sarebbero stati", false, $questionnaire_B2_11_1_3);
-        $this->createProposition("fossero stati ", true, $questionnaire_B2_11_1_3);
-
-        /*******************************************
-                    QUESTIONNAIRE 12 : TVFNM
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_12 = $this->createQuestionnaire("B2_CE_yeux_sur_saturne", "B2", "CE", $test);
-        $questionnaire_B2_12->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette", ""));
-        $questionnaire_B2_12->setMediaContext($this->mediaText("", "Articolo su rivista di eventi culturali", ""));
-        $questionnaire_B2_12->setMediaText($this->mediaText($startTitle . "Occhi su Saturno" . $endTitle, "Sabato 18 Maggio, una sera per mostrare Saturno all’Italia@@@
-La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno, senza dubbio il più bel pianeta del Sistema Solare, generazioni di astronomi hanno posato gli occhi su di lui. Ora grazie alle sonde spaziali abbiamo una visione senza precedenti di Saturno, dei suoi anelli e dei suoi satelliti. Ma lo splendore di questo pianeta è folgorante anche se osservato con un piccolo telescopio.
-", ""));
-        // CREATION QUESTION
-        $questionnaire_B2_12_1 = $this->createQuestion("TVFNM", $questionnaire_B2_12);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_12_1_1 = $this->createSubquestion("VFNM", $questionnaire_B2_12_1, "“Occhi su Saturno” è un’iniziativa organizzata da un gruppo di astronomi.");
-        $questionnaire_B2_12_1_2 = $this->createSubquestion("VFNM", $questionnaire_B2_12_1, "L’iniziativa non sarà solo locale, ma avrà luogo anche in diverse regioni italiane.");
-        $questionnaire_B2_12_1_3 = $this->createSubquestion("VFNM", $questionnaire_B2_12_1, "Il pianeta sarà visibile ad occhio nudo.");
-        // CREATION PROPOSITIONS
-        $this->createProposition("VRAI", false, $questionnaire_B2_12_1_1);
-        $this->createProposition("FAUX", false, $questionnaire_B2_12_1_1);
-        $this->createProposition("ND", true, $questionnaire_B2_12_1_1);
-
-        $this->createProposition("VRAI", true, $questionnaire_B2_12_1_2);
-        $this->createProposition("FAUX", false, $questionnaire_B2_12_1_2);
-        $this->createProposition("ND", false, $questionnaire_B2_12_1_2);
-
-        $this->createProposition("VRAI", false, $questionnaire_B2_12_1_3);
-        $this->createProposition("FAUX", true, $questionnaire_B2_12_1_3);
-        $this->createProposition("ND", false, $questionnaire_B2_12_1_3);
-
-        /*******************************************
-                    QUESTIONNAIRE 15 : QRU
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_15 = $this->createQuestionnaire("B2_CE_gerondif", "B2", "CE", $test);
-        $questionnaire_B2_15->setMediaInstruction($this->mediaText("", "Completa il testo con le parole suggerite. Attenzione: ci sono due intrusi", ""));
-        $questionnaire_B2_15->setMediaContext($this->mediaText("", "Estratto da un romanzo", ""));
-        $questionnaire_B2_15->setMediaText($this->mediaText($startTitle . "Un incidente" . $endTitle, "1. ______ Maria rientrava a casa ha visto una macchina avvicinarsi a grande velocità da Piazza S.Silvestro.@@@
-2. _______ Maria aveva capito che la macchina non si sarebbe fermata per lasciarla passare, ha indietreggiato di qualche passo.@@@
-3.________ Maria avesse lasciato lo spazio sufficiente, il conducente ha perso per un istante il controllo della macchina e ha urtato contro il suo piede.@@@
-4. Il medico ha consigliato a Maria di usare le stampelle, spiegandole che ______ non le avesse utilizzate, avrebbe finito per peggiorare le condizioni della sua gamba.?",
-""));
-        // CREATION QUESTION
-        $questionnaire_B2_15_1 = $this->createQuestion("TQRU", $questionnaire_B2_15);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_15_1_1 = $this->createSubquestion("QRU", $questionnaire_B2_15_1, "Completa il testo con le parole suggerite. Attenzione: ci sono due intrusi");
-        $questionnaire_B2_15_1_2 = $this->createSubquestion("QRU", $questionnaire_B2_15_1, "Completa il testo con le parole suggerite. Attenzione: ci sono due intrusi");
-        $questionnaire_B2_15_1_3 = $this->createSubquestion("QRU", $questionnaire_B2_15_1, "Completa il testo con le parole suggerite. Attenzione: ci sono due intrusi");
-        $questionnaire_B2_15_1_4 = $this->createSubquestion("QRU", $questionnaire_B2_15_1, "Completa il testo con le parole suggerite. Attenzione: ci sono due intrusi");
-
-        // CREATION PROPOSITIONS
-        $this->createProposition("dunque", false, $questionnaire_B2_15_1_1);
-        $this->createProposition("nonostante", true, $questionnaire_B2_15_1_1);
-        $this->createProposition("mentre", true, $questionnaire_B2_15_1_1);
-        $this->createProposition("inoltre", false, $questionnaire_B2_15_1_1);
-        $this->createProposition("se", true, $questionnaire_B2_15_1_1);
-        $this->createProposition("siccome", true, $questionnaire_B2_15_1_1);
-
-        $this->createProposition("dunque", false, $questionnaire_B2_15_1_2);
-        $this->createProposition("nonostante", true, $questionnaire_B2_15_1_2);
-        $this->createProposition("mentre", true, $questionnaire_B2_15_1_2);
-        $this->createProposition("inoltre", false, $questionnaire_B2_15_1_2);
-        $this->createProposition("se", true, $questionnaire_B2_15_1_2);
-        $this->createProposition("siccome", true, $questionnaire_B2_15_1_2);
-
-        $this->createProposition("dunque", false, $questionnaire_B2_15_1_3);
-        $this->createProposition("nonostante", true, $questionnaire_B2_15_1_3);
-        $this->createProposition("mentre", true, $questionnaire_B2_15_1_3);
-        $this->createProposition("inoltre", false, $questionnaire_B2_15_1_3);
-        $this->createProposition("se", true, $questionnaire_B2_15_1_3);
-        $this->createProposition("siccome", true, $questionnaire_B2_15_1_3);
-
-        $this->createProposition("dunque", false, $questionnaire_B2_15_1_4);
-        $this->createProposition("nonostante", true, $questionnaire_B2_15_1_4);
-        $this->createProposition("mentre", true, $questionnaire_B2_15_1_4);
-        $this->createProposition("inoltre", false, $questionnaire_B2_15_1_4);
-        $this->createProposition("se", true, $questionnaire_B2_15_1_4);
-        $this->createProposition("siccome", true, $questionnaire_B2_15_1_4);
-
-        /*******************************************
-                    QUESTIONNAIRE 17 : APPTT
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_17 = $this->createQuestionnaire("B2_CE_superstitions_italie", "B2", "CE", $test);
-        $questionnaire_B2_17->setMediaInstruction($this->mediaText("", "Ricostruisci le frasi", ""));
-        $questionnaire_B2_17->setMediaContext($this->mediaText("", "Post su blog personale", ""));
-        $questionnaire_B2_17->setMediaText($this->mediaText($startTitle . "Superstizioni in Italia" . $endTitle, "Le forme di superstizione sono numerosissime in Italia, spesso legate alla vita quotidiana e in molti casi bizzarre. Ecco una lista delle più comuni.@@@
-1. Mangiare lenticchie a Capodanno porta fortuna per il nuovo anno@@@
-2. È presagio di sventura aprire l’ombrello in casa@@@
-3.Posare il pane a rovescio sulla tavola, porta carestia.@@@
-4. Il quadrifoglio porta fortuna e felicità ma non lo si deve cogliere@@@
-5. Porta sfortuna passare sotto una scala@@@
-6. Rompere uno specchio preannuncia sette anni di guai@@@
-7. Quando si vede una stella cadente, si può esprimere un desiderio", ""));
-        // CREATION QUESTION
-        $questionnaire_B2_17_1 = $this->createQuestion("APPTT", $questionnaire_B2_17);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_17_1_1 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "Si teme che rompere uno specchio");
-        $questionnaire_B2_17_1_2 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "A capodanno si usa mangiare lenticchie affinché");
-        $questionnaire_B2_17_1_3 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "Si crede che vedere una stella cadente");
-        $questionnaire_B2_17_1_4 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "Secondo molti italiani, passare sotto una scala");
-        $questionnaire_B2_17_1_5 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "Aprire l’ombrello in casa");
-        $questionnaire_B2_17_1_6 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "Trovare un quadrifoglio è segno di felicità e fortuna, purché");
-        $questionnaire_B2_17_1_7 = $this->createSubquestion("APPTT", $questionnaire_B2_17_1, "Quando si è a tavola è importante controllare che");
-        // CREATION PROPOSITIONS
-        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("il nuovo anno sia ricco.", true, $questionnaire_B2_17_1_2);
-        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("il nuovo anno sia ricco.", false, $questionnaire_B2_17_1_7);
-
-        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("il pane non sia al rovescio.", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("il pane non sia al rovescio.", true, $questionnaire_B2_17_1_7);
-
-        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("porta sfortuna.", true, $questionnaire_B2_17_1_5);
-        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("porta sfortuna.", false, $questionnaire_B2_17_1_7);
-
-        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("lo si lasci al suo posto", true, $questionnaire_B2_17_1_6);
-        $this->createProposition("lo si lasci al suo posto", false, $questionnaire_B2_17_1_7);
-
-        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", true, $questionnaire_B2_17_1_3);
-        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("rappresenti un’occasione per formulare un progetto da realizzare", false, $questionnaire_B2_17_1_7);
-
-        $this->createProposition("preannunci un lungo periodo di problemi", true, $questionnaire_B2_17_1_1);
-        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_4);
-        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("preannunci un lungo periodo di problemi", false, $questionnaire_B2_17_1_7);
-
-        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_1);
-        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_2);
-        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_3);
-        $this->createProposition("non è di buon augurio", true, $questionnaire_B2_17_1_4);
-        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_5);
-        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_6);
-        $this->createProposition("non è di buon augurio", false, $questionnaire_B2_17_1_7);
-
-        /*******************************************
-                    QUESTIONNAIRE 25 : TVFNM
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_25 = $this->createQuestionnaire("B2_CE_vademecum", "B2", "CE", $test);
-        $questionnaire_B2_25->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette", ""));
-        $questionnaire_B2_25->setMediaContext($this->mediaText("", "Brochure informativa delle elezioni amministrative", ""));
-        $questionnaire_B2_25->setMediaText($this->mediaText($startTitle . "Vademecum delle elezioni amministrative" . $endTitle, "**Come si vota nei comuni con popolazione superiore ai 15.000 abitanti**@@@La scheda per il rinnovo del Consiglio comunale č di colore azzurro. L'elettore ha a disposizione diverse modalitŕ per esprimere la propria preferenza.@@@1- Votare solo per un candidato sindaco, tracciando un segno sul nome, non scegliendo alcuna lista collegata. Il voto cosě espresso si intende attribuito solo al candidato sindaco.@@@2- Votare solo per una delle liste, tracciando un segno sul relativo simbolo. Il voto cosě espresso si intende attribuito anche al candidato sindaco collegato.@@@3- Votare per un candidato sindaco, tracciando un segno sul nome, e per una delle liste a esso collegate, tracciando un segno sul contrassegno della lista prescelta. Il voto cosě espresso si intende attribuito sia al candidato sindaco sia alla lista collegata.",
-        ""));
-        // CREATION QUESTION
-        $questionnaire_B2_25_1 = $this->createQuestion("TVFNM", $questionnaire_B2_25);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_25_1_1 = $this->createSubquestion("VFNM", $questionnaire_B2_25_1, "È possibile votare per il sindaco e per le liste scegliendo solo il simbolo del partito di cui è a capo.");
-        $questionnaire_B2_25_1_2 = $this->createSubquestion("VFNM", $questionnaire_B2_25_1, "È possibile votare per due partiti che fanno parte della stessa coalizione.");
-        $questionnaire_B2_25_1_3 = $this->createSubquestion("VFNM", $questionnaire_B2_25_1, "È possibile votare per un solo candidato scrivendo il suo nome sulla scheda");
-        // CREATION PROPOSITIONS
-        $this->createProposition("VRAI", true, $questionnaire_B2_25_1_1);
-        $this->createProposition("FAUX", false, $questionnaire_B2_25_1_1);
-        $this->createProposition("ND", false, $questionnaire_B2_25_1_1);
-
-        $this->createProposition("VRAI", false, $questionnaire_B2_25_1_2);
-        $this->createProposition("FAUX", false, $questionnaire_B2_25_1_2);
-        $this->createProposition("ND", true, $questionnaire_B2_25_1_2);
-
-        $this->createProposition("VRAI", false, $questionnaire_B2_25_1_3);
-        $this->createProposition("FAUX", true, $questionnaire_B2_25_1_3);
-        $this->createProposition("ND", false, $questionnaire_B2_25_1_3);
-
-        /*******************************************
                     QUESTIONNAIRE 26 : APPTT
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_B2_26 = $this->createQuestionnaire("B2_CE_voisin_greta", "B2", "CE", $test);
-        $questionnaire_B2_26->setMediaInstruction($this->mediaText("", "Abbina ad ogni parola la definizione corretta. Ci sono due intrusi", ""));
-        $questionnaire_B2_26->setMediaContext($this->mediaText("", "Post su un blog personale", ""));
-        $questionnaire_B2_26->setMediaText($this->mediaText($startTitle . "Riflessione in treno" . $endTitle, "In treno mi piace chiudere gli occhi e ascoltare la gente che urla faccende private, intimi segreti a tutta la carrozza. Non per quello che dicono ma per come lo dicono. Per una rubrica come questa le ferrovie sono una grande fonte di ispirazione. Solo che dovremmo cambiare il Titolo: invece che tre minuti una parola, tre ore e migliaia di parole, nel viaggio solo da Milano a Roma. Molte sono superflue ma alcune sono sintomatiche. Il mio vicino nel corso interminabile di una telefonata, più o meno a distanza Parma - Firenze, continuava a ripetere agitato: ma si figuri, ma si figuri, ma si figuri! Non so cosa si figurasse il misterioso interlocutore: io mi figuravo un figuro che temeva una figuraccia", ""));
+        $questionnaire_B2_26 = $this->createQuestionnaire("B2_CE_voisin_greta", "B2", "CE", $test, 0);
+        $questionnaire_B2_26->setOriginText("Associez chaque mot à son sens d'après le texte proposé");
+        $questionnaire_B2_26->setMediaInstruction($this->mediaText("", "Che cosa significano le parole date nel testo che hai letto?", ""));
+        $questionnaire_B2_26->setMediaContext($this->mediaText("", "Post su blog", ""));
+        $questionnaire_B2_26->setMediaText($this->mediaText($startTitle . "Riflessione in treno" . $endTitle, "In treno mi piace chiudere gli occhi e ascoltare la gente che urla faccende private, intimi segreti a tutta la carrozza. Non per quello che dicono ma per come lo dicono. Per una rubrica come questa le ferrovie sono una grande fonte di ispirazione. Solo che dovremmo cambiare il Titolo: invece che tre minuti una parola, tre ore e migliaia di parole, nel viaggio solo da Milano a Roma. Molte sono superflue ma alcune sono sintomatiche. Il mio vicino nel corso interminabile di una telefonata, più o meno a distanza Parma-Firenze, continuava a ripetere agitato: ma si figuri, ma si figuri, ma si figuri! Non so cosa si figurasse il misterioso interlocutore: io mi figuravo un figuro che temeva una figuraccia.@@@Tratto da: www.corriere.it", ""));
         // CREATION QUESTION
         $questionnaire_B2_26_1 = $this->createQuestion("APPTT", $questionnaire_B2_26);
         // CREATION SUBQUESTION
-        $questionnaire_B2_26_1_1 = $this->createSubquestion("APPTT", $questionnaire_B2_26_1, "Figurasi");
+        $questionnaire_B2_26_1_1 = $this->createSubquestion("APPTT", $questionnaire_B2_26_1, "Figurarsi");
         $questionnaire_B2_26_1_2 = $this->createSubquestion("APPTT", $questionnaire_B2_26_1, "Figuro");
         $questionnaire_B2_26_1_3 = $this->createSubquestion("APPTT", $questionnaire_B2_26_1, "Figuraccia");
         // CREATION PROPOSITIONS
@@ -488,9 +107,9 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $this->createProposition("Individuo losco", true, $questionnaire_B2_26_1_2);
         $this->createProposition("Individuo losco", false, $questionnaire_B2_26_1_3);
 
-        $this->createProposition("Azione inopportuna", false, $questionnaire_B2_26_1_1);
-        $this->createProposition("Azione inopportuna", false, $questionnaire_B2_26_1_2);
-        $this->createProposition("Azione inopportuna", true, $questionnaire_B2_26_1_3);
+        $this->createProposition("Discredito", false, $questionnaire_B2_26_1_1);
+        $this->createProposition("Discredito", false, $questionnaire_B2_26_1_2);
+        $this->createProposition("Discredito", true, $questionnaire_B2_26_1_3);
 
         $this->createProposition("Rappresentare", false, $questionnaire_B2_26_1_1);
         $this->createProposition("Rappresentare", false, $questionnaire_B2_26_1_2);
@@ -501,36 +120,256 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $this->createProposition("Immaginare", false, $questionnaire_B2_26_1_3);
 
         /*******************************************
-                    QUESTIONNAIRE 27 : TQRU
+                    QUESTIONNAIRE 1 : TVFNM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_B2_27 = $this->createQuestionnaire("B2_CE_enfin_les_pierres_volent", "B2", "CE", $test);
-        $questionnaire_B2_27->setMediaInstruction($this->mediaText("", "Rispondi alle domande. Una sola risposta è corretta.", ""));
-        $questionnaire_B2_27->setMediaContext($this->mediaText("", "Post su blog di viaggi", ""));
-        $questionnaire_B2_27->setMediaText($this->mediaText($startTitle . "I sassi finalmente volano" . $endTitle,
-        "I sassi di Matera sono un’attrazione turistica da sempre molto forte. Ma avete mai provato a guardarli da una nuova prospettiva? L’evento “I Sassi finalmente volano”, dal 18 marzo al 1°aprile, propone voli in mongolfiera per ammirare il paesaggio antropologico di quella che è stata definita la città più antica del mondo. 30 mongolfiere che si librano in volo al soffio del vento e fanno vedere e vivere dall’alto l’inusuale paesaggio rupestre della Città dei Sassi, patrimonio dell’umanità Unesco. Inoltre, dal 18 al 24 marzo, è previsto un evento di Light Mobility a favore di una consapevole ed ecosostenibile mobilità turistica.", ""));
+        $questionnaire_B2_1 = $this->createQuestionnaire("B2_CE_devenir_celebres_sur_internet", "B2", "CE", $test, 1);
+        $questionnaire_B2_1->setOriginText("");
+        $questionnaire_B2_1->setMediaInstruction($this->mediaText("", "", ""));
+        $questionnaire_B2_1->setMediaContext($this->mediaText("", "Post su blog", ""));
+        $questionnaire_B2_1->setMediaText($this->mediaText($startTitle . "Come diventare famosi su internet" . $endTitle, "La celeberrima frase “Nel futuro, tutti avranno 15 minuti di celebrità”, pronunciata nel 1968 da Andy Warhol, diventa ogni giorno più profetica su internet. Ecco qualche consiglio su come diventare una ***web celebrity***.@@@• Occhio a chi incontri su internet ed evita di condividere troppe informazioni personali.@@@• Gira un video su di te o sul tuo talento e pubblicalo su YouTube.@@@• Il successo va e viene. Però, se lavori duro, offri contenuti freschi ed incanti i tuoi lettori, ***follower*** e spettatori, sarà più facile mantenerti a galla. Punta ad una fama che ti permetta di avere un articolo dedicato a te su Wikipedia e che ti consenta di poter dire che hai raggiunto una certa notorietà. In questo modo, il tuo successo si terrà in piedi, a meno che qualcuno non ti cancelli ma, ehi, siamo su internet!@@@Adattato da: it.wikihow.com",
+        ""));
         // CREATION QUESTION
-        $questionnaire_B2_27_1 = $this->createQuestion("TQRU", $questionnaire_B2_27);
+        $questionnaire_B2_1_1 = $this->createQuestion("TVF", $questionnaire_B2_1);
         // CREATION SUBQUESTION
-        $questionnaire_B2_27_1_1 = $this->createSubquestion("QRU", $questionnaire_B2_27_1, "**1L’articolo parla di un evento a Matera in cui:**");
-        $questionnaire_B2_27_1_2 = $this->createSubquestion("QRU", $questionnaire_B2_27_1, "**L’evento:**");
-        $questionnaire_B2_27_1_3 = $this->createSubquestion("QRU", $questionnaire_B2_27_1, "**Dal 18 al 24 marzo viene inoltre proposta:**");
+        $questionnaire_B2_1_1_1 = $this->createSubquestion("VF", $questionnaire_B2_1_1, "La celebre frase di Andy Warhol si rivela illusoria per gli utenti di internet");
+        $questionnaire_B2_1_1_2 = $this->createSubquestion("VF", $questionnaire_B2_1_1, "Secondo l’autore il successo su internet è un fenomeno duraturo");
+        $questionnaire_B2_1_1_3 = $this->createSubquestion("VF", $questionnaire_B2_1_1, "Si consiglia di pubblicare sempre nuovi articoli per rimanere visibili");
+        $questionnaire_B2_1_1_4 = $this->createSubquestion("VF", $questionnaire_B2_1_1, "Si consiglia di diffidare da chi si incontra in rete");
+        // CREATION PROPOSITIONS
+        $this->createProposition("VRAI", false, $questionnaire_B2_1_1_1);
+        $this->createProposition("FAUX", true, $questionnaire_B2_1_1_1);
+
+        $this->createProposition("VRAI", false, $questionnaire_B2_1_1_2);
+        $this->createProposition("FAUX", true, $questionnaire_B2_1_1_2);
+
+        $this->createProposition("VRAI", true, $questionnaire_B2_1_1_3);
+        $this->createProposition("FAUX", false, $questionnaire_B2_1_1_3);
+
+        $this->createProposition("VRAI", true, $questionnaire_B2_1_1_4);
+        $this->createProposition("FAUX", false, $questionnaire_B2_1_1_4);
+
+        /*******************************************
+                    QUESTIONNAIRE 6 : TQRU
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_98 = $this->createQuestionnaire("B2_CE_menu_viande_2_personnes", "B2", "CE", $test, 0);
+        $questionnaire_98->setOriginText("Une ou plusieurs réponses correctes");
+        $questionnaire_98->setMediaInstruction($this->mediaText("", "", ""));
+        $questionnaire_98->setMediaContext($this->mediaText("", "Promozione su sito internet", ""));
+        $questionnaire_98->setMediaText($this->mediaText($startTitle . "Menù di carne per due" . $endTitle,
+        "###MENU' DI CARNE PER DUE con ricco antipasto rustico + secondo a scelta + contorno + caffè a 23 Euro! Vivi una serata emozionante nella giungla!### @@@Concediti una serata avventurosa nella giungla senza scappare dalla metropoli con la promozione PoinX per una:@@@Cena per Due a 23 Euro invece di 47 Euro presso il Ristorante Tam Tam.@@@Per scendere nella giungla, la scelta è obbligata: si prende lo scivolo (o le scale per i meno temerari)! Sì perché per accedere al locale dovete proprio tornare bambini e fare una bella e lunga scivolata dove alla fine dello scivolo ad attendervi troverete un enorme KING KONG che vi darà il benvenuto insieme a tanti altri animali sparsi per tutta “la giungla” come Leoni, Avvoltoi, Rapaci e Coccodrilli, tutti lì pronti ad aspettarti!
+Affrettati, perché i coupon sono limitati!@@@Tratto da: www.poinx.it", ""));
+
+        // CREATION QUESTION
+        $questionnaire_98_1 = $this->createQuestion("TQRM", $questionnaire_98);
+        // CREATION SUBQUESTION
+        $questionnaire_98_1_1 = $this->createSubquestion("QRM", $questionnaire_98_1, "La promozione PoinX:");
+        $questionnaire_98_1_2 = $this->createSubquestion("QRM", $questionnaire_98_1, "L'annuncio pubblicizza una cena in un ristorante:");
+        $questionnaire_98_1_3 = $this->createSubquestion("QRM", $questionnaire_98_1, "L'accesso al ristorante:");
+        // CREATION PROPOSITIONS
+        $this->createProposition("è valida per poco tempo", true, $questionnaire_98_1_1);
+        $this->createProposition("interessa solo le coppie", false, $questionnaire_98_1_1);
+        $this->createProposition("prevede un menù per bambini", false, $questionnaire_98_1_1);
+        $this->createProposition("non prevede un menù vegetariano", true, $questionnaire_98_1_1);
+
+        $this->createProposition("in campagna", false, $questionnaire_98_1_2);
+        $this->createProposition("in città", true, $questionnaire_98_1_2);
+        $this->createProposition("di un parco divertimenti", false, $questionnaire_98_1_2);
+        $this->createProposition("con tema \"la giungla\"", true, $questionnaire_98_1_2);
+
+        $this->createProposition("prevede il passaggio in una giungla", false, $questionnaire_98_1_3);
+        $this->createProposition("avviene unicamente attraverso uno scivolo", false, $questionnaire_98_1_3);
+        $this->createProposition("simula l'entrata in una giungla", true, $questionnaire_98_1_3);
+        $this->createProposition("avviene anche attraverso delle scale", true, $questionnaire_98_1_3);
+
+        /*******************************************
+                    QUESTIONNAIRE 6 : TQRU
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_6 = $this->createQuestionnaire("B2_CE_pizza_nel_cuore", "B2", "CE", $test, 0);
+        $questionnaire_6->setOriginText("");
+        $questionnaire_6->setMediaInstruction($this->mediaText("", "", ""));
+        $questionnaire_6->setMediaContext($this->mediaText("", "Pubblicità su sito internet", ""));
+        $questionnaire_6->setMediaText($this->mediaText($startTitle . "Qui pizza nel cuore" . $endTitle,
+        "I Partner del progetto sono aziende leader nel settore, in collaborazione con tecnologi, nutrizionisti e ricercatori universitari, per offrire all’operatore professionale e al consumatore finale risposte serie e strumenti concreti per valorizzare le caratteristiche qualitative e le proprietà nutrizionali di un alimento principe della nostra alimentazione: la pizza. Aderire al progetto “Qui Pizza nel cuore” offre notevoli vantaggi competitivi, significa sposare una filosofia di qualità che abbraccia tutta la filiera della pizza, che rispetta il modello alimentare della dieta mediterranea e pone in primo piano la sensibilità del consumatore per la sana, corretta e gustosa alimentazione. Ogni “Qui Pizza nel cuore” verrà servito, assistito e guidato per massimizzare i benefici, cogliendo tutte le opportunità di crescita verso la propria clientela.@@@Adattato da: www.pizzanelcuore.net", ""));
+
+        // CREATION QUESTION
+        $questionnaire_6_1 = $this->createQuestion("TQRU", $questionnaire_6);
+        // CREATION SUBQUESTION
+        $questionnaire_6_1_1 = $this->createSubquestion("QRU", $questionnaire_6_1, "L'annuncio pubblicitario intende promuovere");
+        $questionnaire_6_1_2 = $this->createSubquestion("QRU", $questionnaire_6_1, "L'annuncio pubblicizza:");
+        // CREATION PROPOSITIONS
+        $this->createProposition("la nuova marca di pizza “Qui Pizza nel cuore”", false, $questionnaire_6_1_1);
+        $this->createProposition("una nuova pizza dietetica “Qui Pizza nel cuore”", false, $questionnaire_6_1_1);
+        $this->createProposition("la pizza secondo l’antica ricetta", false, $questionnaire_6_1_1);
+        $this->createProposition("il nuovo marchio di produzione “Qui Pizza nel cuore”", true, $questionnaire_6_1_1);
+
+        $this->createProposition("una dieta alimentare per perdere peso conservando il gusto", false, $questionnaire_6_1_2);
+        $this->createProposition("un modello per il consumo alimentare equilibrato", true, $questionnaire_6_1_2);
+        $this->createProposition("una nuova gustosa ricetta della pizza", false, $questionnaire_6_1_2);
+        $this->createProposition("una nuova ricetta mediterranea della pizza", false, $questionnaire_6_1_2);
+
+        /*******************************************
+                    QUESTIONNAIRE 38 : TQRU
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_38 = $this->createQuestionnaire("B2_CE_aborder_examen", "B2", "CE", $test, 0);
+        $questionnaire_38->setOriginText("");
+        $questionnaire_38->setMediaInstruction($this->mediaText("", "", ""));
+        $questionnaire_38->setMediaContext($this->mediaText("", "Post su blog studentesco", ""));
+        $questionnaire_38->setMediaText($this->mediaText($startTitle . "Breve decalogo per affrontare un esame" . $endTitle,
+        "• Il \"nemico\" va conosciuto. Andate ad assistere agli esami prima di darli.@@@• Siate gradevoli nell'aspetto. L'abito in questo caso fa il monaco.@@@• Sappiate ascoltare. Aspettate a rispondere finché il docente non ha concluso la domanda.@@@• Siate precisi, non arrampicatevi sugli specchi. Se non sapete la risposta non dite cose inesatte.@@@• Se avete un vuoto mentale, ammettetelo. Chiedete poi al professore di riproporvi successivamente la domanda.@@@Adattato da: www.opsonline.it",
+        ""));
+
+        // CREATION QUESTION
+        $questionnaire_38_1 = $this->createQuestion("TQRU", $questionnaire_38);
+        // CREATION SUBQUESTION
+        $questionnaire_38_1_1 = $this->createSubquestion("QRU", $questionnaire_38_1, "Il decalogo suggerisce di:");
+        $questionnaire_38_1_2 = $this->createSubquestion("QRU", $questionnaire_38_1, "Se non si conosce la risposta, il decalogo suggerisce di:");
+        // CREATION PROPOSITIONS
+        $this->createProposition("studiare le domande più frequenti poste durante gli esami", false, $questionnaire_38_1_1);
+        $this->createProposition("osservare gli esami sostenuti da altri studenti", true, $questionnaire_38_1_1);
+        $this->createProposition("anticipare le risposte per fare una buona impressione", false, $questionnaire_38_1_1);
+        $this->createProposition("assistere agli esami dei colleghi per poter scegliere il giusto abbigliamento", false, $questionnaire_38_1_1);
+
+        $this->createProposition("dare comunque una risposta il più possibile verosimile", false, $questionnaire_38_1_2);
+        $this->createProposition("ragionare sulle domande ed arrivare ad una soluzione logica", false, $questionnaire_38_1_2);
+        $this->createProposition("rinunciare a rispondere subito per evitare un’espressione vaga e incompleta", true, $questionnaire_38_1_2);
+        $this->createProposition("evitare di tacere cercando però di non dare risposte totalmente inesatte", false, $questionnaire_38_1_2);
+
+        /*******************************************
+                    QUESTIONNAIRE 39 : TQRU
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_39 = $this->createQuestionnaire("B2_CE_devenir_pilote", "B2", "CE", $test, 0);
+        $questionnaire_39->setOriginText("");
+        $questionnaire_39->setMediaInstruction($this->mediaText("", "", ""));
+        $questionnaire_39->setMediaContext($this->mediaText("", "Messaggio di benvenuto su sito internet", ""));
+        $questionnaire_39->setMediaText($this->mediaText($startTitle . "Benvenuto in ***Diventa Pilota***" . $endTitle,
+        "Benvenuto in ***Diventa Pilota***, il portale per tutto ciò che vuoi sapere sul diventare pilota d’aereo, e su come atterrare sul lavoro perfetto per te.@@@Questo sito è impostato come un vecchio manuale di rotte, speriamo che tu riesca a far tuo questo manuale così da trovare la tua rotta verso questa bellissima professione. Non vedi l'ora d'iniziare, di immergerti nei libri, di leggere cartine, di metterti un paio di cuffie addosso e parlare alla radio del tuo aereo?@@@Se hai qualsiasi domanda o dubbio puoi scriverci un email a info@diventapilota.it, oppure guarda i nostri contatti.@@@Buona lettura e... Speriamo presto di poterti augurare “buon volo”.@@@Adattato da: www.diventapilota.it",
+        ""));
+
+        // CREATION QUESTION
+        $questionnaire_39_1 = $this->createQuestion("TQRU", $questionnaire_39);
+        // CREATION SUBQUESTION
+        $questionnaire_39_1_1 = $this->createSubquestion("QRU", $questionnaire_39_1, "Il sito dà istruzioni:");
+        $questionnaire_39_1_2 = $this->createSubquestion("QRU", $questionnaire_39_1, "Nel secondo paragrafo:");
+        // CREATION PROPOSITIONS
+        $this->createProposition("tecniche su come effettuare un buon atterraggio", false, $questionnaire_39_1_1);
+        $this->createProposition("generali a chi svolge il lavoro di pilota", false, $questionnaire_39_1_1);
+        $this->createProposition("tecniche a coloro che studiano per essere piloti", false, $questionnaire_39_1_1);
+        $this->createProposition("generali a coloro che vogliono prepararsi al lavoro di pilota", true, $questionnaire_39_1_1);
+
+        $this->createProposition("si suggerisce di consultare un vecchio manuale di percorsi aerei", false, $questionnaire_39_1_2);
+        $this->createProposition("si augura a chi legge di intraprendere la giusta strada per diventare pilota", true, $questionnaire_39_1_2);
+        $this->createProposition("si pubblicizza un manuale che descrive la professione di pilota", false, $questionnaire_39_1_2);
+        $this->createProposition("si consiglia di consultare una guida per la professione di pilota", false, $questionnaire_39_1_2);
+
+        /*******************************************
+                    RESILIATION CONTRAT
+        ********************************************/
+        /*******************************************
+                    QUESTIONNAIRE 6 : QRU
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_B2_6 = $this->createQuestionnaire("B2_CE_resiliation_contrat", "B2", "CE", $test, 0);
+        $questionnaire_B2_6->setOriginText("");
+        $questionnaire_B2_6->setMediaInstruction($this->mediaText("", "Il Sig. Verni scrive al Sig. Pastani per:", ""));
+        $questionnaire_B2_6->setMediaContext($this->mediaText("", "Lettera di disdetta contratto di locazione", ""));
+        $questionnaire_B2_6->setMediaText($this->mediaText($startTitle . "" . $endTitle, "B2_CE_resiliation_contrat", "image"));
+
+        // CREATION QUESTION
+        $questionnaire_B2_6_1 = $this->createQuestion("QRU", $questionnaire_B2_6);
+        // CREATION SUBQUESTION
+        $questionnaire_B2_6_1_1 = $this->createSubquestion("QRU", $questionnaire_B2_6_1, "");
+        // CREATION PROPOSITIONS
+        $this->createProposition("chiedere la sospensione temporanea del contratto di affitto. Si impegna comunque a trovare un sostituto per i mesi in cui sarà assente", false, $questionnaire_B2_6_1_1);
+        $this->createProposition("rescindere il contratto d’affitto con ampio anticipo, e si impegna con il proprietario a inviargli il nome del futuro inquilino", false, $questionnaire_B2_6_1_1);
+        $this->createProposition("richiedere la sospensione anticipata del contratto. Chiede inoltre di essere informato sulla data esatta in cui dovrà lasciare l’appartamento", true, $questionnaire_B2_6_1_1);
+
+       /*******************************************
+                    QUESTIONNAIRE 7 : TVF
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_B2_7 = $this->createQuestionnaire("B2_CE_carte_electorale", "B2", "CE", $test, 1);
+        $questionnaire_B2_7->setOriginText("");
+        $questionnaire_B2_7->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false.", ""));
+        $questionnaire_B2_7->setMediaContext($this->mediaText("", "Avviso in Comune", ""));
+        $questionnaire_B2_7->setMediaText($this->mediaText($startTitle . "Tessera elettorale per le elezioni politiche" . $endTitle, "L’ufficio elettorale comunale resta a  disposizione per quanto segue:@@@• coloro che non avessero ricevuto la tessera elettorale a domicilio, possono ritirarla presso l’ufficio elettorale;@@@• coloro che avessero smarrito, deteriorato o subito il furto della tessera elettorale, possono ottenere un duplicato presentandosi all’ufficio elettorale;@@@• nel caso di smarrimento la domanda di duplicato deve essere corredata da denuncia presentata ai competenti uffici di pubblica sicurezza.",
+        ""));
+        // CREATION QUESTION
+        $questionnaire_B2_7_1 = $this->createQuestion("TVF", $questionnaire_B2_7);
+
+        // CREATION SUBQUESTION
+        $questionnaire_B2_7_1_1 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "Se la tessera non è arrivata per posta, bisogna recarsi all’ufficio elettorale");
+        $questionnaire_B2_7_1_2 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "In caso di tessera elettorale rovinata e inutilizzabile, è possibile ricevere una copia dell’originale a casa");
+        $questionnaire_B2_7_1_3 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "Coloro che avessero perso la tessera elettorale,");
 
         // CREATION PROPOSITIONS
-        $this->createProposition("dall’alto delle mongolfiere vengono lanciati dei sassi contro dei bersagli.", false, $questionnaire_B2_27_1_1);
-        $this->createProposition("dei giri in mongolfiera partono da Matera per visitare la regione della Basilicata.", false, $questionnaire_B2_27_1_1);
-        $this->createProposition("dei giri in mongolfiera vengono organizzati per godere della veduta della città.", true, $questionnaire_B2_27_1_1);
-        $this->createProposition("dei giri in mongolfiera vengono organizzati per promuovere il trasporto ecologico.", false, $questionnaire_B2_27_1_1);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_B2_7_1_1);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_B2_7_1_1);
 
-        $this->createProposition("attrae da diversi anni  molti turisti.", false, $questionnaire_B2_27_1_2);
-        $this->createProposition("è una novità turistica", true, $questionnaire_B2_27_1_2);
-        $this->createProposition("è alla sua ultima edizione", false, $questionnaire_B2_27_1_2);
-        $this->createProposition("fa parte della tradizione della città.", false, $questionnaire_B2_27_1_2);
+        $this->createPropositionVF("", "VRAI", false, $questionnaire_B2_7_1_2);
+        $this->createPropositionVF("", "FAUX", true, $questionnaire_B2_7_1_2);
 
-        $this->createProposition("una visita guidata turistica di Matera, detta anche città dei Sassi.", false, $questionnaire_B2_27_1_3);
-        $this->createProposition("un evento che promuove la raccolta differenziata nella città di Matera.", false, $questionnaire_B2_27_1_3);
-        $this->createProposition("un evento che promuove  un risparmio delle risorse energetiche.", false, $questionnaire_B2_27_1_3);
-        $this->createProposition("un evento che promuove  una gestione ecologica dei visitatori.", true, $questionnaire_B2_27_1_3);
+        $this->createPropositionVF("", "VRAI", true, $questionnaire_B2_7_1_3);
+        $this->createPropositionVF("", "FAUX", false, $questionnaire_B2_7_1_3);
+
+        /*******************************************
+                    QUESTIONNAIRE 10 : TVFNM
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_B2_10 = $this->createQuestionnaire("B2_CE_metiers_bien_payes", "B2", "CE", $test, 1);
+        $questionnaire_B2_10->setOriginText("");
+        $questionnaire_B2_10->setMediaInstruction($this->mediaText("", "", ""));
+        $questionnaire_B2_10->setMediaContext($this->mediaText("", "Articolo su sito internet", ""));
+        $questionnaire_B2_10->setMediaText($this->mediaText($startTitle . "I lavori ben pagati che nessuno ha voglia di fare" . $endTitle, "Sei alla ricerca di un lavoro? Ci sono molti settori che offrono molte opportunità e lavori pagati molto bene, ma dove si fa fatica a trovare personale. Scopri quali sono i lavori con più richieste.@@@Tempo di crisi. Ed è difficile trovare lavoro. Ma è veramente così?@@@Ci sono alcuni settori che offrono molte opportunità di lavoro, anche ben pagate, ma ai giovani non interessano. E così le aziende fanno fatica a trovare personale. Ed allora perché non provare a confrontarsi con queste opportunità invece di lamentarsi che in Italia non c'è lavoro?@@@Tratto da: www.studenti.it
+" ,""));
+        // CREATION QUESTION
+        $questionnaire_B2_10_1 = $this->createQuestion("TVFNM", $questionnaire_B2_10);
+        // CREATION SUBQUESTION
+        $questionnaire_B2_10_1_1 = $this->createSubquestion("VFNM", $questionnaire_B2_10_1, "L’articolo propone lavori ben retribuiti ma fisicamente duri");
+        $questionnaire_B2_10_1_2 = $this->createSubquestion("VFNM", $questionnaire_B2_10_1, "L’articolo denuncia mancanza di forza lavoro disponibile in alcuni settori");
+        $questionnaire_B2_10_1_3 = $this->createSubquestion("VFNM", $questionnaire_B2_10_1, "I giovani si lamentano delle condizioni di lavoro in Italia");
+        // CREATION PROPOSITIONS
+        $this->createProposition("VRAI", false, $questionnaire_B2_10_1_1);
+        $this->createProposition("FAUX", false, $questionnaire_B2_10_1_1);
+        $this->createProposition("ND", true, $questionnaire_B2_10_1_1);
+
+        $this->createProposition("VRAI", true, $questionnaire_B2_10_1_2);
+        $this->createProposition("FAUX", false, $questionnaire_B2_10_1_2);
+        $this->createProposition("ND", false, $questionnaire_B2_10_1_2);
+
+        $this->createProposition("VRAI", false, $questionnaire_B2_10_1_3);
+        $this->createProposition("FAUX", false, $questionnaire_B2_10_1_3);
+        $this->createProposition("ND", true, $questionnaire_B2_10_1_3);
+
+        /*******************************************
+                    QUESTIONNAIRE 10 : TVFNM
+        ********************************************/
+        // CREATION QUESTIONNAIRE
+        $questionnaire_B2_10 = $this->createQuestionnaire("B2_CE_candidature", "B2", "CE", $test, 1);
+        $questionnaire_B2_10->setOriginText("");
+        $questionnaire_B2_10->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette.", ""));
+        $questionnaire_B2_10->setMediaContext($this->mediaText("", "Lettera di motivazione", ""));
+        $questionnaire_B2_10->setMediaText($this->mediaText($startTitle . "Candidatura spontanea" . $endTitle, "Egregio Direttore,@@@vorrei sottoporre alla Sua cortese attenzione la mia candidatura. Sono interessato ad un’eventuale assunzione nella vostra Azienda, leader nel settore della ristorazione. Come potete vedere dal Curriculum vitae che allego, dopo aver conseguito il diploma alberghiero ho svolto un tirocinio per approfondire le conoscenze nel servizio di sala e parlo abbastanza bene il tedesco e l’inglese. Sono disponibile fin da subito anche per un’assunzione a tempo determinato o con contratto di Formazione e Lavoro. Sono altresì disponibile a frequentare eventuali corsi di formazione e a fare trasferte, anche all’estero. Spero pertanto che vogliate considerare la mia candidatura.@@@In attesa di poter avere un colloquio di persona, ringrazio per l’attenzione dedicatami.@@@
+Distinti saluti.@@@Luca Gentile", ""));
+        // CREATION QUESTION
+        $questionnaire_B2_10_1 = $this->createQuestion("TVF", $questionnaire_B2_10);
+        // CREATION SUBQUESTION
+        $questionnaire_B2_10_1_1 = $this->createSubquestion("VF", $questionnaire_B2_10_1, "Nella lettera di candidatura, Luca scrive di avere conseguito un’esperienza formativa come cameriere di sala");
+        $questionnaire_B2_10_1_2 = $this->createSubquestion("VF", $questionnaire_B2_10_1, "Luca ha già operato nel settore della ristorazione");
+        $questionnaire_B2_10_1_3 = $this->createSubquestion("VF", $questionnaire_B2_10_1, "Luca scrive di volere solo un impiego a lungo termine");
+        // CREATION PROPOSITIONS
+        $this->createProposition("VRAI", true, $questionnaire_B2_10_1_1);
+        $this->createProposition("FAUX", false, $questionnaire_B2_10_1_1);
+
+        $this->createProposition("VRAI", true, $questionnaire_B2_10_1_2);
+        $this->createProposition("FAUX", false, $questionnaire_B2_10_1_2);
+
+        $this->createProposition("VRAI", false, $questionnaire_B2_10_1_3);
+        $this->createProposition("FAUX", true, $questionnaire_B2_10_1_3);
 
         /*******************************************
                     MISE EN BASE
@@ -565,7 +404,7 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
     /**
      *
      */
-    protected function createQuestionnaire($title, $level, $skill, $test)
+    protected function createQuestionnaire($title, $level, $skill, $test, $fixedOrder)
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
@@ -583,18 +422,17 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skill);
         $questionnaire->setSkill($skill);
 
-
         $questionnaire->setAuthor();
         $questionnaire->setInstruction();
-                        $questionnaire->setDuration();
-                        $questionnaire->setDomain();
-                        $questionnaire->setSupport();
-                        $questionnaire->setFlow();
-                        $questionnaire->setFocus();
-                        $questionnaire->setSource();
-                        $questionnaire->setListeningLimit(0); //ListeningLimit
-                        $questionnaire->setDialogue(0);
-
+        $questionnaire->setDuration();
+        $questionnaire->setDomain();
+        $questionnaire->setSupport();
+        $questionnaire->setFlow();
+        $questionnaire->setFocus();
+        $questionnaire->setSource();
+        $questionnaire->setListeningLimit(0); //ListeningLimit
+        $questionnaire->setDialogue(0);
+        $questionnaire->setFixedOrder($fixedOrder);
 
         $em->persist($questionnaire);
 
@@ -720,17 +558,18 @@ La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $media = new Media();
 
         if ($type != "") {
+            $media->setName(StaticCommand::textSource($title));
+            $media->setDescription(StaticCommand::textSource($title)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image"));
             $media->setUrl($name.".jpg");
         }
         else
         {
+            $media->setName(StaticCommand::textSource($title.$name));
+            $media->setDescription(StaticCommand::textSource($title.$name)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));
             $media->setUrl(NULL);
         }
-
-        $media->setName(StaticCommand::textSource($title.$name));
-        $media->setDescription(StaticCommand::textSource($title.$name)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
 
         $em->persist($media);
 

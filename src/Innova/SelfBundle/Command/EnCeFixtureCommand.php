@@ -24,7 +24,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
     {
         $this
             ->setName('self:fixtures:ence')
-            ->setDescription('English CE test')
+            ->setDescription('English CE test Pilote 2')
         ;
     }
 
