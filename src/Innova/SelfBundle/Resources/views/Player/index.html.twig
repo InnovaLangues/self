@@ -18,6 +18,14 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        {% if questionnaire.mediaContext is null %}
+        var questionnaireHasContext = false;
+        {% else %}
+        var questionnaireHasContext = true;
+        {% endif %}
+    </script>
+
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/player.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/dragAndDrop.js") }}"></script>
 {% endblock %}

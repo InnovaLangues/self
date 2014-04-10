@@ -8,9 +8,9 @@ $(document).ready(function() {
     **************/
     play_in_progress = false;
 
+
     $("audio").bind("ended", function(){
         play_in_progress = false;
-        sound = $(this).attr('id');
         $(".item_audio_button, video").css("opacity","1");
     });
 
@@ -18,9 +18,7 @@ $(document).ready(function() {
         var progress = $("#progress-bar");
         var situation = $("#situation").get("0");
         situation.addEventListener("timeupdate", function() {
-            // Calculate the slider value
             var value = (100 / situation.duration) * situation.currentTime;
-            // Update the slider value
             progress.attr("aria-valuenow",value).css("width",value+"%");
         });
     }
@@ -36,14 +34,16 @@ $(document).ready(function() {
         var audio = document.getElementById(sound);
 
         if(((listened === null || listened <= limit) && listened > 0 || sound != "situation") && !play_in_progress) {
-            play_in_progress = true;
-            $(".item_audio_button, video").css("opacity","0.5");
-            $(this).css("opacity","1");
-            audio.play();
-
-            if (sound === "situation"){
-                // $("#limit_listening_text").html( pluralizeListen(limit, listened) );
-                updateListenCount();
+            if (sound != "situation"){
+                playMedia(audio, $(this));
+            } else {
+                var context = getSessionContextListenNumber();
+                if (context > 0 || questionnaireHasContext == false) {
+                    playMedia(audio, $(this));
+                    updateListenCount();
+                } else {
+                    alert("Il faut écouter le contexte");
+                }
             }
         }
     });
@@ -99,8 +99,6 @@ $(document).ready(function() {
         }
     });
 
-
-
     /**************
         VIDEO 
     **************/
@@ -116,12 +114,16 @@ $(document).ready(function() {
             var listened = $("#listening_number").html();
 
             if(((listened === null || listened <= limit) && listened > 0 ) && !play_in_progress) {
-                playButton.attr("disabled", "disabled");
-                play_in_progress = true;
-                video.play();
-                $(".item_audio_button").css("opacity","0.5");
-                $("#video").css("opacity","1");
-                updateListenCount();
+
+                var context = getSessionContextListenNumber();
+                if (context > 0 || questionnaireHasContext == false) {
+                    playButton.attr("disabled", "disabled");
+                    playMedia(video, $(this));
+                    $("#video").css("opacity","1");
+                    updateListenCount();
+                } else {
+                    alert("Il faut écouter le contexte");
+                }
             }
         });
 
@@ -143,13 +145,50 @@ $(document).ready(function() {
             if (listened <= limit) {
                 playButton.removeAttr("disabled", "disabled");
             };
-            
         });
 
         videoContainer.bind('contextmenu',function() { return false; });
     }
 
+    $(".context").click(function(){
+        incrementeSessionContextListenNumber();
+    });
+
 });
+
+
+function getSessionContextListenNumber() {
+    var context = 0;
+    $.ajax({
+            url: Routing.generate('sessionContextListenNumber'),
+            async: false,
+            type: 'GET',
+            dataType: 'json'
+    })
+    .done(function(data) {
+        context = data.contextListenNumber;
+    });
+
+    return context;
+}
+
+function incrementeSessionContextListenNumber() {
+     $.ajax({
+        url: Routing.generate('incrementeSessionContextListenNumber'),
+        type: 'PUT',
+        dataType: 'json'
+    });
+
+     return true;
+}
+
+
+function playMedia(media, btn){
+    play_in_progress = true;
+    $(".item_audio_button").css("opacity","0.5");
+    btn.css("opacity","1");
+    media.play();
+}
 
 /**************
    CHECK BADGES
@@ -217,16 +256,12 @@ function getListenCount() {
         };
 
         $('#listens-counter').removeClass('hidden');
-    })
-    .fail(function() {
-        // console.log('Ajax error 1');
     });
 }
 
 /**************
    AJAX REQUEST TO INCREMENT LISTENING COUNT
 **************/
-
 function updateListenCount() {
     $.ajax({
         url: Routing.generate('incrementeSessionSituationListenNumber'),
@@ -241,9 +276,6 @@ function updateListenCount() {
         var limit = $("#limit_listening").html();
         var listened = data.situationListenNumber;
         $("#limit_listening_text").html( pluralizeListen(limit, listened));
-    })
-    .fail(function() {
-        // console.log('Ajax error 3');
     });
 }
 
@@ -251,27 +283,25 @@ function updateListenCount() {
 /**************
    AJAX REQUEST TO RESET LISTENING COUNT
 **************/
-
 function resetListenCount() {
     $.ajax({
          url: Routing.generate('resetSessionSituationListenNumber'),
          async: false,
          type: 'PUT',
          dataType: 'json'
-    })
-    .done(function(data) {
-        var reste = data.situationListenNumber;
-    })
-    .fail(function() {
-        // console.log('Ajax error session');
+    });
+
+    $.ajax({
+         url: Routing.generate('resetSessionContextListenNumber'),
+         async: false,
+         type: 'PUT',
+         dataType: 'json'
     });
 }
-
 
 /**************
     Timestamp function
 **************/
-
 function timestamp(){
     return Math.round((new Date()).getTime() / 1000);
 }
@@ -282,8 +312,4 @@ function timestamp(){
 function uncheckEverything(){
     $('input[type="radio"],input[type="checkbox"]').prop('checked', false);
 }
-
-
-
-
 
