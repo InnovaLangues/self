@@ -114,12 +114,16 @@ $(document).ready(function() {
             var listened = $("#listening_number").html();
 
             if(((listened === null || listened <= limit) && listened > 0 ) && !play_in_progress) {
-                playButton.attr("disabled", "disabled");
-                play_in_progress = true;
-                video.play();
-                $(".item_audio_button").css("opacity","0.5");
-                $("#video").css("opacity","1");
-                updateListenCount();
+
+                var context = getSessionContextListenNumber();
+                if (context > 0 || questionnaireHasContext == false) {
+                    playButton.attr("disabled", "disabled");
+                    playMedia(video, $(this));
+                    $("#video").css("opacity","1");
+                    updateListenCount();
+                } else {
+                    alert("Il faut écouter le contexte");
+                }
             }
         });
 
