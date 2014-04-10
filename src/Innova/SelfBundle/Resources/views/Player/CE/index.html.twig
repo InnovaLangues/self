@@ -1,11 +1,10 @@
 <div id="contexte-icon">
-    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" />
+    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" rel="tooltip" data-original-title="Contexte"/>
 </div>
 
 <div id="situation-icon">
-    <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" />
+    <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" rel="tooltip" data-original-title="Objet de la question" />
 </div>
-
 
 <div id="left-container-CE" class="col-md-5 left-container">
     {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
