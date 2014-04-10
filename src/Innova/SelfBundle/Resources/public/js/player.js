@@ -49,7 +49,7 @@ $(document).ready(function() {
     });
 
     /**************
-        FORM  
+        FORM
      **************/
 
     timestampIn = timestamp();
@@ -67,12 +67,12 @@ $(document).ready(function() {
     $(":checkbox, :radio").change(function(){
         checkBadges();
     });
-   
+
 
     /**************
         Fix for checkboxes group required
     **************/
-    
+
     var chbxs = $(':checkbox[required]');
     var namedChbxs = {};
     chbxs.each(function(){
@@ -91,7 +91,7 @@ $(document).ready(function() {
     });
 
     /**************
-        bounce the badges 
+        bounce the badges
     **************/
     $(".submit-container").click(function(){
         if($("#submit").is(":disabled")) {
@@ -100,7 +100,7 @@ $(document).ready(function() {
     });
 
     /**************
-        VIDEO 
+        VIDEO
     **************/
     if($("#video").length > 0){
         var progress = $("#progress-bar");
@@ -150,7 +150,7 @@ $(document).ready(function() {
         videoContainer.bind('contextmenu',function() { return false; });
     }
 
-    $(".context").click(function(){
+    $("#contexte-icon").click(function(){
         incrementeSessionContextListenNumber();
     });
 
@@ -204,9 +204,9 @@ function checkBadges(){
         } else {
             badge.removeClass("subquestion-ok").addClass("subquestion-not-ok");
             incomplete_tab++;
-        } 
+        }
     });
-    
+
     if (incomplete_tab == 0) {
         $("#submit").removeAttr("disabled", "disabled");
     } else {
