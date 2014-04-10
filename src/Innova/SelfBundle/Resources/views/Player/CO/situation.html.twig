@@ -17,7 +17,7 @@
 <div id="situation-CO" class="situation">
     {% if questionnaire.mediaText is not null %}
         {% if questionnaire.mediaText.mediaType.name == "audio" %}
-            {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Situation de départ") }}
+            {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Objet de la question") }}
         {% elseif questionnaire.mediaText.mediaType.name == "video" %}
             {{ macros.video("situation", questionnaire.mediaText, questionnaire.ListeningLimit) }}
         {% endif %}

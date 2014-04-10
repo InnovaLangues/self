@@ -11,7 +11,7 @@
         <div class="proposition-CO">
             {{ macros.inputs(subquestion, proposition) }}
             {% if proposition.media.mediaType.name == "audio" %}
-                {{ macros.audio("proposition-"~ proposition.id, proposition.media, "audio"~bulleCount~".png", 90, 0, "Proposition de réponse "~ bulleCount ) }}
+                {{ macros.audio("proposition-"~ proposition.id, proposition.media, "audio"~bulleCount~".png", 90, 0, "Proposition de réponse" ) }}
             {% elseif proposition.media.mediaType.name == "texte" %}
                 <label for="input-proposition{{ proposition.id }}" class="proposition-CO-text">
                 {{ macros.translateVF(proposition.media.description, test.language.name) }}
