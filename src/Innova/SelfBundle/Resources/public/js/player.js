@@ -42,7 +42,7 @@ $(document).ready(function() {
                     playMedia(audio, $(this));
                     updateListenCount();
                 } else {
-                    alert("Il faut écouter le contexte");
+                    $('#modal-listen-context').modal('show'); 
                 }
             }
         }
@@ -122,7 +122,7 @@ $(document).ready(function() {
                     $("#video").css("opacity","1");
                     updateListenCount();
                 } else {
-                    alert("Il faut écouter le contexte");
+                    $('#modal-listen-context').modal('show'); 
                 }
             }
         });
@@ -152,6 +152,7 @@ $(document).ready(function() {
 
     $("#contexte-icon").click(function(){
         incrementeSessionContextListenNumber();
+        $('#modal-listen-context').modal('show'); 
     });
 
 });
