@@ -37,7 +37,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("Italien a1", "Italian");
+        $test = $this->createTest("Italien a1 A1", "Italian");
 
         // To have CSS form title. #166
         $startTitle = "<span class=\"title-situation\">";
@@ -64,9 +64,9 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION QUESTION
         $questionnaire_1_1 = $this->createQuestion("TVF", $questionnaire_1);
         // CREATION SUBQUESTION
-        $questionnaire_1_1_1 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "L’offerta è valida solo in alcune città.");
-        $questionnaire_1_1_2 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "Con il biglietto del treno il parcheggio per l’automobile è gratuito.");
-        $questionnaire_1_1_3 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "Per avere tariffa speciale è necessario presentare il biglietto del treno.");
+        $questionnaire_1_1_1 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "L’offerta è valida solo in alcune città");
+        $questionnaire_1_1_2 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "Con il biglietto del treno il parcheggio per l’automobile è gratuito");
+        $questionnaire_1_1_3 = $this->createSubquestionVF("VF", $questionnaire_1_1, "", "Per avere la tariffa speciale è necessario presentare il biglietto del treno");
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", true, $questionnaire_1_1_1);
         $this->createPropositionVF("", "FAUX", false, $questionnaire_1_1_1);
@@ -84,17 +84,16 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $questionnaire_2 = $this->createQuestionnaire("A1_CE_carsharing", "A1", "CE", $test, 0);
         $questionnaire_2->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_2->setMediaInstruction($this->mediaText("", "Quali informazioni sono presenti nel testo?", ""));
-        $questionnaire_2->setMediaContext($this->mediaText("", "Pubblicità sul sito internet", ""));
+        $questionnaire_2->setMediaContext($this->mediaText("", "Pubblicità su sito internet", ""));
         $questionnaire_2->setMediaText($this->mediaText($startTitle . "Car sharing, la promozione estiva" . $endTitle, "A1_CE_carsharing", "image"));
         // CREATION QUESTION
         $questionnaire_2_1 = $this->createQuestion("QRM", $questionnaire_2);
         // CREATION SUBQUESTION
         $questionnaire_2_1_1 = $this->createSubquestion("QRM", $questionnaire_2_1, "");
         // CREATION PROPOSITIONS
-        $this->createProposition("Giulio scrive a Matteo dopo un lungo viaggio.", true, $questionnaire_2_1_1);
-        $this->createProposition("Giulio racconta che l’aereo è arrivato in ritardo.", false, $questionnaire_2_1_1);
-        $this->createProposition("Giulio visiterà la città accompagnato da una nuova amica.", true, $questionnaire_2_1_1);
-        $this->createProposition("Giulio ha iniziato uno stage.", false, $questionnaire_2_1_1);
+        $this->createProposition("Per usare", true, $questionnaire_2_1_1);
+        $this->createProposition("Carsharing", false, $questionnaire_2_1_1);
+        $this->createProposition("devi iscriverti sul sito web", true, $questionnaire_2_1_1);
 
         /*******************************************
                     QUESTIONNAIRE 3 : QRM
@@ -128,7 +127,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $questionnaire_4_1 = $this->createQuestion("TVF", $questionnaire_4);
         // CREATION SUBQUESTION
         $questionnaire_4_1_1 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca chiude per la pausa pranzo");
-        $questionnaire_4_1_2 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca č aperta tutte le mattine");
+        $questionnaire_4_1_2 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca è aperta tutte le mattine");
         $questionnaire_4_1_3 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "In biblioteca è possibile navigare su internet senza pagare.");
         $questionnaire_4_1_4 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "Non è permesso restare in biblioteca a studiare");
         // CREATION PROPOSITIONS
@@ -206,13 +205,15 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION QUESTIONNAIRE
         $questionnaire_9 = $this->createQuestionnaire("A1_CE_train_enfants", "A1", "CE", $test, 0);
         $questionnaire_9->setOriginText("Une ou plusieurs réponses correctes");
-        $questionnaire_9->setMediaInstruction($this->mediaText("", "Quali informazioni sono presenti nel testo? ", ""));
+        $questionnaire_9->setMediaInstruction($this->mediaText("", "Quali informazioni sono presenti nel testo?", ""));
         $questionnaire_9->setMediaContext($this->mediaText("", "Pubblicità informativa in stazione", ""));
-        $questionnaire_9->setMediaText($this->mediaText($startTitle . "Su Italo i bambini fino a 4 anni viaggiano gratuitamente e devono essere accompagnati da un adulto. Quelli dai 5 ai 14 anni possono viaggiare da soli ma i genitori devono richiedere il Servizio Hostess. Per i ragazzi dai 15 anni ai 18 anni sono previsti ottimi sconti sulle offerte Base ed Economy.@@@Adattato da: www.italotreno.it" . $endTitle, "Su Italo grandi vantaggi per i piccoli!", ""));
+        $questionnaire_9->setMediaText($this->mediaText(
+        $startTitle . "Su Italo grandi vantaggi per i piccoli!" . $endTitle,
+        "Su Italo i bambini fino a 4 anni viaggiano gratuitamente e devono essere accompagnati da un adulto. Quelli dai 5 ai 14 anni possono viaggiare da soli ma i genitori devono richiedere il Servizio Hostess. Per i ragazzi dai 15 anni ai 18 anni sono previsti ottimi sconti sulle offerte Base ed Economy.@@@Adattato da: www.italotreno.it", ""));
         // CREATION QUESTION
-        $questionnaire_9_1 = $this->createQuestion("QRU", $questionnaire_9);
+        $questionnaire_9_1 = $this->createQuestion("QRM", $questionnaire_9);
         // CREATION SUBQUESTION
-        $questionnaire_9_1_1 = $this->createSubquestion("QRU", $questionnaire_9_1, "Il servizio permette di");
+        $questionnaire_9_1_1 = $this->createSubquestion("QRM", $questionnaire_9_1, "Il servizio permette di");
 
         // CREATION PROPOSITIONS
         $this->createProposition("I bambini che hanno meno di quattro anni non devono pagare il  biglietto", true, $questionnaire_9_1_1);
@@ -372,7 +373,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION SUBQUESTION
         $questionnaire_17_1_1 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "La casa di Giorgio è lontana da quella di Lucia e Sara");
         $questionnaire_17_1_2 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "Per andare alla festa Sara deve prendere il tram");
-        $questionnaire_17_1_3 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "Il Bar Sport si trova dopo piazza Verd");
+        $questionnaire_17_1_3 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "Il Bar Sport si trova dopo piazza Verdi");
         $questionnaire_17_1_4 = $this->createSubquestionVF("VF", $questionnaire_17_1, "", "La casa di Giorgio si trova al lato del panificio");
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", false, $questionnaire_17_1_1);
@@ -401,7 +402,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $questionnaire_19_1 = $this->createQuestion("TVF", $questionnaire_19);
         // CREATION SUBQUESTION
         $questionnaire_19_1_1 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Anita esce spesso con Luca");
-        $questionnaire_19_1_2 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "AAnita non va mai a correre");
+        $questionnaire_19_1_2 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Anita non va mai a correre");
         $questionnaire_19_1_3 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Le lezioni di Anita sono quasi sempre la mattina");
         $questionnaire_19_1_4 = $this->createSubquestionVF("VF", $questionnaire_19_1, "", "Anita lavora solo la sera");
 

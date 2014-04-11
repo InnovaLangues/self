@@ -37,7 +37,7 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("Italien b2", "Italian");
+        $test = $this->createTest("Italien b2 B2", "Italian");
 
         // To have CSS form title. #166
         $startTitle = "<span class=\"title-situation\">";
@@ -57,8 +57,8 @@ class Itceb2FixtureCommand extends ContainerAwareCommand
         $questionnaire_B2_9->setOriginText("");
         $questionnaire_B2_9->setMediaInstruction($this->mediaText("", "", ""));
         $questionnaire_B2_9->setMediaContext($this->mediaText("", "Articolo su sito internet", ""));
-        $questionnaire_B2_9->setMediaText($this->mediaText($startTitle . "Occhi su Saturno" . $endTitle, "Sabato18 Maggio,una sera per mostrare Saturno all’Italia
-La sera del 18 Maggio cerca l'evento a te più vicino e scopri dal vivo Saturno, senza dubbio il più bel pianeta del Sistema Solare, generazioni di astronomi hanno posato gli occhi su di lui. Ora grazie alle sonde spaziali abbiamo una visione senza precedenti di Saturno, dei suoi anelli e dei suoi satelliti. Ma lo splendore di questo pianeta è folgorante anche se osservato con un piccolo telescopio.@@@Tratto da: www.occhisusaturno.it",
+        $questionnaire_B2_9->setMediaText($this->mediaText($startTitle . "Occhi su Saturno" . $endTitle, "Sabato 18 maggio, una sera per mostrare Saturno all’Italia.
+La sera del 18 maggio cerca l'evento a te più vicino e scopri dal vivo Saturno, senza dubbio il più bel pianeta del Sistema Solare, generazioni di astronomi hanno posato gli occhi su di lui. Ora grazie alle sonde spaziali abbiamo una visione senza precedenti di Saturno, dei suoi anelli e dei suoi satelliti. Ma lo splendore di questo pianeta è folgorante anche se osservato con un piccolo telescopio.@@@Tratto da: www.occhisusaturno.it",
 ""));
         // CREATION QUESTION
         $questionnaire_B2_9_1 = $this->createQuestion("TVFNM", $questionnaire_B2_9);
@@ -197,7 +197,7 @@ Affrettati, perché i coupon sono limitati!@@@Tratto da: www.poinx.it", ""));
         // CREATION QUESTION
         $questionnaire_6_1 = $this->createQuestion("TQRU", $questionnaire_6);
         // CREATION SUBQUESTION
-        $questionnaire_6_1_1 = $this->createSubquestion("QRU", $questionnaire_6_1, "L'annuncio pubblicitario intende promuovere");
+        $questionnaire_6_1_1 = $this->createSubquestion("QRU", $questionnaire_6_1, "L'annuncio pubblicitario intende promuovere:");
         $questionnaire_6_1_2 = $this->createSubquestion("QRU", $questionnaire_6_1, "L'annuncio pubblicizza:");
         // CREATION PROPOSITIONS
         $this->createProposition("la nuova marca di pizza “Qui Pizza nel cuore”", false, $questionnaire_6_1_1);
@@ -304,7 +304,7 @@ Affrettati, perché i coupon sono limitati!@@@Tratto da: www.poinx.it", ""));
         // CREATION SUBQUESTION
         $questionnaire_B2_7_1_1 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "Se la tessera non è arrivata per posta, bisogna recarsi all’ufficio elettorale");
         $questionnaire_B2_7_1_2 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "In caso di tessera elettorale rovinata e inutilizzabile, è possibile ricevere una copia dell’originale a casa");
-        $questionnaire_B2_7_1_3 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "Coloro che avessero perso la tessera elettorale,");
+        $questionnaire_B2_7_1_3 = $this->createSubquestionVF("VF", $questionnaire_B2_7_1, "", "Coloro che avessero perso la tessera elettorale, devono esporre denuncia alla polizia");
 
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", true, $questionnaire_B2_7_1_1);
@@ -352,8 +352,8 @@ Affrettati, perché i coupon sono limitati!@@@Tratto da: www.poinx.it", ""));
         $questionnaire_B2_10 = $this->createQuestionnaire("B2_CE_candidature", "B2", "CE", $test, 1);
         $questionnaire_B2_10->setOriginText("");
         $questionnaire_B2_10->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere, false o non dette.", ""));
-        $questionnaire_B2_10->setMediaContext($this->mediaText("", "Lettera di motivazione", ""));
-        $questionnaire_B2_10->setMediaText($this->mediaText($startTitle . "Candidatura spontanea" . $endTitle, "Egregio Direttore,@@@vorrei sottoporre alla Sua cortese attenzione la mia candidatura. Sono interessato ad un’eventuale assunzione nella vostra Azienda, leader nel settore della ristorazione. Come potete vedere dal Curriculum vitae che allego, dopo aver conseguito il diploma alberghiero ho svolto un tirocinio per approfondire le conoscenze nel servizio di sala e parlo abbastanza bene il tedesco e l’inglese. Sono disponibile fin da subito anche per un’assunzione a tempo determinato o con contratto di Formazione e Lavoro. Sono altresì disponibile a frequentare eventuali corsi di formazione e a fare trasferte, anche all’estero. Spero pertanto che vogliate considerare la mia candidatura.@@@In attesa di poter avere un colloquio di persona, ringrazio per l’attenzione dedicatami.@@@
+        $questionnaire_B2_10->setMediaContext($this->mediaText("", "Candidatura spontanea", ""));
+        $questionnaire_B2_10->setMediaText($this->mediaText($startTitle . "" . $endTitle, "Egregio Direttore,@@@vorrei sottoporre alla Sua cortese attenzione la mia candidatura. Sono interessato ad un’eventuale assunzione nella vostra Azienda, leader nel settore della ristorazione. Come potete vedere dal Curriculum vitae che allego, dopo aver conseguito il diploma alberghiero ho svolto un tirocinio per approfondire le conoscenze nel servizio di sala e parlo abbastanza bene il tedesco e l’inglese. Sono disponibile fin da subito anche per un’assunzione a tempo determinato o con contratto di Formazione e Lavoro. Sono altresì disponibile a frequentare eventuali corsi di formazione e a fare trasferte, anche all’estero. Spero pertanto che vogliate considerare la mia candidatura.@@@In attesa di poter avere un colloquio di persona, ringrazio per l’attenzione dedicatami.@@@
 Distinti saluti.@@@Luca Gentile", ""));
         // CREATION QUESTION
         $questionnaire_B2_10_1 = $this->createQuestion("TVF", $questionnaire_B2_10);

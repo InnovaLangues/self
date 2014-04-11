@@ -37,7 +37,7 @@ class Itceb1FixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("Italien b1", "Italian");
+        $test = $this->createTest("Italien b1 B1", "Italian");
 
         // To have CSS form title. #166
         $startTitle = "<span class=\"title-situation\">";
@@ -150,7 +150,7 @@ class Itceb1FixtureCommand extends ContainerAwareCommand
         // CREATION SUBQUESTION
         $questionnaire_B1_11_1_1 = $this->createSubquestionVF("VF", $questionnaire_B1_11_1, "", "Nel racconto di viaggio si descrivono alcuni  aspetti pratici dell’organizzazione");
         $questionnaire_B1_11_1_2 = $this->createSubquestionVF("VF", $questionnaire_B1_11_1, "", "L’autrice sostiene che sia complesso descrivere le forti emozioni provate durante il viaggio");
-        $questionnaire_B1_11_1_3 = $this->createSubquestionVF("VF", $questionnaire_B1_11_1, "", "Per l’autrice i motivi che spronano a partire sono");
+        $questionnaire_B1_11_1_3 = $this->createSubquestionVF("VF", $questionnaire_B1_11_1, "", "Per l’autrice i motivi che spronano a partire sono profondi, inconsci e forti");
 
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", false, $questionnaire_B1_11_1_1);
@@ -219,8 +219,7 @@ class Itceb1FixtureCommand extends ContainerAwareCommand
         $questionnaire_27->setMediaContext($this->mediaText("", "Post su blog", ""));
         $questionnaire_27->setMediaText($this->mediaText($startTitle . "Con ***Cene in Cielo*** si mangia sospesi nel vuoto" . $endTitle, "Talvolta a rendere speciale la cena non sono né gli ingredienti né l’abilità del cuoco, ma l’insolito panorama di cui potrete godere mentre cenate  sospesi a 50 metri d’altezza.
 Se siete tra coloro che non temono l’avventura ma anzi più di qualsiasi cosa detestano la solita routine quotidiana e soprattutto non soffrite di vertigini, potreste cenare nel vuoto a circa 50 metri d’altezza, sullo sfondo di splendidi panorami.@@@
-Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializzata nell’organizzazione di cene, aperitivi e feste a bordo di una piattaforma che, insieme a chef, camerieri ed ospiti, viene sollevata ad altezze adrenaliniche. Sia chiaro, la cena è ad alto tasso di divertimento ma a rischio zero: gli ospiti cenano attaccati alle proprie sedie protetti dalle cinture di sicurezza e anche il personale, assicurato a delle corde, lavora in tutta tranquillità.
-", ""));
+Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializzata nell’organizzazione di cene, aperitivi e feste a bordo di una piattaforma che, insieme a chef, camerieri ed ospiti, viene sollevata ad altezze adrenaliniche. Sia chiaro, la cena è ad alto tasso di divertimento ma a rischio zero: gli ospiti cenano attaccati alle proprie sedie protetti dalle cinture di sicurezza e anche il personale, assicurato a delle corde, lavora in tutta tranquillità.@@@Adattato da: www.nuovetendenze.net", ""));
         // CREATION QUESTION
         $questionnaire_27_1 = $this->createQuestion("TVF", $questionnaire_27);
         // CREATION SUBQUESTION
@@ -279,7 +278,7 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         // CREATION SUBQUESTION
         $questionnaire_23_1_1 = $this->createSubquestionVF("VF", $questionnaire_23_1, "", "Il volontario Unicef svolge la sua azione unicamente nei paesi in via di sviluppo");
         $questionnaire_23_1_2 = $this->createSubquestionVF("VF", $questionnaire_23_1, "", "I volontari Unicef sono impiegati nella raccolta di denaro per finanziare  progetti");
-        $questionnaire_23_1_3 = $this->createSubquestionVF("VF", $questionnaire_23_1, "", "****Younicef*** accoglie tra i suoi volontari persone di tutte le età");
+        $questionnaire_23_1_3 = $this->createSubquestionVF("VF", $questionnaire_23_1, "", "***Younicef*** accoglie tra i suoi volontari persone di tutte le età");
 
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", false, $questionnaire_23_1_1);
@@ -390,7 +389,7 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         $questionnaire_31->setOriginText("");
         $questionnaire_31->setMediaInstruction($this->mediaText("", "Indica se le affermazioni sono vere o false", ""));
         $questionnaire_31->setMediaContext($this->mediaText("", "Pubblicità di Poste Italiane", ""));
-        $questionnaire_31->setMediaText($this->mediaText($startTitle . "Diventa Volontario. Dai anche tu un prezioso contributo per salvare la vita di un bambino." . $endTitle,
+        $questionnaire_31->setMediaText($this->mediaText($startTitle . "" . $endTitle,
 "“Dimmi quando” è il servizio che ti permette di scegliere il giorno esatto della settimana in cui ricevere le tue raccomandate e assicurate.@@@Con “Chiamami” Poste Italiane ti riporta la corrispondenza da firmare che non hai ritirato perché eri assente. È sufficiente chiamare il numero indicato sull’avviso di giacenza nelle zone in cui il servizio è attivo. Attivare i servizi per il destinatario è semplice e puoi scegliere tu la modalità che preferisci; richiedili presso l’ufficio postale o al tuo portalettere fissando un appuntamento al numero 803.160 oppure direttamente on-line sul sito poste.it.@@@Tratto da: www.poste.it", ""));
         // CREATION QUESTION
         $questionnaire_31_1 = $this->createQuestion("TVF", $questionnaire_31);
