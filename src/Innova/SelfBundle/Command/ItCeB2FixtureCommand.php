@@ -80,46 +80,6 @@ La sera del 18 maggio cerca l'evento a te più vicino e scopri dal vivo Saturno,
         $this->createProposition("ND", false, $questionnaire_B2_9_1_3);
 
         /*******************************************
-                    QUESTIONNAIRE 26 : APPTT
-        ********************************************/
-        // CREATION QUESTIONNAIRE
-        $questionnaire_B2_26 = $this->createQuestionnaire("B2_CE_voisin_greta", "B2", "CE", $test, 0);
-        $questionnaire_B2_26->setOriginText("Associez chaque mot à son sens d'après le texte proposé");
-        $questionnaire_B2_26->setMediaInstruction($this->mediaText("", "Che cosa significano le parole date nel testo che hai letto?", ""));
-        $questionnaire_B2_26->setMediaContext($this->mediaText("", "Post su blog", ""));
-        $questionnaire_B2_26->setMediaText($this->mediaText($startTitle . "Riflessione in treno" . $endTitle, "In treno mi piace chiudere gli occhi e ascoltare la gente che urla faccende private, intimi segreti a tutta la carrozza. Non per quello che dicono ma per come lo dicono. Per una rubrica come questa le ferrovie sono una grande fonte di ispirazione. Solo che dovremmo cambiare il Titolo: invece che tre minuti una parola, tre ore e migliaia di parole, nel viaggio solo da Milano a Roma. Molte sono superflue ma alcune sono sintomatiche. Il mio vicino nel corso interminabile di una telefonata, più o meno a distanza Parma-Firenze, continuava a ripetere agitato: ma si figuri, ma si figuri, ma si figuri! Non so cosa si figurasse il misterioso interlocutore: io mi figuravo un figuro che temeva una figuraccia.@@@Tratto da: www.corriere.it", ""));
-        // CREATION QUESTION
-        $questionnaire_B2_26_1 = $this->createQuestion("APPTT", $questionnaire_B2_26);
-        // CREATION SUBQUESTION
-        $questionnaire_B2_26_1_1 = $this->createSubquestion("APPTT", $questionnaire_B2_26_1, "Figurarsi");
-        $questionnaire_B2_26_1_2 = $this->createSubquestion("APPTT", $questionnaire_B2_26_1, "Figuro");
-        $questionnaire_B2_26_1_3 = $this->createSubquestion("APPTT", $questionnaire_B2_26_1, "Figuraccia");
-        // CREATION PROPOSITIONS
-        $this->createProposition("Personaggio famoso", false, $questionnaire_B2_26_1_1);
-        $this->createProposition("Personaggio famoso", false, $questionnaire_B2_26_1_2);
-        $this->createProposition("Personaggio famoso", false, $questionnaire_B2_26_1_3);
-
-        $this->createProposition("Buona impressione", false, $questionnaire_B2_26_1_1);
-        $this->createProposition("Buona impressione", false, $questionnaire_B2_26_1_2);
-        $this->createProposition("Buona impressione", false, $questionnaire_B2_26_1_3);
-
-        $this->createProposition("Individuo losco", false, $questionnaire_B2_26_1_1);
-        $this->createProposition("Individuo losco", true, $questionnaire_B2_26_1_2);
-        $this->createProposition("Individuo losco", false, $questionnaire_B2_26_1_3);
-
-        $this->createProposition("Discredito", false, $questionnaire_B2_26_1_1);
-        $this->createProposition("Discredito", false, $questionnaire_B2_26_1_2);
-        $this->createProposition("Discredito", true, $questionnaire_B2_26_1_3);
-
-        $this->createProposition("Rappresentare", false, $questionnaire_B2_26_1_1);
-        $this->createProposition("Rappresentare", false, $questionnaire_B2_26_1_2);
-        $this->createProposition("Rappresentare", false, $questionnaire_B2_26_1_3);
-
-        $this->createProposition("Immaginare", true, $questionnaire_B2_26_1_1);
-        $this->createProposition("Immaginare", false, $questionnaire_B2_26_1_2);
-        $this->createProposition("Immaginare", false, $questionnaire_B2_26_1_3);
-
-        /*******************************************
                     QUESTIONNAIRE 1 : TVFNM
         ********************************************/
         // CREATION QUESTIONNAIRE
