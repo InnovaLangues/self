@@ -37,7 +37,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("Italien a1 A1", "Italian");
+        $test = $this->createTest("Italien a1", "Italian");
 
         // To have CSS form title. #166
         $startTitle = "<span class=\"title-situation\">";
@@ -81,7 +81,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
            A TERMINER         QUESTIONNAIRE : QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_2 = $this->createQuestionnaire("A1_CE_carsharing", "A1", "CE", $test, 0);
+        $questionnaire_2 = $this->createQuestionnaire("A1_CE_carsharing", "A1", "CE", $test, 1);
         $questionnaire_2->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_2->setMediaInstruction($this->mediaText("", "Quali informazioni sono presenti nel testo?", ""));
         $questionnaire_2->setMediaContext($this->mediaText("", "Pubblicità su sito internet", ""));
@@ -99,7 +99,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 3 : QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_3 = $this->createQuestionnaire("A1_CE_vie_tokyo", "A1", "CE", $test, 0);
+        $questionnaire_3 = $this->createQuestionnaire("A1_CE_vie_tokyo", "A1", "CE", $test, 1);
         $questionnaire_3->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_3->setMediaInstruction($this->mediaText("", "Giulio:", ""));
         $questionnaire_3->setMediaContext($this->mediaText("", "E-mail ad un amico", ""));
@@ -203,7 +203,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 9 : QRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_9 = $this->createQuestionnaire("A1_CE_train_enfants", "A1", "CE", $test, 0);
+        $questionnaire_9 = $this->createQuestionnaire("A1_CE_train_enfants", "A1", "CE", $test, 1);
         $questionnaire_9->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_9->setMediaInstruction($this->mediaText("", "Quali informazioni sono presenti nel testo?", ""));
         $questionnaire_9->setMediaContext($this->mediaText("", "Pubblicità informativa in stazione", ""));
@@ -247,7 +247,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 11 : QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_11 = $this->createQuestionnaire("A1_CE_mail_vacances", "A1", "CE", $test, 0);
+        $questionnaire_11 = $this->createQuestionnaire("A1_CE_mail_vacances", "A1", "CE", $test, 1);
         $questionnaire_11->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_11->setMediaInstruction($this->mediaText("", "Giulio:", ""));
         $questionnaire_11->setMediaContext($this->mediaText("", "E-mail al papà", ""));
@@ -291,7 +291,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 13 : QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_13 = $this->createQuestionnaire("A1_CE_livres_universite", "A1", "CE", $test, 0);
+        $questionnaire_13 = $this->createQuestionnaire("A1_CE_livres_universite", "A1", "CE", $test, 1);
         $questionnaire_13->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_13->setMediaInstruction($this->mediaText("", "Quali informazioni sono presenti nel testo?", ""));
         $questionnaire_13->setMediaContext($this->mediaText("", "Annuncio all’università", ""));

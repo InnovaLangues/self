@@ -4,7 +4,7 @@
 
 #item-count-container {
 	margin-top: -15px;
-	
+
 }
 
 #item-count{
@@ -70,7 +70,7 @@
 	padding: 5px 5px 0 5px;
 	max-height: 500px;
 	overflow: auto;
-	text-align: justify;
+/*	text-align: justify;*/
 }
 
 #situation-CE img, .situation video {
@@ -130,7 +130,7 @@
 	color:white;
 	background-color: #E37E71;
 	border-left:none;
-} 
+}
 
 .tab-pane {
 	background-color: #E37E71;
@@ -209,7 +209,7 @@ input.proposition-input {
 }
 
 input.proposition-input, label{
-	cursor: pointer; 
+	cursor: pointer;
 	cursor: hand;
 }
 
@@ -257,7 +257,7 @@ input.proposition-input, label{
 }
 
 /**********************************
-	Plusieurs ou une seule réponses correctes 
+	Plusieurs ou une seule réponses correctes
 ***********************************/
 
 .info-right-answer {

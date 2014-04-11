@@ -37,7 +37,7 @@ class Itceb1FixtureCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         // CREATION TEST
-        $test = $this->createTest("Italien b1 B1", "Italian");
+        $test = $this->createTest("Italien b1", "Italian");
 
         // To have CSS form title. #166
         $startTitle = "<span class=\"title-situation\">";
@@ -53,7 +53,7 @@ class Itceb1FixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 3 : QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_3 = $this->createQuestionnaire("B1_CE_vacance_croisiere", "B1", "CE", $test, 0);
+        $questionnaire_3 = $this->createQuestionnaire("B1_CE_vacance_croisiere", "B1", "CE", $test, 1);
         $questionnaire_3->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_3->setMediaInstruction($this->mediaText("", "Quali informazioni sono presenti nel testo?", ""));
         $questionnaire_3->setMediaContext($this->mediaText("", "Pubblicità in agenzia di viaggi", ""));
@@ -71,7 +71,7 @@ class Itceb1FixtureCommand extends ContainerAwareCommand
                     QUESTIONNAIRE 6 : QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_6 = $this->createQuestionnaire("B1_CE_annonce_immobilier", "B1", "CE", $test, 0);
+        $questionnaire_6 = $this->createQuestionnaire("B1_CE_annonce_immobilier", "B1", "CE", $test, 1);
         $questionnaire_6->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_6->setMediaInstruction($this->mediaText("", "Quali informazioni sono presenti nel testo?", ""));
         $questionnaire_6->setMediaContext($this->mediaText("", "Annuncio immobiliare", ""));
@@ -294,7 +294,7 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
          NOUVEAU       QUESTIONNAIRE 99 : QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_99 = $this->createQuestionnaire("B1_CE_consommation_ethique_bis", "B1", "CE", $test, 0);
+        $questionnaire_99 = $this->createQuestionnaire("B1_CE_consommation_ethique_bis", "B1", "CE", $test, 1);
         $questionnaire_99->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_99->setMediaInstruction($this->mediaText("", "Quali informazioni sono presenti nel testo?", ""));
         $questionnaire_99->setMediaContext($this->mediaText("", "Articolo su rivista di attualità", ""));
@@ -314,7 +314,7 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
                     QUESTIONNAIRE 24 : QRU à QRM
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_24 = $this->createQuestionnaire("B1_CE_lecture", "B1", "CE", $test, 0);
+        $questionnaire_24 = $this->createQuestionnaire("B1_CE_lecture", "B1", "CE", $test, 1);
         $questionnaire_24->setOriginText("Une ou plusieurs réponses correctes");
         $questionnaire_24->setMediaInstruction($this->mediaText("", "I grandi romanzi:", ""));
         $questionnaire_24->setMediaContext($this->mediaText("", "Articolo su sito internet", ""));
@@ -334,7 +334,7 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
                     QUESTIONNAIRE 6 : TQRU
         ********************************************/
         // CREATION QUESTIONNAIRE
-        $questionnaire_6 = $this->createQuestionnaire("B1_CE_partager_nourriture_en_ligne", "B1", "CE", $test, 0);
+        $questionnaire_6 = $this->createQuestionnaire("B1_CE_partager_nourriture_en_ligne", "B1", "CE", $test, 1);
         $questionnaire_6->setOriginText("");
         $questionnaire_6->setMediaInstruction($this->mediaText("", "", ""));
         $questionnaire_6->setMediaContext($this->mediaText("", "Articolo su rivista di attualità", ""));
