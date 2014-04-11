@@ -91,9 +91,9 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION SUBQUESTION
         $questionnaire_2_1_1 = $this->createSubquestion("QRM", $questionnaire_2_1, "");
         // CREATION PROPOSITIONS
-        $this->createProposition("Per usare", true, $questionnaire_2_1_1);
-        $this->createProposition("Carsharing", false, $questionnaire_2_1_1);
-        $this->createProposition("devi iscriverti sul sito web", true, $questionnaire_2_1_1);
+        $this->createProposition("Per usare ***Carsharing*** devi iscriverti sul sito web", true, $questionnaire_2_1_1);
+        $this->createProposition("Con ***Carsharing*** puoi spendere meno", false, $questionnaire_2_1_1);
+        $this->createProposition("***Carsharing*** è un servizio disponibile in tutta Italia", true, $questionnaire_2_1_1);
 
         /*******************************************
                     QUESTIONNAIRE 3 : QRM
@@ -110,9 +110,9 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         $questionnaire_3_1_1 = $this->createSubquestion("QRM", $questionnaire_3_1, "");
         // CREATION PROPOSITIONS
         $this->createProposition("scrive a Matteo dopo un lungo viaggio", true, $questionnaire_3_1_1);
-        $this->createProposition("racconta che l’aereo è arrivato in ritardo.", false, $questionnaire_3_1_1);
+        $this->createProposition("racconta che l’aereo è arrivato in ritardo", false, $questionnaire_3_1_1);
         $this->createProposition("visiterà la città accompagnato da una nuova amica", true, $questionnaire_3_1_1);
-        $this->createProposition("ha iniziato uno stage.", false, $questionnaire_3_1_1);
+        $this->createProposition("ha iniziato uno stage", false, $questionnaire_3_1_1);
 
         /*******************************************
                     QUESTIONNAIRE 4 : TVF
@@ -128,7 +128,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
         // CREATION SUBQUESTION
         $questionnaire_4_1_1 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca chiude per la pausa pranzo");
         $questionnaire_4_1_2 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "La biblioteca è aperta tutte le mattine");
-        $questionnaire_4_1_3 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "In biblioteca è possibile navigare su internet senza pagare.");
+        $questionnaire_4_1_3 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "In biblioteca è possibile navigare su internet senza pagare");
         $questionnaire_4_1_4 = $this->createSubquestionVF("VF", $questionnaire_4_1, "", "Non è permesso restare in biblioteca a studiare");
         // CREATION PROPOSITIONS
         $this->createPropositionVF("", "VRAI", true, $questionnaire_4_1_1);
