@@ -152,7 +152,6 @@ $(document).ready(function() {
 
     $("#contexte-icon").click(function(){
         incrementeSessionContextListenNumber();
-        $('#modal-listen-context').modal('show'); 
     });
 
 });
