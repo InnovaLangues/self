@@ -19,7 +19,7 @@ class ExportController
 {
     protected $kernelRoot;
     protected $entityManager;
-    
+
     public function __construct($kernelRoot, $entityManager)
     {
         $this->kernelRoot = $kernelRoot;
@@ -27,20 +27,47 @@ class ExportController
     }
 
 
+
+
     /**
-     * exportCsvSQL function
-     * Update : 16/10/2013 by EV email Cristiana
+     * Lists all Test entities.
      *
      * @Route(
      *     "/admin/csv",
      *     name = "csv_export",
      *     options = {"expose"=true}
      * )
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexAction()
+    {
+
+        $em = $this->entityManager;
+
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+        echo "tests : " . $tests[0];
+//        $skill = $tests[0].questionnaires[0].skill.name;
+//        echo "nivo : " . $skill;
+        return array(
+            'tests' => $tests,
+        );
+    }
+
+
+    /**
+     * exportCsvSQL function
+     * Update : 04/2014 by EV pilote 2
+     *
+     * @Route(
+     *     "/admin/csv-export/{language}/{level}/{test}/{levelId}",
+     *     name = "csv-export"
+     * )
      *
      * @Method("GET")
      * @Template()
      */
-    public function exportCsvSQLAction()
+    public function exportCsvSQLAction($language, $level, $test, $levelId)
     {
         $em = $this->entityManager;
 
@@ -49,17 +76,31 @@ class ExportController
         //
 
         $rootPath = $this->kernelRoot . "/../";
-        // File export path
-        $csvPathExport = $rootPath . 'web/upload/export/csv/'; 
 
         // File export name
-        $csvName = 'export-' . date("Ymd_d-m-Y_H:i:s") . '.csv';
-
-        // Symfony
-        $urlCSVRelativeToWeb = 'upload/export/csv/';
-
+        // Spécificité Anglais : on a un seul test pour le pilote 2.
+        if ($language == "en") {
+            // File export path
+            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language;
+            // File export name
+            $csvName = 'export-' . $language . "_" . date("d-m-Y_H:i:s") . '.csv';
+            // File export path
+            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language;
+            // Symfony
+            $urlCSVRelativeToWeb = 'upload/export/csv/p2/' . $language . "/";
+        }
+        if ($language == "it") {
+            // File export path
+            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language . "/" . $level;
+            // File export name
+            $csvName = 'export-' . $language . "-" . $level . "_" . date("d-m-Y_H:i:s") . '.csv';
+            // File export path
+            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language . "/" . $level;
+            // Symfony
+            $urlCSVRelativeToWeb = 'upload/export/csv/p2/' . $language . "/" . $level . "/";
+        }
         // Path + Name
-        $csvPath = $csvPathExport . $csvName;
+        $csvPath = $csvPathExport . "/" . $csvName;
 
         // Open file
         $csvh = fopen($csvPath, 'w+');
@@ -67,8 +108,8 @@ class ExportController
         // Init csv write variable
         $csv = '';
 
-        // Loop for test
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+        // Loop for THE test
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->find($test);
 
         $result = array();
 
@@ -186,13 +227,13 @@ class ExportController
                 if ($countQuestionnaireDone > 0) {
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
                     // Add 5 colums for Level
-                    /*
+
                     $csv .= $user->getStudentType() . ";";
                     $csv .= $user->getLastLevel() . ";";
                     $csv .= $user->getCoLevel() . ";";
                     $csv .= $user->getCeLevel() . ";";
                     $csv .= $user->getEeLevel() . ";";
-                    */
+
                     $csv .= ";";
                     $csv .= ";";
                     $csv .= ";";
