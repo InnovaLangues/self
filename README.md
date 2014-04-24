@@ -28,8 +28,7 @@ php app/console cache:clear --no-debug --env=prod
 
 ### Create needed dirs and Set up rights 
 ``` bash
-mkdir web/upload/
-mkdir web/upload/media/
+mkdir -p web/upload/media/
 mkdir web/upload/import/
 mkdir web/upload/export/
 sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/media web/upload/import web/upload/export app/cache app/logs app/sessions
