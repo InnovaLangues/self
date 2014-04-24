@@ -134,7 +134,7 @@ class ImportController
                         if (isset($exp[7])) {
                             $exp[7] = strtolower($exp[7]);
                         }
- 
+
                         $indice_fileName = 0;
                         if (isset($exp[0])) {
                             if ((preg_match("/consigne/i", $exp[0])) || (preg_match("/option/i", $exp[0]))
