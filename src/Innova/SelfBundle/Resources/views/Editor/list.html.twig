@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for questionnaire in questionnaires %}
+        <tr>
+            <td>
+            	{{ questionnaire.theme }}
+            </td>
+            <td class="text-right">
+                <a class="btn btn-default" href="{{ path('editor_questionnaire_show', { 'id': questionnaire.id }) }}">
+                	<span class="glyphicon glyphicon-edit"></span> Editer
+                </a>
+                <!-- 
+                <a class="btn btn-default" href="{{ path('editor_questionnaire_delete', { 'id': questionnaire.id }) }}">
+                	<span class="glyphicon glyphicon-remove"></span> Supprimer
+                </a>
+                -->
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

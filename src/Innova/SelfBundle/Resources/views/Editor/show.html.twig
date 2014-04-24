@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+    <a class="btn btn-default" href="{{ path('editor_questionnaire_list') }}">
+        <span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste
+    </a>
+
+    <div>
+        {{ questionnaire.id }} - {{ questionnaire.theme }}
+    </div>
+{% endblock %}
