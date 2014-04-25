@@ -554,16 +554,18 @@ class ExportController
                                     //$csv .= $key;
                                 }
                             }
-                            $csv .= ";";
+//                            $csv .= ";";
                         }
                     }
-                    $csv .= "\n";
+//                    $csv .= "\n";
                 }
 
             }
 //        }
         // FOOTER
         // Empty
+
+        $csv .= "\n";
 
         //
         // PARTIE BODY
