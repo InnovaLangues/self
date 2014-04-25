@@ -345,8 +345,8 @@ class ExportController
                             }
                         }
                     }
+                    $csv .= "\n";
                 }
-                $csv .= "\n";
 
             }
 //        }
