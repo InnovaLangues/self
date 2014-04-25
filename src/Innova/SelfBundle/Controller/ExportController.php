@@ -218,7 +218,7 @@ class ExportController
 //                            $csv .= "t" . $themeCode . "res" . $cpt . ";"; // Ajout d'une colonne pour chaque proposition de la question.
 //                            $csv .= "t" . $themeCode . "ch" . $cpt . ";";
                         $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - CORR-FAUX : 1 pour correct / 0 pour faux;";
-                        $csv .= "T" . $cpt . " -  PROPOSITION CHOISIE;";
+                        $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - PROPOSITION CHOISIE;";
                     }
                 }
             }
