@@ -258,7 +258,7 @@ class ExportController
                     $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
                     $answersArray = array();
 
-                    $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByTest($test);
+                    $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByTests($test);
                     foreach ($questionnaires as $questionnaire) {
 
                         $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
