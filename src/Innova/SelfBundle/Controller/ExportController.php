@@ -406,7 +406,6 @@ class ExportController
     public function exportTiaCsvSQLAction($language, $level, $test, $levelId)
     {
         $em = $this->entityManager;
-
         //
         // CSV Export part
         //
@@ -436,7 +435,6 @@ class ExportController
         }
         // Path + Name
         $csvPath = $csvPathExport . "/" . $csvName;
-die();
 
         // Open file
         $csvh = fopen($csvPath, 'w+');
@@ -472,14 +470,49 @@ die();
 
         $csv .= "\n";
 
+        //
+        // PARTIE HEADER
+        //
+        // Difficulty part
+        $csv .= "Difficulté" . ";" ;
+        $csv .= "Libellé" . ";" ;
+        $csv .= "\n";
+        $csv .= "1" . ";" ;
+        $csv .= "Très facile" . ";" ;
+        $csv .= "\n";
+        $csv .= "2" . ";" ;
+        $csv .= "Facile" . ";" ;
+        $csv .= "\n";
+        $csv .= "3" . ";" ;
+        $csv .= "Normal" . ";" ;
+        $csv .= "\n";
+        $csv .= "4" . ";" ;
+        $csv .= "Difficile" . ";" ;
+        $csv .= "\n";
+        $csv .= "5" . ";" ;
+        $csv .= "Très Difficile" . ";" ;
+        $csv .= "\n";
+
+        $csv .= "\n";
+        $csv .= "\n";
 
         //
         // PARTIE HEADER COLONNES DU TABLEAU
         //
         // Loop to display all questionnaire of the test
         // $csv .= "Mail;" ; // A
-        $csv .= "Etudiant;" ; // A
+        $csv .= "Nom;" ; // A
+        $csv .= "Prénom;" ; // B
+        $csv .= "Date;" ; // C
+        $csv .= "Temps en secondes (pour le test entier);" ; // D
 
+        //$csv .= "filiere;" ; // F
+        $csv .= "Niveau Dialang CO;" ; // E
+        $csv .= "Niveau Dialang CE;" ; // F
+        $csv .= "Niveau Dialang EEC;" ; // G
+        $csv .= "Niveau Lansad acquis;" ; // H
+
+        $csv .= "Score total obtenu dans le test (formule du total);" ; // I
 
         $cpt_questionnaire=0;
 //        foreach ($tests as $test) {
@@ -504,16 +537,15 @@ die();
                     $csv .= "T" . $cpt_questionnaire . " - difficulté;";
                     $csv .= "T" . $cpt_questionnaire . " - TEMPS;";
                     $questions = $questionnaire->getQuestions();
-                    foreach ($questions as $question) {
-                        $subquestions = $question->getSubQuestions();
-                        $cpt=0;
-                        foreach ($subquestions as $subquestion) {
-                            $cpt++;
+
+                    $subquestions = $questions[0]->getSubQuestions();
+                    $cpt=0;
+                    foreach ($subquestions as $subquestion) {
+                        $cpt++;
 //                            $csv .= "t" . $themeCode . "res" . $cpt . ";"; // Ajout d'une colonne pour chaque proposition de la question.
 //                            $csv .= "t" . $themeCode . "ch" . $cpt . ";";
-                            $csv .= "T" . $cpt_questionnaire . " - CORR-FAUX : 1 pour correct / 0 pour faux;";
-                            $csv .= "T" . $cpt_questionnaire . " -  PROPOSITION CHOISIE;";
-                        }
+                        $csv .= "T" . $cpt . " - CORR-FAUX : 1 pour correct / 0 pour faux;";
+                        $csv .= "T" . $cpt . " -  PROPOSITION CHOISIE;";
                     }
                 }
             }
@@ -529,16 +561,16 @@ die();
             $rightProps = array();
             $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
             foreach ($users as $user) {
+                $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                    ->countDoneYetByUserByTest($test->getId(), $user->getId());
+                if ($countQuestionnaireDone > 0) {
                 //$csv .= $user->getEmail() . ";" ;
                 $csv .= $user->getUserName() . ";" ;
                 $csv .= $user->getFirstName() . ";" ;
                 // For THE test, loop on the Questionnaire
                 // CR
                 //
-                $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                    ->countDoneYetByUserByTest($test->getId(), $user->getId());
 
-                if ($countQuestionnaireDone > 0) {
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
                     // Add 5 colums for Level
 
@@ -553,7 +585,7 @@ die();
                     $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
                     $answersArray = array();
 
-                    $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+                    $questionnaires = $test->getQuestionnaires();
                     foreach ($questionnaires as $questionnaire) {
 
                         $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
@@ -574,158 +606,74 @@ die();
                             $csv .= $trace->getDifficulty() . ";" ;
                             $csv .= $trace->getTotalTime() . ";" ;
 
-                            switch ($questions[0]->getTypology()->getName()) {
-                                case "TQRM";
-                                    foreach ($answers as $answer) {
-                                        if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])){
-                                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                                        }
-                                        $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
-                                    }
 
-                                    foreach ($answersArray as $subQuestionId => $answers) {
-                                        // Initialisation des variables.
-                                        $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
-                                        // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                                        $subQuestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subQuestionId);
-                                        $propositions = $subQuestion->getPropositions();
-
-                                        // Calcul du nombre de réponses.
-                                        $nbAnswers = count($answers);
-                                        $cptProposition = 0;
-                                        // Accès à la proposition.
-                                        // Calcul du nombre de proposition et
-                                        // calcul du nombre de bonnes réponses.
-                                        foreach ($propositions as $proposition) {
-                                            $cptProposition++;
-                                            if ($proposition->getRightAnswer()) {
-                                                $nbPropositionRightAnswser++;
-                                                $colonneO .= $cptProposition;
-                                            }
-                                        }
-
-                                        // Je calcule le score que si le testeur a répondu à autant de réponses
-                                        // qu'il y a de propositions.
-                                        // Si ce n'est pas le cas, il aura forcément ZERO point.
-                                        if ( $nbAnswers == $nbPropositionRightAnswser) {
-
-                                            $cptProposition = 0;
-                                            foreach ($rightProps as $rightProp) {
-                                                if (in_array($rightProp->getId(),$answersArray[$subQuestion->getId()]))
-                                                {
-                                                        $nbRightAnswer++;
-                                                }
-                                            }
-
-                                        }
-
-                                        if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                                            $csv .= "1" . ";";
-                                        }
-                                        else
-                                        {
-                                            $csv .= "0" . ";";
-                                        }
-                                    }
-                                    // Colonne O
-                                    //var_dump($rightProps[0]);
-                                    $csv .= $colonneO . ";";
-                                    break;
-                                case "APPAT";
-                                case "APPAA";
-                                case "APPAI";
-                                case "APPTT";
-                                    foreach ($answers as $answer) {
-                                        $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
-                                        $cptProposition = 0;
-                                        foreach ($propositions as $proposition) {
-                                            $cptProposition++;
-                                            if ($proposition->getId() === $answer->getProposition()->getId()) {
-                                                $propositionRank = $cptProposition;
-                                                $colonneO = $colonneO . $arr[$propositionRank];
-                                                // Colonne N
-                                                if (!$answer->getProposition()->getRightAnswer()) {
-                                                    $trueFalse = false;
-                                                }
-                                            }
-                                        }
-                                    }
-                                        // Colonne N
-                                        if ($trueFalse)
-                                        $csv .= "1" . ";";
-                                        else
-                                        $csv .= "0" . ";";
-                                        // Colonne O
-                                        $csv .= $colonneO . ";";
-                                    $colonneO = "";
-                                    break;
-                                case "TQRU";
-                                case "TVF";
-                                case "TVFNM";
-                                    foreach ($answers as $answer) {
-                                        $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
-                                        $cptProposition = 0;
-                                        foreach ($propositions as $proposition) {
-                                            $cptProposition++;
-                                            if ($proposition->getId() === $answer->getProposition()->getId()) {
-                                                $propositionRank = $cptProposition;
-                                                $colonneO = $arr[$propositionRank];
-                                                // Colonne N
-                                                if (!$answer->getProposition()->getRightAnswer()) {
-                                                    $trueFalse = false;
-                                                }
-                                            }
-                                        }
-                                        // Colonne N
-                                        if ($trueFalse)
-                                        $csv .= "1" . ";";
-                                        else
-                                        $csv .= "0" . ";";
-                                        // Colonne O
-                                        $csv .= $colonneO . ";";
-                                    }
-                                    break;
-                                case "QRM";
-                                case "QRU";
-                                case "VF";
-                                case "VFNM";
-                                    foreach ($answers as $answer) {
-                                        $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
-                                        $cptProposition = 0;
-                                        foreach ($propositions as $proposition) {
-                                            $cptProposition++;
-                                            if ($proposition->getId() === $answer->getProposition()->getId()) {
-                                                $propositionRank = $cptProposition;
-                                                $colonneO = $colonneO . $arr[$propositionRank];
-                                                // Colonne N
-                                                if (!$answer->getProposition()->getRightAnswer()) {
-                                                    $trueFalse = false;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    // Colonne N
-                                    if ($trueFalse)
-                                    $csv .= "1" . ";";
-                                    else
-                                    $csv .= "0" . ";";
-                                    // Colonne O
-                                    $csv .= $colonneO . ";";
-                                    break;
+                            // création tableau de correspondance subquestion -> réponses
+                            foreach ($answers as $answer) {
+                                if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])){
+                                    $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                                }
+                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
                             }
 
-                                //$csv .= $answer->getProposition()->getMedia()->getName();
-                                //$csv .= $arr[$propositionRank] . ";";
-/*                                if ($answer->getProposition()->getTitle() != "") {
-                                    $csv .= $answer->getProposition()->getTitle() . ";";
-                                } else {
-                                    $csv .= $propositionRank . ";";
+                             // on récupère la subquestion
+                            $subquestions = $questions[0]->getSubQuestions();
+                            foreach ($subquestions as $subquestion) {
+                                $propositions = $subquestion->getPropositions();
+                                $rightProps = array();
+                                $nbPropositionRightAnswser = 0;
+                                $cptProposition = 0;
+                                $propLetters = array();
+                                // on compte les bonnes propositions
+                                foreach ($propositions as $proposition) {
+                                    $cptProposition++;
+                                    if ($proposition->getRightAnswer()) {
+                                        $nbPropositionRightAnswser++;
+                                        $rightProps[] = $proposition->getId();
+
+                                    }
+                                    $propLetters[$proposition->getId()] = $arr[$cptProposition];
                                 }
-*/
+
+                                $nbAnswers = count($answersArray[$subquestion->getId()]);
+                                $subquestionOk = true;
+                                if ( $nbAnswers == $nbPropositionRightAnswser) {
+                                    foreach ($rightProps as $rightProp) {
+                                        $found = false;
+                                        foreach ($answersArray[$subquestion->getId()] as $answerProp) {
+                                           if ($rightProp == $answerProp->getId()){
+                                                $found = true;
+                                           }
+                                        }
+                                        if ($found == false) {
+                                            $subquestionOk = false;
+                                        }
+                                    }
+                                }
+                                else {
+                                    $subquestionOk = false;
+                                }
+
+                                if ($subquestionOk) {
+                                    $csv .= "1" . ";";
+                                } else {
+                                    $csv .= "0" . ";";
+                                }
+
+                                $letters = array();
+                                foreach ($answersArray[$subquestion->getId()] as $answer) {
+                                    $idAnswer = $answer->getId();
+                                    $letters[$propLetters[$idAnswer]] = 1;
+                                }
+                                ksort($letters);
+                                foreach($letters as $key => $value){
+                                    $csv .= $key;
+                                }
+                                $csv .= ";";
+                            }
                         }
                     }
+                    $csv .= "\n";
                 }
-                $csv .= "\n";
 
             }
 //        }
@@ -753,6 +701,17 @@ die();
 
         //Sort file
         arsort($fileList);
+
+        //
+        // To view
+        //
+        return array(
+            "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
+            "csvName"             => $csvName,
+            "fileList"            => $fileList,
+            "nbFile"              => $nbFile
+        );
+
 
     }
 
