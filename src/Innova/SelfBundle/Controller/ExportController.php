@@ -188,41 +188,37 @@ class ExportController
         $csv .= "Score total obtenu dans le test (formule du total);" ; // I
 
         $cpt_questionnaire=0;
-//        foreach ($tests as $test) {
-            if ($cpt_questionnaire == 0) {
-                $questionnaires = $test->getQuestionnaires();
-                // For THE test, loop on the Questionnaire
-                foreach ($questionnaires as $questionnaire) {
-                    $cpt_questionnaire++;
-                    // Suite réception nouvelle version du fichier le 29/11/2013 :
-                    // je prends le dernier ou les 2 derniers caractères du thême
-                    $themeCode = substr($questionnaire->getTheme(), -2);
-                    // Si l'extrait est numérique, alors OK
-                    // sinon, je ne prends que le dernier caractère.
-                    // Exemple : A1COT2, je prends le dernier
-                    // A1COT13, je prends les 2 derniers.
-                    //
-                    if (!is_numeric($themeCode)) {
-                        $themeCode = substr($questionnaire->getTheme(), -1);
-                    }
-                    $csv .= "T" . $cpt_questionnaire . " - NOM de ma TACHE;";
-                    $csv .= "T" . $cpt_questionnaire . " - Protocole d'interaction;";
-                    $csv .= "T" . $cpt_questionnaire . " - difficulté;";
-                    $csv .= "T" . $cpt_questionnaire . " - TEMPS;";
-                    $questions = $questionnaire->getQuestions();
+        if ($cpt_questionnaire == 0) {
+            $questionnaires = $test->getQuestionnaires();
+            // For THE test, loop on the Questionnaire
+            foreach ($questionnaires as $questionnaire) {
+                $cpt_questionnaire++;
+                // Suite réception nouvelle version du fichier le 29/11/2013 :
+                // je prends le dernier ou les 2 derniers caractères du thême
+                $themeCode = substr($questionnaire->getTheme(), -2);
+                // Si l'extrait est numérique, alors OK
+                // sinon, je ne prends que le dernier caractère.
+                // Exemple : A1COT2, je prends le dernier
+                // A1COT13, je prends les 2 derniers.
+                //
+                if (!is_numeric($themeCode)) {
+                    $themeCode = substr($questionnaire->getTheme(), -1);
+                }
+                $csv .= "T" . $cpt_questionnaire . " - NOM de ma TACHE;";
+                $csv .= "T" . $cpt_questionnaire . " - Protocole d'interaction;";
+                $csv .= "T" . $cpt_questionnaire . " - difficulté;";
+                $csv .= "T" . $cpt_questionnaire . " - TEMPS;";
+                $questions = $questionnaire->getQuestions();
 
-                    $subquestions = $questions[0]->getSubQuestions();
-                    $cpt=0;
-                    foreach ($subquestions as $subquestion) {
-                        $cpt++;
-//                            $csv .= "t" . $themeCode . "res" . $cpt . ";"; // Ajout d'une colonne pour chaque proposition de la question.
-//                            $csv .= "t" . $themeCode . "ch" . $cpt . ";";
-                        $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - CORR-FAUX : 1 pour correct / 0 pour faux;";
-                        $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - PROPOSITION CHOISIE;";
-                    }
+                $subquestions = $questions[0]->getSubQuestions();
+                $cpt=0;
+                foreach ($subquestions as $subquestion) {
+                    $cpt++;
+                    $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - CORR-FAUX : 1 pour correct / 0 pour faux;";
+                    $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - PROPOSITION CHOISIE;";
                 }
             }
-//        }
+        }
 
         $csv .= "\n";
 
@@ -349,7 +345,7 @@ class ExportController
                 }
 
             }
-//        }
+
         // FOOTER
         // Empty
 
@@ -385,10 +381,6 @@ class ExportController
             "nbFile"              => $nbFile
         );
     }
-
-
-
-
 
 
     /**
@@ -573,25 +565,6 @@ class ExportController
         // FOOTER
         // Empty
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //
         // PARTIE BODY
         //
@@ -682,7 +655,6 @@ class ExportController
                                     $idAnswer = $answer->getId();
                                     $letters[$propLetters[$idAnswer]] = 1;
                                 }
-                                var_dump($letters);
                                 ksort($letters);
                                 foreach($letters as $key => $value){
                                     $csv .= $key;
