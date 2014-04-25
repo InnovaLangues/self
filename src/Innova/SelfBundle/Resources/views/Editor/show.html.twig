@@ -6,7 +6,55 @@
         <span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste
     </a>
 
-    <div>
-        {{ questionnaire.id }} - {{ questionnaire.theme }}
+    <table class="table table-striped">
+        <tbody>
+                <tr>
+                    <td>
+                        Theme
+                    </td>
+                    <td>
+                        <input value="{{ questionnaire.theme }}" type="text"/>
+                        <input value="ok" type="submit"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Nombre d'écoutes
+                    </td>
+                    <td>
+                        <input value="{{ questionnaire.theme }}" type="number" min="1"/>
+                        <input value="ok" type="submit"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Type de discours<br/>
+                        1- monologue 2- dialogue 3- dialogue int.
+                    </td>
+                    <td>
+                        <input value="{{ questionnaire.dialogue }}" type="number" min="1" max="3"/>
+                        <input value="ok" type="submit"/>
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+
+
+       
+
+
+        ordre fixe {{ questionnaire.fixedOrder}} <br/>
+
+        origin text (consigne en bas à droite) {{ questionnaire.originText }} <br/>
+
+        consigne {{ questionnaire.mediaInstruction.mediaType.name }}  <br/>
+
+        contexte {{ questionnaire.mediaContext.mediaType.name }} <br/>
+
+        texte {{ questionnaire.mediaText.mediaType.name }}  <br/>
+
+
     </div>
 {% endblock %}

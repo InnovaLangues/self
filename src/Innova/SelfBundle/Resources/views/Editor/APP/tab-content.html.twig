@@ -1,0 +1,22 @@
+<div class="tab-content">
+    <div class="tab-pane active" id="tab" data-subquestion-id="{{ question.subquestions[0].id }}">
+        <div class="row propositions-APPT">
+            {% set propWidth = (12 / question.subquestions |length) | round %}
+            {% for subquestion in question.subquestions %}
+                {% include "InnovaSelfBundle:Editor/APP:prop.html.twig" %}
+            {% endfor %}
+        </div>
+        <div class="row propositions-assoc-APPT">
+            {% for subquestion in question.subquestions %}
+                {% include "InnovaSelfBundle:Editor/APP:prop-assoc.html.twig" %}
+            {% endfor %}
+        </div>
+         <div class="hr"></div>
+         <div class="row answers-APPT source">
+            {% for proposition in question.subquestions[0].propositions | shuffle %}
+                {% include "InnovaSelfBundle:Editor/APP:answers.html.twig" %}
+            {% endfor %}
+        </div>
+        {% include "InnovaSelfBundle:Editor/common:countRightAnswer.html.twig" %}
+    </div>
+</div>

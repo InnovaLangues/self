@@ -40,7 +40,7 @@ class QuestionnaireController extends Controller
      *
      * @Route("/questionnaires/{id}", name="editor_questionnaire_show")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:show.html.twig")
+     * @Template("InnovaSelfBundle:Editor:index.html.twig")
      */
     public function showAction($id)
     {

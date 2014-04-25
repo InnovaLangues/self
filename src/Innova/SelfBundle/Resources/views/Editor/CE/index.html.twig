@@ -1,0 +1,28 @@
+<div id="contexte-icon">
+    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" rel="tooltip" data-original-title="Contexte"/>
+    <br/>
+</div>
+
+<div id="situation-icon">
+    <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" rel="tooltip" data-original-title="Objet de la question" />
+</div>
+
+<div id="left-container-CE" class="col-md-5 left-container">
+    {% include "InnovaSelfBundle:Editor/CE:contexte.html.twig" %}
+    {% include "InnovaSelfBundle:Editor/CE:situation.html.twig" %}
+</div>
+
+{% for question in questionnaire.questions %}
+<div id="right-container-CO" class="col-md-7 right-container">
+    <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+        {# ONGLETS #}
+        {% include "InnovaSelfBundle:Editor/common:tab-nav.html.twig" %}
+        
+        {# CONTENU DES ONGLETS #}
+        {% include "InnovaSelfBundle:Editor/CE:tab-content.html.twig" %}
+        
+        {# SUBMIT BUTTON #}
+        {% include "InnovaSelfBundle:Editor/common:submit.html.twig" %}
+    </form>
+</div>
+{% endfor %}

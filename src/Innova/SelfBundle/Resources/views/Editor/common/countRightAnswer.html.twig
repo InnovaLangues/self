@@ -1,0 +1,8 @@
+{% if questionnaire.originText|length > 0  %}
+    <div class="info-right-answer">
+        {% if questionnaire.questions[0].typology.name|slice(0,3) == "APP" %}
+            <p>{{ questionnaire.mediaInstruction.description }}</p>
+        {% endif %}
+        <p>{{ questionnaire.originText }}</p>
+    </div>
+{% endif %}

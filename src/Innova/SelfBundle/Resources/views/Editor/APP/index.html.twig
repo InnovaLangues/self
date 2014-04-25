@@ -1,0 +1,37 @@
+{% if questionnaire.skill.name == "CE" %}
+    <div id="contexte-icon">
+        <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" />
+    </div>
+
+    <div id="situation-icon">
+        <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" />
+    </div>
+
+    <div id="left-container-CE" class="col-md-4 left-container">
+        {% include "InnovaSelfBundle:Editor/CE:contexte.html.twig" %}
+        {% include "InnovaSelfBundle:Editor/CE:situation.html.twig" %}
+    </div>
+{% elseif questionnaire.skill.name == "CO" %}
+    {% include "InnovaSelfBundle:Editor/CO:contexte.html.twig" %}
+    <div id="left-container-CO" class="col-md-4 left-container">
+        {% include "InnovaSelfBundle:Editor/APP:situation.html.twig" %}
+    </div>
+{% endif %}
+
+
+{% for question in questionnaire.questions %}
+    <div id="right-container-APP" class="col-md-8 right-container">
+        <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+            {# ONGLETS #}
+            {% include "InnovaSelfBundle:Editor/APP:tab-nav.html.twig" %}
+
+            {# CONTENU DES ONGLETS #}
+            {% include "InnovaSelfBundle:Editor/APP:tab-content.html.twig" %}
+
+            {# SUBMIT BUTTON #}
+            {% include "InnovaSelfBundle:Editor/common:submit.html.twig" %}
+        </form>
+    </div>
+{% endfor %}
+
+
