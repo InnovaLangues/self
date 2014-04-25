@@ -234,16 +234,16 @@ class ExportController
             $rightProps = array();
             $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
             foreach ($users as $user) {
+                $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                    ->countDoneYetByUserByTest($test->getId(), $user->getId());
+                if ($countQuestionnaireDone > 0) {
                 //$csv .= $user->getEmail() . ";" ;
                 $csv .= $user->getUserName() . ";" ;
                 $csv .= $user->getFirstName() . ";" ;
                 // For THE test, loop on the Questionnaire
                 // CR
                 //
-                $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                    ->countDoneYetByUserByTest($test->getId(), $user->getId());
 
-                if ($countQuestionnaireDone > 0) {
                     $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
                     // Add 5 colums for Level
 
