@@ -1,17 +1,13 @@
 $(document).ready(function() {
     var questionnaireId = $("#questionnaire-id").val();
 
-
     $( "body" ).on( "click", '#btn-theme', function() {
        setTheme(questionnaireId);
     });
 
     $( "body" ).on( "click", '#add-context', function() {
-        $("#entity-field").val("contexte");
-        $("#entity-id").val(questionnaireId);
-        $("#entity-type").val("questionnaire");
-
-        chooseMediaTypeModal("contexte");
+        setParamForRequest("questionnaire", "contexte", questionnaireId);
+        chooseMediaTypeModal();
     });
 
     $( "body" ).on( "click", '.media-type-choice', function() {
@@ -22,9 +18,7 @@ $(document).ready(function() {
         createText();
     });
 
-
 });
-
 
 /************************************************
 *************************************************
@@ -33,8 +27,8 @@ $(document).ready(function() {
 
 *************************************************
 **************************************************/
-function chooseMediaTypeModal( forwhat ) {
-    $(".media-type-choice").attr("for-what", forwhat);
+function chooseMediaTypeModal() {
+    $(".media-type-choice").attr("for-what");
     $('#modal-media-type').modal('show');
 }
 
@@ -58,7 +52,6 @@ function createText(){
     var description = $("#create-text-textarea").val();
     createMedia(null, description, null, "text");
 }
-
 
 
 
@@ -108,4 +101,19 @@ function setTheme(questionnaireId) {
     .done(function(data) {
 
     }); 
+}
+
+
+/************************************************
+*************************************************
+
+                    MISC
+
+*************************************************
+**************************************************/
+
+function setParamForRequest(type, field, id){
+    $("#entity-field").val(field);
+    $("#entity-id").val(id);
+    $("#entity-type").val(type);
 }
