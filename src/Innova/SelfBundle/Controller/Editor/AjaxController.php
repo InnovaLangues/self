@@ -31,12 +31,96 @@ class AjaxController extends Controller
         
         $media = $em->getRepository('InnovaSelfBundle:Media')->findOneById($mediaId);
 
-
         return new JsonResponse(
             array(
                 'id' => $media->getId(),
                 'type' => $media->getMediaType()->getName(),
                 'description' => $media->getDescription(),
+            )
+        );
+    }
+
+    /**
+     * Delete a Questionnaire entity
+     *
+     * @Route("/questionnaires/set-theme", name="editor_questionnaire_set-theme", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setThemeAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaireId = $request->request->get('questionnaireId');
+        $theme = $request->request->get('theme');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        $questionnaire->setTheme($theme);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'theme' => $questionnaire->getTheme(),
+            )
+        );
+    }
+
+
+
+    /**
+     * 
+     *
+     * @Route("/questionnaires/create-media", name="editor_questionnaire_create-media", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function CreateMediaAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+
+        /* Création du nouveau media */
+        $name = $request->request->get('name');
+        $description = $request->request->get('description');
+        $url = $request->request->get('url');
+        $type = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($request->request->get('type'));
+
+        $media = new Media;
+        $media->setMediaType($type);
+        $media->setName($name);
+        $media->setDescription($description);
+        $media->setUrl($url);
+
+        $em->persist($media);
+        $em->flush();
+
+        /* Création de la relation avec une entité */
+        $entityType = $request->request->get('entityType');
+        $entityId = $request->request->get('entityId');
+        $entityField = $request->request->get('entityField');
+
+        switch ($entityType) {
+            case "questionnaire": 
+                $entity =  $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
+                if ($entityField == "contexte"){
+                    $entity->setMediaContext($media);
+                } elseif ($entityField == "consigne") {
+                    $entity->setMediaInstruction($media);
+                } else {
+                    $entity->setMediaText($media);
+                } 
+                break;
+            case "subquestion":
+                break;
+            case "proposition":
+                break;
+        }
+
+        $em->persist($entity);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'mediaId' => $media->getId(),
             )
         );
     }

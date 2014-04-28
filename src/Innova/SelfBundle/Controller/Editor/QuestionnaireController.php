@@ -48,7 +48,7 @@ class QuestionnaireController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($id);
-
+        
         if (!$questionnaire) {
             throw $this->createNotFoundException('Unable to find Questionnaire entity.');
         }
@@ -61,27 +61,28 @@ class QuestionnaireController extends Controller
     /**
      * Creates a new Questionnaire entity.
      *
-     * @Route("/questionnaires", name="editor_questionnaire_create")
-     * @Method("POST")
+     * @Route("/questionnaire/create", name="editor_questionnaire_create")
+     * @Method("GET")
      * @Template("")
      */
-    public function createAction(Request $request)
+    public function createAction()
     {
         $questionnaire = new Questionnaire();
+        $questionnaire->setTheme("");
+        $questionnaire->setListeningLimit(0);
+        $questionnaire->setDialogue(0);
+        $questionnaire->setFixedOrder(0);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($entity);
+        $em->persist($questionnaire);
+
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add(
-                    'notice',
-                    'Le questionnaire a été créé.'
-                );
-
-        return $this->  redirect($this->generateUrl(
+        return $this->redirect($this->generateUrl(
                             'editor_questionnaire_show',
-                            array('id' => $entity->getId()))
+                            array('id' => $questionnaire->getId()))
                         );
+  
     }
 
     /**
