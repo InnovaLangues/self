@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -76,8 +77,37 @@ class AjaxController extends Controller
 
         foreach($request->files as $uploadedFile) {
             $originalName = $uploadedFile->getClientOriginalName();
-            $ext = pathinfo($originalName, PATHINFO_EXTENSION); //$ext will be gif
+            $ext = pathinfo($originalName, PATHINFO_EXTENSION); 
             $newName = uniqid(). "." . $ext;
+
+            $directory = __DIR__.'/../../../../../web/upload/media/';
+            $file = $uploadedFile->move($directory, $newName);
+        }
+
+        return new JsonResponse(
+            array(
+                'url' => $newName,
+            )
+        );
+    }
+
+
+    /**
+     *
+     * @Route("/questionnaires/upload-video", name="editor_questionnaire_upload-video", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function uploadVideoAction()
+    {
+        $request = $this->get('request');
+        
+
+        foreach($request->files as $uploadedFile) {
+            $originalName = $uploadedFile->getClientOriginalName();
+            $ext = pathinfo($originalName, PATHINFO_EXTENSION); 
+
+            // tester si ext == webm
+            $newName = uniqid();
 
             $directory = __DIR__.'/../../../../../web/upload/media/';
             $file = $uploadedFile->move($directory, $newName);
@@ -123,15 +153,19 @@ class AjaxController extends Controller
         $entityId = $request->request->get('entityId');
         $entityField = $request->request->get('entityField');
 
+        $template = "";
         switch ($entityType) {
             case "questionnaire": 
                 $entity =  $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
                 if ($entityField == "contexte"){
                     $entity->setMediaContext($media);
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('questionnaire' => $entity));
                 } elseif ($entityField == "consigne") {
                     $entity->setMediaInstruction($media);
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:consigne.html.twig',array('questionnaire' => $entity));
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText($media);
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $entity));
                 } 
                 break;
             case "subquestion":
@@ -143,11 +177,7 @@ class AjaxController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return new JsonResponse(
-            array(
-                'mediaId' => $media->getId(),
-            )
-        );
+        return new Response($template);
     }
 
 

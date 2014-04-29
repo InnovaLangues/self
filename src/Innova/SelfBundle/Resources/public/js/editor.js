@@ -29,6 +29,11 @@ $(document).ready(function() {
         $("*").modal('hide');
     });
 
+    $( "body" ).on( "click", '#create-video-btn', function() {
+        createVideo();
+        $("*").modal('hide');
+    });
+
 });
 
 /************************************************
@@ -67,7 +72,14 @@ function createImage(){
     var url = $("#image-url").val();
     var name = $("#image-name").val();
     var description = $("#image-description").val();
-   createMedia(name, description, url, "image");
+    createMedia(name, description, url, "image");
+}
+
+function createVideo(){
+    var url = $("#video-url").val();
+    var name = $("#video-name").val();
+    var description = $("#video-description").val();
+    createMedia(name, description, url, "video");
 }
 
 
@@ -80,8 +92,6 @@ function createImage(){
 **************************************************/
 
 function createMedia(name, description, url, type) {
-
-    console.log(name, description, url, type);
     var entityField = $("#entity-field").val();
     var entityId = $("#entity-id").val();
     var entityType = $("#entity-type").val();
@@ -89,7 +99,6 @@ function createMedia(name, description, url, type) {
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-media'),
         type: 'POST',
-        dataType: 'json',
         data: 
         { 
             name: name,
@@ -102,8 +111,8 @@ function createMedia(name, description, url, type) {
         }
     })
     .done(function(data) {
-        var mediaId = data.mediaId;
         initializeFormsFields();
+        //$("#contexte-container").replaceWith(data);
     });
 }
 
@@ -144,6 +153,10 @@ function initializeFormsFields(){
     $("#image-name").val("");
     $("#image-description").val("");
     $("#image-file").val("");
+    $("#video-url").val("");
+    $("#video-name").val("");
+    $("#video-description").val("");
+    $("#video-file").val("");
 }
 
 /************************************************
@@ -178,5 +191,30 @@ $('#image-file').on('change', function(event){
         $("#image-url").val(url);
         $('#create-image-btn').prop("disabled", false);
     }); 
-    
+});
+
+
+$('#video-file').on('change', function(event){
+    files = event.target.files;
+
+    var data = new FormData();
+    $.each(files, function(key, value)
+    {
+        data.append(key, value);
+    });
+
+     $.ajax({
+        url: Routing.generate('editor_questionnaire_upload-video'),
+        type: 'POST',
+        cache: false,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        data : data
+    })
+    .done(function(data) {
+        var url = data["url"];
+        $("#video-url").val(url);
+        $('#create-video-btn').prop("disabled", false);
+    }); 
 });
