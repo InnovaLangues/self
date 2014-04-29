@@ -437,241 +437,100 @@ class ExportController
         // Loop for THE test
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($test);
 
-        $result = array();
-
-//        foreach ($tests as $test) {
-            $questionnaires = $test->getQuestionnaires();
-            // For THE test, loop on the Questionnaire
-            foreach ($questionnaires as $questionnaire) {
-                // For THE questionnaire, loop on the Trace
-                $traces = $questionnaire->getTraces();
-                foreach ($traces as $trace) {
-                    $userName  = (string) $trace->getUser();
-                    $emailName = (string) $trace->getUser()->getEmail();
-                    $testDate  = date_format($trace->getDate(), 'dm');
-                    if (!isset($result[$userName]["time"])) {
-                        $result[$userName]["time"]=0;
-                    }
-                    $result[$userName]["name"]  = $userName;
-                    $result[$userName]["email"] = $emailName;
-                }
+        //
+        // HEADER
+        //
+        $csv .= "Etudiant;" ;
+        $questionnaires = $test->getQuestionnaires();
+        foreach ($questionnaires as $questionnaire) {
+            $i = 0;
+            foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestions) {
+                $i++;
+                $csv .= $questionnaire->getTheme() . " " . $questionnaire->getQuestions()[0]->getTypology()->getName() . " " . $i . ";" ; // Typologie
             }
-//        }
+        }
 
         $csv .= "\n";
 
         //
-        // PARTIE BODY
+        //  BODY
         //
-        // Loop to display all data
-//        foreach ($tests as $test) {
-            $rightProps = array();
-            $csv .= "Etudiant;" ;
-            $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
-            foreach ($users as $user) {
-                $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                    ->countDoneYetByUserByTest($test->getId(), $user->getId());
-                if ($countQuestionnaireDone > 0) {
-                //$csv .= $user->getEmail() . ";" ;
-                // For THE test, loop on the Questionnaire
-                // CR
-                //
-                    $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
-                    $answersArray = array();
-
-                    $questionnaires = $test->getQuestionnaires();
-                    foreach ($questionnaires as $questionnaire) {
-
-                        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
-                                        'questionnaire' => $questionnaire->getId()
-                                        )
-                                    );
-
-                        $questions = $em->getRepository('InnovaSelfBundle:Question')->findBy(
-                                        array('questionnaire' => $questionnaire->getId())
-                                    );
-
-                        foreach ($traces as $trace) {
-                            $colonneO = "";
-                            $trueFalse = true;
-                            $answers = $trace->getAnswers();
-                            $csv .= $questionnaire->getTheme() . " " . $questions[0]->getTypology()->getName() .  ";" ; // Typologie
+        $rightProps = array();
+        $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
+        foreach ($users as $user) {
+            $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                ->countDoneYetByUserByTest($test->getId(), $user->getId());
+            if ($countQuestionnaireDone > 0) {
+            //$csv .= $user->getEmail() . ";" ;
+            $csv .= $user->getUserName() . " " . $user->getFirstName() . ";" ;
 
 
-                            // création tableau de correspondance subquestion -> réponses
-                            foreach ($answers as $answer) {
-                                if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])){
-                                    $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                                }
-                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
+                $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
+                $answersArray = array();
+
+                $questionnaires = $test->getQuestionnaires();
+                foreach ($questionnaires as $questionnaire) {
+
+                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
+                                    'questionnaire' => $questionnaire->getId()
+                                    )
+                                );
+
+                    $questions = $em->getRepository('InnovaSelfBundle:Question')->findBy(
+                                    array('questionnaire' => $questionnaire->getId())
+                                );
+
+                    foreach ($traces as $trace) {
+                        $colonneO = "";
+                        $trueFalse = true;
+                        $answers = $trace->getAnswers();
+                        
+
+                        // création tableau de correspondance subquestion -> réponses
+                        foreach ($answers as $answer) {
+                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])){
+                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
                             }
-
-                             // on récupère la subquestion
-                            $subquestions = $questions[0]->getSubQuestions();
-                            foreach ($subquestions as $subquestion) {
-                                $propositions = $subquestion->getPropositions();
-                                $rightProps = array();
-                                $nbPropositionRightAnswser = 0;
-                                $cptProposition = 0;
-                                $propLetters = array();
-                                // on compte les bonnes propositions
-                                foreach ($propositions as $proposition) {
-                                    $cptProposition++;
-                                    if ($proposition->getRightAnswer()) {
-                                        $nbPropositionRightAnswser++;
-                                        $rightProps[] = $proposition->getId();
-
-                                    }
-                                    $propLetters[$proposition->getId()] = $arr[$cptProposition];
-                                }
-
-                                $nbAnswers = count($answersArray[$subquestion->getId()]);
-                                $subquestionOk = true;
-                                if ( $nbAnswers == $nbPropositionRightAnswser) {
-                                    foreach ($rightProps as $rightProp) {
-                                        $found = false;
-                                        foreach ($answersArray[$subquestion->getId()] as $answerProp) {
-                                           if ($rightProp == $answerProp->getId()){
-                                                $found = true;
-                                           }
-                                        }
-                                        if ($found == false) {
-                                            $subquestionOk = false;
-                                        }
-                                    }
-                                }
-                                else {
-                                    $subquestionOk = false;
-                                }
-
-                                $letters = array();
-                                foreach ($answersArray[$subquestion->getId()] as $answer) {
-                                    $idAnswer = $answer->getId();
-                                    $letters[$propLetters[$idAnswer]] = 1;
-                                }
-                                ksort($letters);
-                                foreach($letters as $key => $value){
-                                    //$csv .= $key;
-                                }
-                            }
-//                            $csv .= ";";
+                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
                         }
-                    }
-//                    $csv .= "\n";
-                }
 
-            }
-//        }
-        // FOOTER
-        // Empty
+                         // on récupère la subquestion
+                        $subquestions = $questions[0]->getSubQuestions();
+                        foreach ($subquestions as $subquestion) {
+                            $propositions = $subquestion->getPropositions();
+                            $rightProps = array();
+                            $nbPropositionRightAnswser = 0;
+                            $cptProposition = 0;
+                            $propLetters = array();
+                            // on compte les bonnes propositions
+                            foreach ($propositions as $proposition) {
+                                $cptProposition++;
+                                if ($proposition->getRightAnswer()) {
+                                    $nbPropositionRightAnswser++;
+                                    $rightProps[] = $proposition->getId();
 
-        $csv .= "\n";
-
-        //
-        // PARTIE BODY
-        //
-        // Loop to display all data
-//        foreach ($tests as $test) {
-            $rightProps = array();
-            $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
-            foreach ($users as $user) {
-                $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                    ->countDoneYetByUserByTest($test->getId(), $user->getId());
-                if ($countQuestionnaireDone > 0) {
-                //$csv .= $user->getEmail() . ";" ;
-                $csv .= $user->getUserName() . " " . $user->getFirstName() . ";" ;
-                // For THE test, loop on the Questionnaire
-                // CR
-                //
-                    $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
-                    $answersArray = array();
-
-                    $questionnaires = $test->getQuestionnaires();
-                    foreach ($questionnaires as $questionnaire) {
-
-                        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
-                                        'questionnaire' => $questionnaire->getId()
-                                        )
-                                    );
-
-                        $questions = $em->getRepository('InnovaSelfBundle:Question')->findBy(
-                                        array('questionnaire' => $questionnaire->getId())
-                                    );
-
-                        foreach ($traces as $trace) {
-                            $colonneO = "";
-                            $trueFalse = true;
-                            $answers = $trace->getAnswers();
-                            //$csv .= $questionnaire->getTheme() . ";" ;
-//                            $csv .= $questions[0]->getTypology()->getName() .  ";" ; // Typologie
-
-
-                            // création tableau de correspondance subquestion -> réponses
-                            foreach ($answers as $answer) {
-                                if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])){
-                                    $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
                                 }
-                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
+                                $propLetters[$proposition->getId()] = $arr[$cptProposition];
                             }
 
-                             // on récupère la subquestion
-                            $subquestions = $questions[0]->getSubQuestions();
-                            foreach ($subquestions as $subquestion) {
-                                $propositions = $subquestion->getPropositions();
-                                $rightProps = array();
-                                $nbPropositionRightAnswser = 0;
-                                $cptProposition = 0;
-                                $propLetters = array();
-                                // on compte les bonnes propositions
-                                foreach ($propositions as $proposition) {
-                                    $cptProposition++;
-                                    if ($proposition->getRightAnswer()) {
-                                        $nbPropositionRightAnswser++;
-                                        $rightProps[] = $proposition->getId();
 
-                                    }
-                                    $propLetters[$proposition->getId()] = $arr[$cptProposition];
-                                }
-
-                                $nbAnswers = count($answersArray[$subquestion->getId()]);
-                                $subquestionOk = true;
-                                if ( $nbAnswers == $nbPropositionRightAnswser) {
-                                    foreach ($rightProps as $rightProp) {
-                                        $found = false;
-                                        foreach ($answersArray[$subquestion->getId()] as $answerProp) {
-                                           if ($rightProp == $answerProp->getId()){
-                                                $found = true;
-                                           }
-                                        }
-                                        if ($found == false) {
-                                            $subquestionOk = false;
-                                        }
-                                    }
-                                }
-                                else {
-                                    $subquestionOk = false;
-                                }
-
-                                $letters = array();
-                                foreach ($answersArray[$subquestion->getId()] as $answer) {
-                                    $idAnswer = $answer->getId();
-                                    $letters[$propLetters[$idAnswer]] = 1;
-                                }
-                                ksort($letters);
-                                foreach($letters as $key => $value){
-                                    $csv .= $key;
-                                }
+                            $letters = array();
+                            foreach ($answersArray[$subquestion->getId()] as $answer) {
+                                $idAnswer = $answer->getId();
+                                $letters[$propLetters[$idAnswer]] = 1;
+                            }
+                            ksort($letters);
+                            foreach($letters as $key => $value){
+                                $csv .= $key;
                             }
                             $csv .= ";";
                         }
                     }
-                    $csv .= "\n";
                 }
-
+                $csv .= "\n";
             }
-//        }
-        // FOOTER
-        // Empty
+
+        }
 
         fwrite($csvh, $csv);
         fclose($csvh);
