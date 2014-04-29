@@ -65,6 +65,31 @@ class AjaxController extends Controller
         );
     }
 
+     /**
+     *
+     * @Route("/questionnaires/upload-image", name="editor_questionnaire_upload-image", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function uploadImageAction()
+    {
+        $request = $this->get('request');
+
+        foreach($request->files as $uploadedFile) {
+            $originalName = $uploadedFile->getClientOriginalName();
+            $ext = pathinfo($originalName, PATHINFO_EXTENSION); //$ext will be gif
+            $newName = uniqid(). "." . $ext;
+
+            $directory = __DIR__.'/../../../../../web/upload/media/';
+            $file = $uploadedFile->move($directory, $newName);
+        }
+
+        return new JsonResponse(
+            array(
+                'url' => $newName,
+            )
+        );
+    }
+
 
 
     /**
@@ -105,7 +130,7 @@ class AjaxController extends Controller
                     $entity->setMediaContext($media);
                 } elseif ($entityField == "consigne") {
                     $entity->setMediaInstruction($media);
-                } else {
+                } elseif ($entityField == "texte") {
                     $entity->setMediaText($media);
                 } 
                 break;

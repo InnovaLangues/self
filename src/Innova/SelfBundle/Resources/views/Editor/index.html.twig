@@ -20,10 +20,13 @@
 
     {% include "InnovaSelfBundle:Editor/partials:theme.html.twig" %}
 
-
     <div id="item-container" class="row">
-        {% include "InnovaSelfBundle:Editor/partials:contexte.html.twig" %}
-
+        <div class="col-md-6">
+            {% include "InnovaSelfBundle:Editor/partials:contexte.html.twig" %}
+            {% include "InnovaSelfBundle:Editor/partials:texte.html.twig" %}
+        </div>
+        <div class="col-md-6">
+        </div>
     </div>
 
     {# Compteur n° de la tâche #}

@@ -10,12 +10,23 @@ $(document).ready(function() {
         chooseMediaTypeModal();
     });
 
+    $( "body" ).on( "click", '#add-text', function() {
+        setParamForRequest("questionnaire", "texte", questionnaireId);
+        chooseMediaTypeModal();
+    });
+
     $( "body" ).on( "click", '.media-type-choice', function() {
         createMediaModal( $(this) );
     });
 
     $( "body" ).on( "click", '#create-text-btn', function() {
         createText();
+        $("*").modal('hide');
+    });
+
+    $( "body" ).on( "click", '#create-image-btn', function() {
+        createImage();
+        $("*").modal('hide');
     });
 
 });
@@ -28,7 +39,6 @@ $(document).ready(function() {
 *************************************************
 **************************************************/
 function chooseMediaTypeModal() {
-    $(".media-type-choice").attr("for-what");
     $('#modal-media-type').modal('show');
 }
 
@@ -50,9 +60,15 @@ function createMediaModal( media ) {
 
 function createText(){
     var description = $("#create-text-textarea").val();
-    createMedia(null, description, null, "text");
+    createMedia(null, description, null, "texte");
 }
 
+function createImage(){
+    var url = $("#image-url").val();
+    var name = $("#image-name").val();
+    var description = $("#image-description").val();
+   createMedia(name, description, url, "image");
+}
 
 
 /************************************************
@@ -64,6 +80,8 @@ function createText(){
 **************************************************/
 
 function createMedia(name, description, url, type) {
+
+    console.log(name, description, url, type);
     var entityField = $("#entity-field").val();
     var entityId = $("#entity-id").val();
     var entityType = $("#entity-type").val();
@@ -85,6 +103,7 @@ function createMedia(name, description, url, type) {
     })
     .done(function(data) {
         var mediaId = data.mediaId;
+        initializeFormsFields();
     });
 }
 
@@ -117,3 +136,47 @@ function setParamForRequest(type, field, id){
     $("#entity-id").val(id);
     $("#entity-type").val(type);
 }
+
+
+function initializeFormsFields(){
+    $("#create-text-textarea").val("");
+    $("#image-url").val("");
+    $("#image-name").val("");
+    $("#image-description").val("");
+    $("#image-file").val("");
+}
+
+/************************************************
+*************************************************
+
+                    UPLOAD FILE
+
+*************************************************
+**************************************************/
+
+
+$('#image-file').on('change', function(event){
+    files = event.target.files;
+
+    var data = new FormData();
+    $.each(files, function(key, value)
+    {
+        data.append(key, value);
+    });
+
+     $.ajax({
+        url: Routing.generate('editor_questionnaire_upload-image'),
+        type: 'POST',
+        cache: false,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        data : data
+    })
+    .done(function(data) {
+        var url = data["url"];
+        $("#image-url").val(url);
+        $('#create-image-btn').prop("disabled", false);
+    }); 
+    
+});

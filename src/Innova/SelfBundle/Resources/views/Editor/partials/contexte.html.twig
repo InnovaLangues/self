@@ -1,7 +1,10 @@
-{% if questionnaire.mediaContext is null %}
-    <span id="add-context" class="btn btn-default">
-        Ajouter un contexte
-    </span>
-{% else %}
-    Il y a un contexte
-{% endif %}
+<div id="contexte-container" class="panel panel-default">
+    <div class="panel-heading">Contexte</div>
+    <div class="panel-body">
+        {% if questionnaire.mediaContext is null %}
+            <span id="add-context" class="btn btn-default">Ajouter</span>
+        {% else %}
+           {{ macros.displayMedia(questionnaire.mediaContext) }}
+        {% endif %}
+    </div>
+</div>
