@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Innova\SelfBundle\Entity\Media;
-
+use Innova\SelfBundle\Entity\Subquestion;
 /**
  * Main controller.
  *
@@ -116,6 +116,48 @@ class AjaxController extends Controller
         return new JsonResponse(
             array(
                 'level' => $level,
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/set-typology", name="editor_questionnaire_set-typology", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setTypologyAction()
+    {
+        $msg = "";
+        $request = $this->get('request');
+        $questionnaireId = $request->request->get('questionnaireId');
+        $typologyName = $request->request->get('typology');
+
+        $em = $this->getDoctrine()->getManager();
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+
+        if(!$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typologyName)){
+            $typology = null;
+        }
+
+        // on teste s'il n'y a pas de subquestion 
+        // (pour éviter un conflit entre la typo de la question et des subq)
+        if(count($questionnaire->getQuestions()[0]->getSubquestions()) > 0 ){
+            $msg = "Vous ne pouvez pas éditer la typologie s'il y a déjà des subquestions !";
+        } else {
+            $questionnaire->getQuestions()[0]->setTypology($typology);
+            $em->persist($questionnaire);
+            $em->flush();
+        }
+
+        $typologyName = "-";
+        if($typology = $questionnaire->getQuestions()[0]->getTypology()){
+            $typologyName = $typology->getName();
+        }
+
+        return new JsonResponse(
+            array(
+                'msg' => $msg,
+                'typology'=> $typologyName,
             )
         );
     }
@@ -259,5 +301,78 @@ class AjaxController extends Controller
         return new Response($template);
     }
 
+    /**
+     * 
+     *
+     * @Route("/questionnaires/unlink-media", name="editor_questionnaire_unlink-media", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function UnlinkMediaAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+
+        $entityType = $request->request->get('entityType');
+        $entityId = $request->request->get('entityId');
+        $entityField = $request->request->get('entityField');
+
+        $template = "";
+        switch ($entityType) {
+            case "questionnaire": 
+                $entity =  $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
+                if ($entityField == "contexte"){
+                    $entity->setMediaContext(null);
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('questionnaire' => $entity));
+                } elseif ($entityField == "texte") {
+                    $entity->setMediaText(null);
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $entity));
+                } 
+                break;
+            case "subquestion":
+                break;
+            case "proposition":
+                break;
+        }
+
+        $em->persist($entity);
+        $em->flush();
+
+        return new Response($template);
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/create-subquestion", name="editor_questionnaire_create-subquestion", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function createSubquestionAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaireId = $request->request->get('questionnaireId');
+        $questionnaireTypology = $request->request->get('questionnaireTypology');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        $question = $questionnaire->getQuestions()[0];
+
+        if(mb_substr($questionnaireTypology, 0, 3) == "APP"){
+            $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
+        } else {
+            $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($questionnaireTypology, 1));
+        }
+
+        $subquestion = new Subquestion();
+        $subquestion->setTypology($typology);
+        $subquestion->setQuestion($question);
+
+        $em->persist($subquestion);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'ok' => "ok",
+            )
+        );
+    }
 
 }

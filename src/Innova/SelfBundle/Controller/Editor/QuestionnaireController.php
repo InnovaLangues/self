@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Question;
+
 
 /**
  * Questionnaire controller.
@@ -75,6 +77,10 @@ class QuestionnaireController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($questionnaire);
+
+        $question = new Question();
+        $question->setQuestionnaire($questionnaire);
+        $em->persist($question);
 
         $em->flush();
 

@@ -1,19 +1,19 @@
 {% macro displayMedia(media) %}
     {% set mediaType = media.mediaType.name %}
-        {% if mediaType == "texte" %}
-           {{ media.description | raw }}
-        {% elseif mediaType == "image" %}
-            <img src="{{ asset('upload/media/') ~ media.url }}" height="80px"/>
-        {% elseif mediaType == "video" %}
-            <video id="video" controls>
-                <source src="{{ asset('upload/media/') ~ media.url }}.webm" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
-                Your browser does not support the video tag.
-            </video>
-        {% elseif mediaType == "audio" %}
-            <audio controls preload="auto">
-                <source src="{{ asset('upload/media/') ~ media.url }}.mp3" type="audio/mp3">
-                <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
-                Votre navigateur est trop ancien.
-            </audio>
-        {% endif %}
+    {% if mediaType == "texte" %}
+       {{ media.description | raw }}
+    {% elseif mediaType == "image" %}
+        <img src="{{ asset('upload/media/') ~ media.url }}" height="180px"/>
+    {% elseif mediaType == "video" %}
+        <video id="video" controls>
+            <source src="{{ asset('upload/media/') ~ media.url }}.webm" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
+            Your browser does not support the video tag.
+        </video>
+    {% elseif mediaType == "audio" %}
+        <audio controls preload="auto">
+            <source src="{{ asset('upload/media/') ~ media.url }}.mp3" type="audio/mp3">
+            <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
+            Votre navigateur est trop ancien.
+        </audio>
+    {% endif %}
 {% endmacro %}

@@ -3,14 +3,14 @@
     <div class="panel-body">
         <form class="form-inline" role="form">
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="theme">Theme</label>
                     <input type="text" class="form-control" id="theme" value="{{ questionnaire.theme }}"/>
                 </div>
             </div>
             
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="skill">Compétences</label>
                     {% set skills = ["-", "CO", "CE"] %}
@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="skill">Niveau</label>
                     {% set levels = ["-", "A1", "A2", "B1", "B2", "C1"] %}
@@ -32,6 +32,20 @@
                         {% for level in levels %}
                             <option {% if questionnaire.level is not null and questionnaire.level.name == level %}selected{% endif %} value="{{ level }}">
                                 {{ level }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="typology">Typology</label>
+                    {% set typologies = ["-", "TVF", "TQRM", "TQRU", "TVFNM", "APPAA", "APPAA", "APPTT", "APPAT"] %}
+                    <select id="typology" class="form-control">
+                        {% for typology in typologies %}
+                            <option {% if questionnaire.questions[0].typology is not null and questionnaire.questions[0].typology.name == typology %}selected{% endif %} value="{{ typology }}">
+                                {{ typology }}
                             </option>
                         {% endfor %}
                     </select>

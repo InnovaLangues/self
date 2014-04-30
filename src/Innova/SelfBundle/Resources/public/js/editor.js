@@ -14,6 +14,10 @@ $(document).ready(function() {
         setLevel(questionnaireId);
     });
 
+    $('#typology').on('change',function(e){
+        setTypology(questionnaireId);
+    });
+
     /* QUESTIONNAIRE RELATED EVENTS */
     $( "body" ).on( "click", '#add-context', function() {
         setParamForRequest("questionnaire", "contexte", questionnaireId);
@@ -24,6 +28,23 @@ $(document).ready(function() {
         setParamForRequest("questionnaire", "texte", questionnaireId);
         chooseMediaTypeModal();
     });
+
+    $( "body" ).on( "click", '#delete-context', function() {
+        setParamForRequest("questionnaire", "contexte", questionnaireId);
+        unlinkMedia();
+    });
+
+    $( "body" ).on( "click", '#delete-text', function() {
+        setParamForRequest("questionnaire", "texte", questionnaireId);
+        unlinkMedia();
+    });
+
+
+    /* QUESTION RELATED EVENT */
+    $( "body" ).on( "click", '#create-subquestion', function() {
+        createSubquestion(questionnaireId);
+    });
+
 
     /* MEDIA RELATED EVENTS */
     $( "body" ).on( "click", '.media-type-choice', function() {
@@ -176,6 +197,27 @@ function setSkill(questionnaireId) {
     }); 
 }
 
+function setTypology(questionnaireId) {
+    $("#loader-img").show();
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_set-typology'),
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            questionnaireId: questionnaireId,
+            typology: $("#typology").val() 
+        }
+    })
+    .done(function(data) {
+        $("#loader-img").hide();
+        $("#typology").val(data.typology);
+        if(data.msg != ""){
+            alert(data.msg);
+        } 
+    }); 
+}
+
+
 function setLevel(questionnaireId) {
     $("#loader-img").show();
 
@@ -193,7 +235,47 @@ function setLevel(questionnaireId) {
     }); 
 }
 
+function unlinkMedia(){
+    $("#loader-img").show();
 
+    var entityField = $("#entity-field").val();
+    var entityId = $("#entity-id").val();
+    var entityType = $("#entity-type").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_unlink-media'),
+        type: 'POST',
+        data: 
+        { 
+            entityType: entityType,
+            entityId: entityId,
+            entityField: entityField
+        }
+    })
+    .done(function(data) {
+        $("#"+entityField+"-container").replaceWith(data);
+        initializeFormsFields();
+        $("#loader-img").hide();
+    });
+}
+
+
+function createSubquestion(questionnaireId) {
+    $("#loader-img").show();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_create-subquestion'),
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            questionnaireId: questionnaireId,
+            questionnaireTypology: $("#typology").val(), 
+        }
+    })
+    .done(function(data) {
+        $("#loader-img").hide();
+    }); 
+}
 
 /************************************************
 *************************************************
@@ -240,7 +322,7 @@ $('#image-file').on('change', function(event){
         data.append(key, value);
     });
 
-     $.ajax({
+    $.ajax({
         url: Routing.generate('editor_questionnaire_upload-image'),
         type: 'POST',
         cache: false,
