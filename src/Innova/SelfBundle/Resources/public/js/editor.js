@@ -269,11 +269,12 @@ function createSubquestion(questionnaireId) {
         dataType: 'json',
         data: { 
             questionnaireId: questionnaireId,
-            questionnaireTypology: $("#typology").val(), 
+            questionnaireTypology: $("#typology").val()
         }
     })
-    .done(function(data) {
+    .complete(function(data) {
         $("#loader-img").hide();
+        $("#subquestion-container").replaceWith(data.responseText);
     }); 
 }
 

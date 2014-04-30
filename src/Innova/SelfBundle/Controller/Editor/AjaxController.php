@@ -368,11 +368,10 @@ class AjaxController extends Controller
         $em->persist($subquestion);
         $em->flush();
 
-        return new JsonResponse(
-            array(
-                'ok' => "ok",
-            )
-        );
+
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('questionnaire' => $questionnaire));
+
+        return new Response($template);
     }
 
 }

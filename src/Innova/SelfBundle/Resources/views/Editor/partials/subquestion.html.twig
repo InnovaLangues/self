@@ -1,6 +1,5 @@
-{% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
-
 <div id="subquestion-container" class="panel panel-default">
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     <div class="panel-heading">
         Questions
     </div>
@@ -8,13 +7,12 @@
         {% if questionnaire.questions[0].subquestions is not null %}
             {% set subquestions = questionnaire.questions[0].subquestions %}
             {% for i, subquestion in subquestions %}
-                {{ i }} - {{ subquestion.typology.name }}
+                {{ i }} - {{ subquestion.typology.name }} <br />
             {% endfor %}
-            
         {% endif %}
 
         <div class="text-center">
-            <span id="create-subquestion" class="btn btn-default">Ajouter</span>
+            <span id="create-subquestion" class="btn btn-default">Ajouter une question</span>
         </div>
     </div>
 </div>
