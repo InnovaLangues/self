@@ -225,12 +225,13 @@ function initializeFormsFields(){
 /************************************************
 *************************************************
 
-                    UPLOAD FILE
+                    UPLOAD FILE (à factoriser)
 
 *************************************************
 **************************************************/
 
 $('#image-file').on('change', function(event){
+    $("#loader-img").show();
     files = event.target.files;
 
     var data = new FormData();
@@ -252,11 +253,13 @@ $('#image-file').on('change', function(event){
         var url = data["url"];
         $("#image-url").val(url);
         $('#create-image-btn').prop("disabled", false);
+        $("#loader-img").hide();
     }); 
 });
 
 
 $('#video-file').on('change', function(event){
+    $("#loader-img").show();
     files = event.target.files;
 
     var data = new FormData();
@@ -278,10 +281,12 @@ $('#video-file').on('change', function(event){
         var url = data["url"];
         $("#video-url").val(url);
         $('#create-video-btn').prop("disabled", false);
+        $("#loader-img").hide();
     }); 
 });
 
 $('#audio-file').on('change', function(event){
+    $("#loader-img").show();
     files = event.target.files;
 
     var data = new FormData();
@@ -303,5 +308,6 @@ $('#audio-file').on('change', function(event){
         var url = data["url"];
         $("#audio-url").val(url);
         $('#create-audio-btn').prop("disabled", false);
+        $("#loader-img").hide();
     }); 
 });
