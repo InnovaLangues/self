@@ -42,7 +42,6 @@ class AjaxController extends Controller
     }
 
     /**
-     * Delete a Questionnaire entity
      *
      * @Route("/questionnaires/set-theme", name="editor_questionnaire_set-theme", options={"expose"=true})
      * @Method("POST")
@@ -66,6 +65,63 @@ class AjaxController extends Controller
         );
     }
 
+    /**
+     *
+     * @Route("/questionnaires/set-skill", name="editor_questionnaire_set-skill", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setSkillAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaireId = $request->request->get('questionnaireId');
+        $skillName = $request->request->get('skill');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        if (!$skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skillName)){
+            $skill = null;
+        }
+
+        $questionnaire->setSkill($skill);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'skill' => $skill,
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/set-level", name="editor_questionnaire_set-level", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setLevelAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaireId = $request->request->get('questionnaireId');
+        $levelName = $request->request->get('level');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        if(!$level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($levelName)){
+            $level = null;
+        }
+        $questionnaire->setLevel($level);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'level' => $level,
+            )
+        );
+    }
+
+
+
      /**
      *
      * @Route("/questionnaires/upload-image", name="editor_questionnaire_upload-image", options={"expose"=true})
@@ -82,6 +138,32 @@ class AjaxController extends Controller
 
             $directory = __DIR__.'/../../../../../web/upload/media/';
             $file = $uploadedFile->move($directory, $newName);
+        }
+
+        return new JsonResponse(
+            array(
+                'url' => $newName,
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/upload-audio", name="editor_questionnaire_upload-audio", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function uploadAudioAction()
+    {
+        $request = $this->get('request');
+
+        foreach($request->files as $uploadedFile) {
+            $originalName = $uploadedFile->getClientOriginalName();
+            $ext = pathinfo($originalName, PATHINFO_EXTENSION); 
+            $newName = uniqid();
+
+            //convertir en ogg
+            $directory = __DIR__.'/../../../../../web/upload/media/';
+            $file = $uploadedFile->move($directory, $newName.".".$ext);
         }
 
         return new JsonResponse(
@@ -160,9 +242,6 @@ class AjaxController extends Controller
                 if ($entityField == "contexte"){
                     $entity->setMediaContext($media);
                     $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('questionnaire' => $entity));
-                } elseif ($entityField == "consigne") {
-                    $entity->setMediaInstruction($media);
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:consigne.html.twig',array('questionnaire' => $entity));
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText($media);
                     $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $entity));

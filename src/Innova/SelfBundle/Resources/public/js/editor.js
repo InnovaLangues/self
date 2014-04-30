@@ -1,10 +1,20 @@
 $(document).ready(function() {
     var questionnaireId = $("#questionnaire-id").val();
 
-    $( "body" ).on( "click", '#btn-theme', function() {
-       setTheme(questionnaireId);
+    /* GENERAL INFOS EVENTS */
+    $('#theme').on('blur',function(e){
+        setTheme(questionnaireId);
     });
 
+    $('#skill').on('change',function(e){
+        setSkill(questionnaireId);
+    });
+
+    $('#level').on('change',function(e){
+        setLevel(questionnaireId);
+    });
+
+    /* QUESTIONNAIRE RELATED EVENTS */
     $( "body" ).on( "click", '#add-context', function() {
         setParamForRequest("questionnaire", "contexte", questionnaireId);
         chooseMediaTypeModal();
@@ -15,6 +25,7 @@ $(document).ready(function() {
         chooseMediaTypeModal();
     });
 
+    /* MEDIA RELATED EVENTS */
     $( "body" ).on( "click", '.media-type-choice', function() {
         createMediaModal( $(this) );
     });
@@ -31,6 +42,11 @@ $(document).ready(function() {
 
     $( "body" ).on( "click", '#create-video-btn', function() {
         createVideo();
+        $("*").modal('hide');
+    });
+
+    $( "body" ).on( "click", '#create-audio-btn', function() {
+        createAudio();
         $("*").modal('hide');
     });
 
@@ -82,6 +98,13 @@ function createVideo(){
     createMedia(name, description, url, "video");
 }
 
+function createAudio(){
+    var url = $("#audio-url").val();
+    var name = $("#audio-name").val();
+    var description = $("#audio-description").val();
+    createMedia(name, description, url, "audio");
+}
+
 
 /************************************************
 *************************************************
@@ -92,6 +115,8 @@ function createVideo(){
 **************************************************/
 
 function createMedia(name, description, url, type) {
+    $("#loader-img").show();
+
     var entityField = $("#entity-field").val();
     var entityId = $("#entity-id").val();
     var entityType = $("#entity-type").val();
@@ -111,25 +136,63 @@ function createMedia(name, description, url, type) {
         }
     })
     .done(function(data) {
+        $("#"+entityField+"-container").replaceWith(data);
         initializeFormsFields();
-        //$("#contexte-container").replaceWith(data);
+        $("#loader-img").hide();
     });
 }
 
 
 function setTheme(questionnaireId) {
+    $("#loader-img").show();
+
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-theme'),
         type: 'POST',
         dataType: 'json',
-        data: { questionnaireId: questionnaireId,
-                theme: $("#theme").val() 
-            }
+        data: { 
+            questionnaireId: questionnaireId,
+            theme: $("#theme").val() 
+        }
     })
     .done(function(data) {
-
+        $("#loader-img").hide();
     }); 
 }
+
+function setSkill(questionnaireId) {
+    $("#loader-img").show();
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_set-skill'),
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            questionnaireId: questionnaireId,
+            skill: $("#skill").val() 
+        }
+    })
+    .done(function(data) {
+        $("#loader-img").hide();
+    }); 
+}
+
+function setLevel(questionnaireId) {
+    $("#loader-img").show();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_set-level'),
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            questionnaireId: questionnaireId,
+            level: $("#level").val() 
+        }
+    })
+    .done(function(data) {
+        $("#loader-img").hide();
+    }); 
+}
+
 
 
 /************************************************
@@ -166,7 +229,6 @@ function initializeFormsFields(){
 
 *************************************************
 **************************************************/
-
 
 $('#image-file').on('change', function(event){
     files = event.target.files;
@@ -216,5 +278,30 @@ $('#video-file').on('change', function(event){
         var url = data["url"];
         $("#video-url").val(url);
         $('#create-video-btn').prop("disabled", false);
+    }); 
+});
+
+$('#audio-file').on('change', function(event){
+    files = event.target.files;
+
+    var data = new FormData();
+    $.each(files, function(key, value)
+    {
+        data.append(key, value);
+    });
+
+     $.ajax({
+        url: Routing.generate('editor_questionnaire_upload-audio'),
+        type: 'POST',
+        cache: false,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        data : data
+    })
+    .done(function(data) {
+        var url = data["url"];
+        $("#audio-url").val(url);
+        $('#create-audio-btn').prop("disabled", false);
     }); 
 });

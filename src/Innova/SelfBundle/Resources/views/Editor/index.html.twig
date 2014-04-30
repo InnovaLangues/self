@@ -10,27 +10,27 @@
     <a class="btn btn-default" href="{{ path('editor_questionnaire_list') }}">
         <span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste
     </a>
+
+
+    <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
     
     <input type="hidden" id="questionnaire-id" value="{{ questionnaire.id }}"/>
-
     <input type="hidden" id="entity-id" value=""/>
     <input type="hidden" id="entity-type" value=""/>
     <input type="hidden" id="entity-field" value=""/>
     <hr/>
 
-    {% include "InnovaSelfBundle:Editor/partials:theme.html.twig" %}
-
-    <div id="item-container" class="row">
-        <div class="col-md-6">
+    <div id="" class="row">
+        <div class="col-md-12">
+            {% include "InnovaSelfBundle:Editor/partials:general-infos.html.twig" %}
+        </div>
+        <div class="col-md-5">
             {% include "InnovaSelfBundle:Editor/partials:contexte.html.twig" %}
             {% include "InnovaSelfBundle:Editor/partials:texte.html.twig" %}
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
         </div>
     </div>
-
-    {# Compteur n° de la tâche #}
-    {% include "InnovaSelfBundle:Editor/common:compteur.html.twig" %}
 
     {% include "InnovaSelfBundle:Editor/common:modal.html.twig" %}
     

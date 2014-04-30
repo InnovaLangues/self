@@ -1,0 +1,43 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Informations générales</div>
+    <div class="panel-body">
+        <form class="form-inline" role="form">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="theme">Theme</label>
+                    <input type="text" class="form-control" id="theme" value="{{ questionnaire.theme }}"/>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="skill">Compétences</label>
+                    {% set skills = ["-", "CO", "CE"] %}
+                    <select id="skill" class="form-control">
+                        {% for skill in skills %}
+                            <option {% if questionnaire.skill is not null and questionnaire.skill.name == skill %}selected{% endif %} value="{{ skill }}">
+                                {{ skill }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="skill">Niveau</label>
+                    {% set levels = ["-", "A1", "A2", "B1", "B2", "C1"] %}
+                    <select id="level" class="form-control">
+                        {% for level in levels %}
+                            <option {% if questionnaire.level is not null and questionnaire.level.name == level %}selected{% endif %} value="{{ level }}">
+                                {{ level }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
