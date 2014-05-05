@@ -2,11 +2,11 @@
     <img width="70px" src="{{ asset("bundles/innovaself/images/") }}oignon.png" rel="tooltip" data-original-title="Question" />
     {% if subquestion.media is not null %}
         <div class="question-CE-text">
-                {{ subquestion.media.description | raw }}
+                {{ subquestion.media.description|raw }}
         </div>
     {% elseif questionnaire.mediaInstruction is not null %}
         <div class="question-CE-text">
-                {{ questionnaire.mediaInstruction.description | raw }}
+                {{ questionnaire.mediaInstruction.description|raw }}
         </div>
     {% endif %}
 </div>

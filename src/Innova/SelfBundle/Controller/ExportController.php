@@ -446,9 +446,7 @@ class ExportController
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $user->getId());
             if ($countQuestionnaireDone > 0) {
-            //$csv .= $user->getEmail() . ";" ;
-            $csv .= $user->getUserName() . " " . $user->getFirstName() . ";" ;
-
+                $csv .= $user->getUserName() . " " . $user->getFirstName() . ";" ;
 
                 $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
                 $answersArray = array();
