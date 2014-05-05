@@ -2,8 +2,6 @@
 
 namespace Innova\SelfBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -45,7 +43,7 @@ class ImportController
      *     name = "csv-import",
      *     requirements={"language" = "en|it", "level" = "a1|b1|b2"}
      * )
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function importCsvSQLAction($language, $level)
@@ -1072,7 +1070,6 @@ class ImportController
             $Vrai = "VRAI";
 
             $tab = explode("#", $data[12]);
-            $type = $tab[0];
 
             if ($data[12] != "VF") {
                 $vrai = $tab[1];
@@ -1151,7 +1148,6 @@ class ImportController
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 10+(2*$i);
-            //$rightAnswer = $data[$indice-1];
             $rightAnswer = $data[$indice+1]; // Changement 14/02/2014 car décalage du fichier.
 
                 $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
@@ -1230,9 +1226,6 @@ class ImportController
 
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
-
-            // Créer une occurrence dans la table "Proposition"
-            $indice = 11+(2*$i);
 
             $nbMedias = count($medias); #80
             for ($j=0; $j < $nbMedias; $j++)
