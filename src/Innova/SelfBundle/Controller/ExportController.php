@@ -62,7 +62,7 @@ class ExportController
      *     name = "csv-export"
      * )
      *
-     * @Method({"GET", "POST"})
+     * @Method("GET|POST")
      * @Template()
      */
     public function exportCsvSQLAction($language, $level, $test)
@@ -377,7 +377,7 @@ class ExportController
      *     name = "csv-export-tia"
      * )
      *
-     * @Method({"GET", "POST"})
+     * @Method("GET|POST")
      * @Template()
      */
     public function exportTiaCsvSQLAction($language, $level, $test)
