@@ -1,9 +1,7 @@
 {% macro inputs(subquestion, proposition) %}
-    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF"
-    or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVFNM" or subquestion.typology.name == "TVF" %}
+    {% set type = "checkbox" %}
+    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVFNM" or subquestion.typology.name == "TVF" %}
         {% set type = "radio" %}
-    {% else %}
-        {% set type = "checkbox" %}
     {% endif %}
     <input class="proposition-input" type="{{ type }}" name="{{ subquestion.id }}[]" id="input-proposition{{ proposition.id }}" value="{{ proposition.id }}" required />
 {% endmacro %}
@@ -29,8 +27,6 @@
 
 {% macro image(id, media, tooltip, width) %}
     {% import _self as macros %}
-    {# {{ macros.modale(id, media, tooltip) }} #}
-    {#     <img data-toggle="modal" width={{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ ('/upload/media/' ~  media.url) | imagine_filter('thumb_400') }}" /> #}
     <img data-toggle="modal" width="{{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url  }}" />
 {% endmacro %}
 
@@ -49,8 +45,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- <span class="btn btn-default" id="full-screen">Plein écran</span> -->
     </div>
 {% endmacro %}
 
@@ -58,14 +52,12 @@
     <div id="modal-{{ id }}" class="modal fade modales">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                    <div class="modal-body">
+                <div class="modal-body">
                     {% if media.mediaType.name == "image" %}
                         <img src="{{ asset('upload/media/') ~ media.url }}"/>
-                    {% endif %}
-                    {% if media.mediaType.name == "texte" %}
+                    {% elseif media.mediaType.name == "texte" %}
                         <div id="{{ id }}"> {{ media.description }} </div>
-                    {% endif %}
-                    {% if media.mediaType.name == "video" %}
+                    {% elseif media.mediaType.name == "video" %}
                         <video id="{{ id }}">
                             <source src="{{ asset('upload/media/') ~ media.url }}" >
                             Your browser does not support the video tag.
@@ -79,7 +71,6 @@
         </div>
     </div>
 {% endmacro %}
-
 
 {% macro translateVF(description, language) %}
     {% set languageShorten = language | slice(0, 2) | lower %}
