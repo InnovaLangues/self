@@ -83,9 +83,10 @@ class ImportController
 		// Tableau de trace.
         $nbTrace = 0;
         $tabTrace = array();
-// Traitement des fichiers reçus
-// DEBUT
-//
+
+        // Traitement des fichiers reçus
+        // DEBUT
+        //
 
         // Jusqu'à ce jour, il fallait à chaque fois supprimer tous les répertoires
         // avant d'exécuter le traitement. Ce qui n'était pas optimum.
@@ -370,8 +371,8 @@ class ImportController
             }
         }
 
-// FIN
-//
+        // FIN
+        //
 
         $nbTrace++;
         $tabTrace[$nbTrace] = "************  TRAITEMENT CSV ************";
@@ -530,7 +531,7 @@ class ImportController
                             $this->appatProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                         case "QRU_I";
-                            $this->qruiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            $this->qruiProcess($typo, $questionnaire, $data, $dir2copy, $dir_paste);
                             break;
                         case "APPAA";
                             $this->appaaProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
@@ -1295,7 +1296,7 @@ class ImportController
      * qruiProcess function
      *
      */
-    private function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function qruiProcess($typo, $questionnaire, $data, $dir2copy, $dir_paste)
     {
         $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"
