@@ -1,18 +1,11 @@
-<div id="subquestion-container" class="panel panel-default">
-    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
-    <div class="panel-heading">
-        Questions
-    </div>
-    <div class="panel-body">
-        {% if questionnaire.questions[0].subquestions is not null %}
-            {% set subquestions = questionnaire.questions[0].subquestions %}
-            {% for i, subquestion in subquestions %}
-                {{ i }} - {{ subquestion.typology.name }} <br />
-            {% endfor %}
-        {% endif %}
+{% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
 
-        <div class="text-center">
-            <span id="create-subquestion" class="btn btn-default">Ajouter une question</span>
-        </div>
-    </div>
+<div id="subquestion-{{ subquestion.id }}-container" class="tab-pane{% if i is not defined or i == 0 %} active{% endif %}">
+    {% set propositions = subquestion.propositions %}
+    {% for proposition in propositions %}
+        {% include "InnovaSelfBundle:Editor/partials:proposition.html.twig" %}
+    {% endfor %}
+    <p>
+        <span id="create-proposition" data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs">Ajouter une proposition</span>
+    </p>
 </div>

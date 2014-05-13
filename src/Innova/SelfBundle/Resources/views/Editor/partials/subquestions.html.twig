@@ -1,0 +1,26 @@
+<div id="subquestion-container" class="panel panel-default">
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+    <div class="panel-heading">
+        Questions
+        <span id="create-subquestion" class="btn btn-default btn-xs pull-right">Ajouter une question</span>
+    </div>
+    <div class="panel-body">
+        {% if questionnaire.questions[0].subquestions is not null %}
+            {% set subquestions = questionnaire.questions[0].subquestions %}
+
+            <ul class="nav nav-tabs">
+                {% for i, subquestion in subquestions %}
+                    <li {% if i == 0 %}class="active"{% endif %}>
+                        <a href="#subquestion-{{ subquestion.id }}-container" data-toggle="tab">#{{ i+1 }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="tab-content">
+                {% for i, subquestion in subquestions %}
+                        {% include "InnovaSelfBundle:Editor/partials:subquestion.html.twig" %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

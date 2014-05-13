@@ -1,0 +1,8 @@
+{% if proposition %}
+<p id="proposition-{{ proposition.id }}-container" class="proposition" data-subquestion-id="{{ proposition.subquestion.id }}">
+    {{ macros.deleteProposition(proposition) }}
+    {{ macros.inputs(proposition.subquestion, proposition) }}
+    {{ macros.displayMedia(proposition.media) }}
+    {{ macros.isRightAnswer(proposition) }}
+</p>
+{% endif %}

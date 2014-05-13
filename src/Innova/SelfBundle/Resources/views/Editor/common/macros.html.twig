@@ -1,7 +1,7 @@
 {% macro displayMedia(media) %}
     {% set mediaType = media.mediaType.name %}
     {% if mediaType == "texte" %}
-       {{ media.description | raw }}
+       {{ media.description | raw | striptags }}
     {% elseif mediaType == "image" %}
         <img src="{{ asset('upload/media/') ~ media.url }}" height="180px"/>
     {% elseif mediaType == "video" %}
@@ -16,4 +16,27 @@
             Votre navigateur est trop ancien.
         </audio>
     {% endif %}
+{% endmacro %}
+
+
+{% macro inputs(subquestion, proposition) %}
+    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVFNM" or subquestion.typology.name == "TVF" %}
+        {% set type = "radio" %}
+    {% else %}
+        {% set type = "checkbox" %}
+    {% endif %}
+    <input class="proposition-input" type="{{ type }}" name="{{ subquestion.id }}[]" id="input-proposition{{ proposition.id }}" value="{{ proposition.id }}" required />
+{% endmacro %}
+
+{% macro isRightAnswer(proposition) %}
+    {% if proposition.rightAnswer == true %}
+        <button type="button" class="btn btn-success btn-xs is-right-answer">Bonne réponse</button>
+    {% else %}
+        <button type="button" class="btn btn-danger btn-xs">Mauvaise réponse</button>
+    {% endif %}
+{% endmacro %}
+
+
+{% macro deleteProposition(proposition) %}
+    <span data-subquestion-id="{{ proposition.subquestion.id }}" data-proposition-id="{{ proposition.id }}" class="glyphicon glyphicon-remove btn btn-default btn-sm delete-proposition"></span>
 {% endmacro %}

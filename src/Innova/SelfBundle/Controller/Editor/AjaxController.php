@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Proposition;
 /**
  * Main controller.
  *
@@ -283,20 +284,33 @@ class AjaxController extends Controller
                 $entity =  $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
                 if ($entityField == "contexte"){
                     $entity->setMediaContext($media);
+                    $em->persist($entity);
+                    $em->flush();
+
                     $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('questionnaire' => $entity));
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText($media);
+                    $em->persist($entity);
+                    $em->flush();
+
                     $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $entity));
                 } 
                 break;
             case "subquestion":
                 break;
             case "proposition":
+                $entity = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
+                $proposition = new Proposition;
+                $proposition->setSubquestion($entity);
+                $proposition->setMedia($media);
+                $proposition->setRightAnswer(false);
+                $em->persist($proposition);
+                $em->persist($entity);
+                $em->flush();
+
+                $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('subquestion' => $entity));
                 break;
         }
-
-        $em->persist($entity);
-        $em->flush();
 
         return new Response($template);
     }
@@ -326,15 +340,22 @@ class AjaxController extends Controller
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText(null);
                     $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $entity));
-                } 
+                }
+                $em->persist($entity);
                 break;
             case "subquestion":
                 break;
             case "proposition":
+                $entity =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
+                $subquestion = $entity->getSubquestion();
+                $em->remove($entity);
+
+                $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('proposition' => null));
+
                 break;
         }
 
-        $em->persist($entity);
+        
         $em->flush();
 
         return new Response($template);
@@ -369,7 +390,7 @@ class AjaxController extends Controller
         $em->flush();
 
 
-        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }

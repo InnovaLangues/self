@@ -20,22 +20,22 @@ $(document).ready(function() {
 
     /* QUESTIONNAIRE RELATED EVENTS */
     $( "body" ).on( "click", '#add-context', function() {
-        setParamForRequest("questionnaire", "contexte", questionnaireId);
+        setParamForRequest("questionnaire", "contexte", questionnaireId, "contexte-container");
         chooseMediaTypeModal();
     });
 
     $( "body" ).on( "click", '#add-text', function() {
-        setParamForRequest("questionnaire", "texte", questionnaireId);
+        setParamForRequest("questionnaire", "texte", questionnaireId, "texte-container");
         chooseMediaTypeModal();
     });
 
     $( "body" ).on( "click", '#delete-context', function() {
-        setParamForRequest("questionnaire", "contexte", questionnaireId);
+        setParamForRequest("questionnaire", "contexte", questionnaireId, "contexte-container");
         unlinkMedia();
     });
 
     $( "body" ).on( "click", '#delete-text', function() {
-        setParamForRequest("questionnaire", "texte", questionnaireId);
+        setParamForRequest("questionnaire", "texte", questionnaireId, "texte-container");
         unlinkMedia();
     });
 
@@ -43,6 +43,19 @@ $(document).ready(function() {
     /* QUESTION RELATED EVENT */
     $( "body" ).on( "click", '#create-subquestion', function() {
         createSubquestion(questionnaireId);
+    });
+
+    $( "body" ).on( "click", '#create-proposition', function() {
+        var subquestionId = $(this).data("subquestion-id");
+        setParamForRequest("proposition", null, subquestionId, "subquestion-"+subquestionId+"-container");
+        chooseMediaTypeModal();
+    });
+
+    $( "body" ).on( "click", '.delete-proposition', function() {
+        var propositionId = $(this).data("proposition-id");
+        var subquestionId = $(this).data("subquestion-id");
+        setParamForRequest("proposition", null, propositionId, "proposition-"+propositionId+"-container");
+        unlinkMedia();
     });
 
 
@@ -141,6 +154,7 @@ function createMedia(name, description, url, type) {
     var entityField = $("#entity-field").val();
     var entityId = $("#entity-id").val();
     var entityType = $("#entity-type").val();
+    var toBeReloaded = $("#entity-to-be-reloaded").val();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-media'),
@@ -157,7 +171,7 @@ function createMedia(name, description, url, type) {
         }
     })
     .done(function(data) {
-        $("#"+entityField+"-container").replaceWith(data);
+        $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
         $("#loader-img").hide();
     });
@@ -241,6 +255,8 @@ function unlinkMedia(){
     var entityField = $("#entity-field").val();
     var entityId = $("#entity-id").val();
     var entityType = $("#entity-type").val();
+    var toBeReloaded = $("#entity-to-be-reloaded").val();
+
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_unlink-media'),
@@ -253,7 +269,7 @@ function unlinkMedia(){
         }
     })
     .done(function(data) {
-        $("#"+entityField+"-container").replaceWith(data);
+        $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
         $("#loader-img").hide();
     });
@@ -286,10 +302,11 @@ function createSubquestion(questionnaireId) {
 *************************************************
 **************************************************/
 
-function setParamForRequest(type, field, id){
+function setParamForRequest(type, field, id, reloaded){
     $("#entity-field").val(field);
     $("#entity-id").val(id);
     $("#entity-type").val(type);
+    $("#entity-to-be-reloaded").val(reloaded);
 }
 
 
