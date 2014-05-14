@@ -18,7 +18,10 @@ $(document).ready(function() {
         setTypology(questionnaireId);
     });
 
-    /* QUESTIONNAIRE RELATED EVENTS */
+    /**********************
+        QUESTIONNAIRE RELATED EVENTS 
+    ************************/
+
     $( "body" ).on( "click", '#add-context', function() {
         setParamForRequest("questionnaire", "contexte", questionnaireId, "contexte-container");
         chooseMediaTypeModal();
@@ -47,6 +50,12 @@ $(document).ready(function() {
     $( "body" ).on( "click", '#create-subquestion', function() {
         createSubquestion(questionnaireId);
     });
+
+    $( "body" ).on( "click", '.delete-subquestion', function() {
+        var subquestionId = $(this).data("subquestion-id");
+        deleteSubquestion(questionnaireId, subquestionId);
+    });
+
 
     $( "body" ).on( "click", '.add-amorce', function() {
         var subquestionId = $(this).data("subquestion-id");
@@ -248,9 +257,6 @@ function setTypology(questionnaireId) {
     .done(function(data) {
         $("#loader-img").hide();
         $("#typology").val(data.typology);
-        if(data.msg != ""){
-            alert(data.msg);
-        } 
     }); 
 }
 
@@ -315,6 +321,25 @@ function createSubquestion(questionnaireId) {
         $("#subquestion-container").replaceWith(data.responseText);
     }); 
 }
+
+function deleteSubquestion(questionnaireId, subquestionId){
+    $("#loader-img").show();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_delete_subquestion'),
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            questionnaireId: questionnaireId,
+            subquestionId: subquestionId,
+        }
+    })
+    .complete(function(data) {
+        $("#loader-img").hide();
+        $("#subquestion-container").replaceWith(data.responseText);
+    });
+}
+
 
 function toggleRightWrong(propositionId){
     $("#loader-img").show();

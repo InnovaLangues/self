@@ -128,7 +128,7 @@ class AjaxController extends Controller
      */
     public function setTypologyAction()
     {
-        $msg = "";
+        /* $msg = ""; */
         $request = $this->get('request');
         $questionnaireId = $request->request->get('questionnaireId');
         $typologyName = $request->request->get('typology');
@@ -140,15 +140,19 @@ class AjaxController extends Controller
             $typology = null;
         }
 
+        /*
         // on teste s'il n'y a pas de subquestion 
         // (pour éviter un conflit entre la typo de la question et des subq)
         if(count($questionnaire->getQuestions()[0]->getSubquestions()) > 0 ){
             $msg = "Vous ne pouvez pas éditer la typologie s'il y a déjà des subquestions !";
         } else {
+        */
             $questionnaire->getQuestions()[0]->setTypology($typology);
             $em->persist($questionnaire);
             $em->flush();
+        /*
         }
+        */
 
         $typologyName = "-";
         if($typology = $questionnaire->getQuestions()[0]->getTypology()){
@@ -157,7 +161,7 @@ class AjaxController extends Controller
 
         return new JsonResponse(
             array(
-                'msg' => $msg,
+                /*'msg' => $msg,*/
                 'typology'=> $typologyName,
             )
         );
@@ -409,6 +413,32 @@ class AjaxController extends Controller
 
         return new Response($template);
     }
+
+
+    /**
+     *
+     * @Route("/questionnaires/delete-subquestion", name="editor_questionnaire_delete_subquestion", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function deleteSubquestionAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $subquestionId = $request->request->get('subquestionId');
+        $questionnaireId = $request->request->get('questionnaireId');
+
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        
+        $em->remove($subquestion);
+        $em->flush();
+
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+
+        return new Response($template);
+    }
+
+
 
     /**
      *

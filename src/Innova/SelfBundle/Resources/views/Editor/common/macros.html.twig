@@ -29,14 +29,14 @@
 
 {% macro isRightAnswer(proposition) %}
     {% if proposition.rightAnswer == true %}
-        <button type="button" class="btn btn-success btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}">Bonne réponse</button>
+        <button rel="tooltip" data-original-title="Changer en mauvaise réponse" type="button" class="btn btn-success btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}">Bonne réponse</button>
     {% else %}
-        <button type="button" class="btn btn-danger btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}">Mauvaise réponse</button>
+        <button rel="tooltip" data-original-title="Changer en bonne réponse" type="button" class="btn btn-danger btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}">Mauvaise réponse</button>
     {% endif %}
 {% endmacro %}
 
 {% macro deleteProposition(proposition) %}
-    <button class="btn btn-default btn-xs delete-proposition" data-subquestion-id="{{ proposition.subquestion.id }}" data-proposition-id="{{ proposition.id }}">
+    <button rel="tooltip" data-original-title="Supprimer la proposition" class="btn btn-default btn-xs delete-proposition" data-subquestion-id="{{ proposition.subquestion.id }}" data-proposition-id="{{ proposition.id }}">
         <span class="glyphicon glyphicon-remove "></span>
     </button>
 {% endmacro %}
