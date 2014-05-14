@@ -340,7 +340,6 @@ function deleteSubquestion(questionnaireId, subquestionId){
     });
 }
 
-
 function toggleRightWrong(propositionId){
     $("#loader-img").show();
 

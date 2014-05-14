@@ -138,6 +138,24 @@ class AjaxController extends Controller
 
         if(!$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typologyName)){
             $typology = null;
+            foreach($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion){
+                $subquestion->setTypology(null);
+                $em->persist($subquestion);
+            }
+        } else {
+            if(mb_substr($typology->getName(), 0, 3) == "APP"){
+                foreach($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion){
+                    $subquestion->setTypology($typology);
+                    $em->persist($subquestion);
+                }
+
+            } else {
+                $typologySubquestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($typologyName, 1));
+                foreach($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion){
+                    $subquestion->setTypology($typologySubquestion);
+                    $em->persist($subquestion);
+                }
+            }
         }
 
         /*

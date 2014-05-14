@@ -4,10 +4,12 @@
     <div class="row">
         {% if subquestion.mediaAmorce is not null %}
             {{ macros.deleteAmorce(subquestion) }}
-            Question : 
             {{ macros.displayMedia(subquestion.mediaAmorce) }}
         {% else %}
-            <span class="btn btn-default btn-xs add-amorce" data-subquestion-id="{{ subquestion.id }}">ajouter une consigne / question / amorce</span>
+            <span class="btn btn-default btn-xs add-amorce" data-subquestion-id="{{ subquestion.id }}">
+                <span class="glyphicon glyphicon-plus"></span> 
+                ajouter une consigne / question / amorce
+            </span>
         {% endif %}
 
         <hr />
@@ -24,6 +26,9 @@
             </tr>
         </table>
 
-        <span class="btn btn-default btn-xs delete-subquestion pull-right" data-subquestion-id="{{ subquestion.id }}">Supprimer l'onglet</span>
+        <span class="btn btn-default btn-xs delete-subquestion pull-right" data-subquestion-id="{{ subquestion.id }}">
+            <span class="glyphicon glyphicon-remove"></span> 
+            Supprimer l'onglet
+        </span>
     </div>
 </div>
