@@ -18,7 +18,6 @@
     {% endif %}
 {% endmacro %}
 
-
 {% macro inputs(subquestion, proposition) %}
     {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVFNM" or subquestion.typology.name == "TVF" %}
         {% set type = "radio" %}
@@ -36,7 +35,14 @@
     {% endif %}
 {% endmacro %}
 
-
 {% macro deleteProposition(proposition) %}
-    <span data-subquestion-id="{{ proposition.subquestion.id }}" data-proposition-id="{{ proposition.id }}" class="glyphicon glyphicon-remove btn btn-default btn-sm delete-proposition"></span>
+    <button class="btn btn-default btn-xs delete-proposition" data-subquestion-id="{{ proposition.subquestion.id }}" data-proposition-id="{{ proposition.id }}">
+        <span class="glyphicon glyphicon-remove "></span>
+    </button>
+{% endmacro %}
+
+{% macro deleteAmorce(subquestion) %}
+    <button rel="tooltip" data-original-title="Supprimer l'amorce" class="btn btn-default btn-xs delete-amorce" data-subquestion-id="{{ subquestion.id }}">
+        <span class="glyphicon glyphicon-remove "></span>
+    </button>
 {% endmacro %}

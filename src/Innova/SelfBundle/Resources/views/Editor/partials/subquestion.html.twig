@@ -1,11 +1,27 @@
 {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
 
 <div id="subquestion-{{ subquestion.id }}-container" class="tab-pane{% if i is not defined or i == 0 %} active{% endif %}">
+    
+    {% if subquestion.mediaAmorce is not null %}
+        {{ macros.deleteAmorce(subquestion) }}
+        Consigne / question / amorce : 
+        {{ macros.displayMedia(subquestion.mediaAmorce) }}
+    {% else %}
+        Consigne / question / amorce : 
+         <span class="btn btn-default btn-sm add-amorce glyphicon glyphicon-plus" data-subquestion-id="{{ subquestion.id }}"></span>
+    {% endif %}
+
+    <hr />
+
     {% set propositions = subquestion.propositions %}
-    {% for proposition in propositions %}
-        {% include "InnovaSelfBundle:Editor/partials:proposition.html.twig" %}
-    {% endfor %}
-    <p>
-        <span id="create-proposition" data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs">Ajouter une proposition</span>
-    </p>
+    <table class="table">
+        {% for proposition in propositions %}
+            {% include "InnovaSelfBundle:Editor/partials:proposition.html.twig" %}
+        {% endfor %}
+        <tr>
+            <td style="border: none;" colspan="3">
+                <span id="create-proposition" data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs">Ajouter une proposition</span>
+            </td>
+        </tr>
+    </table>
 </div>

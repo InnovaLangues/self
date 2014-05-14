@@ -40,13 +40,30 @@ $(document).ready(function() {
     });
 
 
-    /* QUESTION RELATED EVENTS */
+    /**********************
+        QUESTION RELATED EVENTS 
+    ************************/
+
     $( "body" ).on( "click", '#create-subquestion', function() {
         createSubquestion(questionnaireId);
     });
 
+    $( "body" ).on( "click", '.add-amorce', function() {
+        var subquestionId = $(this).data("subquestion-id");
+        setParamForRequest("subquestion", "amorce", subquestionId, "subquestion-"+subquestionId+"-container");
+        chooseMediaTypeModal();
+    });
 
-    /* PROPOSITION RELATED EVENTS */
+    $( "body" ).on( "click", '.delete-amorce', function() {
+        var subquestionId = $(this).data("subquestion-id");
+        setParamForRequest("subquestion", "amorce", subquestionId, "subquestion-"+subquestionId+"-container");
+        unlinkMedia();
+    });
+
+    /**********************
+        PROPOSITION RELATED EVENTS 
+    ************************/
+
     $( "body" ).on( "click", '#create-proposition', function() {
         var subquestionId = $(this).data("subquestion-id");
         setParamForRequest("proposition", null, subquestionId, "subquestion-"+subquestionId+"-container");

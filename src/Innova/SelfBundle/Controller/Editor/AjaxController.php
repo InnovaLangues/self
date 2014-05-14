@@ -297,6 +297,14 @@ class AjaxController extends Controller
                 } 
                 break;
             case "subquestion":
+                $entity =  $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
+                if ($entityField == "amorce"){
+                    $entity->setMediaAmorce($media);
+                    $em->persist($entity);
+                    $em->flush();
+
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('subquestion' => $entity));
+                }
                 break;
             case "proposition":
                 $entity = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
@@ -342,19 +350,28 @@ class AjaxController extends Controller
                     $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $entity));
                 }
                 $em->persist($entity);
+                $em->flush();
                 break;
             case "subquestion":
+                $entity =  $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
+                if ($entityField == "amorce"){
+                    $entity->setMediaAmorce(null);
+                    $em->persist($entity);
+                    $em->flush();
+
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('subquestion' => $entity));
+                }
                 break;
             case "proposition":
                 $entity =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
                 $subquestion = $entity->getSubquestion();
                 $em->remove($entity);
+                $em->flush();
 
                 $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('proposition' => null));
 
                 break;
         }
-        $em->flush();
 
         return new Response($template);
     }

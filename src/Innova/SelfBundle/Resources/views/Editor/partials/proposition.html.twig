@@ -1,10 +1,10 @@
 {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
 
 {% if proposition %}
-    <p id="proposition-{{ proposition.id }}-container" class="proposition" data-subquestion-id="{{ proposition.subquestion.id }}">
-        {{ macros.deleteProposition(proposition) }}
-        {{ macros.isRightAnswer(proposition) }}
+    <tr id="proposition-{{ proposition.id }}-container" data-subquestion-id="{{ proposition.subquestion.id }}">
+        <td style="width:20px; border: none;">{{ macros.deleteProposition(proposition) }}</td>
+        <td style="width:120px; border: none;">{{ macros.isRightAnswer(proposition) }}</td>
         {# {{ macros.inputs(proposition.subquestion, proposition) }} #}
-        {{ macros.displayMedia(proposition.media) }}
-    </p>
+        <td style="border: none;">{{ macros.displayMedia(proposition.media) }}</td>
+    </tr>
 {% endif %}
