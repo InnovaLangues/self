@@ -354,8 +354,6 @@ class AjaxController extends Controller
 
                 break;
         }
-
-        
         $em->flush();
 
         return new Response($template);
@@ -391,6 +389,33 @@ class AjaxController extends Controller
 
 
         $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+
+        return new Response($template);
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/toggle_right_answer", name="editor_questionnaire_toggle_right_anwser", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function toggleRightAnswserAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+
+        $propositionId = $request->request->get('propositionId');
+        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
+
+        if($proposition->getRightAnswer() == true){
+            $proposition->setRightAnswer(false);
+        } else {
+            $proposition->setRightAnswer(true);
+        }
+       
+        $em->persist($proposition);
+        $em->flush();
+
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('proposition' => $proposition));
 
         return new Response($template);
     }

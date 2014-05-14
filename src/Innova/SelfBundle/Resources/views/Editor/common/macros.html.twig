@@ -25,14 +25,14 @@
     {% else %}
         {% set type = "checkbox" %}
     {% endif %}
-    <input class="proposition-input" type="{{ type }}" name="{{ subquestion.id }}[]" id="input-proposition{{ proposition.id }}" value="{{ proposition.id }}" required />
+    <input disabled class="proposition-input" type="{{ type }}" name="{{ subquestion.id }}[]" id="input-proposition{{ proposition.id }}" value="{{ proposition.id }}" required />
 {% endmacro %}
 
 {% macro isRightAnswer(proposition) %}
     {% if proposition.rightAnswer == true %}
-        <button type="button" class="btn btn-success btn-xs is-right-answer">Bonne réponse</button>
+        <button type="button" class="btn btn-success btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}">Bonne réponse</button>
     {% else %}
-        <button type="button" class="btn btn-danger btn-xs">Mauvaise réponse</button>
+        <button type="button" class="btn btn-danger btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}">Mauvaise réponse</button>
     {% endif %}
 {% endmacro %}
 

@@ -40,11 +40,13 @@ $(document).ready(function() {
     });
 
 
-    /* QUESTION RELATED EVENT */
+    /* QUESTION RELATED EVENTS */
     $( "body" ).on( "click", '#create-subquestion', function() {
         createSubquestion(questionnaireId);
     });
 
+
+    /* PROPOSITION RELATED EVENTS */
     $( "body" ).on( "click", '#create-proposition', function() {
         var subquestionId = $(this).data("subquestion-id");
         setParamForRequest("proposition", null, subquestionId, "subquestion-"+subquestionId+"-container");
@@ -58,6 +60,10 @@ $(document).ready(function() {
         unlinkMedia();
     });
 
+    $( "body" ).on( "click", '.make-it-right-or-wrong', function() {
+        var propositionId = $(this).data("proposition-id");
+        toggleRightWrong(propositionId);
+    });
 
     /* MEDIA RELATED EVENTS */
     $( "body" ).on( "click", '.media-type-choice', function() {
@@ -257,7 +263,6 @@ function unlinkMedia(){
     var entityType = $("#entity-type").val();
     var toBeReloaded = $("#entity-to-be-reloaded").val();
 
-
     $.ajax({
         url: Routing.generate('editor_questionnaire_unlink-media'),
         type: 'POST',
@@ -292,6 +297,23 @@ function createSubquestion(questionnaireId) {
         $("#loader-img").hide();
         $("#subquestion-container").replaceWith(data.responseText);
     }); 
+}
+
+function toggleRightWrong(propositionId){
+    $("#loader-img").show();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_toggle_right_anwser'),
+        type: 'POST',
+        data: { 
+            propositionId: propositionId,
+        }
+    })
+    .done(function(data) {
+        $("#loader-img").hide();
+        $("#proposition-"+propositionId+"-container").replaceWith(data);
+    }); 
+
 }
 
 /************************************************
