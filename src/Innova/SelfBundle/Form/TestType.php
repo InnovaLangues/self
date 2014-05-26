@@ -15,11 +15,13 @@ class TestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('questionnaires', null, array(
+            ->add('name', 'text', array('label' => 'Name'))
+            ->add('language', null, array('label' => 'Language'))
+            ->add('actifTest', 'checkbox', array('required' => false, 'label' => 'Actif ou pas ?'))
+            /**->add('questionnaires', null, array(
                     'expanded' => true
                 )
-            )
+            )*/
         ;
     }
 

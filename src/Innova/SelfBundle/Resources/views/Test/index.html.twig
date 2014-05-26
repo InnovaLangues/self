@@ -7,6 +7,7 @@
         <thead>
             <tr>
                 <th>Nom</th>
+                <th>Affecter</th>
                 <th></th>
             </tr>
         </thead>
@@ -15,7 +16,10 @@
             <tr>
                 <td><a href="{{ path('test_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td class="text-right">
-                    <a href="{{ path('test_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a href="{{ path('display_questionnaire', { 'testId': entity.id, 'testId': entity.id }) }}"><span class="glyphicon glyphicon-screenshot"></span></a>
+                </td>
+                <td class="text-right">
+                    <a href="{{ path('test_edit_admin', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
             </tr>
         {% endfor %}

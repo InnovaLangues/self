@@ -48,6 +48,14 @@ class Test
     */
     protected $language;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="actifTest", type="boolean")
+     *
+     */
+    private $actifTest;
+
     public function __construct()
     {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
@@ -212,5 +220,28 @@ class Test
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Set actifTest
+     *
+     * @param boolean $actifTest
+     * @return Test
+     */
+    public function setActifTest($actifTest)
+    {
+        $this->actifTest = $actifTest;
+    
+        return $this;
+    }
+
+    /**
+     * Get actifTest
+     *
+     * @return boolean 
+     */
+    public function getActifTest()
+    {
+        return $this->actifTest;
     }
 }

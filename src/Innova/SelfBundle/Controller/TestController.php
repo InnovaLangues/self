@@ -79,6 +79,7 @@ class TestController extends Controller
      */
     public function createAction(Request $request)
     {
+
         $entity = new Test();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -122,10 +123,12 @@ class TestController extends Controller
             )
         );
 
+        /*
         $form->add(
             'submit',
             array('label' => 'Create')
         );
+        */
 
         return $form;
     }
@@ -201,6 +204,33 @@ class TestController extends Controller
     }
 
     /**
+     * Displays a form to edit an existing Test entity.
+     *
+     * @Route("admin/test/{id}/edit2", name="test_edit_admin")
+     * @Method("GET")
+     * @Template()
+     */
+    public function editAdminAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Test entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
     * Creates a form to edit a Test entity.
     *
     * @param Test $entity The entity
@@ -246,7 +276,7 @@ class TestController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('test_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('test_edit_admin', array('id' => $id)));
         }
 
         return array(
