@@ -1,12 +1,14 @@
 <div class="questionnaire-container">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     
-    <a class="btn btn-default" href="{{ path('editor_questionnaire_list') }}">
+    <a class="btn btn-default" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
         <span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste
     </a>
     <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
     
     <input type="hidden" id="questionnaire-id" value="{{ questionnaire.id }}"/>
+    <input type="hidden" id="test-id" value="{{ test.id }}"/>
+
     <input type="hidden" id="entity-id" value=""/>
     <input type="hidden" id="entity-type" value=""/>
     <input type="hidden" id="entity-field" value=""/>

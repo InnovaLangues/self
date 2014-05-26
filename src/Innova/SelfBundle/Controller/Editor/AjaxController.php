@@ -13,13 +13,12 @@ use Innova\SelfBundle\Entity\Proposition;
 /**
  * Main controller.
  *
- * @Route("/ajax")
+ * @Route("admin/editor/ajax")
  */
 class AjaxController extends Controller
 {
 
     /**
-     * Vérify if the session variable is OK and initialize if not.
      *
      * @Route("/edit-media", name="edit-media", options={"expose"=true})
      * @Method("GET")

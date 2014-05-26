@@ -2,10 +2,16 @@
 
 {% block body -%}
 
-
-<a class="btn btn-default" href="{{ path('editor_questionnaire_create') }}">
-    <span class="glyphicon glyphicon-plus"></span> Ajouter
+<a class="btn btn-default" href="{{ path('editor_tests_show') }}">
+    <span class="glyphicon glyphicon-chevron-left"></span> Retourner à la liste des tests
 </a>
+<a class="btn btn-primary" href="{{ path('editor_questionnaire_create', { 'testId': test.id }) }}">
+    <span class="glyphicon glyphicon-plus"></span> Créer un item
+</a>
+
+<hr/>
+
+<h3>Edition de {{ test.name }} ({{ test.language.name }})</h3>
 
 <table class="table table-striped">
     <thead>
@@ -15,13 +21,13 @@
         </tr>
     </thead>
     <tbody>
-    {% for questionnaire in questionnaires %}
+    {% for questionnaire in test.questionnaires %}
         <tr>
             <td>
             	{{ questionnaire.theme }}
             </td>
             <td class="text-right">
-                <a class="btn btn-default" href="{{ path('editor_questionnaire_show', { 'id': questionnaire.id }) }}">
+                <a class="btn btn-default" href="{{ path('editor_questionnaire_show', { 'testId': test.id, 'questionnaireId': questionnaire.id }) }}">
                 	<span class="glyphicon glyphicon-edit"></span> Editer
                 </a>
                 <!-- 

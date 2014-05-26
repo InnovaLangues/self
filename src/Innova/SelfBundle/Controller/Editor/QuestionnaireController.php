@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
 
@@ -14,48 +15,68 @@ use Innova\SelfBundle\Entity\Question;
 /**
  * Questionnaire controller.
  *
- * @Route("/editor")
+ * @Route("admin/editor")
  */
 class QuestionnaireController extends Controller
 {
+    /**
+     * Lists all Questionnaire entities.
+     *
+     * @Route("/tests", name="editor_tests_show")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
+     */
+    public function listTestsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+
+        return array(
+            'tests' => $tests,
+        );
+    }
+
 
     /**
      * Lists all Questionnaire entities.
      *
-     * @Route("/questionnaires", name="editor_questionnaire_list")
+     * @Route("/test/{testId}/questionnaires", name="editor_test_questionnaires_show")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:list.html.twig")
+     * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
-    public function listQuestionnairesAction()
+    public function listQuestionnairesAction($testId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
         return array(
-            'questionnaires' => $questionnaires
+            'test' => $test,
         );
     }
 
     /**
      * Finds and displays a Questionnaire entity.
      *
-     * @Route("/questionnaires/{id}", name="editor_questionnaire_show")
+     * @Route("/test/{testId}/questionnaire/{questionnaireId}", name="editor_questionnaire_show", requirements={"questionnaireId" = "\d+"})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:index.html.twig")
      */
-    public function showAction($id)
+    public function showAction($testId, $questionnaireId)
     {
 
         $em = $this->getDoctrine()->getManager();
 
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($id);
+        $test = $em->getRepository('InnovaSelfBundle:test')->find($testId);
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         
         if (!$questionnaire) {
-            throw $this->createNotFoundException('Unable to find Questionnaire entity.');
+            throw $this->createNotFoundException('Unable to find Questionnaire entity ! ');
         }
 
         return array(
+            'test' => $test,
             'questionnaire' => $questionnaire
         );
     }
@@ -63,19 +84,26 @@ class QuestionnaireController extends Controller
     /**
      * Creates a new Questionnaire entity.
      *
-     * @Route("/questionnaire/create", name="editor_questionnaire_create")
+     * @Route("/test/{testId}/questionnaire/create", name="editor_questionnaire_create")
      * @Method("GET")
      * @Template("")
      */
-    public function createAction()
+    public function createQuestionnaireAction($testId)
     {
+
+        $em = $this->getDoctrine()->getManager();
+
         $questionnaire = new Questionnaire();
         $questionnaire->setTheme("");
+
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $questionnaire->addTest($test);
         $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);
         $questionnaire->setFixedOrder(0);
 
-        $em = $this->getDoctrine()->getManager();
+        
         $em->persist($questionnaire);
 
         $question = new Question();
@@ -86,10 +114,15 @@ class QuestionnaireController extends Controller
 
         return $this->redirect($this->generateUrl(
                             'editor_questionnaire_show',
-                            array('id' => $questionnaire->getId()))
-                        );
+                            array(
+                                'testId' => $testId,
+                                'questionnaireId' => $questionnaire->getId()
+                            )
+                ));
   
     }
+
+    
 
     /**
      * Updates a Questionnaire entity

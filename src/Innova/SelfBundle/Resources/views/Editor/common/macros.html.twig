@@ -1,4 +1,5 @@
 {% macro displayMedia(media) %}
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     {% set mediaType = media.mediaType.name %}
     {% if mediaType == "texte" %}
        {{ media.description | raw | striptags }}
@@ -9,12 +10,14 @@
             <source src="{{ asset('upload/media/') ~ media.url }}.webm" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
             Your browser does not support the video tag.
         </video>
+        {{ macros.listeningLimit(media) }}
     {% elseif mediaType == "audio" %}
         <audio controls preload="auto">
             <source src="{{ asset('upload/media/') ~ media.url }}.mp3" type="audio/mp3">
             <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
             Votre navigateur est trop ancien.
         </audio>
+        {{ macros.listeningLimit(media) }}
     {% endif %}
 {% endmacro %}
 
@@ -43,6 +46,10 @@
 
 {% macro deleteAmorce(subquestion) %}
     <button rel="tooltip" data-original-title="Supprimer l'amorce" class="btn btn-default btn-xs delete-amorce" data-subquestion-id="{{ subquestion.id }}">
-        <span class="glyphicon glyphicon-remove "></span>
+        <span class="glyphicon glyphicon-remove"></span>
     </button>
+{% endmacro %}
+
+{% macro listeningLimit(media) %}
+    Limite d'écoutes : <input class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern="\d+"/>
 {% endmacro %}

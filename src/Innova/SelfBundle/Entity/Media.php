@@ -48,6 +48,18 @@ class Media
     protected $mediaType;
 
     /**
+    * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="media")
+    */
+    private $mediaLimits;
+
+    /**
+    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="media")
+    */
+    private $mediaClicks;
+
+
+
+    /**
      * To String
      */
 

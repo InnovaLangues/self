@@ -96,6 +96,16 @@ class Questionnaire
     protected $languageLevel;
 
     /**
+    * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="questionnaire")
+    */
+    private $mediaLimits;
+
+    /**
+    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="questionnaire")
+    */
+    private $mediaClicks;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="theme", type="string", length=255)
