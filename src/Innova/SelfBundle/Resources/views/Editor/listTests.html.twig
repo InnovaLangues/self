@@ -2,7 +2,7 @@
 
 {% block body -%}
 
-<a class="btn btn-primary" href="{{ path('editor_test_create_form') }}">
+<a class="btn btn-primary btn-sm" href="{{ path('editor_test_create_form') }}">
     <span class="glyphicon glyphicon-plus"></span> Créer un test
 </a>
 
@@ -31,11 +31,11 @@
                 {{ test.questionnaires | length }}
             </td>
             <td class="text-right">
-                <a class="btn btn-default" href="{{ path('editor_test_edit_form', { 'testId': test.id }) }}">
+                <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_form', { 'testId': test.id }) }}">
                     <span class="glyphicon glyphicon-edit"></span> Editer
                 </a>
-                <a class="btn btn-default" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
-                    <span class="glyphicon glyphicon-plus"></span> Gérer les items
+                <a class="btn btn-default btn-sm" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
+                    <span class="glyphicon glyphicon-plus"></span> Gérer des tâches
                 </a>
             </td>
         </tr>

@@ -279,6 +279,10 @@ class AjaxController extends Controller
         $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
 
+       
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
+
         /* Création du nouveau media */
         $name = $request->request->get('name');
         $description = $request->request->get('description');
@@ -308,13 +312,13 @@ class AjaxController extends Controller
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('questionnaire' => $entity));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText($media);
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $entity));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
                 } 
                 break;
             case "subquestion":
@@ -324,7 +328,7 @@ class AjaxController extends Controller
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('subquestion' => $entity));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
                 }
                 break;
             case "proposition":
@@ -337,7 +341,7 @@ class AjaxController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('subquestion' => $entity));
+                $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
                 break;
         }
 
@@ -355,6 +359,9 @@ class AjaxController extends Controller
         $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
 
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
+
         $entityType = $request->request->get('entityType');
         $entityId = $request->request->get('entityId');
         $entityField = $request->request->get('entityField');
@@ -365,10 +372,10 @@ class AjaxController extends Controller
                 $entity =  $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
                 if ($entityField == "contexte"){
                     $entity->setMediaContext(null);
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('questionnaire' => $entity));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText(null);
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $entity));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
                 }
                 $em->persist($entity);
                 $em->flush();
@@ -380,7 +387,7 @@ class AjaxController extends Controller
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('subquestion' => $entity));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
                 }
                 break;
             case "proposition":
@@ -389,7 +396,7 @@ class AjaxController extends Controller
                 $em->remove($entity);
                 $em->flush();
 
-                $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('proposition' => null));
+                $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'proposition' => null));
 
                 break;
         }
@@ -406,6 +413,9 @@ class AjaxController extends Controller
     {
         $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
+
         $questionnaireId = $request->request->get('questionnaireId');
         $questionnaireTypology = $request->request->get('questionnaireTypology');
 
@@ -426,7 +436,7 @@ class AjaxController extends Controller
         $em->flush();
 
 
-        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
 
         return new Response($template);
     }
@@ -441,6 +451,9 @@ class AjaxController extends Controller
     {
         $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
+
         $subquestionId = $request->request->get('subquestionId');
         $questionnaireId = $request->request->get('questionnaireId');
 
@@ -450,7 +463,7 @@ class AjaxController extends Controller
         $em->remove($subquestion);
         $em->flush();
 
-        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
 
         return new Response($template);
     }
@@ -467,6 +480,8 @@ class AjaxController extends Controller
         $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
 
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
         $propositionId = $request->request->get('propositionId');
         $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
 
@@ -479,7 +494,7 @@ class AjaxController extends Controller
         $em->persist($proposition);
         $em->flush();
 
-        $template = $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('proposition' => $proposition));
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('test' => $test, 'questionnaire' => $questionnaire, 'proposition' => $proposition));
 
         return new Response($template);
     }

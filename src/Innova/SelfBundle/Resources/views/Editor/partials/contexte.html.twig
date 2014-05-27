@@ -12,7 +12,7 @@
                 <span id="add-context" class="btn btn-default">Ajouter</span>
             </div>
         {% else %}
-           {{ macros.displayMedia(questionnaire.mediaContext) }}
+           {{ macros.displayMedia(test, questionnaire, questionnaire.mediaContext) }}
         {% endif %}
     </div>
 </div>

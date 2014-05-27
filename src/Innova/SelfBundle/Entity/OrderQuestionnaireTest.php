@@ -5,12 +5,12 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MediaLimit
+ * Media
  *
- * @ORM\Table("mediaLimit")
+ * @ORM\Table("orderQuestionnaireTest")
  * @ORM\Entity
  */
-class MediaLimit
+class OrderQuestionnaireTest
 {
     /**
      * @var integer
@@ -22,26 +22,22 @@ class MediaLimit
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media", inversedBy="mediaLimits")
-    */
-    protected $media;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Test", inversedBy="mediaLimits")
+    * @ORM\ManyToOne(targetEntity="Test", inversedBy="orderQuestionnaireTests")
     */
     protected $test;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="mediaLimits")
+    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="orderQuestionnaireTests")
     */
-    protected $questionnaire;
+    private $questionnaire;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="listeningLimit", type="integer")
+     * @ORM\Column(name="displayOrder", type="integer")
      */
-    private $listeningLimit;
+    private $displayOrder;
+
 
     /**
      * Get id
@@ -54,56 +50,33 @@ class MediaLimit
     }
 
     /**
-     * Set listeningLimit
+     * Set displayOrder
      *
-     * @param integer $listeningLimit
-     * @return MediaLimit
+     * @param integer $displayOrder
+     * @return OrderQuestionnaireTest
      */
-    public function setListeningLimit($listeningLimit)
+    public function setDisplayOrder($displayOrder)
     {
-        $this->listeningLimit = $listeningLimit;
+        $this->displayOrder = $displayOrder;
     
         return $this;
     }
 
     /**
-     * Get listeningLimit
+     * Get displayOrder
      *
      * @return integer 
      */
-    public function getListeningLimit()
+    public function getDisplayOrder()
     {
-        return $this->listeningLimit;
-    }
-
-    /**
-     * Set media
-     *
-     * @param \Innova\SelfBundle\Entity\Media $media
-     * @return MediaLimit
-     */
-    public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
-    {
-        $this->media = $media;
-    
-        return $this;
-    }
-
-    /**
-     * Get media
-     *
-     * @return \Innova\SelfBundle\Entity\Media 
-     */
-    public function getMedia()
-    {
-        return $this->media;
+        return $this->displayOrder;
     }
 
     /**
      * Set test
      *
      * @param \Innova\SelfBundle\Entity\Test $test
-     * @return MediaLimit
+     * @return OrderQuestionnaireTest
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
     {
@@ -126,7 +99,7 @@ class MediaLimit
      * Set questionnaire
      *
      * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
-     * @return MediaLimit
+     * @return OrderQuestionnaireTest
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
     {

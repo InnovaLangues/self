@@ -76,6 +76,12 @@ class DeleteAllCommand extends ContainerAwareCommand
                 $em->remove($media);
             }
 
+            $output->writeln("Suppression ORDER ...");
+            $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findAll();
+            foreach ($orders as $order) {
+                $em->remove($order);
+            }
+
             $output->writeln("Suppression TEST ...");
             $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
             foreach ($tests as $test) {

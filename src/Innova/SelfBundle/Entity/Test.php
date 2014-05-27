@@ -65,6 +65,11 @@ class Test
     */
     private $mediaClicks;
 
+    /**
+    * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="test")
+    */
+    private $orderQuestionnaireTests;
+
 
 
     public function __construct()

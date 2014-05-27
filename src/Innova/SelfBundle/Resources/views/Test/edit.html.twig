@@ -9,6 +9,12 @@
 	    	<label for="name">{{ form_label(edit_form.name) }}</label>
 			{{ form_widget(edit_form.name, { 'attr': {'class': 'form-control'} }) }}
 	  	</div>
+        
+        <div class="form-group">
+            <label for="name">{{ form_label(edit_form.questionnaires) }}</label>
+            {{ form_widget(edit_form.questionnaires, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
 
 	  	{% do edit_form.submit.setRendered %}
 
@@ -19,11 +25,8 @@
 
 	<hr>
 
-  	{{ form_start(delete_form) }}
-  		{{ form_errors(delete_form) }}
+  	
 	  	<a href="{{ path('test') }}" type="submit" class="btn btn-default">Back to the list</a>
-  		{{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
-  		{{ form_rest(delete_form) }}
-  	{{ form_start(delete_form) }}
+
 
 {% endblock %}

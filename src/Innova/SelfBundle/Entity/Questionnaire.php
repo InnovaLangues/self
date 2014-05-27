@@ -183,6 +183,15 @@ class Questionnaire
     */
     private $tests;
 
+    /**
+    * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="questionnaire")
+    */
+    private $orderQuestionnaireTests;
+
+
+
+
+
     public function __construct()
     {
         $this->tests = new \Doctrine\Common\Collections\ArrayCollection();

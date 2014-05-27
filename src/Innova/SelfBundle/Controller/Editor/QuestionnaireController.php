@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
+use Innova\SelfBundle\Entity\OrderQuestionnaireTest;
 
 
 /**
@@ -50,9 +51,11 @@ class QuestionnaireController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($testId);
 
         return array(
             'test' => $test,
+            'orders' => $orders
         );
     }
 
@@ -102,13 +105,19 @@ class QuestionnaireController extends Controller
         $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);
         $questionnaire->setFixedOrder(0);
-
-        
         $em->persist($questionnaire);
 
         $question = new Question();
         $question->setQuestionnaire($questionnaire);
         $em->persist($question);
+
+
+        $orderQuestionnaireTest = new OrderQuestionnaireTest();
+        $orderQuestionnaireTest->setTest($test);
+        $orderQuestionnaireTest->setQuestionnaire($questionnaire);
+        $orderMax = count($em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
+        $orderQuestionnaireTest->setDisplayOrder($orderMax + 1);
+        $em->persist($orderQuestionnaireTest);
 
         $em->flush();
 

@@ -183,6 +183,9 @@ function createAudio(){
 function createMedia(name, description, url, type) {
     $("#loader-img").show();
 
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#test-id").val();
+
     var entityField = $("#entity-field").val();
     var entityId = $("#entity-id").val();
     var entityType = $("#entity-type").val();
@@ -193,6 +196,8 @@ function createMedia(name, description, url, type) {
         type: 'POST',
         data: 
         { 
+            testId: testId,
+            questionnaireId: questionnaireId,
             name: name,
             description: description,
             url: url,
@@ -281,6 +286,9 @@ function setLevel(questionnaireId) {
 function unlinkMedia(){
     $("#loader-img").show();
 
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#test-id").val();
+
     var entityField = $("#entity-field").val();
     var entityId = $("#entity-id").val();
     var entityType = $("#entity-type").val();
@@ -290,7 +298,9 @@ function unlinkMedia(){
         url: Routing.generate('editor_questionnaire_unlink-media'),
         type: 'POST',
         data: 
-        { 
+        {
+            testId: testId,
+            questionnaireId: questionnaireId, 
             entityType: entityType,
             entityId: entityId,
             entityField: entityField
@@ -307,11 +317,14 @@ function unlinkMedia(){
 function createSubquestion(questionnaireId) {
     $("#loader-img").show();
 
+    var testId = $("#test-id").val();
+
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-subquestion'),
         type: 'POST',
         dataType: 'json',
         data: { 
+            testId: testId,
             questionnaireId: questionnaireId,
             questionnaireTypology: $("#typology").val()
         }
@@ -325,11 +338,14 @@ function createSubquestion(questionnaireId) {
 function deleteSubquestion(questionnaireId, subquestionId){
     $("#loader-img").show();
 
+    var testId = $("#test-id").val();
+
     $.ajax({
         url: Routing.generate('editor_questionnaire_delete_subquestion'),
         type: 'POST',
         dataType: 'json',
         data: { 
+            testId: testId,
             questionnaireId: questionnaireId,
             subquestionId: subquestionId,
         }
@@ -343,10 +359,15 @@ function deleteSubquestion(questionnaireId, subquestionId){
 function toggleRightWrong(propositionId){
     $("#loader-img").show();
 
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
     $.ajax({
         url: Routing.generate('editor_questionnaire_toggle_right_anwser'),
         type: 'POST',
         data: { 
+            testId: testId,
+            questionnaireId: questionnaireId,
             propositionId: propositionId,
         }
     })

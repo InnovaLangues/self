@@ -1,4 +1,4 @@
-{% macro displayMedia(media) %}
+{% macro displayMedia(test, questionnaire, media) %}
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     {% set mediaType = media.mediaType.name %}
     {% if mediaType == "texte" %}
@@ -17,7 +17,7 @@
             <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
             Votre navigateur est trop ancien.
         </audio>
-        {{ macros.listeningLimit(media) }}
+        {{ macros.listeningLimit(test, questionnaire, media) }}
     {% endif %}
 {% endmacro %}
 
@@ -50,6 +50,12 @@
     </button>
 {% endmacro %}
 
-{% macro listeningLimit(media) %}
-    Limite d'écoutes : <input class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern="\d+"/>
+{% macro listeningLimit(test, questionnaire, media) %}
+    {% set limit = 0 %}
+    {% for limits in media.mediaLimits %}
+        {% if limits.test == test and limits.questionnaire == questionnaire %}
+        {% set limit = limits.listeningLimit %}
+        {% endif %}
+    {% endfor %}
+     <input value="{{ limit }}" class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern="\d+"/>
 {% endmacro %}

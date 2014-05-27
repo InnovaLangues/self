@@ -169,4 +169,78 @@ class Media
     {
         return $this->url;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mediaLimits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mediaClicks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add mediaLimits
+     *
+     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     * @return Media
+     */
+    public function addMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    {
+        $this->mediaLimits[] = $mediaLimits;
+    
+        return $this;
+    }
+
+    /**
+     * Remove mediaLimits
+     *
+     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     */
+    public function removeMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    {
+        $this->mediaLimits->removeElement($mediaLimits);
+    }
+
+    /**
+     * Get mediaLimits
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMediaLimits()
+    {
+        return $this->mediaLimits;
+    }
+
+    /**
+     * Add mediaClicks
+     *
+     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @return Media
+     */
+    public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    {
+        $this->mediaClicks[] = $mediaClicks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove mediaClicks
+     *
+     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     */
+    public function removeMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    {
+        $this->mediaClicks->removeElement($mediaClicks);
+    }
+
+    /**
+     * Get mediaClicks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMediaClicks()
+    {
+        return $this->mediaClicks;
+    }
 }
