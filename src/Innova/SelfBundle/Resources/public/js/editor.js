@@ -91,7 +91,10 @@ $(document).ready(function() {
         toggleRightWrong(propositionId);
     });
 
-    /* MEDIA RELATED EVENTS */
+    /**********************
+     MEDIA RELATED EVENTS 
+     ************************/
+
     $( "body" ).on( "click", '.media-type-choice', function() {
         createMediaModal( $(this) );
     });
@@ -115,6 +118,13 @@ $(document).ready(function() {
         createAudio();
         $("*").modal('hide');
     });
+
+    $( "body" ).on( "change", '.media-listening-limit', function() {
+        var mediaId = $(this).data("media-id");
+        var listeningLimit = $(this).val();
+        setListeningLimit(mediaId, listeningLimit);
+    });
+
 
 });
 
@@ -376,6 +386,28 @@ function toggleRightWrong(propositionId){
         $("#proposition-"+propositionId+"-container").replaceWith(data);
     }); 
 
+}
+
+
+function setListeningLimit(mediaId, listeningLimit){
+    $("#loader-img").show();
+
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('set-listening-limit'),
+        type: 'POST',
+        data: { 
+            testId: testId,
+            questionnaireId: questionnaireId,
+            mediaId: mediaId,
+            listeningLimit: listeningLimit
+        }
+    })
+    .done(function(data) {
+        $("#loader-img").hide();
+    });
 }
 
 /************************************************

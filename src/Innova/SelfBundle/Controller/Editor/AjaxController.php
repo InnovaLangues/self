@@ -268,141 +268,6 @@ class AjaxController extends Controller
 
 
 
-    /**
-     * 
-     *
-     * @Route("/questionnaires/create-media", name="editor_questionnaire_create-media", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function CreateMediaAction()
-    {
-        $request = $this->get('request');
-        $em = $this->getDoctrine()->getManager();
-
-       
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
-
-        /* Création du nouveau media */
-        $name = $request->request->get('name');
-        $description = $request->request->get('description');
-        $url = $request->request->get('url');
-        $type = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($request->request->get('type'));
-
-        $media = new Media;
-        $media->setMediaType($type);
-        $media->setName($name);
-        $media->setDescription($description);
-        $media->setUrl($url);
-
-        $em->persist($media);
-        $em->flush();
-
-        /* Création de la relation avec une entité */
-        $entityType = $request->request->get('entityType');
-        $entityId = $request->request->get('entityId');
-        $entityField = $request->request->get('entityField');
-
-        $template = "";
-        switch ($entityType) {
-            case "questionnaire": 
-                $entity =  $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
-                if ($entityField == "contexte"){
-                    $entity->setMediaContext($media);
-                    $em->persist($entity);
-                    $em->flush();
-
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
-                } elseif ($entityField == "texte") {
-                    $entity->setMediaText($media);
-                    $em->persist($entity);
-                    $em->flush();
-
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
-                } 
-                break;
-            case "subquestion":
-                $entity =  $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
-                if ($entityField == "amorce"){
-                    $entity->setMediaAmorce($media);
-                    $em->persist($entity);
-                    $em->flush();
-
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
-                }
-                break;
-            case "proposition":
-                $entity = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
-                $proposition = new Proposition;
-                $proposition->setSubquestion($entity);
-                $proposition->setMedia($media);
-                $proposition->setRightAnswer(false);
-                $em->persist($proposition);
-                $em->persist($entity);
-                $em->flush();
-
-                $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
-                break;
-        }
-
-        return new Response($template);
-    }
-
-    /**
-     * 
-     *
-     * @Route("/questionnaires/unlink-media", name="editor_questionnaire_unlink-media", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function UnlinkMediaAction()
-    {
-        $request = $this->get('request');
-        $em = $this->getDoctrine()->getManager();
-
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
-
-        $entityType = $request->request->get('entityType');
-        $entityId = $request->request->get('entityId');
-        $entityField = $request->request->get('entityField');
-
-        $template = "";
-        switch ($entityType) {
-            case "questionnaire": 
-                $entity =  $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
-                if ($entityField == "contexte"){
-                    $entity->setMediaContext(null);
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
-                } elseif ($entityField == "texte") {
-                    $entity->setMediaText(null);
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
-                }
-                $em->persist($entity);
-                $em->flush();
-                break;
-            case "subquestion":
-                $entity =  $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
-                if ($entityField == "amorce"){
-                    $entity->setMediaAmorce(null);
-                    $em->persist($entity);
-                    $em->flush();
-
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
-                }
-                break;
-            case "proposition":
-                $entity =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
-                $subquestion = $entity->getSubquestion();
-                $em->remove($entity);
-                $em->flush();
-
-                $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'proposition' => null));
-
-                break;
-        }
-
-        return new Response($template);
-    }
 
     /**
      *
@@ -422,18 +287,15 @@ class AjaxController extends Controller
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $question = $questionnaire->getQuestions()[0];
 
-        if(mb_substr($questionnaireTypology, 0, 3) == "APP"){
-            $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
-        } else {
+        //$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
+        if(mb_substr($questionnaireTypology, 0, 3) != "APP"){
             $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($questionnaireTypology, 1));
+            $subquestion = new Subquestion();
+            $subquestion->setTypology($typology);
+            $subquestion->setQuestion($question);
+            $em->persist($subquestion);
+            $em->flush();
         }
-
-        $subquestion = new Subquestion();
-        $subquestion->setTypology($typology);
-        $subquestion->setQuestion($question);
-
-        $em->persist($subquestion);
-        $em->flush();
 
 
         $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
@@ -464,37 +326,6 @@ class AjaxController extends Controller
         $em->flush();
 
         $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
-
-        return new Response($template);
-    }
-
-
-
-    /**
-     *
-     * @Route("/questionnaires/toggle_right_answer", name="editor_questionnaire_toggle_right_anwser", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function toggleRightAnswserAction()
-    {
-        $request = $this->get('request');
-        $em = $this->getDoctrine()->getManager();
-
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
-        $propositionId = $request->request->get('propositionId');
-        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
-
-        if($proposition->getRightAnswer() == true){
-            $proposition->setRightAnswer(false);
-        } else {
-            $proposition->setRightAnswer(true);
-        }
-       
-        $em->persist($proposition);
-        $em->flush();
-
-        $template = $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('test' => $test, 'questionnaire' => $questionnaire, 'proposition' => $proposition));
 
         return new Response($template);
     }

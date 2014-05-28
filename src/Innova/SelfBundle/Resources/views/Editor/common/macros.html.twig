@@ -57,5 +57,5 @@
         {% set limit = limits.listeningLimit %}
         {% endif %}
     {% endfor %}
-     <input value="{{ limit }}" class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern="\d+"/>
+     <input style="color:black;" value="{{ limit }}" class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern="\d+"/>
 {% endmacro %}
