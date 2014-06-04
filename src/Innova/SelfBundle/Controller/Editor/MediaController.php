@@ -168,11 +168,37 @@ class MediaController extends Controller
         $question = $currentSubquestion->getQuestion();
         $subquestions = $question->getSubquestions();
 
+        // on ajoute aux autres subquestions des propositions
         foreach ($subquestions as $subquestion) {
             if ($subquestion != $currentSubquestion){
+                $propositions = $subquestion->getPropositions();
+
                 $proposition = new Proposition();
                 $proposition->setSubquestion($subquestion);
                 $proposition->setMedia($currentProposition->getMedia());
+                $proposition->setRightAnswer(false);
+                $em->persist($proposition);
+                $em->persist($subquestion);
+                $em->flush();
+            }
+        }
+
+        // reste à ajouter les propositions des autres à la subquestion courante.
+        foreach ($propositions as $proposition) {
+            $media = $proposition->getMedia();
+            $mediaId = $proposition->getMedia()->getId();
+            echo $mediaId;
+            $found = false;
+            foreach ($currentSubquestion->getPropositions() as $currentSubquestionProposition){
+                $currentMediaId = $currentSubquestionProposition->getMedia()->getId();
+                if ($mediaId == $currentMediaId){
+                    $found = true;
+                }
+            } 
+            if($found == false){
+                $proposition = new Proposition();
+                $proposition->setSubquestion($currentSubquestion);
+                $proposition->setMedia($media);
                 $proposition->setRightAnswer(false);
                 $em->persist($proposition);
                 $em->persist($subquestion);
