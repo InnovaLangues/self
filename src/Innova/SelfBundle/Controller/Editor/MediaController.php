@@ -68,7 +68,8 @@ class MediaController extends Controller
 
        
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
+        $questionnaireId = $request->request->get('questionnaireId');
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
         /* Création du nouveau media */
         $name = $request->request->get('name');
@@ -116,23 +117,69 @@ class MediaController extends Controller
                     $em->flush();
 
                     $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
+                } elseif ($entityField == "media") {
+                    $entity->setMedia($media);
+                    $em->persist($entity);
+                    $em->flush();
+
+                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));          
                 }
+
                 break;
             case "proposition":
-                $entity = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
-                $proposition = new Proposition;
-                $proposition->setSubquestion($entity);
-                $proposition->setMedia($media);
-                $proposition->setRightAnswer(false);
-                $em->persist($proposition);
-                $em->persist($entity);
-                $em->flush();
+                $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
 
-                $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
+                if ($entityField == "app"){
+
+                    $proposition = new Proposition();
+                    $proposition->setSubquestion($subquestion);
+                    $proposition->setMedia($media);
+                    $proposition->setRightAnswer(true);
+                    $em->persist($proposition);
+                    $em->persist($subquestion);
+                    $em->flush();
+
+                    $this->createAppFakeAnswer($proposition);
+
+                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+
+                } else {
+                    $proposition = new Proposition();
+                    $proposition->setSubquestion($subquestion);
+                    $proposition->setMedia($media);
+                    $proposition->setRightAnswer(false);
+                    $em->persist($proposition);
+                    $em->persist($subquestion);
+                    $em->flush();
+
+                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $subquestion));
+                }
+                
                 break;
         }
 
         return new Response($template);
+    }
+
+    private function createAppFakeAnswer($currentProposition){
+        $em = $this->getDoctrine()->getManager();
+
+        $currentSubquestion = $currentProposition->getSubquestion();
+        $question = $currentSubquestion->getQuestion();
+        $subquestions = $question->getSubquestions();
+
+        foreach ($subquestions as $subquestion) {
+            if ($subquestion != $currentSubquestion){
+                $proposition = new Proposition();
+                $proposition->setSubquestion($subquestion);
+                $proposition->setMedia($currentProposition->getMedia());
+                $proposition->setRightAnswer(false);
+                $em->persist($proposition);
+                $em->persist($subquestion);
+                $em->flush();
+            }
+        }
+        return;
     }
 
     /**

@@ -92,7 +92,7 @@ $(document).ready(function() {
     });
 
     /**********************
-     MEDIA RELATED EVENTS 
+        MEDIA RELATED EVENTS 
      ************************/
 
     $( "body" ).on( "click", '.media-type-choice', function() {
@@ -125,7 +125,25 @@ $(document).ready(function() {
         setListeningLimit(mediaId, listeningLimit);
     });
 
+    /**********************
+        APPARIEMMENT RELATED EVENTS 
+     ************************/
 
+    $( "body" ).on( "click", '.app-add-subquestion', function() {
+        createSubquestion(questionnaireId);
+    });
+
+    $( "body" ).on( "click", '.app-add-media', function() {
+        var subquestionId = $(this).data("subquestion-id");
+        setParamForRequest("subquestion", "media", subquestionId, "subquestion-container");
+        chooseMediaTypeModal();
+    });
+
+    $( "body" ).on( "click", '.app-add-answer', function() {
+        var subquestionId = $(this).data("subquestion-id");
+        setParamForRequest("proposition", "app", subquestionId, "subquestion-container");
+        chooseMediaTypeModal();
+    });
 });
 
 /************************************************
@@ -194,7 +212,7 @@ function createMedia(name, description, url, type) {
     $("#loader-img").show();
 
     var testId = $("#test-id").val();
-    var questionnaireId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
 
     var entityField = $("#entity-field").val();
     var entityId = $("#entity-id").val();
@@ -297,7 +315,7 @@ function unlinkMedia(){
     $("#loader-img").show();
 
     var testId = $("#test-id").val();
-    var questionnaireId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
 
     var entityField = $("#entity-field").val();
     var entityId = $("#entity-id").val();

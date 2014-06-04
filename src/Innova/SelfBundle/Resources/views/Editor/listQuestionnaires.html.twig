@@ -18,9 +18,9 @@
 
 <ul class="list-group" id="sortable">
 {% for order in orders %}
-    <li class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id}}" data-test-id="{{ test.id }}">
+    <li class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id}}" data-test-id="{{ order.test.id }}">
         {{ order.questionnaire.theme }}
-        <a style="position:absolute;right:5px;top:5px" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'testId': test.id, 'questionnaireId': order.questionnaire.id }) }}">
+        <a style="position:absolute;right:5px;top:5px" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'testId': order.test.id, 'questionnaireId': order.questionnaire.id }) }}">
             <span class="glyphicon glyphicon-edit"></span> Editer la tâche
         </a>
     </li>

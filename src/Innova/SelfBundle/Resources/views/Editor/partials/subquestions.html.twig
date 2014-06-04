@@ -33,14 +33,28 @@
                 </div>
             {% endif %}
         {% else %}
-            <span class="btn btn-default btn-xs app-add-paire">Ajouter une paire</span> 
-            {% if questionnaire.questions[0].subquestions | length > 1 %}
+            <span class="btn btn-default btn-xs app-add-subquestion">Ajouter une paire</span> 
+            {% if questionnaire.questions[0].subquestions | length > 0 %}
                 <span class="btn btn-default btn-xs app-add-distractor">Ajouter un distracteur</span>
+                <hr/>
                 {% set subquestions = questionnaire.questions[0].subquestions %}
+
                 {% for subquestion in subquestions %}
-                    afficher le media + la bonne proposition 
+                    {% if subquestion.media is not null %}
+                        <div class="row well">
+                            <div class="col-md-6">
+                            {{ macros.displayMedia(test, questionnaire, subquestion.media) }}
+                            </div>
+                            <div class="col-md-6">
+                            {{ macros.displayRightAnswerAPP(test, questionnaire, subquestion) }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <span class="btn btn-default btn-xs app-add-media" data-subquestion-id="{{ subquestion.id }}">ajouter média</span>
+                    {% endif %} 
+                    <hr/>
                 {% endfor %}
-                    afficher distracteurs
+                     {#<p>afficher distracteurs</p>#}
             {% endif %}
         {% endif %}
         </div>

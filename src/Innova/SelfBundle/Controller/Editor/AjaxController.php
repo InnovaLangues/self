@@ -287,16 +287,17 @@ class AjaxController extends Controller
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $question = $questionnaire->getQuestions()[0];
 
-        //$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
+        $subquestion = new Subquestion();
         if(mb_substr($questionnaireTypology, 0, 3) != "APP"){
             $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($questionnaireTypology, 1));
-            $subquestion = new Subquestion();
-            $subquestion->setTypology($typology);
-            $subquestion->setQuestion($question);
-            $em->persist($subquestion);
-            $em->flush();
+            
+        } else {
+            $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
         }
-
+        $subquestion->setTypology($typology);
+        $subquestion->setQuestion($question);
+        $em->persist($subquestion);
+        $em->flush();
 
         $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
 

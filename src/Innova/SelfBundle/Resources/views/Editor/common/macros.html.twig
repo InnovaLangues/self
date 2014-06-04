@@ -59,3 +59,18 @@
     {% endfor %}
      <input style="color:black;" value="{{ limit }}" class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern="\d+"/>
 {% endmacro %}
+
+{% macro displayRightAnswerAPP(test, questionnaire, subquestion) %}
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+    {% set HasAnAnswer = false %}
+    {% for proposition in subquestion.propositions %}
+        {% if proposition.rightAnswer == true %}
+            {% set HasAnAnswer = true %}
+            {{ macros.displayMedia(test, questionnaire, proposition.media) }}
+        {% endif %}
+    {% endfor %}
+
+    {% if HasAnAnswer == false %}
+        <span class="btn btn-default btn-xs app-add-answer" data-subquestion-id="{{ subquestion.id }}">Ajouter réponse</span>
+    {% endif %}
+{% endmacro %}

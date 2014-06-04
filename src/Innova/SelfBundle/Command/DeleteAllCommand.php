@@ -70,6 +70,12 @@ class DeleteAllCommand extends ContainerAwareCommand
                 $em->remove($questionnaire);
             }
 
+            $output->writeln("Suppression MediaLimit ...");
+            $limits = $em->getRepository('InnovaSelfBundle:MediaLimit')->findAll();
+            foreach ($limits as $limit) {
+                $em->remove($limit);
+            }
+
             $output->writeln("Suppression MEDIA ...");
             $medias = $em->getRepository('InnovaSelfBundle:Media')->findAll();
             foreach ($medias as $media) {
