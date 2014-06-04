@@ -141,7 +141,12 @@ $(document).ready(function() {
 
     $( "body" ).on( "click", '.app-add-answer', function() {
         var subquestionId = $(this).data("subquestion-id");
-        setParamForRequest("proposition", "app", subquestionId, "subquestion-container");
+        setParamForRequest("proposition", "app-answer", subquestionId, "subquestion-container");
+        chooseMediaTypeModal();
+    });
+
+    $( "body" ).on( "click", '.app-add-distractor', function() {
+        setParamForRequest("proposition", "app-distractor", questionnaireId, "subquestion-container");
         chooseMediaTypeModal();
     });
 });

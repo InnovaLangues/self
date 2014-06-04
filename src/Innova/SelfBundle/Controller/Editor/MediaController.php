@@ -124,13 +124,10 @@ class MediaController extends Controller
 
                     $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));          
                 }
-
                 break;
             case "proposition":
-                $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
-
-                if ($entityField == "app"){
-
+                if ($entityField == "app-answer"){
+                    $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
                     $proposition = new Proposition();
                     $proposition->setSubquestion($subquestion);
                     $proposition->setMedia($media);
@@ -142,7 +139,19 @@ class MediaController extends Controller
                     $this->createAppFakeAnswer($proposition);
 
                     $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
-
+                } elseif ($entityField == "app-distractor") {
+                    $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
+                    $subquestions = $questionnaire->getQuestions()[0]->getSubquestions();
+                    foreach ($subquestions as $subquestion) {
+                        $proposition = new Proposition();
+                        $proposition->setSubquestion($subquestion);
+                        $proposition->setMedia($media);
+                        $proposition->setRightAnswer(false);
+                        $em->persist($proposition);
+                        $em->persist($subquestion);
+                    }
+                    $em->flush();
+                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
                 } else {
                     $proposition = new Proposition();
                     $proposition->setSubquestion($subquestion);
@@ -154,7 +163,6 @@ class MediaController extends Controller
 
                     $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $subquestion));
                 }
-                
                 break;
         }
 

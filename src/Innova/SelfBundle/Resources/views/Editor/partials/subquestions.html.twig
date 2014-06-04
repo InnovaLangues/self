@@ -46,14 +46,13 @@
                 {% for subquestion in subquestions %}
                     {% if subquestion.media is not null %}
                         <tr>
-                            <td>
+                            <td class="col-md-6">
                                 {{ macros.displayMedia(test, questionnaire, subquestion.media) }}
                             </td>
                             <td>
                                 {{ macros.displayRightAnswerAPP(test, questionnaire, subquestion) }}
                             </td>
                         </tr>
-                            
                     {% else %}
                         <tr>
                             <td>
@@ -62,8 +61,12 @@
                         </tr>
                     {% endif %} 
                 {% endfor %}
+                    <tr>
+                        <th>Distracteur(s)</th>
+                    </tr>
+                    {{ macros.displayDistractor(test, questionnaire) }}
                 </table>
-                     {#<p>afficher distracteurs</p>#}
+
             {% endif %}
         {% endif %}
         </div>

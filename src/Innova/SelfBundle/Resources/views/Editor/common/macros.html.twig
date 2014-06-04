@@ -74,3 +74,26 @@
         <span class="btn btn-default btn-xs app-add-answer" data-subquestion-id="{{ subquestion.id }}">Ajouter réponse</span>
     {% endif %}
 {% endmacro %}
+
+{% macro displayDistractor(test, questionnaire) %}
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+    {% set subquestions = questionnaire.questions[0].subquestions %}
+    {% set propositions = questionnaire.questions[0].subquestions[0].propositions %}
+    {% for proposition in propositions %}
+        {% set mediaCurrent =  proposition.media %}
+
+        {% set found = false %}
+        {% for subquestion in subquestions %}
+            {% for propositionOther in subquestion.propositions %}
+                {% if (propositionOther.media == mediaCurrent) and (proposition.rightAnswer == true) %}
+                    {% set found = true %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        {% if found == false %}
+            {{ macros.displayMedia(test, questionnaire, proposition.media) }}
+        {% endif %}
+
+    {% endfor %}
+{% endmacro %}
