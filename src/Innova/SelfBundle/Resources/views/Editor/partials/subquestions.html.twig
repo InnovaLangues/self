@@ -36,24 +36,33 @@
             <span class="btn btn-default btn-xs app-add-subquestion">Ajouter une paire</span> 
             {% if questionnaire.questions[0].subquestions | length > 0 %}
                 <span class="btn btn-default btn-xs app-add-distractor">Ajouter un distracteur</span>
-                <hr/>
                 {% set subquestions = questionnaire.questions[0].subquestions %}
-
+                <br/><br/>
+                <table class="table">
+                    <tr>
+                        <th>Proposition</th>
+                        <th>Réponse associée</th>
+                    </tr>
                 {% for subquestion in subquestions %}
                     {% if subquestion.media is not null %}
-                        <div class="row well">
-                            <div class="col-md-6">
-                            {{ macros.displayMedia(test, questionnaire, subquestion.media) }}
-                            </div>
-                            <div class="col-md-6">
-                            {{ macros.displayRightAnswerAPP(test, questionnaire, subquestion) }}
-                            </div>
-                        </div>
+                        <tr>
+                            <td>
+                                {{ macros.displayMedia(test, questionnaire, subquestion.media) }}
+                            </td>
+                            <td>
+                                {{ macros.displayRightAnswerAPP(test, questionnaire, subquestion) }}
+                            </td>
+                        </tr>
+                            
                     {% else %}
-                        <span class="btn btn-default btn-xs app-add-media" data-subquestion-id="{{ subquestion.id }}">ajouter média</span>
+                        <tr>
+                            <td>
+                                <span class="btn btn-default btn-xs app-add-media" data-subquestion-id="{{ subquestion.id }}">Ajouter média</span>
+                            </td>
+                        </tr>
                     {% endif %} 
-                    <hr/>
                 {% endfor %}
+                </table>
                      {#<p>afficher distracteurs</p>#}
             {% endif %}
         {% endif %}
