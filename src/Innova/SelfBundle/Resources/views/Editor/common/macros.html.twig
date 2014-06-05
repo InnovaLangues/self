@@ -81,19 +81,21 @@
     {% set propositions = questionnaire.questions[0].subquestions[0].propositions %}
     {% for proposition in propositions %}
         {% set mediaCurrent =  proposition.media %}
-
         {% set found = false %}
         {% for subquestion in subquestions %}
-            {% for propositionOther in subquestion.propositions %}
-                {% if (propositionOther.media == mediaCurrent) and (proposition.rightAnswer == true) %}
+            {% for propositionOther in subquestion.propositions if found == false %}
+                {% if (propositionOther.media == mediaCurrent) and (propositionOther.rightAnswer == true) %} 
                     {% set found = true %}
+                {% else %}
                 {% endif %}
             {% endfor %}
         {% endfor %}
-
         {% if found == false %}
-            {{ macros.displayMedia(test, questionnaire, proposition.media) }}
+            <tr>
+                <td>
+                    {{ macros.displayMedia(test, questionnaire, proposition.media) }}
+                </td>
+            </tr>
         {% endif %}
-
     {% endfor %}
 {% endmacro %}

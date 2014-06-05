@@ -5,13 +5,14 @@
 <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
     <span class="glyphicon glyphicon-chevron-left"></span> Retourner à la liste des tests
 </a>
-<a class="btn btn-info btn-sm" href="{{ path('editor_questionnaire_create', { 'testId': test.id }) }}">
+<a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_create', { 'testId': test.id }) }}">
     <span class="glyphicon glyphicon-plus"></span> Créer une tâche et l'ajouter
 </a>
+{#
 <a class="btn btn-info btn-sm" href="{{ path('test_edit', { 'testId': test.id }) }}">
     <span class="glyphicon glyphicon-plus"></span> Ajouter une tâche déjà existante
 </a>
-
+#}
 <hr/>
 
 <h3>Liste des tâches pour le test <strong>{{ test.name }}</strong></h3>

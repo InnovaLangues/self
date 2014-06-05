@@ -15,6 +15,7 @@
             <th>Nom</th>
             <th>Langue</th>
             <th>Nombre de tâches</th>
+            <th>Actif</th>
             <th></th>
         </tr>
     </thead>
@@ -29,6 +30,11 @@
             </td>
             <td>
                 {{ test.questionnaires | length }}
+            </td>
+            <td>
+                {% if test.actif %} oui 
+                {% else %} non
+                {% endif %}
             </td>
             <td class="text-right">
                 <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_form', { 'testId': test.id }) }}">

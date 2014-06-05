@@ -93,6 +93,13 @@ class TestController extends Controller
         $test->setName($request->request->get('test-name'));
         $test->setLanguage($em->getRepository('InnovaSelfBundle:Language')->find($request->request->get('test-language')));
 
+        $display = $request->request->get('test-display');
+        if ($display == "actif") {
+            $test->setActif(true);
+        } else {
+            $test->setActif(false);
+        }
+
         $em->persist($test);
         $em->flush();
 

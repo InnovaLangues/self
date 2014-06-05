@@ -1,0 +1,34 @@
+<span class="btn btn-default btn-xs app-add-subquestion">Ajouter une paire</span> 
+{% if questionnaire.questions[0].subquestions | length > 0 %}
+    <span class="btn btn-default btn-xs app-add-distractor">Ajouter un distracteur</span>
+    {% set subquestions = questionnaire.questions[0].subquestions %}
+    <br/><br/>
+    <table class="table">
+        <tr>
+            <th>Proposition</th>
+            <th>Réponse associée</th>
+        </tr>
+    {% for subquestion in subquestions %}
+        {% if subquestion.media is not null %}
+            <tr>
+                <td class="col-md-6">
+                    {{ macros.displayMedia(test, questionnaire, subquestion.media) }}
+                </td>
+                <td>
+                    {{ macros.displayRightAnswerAPP(test, questionnaire, subquestion) }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>
+                    <span class="btn btn-default btn-xs app-add-media" data-subquestion-id="{{ subquestion.id }}">Ajouter média</span>
+                </td>
+            </tr>
+        {% endif %} 
+    {% endfor %}
+        <tr>
+            <th>Distracteur(s)</th>
+        </tr>
+        {{ macros.displayDistractor(test, questionnaire) }}
+    </table>
+{% endif %}
