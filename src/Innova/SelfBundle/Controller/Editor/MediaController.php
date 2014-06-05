@@ -153,6 +153,7 @@ class MediaController extends Controller
                     $em->flush();
                     $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
                 } else {
+                    $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
                     $proposition = new Proposition();
                     $proposition->setSubquestion($subquestion);
                     $proposition->setMedia($media);

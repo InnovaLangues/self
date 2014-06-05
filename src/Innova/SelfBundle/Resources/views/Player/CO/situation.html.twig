@@ -16,10 +16,11 @@
 
 <div id="situation-CO" class="situation">
     {% if questionnaire.mediaText is not null %}
+        {# pour l'instant on affiche la limite d'écoute non contextualisée étant donné que les media sont dupliqué et qu'un media n'est présent que dans un seul test/questionnaire #}
         {% if questionnaire.mediaText.mediaType.name == "audio" %}
-            {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Objet de la question") }}
+            {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.mediaText.mediaLimits[0].listeningLimit, "Objet de la question") }}
         {% elseif questionnaire.mediaText.mediaType.name == "video" %}
-            {{ macros.video("situation", questionnaire.mediaText, questionnaire.ListeningLimit) }}
+            {{ macros.video("situation", questionnaire.mediaText, questionnaire.mediaText.mediaLimits[0].listeningLimit) }}
         {% endif %}
         <div class="hidden" id="listens-counter">
             Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span>
