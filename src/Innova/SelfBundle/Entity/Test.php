@@ -67,6 +67,7 @@ class Test
 
     /**
     * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="test")
+    * @ORM\OrderBy({"displayOrder" = "ASC"})
     */
     private $orderQuestionnaireTests;
 

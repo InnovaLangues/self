@@ -90,19 +90,17 @@ class PlayerController
     protected function findAQuestionnaireWithoutTrace($test, $user)
     {
         $em = $this->entityManager;
-
+        $orderedQuestionnaires = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test);
         $questionnaireWithoutTrace = null;
 
-        $questionnaires = $test->getQuestionnaires();
-
-        foreach ($questionnaires as $questionnaire) {
+        foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
             $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
-                array('user' => $user->getId(), 
+                array(  'user' => $user->getId(), 
                         'test' => $test->getId(),
-                        'questionnaire' => $questionnaire->getId()
+                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire()->getId()
                 ));
             if (count($traces) == 0) {
-                $questionnaireWithoutTrace = $questionnaire;
+                $questionnaireWithoutTrace = $orderedQuestionnaire->getQuestionnaire();
                 break;
             }
         }
