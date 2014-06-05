@@ -5,7 +5,7 @@
         <div class="draggable answer-APP"  propositionId="{{ proposition.id }}">
              <!-- <span class="glyphicon glyphicon-move touch-me"></span> -->
             {% if mediaType == "texte" %}
-                    <div class="answer-APP-text">{{ proposition.media.description }}</div>
+                    <div class="answer-APP-text">{{ proposition.media.description | raw }}</div>
             {% elseif mediaType == "audio" %}
                     {{ macros.audio(proposition.id, proposition.media, "audio.png", 100, 0, "") }}
             {% elseif mediaType == "image" %}

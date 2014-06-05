@@ -1,0 +1,123 @@
+<div class="modal fade" id="modal-media-type" tabindex="-1" role="dialog" aria-labelledby="modal-media-typeLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Choix d'un type de média</h4>
+			</div>
+			<div class="modal-body">
+				<span media-type="audio" class="btn btn-default glyphicon glyphicon-headphones media-type-choice"> Audio</span>
+				<span media-type="image" class="btn btn-default glyphicon glyphicon-picture media-type-choice"> Image</span>
+				<span media-type="video" class="btn btn-default glyphicon glyphicon-facetime-video media-type-choice"> Video</span>
+				<span media-type="texte" class="btn btn-default glyphicon glyphicon glyphicon-align-center media-type-choice"> Texte</span>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{# TEXTE #}
+<div class="modal fade" id="modal-create-texte" tabindex="-1" role="dialog" aria-labelledby="modal-create-texteLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Texte</h4>
+			</div>
+			<div class="modal-body">
+				<textarea id="create-text-textarea" class="tinymce"></textarea>
+			</div>
+			<div class="modal-footer">
+				<button id="create-text-btn" type="button" class="btn btn-primary">Save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{# IMAGE #}
+<div class="modal fade" id="modal-create-image" tabindex="-1" role="dialog" aria-labelledby="modal-create-imageLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Image</h4>
+			</div>
+			<div class="modal-body">
+				<form id="" enctype="multipart/form-data" >
+					<label for="theme">Nom</label>
+    				<input type="text" class="form-control" id="image-name" value=""/>
+    				<label for="theme">Description</label>
+    				<input type="text" class="form-control" id="image-description" value=""/>
+
+    				<label for="image-file">Fichier</label>
+					<input id="image-file" name="userfile" type="file"/>
+					<input type="hidden" id="image-url" value=""/>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button id="create-image-btn" type="button" disabled class="btn btn-primary">Save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{# VIDEO #}
+<div class="modal fade" id="modal-create-video" tabindex="-1" role="dialog" aria-labelledby="modal-create-videoLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Video</h4>
+			</div>
+			<div class="modal-body">
+				<form id="" enctype="multipart/form-data" >
+					<label for="video-name">Nom</label>
+    				<input type="text" class="form-control" id="video-name" value=""/>
+    				<label for="video-description">Description</label>
+    				<input type="text" class="form-control" id="video-description" value=""/>
+
+    				<label for="video-file">Fichier</label>
+					<input id="video-file" name="userfile" type="file"/>
+					<input type="hidden" id="video-url" value=""/>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button id="create-video-btn" type="button" disabled class="btn btn-primary">Save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{# AUDIO #}
+<div class="modal fade" id="modal-create-audio" tabindex="-1" role="dialog" aria-labelledby="modal-create-audioLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Fichier audio</h4>
+			</div>
+			<div class="modal-body">
+				<form id="" enctype="multipart/form-data" >
+					<label for="audio-name">Nom</label>
+    				<input type="text" class="form-control" id="audio-name" value=""/>
+    				<label for="audio-description">Description</label>
+    				<input type="text" class="form-control" id="audio-description" value=""/>
+
+    				<label for="audio-file">Fichier</label>
+					<input id="audio-file" name="userfile" type="file"/>
+					<input type="hidden" id="audio-url" value=""/>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button id="create-audio-btn" type="button" disabled class="btn btn-primary">Save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

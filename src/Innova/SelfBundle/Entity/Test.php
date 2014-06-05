@@ -29,6 +29,13 @@ class Test
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="actif", type="boolean")
+     */
+    private $actif;
+
+    /**
     * @ORM\ManyToMany(targetEntity="Questionnaire", inversedBy="tests")
     */
     private $questionnaires;
@@ -48,10 +55,29 @@ class Test
     */
     protected $language;
 
+    /**
+    * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="test")
+    */
+    private $mediaLimits;
+
+    /**
+    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="test")
+    */
+    private $mediaClicks;
+
+    /**
+    * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="test")
+    * @ORM\OrderBy({"displayOrder" = "ASC"})
+    */
+    private $orderQuestionnaireTests;
+
+
+
     public function __construct()
     {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->actif = false;
     }
 
     public function __toString()
@@ -212,5 +238,129 @@ class Test
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Set actif
+     *
+     * @param boolean $actif
+     * @return Test
+     */
+    public function setActif($actif)
+    {
+        $this->actif = $actif;
+    
+        return $this;
+    }
+
+    /**
+     * Get actif
+     *
+     * @return boolean 
+     */
+
+    public function getActif()
+    {
+
+        return $this->actif;
+    }
+
+    /**
+     * Add mediaLimits
+     *
+     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     * @return Test
+     */
+    public function addMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    {
+        $this->mediaLimits[] = $mediaLimits;
+    
+        return $this;
+    }
+
+    /**
+     * Remove mediaLimits
+     *
+     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     */
+    public function removeMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    {
+        $this->mediaLimits->removeElement($mediaLimits);
+    }
+
+    /**
+     * Get mediaLimits
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMediaLimits()
+    {
+        return $this->mediaLimits;
+    }
+
+    /**
+     * Add mediaClicks
+     *
+     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @return Test
+     */
+    public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    {
+        $this->mediaClicks[] = $mediaClicks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove mediaClicks
+     *
+     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     */
+    public function removeMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    {
+        $this->mediaClicks->removeElement($mediaClicks);
+    }
+
+    /**
+     * Get mediaClicks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMediaClicks()
+    {
+        return $this->mediaClicks;
+    }
+
+    /**
+     * Add orderQuestionnaireTests
+     *
+     * @param \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
+     * @return Test
+     */
+    public function addOrderQuestionnaireTest(\Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests)
+    {
+        $this->orderQuestionnaireTests[] = $orderQuestionnaireTests;
+    
+        return $this;
+    }
+
+    /**
+     * Remove orderQuestionnaireTests
+     *
+     * @param \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
+     */
+    public function removeOrderQuestionnaireTest(\Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests)
+    {
+        $this->orderQuestionnaireTests->removeElement($orderQuestionnaireTests);
+    }
+
+    /**
+     * Get orderQuestionnaireTests
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrderQuestionnaireTests()
+    {
+        return $this->orderQuestionnaireTests;
     }
 }

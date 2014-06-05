@@ -74,3 +74,8 @@ fos_user:
     registration:
         form:
             type: innova_selfbundle_user
+
+
+stfalcon_tinymce:
+    include_jquery: false
+    tinymce_jquery: true

@@ -17,9 +17,10 @@ class TestType extends AbstractType
         $builder
             ->add('name')
             ->add('questionnaires', null, array(
-                    'expanded' => true
+                    'expanded' => true,
                 )
             )
+            ->add('actif')
         ;
     }
 

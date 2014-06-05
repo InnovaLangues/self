@@ -1,0 +1,20 @@
+<div id="texte-container" class="panel panel-default">
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+    <div class="panel-heading">
+        Objet de la question
+        {% if questionnaire.mediaText is not null %} 
+            <span id="delete-text" class="glyphicon glyphicon-remove btn btn-default btn-sm pull-right"></span>
+        {% endif %}
+    </div>
+    <div class="panel-body">
+        {% if questionnaire.mediaText is null %}
+        <div class="text-center">
+            <span id="add-text" class="btn btn-default">
+                Ajouter 
+            </span>
+        </div>
+        {% else %}
+            {{ macros.displayMedia(test, questionnaire, questionnaire.mediaText) }}
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a class="btn btn-primary btn-sm" href="{{ path('editor_test_create_form') }}">
+    <span class="glyphicon glyphicon-plus"></span> Créer un test
+</a>
+
+<hr/>
+
+<h3>Liste des tests</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Langue</th>
+            <th>Nombre de tâches</th>
+            <th>Actif</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for test in tests %}
+        <tr>
+            <td>
+                {{ test.name }}
+            </td>
+            <td>
+                {{ test.language.name }}
+            </td>
+            <td>
+                {{ test.questionnaires | length }}
+            </td>
+            <td>
+                {% if test.actif %} oui 
+                {% else %} non
+                {% endif %}
+            </td>
+            <td class="text-right">
+                <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_form', { 'testId': test.id }) }}">
+                    <span class="glyphicon glyphicon-edit"></span> Editer
+                </a>
+                <a class="btn btn-default btn-sm" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
+                    <span class="glyphicon glyphicon-plus"></span> Gérer des tâches
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

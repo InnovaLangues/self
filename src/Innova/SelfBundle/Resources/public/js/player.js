@@ -173,7 +173,7 @@ function getSessionContextListenNumber() {
 }
 
 function incrementeSessionContextListenNumber() {
-     $.ajax({
+    $.ajax({
         url: Routing.generate('incrementeSessionContextListenNumber'),
         type: 'PUT',
         dataType: 'json'

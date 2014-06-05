@@ -1,0 +1,18 @@
+<div id="contexte-container" class="panel panel-default">
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+    <div class="panel-heading">
+        Contexte
+        {% if questionnaire.mediaContext is not null %} 
+            <span id="delete-context" class="glyphicon glyphicon-remove btn btn-default btn-sm pull-right"></span>
+        {% endif %}
+    </div>
+    <div class="panel-body">
+        {% if questionnaire.mediaContext is null %}
+            <div class="text-center">
+                <span id="add-context" class="btn btn-default">Ajouter</span>
+            </div>
+        {% else %}
+           {{ macros.displayMedia(test, questionnaire, questionnaire.mediaContext) }}
+        {% endif %}
+    </div>
+</div>

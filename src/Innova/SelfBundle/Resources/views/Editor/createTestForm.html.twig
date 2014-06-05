@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a class="btn btn-default" href="{{ path('editor_tests_show') }}">
+    <span class="glyphicon glyphicon-chevron-left"></span> Revenir à la liste des tests
+</a>
+
+<hr/>
+
+<h3>Nouveau test</h3>
+<form role="form" action="{{ path('editor_test_create') }}" method="POST"> 
+    <div class="form-group">
+        <label for="test-name">Nom du test</label>
+        <input id="test-name" type="text" class="form-control" name="test-name" required />
+    </div>
+
+    <div class="form-group">
+        <label for="test-language">Langue</label>
+        <select id="test-language" class="form-control" name="test-language" required />
+            {% for language in languages %}
+                <option value="{{ language.id }}">{{ language.name }}</option> 
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Créer le test" class="btn btn-primary pull-right">
+    </div>
+</form>
+
+{% endblock %}
