@@ -90,7 +90,7 @@ class PlayerController
     protected function findAQuestionnaireWithoutTrace($test, $user)
     {
         $em = $this->entityManager;
-        $orderedQuestionnaires = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test);
+        $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
         $questionnaireWithoutTrace = null;
 
         foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
