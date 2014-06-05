@@ -130,10 +130,12 @@ class AjaxController extends Controller
         /* $msg = ""; */
         $request = $this->get('request');
         $questionnaireId = $request->request->get('questionnaireId');
+        $testId = $request->request->get('testId');
         $typologyName = $request->request->get('typology');
 
         $em = $this->getDoctrine()->getManager();
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
         if(!$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typologyName)){
             $typology = null;
@@ -176,10 +178,14 @@ class AjaxController extends Controller
             $typologyName = $typology->getName();
         }
 
+
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
+
         return new JsonResponse(
             array(
                 /*'msg' => $msg,*/
                 'typology'=> $typologyName,
+                'subquestions' => $template
             )
         );
     }
