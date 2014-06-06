@@ -25,6 +25,7 @@ use Innova\SelfBundle\Entity\Media;
  */
 class MediaController extends Controller
 {
+    
     /**
      * @Route("/set-listening-limit", name="set-listening-limit", options={"expose"=true})
      * @Method("POST")
@@ -38,17 +39,9 @@ class MediaController extends Controller
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
-        
-        if(!$mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array('test' => $test, 'questionnaire' => $questionnaire, 'media' => $media))){
-            $mediaLimit = new MediaLimit();
-            $mediaLimit->setTest($test);
-            $mediaLimit->setQuestionnaire($questionnaire);
-            $mediaLimit->setMedia($media);
-        }
-        $mediaLimit->setListeningLimit($request->get('listeningLimit'));
-       
-        $em->persist($mediaLimit);
-        $em->flush();
+        $limit = $request->get('listeningLimit');
+
+        $this->createMediaLimit($test, $questionnaire, $media, $limit);
 
         return new JsonResponse(
             array()
@@ -75,9 +68,10 @@ class MediaController extends Controller
         $name = $request->request->get('name');
         $description = $request->request->get('description');
         $url = $request->request->get('url');
-        $type = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($request->request->get('type'));
+        $mediaTypeName = $request->request->get('type');
+        $type = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($mediaTypeName);
 
-        $media = new Media;
+        $media = new Media();
         $media->setMediaType($type);
         $media->setName($name);
         $media->setDescription($description);
@@ -85,6 +79,10 @@ class MediaController extends Controller
 
         $em->persist($media);
         $em->flush();
+
+        if ($mediaTypeName == "audio" || $mediaTypeName == "video") {
+            $this->createMediaLimit($test, $questionnaire, $media, 0);
+        }
 
         /* Création de la relation avec une entité */
         $entityType = $request->request->get('entityType');
@@ -128,13 +126,7 @@ class MediaController extends Controller
             case "proposition":
                 if ($entityField == "app-answer"){
                     $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
-                    $proposition = new Proposition();
-                    $proposition->setSubquestion($subquestion);
-                    $proposition->setMedia($media);
-                    $proposition->setRightAnswer(true);
-                    $em->persist($proposition);
-                    $em->persist($subquestion);
-                    $em->flush();
+                    $proposition = $this->createProposition($subquestion, $media, true);
 
                     $this->createAppFakeAnswer($proposition);
 
@@ -143,24 +135,12 @@ class MediaController extends Controller
                     $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
                     $subquestions = $questionnaire->getQuestions()[0]->getSubquestions();
                     foreach ($subquestions as $subquestion) {
-                        $proposition = new Proposition();
-                        $proposition->setSubquestion($subquestion);
-                        $proposition->setMedia($media);
-                        $proposition->setRightAnswer(false);
-                        $em->persist($proposition);
-                        $em->persist($subquestion);
+                        $proposition = $this->createProposition($subquestion, $media, false);
                     }
-                    $em->flush();
                     $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
                 } else {
                     $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
-                    $proposition = new Proposition();
-                    $proposition->setSubquestion($subquestion);
-                    $proposition->setMedia($media);
-                    $proposition->setRightAnswer(false);
-                    $em->persist($proposition);
-                    $em->persist($subquestion);
-                    $em->flush();
+                    $proposition = $this->createProposition($subquestion, $media, false);
 
                     $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $subquestion));
                 }
@@ -226,6 +206,42 @@ class MediaController extends Controller
         return new Response($template);
     }
 
+    /**
+     * Create a mediaLimit entity or update one for a given media, and questionnaire
+     */
+    private function createMediaLimit($test, $questionnaire, $media, $limit)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if(!$mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array('test' => $test, 'questionnaire' => $questionnaire, 'media' => $media))){
+            $mediaLimit = new MediaLimit();
+            $mediaLimit->setTest($test);
+            $mediaLimit->setQuestionnaire($questionnaire);
+            $mediaLimit->setMedia($media);
+        }
+        $mediaLimit->setListeningLimit($limit);
+
+        $em->persist($mediaLimit);
+        $em->flush();
+
+        return $mediaLimit;
+    }
+
+    private function createProposition($subquestion, $media, $rightAnswer)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $proposition = new Proposition();
+        $proposition->setSubquestion($subquestion);
+        $proposition->setMedia($media);
+        $proposition->setRightAnswer($rightAnswer);
+        $em->persist($proposition);
+        $em->flush();
+
+        return $proposition;
+    }
+
+
     private function createAppFakeAnswer($currentProposition){
         $em = $this->getDoctrine()->getManager();
 
@@ -237,14 +253,7 @@ class MediaController extends Controller
         foreach ($subquestions as $subquestion) {
             if ($subquestion != $currentSubquestion){
                 $propositions = $subquestion->getPropositions();
-
-                $proposition = new Proposition();
-                $proposition->setSubquestion($subquestion);
-                $proposition->setMedia($currentProposition->getMedia());
-                $proposition->setRightAnswer(false);
-                $em->persist($proposition);
-                $em->persist($subquestion);
-                $em->flush();
+                $proposition = $this->createProposition($subquestion, $currentProposition->getMedia(), false);
             }
         }
 
@@ -260,13 +269,7 @@ class MediaController extends Controller
                 }
             } 
             if($found == false){
-                $proposition = new Proposition();
-                $proposition->setSubquestion($currentSubquestion);
-                $proposition->setMedia($media);
-                $proposition->setRightAnswer(false);
-                $em->persist($proposition);
-                $em->persist($subquestion);
-                $em->flush();
+                $proposition = $this->createProposition($currentSubquestion, $media, false);
             }
         }
         return;
