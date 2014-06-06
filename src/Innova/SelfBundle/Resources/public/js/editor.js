@@ -283,18 +283,21 @@ function setSkill(questionnaireId) {
 
 function setTypology(questionnaireId) {
     $("#loader-img").show();
+    var testId = $("#test-id").val();
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-typology'),
         type: 'POST',
         dataType: 'json',
         data: { 
             questionnaireId: questionnaireId,
+            testId: testId,
             typology: $("#typology").val() 
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
         $("#typology").val(data.typology);
+        $("#subquestion-container").replaceWith(data.subquestions);
+        $("#loader-img").hide();
     }); 
 }
 

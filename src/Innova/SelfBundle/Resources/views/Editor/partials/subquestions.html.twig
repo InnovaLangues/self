@@ -1,5 +1,6 @@
+<div id="subquestion-container">
 {% if questionnaire.questions[0].typology is not null %}
-    <div id="subquestion-container" class="panel panel-default">
+    <div class="panel panel-default">
         {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
         <div class="panel-heading">
             Items
@@ -37,3 +38,4 @@
         </div>
     </div>
 {% endif %}
+</div>
