@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Subquestion;
-use Innova\SelfBundle\Entity\Proposition;
 /**
  * Main controller.
  *
@@ -29,7 +28,7 @@ class AjaxController extends Controller
 
         $request = $this->container->get('request');
         $mediaId = $request->query->get('id');
-        
+
         $media = $em->getRepository('InnovaSelfBundle:Media')->findOneById($mediaId);
 
         return new JsonResponse(
@@ -78,7 +77,7 @@ class AjaxController extends Controller
         $skillName = $request->request->get('skill');
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        if (!$skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skillName)){
+        if (!$skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skillName)) {
             $skill = null;
         }
 
@@ -106,7 +105,7 @@ class AjaxController extends Controller
         $levelName = $request->request->get('level');
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        if(!$level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($levelName)){
+        if (!$level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($levelName)) {
             $level = null;
         }
         $questionnaire->setLevel($level);
@@ -137,22 +136,22 @@ class AjaxController extends Controller
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
-        if(!$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typologyName)){
+        if (!$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typologyName)) {
             $typology = null;
-            foreach($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion){
+            foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
                 $subquestion->setTypology(null);
                 $em->persist($subquestion);
             }
         } else {
-            if(mb_substr($typology->getName(), 0, 3) == "APP"){
-                foreach($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion){
+            if (mb_substr($typology->getName(), 0, 3) == "APP") {
+                foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
                     $subquestion->setTypology($typology);
                     $em->persist($subquestion);
                 }
 
             } else {
                 $typologySubquestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($typologyName, 1));
-                foreach($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion){
+                foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
                     $subquestion->setTypology($typologySubquestion);
                     $em->persist($subquestion);
                 }
@@ -160,9 +159,9 @@ class AjaxController extends Controller
         }
 
         /*
-        // on teste s'il n'y a pas de subquestion 
+        // on teste s'il n'y a pas de subquestion
         // (pour éviter un conflit entre la typo de la question et des subq)
-        if(count($questionnaire->getQuestions()[0]->getSubquestions()) > 0 ){
+        if (count($questionnaire->getQuestions()[0]->getSubquestions()) > 0 ) {
             $msg = "Vous ne pouvez pas éditer la typologie s'il y a déjà des subquestions !";
         } else {
         */
@@ -174,10 +173,9 @@ class AjaxController extends Controller
         */
 
         $typologyName = "-";
-        if($typology = $questionnaire->getQuestions()[0]->getTypology()){
+        if ($typology = $questionnaire->getQuestions()[0]->getTypology()) {
             $typologyName = $typology->getName();
         }
-
 
         $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
 
@@ -190,8 +188,6 @@ class AjaxController extends Controller
         );
     }
 
-
-
      /**
      *
      * @Route("/questionnaires/upload-image", name="editor_questionnaire_upload-image", options={"expose"=true})
@@ -201,9 +197,9 @@ class AjaxController extends Controller
     {
         $request = $this->get('request');
 
-        foreach($request->files as $uploadedFile) {
+        foreach ($request->files as $uploadedFile) {
             $originalName = $uploadedFile->getClientOriginalName();
-            $ext = pathinfo($originalName, PATHINFO_EXTENSION); 
+            $ext = pathinfo($originalName, PATHINFO_EXTENSION);
             $newName = uniqid(). "." . $ext;
 
             $directory = __DIR__.'/../../../../../web/upload/media/';
@@ -226,9 +222,9 @@ class AjaxController extends Controller
     {
         $request = $this->get('request');
 
-        foreach($request->files as $uploadedFile) {
+        foreach ($request->files as $uploadedFile) {
             $originalName = $uploadedFile->getClientOriginalName();
-            $ext = pathinfo($originalName, PATHINFO_EXTENSION); 
+            $ext = pathinfo($originalName, PATHINFO_EXTENSION);
             $newName = uniqid();
 
             //convertir en ogg
@@ -243,7 +239,6 @@ class AjaxController extends Controller
         );
     }
 
-
     /**
      *
      * @Route("/questionnaires/upload-video", name="editor_questionnaire_upload-video", options={"expose"=true})
@@ -252,11 +247,10 @@ class AjaxController extends Controller
     public function uploadVideoAction()
     {
         $request = $this->get('request');
-        
 
-        foreach($request->files as $uploadedFile) {
+        foreach ($request->files as $uploadedFile) {
             $originalName = $uploadedFile->getClientOriginalName();
-            $ext = pathinfo($originalName, PATHINFO_EXTENSION); 
+            $ext = pathinfo($originalName, PATHINFO_EXTENSION);
 
             // tester si ext == webm
             $newName = uniqid();
@@ -271,9 +265,6 @@ class AjaxController extends Controller
             )
         );
     }
-
-
-
 
     /**
      *
@@ -294,9 +285,9 @@ class AjaxController extends Controller
         $question = $questionnaire->getQuestions()[0];
 
         $subquestion = new Subquestion();
-        if(mb_substr($questionnaireTypology, 0, 3) != "APP"){
+        if (mb_substr($questionnaireTypology, 0, 3) != "APP") {
             $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($questionnaireTypology, 1));
-            
+
         } else {
             $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
         }
@@ -309,7 +300,6 @@ class AjaxController extends Controller
 
         return new Response($template);
     }
-
 
     /**
      *
@@ -328,7 +318,7 @@ class AjaxController extends Controller
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        
+
         $em->remove($subquestion);
         $em->flush();
 

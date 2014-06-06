@@ -9,8 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Entity\Question;
-
 
 /**
  * Test controller.
@@ -74,7 +72,7 @@ class TestController extends Controller
         return array(
                     'test' => $test,
                     'languages' => $languages
-        ); 
+        );
     }
 
     /**

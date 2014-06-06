@@ -2,7 +2,6 @@
 
 namespace Innova\SelfBundle\Controller\Editor;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,7 +10,6 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\OrderQuestionnaireTest;
-
 
 /**
  * Questionnaire controller.
@@ -37,7 +35,6 @@ class QuestionnaireController extends Controller
             'tests' => $tests,
         );
     }
-
 
     /**
      * Lists all Questionnaire entities.
@@ -73,7 +70,7 @@ class QuestionnaireController extends Controller
 
         $test = $em->getRepository('InnovaSelfBundle:test')->find($testId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        
+
         if (!$questionnaire) {
             throw $this->createNotFoundException('Unable to find Questionnaire entity ! ');
         }
@@ -99,7 +96,6 @@ class QuestionnaireController extends Controller
         $questionnaire = new Questionnaire();
         $questionnaire->setTheme("");
 
-
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $questionnaire->addTest($test);
         $questionnaire->setListeningLimit(0);
@@ -110,7 +106,6 @@ class QuestionnaireController extends Controller
         $question = new Question();
         $question->setQuestionnaire($questionnaire);
         $em->persist($question);
-
 
         $orderQuestionnaireTest = new OrderQuestionnaireTest();
         $orderQuestionnaireTest->setTest($test);
@@ -128,10 +123,8 @@ class QuestionnaireController extends Controller
                                 'questionnaireId' => $questionnaire->getId()
                             )
                 ));
-  
-    }
 
-    
+    }
 
     /**
      * Updates a Questionnaire entity
