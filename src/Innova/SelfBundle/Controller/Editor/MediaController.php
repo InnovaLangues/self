@@ -178,7 +178,7 @@ class MediaController extends Controller
                 }
                 $em->persist($entity);
                 $em->flush();
-                
+                break;     
             case "subquestion":
                 $entity =  $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
                 if ($entityField == "amorce") {
@@ -199,7 +199,7 @@ class MediaController extends Controller
 
                     $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('test'=> $test, 'questionnaire' => $questionnaire));
                 }
-               
+                break;     
             case "proposition":
                 if ($entityField == "app-distractor") {
                     $proposition =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
@@ -216,7 +216,7 @@ class MediaController extends Controller
 
                     $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig', array('test'=> $test, 'questionnaire' => $questionnaire, 'proposition' => null));
                 }
-                
+                break; 
         }
 
         return new Response($template);
