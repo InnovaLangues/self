@@ -72,12 +72,12 @@ class OrderQuestionnaireTestController extends Controller
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
         $entityToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array(
-                                                                                            'test' => $test, 
+                                                                                            'test' => $test,
                                                                                             'questionnaire' => $questionnaire
                                                                                         ));
-        
+
         $test->removeQuestionnaire($questionnaire);
-        
+
         $em->persist($test);
         $em->remove($entityToRemove);
         $em->flush();
