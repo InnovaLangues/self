@@ -95,6 +95,9 @@
                 <td>
                     {{ macros.displayMedia(test, questionnaire, proposition.media) }}
                 </td>
+                <td>
+                    <span class="app-delete-distractor glyphicon glyphicon-remove btn btn-default btn-sm" data-proposition-id="{{ proposition.id }}" data-original-title="" title=""></span>
+                </td>
             </tr>
         {% endif %}
     {% endfor %}

@@ -9,22 +9,27 @@
             <th>Réponse associée</th>
         </tr>
     {% for subquestion in subquestions %}
+        <tr>
         {% if subquestion.media is not null %}
-            <tr>
+            
                 <td class="col-md-6">
                     {{ macros.displayMedia(test, questionnaire, subquestion.media) }}
                 </td>
                 <td>
                     {{ macros.displayRightAnswerAPP(test, questionnaire, subquestion) }}
                 </td>
-            </tr>
+            
         {% else %}
-            <tr>
+         
                 <td>
                     <span class="btn btn-default btn-xs app-add-media" data-subquestion-id="{{ subquestion.id }}">Ajouter média</span>
                 </td>
-            </tr>
+            
         {% endif %} 
+            <td>
+                <span class="app-delete-subquestion glyphicon glyphicon-remove btn btn-default btn-sm" data-subquestion-id="{{ subquestion.id }}" data-original-title="" title=""></span>
+            </td>
+        </tr>
     {% endfor %}
         <tr>
             <th>Distracteur(s)</th>

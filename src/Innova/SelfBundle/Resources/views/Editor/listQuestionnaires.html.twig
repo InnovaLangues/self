@@ -24,10 +24,10 @@
 
         <span class="buttons" style="position:absolute;right:5px;top:5px">
             <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'testId': order.test.id, 'questionnaireId': order.questionnaire.id }) }}">
-                <span class="glyphicon glyphicon-edit"></span> Editer la tâche
+                <span class="glyphicon glyphicon-edit"></span> Editer
             </a>
-            <a class="btn btn-default btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
-                <span class="glyphicon glyphicon-edit"></span> Supprimer la tâche
+            <a class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
+                <span class="glyphicon glyphicon-remove"></span> Supprimer
             </a>
         </span>
     </li>
@@ -35,7 +35,7 @@
 </ul>
 
 {% if orders | length > 0 %}
-    <span class="btn btn-primary btn-sm" id="save-order">Sauvegarder l'ordre des tâches</span>
+    <span class="btn btn-default btn-sm pull-right" id="save-order">Sauvegarder l'ordre des tâches</span>
 {% endif %}
 
 <div id="delete-task-modal" class="modal fade">
