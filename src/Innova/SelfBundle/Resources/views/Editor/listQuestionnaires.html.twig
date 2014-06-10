@@ -19,11 +19,17 @@
 
 <ul class="list-group" id="sortable">
 {% for order in orders %}
-    <li class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id}}" data-test-id="{{ order.test.id }}">
+    <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
         {{ order.questionnaire.theme }}
-        <a style="position:absolute;right:5px;top:5px" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'testId': order.test.id, 'questionnaireId': order.questionnaire.id }) }}">
-            <span class="glyphicon glyphicon-edit"></span> Editer la tâche
-        </a>
+
+        <span class="buttons" style="position:absolute;right:5px;top:5px">
+            <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'testId': order.test.id, 'questionnaireId': order.questionnaire.id }) }}">
+                <span class="glyphicon glyphicon-edit"></span> Editer la tâche
+            </a>
+            <a class="btn btn-default btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
+                <span class="glyphicon glyphicon-edit"></span> Supprimer la tâche
+            </a>
+        </span>
     </li>
 {% endfor %}
 </ul>
@@ -32,11 +38,31 @@
     <span class="btn btn-primary btn-sm" id="save-order">Sauvegarder l'ordre des tâches</span>
 {% endif %}
 
+<div id="delete-task-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Suppression d'une tâche</h4>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cette tâche de ce test ?
+                <input id="test-id" type="hidden" value="{{ test.id }}"/>
+                <input id="questionnaire-id" type="hidden" value=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+                <button type="button" id="delete-task-confirmation" class="btn btn-primary">Oui</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-save-order.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-task-list.js") }}"></script>
 {% endblock %}
 
 
