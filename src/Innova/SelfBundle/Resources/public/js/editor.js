@@ -257,6 +257,7 @@ function createMedia(name, description, url, type) {
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
         $("#loader-img").hide();
+        $('*').tooltip({placement:'top'});
     });
 }
 
@@ -359,6 +360,7 @@ function unlinkMedia(){
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
         $("#loader-img").hide();
+        $('*').tooltip({placement:'top'});
     });
 }
 
@@ -423,8 +425,8 @@ function toggleRightWrong(propositionId){
     .done(function(data) {
         $("#loader-img").hide();
         $("#proposition-"+propositionId+"-container").replaceWith(data);
+        $('*').tooltip({placement:'top'});
     }); 
-
 }
 
 
