@@ -18,6 +18,11 @@ $(document).ready(function() {
         setTypology(questionnaireId);
     });
 
+    $('#fixed-order').on('change',function(e){
+        isChecked = $('#fixed-order').prop('checked');
+        setFixedOrder(isChecked);
+    });
+
     /**********************
         QUESTIONNAIRE RELATED EVENTS 
     ************************/
@@ -315,6 +320,24 @@ function setTypology(questionnaireId) {
     }); 
 }
 
+function setFixedOrder(isChecked){
+    $("#loader-img").show();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_set-fixed-order'),
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            questionnaireId: questionnaireId,
+            isChecked: isChecked 
+        }
+    })
+    .done(function(data) {
+        $("#loader-img").hide();
+    }); 
+
+}
 
 function setLevel(questionnaireId) {
     $("#loader-img").show();

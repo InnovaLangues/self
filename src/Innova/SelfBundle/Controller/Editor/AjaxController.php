@@ -66,6 +66,29 @@ class AjaxController extends Controller
 
     /**
      *
+     * @Route("/questionnaires/set-fixed-order", name="editor_questionnaire_set-fixed-order", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setFixedOrderAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaireId = $request->request->get('questionnaireId');
+        $isChecked = $request->request->get('isChecked');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        $questionnaire->setFixedOrder($isChecked);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array()
+        );
+    }
+
+
+    /**
+     *
      * @Route("/questionnaires/set-skill", name="editor_questionnaire_set-skill", options={"expose"=true})
      * @Method("POST")
      */
