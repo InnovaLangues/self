@@ -148,7 +148,7 @@ class MediaController extends Controller
     }
 
     /**
-     *
+     * Supprime la relation qu'a un media avec un élément (ou supprime l'élément)... il faudrait supprimer le media dans certains cas.
      *
      * @Route("/questionnaires/unlink-media", name="editor_questionnaire_unlink-media", options={"expose"=true})
      * @Method("POST")
@@ -171,10 +171,10 @@ class MediaController extends Controller
                 $entity =  $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
                 if ($entityField == "contexte") {
                     $entity->setMediaContext(null);
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:contexte.html.twig', array('test'=> $test, 'questionnaire' => $entity));
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText(null);
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:texte.html.twig', array('test'=> $test, 'questionnaire' => $entity));
                 }
                 $em->persist($entity);
                 $em->flush();
@@ -186,9 +186,9 @@ class MediaController extends Controller
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig', array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
                 } elseif ($entityField == "app") {
-                    if($rightProposition = $em->getRepository('InnovaSelfBundle:Proposition')->findOneBy(array("subquestion" => $entity, "rightAnswer" => true))){
+                    if ($rightProposition = $em->getRepository('InnovaSelfBundle:Proposition')->findOneBy(array("subquestion" => $entity, "rightAnswer" => true))) {
                         $mediaToSearch = $rightProposition->getMedia();
                         $question = $entity->getQuestion();
                         $this->appDeletePropositions($mediaToSearch, $question);
@@ -197,7 +197,7 @@ class MediaController extends Controller
                     $em->remove($entity);
                     $em->flush();
 
-                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('test'=> $test, 'questionnaire' => $questionnaire));
                 }
                 break;
             case "proposition":
@@ -207,14 +207,14 @@ class MediaController extends Controller
                     $question = $proposition->getSubquestion()->getQuestion();
                     $this->appDeletePropositions($mediaToSearch, $question);
 
-                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('test'=> $test, 'questionnaire' => $questionnaire));
                 } else {
                     $entity =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
                     $subquestion = $entity->getSubquestion();
                     $em->remove($entity);
                     $em->flush();
 
-                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'proposition' => null));
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig', array('test'=> $test, 'questionnaire' => $questionnaire, 'proposition' => null));
                 }
                 break;
         }

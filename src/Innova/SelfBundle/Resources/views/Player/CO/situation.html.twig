@@ -23,9 +23,9 @@
             {{ macros.video("situation", questionnaire.mediaText, questionnaire.mediaText.mediaLimits[0].listeningLimit) }}
         {% endif %}
         <div class="hidden" id="listens-counter">
-            Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span>
+            Reste <span data-limit={{ questionnaire.mediaText.mediaLimits[0].listeningLimit }} id="listening_number">{{ questionnaire.mediaText.mediaLimits[0].listeningLimit }}</span>
             <span id="limit_listening_text">{{ limit_listening_text }}</span>
-            <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span>
+            <span class="hidden">sur <span id="limit_listening">{{ questionnaire.mediaText.mediaLimits[0].listeningLimit }}</span></span>
         </div>
     {% endif %}
 </div>
