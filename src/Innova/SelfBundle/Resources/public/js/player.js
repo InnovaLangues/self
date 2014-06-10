@@ -30,10 +30,11 @@ $(document).ready(function() {
         // Number of times listened
         //var listened = Number($(this).attr("data-listened"));
         var listened = $("#listening_number").html();
+
         var sound = $(this).attr("sound");
         var audio = document.getElementById(sound);
 
-        if(((listened === null || listened <= limit) && listened > 0 || sound != "situation") && !play_in_progress) {
+        if(((listened === null || listened <= limit) && listened > 0 || sound != "situation" || limit == 0) && !play_in_progress) {
             if (sound != "situation"){
                 playMedia(audio, $(this));
             } else {

@@ -57,7 +57,7 @@
         {% set limit = limits.listeningLimit %}
         {% endif %}
     {% endfor %}
-     <input style="color:black;" value="{{ limit }}" class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern="\d+" data-toggle="tooltip" data-original-title="Définir le nombre d'écoutes (0 = pas de limite)" />
+     <input size="2" style="color:black;" value="{{ limit }}" class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern='[0-9]{1,3}' data-toggle="tooltip" data-original-title="Définir le nombre d'écoutes (0 = pas de limite)" />
 {% endmacro %}
 
 {% macro displayRightAnswerAPP(test, questionnaire, subquestion) %}
