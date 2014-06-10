@@ -187,16 +187,35 @@ class MediaController extends Controller
                     $em->flush();
 
                     $template =  $this->renderView('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
+                } elseif ($entityField == "app") {
+                    if($rightProposition = $em->getRepository('InnovaSelfBundle:Proposition')->findOneBy(array("subquestion" => $entity, "rightAnswer" => true))){
+                        $mediaToSearch = $rightProposition->getMedia();
+                        $question = $entity->getQuestion();
+                        $this->appDeletePropositions($mediaToSearch, $question);
+                    }
+
+                    $em->remove($entity);
+                    $em->flush();
+
+                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
                 }
                 break;
             case "proposition":
-                $entity =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
-                $subquestion = $entity->getSubquestion();
-                $em->remove($entity);
-                $em->flush();
+                if ($entityField == "app-distractor") {
+                    $proposition =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
+                    $mediaToSearch = $proposition->getMedia();
+                    $question = $proposition->getSubquestion()->getQuestion();
+                    $this->appDeletePropositions($mediaToSearch, $question);
 
-                $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'proposition' => null));
+                    $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+                } else {
+                    $entity =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
+                    $subquestion = $entity->getSubquestion();
+                    $em->remove($entity);
+                    $em->flush();
 
+                    $template =  $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'proposition' => null));
+                }
                 break;
         }
 
@@ -246,6 +265,8 @@ class MediaController extends Controller
         $question = $currentSubquestion->getQuestion();
         $subquestions = $question->getSubquestions();
 
+        $propositions = array();
+
         // on ajoute aux autres subquestions des propositions
         foreach ($subquestions as $subquestion) {
             if ($subquestion != $currentSubquestion) {
@@ -271,5 +292,19 @@ class MediaController extends Controller
         }
 
         return;
+    }
+
+    private function appDeletePropositions($media, $question)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $subquestions = $question->getSubquestions();
+        foreach ($subquestions as $subquestion) {
+            $propositionToDelete = $em->getRepository('InnovaSelfBundle:Proposition')->findOneBy(array("subquestion" => $subquestion, "media" => $media));
+            $em->remove($propositionToDelete);
+        }
+        $em->flush();
+
+        return true;
     }
 }

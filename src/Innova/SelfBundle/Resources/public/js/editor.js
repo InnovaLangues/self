@@ -149,6 +149,19 @@ $(document).ready(function() {
         setParamForRequest("proposition", "app-distractor", questionnaireId, "subquestion-container");
         chooseMediaTypeModal();
     });
+
+    $( "body" ).on( "click", '.app-delete-subquestion', function() {
+        var subquestionId = $(this).data("subquestion-id");
+        setParamForRequest("subquestion", "app", subquestionId, "subquestion-container");
+        unlinkMedia();
+    });
+
+    $( "body" ).on( "click", '.app-delete-distractor', function() {
+        var propositionId = $(this).data("proposition-id");
+        setParamForRequest("proposition", "app-distractor", propositionId, "subquestion-container");
+        unlinkMedia();
+    });
+
 });
 
 /************************************************
@@ -244,6 +257,7 @@ function createMedia(name, description, url, type) {
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
         $("#loader-img").hide();
+        $('*').tooltip({placement:'top'});
     });
 }
 
@@ -346,6 +360,7 @@ function unlinkMedia(){
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
         $("#loader-img").hide();
+        $('*').tooltip({placement:'top'});
     });
 }
 
@@ -410,8 +425,8 @@ function toggleRightWrong(propositionId){
     .done(function(data) {
         $("#loader-img").hide();
         $("#proposition-"+propositionId+"-container").replaceWith(data);
+        $('*').tooltip({placement:'top'});
     }); 
-
 }
 
 

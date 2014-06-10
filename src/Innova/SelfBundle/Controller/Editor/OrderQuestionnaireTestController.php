@@ -56,4 +56,35 @@ class OrderQuestionnaireTestController extends Controller
         );
     }
 
+    /**
+     * @Route("/delete-task", name="delete-task", options={"expose"=true})
+     * @Method("POST")
+     * @Template("")
+     */
+    public function deleteTaskAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request')->request;
+
+        $testId = $request->get('testId');
+        $questionnaireId = $request->get('questionnaireId');
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+
+        $entityToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array(
+                                                                                            'test' => $test, 
+                                                                                            'questionnaire' => $questionnaire
+                                                                                        ));
+        
+        $test->removeQuestionnaire($questionnaire);
+        
+        $em->persist($test);
+        $em->remove($entityToRemove);
+        $em->flush();
+
+        return new JsonResponse(
+            array()
+        );
+    }
+
 }

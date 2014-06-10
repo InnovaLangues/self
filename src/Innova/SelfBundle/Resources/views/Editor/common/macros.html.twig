@@ -32,14 +32,14 @@
 
 {% macro isRightAnswer(proposition) %}
     {% if proposition.rightAnswer == true %}
-        <button rel="tooltip" data-original-title="Changer en mauvaise réponse" type="button" class="btn btn-success btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}">Bonne réponse</button>
+        <button rel="tooltip" data-original-title="Changer en mauvaise réponse" type="button" class="btn btn-success btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Passer en mauvaise réponse">Bonne réponse</button>
     {% else %}
-        <button rel="tooltip" data-original-title="Changer en bonne réponse" type="button" class="btn btn-danger btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}">Mauvaise réponse</button>
+        <button rel="tooltip" data-original-title="Changer en bonne réponse" type="button" class="btn btn-danger btn-xs make-it-right-or-wrong" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Passer en bonne réponse">Mauvaise réponse</button>
     {% endif %}
 {% endmacro %}
 
 {% macro deleteProposition(proposition) %}
-    <button rel="tooltip" data-original-title="Supprimer la proposition" class="btn btn-default btn-xs delete-proposition" data-subquestion-id="{{ proposition.subquestion.id }}" data-proposition-id="{{ proposition.id }}">
+    <button rel="tooltip" data-original-title="Supprimer la proposition" class="btn btn-default btn-xs delete-proposition" data-subquestion-id="{{ proposition.subquestion.id }}" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Supprimer la proposition">
         <span class="glyphicon glyphicon-remove "></span>
     </button>
 {% endmacro %}
@@ -57,7 +57,7 @@
         {% set limit = limits.listeningLimit %}
         {% endif %}
     {% endfor %}
-     <input style="color:black;" value="{{ limit }}" class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern="\d+"/>
+     <input style="color:black;" value="{{ limit }}" class="media-listening-limit" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern="\d+" data-toggle="tooltip" data-original-title="Définir le nombre d'écoutes (0 = pas de limite)" />
 {% endmacro %}
 
 {% macro displayRightAnswerAPP(test, questionnaire, subquestion) %}
@@ -94,6 +94,9 @@
             <tr>
                 <td>
                     {{ macros.displayMedia(test, questionnaire, proposition.media) }}
+                </td>
+                <td>
+                    <span class="app-delete-distractor glyphicon glyphicon-remove btn btn-default btn-sm" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Supprimer le distracteur" title=""></span>
                 </td>
             </tr>
         {% endif %}
