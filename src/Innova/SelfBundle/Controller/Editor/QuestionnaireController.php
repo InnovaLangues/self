@@ -3,14 +3,17 @@
 namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
+use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\OrderQuestionnaireTest;
-
+use Innova\SelfBundle\Entity\Media;
 /**
  * Questionnaire controller.
  *
@@ -183,5 +186,177 @@ class QuestionnaireController extends Controller
                         array('id' => $entity->getId()))
                     );
     }
+
+    /**
+     *
+     * @Route("/questionnaires/set-theme", name="editor_questionnaire_set-theme", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setThemeAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaireId = $request->request->get('questionnaireId');
+        $theme = $request->request->get('theme');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        $questionnaire->setTheme($theme);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'theme' => $questionnaire->getTheme(),
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/set-fixed-order", name="editor_questionnaire_set-fixed-order", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setFixedOrderAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaireId = $request->request->get('questionnaireId');
+        $isChecked = $request->request->get('isChecked');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        $questionnaire->setFixedOrder($isChecked);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array()
+        );
+    }
+
+
+    /**
+     *
+     * @Route("/questionnaires/set-skill", name="editor_questionnaire_set-skill", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setSkillAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaireId = $request->request->get('questionnaireId');
+        $skillName = $request->request->get('skill');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        if (!$skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skillName)) {
+            $skill = null;
+        }
+
+        $questionnaire->setSkill($skill);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'skill' => $skill,
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/set-level", name="editor_questionnaire_set-level", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setLevelAction()
+    {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaireId = $request->request->get('questionnaireId');
+        $levelName = $request->request->get('level');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        if (!$level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($levelName)) {
+            $level = null;
+        }
+        $questionnaire->setLevel($level);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'level' => $level,
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/set-typology", name="editor_questionnaire_set-typology", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setTypologyAction()
+    {
+        /* $msg = ""; */
+        $request = $this->get('request');
+        $questionnaireId = $request->request->get('questionnaireId');
+        $testId = $request->request->get('testId');
+        $typologyName = $request->request->get('typology');
+
+        $em = $this->getDoctrine()->getManager();
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+
+        if (!$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typologyName)) {
+            $typology = null;
+            foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
+                $subquestion->setTypology(null);
+                $em->persist($subquestion);
+            }
+        } else {
+            if (mb_substr($typology->getName(), 0, 3) == "APP") {
+                foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
+                    $subquestion->setTypology($typology);
+                    $em->persist($subquestion);
+                }
+
+            } else {
+                $typologySubquestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($typologyName, 1));
+                foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
+                    $subquestion->setTypology($typologySubquestion);
+                    $em->persist($subquestion);
+                }
+            }
+        }
+
+        /*
+        // on teste s'il n'y a pas de subquestion
+        // (pour éviter un conflit entre la typo de la question et des subq)
+        if (count($questionnaire->getQuestions()[0]->getSubquestions()) > 0 ) {
+            $msg = "Vous ne pouvez pas éditer la typologie s'il y a déjà des subquestions !";
+        } else {
+        */
+            $questionnaire->getQuestions()[0]->setTypology($typology);
+            $em->persist($questionnaire);
+            $em->flush();
+        /*
+        }
+        */
+
+        $typologyName = "-";
+        if ($typology = $questionnaire->getQuestions()[0]->getTypology()) {
+            $typologyName = $typology->getName();
+        }
+
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
+
+        return new JsonResponse(
+            array(
+                /*'msg' => $msg,*/
+                'typology'=> $typologyName,
+                'subquestions' => $template
+            )
+        );
+    }
+
 
 }
