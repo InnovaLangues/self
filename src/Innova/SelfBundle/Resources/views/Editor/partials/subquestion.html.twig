@@ -1,7 +1,7 @@
 {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
 
 <div id="subquestion-{{ subquestion.id }}-container" class="tab-pane{% if i is not defined or i == 0 %} active{% endif %}">
-    <div class="row">
+    <div class="row" style="position:relative">
         {% if subquestion.mediaAmorce is not null %}
             {{ macros.deleteAmorce(subquestion) }}
             {{ macros.displayMedia(test, questionnaire, subquestion.mediaAmorce) }}

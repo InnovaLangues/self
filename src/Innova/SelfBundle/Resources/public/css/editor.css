@@ -38,3 +38,11 @@
 	outline:none;
 }
 
+
+/**********************************
+	vertical align
+***********************************/
+
+.vertical-middle{
+	vertical-align: middle;
+}
