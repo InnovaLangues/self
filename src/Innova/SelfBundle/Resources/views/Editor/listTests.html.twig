@@ -9,7 +9,7 @@
 <hr/>
 
 <h3>Liste des tests</h3>
-<table class="table table-striped">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>Nom</th>
@@ -32,8 +32,10 @@
                 {{ test.questionnaires | length }}
             </td>
             <td>
-                {% if test.actif %} oui 
-                {% else %} non
+                {% if test.actif %} 
+                    oui 
+                {% else %}
+                    non
                 {% endif %}
             </td>
             <td class="text-right">
