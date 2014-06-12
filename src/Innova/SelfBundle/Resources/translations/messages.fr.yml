@@ -1,14 +1,57 @@
+anonymous:
+    first: Première visite ?
+    register: Inscrivez-vous pour accéder aux tests
+    registration: Inscription
+    already_registered: Déjà inscrit ?
+    connect: Cliquer sur "Connexion"
+    connection: Connexion
+
+menu:
+    users: Utilisateurs
+    csv_export: Export CSV
+    tests: Accès aux tests
+    editor: Editeur
+    help: Aide
+    logout: Déconnexion
+
+export:
+    file_generated: Le fichier a été généré
+    file_download: Télécharger le fichier au format CSV
+    files_list: Liste des fichiers générés
+    files_count: %nbFile% fichier(s) dans le dossier
+    tests_list: Tests exportés
+
+import:
+    traces: Traces
+    finished: Traitement du fichier <u>%fileName%</u> terminé
+
+user:
+    edit: Edition d'un utilisateur
+    back_to_list: Retour à la liste des utilisateurs
+    list: Liste des utilisateurs
+    create: Créer un utilisateur
+    creation: Création d'un utilisateur
+    single: Utilisateur
+    plural: Utilisateurs
+    firstname: Prénom 
+    name: Nom
+    email: Adresse mail
+
+test:
+    available: Tests disponibles
+    start: Démarrer le test
+    list: Liste des tests
+    no_registered: Vous êtes inscrit à aucun test.
+
 generic:
     index: Lister
     create: Ajouter
     show: Afficher
-    help: Aide
     ok: OK
     edit: Mettre à jour
     delete: Supprimer
     register: Inscription
     login: Connexion
-    logout: Déconnexion
     validate: Valider
     boolTrue: "True"
     boolFalse: "False"
@@ -20,94 +63,6 @@ generic:
     save: Sauvegarder
     yes: Oui
     no: Non
-
-user:
-    singular: Utilisateur
-    plural: Utilisateurs
-    field:
-        id: Numéro d'identification
-        userName : Nom
-        email : Email
-        password : Mot de passe
-        userName : Nom
-        firstName : Prénom
-        lastName : Nom
-    action:
-        index: Lister les utilisateurs
-        create: Ajouter un utilisateur
-        show: Afficher l'utilisateur
-        edit: Modifier cet utilisateur
-        delete: Supprimer cet utilisateur
-    message:
-        create:
-            success: Votre utilisateur a bien été ajouté
-            error: Votre utilisateur n'a pas été ajouté
-        edit:
-            success: Votre utilisateur a bien été modifié
-            error: Votre utilisateur n'a pas été modifié
-        delete:
-            success: Votre utilisateur a bien été supprimé
-            error: Votre utilisateur n'a pas été supprimé
-
-test:
-    action:
-        start: Démarrer
-        start_test: Démarrer ce test
-
-trace:
-    action:
-        evaluate: Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
-    field:
-        difficulty:
-            veryEasy: Très facile
-            easy: Facile
-            normal: Normal
-            difficult: Difficile
-            veryDifficult: Très difficile
-
-questionnaire:
-    action:
-        edit_button: Editer
-        show_button: Afficher
-        index: Lister les questionnaires
-        create: Ajouter un questionnaire
-        show: Afficher le questionnaire
-        edit: Modifier ce questionnaire
-        delete: Supprimer ce questionnaire
-    message:
-        create:
-            success: Votre questionnaire a bien été ajouté
-            error: Votre questionnaire n'a pas été ajouté
-        edit:
-            success: Votre questionnaire a bien été modifié
-            error: Votre questionnaire n'a pas été modifié
-        delete:
-            success: Votre questionnaire a bien été supprimé
-            error: Votre questionnaire n'a pas été supprimé
-    field:
-        theme: Thème
-        listeningLimit: Temps d'écoute limite
-        dialogue: Dialogue
-        mediaInstruction: Consigne
-        mediaContext: Contexte
-        mediaText: Objet de la question
-        sourceType: Type de source
-        receptionType: Type de réception
-        functionType: Type de fonction
-        cognitiveOperation: Opération cognitive
-        languageLevel: Niveau de langage
-        originText: Texte d'origine
-        exerciceText: Texte d'exercice
-        level: Niveau
-        author: Auteur
-        instruction: Consigne
-        source: Source
-        duration: Durée
-        domain: Domaine
-        support: Support
-        flow: Débit
-        focus: Focus
-        skill: Compétence
 
 editor:
     test:
@@ -138,6 +93,7 @@ editor:
         fixed_order: Ordre fixe
         context: Contexte
         question_object: Objet de la question
+        skill: Compétence
     subquestion:
         subquestions: Items
         add: Ajouter un item
@@ -173,6 +129,19 @@ editor:
         add_answer: Ajouter une réponse
 
 
+player:
+    listen_context: Il vous faut d'abord écouter le contexte.
 
+
+trace:
+    action:
+        evaluate: Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
+    field:
+        difficulty:
+            veryEasy: Très facile
+            easy: Facile
+            normal: Normal
+            difficult: Difficile
+            veryDifficult: Très difficile
 
 

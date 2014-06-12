@@ -1,22 +1,23 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Test</h1>
+    <h1>{{ 'user.single' | trans }}</h1>
 
     <table class="record_properties table">
         <tbody>
             <tr>
-                <th>Nom / Prénom</th>
+                <th>{{ 'user.name' | trans }} {{ 'user.firstname' | trans }}</th>
                 <td>{{ entity.username }} {{ entity.lastName }}</td>
             </tr>
             <tr>
-                <th>Email</th>
+                <th>{{ 'user.email' | trans }}</th>
                 <td>{{ entity.email }}</td>
             </tr>
         </tbody>
     </table>
     <hr>
     {# List of tests #}
+    <h3>{{ 'test.list' | trans }}</h3>
     <form action="{{ path('admin_user_affect_tests', { 'id': entity.id }) }}" method="post"}}>
         <input type="hidden" name="_method" value="PUT" />
         <table>
@@ -35,13 +36,13 @@
             {% endfor %}
             </tbody>
         </table>
-        <input type="submit" value="Valider" class="btn btn-default" />
+        <input type="submit" value="{{ 'generic.validate' | trans }}" class="btn btn-default" />
     </form>
 
     <hr>
     {{ form_start(delete_form) }}
         {{ form_errors(delete_form) }}
-        <a href="{{ path('admin_user') }}" class="btn btn-default">Back to the list</a>
+        <a href="{{ path('admin_user') }}" class="btn btn-default">{{ 'user.back_to_list' | trans }}</a>
         {{ form_widget(delete_form.submit, { 'attr': {'class': 'btn btn-danger'} }) }}
         {{ form_rest(delete_form) }}
     {{ form_start(delete_form) }}
