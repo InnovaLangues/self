@@ -114,7 +114,7 @@ $(document).ready(function() {
             var limit = Number(videoContainer.attr("data-limit"));
             var listened = $("#listening_number").html();
 
-            if(((listened === null || listened <= limit) && listened > 0 ) && !play_in_progress) {
+            if(((listened === null || listened <= limit) && listened > 0 || limit == 0) && !play_in_progress) {
 
                 var context = getSessionContextListenNumber();
                 if (context > 0 || questionnaireHasContext == false) {

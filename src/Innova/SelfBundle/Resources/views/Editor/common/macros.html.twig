@@ -93,10 +93,10 @@
         {% if found == false %}
             <tr>
                 <td>
-                    {{ macros.displayMedia(test, questionnaire, proposition.media) }}
+                    <span class="app-delete-distractor glyphicon glyphicon-remove btn btn-default btn-sm vertical-middle pull-right" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Supprimer le distracteur" title=""></span>
                 </td>
                 <td>
-                    <span class="app-delete-distractor glyphicon glyphicon-remove btn btn-default btn-sm vertical-middle" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Supprimer le distracteur" title=""></span>
+                    {{ macros.displayMedia(test, questionnaire, proposition.media) }}
                 </td>
             </tr>
         {% endif %}
