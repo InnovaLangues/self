@@ -3,16 +3,24 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Choix d'un type de média</h4>
+				<h4 class="modal-title">{{ 'editor.media.choose' | trans }}</h4>
 			</div>
 			<div class="modal-body">
-				<span media-type="audio" class="btn btn-default glyphicon glyphicon-headphones media-type-choice"> Audio</span>
-				<span media-type="image" class="btn btn-default glyphicon glyphicon-picture media-type-choice"> Image</span>
-				<span media-type="video" class="btn btn-default glyphicon glyphicon-facetime-video media-type-choice"> Video</span>
-				<span media-type="texte" class="btn btn-default glyphicon glyphicon glyphicon-align-center media-type-choice"> Texte</span>
+				<span media-type="audio" class="btn btn-default glyphicon glyphicon-headphones media-type-choice"> 
+					{{ 'editor.media.audio' | trans }}
+				</span>
+				<span media-type="image" class="btn btn-default glyphicon glyphicon-picture media-type-choice"> 
+					{{ 'editor.media.picture' | trans }}
+				</span>
+				<span media-type="video" class="btn btn-default glyphicon glyphicon-facetime-video media-type-choice"> 
+					{{ 'editor.media.video' | trans }}
+				</span>
+				<span media-type="texte" class="btn btn-default glyphicon glyphicon glyphicon-align-center media-type-choice"> 
+					{{ 'editor.media.text' | trans }}
+				</span>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
 			</div>
 		</div>
 	</div>
@@ -24,14 +32,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Texte</h4>
+				<h4 class="modal-title">{{ 'editor.media.text' | trans }}</h4>
 			</div>
 			<div class="modal-body">
 				<textarea id="create-text-textarea" class="tinymce"></textarea>
 			</div>
 			<div class="modal-footer">
-				<button id="create-text-btn" type="button" class="btn btn-primary">Save</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button id="create-text-btn" type="button" class="btn btn-primary">{{ 'generic.save' | trans }}</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
 			</div>
 		</div>
 	</div>
@@ -43,23 +51,23 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Image</h4>
+				<h4 class="modal-title">{{ 'editor.media.picture' | trans }}</h4>
 			</div>
 			<div class="modal-body">
 				<form id="" enctype="multipart/form-data" >
-					<label for="theme">Nom</label>
+					<label for="theme">{{ 'editor.media.name' | trans }}</label>
     				<input type="text" class="form-control" id="image-name" value=""/>
-    				<label for="theme">Description</label>
+    				<label for="theme">{{ 'editor.media.description' | trans }}</label>
     				<input type="text" class="form-control" id="image-description" value=""/>
 
-    				<label for="image-file">Fichier</label>
+    				<label for="image-file">{{ 'editor.media.file' | trans }}</label>
 					<input id="image-file" name="userfile" type="file"/>
 					<input type="hidden" id="image-url" value=""/>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button id="create-image-btn" type="button" disabled class="btn btn-primary">Save</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button id="create-image-btn" type="button" disabled class="btn btn-primary">{{ 'generic.save' | trans }}</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
 			</div>
 		</div>
 	</div>
@@ -72,23 +80,23 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Video</h4>
+				<h4 class="modal-title">{{ 'editor.media.video' | trans }}</h4>
 			</div>
 			<div class="modal-body">
 				<form id="" enctype="multipart/form-data" >
-					<label for="video-name">Nom</label>
+					<label for="video-name">{{ 'editor.media.name' | trans }}</label>
     				<input type="text" class="form-control" id="video-name" value=""/>
-    				<label for="video-description">Description</label>
+    				<label for="video-description">{{ 'editor.media.description' | trans }}</label>
     				<input type="text" class="form-control" id="video-description" value=""/>
 
-    				<label for="video-file">Fichier</label>
+    				<label for="video-file">{{ 'editor.media.file' | trans }}</label>
 					<input id="video-file" name="userfile" type="file"/>
 					<input type="hidden" id="video-url" value=""/>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button id="create-video-btn" type="button" disabled class="btn btn-primary">Save</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button id="create-video-btn" type="button" disabled class="btn btn-primary">{{ 'generic.save' | trans }}</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
 			</div>
 		</div>
 	</div>
@@ -100,23 +108,23 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Fichier audio</h4>
+				<h4 class="modal-title">{{ 'editor.media.audio' | trans }}</h4>
 			</div>
 			<div class="modal-body">
 				<form id="" enctype="multipart/form-data" >
-					<label for="audio-name">Nom</label>
+					<label for="audio-name">{{ 'editor.media.name' | trans }}</label>
     				<input type="text" class="form-control" id="audio-name" value=""/>
-    				<label for="audio-description">Description</label>
+    				<label for="audio-description">{{ 'editor.media.description' | trans }}</label>
     				<input type="text" class="form-control" id="audio-description" value=""/>
 
-    				<label for="audio-file">Fichier</label>
+    				<label for="audio-file">{{ 'editor.media.file' | trans }}</label>
 					<input id="audio-file" name="userfile" type="file"/>
 					<input type="hidden" id="audio-url" value=""/>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button id="create-audio-btn" type="button" disabled class="btn btn-primary">Save</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button id="create-audio-btn" type="button" disabled class="btn btn-primary">{{ 'generic.save' | trans }}</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
 			</div>
 		</div>
 	</div>

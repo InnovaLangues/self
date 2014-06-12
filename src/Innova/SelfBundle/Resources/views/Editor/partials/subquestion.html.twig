@@ -8,7 +8,7 @@
         {% else %}
             <span class="btn btn-default btn-xs add-amorce" data-subquestion-id="{{ subquestion.id }}">
                 <span class="glyphicon glyphicon-plus"></span> 
-                ajouter une consigne / question / amorce
+                {{ 'editor.subquestion.add_instruction' | trans }}
             </span>
         {% endif %}
 
@@ -21,14 +21,14 @@
             {% endfor %}
             <tr>
                 <td style="border: none;" colspan="3">
-                    <span id="create-proposition" data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs">Ajouter une proposition</span>
+                    <span id="create-proposition" data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs">{{ 'editor.proposition.add' | trans }}</span>
                 </td>
             </tr>
         </table>
 
         <span class="btn btn-default btn-xs delete-subquestion pull-right" data-subquestion-id="{{ subquestion.id }}">
             <span class="glyphicon glyphicon-remove"></span> 
-            Supprimer l'onglet
+            {{ 'editor.subquestion.remove' | trans }}
         </span>
     </div>
 </div>

@@ -32,20 +32,24 @@
 
 {% macro isRightAnswer(proposition) %}
     {% if proposition.rightAnswer == true %}
-        <button rel="tooltip" data-original-title="Changer en mauvaise réponse" type="button" class="btn btn-success btn-xs make-it-right-or-wrong vertical-middle" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Passer en mauvaise réponse">Bonne réponse</button>
+        <button type="button" class="btn btn-success btn-xs make-it-right-or-wrong vertical-middle" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.proposition.make_it_wrong' | trans }}">
+            {{ 'editor.proposition.right' | trans }}
+        </button>
     {% else %}
-        <button rel="tooltip" data-original-title="Changer en bonne réponse" type="button" class="btn btn-danger btn-xs make-it-right-or-wrong vertical-middle" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Passer en bonne réponse">Mauvaise réponse</button>
+        <button type="button" class="btn btn-danger btn-xs make-it-right-or-wrong vertical-middle" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.proposition.make_it_right' | trans }}">
+            {{ 'editor.proposition.wrong' | trans }}
+        </button>
     {% endif %}
 {% endmacro %}
 
 {% macro deleteProposition(proposition) %}
-    <button rel="tooltip" data-original-title="Supprimer la proposition" class="btn btn-default btn-xs delete-proposition vertical-middle" data-subquestion-id="{{ proposition.subquestion.id }}" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Supprimer la proposition">
+    <button class="btn btn-default btn-xs delete-proposition vertical-middle" data-subquestion-id="{{ proposition.subquestion.id }}" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.proposition.remove' | trans }}">
         <span class="glyphicon glyphicon-remove "></span>
     </button>
 {% endmacro %}
 
 {% macro deleteAmorce(subquestion) %}
-    <button rel="tooltip" data-original-title="Supprimer l'amorce" class="btn btn-default btn-xs delete-amorce vertical-middle" data-subquestion-id="{{ subquestion.id }}">
+    <button rel="tooltip" data-original-title="{{ 'editor.subquestion.remove_instruction' | trans }}" class="btn btn-default btn-xs delete-amorce vertical-middle" data-subquestion-id="{{ subquestion.id }}">
         <span class="glyphicon glyphicon-remove"></span>
     </button>
 {% endmacro %}
@@ -57,7 +61,7 @@
         {% set limit = limits.listeningLimit %}
         {% endif %}
     {% endfor %}
-     <input size="2" style="color:black;" value="{{ limit }}" class="media-listening-limit vertical-middle" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern='[0-9]{1,3}' data-toggle="tooltip" data-original-title="Définir le nombre d'écoutes (0 = pas de limite)" />
+     <input size="2" style="color:black;" value="{{ limit }}" class="media-listening-limit vertical-middle" data-media-id="{{ media.id }}" type="number" min="0" step="1" pattern='[0-9]{1,3}' data-toggle="tooltip" data-original-title="{{ 'editor.media.listening_limit' | trans }}" />
 {% endmacro %}
 
 {% macro displayRightAnswerAPP(test, questionnaire, subquestion) %}
@@ -71,7 +75,7 @@
     {% endfor %}
 
     {% if HasAnAnswer == false %}
-        <span class="btn btn-default btn-xs app-add-answer vertical-middle" data-subquestion-id="{{ subquestion.id }}">Ajouter réponse</span>
+        <span class="btn btn-default btn-xs app-add-answer vertical-middle" data-subquestion-id="{{ subquestion.id }}">{{ 'editor.app.add_answer' | trans }}</span>
     {% endif %}
 {% endmacro %}
 
@@ -93,7 +97,7 @@
         {% if found == false %}
             <tr>
                 <td>
-                    <span class="app-delete-distractor glyphicon glyphicon-remove btn btn-default btn-sm vertical-middle pull-right" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="Supprimer le distracteur" title=""></span>
+                    <span class="app-delete-distractor glyphicon glyphicon-remove btn btn-default btn-sm vertical-middle pull-right" data-proposition-id="{{ proposition.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.app.remove_distractor' | trans }}" title=""></span>
                 </td>
                 <td>
                     {{ macros.displayMedia(test, questionnaire, proposition.media) }}

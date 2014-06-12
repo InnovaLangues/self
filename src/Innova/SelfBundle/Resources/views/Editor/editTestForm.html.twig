@@ -3,20 +3,20 @@
 {% block body -%}
 
 <a class="btn btn-default" href="{{ path('editor_tests_show') }}">
-    <span class="glyphicon glyphicon-chevron-left"></span> Revenir à la liste des tests
+    <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
 </a>
 
 <hr/>
 
-<h3>Edition d'un test</h3>
+<h3>{{ 'editor.test.edition' | trans }}</h3>
 <form role="form" action="{{ path('editor_test_edit', { 'testId': test.id }) }}" method="POST"> 
     <div class="form-group">
-        <label for="test-name">Nom du test</label>
+        <label for="test-name">{{ 'editor.test.name' | trans }}</label>
         <input value="{{ test.name }}" id="test-name" type="text" class="form-control" name="test-name" required />
     </div>
 
     <div class="form-group">
-        <label for="test-language">Langue</label>
+        <label for="test-language">{{ 'editor.test.language' | trans }}</label>
         <select id="test-language" class="form-control" name="test-language" required />
             {% for language in languages %}
                 <option {% if test.language == language %}selected{% endif %} value="{{ language.id }}">{{ language.name }}</option>
@@ -25,13 +25,13 @@
     </div>
 
     <div class="form-group">
-        <label for="test-display">Actif ?
+        <label for="test-display">{{ 'editor.test.is_active' | trans }} ?
             <input {% if test.actif == true %}checked{% endif %} id="test-display" value="actif" type="checkbox" class="form-control" name="test-display" />
         </label>
     </div>
 
     <div class="form-group">
-        <input type="submit" value="Enregistrer les modifications" class="btn btn-primary pull-right">
+        <input type="submit" value="{{ 'generic.save' | trans }}" class="btn btn-primary pull-right">
     </div>
 </form>
 

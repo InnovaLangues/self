@@ -3,19 +3,19 @@
 {% block body -%}
 
 <a class="btn btn-primary btn-sm" href="{{ path('editor_test_create_form') }}">
-    <span class="glyphicon glyphicon-plus"></span> Créer un test
+    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.test.create' | trans }}
 </a>
 
 <hr/>
 
-<h3>Liste des tests</h3>
+<h3>{{ 'editor.test.list' | trans }}</h3>
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Nom</th>
-            <th>Langue</th>
-            <th>Nombre de tâches</th>
-            <th>Actif</th>
+            <th>{{ 'editor.test.name' | trans }}</th>
+            <th>{{ 'editor.test.language' | trans }}</th>
+            <th>{{ 'editor.task.count' | trans }}</th>
+            <th>{{ 'editor.test.is_active' | trans }}</th>
             <th></th>
         </tr>
     </thead>
@@ -33,17 +33,17 @@
             </td>
             <td>
                 {% if test.actif %} 
-                    oui 
+                    {{ 'generic.yes' | trans }}
                 {% else %}
-                    non
+                    {{ 'generic.no' | trans }}
                 {% endif %}
             </td>
             <td class="text-right">
                 <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_form', { 'testId': test.id }) }}">
-                    <span class="glyphicon glyphicon-edit"></span> Editer
+                    <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
                 </a>
                 <a class="btn btn-default btn-sm" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
-                    <span class="glyphicon glyphicon-plus"></span> Gérer des tâches
+                    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.manage' | trans }}
                 </a>
             </td>
         </tr>

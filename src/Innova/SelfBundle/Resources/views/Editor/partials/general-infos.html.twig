@@ -1,18 +1,18 @@
 <div class="panel panel-default">
-    <div class="panel-heading">Informations générales</div>
+    <div class="panel-heading">{{ 'editor.questionnaire.general_infos' | trans }}</div>
     <div class="panel-body">
         <form class="form-inline" role="form">
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="theme">Titre</label>
+                    <label for="theme">{{ 'editor.questionnaire.title' | trans }}</label>
                     <input type="text" class="form-control" id="theme" value="{{ questionnaire.theme }}"/>
                 </div>
             </div>
             
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="skill">Compétences</label>
+                    <label for="skill">{{ 'questionnaire.field.skill' | trans }}</label>
                     {% set skills = ["-", "CO", "CE"] %}
                     <select id="skill" class="form-control">
                         {% for skill in skills %}
@@ -43,7 +43,7 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="typology">Typologie</label>
+                    <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
                     {% set typologies = ["-", "TVF", "TQRM", "TQRU", "TVFNM", "APPAA", "APPAI", "APPTT"] %}
                     <select id="typology" class="form-control">
                         {% for typology in typologies %}
@@ -57,7 +57,7 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="orderfix">Ordre fixe ?</label>
+                    <label for="orderfix">{{ 'editor.questionnaire.fixed_order' | trans }} ?</label>
                     <input id="fixed-order" type="checkbox" class="form-control" {% if questionnaire.fixedOrder == true %}checked{% endif %}/>
                 </div>
             </div>

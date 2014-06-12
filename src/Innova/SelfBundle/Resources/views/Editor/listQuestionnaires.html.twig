@@ -3,10 +3,10 @@
 {% block body -%}
 
 <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
-    <span class="glyphicon glyphicon-chevron-left"></span> Retourner à la liste des tests
+    <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
 </a>
 <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_create', { 'testId': test.id }) }}">
-    <span class="glyphicon glyphicon-plus"></span> Créer une tâche et l'ajouter
+    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
 </a>
 {#
 <a class="btn btn-info btn-sm" href="{{ path('test_edit', { 'testId': test.id }) }}">
@@ -15,7 +15,7 @@
 #}
 <hr/>
 
-<h3>Liste des tâches pour le test <strong>{{ test.name }}</strong></h3>
+<h3>{{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}</h3>
 
 <ul class="list-group" id="sortable">
 {% for order in orders %}
@@ -24,10 +24,10 @@
 
         <span class="buttons" style="position:absolute;right:5px;top:5px">
             <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'testId': order.test.id, 'questionnaireId': order.questionnaire.id }) }}">
-                <span class="glyphicon glyphicon-edit"></span> Editer
+                <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
             </a>
             <a class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
-                <span class="glyphicon glyphicon-remove"></span> Supprimer
+                <span class="glyphicon glyphicon-remove"></span> {{ 'generic.remove' | trans }}
             </a>
         </span>
     </li>
@@ -35,7 +35,7 @@
 </ul>
 
 {% if orders | length > 0 %}
-    <span class="btn btn-default btn-sm pull-right" id="save-order">Sauvegarder l'ordre des tâches</span>
+    <span class="btn btn-default btn-sm pull-right" id="save-order">{{ 'editor.task.save_order' | trans }}</span>
 {% endif %}
 
 <div id="delete-task-modal" class="modal fade">
@@ -43,16 +43,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Suppression d'une tâche</h4>
+                <h4 class="modal-title">{{ 'editor.task.delete' | trans }}</h4>
             </div>
             <div class="modal-body">
-                Êtes-vous sûr de vouloir supprimer cette tâche de ce test ?
+                {{ 'editor.task.delete_confirm' | trans }}
                 <input id="test-id" type="hidden" value="{{ test.id }}"/>
                 <input id="questionnaire-id" type="hidden" value=""/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
-                <button type="button" id="delete-task-confirmation" class="btn btn-primary">Oui</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'editor.task.delete_confirm_no' | trans }}</button>
+                <button type="button" id="delete-task-confirmation" class="btn btn-primary">{{ 'editor.task.delete_confirm_yes' | trans }}</button>
             </div>
         </div>
     </div>

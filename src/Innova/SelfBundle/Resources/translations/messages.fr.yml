@@ -13,6 +13,13 @@ generic:
     boolTrue: "True"
     boolFalse: "False"
     chooseCorrectAnswer: Sélectionner la réponse correcte
+    edit: Editer
+    remove: Supprimer
+    add: Ajouter
+    close: Fermer
+    save: Sauvegarder
+    yes: Oui
+    no: Non
 
 user:
     singular: Utilisateur
@@ -46,10 +53,6 @@ test:
     action:
         start: Démarrer
         start_test: Démarrer ce test
-    field:
-        instruction: Consigne
-        context: Contexte
-        dialogue: Dialogue
 
 trace:
     action:
@@ -82,12 +85,12 @@ questionnaire:
             success: Votre questionnaire a bien été supprimé
             error: Votre questionnaire n'a pas été supprimé
     field:
-        theme: Theme
+        theme: Thème
         listeningLimit: Temps d'écoute limite
         dialogue: Dialogue
-        mediaInstruction: Consigne audio
-        mediaContext: Contexte audio
-        mediaText: Item audio
+        mediaInstruction: Consigne
+        mediaContext: Contexte
+        mediaText: Objet de la question
         sourceType: Type de source
         receptionType: Type de réception
         functionType: Type de fonction
@@ -102,6 +105,74 @@ questionnaire:
         duration: Durée
         domain: Domaine
         support: Support
-        flow: Flow
+        flow: Débit
         focus: Focus
-        skill: Niveau
+        skill: Compétence
+
+editor:
+    test:
+        create: Créer un test
+        list: Liste des tests
+        name: Nom du test
+        language: Langue
+        is_active: Actif
+        edition: Edition d'un test
+        edit: Editer
+        back_to_list: Revenir à la liste des tests
+        new: Nouveau test
+    task:
+        back_to_list: Retour à la liste des tâches
+        list: Liste des tâches pour le test <strong>%testName%</strong>
+        manage: Gérer les tâches
+        count: Nombre de tâches
+        create: Créer une tâche
+        save_order: Sauvegarder l'ordre des tâches
+        delete: Suppression d'une tâche
+        delete_confirm: Êtes-vous sûr de vouloir supprimer cette tâche de ce test ?
+        delete_confirm_yes: Oui, supprimer la tâche
+        delete_confirm_no: Non
+    questionnaire:
+        general_infos: Informations générales
+        title: Titre
+        typology: Typologie
+        fixed_order: Ordre fixe
+        context: Contexte
+        question_object: Objet de la question
+    subquestion:
+        subquestions: Items
+        add: Ajouter un item
+        remove: Supprimer l'item
+        add_instruction: Ajouter une consigne / question / amorce
+        remove_instruction: Supprimer la consigne / question / amorce
+    proposition:
+        add: Ajouter une proposition
+        remove: Supprimer la proposition
+        right: Bonne réponse
+        wrong: Mauvaise réponse
+        make_it_right: Passer en bonne réponse
+        make_it_wrong: Passer en mauvaise réponse
+    media:
+        choose: Choix d'un type de média
+        audio: Audio
+        picture: Image
+        video: Vidéo
+        text: Texte
+        listening_limit: Définir le nombre d'écoutes (0 = illimité)
+        name: Nom
+        description: Description
+        file: Fichier
+    app:
+        add_pair: Ajouter une paire
+        remove_pair: Supprimer la paire
+        add_distractor: Ajouter un distracteur
+        remove_distractor: Supprimer le distracteur
+        add_media: Ajouter un media
+        distractors: Distracteurs
+        proposition: Proposition
+        associated_answer: Réponse associée
+        add_answer: Ajouter une réponse
+
+
+
+
+

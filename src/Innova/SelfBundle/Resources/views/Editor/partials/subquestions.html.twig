@@ -7,7 +7,7 @@
                 {% set typoPrefix = questionnaire.questions[0].typology.name | slice(0,3) %}
                 {# {% if ( typoPrefix != "APP") or (typoPrefix == "APP" and questionnaire.questions[0].subquestions | length < 1)%} #}
                 {% if typoPrefix != "APP" %}
-                    <span id="create-subquestion" class="btn btn-default btn-xs pull-right">Ajouter un item</span>
+                    <span id="create-subquestion" class="btn btn-default btn-xs pull-right">{{ 'editor.subquestion.add' | trans }}</span>
                 {% endif %}
         </div>
         <div class="panel-body">
