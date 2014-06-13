@@ -3,12 +3,9 @@
 namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Innova\SelfBundle\Entity\Media;
-use Innova\SelfBundle\Entity\Subquestion;
 /**
  * Main controller.
  *
@@ -32,7 +29,7 @@ class UploadController extends Controller
             $newName = uniqid(). "." . $ext;
 
             $directory = __DIR__.'/../../../../../web/upload/media/';
-            $file = $uploadedFile->move($directory, $newName);
+            $uploadedFile->move($directory, $newName);
         }
 
         return new JsonResponse(
@@ -58,7 +55,7 @@ class UploadController extends Controller
 
             //convertir en ogg
             $directory = __DIR__.'/../../../../../web/upload/media/';
-            $file = $uploadedFile->move($directory, $newName.".".$ext);
+            $uploadedFile->move($directory, $newName.".".$ext);
         }
 
         return new JsonResponse(
@@ -81,11 +78,12 @@ class UploadController extends Controller
             $originalName = $uploadedFile->getClientOriginalName();
             $ext = pathinfo($originalName, PATHINFO_EXTENSION);
 
-            // tester si ext == webm
-            $newName = uniqid();
+            if ($ext === "webm") {
+                $newName = uniqid();
 
-            $directory = __DIR__.'/../../../../../web/upload/media/';
-            $file = $uploadedFile->move($directory, $newName);
+                $directory = __DIR__.'/../../../../../web/upload/media/';
+                $uploadedFile->move($directory, $newName);
+            }
         }
 
         return new JsonResponse(

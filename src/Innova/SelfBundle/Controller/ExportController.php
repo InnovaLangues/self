@@ -55,9 +55,7 @@ class ExportController
         $em = $this->entityManager;
 
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-        echo "tests : " . $tests[0];
-//        $skill = $tests[0].questionnaires[0].skill.name;
-//        echo "nivo : " . $skill;
+
         return array(
             'tests' => $tests,
         );

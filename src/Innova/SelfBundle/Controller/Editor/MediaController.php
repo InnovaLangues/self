@@ -2,16 +2,12 @@
 
 namespace Innova\SelfBundle\Controller\Editor;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Innova\SelfBundle\Entity\Test;
-use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\MediaLimit;
 use Innova\SelfBundle\Entity\Media;
@@ -210,7 +206,6 @@ class MediaController extends Controller
                     $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('test'=> $test, 'questionnaire' => $questionnaire));
                 } else {
                     $entity =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
-                    $subquestion = $entity->getSubquestion();
                     $em->remove($entity);
                     $em->flush();
 
@@ -259,7 +254,6 @@ class MediaController extends Controller
 
     private function createAppFakeAnswer($currentProposition)
     {
-        $em = $this->getDoctrine()->getManager();
 
         $currentSubquestion = $currentProposition->getSubquestion();
         $question = $currentSubquestion->getQuestion();

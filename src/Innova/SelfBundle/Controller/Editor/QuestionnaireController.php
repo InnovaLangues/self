@@ -4,16 +4,13 @@ namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Question;
-use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\OrderQuestionnaireTest;
-use Innova\SelfBundle\Entity\Media;
+
 /**
  * Questionnaire controller.
  *
