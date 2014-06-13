@@ -131,9 +131,21 @@ editor:
 
 player:
     listen_context: Il vous faut d'abord écouter le contexte.
+    fullscreen: Plein écran
+    count_task: sur
+    listening_single: écoute
+    listening_plural: écoutes
+    tooltip:
+        question_object: Objet de la question
+        proposition: Proposition de réponse
+        enlarge: Cliquer pour agrandir
+        context: Contexte
+        question: Question
+        intruction: Consigne
 
 
 trace:
+    test_continue: Continuer le test
     action:
         evaluate: Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
     field:

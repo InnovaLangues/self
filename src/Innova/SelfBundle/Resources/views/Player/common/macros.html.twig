@@ -1,7 +1,8 @@
 {% macro inputs(subquestion, proposition) %}
-    {% set type = "checkbox" %}
     {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVFNM" or subquestion.typology.name == "TVF" %}
         {% set type = "radio" %}
+    {% else %}
+        {% set type = "checkbox" %}
     {% endif %}
     <input class="proposition-input" type="{{ type }}" name="{{ subquestion.id }}[]" id="input-proposition{{ proposition.id }}" value="{{ proposition.id }}" required />
 {% endmacro %}
@@ -31,7 +32,8 @@
 
 {% macro image(id, media, tooltip, width) %}
     {% import _self as macros %}
-    <img data-toggle="modal" width="{{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url  }}" />
+    {# {{ macros.modale(id, media, tooltip) }} #}
+    <img data-toggle="modal" width={{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
 {% endmacro %}
 
 {% macro video(id, media, limitAudio) %}
@@ -49,6 +51,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- <span class="btn btn-default" id="full-screen">{{ 'fullscreen.fullscren' | trans }}</span> -->
     </div>
 {% endmacro %}
 
@@ -56,25 +60,32 @@
     <div id="modal-{{ id }}" class="modal fade modales">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
+            <!--
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ title }}</h4>
+                </div>
+            -->
                 <div class="modal-body">
-                    {% if media.mediaType.name == "image" %}
-                        <img src="{{ asset('upload/media/') ~ media.url }}"/>
-                    {% elseif media.mediaType.name == "texte" %}
-                        <div id="{{ id }}"> {{ media.description }} </div>
-                    {% elseif media.mediaType.name == "video" %}
-                        <video id="{{ id }}">
-                            <source src="{{ asset('upload/media/') ~ media.url }}" >
-                            Your browser does not support the video tag.
-                        </video>
-                    {% endif %}
+                {% if media.mediaType.name == "image" %}
+                    <img src="{{ asset('upload/media/') ~ media.url }}"/>
+                {% elseif media.mediaType.name == "texte" %}
+                    <div id="{{ id }}"> {{ media.description }} </div>
+                {% elseif media.mediaType.name == "video" %}
+                    <video id="{{ id }}">
+                        <source src="{{ asset('upload/media/') ~ media.url }}" >
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
                 </div>
             </div>
         </div>
     </div>
 {% endmacro %}
+
 
 {% macro translateVF(description, language) %}
     {% set languageShorten = language | slice(0, 2) | lower %}
@@ -86,6 +97,6 @@
     {% elseif description == "ND" %}
        {{ 'generic.boolND' | trans({}, "messages", languageShorten) }}
     {% else %}
-        {{ description|raw }}
+            {{ description|raw }}
     {% endif %}
 {% endmacro %}

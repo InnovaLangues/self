@@ -9,11 +9,11 @@
             {% elseif mediaType == "audio" %}
                     {{ macros.audio(proposition.id, proposition.media, "audio.png", 100, 0, "") }}
             {% elseif mediaType == "image" %}
-                {{ macros.image(proposition.media.id, proposition.media, "Cliquez pour agrandir", "") }}
+                {{ macros.image(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans , "") }}
             {% endif %}
         </div>
         {% if mediaType == "image" %}
-            {{ macros.modale(proposition.media.id, proposition.media, "Cliquez pour agrandir") }}
+            {{ macros.modale(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans) }}
         {% endif %}
     </div>
 </div>
