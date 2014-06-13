@@ -2,7 +2,7 @@
 
 {% block body -%}
 
-  	<h3>Traces</h3>
+  	<h3>{{ 'import.traces' | trans }}</h3>
 
     <!-- Dans le controller "Import", un tableau de traces se remplit au fur et à mesure. -->
     <!-- Une fois dans le vue, j'affiche les traces en parcourant ce tableau. -->
@@ -11,7 +11,7 @@
     {% for i, tabTrace in tabTraces %}
         <li>{{ tabTraces[i] }}</li>
     {% endfor %}
-
-    <h3>Traitement du fichier <u>{{ csvName }}</u> terminé</h3>
+    
+    <h3>{{ 'import.finished' | trans({'%fileName%': csvName}) | raw }}</h3>
 
 {% endblock %}

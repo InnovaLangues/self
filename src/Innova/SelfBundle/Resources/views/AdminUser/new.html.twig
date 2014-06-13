@@ -1,21 +1,21 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Test creation</h1>
+    <h1>{{ 'user.creation' | trans }}</h1>
 
     {{ form_start(form) }}
-    	<div class="form-group">
-	    	<label for="username">{{ form_label(form.username) }}</label>
-    		{{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
-    	</div>
+	<div class="form-group">
+    	<label for="username">{{ form_label(form.username) }}</label>
+		{{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
+	</div>
 
-    	{% do form.submit.setRendered %}
+    {% do form.submit.setRendered %}
 
-    	{{ form_rest(form) }}
+    {{ form_rest(form) }}
 
-		<button type="submit" class="btn btn-primary">Create</button>
-    	<a href="{{ path('test') }}" class="btn btn-default">Back to the list</a>
+	<button type="submit" class="btn btn-primary">{{ 'generic.create' | trans }}</button>
+    <a href="{{ path('test') }}" class="btn btn-default">{{ 'user.list' | trans }}</a>
+    
     {{ form_end(form) }}
-
 
 {% endblock %}

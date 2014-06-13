@@ -15,7 +15,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">La liste des tests</h3>
+                <h3 class="panel-title">{{ 'test.available' | trans }}</h3>
             </div>
             <div class="panel-body">
                 {% for i, test in tests if test.actif == true %}
@@ -52,7 +52,7 @@
     {% else %}
         <div class="panel panel-default ">
             <div class="panel-body">
-                <p class="alert alert-danger">Vous êtes inscrit à aucun test. Contactez la personne en charge de la passation puis rechargez cette page en cliquant <a href="{{ path('show_tests')}}">ici</a> </p>
+                <p class="alert alert-danger">{{ 'test.no_registered' | trans }}</p>
             </div>
         </div>
     {% endif %}
@@ -60,11 +60,10 @@
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/showTests.js") }}"></script>
-            <!-- Jquery first then Bootstrap call -->
-            <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-            <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-            <script src="{{ asset('bundles/innovaself/js/main.js') }}"></script>
-
+    <!-- Jquery first then Bootstrap call -->
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script src="{{ asset('bundles/innovaself/js/main.js') }}"></script>
 {% endblock %}
