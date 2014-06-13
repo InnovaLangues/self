@@ -59,7 +59,7 @@ class QuestionnaireController extends Controller
     /**
      * Finds and displays a Questionnaire entity.
      *
-     * @Route("/test/{testId}/questionnaire/{questionnaireId}", name="editor_questionnaire_show", requirements={"questionnaireId" = "\d+"})
+     * @Route("/test/{testId}/questionnaire/{questionnaireId}", name="editor_questionnaire_show", options={"expose"=true})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:index.html.twig")
      */
@@ -84,14 +84,18 @@ class QuestionnaireController extends Controller
     /**
      * Creates a new Questionnaire entity.
      *
-     * @Route("/test/{testId}/questionnaire/create", name="editor_questionnaire_create")
-     * @Method("GET")
+     * @Route("questionnaire/create", name="editor_questionnaire_create", options={"expose"=true})
+     * @Method("POST")
      * @Template("")
      */
-    public function createQuestionnaireAction($testId)
+    public function createQuestionnaireAction()
     {
 
         $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+
+
+        $testId = $request->request->get('testId');
 
         $questionnaire = new Questionnaire();
         $questionnaire->setTheme("");
@@ -116,13 +120,12 @@ class QuestionnaireController extends Controller
 
         $em->flush();
 
-        return $this->redirect($this->generateUrl(
-                            'editor_questionnaire_show',
-                            array(
-                                'testId' => $testId,
-                                'questionnaireId' => $questionnaire->getId()
-                            )
-                ));
+        return new JsonResponse(
+            array(
+                'questionnaireId' =>  $questionnaire->getId(),
+                'testId' => $test->getId()
+            )
+        );
 
     }
 

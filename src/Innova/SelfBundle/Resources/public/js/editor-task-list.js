@@ -16,6 +16,11 @@ $( "body" ).on( "click", '#delete-task-confirmation', function() {
     deleteTask();
 });
 
+$( "body" ).on( "click", '#create-task', function() {
+    createTask();
+});
+
+
 function saveOrder(){
     var newOrder = new Array();
     var testId = "";
@@ -59,5 +64,22 @@ function deleteTask(){
         $("#task-"+questionnaireId).remove();
         saveOrder();
         $('#delete-task-modal').modal('hide');
+    });
+}
+
+function createTask(){
+    var testId = $("#test-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_create'),
+        type: 'POST',
+        dataType: 'json',
+        data: 
+        { 
+            testId: testId,
+        }
+    })
+    .done(function(data) {
+        window.location = Routing.generate('editor_questionnaire_show', {'testId': data.testId, 'questionnaireId': data.questionnaireId });
     });
 }
