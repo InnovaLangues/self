@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+  	<h3>Le fichier a été généré</h3>
+
+  	<h3><a href="{{ asset(urlCSVRelativeToWeb) ~ csvName }}">Télécharger le fichier au format CSV</a></h3>
+
+    <h3>Liste des fichiers générés</h3>
+
+    <h4>{{ nbFile }} fichier(s) dans le dossier</h4>
+
+  	{# Files export CSV list  #}
+		{% for fileList in fileList %}
+			<h5><a href="{{ asset(urlCSVRelativeToWeb) ~ fileList }}">{{ fileList }}</a></h5>
+    {% endfor %}
+
+{% endblock %}

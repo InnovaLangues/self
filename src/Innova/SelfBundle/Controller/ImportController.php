@@ -2,8 +2,6 @@
 
 namespace Innova\SelfBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -45,7 +43,7 @@ class ImportController
      *     name = "csv-import",
      *     requirements={"language" = "en|it", "level" = "a1|b1|b2"}
      * )
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function importCsvSQLAction($language, $level)
@@ -85,9 +83,10 @@ class ImportController
 		// Tableau de trace.
         $nbTrace = 0;
         $tabTrace = array();
-// Traitement des fichiers reçus
-// DEBUT
-//
+
+        // Traitement des fichiers reçus
+        // DEBUT
+        //
 
         // Jusqu'à ce jour, il fallait à chaque fois supprimer tous les répertoires
         // avant d'exécuter le traitement. Ce qui n'était pas optimum.
@@ -372,8 +371,8 @@ class ImportController
             }
         }
 
-// FIN
-//
+        // FIN
+        //
 
         $nbTrace++;
         $tabTrace[$nbTrace] = "************  TRAITEMENT CSV ************";
@@ -532,7 +531,7 @@ class ImportController
                             $this->appatProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
                             break;
                         case "QRU_I";
-                            $this->qruiProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
+                            $this->qruiProcess($typo, $questionnaire, $data, $dir2copy, $dir_paste);
                             break;
                         case "APPAA";
                             $this->appaaProcess($typo, $questionnaire, $data[11], $data, $dir2copy, $dir_paste);
@@ -1072,7 +1071,6 @@ class ImportController
             $Vrai = "VRAI";
 
             $tab = explode("#", $data[12]);
-            $type = $tab[0];
 
             if ($data[12] != "VF") {
                 $vrai = $tab[1];
@@ -1151,7 +1149,6 @@ class ImportController
 
             // Créer une occurrence dans la table "Proposition"
             $indice = 10+(2*$i);
-            //$rightAnswer = $data[$indice-1];
             $rightAnswer = $data[$indice+1]; // Changement 14/02/2014 car décalage du fichier.
 
                 $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
@@ -1231,9 +1228,6 @@ class ImportController
             // Voir le traitement de l'amorce // AB.
             $em->persist($subQuestion);
 
-            // Créer une occurrence dans la table "Proposition"
-            $indice = 11+(2*$i);
-
             $nbMedias = count($medias); #80
             for ($j=0; $j < $nbMedias; $j++)
             {
@@ -1302,7 +1296,7 @@ class ImportController
      * qruiProcess function
      *
      */
-    private function qruiProcess($typo, $questionnaire, $nbItems, $data, $dir2copy, $dir_paste)
+    private function qruiProcess($typo, $questionnaire, $data, $dir2copy, $dir_paste)
     {
         $em = $this->entityManager;
         // Créer une occurrence dans la table "Question"

@@ -2,14 +2,14 @@
     <img width="70px" src="{{ asset("bundles/innovaself/images/") }}oignon.png" rel="tooltip" data-original-title="{{ 'player.tooltip.question' | trans }}" />
     {% if subquestion.media is not null %}
         <div class="question-CE-text">
-            {% autoescape 'html' %}
-                {{ subquestion.media.description | raw }}
+            {% autoescape %}
+                {{ subquestion.media.description|raw }}
             {% endautoescape %}
         </div>
     {% elseif questionnaire.mediaInstruction is not null %}
         <div class="question-CE-text">
-            {% autoescape 'html' %}
-                {{ questionnaire.mediaInstruction.description | raw }}
+            {% autoescape %}
+                {{ questionnaire.mediaInstruction.description|raw }}
             {% endautoescape %}
         </div>
     {% endif %}

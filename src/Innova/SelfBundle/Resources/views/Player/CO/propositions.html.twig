@@ -1,8 +1,8 @@
 <!-- Avril 2014 : affichage en ordre fixe ou pas. EV. -->
+{% set propositions = subquestion.propositions | shuffle %}
+
 {% if questionnaire.fixedOrder %}
     {% set propositions = subquestion.propositions %}
-{% else %}
-    {% set propositions = subquestion.propositions | shuffle %}
 {% endif %}
 
 <div class="col-md-7 propositions-CO">

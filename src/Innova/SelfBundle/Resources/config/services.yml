@@ -3,7 +3,7 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
-           
+
     twig.extension.array:
         class: Twig_Extensions_Extension_Array
         tags:
@@ -19,13 +19,19 @@ services:
 
     innova_import:
         class: Innova\SelfBundle\Controller\ImportController
-        arguments: 
+        arguments:
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
 
     innova_export:
         class: Innova\SelfBundle\Controller\ExportController
-        arguments: 
+        arguments:
+            kernelRoot: %kernel.root_dir%
+            entityManager: @doctrine.orm.entity_manager
+
+    innova_export_tia:
+        class: Innova\SelfBundle\Controller\ExportTiaController
+        arguments:
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
 
