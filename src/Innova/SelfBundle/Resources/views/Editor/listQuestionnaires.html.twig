@@ -5,7 +5,7 @@
 <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
     <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
 </a>
-<a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_create', { 'testId': test.id }) }}">
+<a id="create-task" class="btn btn-default btn-sm">
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
 </a>
 {#
