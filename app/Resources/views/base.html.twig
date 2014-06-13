@@ -4,11 +4,130 @@
         <meta charset="UTF-8" />
         <title>{% block title %}SELF{% endblock %}</title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-        <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
-        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-        <script type="text/javascript" src="{{ asset('bundles/innovaself/js/mediaelement-and-player.min.js') }}"></script>
+
+
+        <script type="text/javascript" src="{{ asset('bundles/innovaself/js/jquery-1.3.2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/innovaself/js/jquery-ui-1.7.1.custom.min.js') }}"></script>
+
+
+    <style>
+        header, section {
+            display: block;
+        }
+        body {
+            font-family: 'Droid Serif';
+        }
+        h1, h2 {
+            text-align: center;
+            font-weight: normal;
+        }
+        #info {
+    display: block;
+    padding: 10px; margin-bottom: 20px;
+    border: 1px solid #333;
+    background-color: #efefef;
+}
+
+#test-list {
+    list-style: none;
+}
+
+#test-list li {
+    display: block;
+    padding: 20px 10px; margin-bottom: 3px;
+    background-color: #efefef;
+}
+
+#test-list li img.handle {
+    margin-right: 20px;
+    cursor: move;
+}
+
+        #features {
+            margin: auto;
+            width: 460px;
+            font-size: 0.9em;
+        }
+        .connected, .sortable, .exclude, .handles {
+            margin: auto;
+            padding: 0;
+            width: 510px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .sortable.grid {
+            overflow: hidden;
+        }
+        .connected li, .sortable li, .exclude li, .handles li {
+            list-style: none;
+            border: 1px solid #CCC;
+            background: #F6F6F6;
+            font-family: "Tahoma";
+            color: #1C94C4;
+            margin: 5px;
+            padding: 5px;
+            height: 32px;
+        }
+        .handles span {
+            cursor: move;
+        }
+        li.disabled {
+            opacity: 0.5;
+        }
+        .sortable.grid li {
+            line-height: 80px;
+            float: left;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+        }
+        li.highlight {
+            background: #FEE25F;
+        }
+        #connected {
+            width: 440px;
+            overflow: hidden;
+            margin: auto;
+        }
+        .connected {
+            float: left;
+            width: 200px;
+        }
+        .connected.no2 {
+            float: right;
+        }
+        li.sortable-placeholder {
+            border: 1px dashed #CCC;
+            background: none;
+        }
+    </style>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+
+
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script type="text/javascript">
+  // When the document is ready set up our sortable with it's inherant function(s)
+  $(document).ready(function() {
+    $("#test-list").sortable({
+      handle : '.handle',
+      update : function (data) {
+          //var order = $('#test-list').sortable('serialize');
+            $.ajax({
+                type: "post",
+                url: Routing.generate('admin_ajax_questionnaire_order'),
+                data: $('#test-list').sortable('serialize')
+            });
+        // $("#info").load(Routing.generate('admin_ajax_questionnaire_order', $('#test-list').sortable('serialize') ));
+        console.log(data);
+      }
+    });
+});
+</script>
     </head>
     <body>
         {% block navbar %}
@@ -25,6 +144,7 @@
                             <!-- Add Questionnaire menu for evolution -->
                             <li><a href="{{ path('admin_questionnaire') }}">Questionnaire</a></li>
                             <li><a href="{{ path('csv_export') }}">Export CSV</a></li>
+                            <li><a href="{{ path('test') }}">Voir les tests</a></li>
                             <li><a href="{{ path('show_tests') }}">Accès aux tests</a></li>
                         {% endif %}
                         <!-- Help with Modal Bootstrap : http://getbootstrap.com/javascript/#modals -->
@@ -88,6 +208,11 @@
         </div>
 
         {% block javascripts %}
+
+
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+
             <!-- Jquery first then Bootstrap call -->
             <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>

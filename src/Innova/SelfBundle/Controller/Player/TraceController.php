@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Trace;
 use Innova\SelfBundle\Entity\Answer;
+use Innova\SelfBundle\Entity\Media;
+use Innova\SelfBundle\Entity\Proposition;
 
 class TraceController extends Controller
 {
@@ -23,6 +25,10 @@ class TraceController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $post = $this->get('request')->request->all();
+
+//var_dump($post);die();
+echo "Q : " . $post["questionnaireId"];
+echo "<br />";
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($post["questionnaireId"]);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($post["testId"]);
         $user = $this->get('security.context')->getToken()->getUser();
@@ -36,7 +42,7 @@ class TraceController extends Controller
             return array("traceId" => 0, "testId" => $test->getId());
         }
 
-        $trace = $this->createTrace($questionnaire, $test, $user, $post["totalTime"]);    
+        $trace = $this->createTrace($questionnaire, $test, $user, $post["totalTime"]);
 
         $this->parsePost($post, $trace);
 
@@ -73,10 +79,28 @@ class TraceController extends Controller
     {
         $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
+//var_dump($post);
         foreach ($post as $subquestionId => $postVar) {
+//echo $subquestionId;
+            // Cas classique
             if (is_array($postVar)) {
+//var_dump($postVar);
                 foreach ($postVar as $key => $propositionId) {
-                    $this->createAnswer($trace, $propositionId, $subquestionId);
+                    //echo "<br />Prop=" . $propositionId;
+                    // SAISIE d'une valeur et non pas choix dans une liste
+                    if (is_string($propositionId)) {
+                            // Du coup, je récupère l'indice (la clé) dans le tableau $post
+                            // Et le résultat de la recherche me donne le NUMERO de la subquestion.
+                            //$subquestionId = array_search($propositionId, $postVar);
+                            //echo "<br />P=" . $propositionId;
+                            //echo "  S=". $subquestionId;
+                            $this->createAnswerProposition($trace, $propositionId, $subquestionId);
+                    }
+                    else {
+                        foreach ($postVar as $key => $propositionId) {
+                            //$this->createAnswer($trace, $propositionId, $subquestionId);
+                        }
+                    }
                 }
             }
         }
@@ -114,6 +138,52 @@ class TraceController extends Controller
     /**
      * create and return an answer
      */
+    private function createAnswerProposition($trace, $postVar, $subquestionId)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $answer = new Answer();
+
+        $answer->setTrace($trace);
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
+        $answer->setSubquestion($subquestion);
+
+        $typo = $subquestion->getTypology()->getName();
+
+        // Si on est sur une saisie ...
+        if ($typo == "TLQROCDERIV") {
+                // 1 : création d'une ligne dans Media
+                $media = new Media();
+                $media->setDescription($postVar);
+                $media->setName($postVar);
+                //$media->setUrl();
+                $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));
+                // Enregistrement en base
+                $em->persist($media);
+
+                // 2 : création d'une ligne dans Proposition
+                $propositionAnwser = new Proposition();
+                $propositionAnwser->setSubquestion($subquestion);
+                $propositionAnwser->setMedia($media);
+                $propositionAnwser->setRightAnswer(0);
+                // Enregistrement en base
+                $em->persist($propositionAnwser);
+
+                $answer->setProposition($propositionAnwser);
+        }
+
+        $em->persist($answer);
+
+        $em->flush();
+
+        return $answer;
+    }
+
+
+    /**
+     * create and return an answer
+     */
     private function createAnswer($trace, $propositionId, $subquestionId)
     {
         $em = $this->getDoctrine()->getManager();
@@ -121,15 +191,50 @@ class TraceController extends Controller
         $answer = new Answer();
 
         $answer->setTrace($trace);
-        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
-        $answer->setProposition($proposition);
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
         $answer->setSubquestion($subquestion);
+
+        $typo = $subquestion->getTypology()->getName();
+
+//echo "P : " . $propositionId;die();
+        // Si on est sur un QROC ...
+        if ($typo == "TLQROCNOCLU" or $typo == "TLQROCLEN" or $typo == "TLQROCFIRST"
+         or $typo == "TLQROCFIRSTLEN" or $typo == "TLQROCSYL") {
+            $propositionSub = $em->getRepository('InnovaSelfBundle:Proposition')->
+                findBy(array('subquestion' => $subquestionId));
+            $rightText = $propositionSub[0]->getMedia()->getName();
+
+            if ( $propositionId != $rightText ) {
+                // La saisie n'est pas bonne.
+                // 1 : création d'une ligne dans Media
+                $media = new Media();
+                $media->setDescription($propositionId);
+                $media->setName($propositionId);
+                //$media->setUrl();
+                $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));
+                // Enregistrement en base
+                $em->persist($media);
+                // 2 : création d'une ligne dans Proposition
+                $propositionAnwser = new Proposition();
+                $propositionAnwser->setSubquestion($subquestion);
+                $propositionAnwser->setMedia($media);
+                $propositionAnwser->setRightAnswer(0);
+                // Enregistrement en base
+                $em->persist($propositionAnwser);
+            }
+        }
+        // Si on N'est PAS sur un QROC.
+        // $typo == "TLQROCDCTM" or $typo == "TLQROCDCTU"
+        else {
+            $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
+            $answer->setProposition($proposition);
+        }
+
         $em->persist($answer);
 
         $em->flush();
 
-        return $answer; 
+        return $answer;
     }
 
 
