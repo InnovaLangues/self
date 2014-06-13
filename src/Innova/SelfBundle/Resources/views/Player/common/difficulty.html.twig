@@ -13,7 +13,7 @@ Et dans ce cas, j'affiche un message d'erreur et je le route vers le questionnai
             {% for flashMessage in app.session.flashbag.get('notice') %}
                 <div class="alert alert-danger">{{ flashMessage }}</div>
             {% endfor %}
-            <input type="submit" class="btn btn-primary" value="Cliquez pour continuer le test"/>
+            <input type="submit" class="btn btn-primary" value="{{ 'trace.test_continue' | trans }}"/>
         </form>
     {% else %}
         <form action="{{ path('trace_setDifficulty') }}" method="post">

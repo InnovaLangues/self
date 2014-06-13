@@ -1,9 +1,9 @@
 <div id="contexte-icon">
-    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" rel="tooltip" data-original-title="Contexte"/>
+    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" rel="tooltip" data-original-title="{{ 'player.tooltip.context' | trans }}" />
 </div>
 
 <div id="situation-icon">
-    <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" rel="tooltip" data-original-title="Objet de la question" />
+    <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" rel="tooltip" data-original-title="{{ 'player.tooltip.question_object' | trans }}" />
 </div>
 
 <div id="left-container-CE" class="col-md-5 left-container">
