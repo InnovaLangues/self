@@ -506,13 +506,13 @@ function initializeFormsFields(){
 *************************************************
 
                     UPLOAD FILE 
-                    
+
 *************************************************
 **************************************************/
 
 $('.file').on('change', function(event){
     $("#loader-img").show();
-    files = event.target.files;
+    var files = event.target.files;
     var fileType = $(this).data("file-type");
     var data = new FormData();
     $.each(files, function(key, value)
@@ -532,8 +532,7 @@ $('.file').on('change', function(event){
         data : data
     })
     .done(function(data) {
-        var url = data["url"];
-        $("#"+fileType+"-url").val(url);
+        $("#"+fileType+"-url").val(data["url"]);
         $("#create-"+fileType+"-btn").prop("disabled", false);
         $("#loader-img").hide();
     }); 
