@@ -92,15 +92,12 @@ class QuestionnaireController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request');
-
-
-        $testId = $request->request->get('testId');
+        $request = $this->get('request')->request;
 
         $questionnaire = new Questionnaire();
         $questionnaire->setTheme("");
 
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire->addTest($test);
         $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);

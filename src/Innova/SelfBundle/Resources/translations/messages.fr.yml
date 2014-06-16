@@ -86,6 +86,7 @@ editor:
         delete_confirm: Êtes-vous sûr de vouloir supprimer cette tâche de ce test ?
         delete_confirm_yes: Oui, supprimer la tâche
         delete_confirm_no: Non
+        unnamed: Tâche sans nom
     questionnaire:
         general_infos: Informations générales
         title: Titre
