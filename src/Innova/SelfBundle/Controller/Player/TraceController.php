@@ -88,18 +88,23 @@ echo "<br />";
                 foreach ($postVar as $key => $propositionId) {
                     //echo "<br />Prop=" . $propositionId;
                     // SAISIE d'une valeur et non pas choix dans une liste
-                    if (is_string($propositionId)) {
+
+
+        echo "propositionId" . $propositionId;
+                    if (is_numeric($propositionId)) {
+        echo "is_numeric";
+                        foreach ($postVar as $key => $propositionId) {
+                            $this->createAnswer($trace, $propositionId, $subquestionId);
+                        }
+                    }
+                    else {
                             // Du coup, je récupère l'indice (la clé) dans le tableau $post
                             // Et le résultat de la recherche me donne le NUMERO de la subquestion.
                             //$subquestionId = array_search($propositionId, $postVar);
                             //echo "<br />P=" . $propositionId;
                             //echo "  S=". $subquestionId;
+        echo "is_string";
                             $this->createAnswerProposition($trace, $propositionId, $subquestionId);
-                    }
-                    else {
-                        foreach ($postVar as $key => $propositionId) {
-                            //$this->createAnswer($trace, $propositionId, $subquestionId);
-                        }
                     }
                 }
             }
@@ -141,6 +146,8 @@ echo "<br />";
     private function createAnswerProposition($trace, $postVar, $subquestionId)
     {
 
+        echo "postVar" . $postVar;
+        echo "createAnswerProposition";
         $em = $this->getDoctrine()->getManager();
 
         $answer = new Answer();
@@ -152,7 +159,8 @@ echo "<br />";
         $typo = $subquestion->getTypology()->getName();
 
         // Si on est sur une saisie ...
-        if ($typo == "TLQROCDERIV") {
+        if ($typo == "TLQROCDERIV" or $typo == "TLQROCFIRST" or $typo == "TLQROCSYL"
+        or $typo == "TLQROCNOCLU" or $typo == "TLQROCLEN" or $typo == "TLQROCFIRSTLEN") {
                 // 1 : création d'une ligne dans Media
                 $media = new Media();
                 $media->setDescription($postVar);
@@ -196,12 +204,13 @@ echo "<br />";
 
         $typo = $subquestion->getTypology()->getName();
 
-//echo "P : " . $propositionId;die();
+echo "T : " . $typo;
         // Si on est sur un QROC ...
-        if ($typo == "TLQROCNOCLU" or $typo == "TLQROCLEN" or $typo == "TLQROCFIRST"
-         or $typo == "TLQROCFIRSTLEN" or $typo == "TLQROCSYL") {
+        if ($typo == "TLCMLDMZZZ") {
             $propositionSub = $em->getRepository('InnovaSelfBundle:Proposition')->
                 findBy(array('subquestion' => $subquestionId));
+            //find($propositionId);
+//            $rightText = $propositionSub->getMedia()->getName();
             $rightText = $propositionSub[0]->getMedia()->getName();
 
             if ( $propositionId != $rightText ) {
@@ -219,13 +228,15 @@ echo "<br />";
                 $propositionAnwser->setSubquestion($subquestion);
                 $propositionAnwser->setMedia($media);
                 $propositionAnwser->setRightAnswer(0);
+
                 // Enregistrement en base
                 $em->persist($propositionAnwser);
+
             }
         }
         // Si on N'est PAS sur un QROC.
         // $typo == "TLQROCDCTM" or $typo == "TLQROCDCTU"
-        else {
+        elseif ($typo == "TLCMQRU" or $typo == "TLCMTQRU" or $typo == "TLCMLDM") {
             $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
             $answer->setProposition($proposition);
         }

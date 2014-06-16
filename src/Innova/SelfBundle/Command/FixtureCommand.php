@@ -75,7 +75,7 @@ class FixtureCommand extends ContainerAwareCommand
             $typologies = array("TVF", "QRU", "VF", "QRM", "TQRU", "TQRM", "TVFPM",
             "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFNM", "VFNM",
             "TLCMQRU", "TLCMTQRU", "TLCMLDM", "TLQROCNOCLU", "TLQROCLEN", "TLQROCFIRST", "TLQROCFIRSTLEN", "TLQROCSYL",
-            "TLQROCDCTU", "TLQROCDCTM", "TLQROCDERIV");
+            "TLQROCDCTU", "TLQROCDCTM", "TLQROCDERIV", "TLQROCTRANS");
             foreach ($typologies as $typology) {
                 if (!$em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)){
                     $typo = new Typology();
