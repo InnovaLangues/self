@@ -510,18 +510,20 @@ function initializeFormsFields(){
 *************************************************
 **************************************************/
 
-$('#image-file').on('change', function(event){
+$('.file').on('change', function(event){
     $("#loader-img").show();
     files = event.target.files;
-
+    var fileType = $(this).data("file-type");
     var data = new FormData();
     $.each(files, function(key, value)
     {
         data.append(key, value);
     });
+        
+    data.append("file-type", fileType);
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_upload-image'),
+        url: Routing.generate('editor_questionnaire_upload-file'),
         type: 'POST',
         cache: false,
         dataType: 'json',
@@ -531,12 +533,13 @@ $('#image-file').on('change', function(event){
     })
     .done(function(data) {
         var url = data["url"];
-        $("#image-url").val(url);
-        $('#create-image-btn').prop("disabled", false);
+        $("#"+fileType+"-url").val(url);
+        $("#create-"+fileType+"-btn").prop("disabled", false);
         $("#loader-img").hide();
     }); 
 });
 
+/*
 
 $('#video-file').on('change', function(event){
     $("#loader-img").show();
@@ -591,3 +594,5 @@ $('#audio-file').on('change', function(event){
         $("#loader-img").hide();
     }); 
 });
+
+*/
