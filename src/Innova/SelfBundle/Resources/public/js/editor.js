@@ -505,8 +505,8 @@ function initializeFormsFields(){
 /************************************************
 *************************************************
 
-                    UPLOAD FILE (à factoriser)
-
+                    UPLOAD FILE 
+                    
 *************************************************
 **************************************************/
 
@@ -538,61 +538,3 @@ $('.file').on('change', function(event){
         $("#loader-img").hide();
     }); 
 });
-
-/*
-
-$('#video-file').on('change', function(event){
-    $("#loader-img").show();
-    files = event.target.files;
-
-    var data = new FormData();
-    $.each(files, function(key, value)
-    {
-        data.append(key, value);
-    });
-
-     $.ajax({
-        url: Routing.generate('editor_questionnaire_upload-video'),
-        type: 'POST',
-        cache: false,
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-        data : data
-    })
-    .done(function(data) {
-        var url = data["url"];
-        $("#video-url").val(url);
-        $('#create-video-btn').prop("disabled", false);
-        $("#loader-img").hide();
-    }); 
-});
-
-$('#audio-file').on('change', function(event){
-    $("#loader-img").show();
-    files = event.target.files;
-
-    var data = new FormData();
-    $.each(files, function(key, value)
-    {
-        data.append(key, value);
-    });
-
-     $.ajax({
-        url: Routing.generate('editor_questionnaire_upload-audio'),
-        type: 'POST',
-        cache: false,
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-        data : data
-    })
-    .done(function(data) {
-        var url = data["url"];
-        $("#audio-url").val(url);
-        $('#create-audio-btn').prop("disabled", false);
-        $("#loader-img").hide();
-    }); 
-});
-
-*/
