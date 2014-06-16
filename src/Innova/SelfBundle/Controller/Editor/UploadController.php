@@ -3,32 +3,54 @@
 namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+
 /**
- * Main controller.
- *
- * @Route("admin/editor/ajax")
+ * Class UploadController
+ * @Route(
+ *      "admin/editor",
+ *      name    = "",
+ *      service = "innova_editor_upload"
+ * )
  */
 class UploadController extends Controller
 {
-    
-     /**
+    protected $kernelRoot;
+    protected $request;
+
+    public function __construct($kernelRoot)
+    {
+        $this->kernelRoot = $kernelRoot;
+    }
+
+    public function setRequest(Request $request = null)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    /**
      *
-     * @Route("/questionnaires/upload-image", name="editor_questionnaire_upload-image", options={"expose"=true})
+     * @Route("/questionnaires/upload-file", name="editor_questionnaire_upload-file", options={"expose"=true})
      * @Method("POST")
      */
-    public function uploadImageAction()
+    public function uploadFileAction()
     {
-        $request = $this->get('request');
+        $request = $this->request;
+        $fileType = $request->get("file-type");
 
         foreach ($request->files as $uploadedFile) {
             $originalName = $uploadedFile->getClientOriginalName();
             $ext = pathinfo($originalName, PATHINFO_EXTENSION);
+            // penser à enlever l'extension selon le fileType.
             $newName = uniqid(). "." . $ext;
 
-            $directory = __DIR__.'/../../../../../web/upload/media/';
+            $directory = $this->kernelRoot.'/../web/upload/media/';
             $uploadedFile->move($directory, $newName);
         }
 
@@ -39,57 +61,4 @@ class UploadController extends Controller
         );
     }
 
-    /**
-     *
-     * @Route("/questionnaires/upload-audio", name="editor_questionnaire_upload-audio", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function uploadAudioAction()
-    {
-        $request = $this->get('request');
-
-        foreach ($request->files as $uploadedFile) {
-            $originalName = $uploadedFile->getClientOriginalName();
-            $ext = pathinfo($originalName, PATHINFO_EXTENSION);
-            $newName = uniqid();
-
-            //convertir en ogg
-            $directory = __DIR__.'/../../../../../web/upload/media/';
-            $uploadedFile->move($directory, $newName.".".$ext);
-        }
-
-        return new JsonResponse(
-            array(
-                'url' => $newName,
-            )
-        );
-    }
-
-    /**
-     *
-     * @Route("/questionnaires/upload-video", name="editor_questionnaire_upload-video", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function uploadVideoAction()
-    {
-        $request = $this->get('request');
-
-        foreach ($request->files as $uploadedFile) {
-            $originalName = $uploadedFile->getClientOriginalName();
-            $ext = pathinfo($originalName, PATHINFO_EXTENSION);
-
-            if ($ext === "webm") {
-                $newName = uniqid();
-
-                $directory = __DIR__.'/../../../../../web/upload/media/';
-                $uploadedFile->move($directory, $newName);
-            }
-        }
-
-        return new JsonResponse(
-            array(
-                'url' => $newName,
-            )
-        );
-    }
 }
