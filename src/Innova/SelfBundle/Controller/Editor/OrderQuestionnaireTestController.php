@@ -26,10 +26,8 @@ class OrderQuestionnaireTestController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->get('request')->request;
 
-        $testId = $request->get('testId');
-        $newOrder = $request->get('newOrder');
-        $newOrderArray = json_decode($newOrder);
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $newOrderArray = json_decode($request->get('newOrder'));
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
 
         $entitiesToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test);
         foreach ($entitiesToRemove as $entity) {
@@ -48,9 +46,7 @@ class OrderQuestionnaireTestController extends Controller
         }
         $em->flush();
 
-        return new JsonResponse(
-            array()
-        );
+        return new JsonResponse(null);
     }
 
     /**
