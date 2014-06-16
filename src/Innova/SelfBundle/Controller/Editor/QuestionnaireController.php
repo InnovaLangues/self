@@ -296,7 +296,6 @@ class QuestionnaireController extends Controller
      */
     public function setTypologyAction()
     {
-        /* $msg = ""; */
         $request = $this->get('request');
         $questionnaireId = $request->request->get('questionnaireId');
         $testId = $request->request->get('testId');
@@ -328,20 +327,11 @@ class QuestionnaireController extends Controller
             }
         }
 
-        /*
-        // on teste s'il n'y a pas de subquestion
-        // (pour éviter un conflit entre la typo de la question et des subq)
-        if (count($questionnaire->getQuestions()[0]->getSubquestions()) > 0 ) {
-            $msg = "Vous ne pouvez pas éditer la typologie s'il y a déjà des subquestions !";
-        } else {
-        */
-            $questionnaire->getQuestions()[0]->setTypology($typology);
-            $em->persist($questionnaire);
-            $em->flush();
-        /*
-        }
-        */
 
+        $questionnaire->getQuestions()[0]->setTypology($typology);
+        $em->persist($questionnaire);
+        $em->flush();
+    
         $typologyName = "-";
         if ($typology = $questionnaire->getQuestions()[0]->getTypology()) {
             $typologyName = $typology->getName();

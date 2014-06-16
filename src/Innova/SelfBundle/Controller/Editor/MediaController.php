@@ -48,7 +48,7 @@ class MediaController extends Controller
      * @Route("/questionnaires/create-media", name="editor_questionnaire_create-media", options={"expose"=true})
      * @Method("POST")
      */
-    public function CreateMediaAction()
+    public function createMediaAction()
     {
         $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
@@ -149,7 +149,7 @@ class MediaController extends Controller
      * @Route("/questionnaires/unlink-media", name="editor_questionnaire_unlink-media", options={"expose"=true})
      * @Method("POST")
      */
-    public function UnlinkMediaAction()
+    public function unlinkMediaAction()
     {
         $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
