@@ -79,32 +79,38 @@ echo "<br />";
     {
         $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
-//var_dump($post);
+var_dump($post);
         foreach ($post as $subquestionId => $postVar) {
-//echo $subquestionId;
+echo $subquestionId;
             // Cas classique
             if (is_array($postVar)) {
-//var_dump($postVar);
+var_dump($postVar);
                 foreach ($postVar as $key => $propositionId) {
-                    //echo "<br />Prop=" . $propositionId;
+echo "<br />Prop=" . $propositionId;
+die();
                     // SAISIE d'une valeur et non pas choix dans une liste
 
 
-        echo "propositionId" . $propositionId;
+//        echo "propositionId" . $propositionId;
+//                  // Deux cas :
+                    // Cas 1 : si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
                     if (is_numeric($propositionId)) {
-        echo "is_numeric";
+//        echo "is_numeric";
                         foreach ($postVar as $key => $propositionId) {
                             $this->createAnswer($trace, $propositionId, $subquestionId);
                         }
                     }
+                    // Cas 2 : si la proposition N'est PAS de type numéric alors on est dans le cas d'une SAISIE
                     else {
                             // Du coup, je récupère l'indice (la clé) dans le tableau $post
                             // Et le résultat de la recherche me donne le NUMERO de la subquestion.
                             //$subquestionId = array_search($propositionId, $postVar);
                             //echo "<br />P=" . $propositionId;
                             //echo "  S=". $subquestionId;
-        echo "is_string";
+//        echo "is_string";
+                        foreach ($postVar as $key => $propositionId) {
                             $this->createAnswerProposition($trace, $propositionId, $subquestionId);
+                        }
                     }
                 }
             }
@@ -141,13 +147,13 @@ echo "<br />";
 
 
     /**
-     * create and return an answer
+     * si la proposition N'est PAS de type numéric alors on est dans le cas d'une SAISIE
      */
     private function createAnswerProposition($trace, $postVar, $subquestionId)
     {
 
-        echo "postVar" . $postVar;
-        echo "createAnswerProposition";
+        echo "postVar" . $postVar;die();
+        //echo "createAnswerProposition";
         $em = $this->getDoctrine()->getManager();
 
         $answer = new Answer();
@@ -161,6 +167,9 @@ echo "<br />";
         // Si on est sur une saisie ...
         if ($typo == "TLQROCDERIV" or $typo == "TLQROCFIRST" or $typo == "TLQROCSYL"
         or $typo == "TLQROCNOCLU" or $typo == "TLQROCLEN" or $typo == "TLQROCFIRSTLEN") {
+
+
+                $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
                 // 1 : création d'une ligne dans Media
                 $media = new Media();
                 $media->setDescription($postVar);
@@ -190,7 +199,7 @@ echo "<br />";
 
 
     /**
-     * create and return an answer
+     * si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
      */
     private function createAnswer($trace, $propositionId, $subquestionId)
     {
@@ -235,8 +244,7 @@ echo "T : " . $typo;
             }
         }
         // Si on N'est PAS sur un QROC.
-        // $typo == "TLQROCDCTM" or $typo == "TLQROCDCTU"
-        elseif ($typo == "TLCMQRU" or $typo == "TLCMTQRU" or $typo == "TLCMLDM") {
+        elseif ($typo == "TLCMQRU" or $typo == "TLCMTQRU" or $typo == "TLCMLDM" or $typo == "TLQROCDCTM" or $typo == "TLQROCDCTU") {
             $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
             $answer->setProposition($proposition);
         }

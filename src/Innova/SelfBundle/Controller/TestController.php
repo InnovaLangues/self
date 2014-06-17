@@ -39,7 +39,6 @@ class TestController extends Controller
      */
     public function userIndexAction()
     {
-
         $user = $this->get('security.context')->getToken()->getUser();
 
         $em = $this->getDoctrine()->getManager();
@@ -79,7 +78,6 @@ class TestController extends Controller
      */
     public function createAction(Request $request)
     {
-
         $entity = new Test();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);

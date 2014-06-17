@@ -292,40 +292,4 @@ class QuestionnaireController extends Controller
         ;
     }
 
-    /**
-     * Lists all Test entities.
-     *
-     * @Route("/ajax/order", name="admin_ajax_questionnaire_order", options={"expose"=true})
-     * @Method("POST")
-     * @Template()
-     */
-    public function ajaxOrderAction(Request $request)
-    {
-
-        $order = $request->get('listItem');
-
-echo "<pre>";
-var_dump($order);
-
-        // print_r($order);
-
-        //foreach ($order['listItem'] as $position => $item) :
-            //$sql[] = "UPDATE `table` SET `position` = $position WHERE `id` = $item";
-            // Doctrine
-            //
-
-        //endforeach;
-
-        foreach ($order as $position => $item) {
-            echo "titi";
-        }
-
-        //return $this->redirect($this->generateUrl('test'));
-        return new JsonResponse(
-            array('data' => 'success')
-        );
-    }
-
-
-
 }
