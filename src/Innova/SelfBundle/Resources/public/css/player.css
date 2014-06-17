@@ -66,6 +66,10 @@
 	margin-top:-10px;
 }
 
+#situation-EEC {
+	margin-top:-10px;
+}
+
 #situation-CE, #situation-APP {
 	padding: 5px 5px 0 5px;
 	max-height: 500px;
@@ -100,6 +104,10 @@
 	text-align:center;
 }
 
+#left-container-EEC {
+	padding-top: 90px;
+	text-align:center;
+}
 /**********************************
 	RIGHT CONTAINER
 ***********************************/
@@ -108,6 +116,9 @@
 	border-radius: 5px;
 }
 
+.right-container-EEC {
+	border-radius: 5px;
+}
 /**********************************
 	TABS
 ***********************************/
@@ -192,6 +203,19 @@
 	width: 75%;
 }
 
+.question-EEC-text {
+	position:relative;
+	display: inline-block;
+	vertical-align: middle;
+	border: 1px solid black;
+	background-color: white;
+	color: black;
+	border-radius: 2px;
+	padding: 5px 5px 5px 10px;
+	width: 75%;
+}
+
+
 /**********************************
 	PROPOSITION
 ***********************************/
@@ -204,6 +228,10 @@
 	margin: 10px 0 30px 0;
 }
 
+.propositions-EEC {
+	margin: 20px 20px 0 80px;
+}
+
 input.proposition-input {
 	margin-right: 8px;
 }
@@ -213,11 +241,11 @@ input.proposition-input, label{
 	cursor: hand;
 }
 
-.proposition-CO, .proposition-CE {
+.proposition-CO, .proposition-CE, .proposition-EEC {
 	margin-bottom:8px;
 }
 
-.proposition-CE-text, .proposition-CO-text {
+.proposition-CE-text, .proposition-CO-text, .proposition-EEC-text {
 	display: inline-block;
 	vertical-align: middle;
 	font-weight: normal;

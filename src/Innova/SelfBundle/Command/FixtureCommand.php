@@ -62,7 +62,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $questionnaireSkills = array("CO", "CE");
+            $questionnaireSkills = array("CO", "CE", "EEC");
             foreach ($questionnaireSkills as $questionnaireSkill) {
                 if (!$em->getRepository('InnovaSelfBundle:Skill')->findOneByName($questionnaireSkill)){
                     $skill = new Skill();
@@ -73,7 +73,9 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             $typologies = array("TVF", "QRU", "VF", "QRM", "TQRU", "TQRM", "TVFPM",
-            "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFNM", "VFNM");
+            "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFNM", "VFNM",
+            "TLCMQRU", "TLCMTQRU", "TLCMLDM", "TLQROCNOCLU", "TLQROCLEN", "TLQROCFIRST", "TLQROCFIRSTLEN", "TLQROCSYL",
+            "TLQROCDCTU", "TLQROCDCTM", "TLQROCDERIV", "TLQROCTRANS");
             foreach ($typologies as $typology) {
                 if (!$em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)){
                     $typo = new Typology();
@@ -100,7 +102,7 @@ class FixtureCommand extends ContainerAwareCommand
             /*  New table for version 1.2 or version 2 (2014)
                 fixtures for language table
                 Important : we must have some keywords to add test.
-                So, in TestController.php, we create the test with language "English" or "Italian". 
+                So, in TestController.php, we create the test with language "English" or "Italian".
             */
             if (!$em->getRepository('InnovaSelfBundle:Language')->findOneByName("English")){
                 $langEng = new Language();

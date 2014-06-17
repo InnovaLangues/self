@@ -1,0 +1,13 @@
+<div id="situation-CE" class="situation">
+{% if questionnaire.mediaText is not null %}
+    {% if questionnaire.mediaText.mediaType.name == "texte" %}
+        {% autoescape 'html' %}
+            {{ questionnaire.mediaText.description | raw }}
+        {% endautoescape %}
+    {% elseif questionnaire.mediaText.mediaType.name == "image" %}
+            {{ questionnaire.mediaText.description|raw }}
+        {{ macros.image("situation-image", questionnaire.mediaText, "Objet de la question - Cliquer pour agrandir", "" ) }}
+        {{ macros.modale("situation-image", questionnaire.mediaText, "Objet de la question") }}
+    {% endif %}
+{% endif %}
+</div>

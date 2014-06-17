@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,6 +36,32 @@ class QuestionnaireController extends Controller
             'entities' => $entities,
         );
     }
+
+    /**
+     * Lists all Questionnaire entities.
+     *
+     * @Route("/admin/questionnaire/display/{testId}", name="display_questionnaire")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Questionnaire:display.html.twig")
+     */
+    public function displayAction($testId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+
+        $entities = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+
+        if (!$entities) {
+            throw $this->createNotFoundException('Unable to find Test entity.');
+        }
+
+        return array(
+            'test' => $test,
+            'entities' => $entities,
+        );
+    }
+
     /**
      * Creates a new Questionnaire entity.
      *
@@ -176,6 +203,7 @@ class QuestionnaireController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Questionnaire entity.
      *
@@ -263,4 +291,5 @@ class QuestionnaireController extends Controller
             ->getForm()
         ;
     }
+
 }
