@@ -7,9 +7,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Entity\Question;
-use Innova\SelfBundle\Entity\OrderQuestionnaireTest;
 
 /**
  * Class QuestionnaireController
@@ -129,8 +126,8 @@ class QuestionnaireController
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
 
         $questionnaire = $this->questionnaireManager->createQuestionnaire($test);
-        $question = $this->questionManager->createQuestion($questionnaire);
-        $orderQuestionnaireTest = $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
+        $this->questionManager->createQuestion($questionnaire);
+        $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
 
         return new JsonResponse(
             array(

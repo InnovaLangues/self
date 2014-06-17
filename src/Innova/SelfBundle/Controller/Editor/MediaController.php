@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Innova\SelfBundle\Entity\Proposition;
 
 /**
  * Class MediaController
@@ -53,7 +51,7 @@ class MediaController
      * @Route("/set-listening-limit", name="set-listening-limit", options={"expose"=true})
      * @Method("POST")
      */
-    public function setListeningLimit()
+    public function setListeningLimitAction()
     {
         $em = $this->entityManager;
         $request = $this->request->request;

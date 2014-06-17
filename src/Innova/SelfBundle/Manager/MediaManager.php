@@ -29,7 +29,7 @@ class MediaManager
         $em->flush();
 
         if ($mediaTypeName == "audio" || $mediaTypeName == "video") {
-            $this->updateMediaLimit($test, $questionnaire, $media, 0);
+            $this->updateMediaLimit($test, $questionnaire, $media, $mediaLimit);
         }
 
         return $media;
