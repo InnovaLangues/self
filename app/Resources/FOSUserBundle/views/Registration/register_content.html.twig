@@ -1,5 +1,3 @@
-{% trans_default_domain 'FOSUserBundle' %}
-
 <br>
 <div class="well">
     <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
@@ -18,18 +16,20 @@
             {# Onglet 1 #}
             <div class="tab-pane fade active in" id="step1">
                 <div id="legend">
-                    <legend class="">Inscription</legend>{# TODO: i18n #}
+                    <legend class="">{{ 'anonymous.registration' | trans({}, 'messages') }}</legend>
                 </div>
 
                 <div class="legend">
                     <p class="text-danger text-left">
-                        Les zones avec un astérisque rouge sont obligatoires
+                        {{ 'registration.warning_required' | trans({}, 'messages') }}
                     </p>
                 </div>
 
                 <div class="form-group">
                     {{ form_errors(form.lastName) }}
-                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_lastName">Nom</label>
+                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_lastName">
+                        {{ 'user.name' | trans({}, 'messages') }}
+                    </label>
                     <div class="col-lg-4">
                         <input value="{{ form.vars.value.lastName }}" class="form-control" id="fos_user_registration_form_lastName" type="text"  required="required" name="fos_user_registration_form[lastName]">
                     </div>
@@ -38,7 +38,9 @@
                 </div>
                 <div class="form-group">
                     {{ form_errors(form.firstName) }}
-                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_firstName">Prénom</label>
+                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_firstName">
+                        {{ 'user.firstname' | trans({}, 'messages') }}
+                    </label>
                     <div class="col-lg-4">
                         <input value="{{ form.vars.value.firstName }}" class="form-control" id="fos_user_registration_form_firstName" type="text" required="required" name="fos_user_registration_form[firstName]">
                     </div>
@@ -47,7 +49,9 @@
                 </div>
                 <div class="form-group">
                     {{ form_errors(form.email) }}
-                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_email">Adresse mail</label>
+                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_email">
+                        {{ 'user.email' | trans({}, 'messages') }}
+                    </label>
                     <div class="col-lg-4">
                         <input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
                     </div>
@@ -56,7 +60,9 @@
                 </div>
                 <div class="form-group">
                     {{ form_errors(form.username) }}
-                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_username">{{ 'security.login.username'|trans }}</label>
+                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_username">
+                        {{ 'registration.username' | trans({}, 'messages') }}
+                    </label>
                     <div class="col-lg-4">
                         <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
                     </div>
@@ -65,7 +71,9 @@
                 </div>
                 <div class="form-group">
                     {{ form_errors(form.plainPassword.first) }}
-                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_plainPassword_first">{{ 'security.login.password'|trans }}</label>
+                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_plainPassword_first">
+                        {{ 'registration.password' | trans({}, 'messages') }}
+                    </label>
                     <div class="col-lg-4">
                         <input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
                     </div>
@@ -73,7 +81,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_plainPassword_second">Confirmation du mot de passe</label>
+                    <label class="col-lg-3 control-label required" for="fos_user_registration_form_plainPassword_second">
+                        {{ 'registration.password_confirmation' | trans({}, 'messages') }}
+                    </label>
                     <div class="col-lg-4">
                         <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
                     </div>
@@ -84,7 +94,9 @@
                     {{ form_widget(form._token) }}
                     <div class="col-lg-offset-3 col-lg-9">
                         {# Call nexttab JS in main.js #130 #}
-                        <a href='#step2' data-toggle="tab" class="btn btn-primary nexttab">Etape suivante</a>
+                        <a href='#step2' data-toggle="tab" class="btn btn-primary nexttab">
+                            {{ 'registration.next_step' | trans({}, 'messages') }}
+                        </a>
                     </div>
                 </div>
 
@@ -93,11 +105,13 @@
             {# Onglet 2 #}
             <div class="tab-pane fade" id="step2">
                 <fieldset>
-                    <legend>Filière</legend>
+                    <legend>{{ 'registration.pathway' | trans({}, 'messages') }}</legend>
                     {# originStudent, user entity #}
                     <div class="form-group">
                         {{ form_errors(form.originStudent) }}
-                        <label class="col-lg-4 control-label" for="fos_user_registration_form_originStudent">Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / UJF / Autres)</label>
+                        <label class="col-lg-4 control-label" for="fos_user_registration_form_originStudent">
+                            {{ 'registration.pathway_question' | trans({}, 'messages') }}
+                        </label>
                         <div class="col-lg-3">
                             {# <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]"> #}
                             {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
@@ -110,7 +124,9 @@
                     {# display by language. So, I use an "optgroup" #}
                     <div class="form-group">
                         {{ form_errors(form.levelLansad) }}
-                        <label class="col-lg-4 control-label" for="fos_user_registration_form_levelLansad">Quel était le niveau du dernier cours LANSAD que vous avez validé ?</label>
+                        <label class="col-lg-4 control-label" for="fos_user_registration_form_levelLansad">
+                            {{ 'registration.last_lansad' | trans({}, 'messages') }}
+                        </label>
                         <div class="col-lg-3">
                             {{ form_widget(form.levelLansad, { 'attr': {'class': 'form-control'} }) }}
                         </div>
@@ -124,7 +140,9 @@
                     {# coLevel, user entity #}
                     <div class="form-group">
                         {{ form_errors(form.coLevel) }}
-                        <label class="col-lg-4 control-label" for="fos_user_registration_form_coLevel">Niveau obtenu en CO (compréhension orale)</label>
+                        <label class="col-lg-4 control-label" for="fos_user_registration_form_coLevel">
+                            {{ 'registration.CO_level' | trans({}, 'messages') }}
+                        </label>
                         <div class="col-lg-3">
                             {{ form_widget(form.coLevel, { 'attr': {'class': 'form-control'} }) }}
                         </div>
@@ -135,7 +153,9 @@
                     {# ceLevel, user entity #}
                     <div class="form-group">
                         {{ form_errors(form.coLevel) }}
-                        <label class="col-lg-4 control-label" for="fos_user_registration_form_ceLevel">Niveau obtenu en CE (compréhension écrite)</label>
+                        <label class="col-lg-4 control-label" for="fos_user_registration_form_ceLevel">
+                            {{ 'registration.CE_level' | trans({}, 'messages') }}
+                        </label>
                         <div class="col-lg-3">
                             {{ form_widget(form.ceLevel, { 'attr': {'class': 'form-control'} }) }}
                         </div>
@@ -146,7 +166,9 @@
                     {# eeLevel, user entity #}
                     <div class="form-group">
                         {{ form_errors(form.eeLevel) }}
-                        <label class="col-lg-4 control-label" for="fos_user_registration_form_eeLevel">Niveau obtenu en EE (expression écrite) </label>
+                        <label class="col-lg-4 control-label" for="fos_user_registration_form_eeLevel">
+                            {{ 'registration.EE_level' | trans({}, 'messages') }}
+                        </label>
                         <div class="col-lg-3">
                             {{ form_widget(form.eeLevel, { 'attr': {'class': 'form-control'} }) }}
                         </div>
@@ -158,7 +180,7 @@
                 <div class="form-group">
                     {{ form_widget(form._token) }}
                     <div class="col-lg-offset-4 col-lg-8">
-                        <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary"/>
+                        <input type="submit" id="_submit" name="_submit" value="{{ 'generic.validate' | trans({}, 'messages') }}" class="btn btn-primary"/>
                     </div>
                 </div>
 
