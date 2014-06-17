@@ -3,54 +3,105 @@
 namespace Innova\SelfBundle\Controller\Player;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Innova\SelfBundle\Entity\Trace;
 use Innova\SelfBundle\Entity\Answer;
 use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Proposition;
 
-class TraceController extends Controller
+/**
+ * Class TraceController
+ *
+ * @Route(
+ *      "",
+ *      name = "innova_trace",
+ *      service = "innova_player_trace"
+ * )
+ */
+class TraceController
 {
+    protected $mediaManager;
+    protected $propositionManager;
+    protected $traceManager;
+    protected $entityManager;
+    protected $session;
+    protected $router;
+    protected $securityContext;
+    protected $request;
+
+
+    /**
+     * Class constructor
+     */
+    public function __construct(
+        $mediaManager,
+        $propositionManager,
+        $traceManager,
+        $entityManager,
+        $session,
+        $router,
+        $securityContext
+    )
+    {
+        $this->mediaManager = $mediaManager;
+        $this->propositionManager = $propositionManager;
+        $this->traceManager = $traceManager;
+        $this->entityManager = $entityManager;
+        $this->session = $session;
+        $this->router = $router;
+        $this->securityContext = $securityContext;
+        $this->user = $this->securityContext->getToken()->getUser();
+    }
+
+    public function setRequest(Request $request = null)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+
     /**
      * Save Trace and display a form to set the difficulty
      *
      * @Route("trace_submit", name="trace_submit")
      * @Method({"GET", "POST"})
-     * @Template("")
+     * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
      */
     public function saveTraceAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->entityManager;
 
-        $post = $this->get('request')->request->all();
+        $post = $this->request->request->all();
 
-//var_dump($post);die();
-echo "Q : " . $post["questionnaireId"];
-echo "<br />";
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($post["questionnaireId"]);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($post["testId"]);
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->user;
 
         $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')
             ->countTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
 
         if ($countTrace > 0) {
-            $this->get('session')->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
+            $this->session->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
 
             return array("traceId" => 0, "testId" => $test->getId());
+        } else {
+            $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"]);
+
+            $this->parsePost($post, $trace);
+
+            $session = $this->session;
+            $session->set('traceId', $trace->getId());
+            $session->set('testId', $post["testId"]);
+
+            return new RedirectResponse($this->router->generate('display_difficulty'));
         }
-
-        $trace = $this->createTrace($questionnaire, $test, $user, $post["totalTime"]);
-
-        $this->parsePost($post, $trace);
-
-        $session = $this->container->get('request')->getSession();
-        $session->set('traceId', $trace->getId());
-        $session->set('testId', $post["testId"]);
-
-        return $this->redirect($this->generateUrl('display_difficulty'));
     }
 
 
@@ -64,7 +115,7 @@ echo "<br />";
     public function displayDifficultyFormAction()
     {
 
-        $session = $this->container->get('request')->getSession();
+        $session = $this->session;
         $traceId = $session->get('traceId');
         $testId = $session->get('testId');
 
@@ -77,37 +128,20 @@ echo "<br />";
      */
     private function parsePost($post, $trace)
     {
-        $this->get('session')->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
+        $this->session->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
-var_dump($post);
         foreach ($post as $subquestionId => $postVar) {
-echo $subquestionId;
             // Cas classique
             if (is_array($postVar)) {
-var_dump($postVar);
                 foreach ($postVar as $key => $propositionId) {
-echo "<br />Prop=" . $propositionId;
-die();
-                    // SAISIE d'une valeur et non pas choix dans une liste
-
-
-//        echo "propositionId" . $propositionId;
-//                  // Deux cas :
                     // Cas 1 : si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
                     if (is_numeric($propositionId)) {
-//        echo "is_numeric";
                         foreach ($postVar as $key => $propositionId) {
                             $this->createAnswer($trace, $propositionId, $subquestionId);
                         }
                     }
                     // Cas 2 : si la proposition N'est PAS de type numéric alors on est dans le cas d'une SAISIE
                     else {
-                            // Du coup, je récupère l'indice (la clé) dans le tableau $post
-                            // Et le résultat de la recherche me donne le NUMERO de la subquestion.
-                            //$subquestionId = array_search($propositionId, $postVar);
-                            //echo "<br />P=" . $propositionId;
-                            //echo "  S=". $subquestionId;
-//        echo "is_string";
                         foreach ($postVar as $key => $propositionId) {
                             $this->createAnswerProposition($trace, $propositionId, $subquestionId);
                         }
@@ -117,49 +151,17 @@ die();
         }
     }
 
-
-    /**
-     * Create and return a trace
-     */
-    private function createTrace($questionnaire, $test, $user, $totalTime)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $trace = new Trace();
-
-        $trace->setDate(new \DateTime());
-        $trace->setQuestionnaire($questionnaire);
-        $trace->setTest($test);
-        $trace->setUser($user);
-        $trace->setTotalTime($totalTime);
-        $trace->setListeningTime("");
-        $trace->setListeningAfterAnswer("");
-        $trace->setClickCorrectif("");
-        $trace->setIp("");
-        $trace->setuserAgent("");
-        $trace->setDifficulty("");
-
-        $em->persist($trace);
-        $em->flush();
-
-        return $trace;
-    }
-
-
     /**
      * si la proposition N'est PAS de type numéric alors on est dans le cas d'une SAISIE
      */
-    private function createAnswerProposition($trace, $postVar, $subquestionId)
+    private function createAnswerProposition($trace, $saisie, $subquestionId)
     {
+        $em = $this->entityManager;
 
-        echo "postVar" . $postVar;die();
-        //echo "createAnswerProposition";
-        $em = $this->getDoctrine()->getManager();
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
 
         $answer = new Answer();
-
         $answer->setTrace($trace);
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
         $answer->setSubquestion($subquestion);
 
         $typo = $subquestion->getTypology()->getName();
@@ -168,30 +170,33 @@ die();
         if ($typo == "TLQROCDERIV" or $typo == "TLQROCFIRST" or $typo == "TLQROCSYL"
         or $typo == "TLQROCNOCLU" or $typo == "TLQROCLEN" or $typo == "TLQROCFIRSTLEN") {
 
+            $propositions = $em->getRepository('InnovaSelfBundle:Proposition')->findBy(array('subquestion' => $subquestionId));
+            $rightAnswer = false;
+            $propositionFound = null;
+            foreach ($propositions as $proposition) {
+                $text = $proposition->getMedia()->getName();
+                if ($text == $saisie) {
+                    $propositionFound = $proposition;
+                    if ($proposition->getRightAnswer() == true) {
+                        $rightAnswer = true;
+                    } else {
+                        $rightAnswer = false;
+                    }
+                    break;
+                }
+            }
 
-                $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
-                // 1 : création d'une ligne dans Media
-                $media = new Media();
-                $media->setDescription($postVar);
-                $media->setName($postVar);
-                //$media->setUrl();
-                $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));
-                // Enregistrement en base
-                $em->persist($media);
+            if ($propositionFound == null) {
+                $media = $this->mediaManager->createMedia(null, null, "texte", $saisie, $saisie, null, 0);
+                $proposition = $this->propositionManager->createProposition($subquestion, $media, $rightAnswer);
+            } else {
+                $proposition = $propositionFound;
+            }
 
-                // 2 : création d'une ligne dans Proposition
-                $propositionAnwser = new Proposition();
-                $propositionAnwser->setSubquestion($subquestion);
-                $propositionAnwser->setMedia($media);
-                $propositionAnwser->setRightAnswer(0);
-                // Enregistrement en base
-                $em->persist($propositionAnwser);
-
-                $answer->setProposition($propositionAnwser);
+            $answer->setProposition($proposition);
         }
 
         $em->persist($answer);
-
         $em->flush();
 
         return $answer;
@@ -203,52 +208,14 @@ die();
      */
     private function createAnswer($trace, $propositionId, $subquestionId)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->entityManager;
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
+        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
 
         $answer = new Answer();
-
         $answer->setTrace($trace);
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
         $answer->setSubquestion($subquestion);
-
-        $typo = $subquestion->getTypology()->getName();
-
-echo "T : " . $typo;
-        // Si on est sur un QROC ...
-        if ($typo == "TLCMLDMZZZ") {
-            $propositionSub = $em->getRepository('InnovaSelfBundle:Proposition')->
-                findBy(array('subquestion' => $subquestionId));
-            //find($propositionId);
-//            $rightText = $propositionSub->getMedia()->getName();
-            $rightText = $propositionSub[0]->getMedia()->getName();
-
-            if ( $propositionId != $rightText ) {
-                // La saisie n'est pas bonne.
-                // 1 : création d'une ligne dans Media
-                $media = new Media();
-                $media->setDescription($propositionId);
-                $media->setName($propositionId);
-                //$media->setUrl();
-                $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));
-                // Enregistrement en base
-                $em->persist($media);
-                // 2 : création d'une ligne dans Proposition
-                $propositionAnwser = new Proposition();
-                $propositionAnwser->setSubquestion($subquestion);
-                $propositionAnwser->setMedia($media);
-                $propositionAnwser->setRightAnswer(0);
-
-                // Enregistrement en base
-                $em->persist($propositionAnwser);
-
-            }
-        }
-        // Si on N'est PAS sur un QROC.
-        elseif ($typo == "TLCMQRU" or $typo == "TLCMTQRU" or $typo == "TLCMLDM" or $typo == "TLQROCDCTM" or $typo == "TLQROCDCTU") {
-            $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
-            $answer->setProposition($proposition);
-        }
-
+        $answer->setProposition($proposition);
         $em->persist($answer);
 
         $em->flush();
@@ -266,15 +233,14 @@ echo "T : " . $typo;
     public function traceSetDifficultyAction()
     {
 
-        $em = $this->getDoctrine()->getManager();
-        $post = $this->get('request')->request->all();
+        $em = $this->entityManager;
+        $post = $this->request->request->all();
 
         $trace = $em->getRepository('InnovaSelfBundle:Trace')->find($post["traceId"]);
         $trace->setDifficulty($post["difficulty"]);
         $em->persist($trace);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('test_start', array('id' => $post["testId"])));
+        return new RedirectResponse($this->router->generate('test_start', array('id' => $post["testId"])));
     }
-
 }
