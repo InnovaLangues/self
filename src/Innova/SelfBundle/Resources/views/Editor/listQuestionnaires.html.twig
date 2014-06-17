@@ -15,7 +15,8 @@
 #}
 <hr/>
 
-<h3>{{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}</h3>
+
+<h3>{% autoescape 'html' %}{{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}{% endautoescape %}</h3>
 
 <ul class="list-group" id="sortable">
 {% for order in orders %}
