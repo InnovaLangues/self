@@ -2,8 +2,6 @@
 
 namespace Innova\SelfBundle\Manager;
 
-use Innova\SelfBundle\Entity\Media;
-
 class AppManager
 {
     protected $entityManager;
@@ -33,7 +31,6 @@ class AppManager
 
         // reste à ajouter les propositions des autres à la subquestion courante.
         foreach ($propositions as $proposition) {
-            $media = $proposition->getMedia();
             $mediaId = $proposition->getMedia()->getId();
             $found = false;
             foreach ($currentSubquestion->getPropositions() as $currentSubquestionProposition) {
