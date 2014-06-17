@@ -144,7 +144,6 @@ player:
         question: Question
         intruction: Consigne
 
-
 trace:
     test_continue: Continuer le test
     action:

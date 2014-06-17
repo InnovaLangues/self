@@ -262,8 +262,8 @@ class AdminUserController extends Controller
     public function affectTestsAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
+        $put = $request->request;
 
         if (!$user) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -274,11 +274,7 @@ class AdminUserController extends Controller
             $user->removeTest($test);
             $em->persist($user);
         }
-
-        // Insertion en base de données;
         $em->flush();
-
-        $put = $request->request;
 
         // Boucle pour remplir ce tableau
         foreach ($put as $key => $value) {
@@ -294,11 +290,8 @@ class AdminUserController extends Controller
                 }
             }
         }
-
-        // Insertion en base de données;
         $em->flush();
 
-        // Redirection
         return $this->redirect($this->generateUrl('admin_user'));
     }
 

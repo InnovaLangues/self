@@ -50,3 +50,28 @@ services:
         calls:
             - [setRequest, [@request]]
         scope: request
+
+    innova_editor_questionnaire:
+        class: Innova\SelfBundle\Controller\Editor\QuestionnaireController
+        arguments:
+            questionnaireManager:   @self.questionnaire.manager
+            questionManager:    @self.question.manager
+            orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
+            entityManager:      @doctrine.orm.entity_manager
+            templating:         @templating
+        calls:
+            - [setRequest, [@request]]
+        scope: request
+
+    innova_editor_media:
+        class: Innova\SelfBundle\Controller\Editor\MediaController
+        arguments:
+            mediaManager:       @self.media.manager
+            propositionManager: @self.proposition.manager
+            appManager:         @self.app.manager
+            entityManager:      @doctrine.orm.entity_manager
+            templating:         @templating
+        calls:
+            - [setRequest, [@request]]
+        scope: request
+
