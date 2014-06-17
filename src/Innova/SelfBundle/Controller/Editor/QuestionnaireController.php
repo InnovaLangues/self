@@ -2,7 +2,7 @@
 
 namespace Innova\SelfBundle\Controller\Editor;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,12 +12,47 @@ use Innova\SelfBundle\Entity\Question;
 use Innova\SelfBundle\Entity\OrderQuestionnaireTest;
 
 /**
- * Questionnaire controller.
- *
- * @Route("admin/editor")
+ * Class QuestionnaireController
+ * @Route(
+ *      "admin/editor",
+ *      name    = "",
+ *      service = "innova_editor_questionnaire"
+ * )
  */
-class QuestionnaireController extends Controller
+
+class QuestionnaireController
 {
+
+    protected $questionnaireManager;
+    protected $questionManager;
+    protected $orderQuestionnaireTestManager;
+    protected $entityManager;
+    protected $request;
+    protected $templating;
+
+    public function __construct(
+            $questionnaireManager,
+            $questionManager,
+            $orderQuestionnaireTestManager,
+            $entityManager,
+            $templating
+    )
+    {
+        $this->questionnaireManager = $questionnaireManager;
+        $this->questionManager = $questionManager;
+        $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
+        $this->entityManager = $entityManager;
+        $this->templating = $templating;
+
+    }
+
+    public function setRequest(Request $request = null)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
     /**
      * Lists all Questionnaire entities.
      *
@@ -27,7 +62,7 @@ class QuestionnaireController extends Controller
      */
     public function listTestsAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->entityManager;
 
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
@@ -45,7 +80,7 @@ class QuestionnaireController extends Controller
      */
     public function listQuestionnairesAction($testId)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->entityManager;
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($testId);
@@ -66,7 +101,7 @@ class QuestionnaireController extends Controller
     public function showAction($testId, $questionnaireId)
     {
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->entityManager;
 
         $test = $em->getRepository('InnovaSelfBundle:test')->find($testId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
@@ -82,40 +117,20 @@ class QuestionnaireController extends Controller
     }
 
     /**
-     * Creates a new Questionnaire entity.
      *
      * @Route("questionnaire/create", name="editor_questionnaire_create", options={"expose"=true})
      * @Method("POST")
-     * @Template("")
      */
     public function createQuestionnaireAction()
     {
 
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request')->request;
-
-        $questionnaire = new Questionnaire();
-        $questionnaire->setTheme("");
-
+        $em = $this->entityManager;
+        $request = $this->request->request;
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
-        $questionnaire->addTest($test);
-        $questionnaire->setListeningLimit(0);
-        $questionnaire->setDialogue(0);
-        $questionnaire->setFixedOrder(0);
-        $em->persist($questionnaire);
 
-        $question = new Question();
-        $question->setQuestionnaire($questionnaire);
-        $em->persist($question);
-
-        $orderQuestionnaireTest = new OrderQuestionnaireTest();
-        $orderQuestionnaireTest->setTest($test);
-        $orderQuestionnaireTest->setQuestionnaire($questionnaire);
-        $orderMax = count($em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
-        $orderQuestionnaireTest->setDisplayOrder($orderMax + 1);
-        $em->persist($orderQuestionnaireTest);
-
-        $em->flush();
+        $questionnaire = $this->questionnaireManager->createQuestionnaire($test);
+        $question = $this->questionManager->createQuestion($questionnaire);
+        $orderQuestionnaireTest = $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
 
         return new JsonResponse(
             array(
@@ -127,72 +142,14 @@ class QuestionnaireController extends Controller
     }
 
     /**
-     * Updates a Questionnaire entity
-     *
-     * @Route("/questionnaires/{id}", name="editor_questionnaire_edit")
-     * @Method("PUT")
-     * @Template("")
-     */
-    public function editAction($id)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($id);
-
-        if (!$questionnaire) {
-            throw $this->createNotFoundException('Unable to find Questionnaire entity.');
-        }
-
-        $this->get('session')->getFlashBag()->add(
-                    'notice',
-                    'Le questionnaire a été créé.'
-                );
-
-        return $this->redirect($this->generateUrl(
-                        'editor_questionnaire_show',
-                        array('id' => $entity->getId()))
-                    );
-    }
-
-     /**
-     * Delete a Questionnaire entity
-     *
-     * @Route("/questionnaires/{id}", name="editor_questionnaire_delete")
-     * @Method("DELETE")
-     * @Template("")
-     */
-    public function deleteAction($id)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($id);
-
-        if (!$questionnaire) {
-            throw $this->createNotFoundException('Unable to find Questionnaire entity.');
-        }
-
-        $this->get('session')->getFlashBag()->add(
-                    'notice',
-                    'Le questionnaire a été supprimé.'
-                );
-
-        return $this->redirect($this->generateUrl(
-                        'editor_questionnaire_show',
-                        array('id' => $entity->getId()))
-                    );
-    }
-
-    /**
      *
      * @Route("/questionnaires/set-theme", name="editor_questionnaire_set-theme", options={"expose"=true})
      * @Method("POST")
      */
     public function setThemeAction()
     {
-        $request = $this->get('request');
-        $em = $this->getDoctrine()->getManager();
+        $request = $this->request;
+        $em = $this->entityManager;
         $questionnaireId = $request->request->get('questionnaireId');
         $theme = $request->request->get('theme');
 
@@ -215,8 +172,8 @@ class QuestionnaireController extends Controller
      */
     public function setFixedOrderAction()
     {
-        $request = $this->get('request');
-        $em = $this->getDoctrine()->getManager();
+        $request = $this->request;
+        $em = $this->entityManager;
         $questionnaireId = $request->request->get('questionnaireId');
         $isChecked = $request->request->get('isChecked');
 
@@ -230,7 +187,6 @@ class QuestionnaireController extends Controller
         );
     }
 
-
     /**
      *
      * @Route("/questionnaires/set-skill", name="editor_questionnaire_set-skill", options={"expose"=true})
@@ -238,8 +194,8 @@ class QuestionnaireController extends Controller
      */
     public function setSkillAction()
     {
-        $request = $this->get('request');
-        $em = $this->getDoctrine()->getManager();
+        $request = $this->request;
+        $em = $this->entityManager;
         $questionnaireId = $request->request->get('questionnaireId');
         $skillName = $request->request->get('skill');
 
@@ -266,8 +222,8 @@ class QuestionnaireController extends Controller
      */
     public function setLevelAction()
     {
-        $request = $this->get('request');
-        $em = $this->getDoctrine()->getManager();
+        $request = $this->request;
+        $em = $this->entityManager;
         $questionnaireId = $request->request->get('questionnaireId');
         $levelName = $request->request->get('level');
 
@@ -293,57 +249,30 @@ class QuestionnaireController extends Controller
      */
     public function setTypologyAction()
     {
-        $request = $this->get('request');
+        $request = $this->request;
         $questionnaireId = $request->request->get('questionnaireId');
         $testId = $request->request->get('testId');
         $typologyName = $request->request->get('typology');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->entityManager;
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
-        if (!$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typologyName)) {
-            $typology = null;
-            foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
-                $subquestion->setTypology(null);
-                $em->persist($subquestion);
-            }
-        } else {
-            if (mb_substr($typology->getName(), 0, 3) == "APP") {
-                foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
-                    $subquestion->setTypology($typology);
-                    $em->persist($subquestion);
-                }
+        $typology = $this->questionnaireManager->setTypology($questionnaire, $typologyName);
 
-            } else {
-                $typologySubquestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($typologyName, 1));
-                foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
-                    $subquestion->setTypology($typologySubquestion);
-                    $em->persist($subquestion);
-                }
-            }
-        }
-
-
-        $questionnaire->getQuestions()[0]->setTypology($typology);
-        $em->persist($questionnaire);
-        $em->flush();
-    
         $typologyName = "-";
         if ($typology = $questionnaire->getQuestions()[0]->getTypology()) {
             $typologyName = $typology->getName();
         }
 
-        $template = $this->renderView('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
 
         return new JsonResponse(
             array(
-                /*'msg' => $msg,*/
                 'typology'=> $typologyName,
                 'subquestions' => $template
             )
         );
     }
-
 
 }

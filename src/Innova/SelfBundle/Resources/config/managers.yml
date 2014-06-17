@@ -1,0 +1,31 @@
+services:
+    self.questionnaire.manager:
+        class: Innova\SelfBundle\Manager\QuestionnaireManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    self.question.manager:
+        class: Innova\SelfBundle\Manager\QuestionManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    self.order_questionnaire_test.manager:
+        class: Innova\SelfBundle\Manager\OrderQuestionnaireTestManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    self.proposition.manager:
+        class: Innova\SelfBundle\Manager\PropositionManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    self.media.manager:
+        class: Innova\SelfBundle\Manager\MediaManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    self.app.manager:
+        class: Innova\SelfBundle\Manager\AppManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            propositionManager: @self.proposition.manager
