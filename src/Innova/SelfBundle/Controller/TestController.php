@@ -177,27 +177,25 @@ class TestController extends Controller
     /**
      * Displays a form to edit an existing Test entity.
      *
-     * @Route("admin/test/{id}/edit", name="test_edit")
+     * @Route("admin/test/{testId}/edit", name="test_edit")
      * @Method("GET")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction($testId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
+        $entity = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Test entity.');
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -250,6 +248,7 @@ class TestController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Test entity.
      *
@@ -283,47 +282,6 @@ class TestController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
-    /**
-     * Deletes a Test entity.
-     *
-     * @Route("admin/test/{id}", name="test_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('InnovaSelfBundle:Test')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Test entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('test'));
-    }
-
-    /**
-     * Creates a form to delete a Test entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('test_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
-    }
 
 }

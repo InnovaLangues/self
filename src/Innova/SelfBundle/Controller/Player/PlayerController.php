@@ -36,8 +36,8 @@ class PlayerController
      * Class constructor
      */
     public function __construct(
-        SecurityContextInterface $securityContext,
-        EntityManager $entityManager,
+        SecurityContextInterface $securityContext, 
+        EntityManager $entityManager, 
         SessionInterface $session,
         RouterInterface $router
     )
@@ -51,7 +51,7 @@ class PlayerController
 
 
     /**
-     * Try to pick a questionnaire entity for a given test not done yet by the user
+     * Try to pick a questionnaire entity for a given test not done yet by the user 
      * and display it if possible.
      *
      * @Route("student/test/start/{id}", name="test_start")
@@ -75,15 +75,10 @@ class PlayerController
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $this->user->getId());
 
-            $text = str_replace('@@@', '<br>', $questionnaire->getMediaText()->getDescription()); // Saut de ligne
-            $typo = $questionnaire->getQuestions()[0]->getTypology()->getName();
-
             return array(
                 'questionnaire' => $questionnaire,
                 'test' => $test,
-                'counQuestionnaireDone' => $countQuestionnaireDone,
-                'text' => $text,
-                'typo' => $typo
+                'counQuestionnaireDone' => $countQuestionnaireDone
             );
         }
     }
@@ -95,19 +90,17 @@ class PlayerController
     protected function findAQuestionnaireWithoutTrace($test, $user)
     {
         $em = $this->entityManager;
-
+        $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
         $questionnaireWithoutTrace = null;
 
-        $questionnaires = $test->getQuestionnaires();
-
-        foreach ($questionnaires as $questionnaire) {
+        foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
             $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
-                array('user' => $user->getId(),
+                array(  'user' => $user->getId(), 
                         'test' => $test->getId(),
-                        'questionnaire' => $questionnaire->getId()
+                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire()->getId()
                 ));
             if (count($traces) == 0) {
-                $questionnaireWithoutTrace = $questionnaire;
+                $questionnaireWithoutTrace = $orderedQuestionnaire->getQuestionnaire();
                 break;
             }
         }
@@ -141,7 +134,7 @@ class PlayerController
     /**
      *
      * @Route(
-     *      "admin/test/{testId}/questionnaire/{questionnaireId}",
+     *      "admin/test/{testId}/questionnaire/{questionnaireId}", 
      *      name="questionnaire_pick"
      * )
      * @ParamConverter("test", class="InnovaSelfBundle:Test", options={"mapping": {"testId": "id" }})

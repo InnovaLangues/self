@@ -2,11 +2,11 @@
 <div class="col-md-{{ propWidth }} proposition-APPT-container">
     <div class="proposition-APP">
     {% if mediaType == "texte" %}
-            {{ subquestion.media.description }}
+            {{ subquestion.media.description | raw }}
     {% elseif mediaType == "audio" %}
         {{ macros.audio(subquestion.media.id, subquestion.media, "audio.png", 100, 0, "") }}
     {% elseif mediaType == "image" %}
-        {{ macros.image(subquestion.media.id, subquestion.media, "Cliquez pour agrandir", "") }}
+        {{ macros.image(subquestion.media.id, subquestion.media, 'player.tooltip.enlarge' | trans, "") }}
     {% endif %}
     </div>
 </div>

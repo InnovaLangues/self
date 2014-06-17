@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset("bundles/innovaself/css/editor.css") }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body -%}
+    {% include "InnovaSelfBundle:Editor/partials:questionnaire.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/player.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/dragAndDrop.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor.js") }}"></script>
+    {{ tinymce_init() }}
+{% endblock %}

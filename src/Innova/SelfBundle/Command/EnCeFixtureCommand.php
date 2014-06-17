@@ -57,7 +57,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
         $questionnaire_1 = $this->createQuestionnaire("B1_CE_AgathaChristie", "B1", "CE", $test, 0);
         $questionnaire_1->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
         $questionnaire_1->setMediaText(
-            $this->mediaText("",
+            $this->mediaText($startTitle . "" . $endTitle,
             "Dame Agatha Mary Clarissa Christie, DBE (born Miller; 15 September 1890 – 12 January 1976) was an English crime writer of novels, short stories, and plays. She also wrote six romances under the name Mary Westmacott, but she is best remembered for the 66 detective novels and 14 short story collections she wrote under her own name, most of which revolve around the investigations of such characters as Hercule Poirot, Miss Jane Marple and Tommy and Tuppence. She also wrote the world's longest-running play, The Mousetrap.",
             "")
             );
@@ -78,7 +78,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
         $questionnaire_2 = $this->createQuestionnaire("B1_CE_Parmesanchicken", "B1", "CE", $test, 0);
         $questionnaire_2->setMediaInstruction($this->mediaText("", "Read the text and answer the questions.", ""));
         $questionnaire_2->setMediaText(
-            $this->mediaText("",
+            $this->mediaText($startTitle . "" . $endTitle,
             "1. Preheat oven to 350 degrees F (175 degrees C). Lightly grease a 9x13 inch baking dish.@@@ 2. In a bowl, blend the olive oil and garlic. In a separate bowl, mix the bread crumbs, Parmesan cheese, basil, and pepper. Dip each chicken breast in the oil mixture, then in the bread crumb mixture. Arrange the coated chicken breasts in the prepared baking dish, and top with any remaining bread crumb mixture.@@@ 3. Bake 30 minutes in the preheated oven, or until chicken is no longer pink and juices run clear.",
             ""));
         // CREATION QUESTION
@@ -128,7 +128,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
         $questionnaire_4 = $this->createQuestionnaire("B1_CE_Renewableenergy", "B1", "CE", $test, 0);
         $questionnaire_4->setMediaInstruction($this->mediaText("", "Read the text and answer the questions.", ""));
         $questionnaire_4->setMediaText(
-        $this->mediaText("",
+        $this->mediaText($startTitle . "" . $endTitle,
         "Most people agree that carbon emissions from power stations are a significant cause of climate change. These days a fiercer argument is over what to do about it. Many governments are pumping money into renewable sources of electricity, such as wind turbines, solar farms, hydroelectric and geothermal plants. But countries with large amounts of renewable generation, such as Denmark and Germany, face the highest energy prices in the rich world. In Britain electricity from wind farms costs twice as much as that from traditional sources; solar power is even more dear.",
         ""));
         // CREATION QUESTION
@@ -151,7 +151,7 @@ class EnceFixtureCommand extends ContainerAwareCommand
         // CREATION QUESTIONNAIRE
         $questionnaire_5 = $this->createQuestionnaire("B1_CE_Valentinesales", "B1", "CE", $test, 0);
         $questionnaire_5->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
-        $questionnaire_5->setMediaText($this->mediaText("", "Today couples tend to celebrate by exchanging gifts, from greeting cards to chocolates to weekend getaways.
+        $questionnaire_5->setMediaText($this->mediaText($startTitle . "" . $endTitle, "Today couples tend to celebrate by exchanging gifts, from greeting cards to chocolates to weekend getaways.
 According to the National Retail Federation’s 2008 Valentine’s Day Consumer Intentions and Actions Survey, conducted by Columbus-based BIGresearch, the average consumer plans to spend $122.98 on this day – an increase of about $3 over last year.", ""));
         // CREATION QUESTION
         $questionnaire_5_1 = $this->createQuestion("QRU", $questionnaire_5);
@@ -169,7 +169,7 @@ According to the National Retail Federation’s 2008 Valentine’s Day Consumer 
         // CREATION QUESTIONNAIRE
         $questionnaire_6 = $this->createQuestionnaire("B1_CE_Doves", "B1", "CE", $test, 0);
         $questionnaire_6->setMediaInstruction($this->mediaText("", "Read the text and find the 2 correct answers.", ""));
-        $questionnaire_6->setMediaText($this->mediaText("", "White doves are a traditional symbol of love and peace, so the idea of releasing doves at a wedding, christening or funeral may seem like an innocent expression of affection. But what about the animals involved?
+        $questionnaire_6->setMediaText($this->mediaText($startTitle . "" . $endTitle, "White doves are a traditional symbol of love and peace, so the idea of releasing doves at a wedding, christening or funeral may seem like an innocent expression of affection. But what about the animals involved?
 The theory is that the doves should automatically return to their place of origin using their innate homing instinct but the ISPCA is seeing a different picture emerge. After a release of doves at a wedding in Athlone, 3 young birds remained around the hotel disorientated and confused. By the time ISPCA Inspector Karen Lyons captured the last of the birds they were severely underweight.", ""));
         // CREATION QUESTION
         $questionnaire_6_1 = $this->createQuestion("QRM", $questionnaire_6);
@@ -186,7 +186,7 @@ The theory is that the doves should automatically return to their place of origi
         // CREATION QUESTIONNAIRE
         $questionnaire_8 = $this->createQuestionnaire("B1_CE_Scubadiving", "B1", "CE", $test, 1);
         $questionnaire_8->setMediaInstruction($this->mediaText("", "According to the text, are the following statements true or false ?", ""));
-        $questionnaire_8->setMediaText($this->mediaText("", "Scuba diving is a form of underwater diving in which a diver uses a self contained underwater breathing apparatus (scuba) to breathe underwater. Unlike other modes of diving, which rely either on breath-hold or on air pumped from the surface, scuba divers carry their own source of breathing gas, (usually compressed air), allowing them greater freedom of movement than with an air line or diver's umbilical and longer underwater endurance than breath-hold.", ""));
+        $questionnaire_8->setMediaText($this->mediaText($startTitle . "" . $endTitle, "Scuba diving is a form of underwater diving in which a diver uses a self contained underwater breathing apparatus (scuba) to breathe underwater. Unlike other modes of diving, which rely either on breath-hold or on air pumped from the surface, scuba divers carry their own source of breathing gas, (usually compressed air), allowing them greater freedom of movement than with an air line or diver's umbilical and longer underwater endurance than breath-hold.", ""));
         // CREATION QUESTION
         $questionnaire_8_1 = $this->createQuestion("TVF", $questionnaire_8);
         // CREATION SUBQUESTION
@@ -209,7 +209,7 @@ The theory is that the doves should automatically return to their place of origi
         // CREATION QUESTIONNAIRE
         $questionnaire_9 = $this->createQuestionnaire("A2_CE_Schoolbadboys", "A2", "CE", $test, 0);
         $questionnaire_9->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
-        $questionnaire_9->setMediaText($this->mediaText("",
+        $questionnaire_9->setMediaText($this->mediaText($startTitle . "" . $endTitle,
         "The point is, though, that after six months on the course the kids all claim - and the school agrees - that their behaviour has improved beyond all recognition. \"I've only had one detention and I haven't felt like bunking off,\" says Mather. \"I thought it was about time I sorted myself out.\" There has also been a further knock-on benefit of improvements in their GCSE curricular work. So what is the secret ?", ""));
         // CREATION QUESTION
         $questionnaire_9_1 = $this->createQuestion("QRU", $questionnaire_9);
@@ -228,7 +228,7 @@ The theory is that the doves should automatically return to their place of origi
         // CREATION QUESTIONNAIRE
         $questionnaire_10 = $this->createQuestionnaire("B2_CE_Schoolskiveoff", "B2", "CE", $test, 0);
         $questionnaire_10->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
-        $questionnaire_10->setMediaText($this->mediaText("",
+        $questionnaire_10->setMediaText($this->mediaText($startTitle . "" . $endTitle,
         "The kids enjoy the work - \"less boring, more useful\" - and the sanction of being slung off the course is a great deal more effective than being banned from maths, but what they really seem to appreciate is being treated as adults. \"If you get wound up and think you're going to lose your temper they let you take five minutes out,\" says Mather. \"A teacher would think you were trying to skive off if you asked for time out.\" \"They don't say 'Do this' or 'Do that',\" says Mather. \"They tell you what's expected and let you get on with it. If you need help they'll give it but they let you complete the work to your standard, not some curriculum standard. So you feel like putting more effort in.\"", ""));
         // CREATION QUESTION
         $questionnaire_10_1 = $this->createQuestion("QRU", $questionnaire_10);
@@ -247,7 +247,7 @@ The theory is that the doves should automatically return to their place of origi
         // CREATION QUESTIONNAIRE
         $questionnaire_11= $this->createQuestionnaire("B1_CE_Copsstory", "B1", "CE", $test, 1);
         $questionnaire_11->setMediaInstruction($this->mediaText("", "According to the text, are the following statements true or false, or is the information not mentioned ?", ""));
-        $questionnaire_11->setMediaText($this->mediaText("", "\"Called the cops?\" I asked.@@@
+        $questionnaire_11->setMediaText($this->mediaText($startTitle . "" . $endTitle, "\"Called the cops?\" I asked.@@@
 They nodded. @@@
 \"Anything missing?\"@@@
 \"His gold Rolex,\" the woman said. \"He loved it like his own child. And the other silver icepick. Both were part of a set he treasured.\"@@@
@@ -285,7 +285,7 @@ She took a deep breath and started.
         // CREATION QUESTIONNAIRE
         $questionnaire_12 = $this->createQuestionnaire("B2_CE_Indiashotdead", "B2", "CE", $test, 1);
         $questionnaire_12->setMediaInstruction($this->mediaText("", "According to the text, are the following statements true or false ?", ""));
-        $questionnaire_12->setMediaText($this->mediaText("", "Narendra Dabholkar was on a regular morning stroll, in Pune, Maharashtra, when a pair of hitmen parked their motorbike and shot him dead. He had campaigned for 18 years against those who pretend to use, or offer protection from, the arts of black magic or other religious or mystical harassment. He wanted a law to prosecute such con artists and to protect their victims from extortion and bullying.
+        $questionnaire_12->setMediaText($this->mediaText($startTitle . "" . $endTitle, "Narendra Dabholkar was on a regular morning stroll, in Pune, Maharashtra, when a pair of hitmen parked their motorbike and shot him dead. He had campaigned for 18 years against those who pretend to use, or offer protection from, the arts of black magic or other religious or mystical harassment. He wanted a law to prosecute such con artists and to protect their victims from extortion and bullying.
 A local sect and assorted Hindu right-wingers opposed his law, which Maharashtra’s state government finally agreed to enact, in Mr Dabholkar’s memory, on August 21st. He had received death threats before. The chief minister, Prithviraj Chavan, compared the killing of the rationalist to the murder of India’s most revered figure, saying that \"just as Gandhi was killed by those who could not digest his thoughts…[Mr Dabholkar] too was eliminated\"", ""));
         // CREATION QUESTION
         $questionnaire_12_1 = $this->createQuestion("TVF", $questionnaire_12);
@@ -309,7 +309,7 @@ A local sect and assorted Hindu right-wingers opposed his law, which Maharashtra
         // CREATION QUESTIONNAIRE
         $questionnaire_13 = $this->createQuestionnaire("B2_CE_AtheismIndia", "B2", "CE", $test, 0);
         $questionnaire_13->setMediaInstruction($this->mediaText("", "Read the text and answer the following question.", ""));
-        $questionnaire_13->setMediaText($this->mediaText("",
+        $questionnaire_13->setMediaText($this->mediaText($startTitle . "" . $endTitle,
         "Indian atheists generally have an easier time than those elsewhere in South Asia. Prominent figures including the first prime minister, Jawaharlal Nehru, and the current defence and home ministers, plus the chief minister of Karnataka state, are cheerily irreligious. Buddhists, Jains and many Hindus hold no particular belief in God. Humanist groups abound and the taboo against refusing to express religious belief is falling. A survey in May found 81% of Indians were religious, a fall from 87% in 2005.
 Yet powerful groups remain to exploit superstition and religious fear. “Even now we have witch-hunting: people who are branded as witches and either killed or extorted for money”, says Sumitra Padmanabhan, the editor of the Freethinker, a humanist magazine in Kolkata. She lists a baffling range of charlatans in the state of West Bengal: sellers of gemstones with supposedly therapeutic powers, providers of talismans and amulets, purveyors of cosmetics with magical properties.", ""));
         // CREATION QUESTION
@@ -331,7 +331,7 @@ Yet powerful groups remain to exploit superstition and religious fear. “Even n
         // CREATION QUESTIONNAIRE
         $questionnaire_14 = $this->createQuestionnaire("B2_CE_Valentineorigin", "B2", "CE", $test, 0);
         $questionnaire_14->setMediaInstruction($this->mediaText("", "Read the text and find the 2 correct answers.", ""));
-        $questionnaire_14->setMediaText($this->mediaText("", "This year, consumers are expected to spend more than $17 billion on this special day that traces its roots to ancient Rome.
+        $questionnaire_14->setMediaText($this->mediaText($startTitle . "" . $endTitle, "This year, consumers are expected to spend more than $17 billion on this special day that traces its roots to ancient Rome.
 Opinions abound about who the original Valentine was, with the most popular theory that he was a clergyman who was executed for secretly marrying couples in Rome even though the emperor at the time thought marriage weakened his soldiers. In AD 496, Pope Gelasius set aside Feb 14 to honor St. Valentine.", ""));
         // CREATION QUESTION
         $questionnaire_14_1 = $this->createQuestion("QRM", $questionnaire_14);
@@ -348,7 +348,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
         // CREATION QUESTIONNAIRE
         $questionnaire_15 = $this->createQuestionnaire("B2_CE_Brfailingschools", "B2", "CE", $test, 0);
         $questionnaire_15->setMediaInstruction($this->mediaText("", "Read the text and complete the statement.", ""));
-        $questionnaire_15->setMediaText($this->mediaText("",
+        $questionnaire_15->setMediaText($this->mediaText($startTitle . "" . $endTitle,
         "The new government wants to rely on methods other than overt selection to improve results in state schools. The education secretary, has rushed through two main sorts of supply-side reforms. The previous government had come up with “academies” to revive failing, mainly inner-city schools and given them certain freedoms. Academies do not have to stick zealously to the national curriculum, for example, and they are not constrained by the national pay deals for teachers that hobble their counterparts elsewhere in the state sector. They may not, however, select students: they are required to take the most local ones, even when an academy replaces that vanishingly rare thing, a failing church school.", ""));
         // CREATION QUESTION
         $questionnaire_15_1 = $this->createQuestion("QRU", $questionnaire_15);

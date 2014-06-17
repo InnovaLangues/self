@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>User</h1>
+    <h1>{{ 'user.single' | trans }}</h1>
 
     <table class="record_properties">
         <tbody>
@@ -31,12 +31,12 @@
         <ul class="record_actions">
     <li>
         <a href="{{ path('user') }}">
-            Back to the list
+            {{ 'user.back_to_list' | trans }}
         </a>
     </li>
     <li>
         <a href="{{ path('user_edit', { 'id': entity.id }) }}">
-            Edit
+            {{ 'generic.edit' | trans }}
         </a>
     </li>
     <li>{{ form(delete_form) }}</li>

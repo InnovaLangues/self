@@ -3,7 +3,7 @@
 {% block body -%}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">La liste des tests exportés</h3>
+            <h3 class="panel-title">{{ 'export.tests_list' | trans }}</h3>
         </div>
         <div class="panel-body">
             <div class='row pull-left col-md-3 test-available'>
@@ -11,7 +11,10 @@
                 <div class="panel panel-default  ">
                     <div class="panel-body">
                         <div>
-                            <a href="{{ path('csv-export', { 'language': test.language.name| slice(0, 2)|lower, 'level': test.questionnaires[0].level.name|lower, 'test': test.id, 'levelId': test.questionnaires[0].level.id } )}}">{{ test.name }}</a>
+                            <a href="{{ path('csv-export', { 'language': test.language.name| slice(0, 2)|lower, 'level': test.questionnaires[0].level.name|lower, 'test': test.id } )}}">{{ test.name }}</a>
+                        </div>
+                        <div>
+                            <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': test.questionnaires[0].level.name|lower, 'test': test.id } )}}">{{ test.name }} Tia Plus</a>
                         </div>
                         <div>
                             <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': test.questionnaires[0].level.name|lower, 'test': test.id, 'levelId': test.questionnaires[0].level.id } )}}">{{ test.name }} Tia Plus</a>
@@ -22,15 +25,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/showTests.js") }}"></script>
-            <!-- Jquery first then Bootstrap call -->
-            <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-            <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-            <script src="{{ asset('bundles/innovaself/js/main.js') }}"></script>
-
 {% endblock %}

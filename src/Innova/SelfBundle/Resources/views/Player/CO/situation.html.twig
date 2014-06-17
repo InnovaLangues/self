@@ -1,7 +1,7 @@
-{% if questionnaire.ListeningLimit <= 1 %}
-    {% set limit_listening_text = "écoute" %}
+{% if questionnaire.mediaText.mediaLimits[0].listeningLimit <= 1 %}
+    {% set limit_listening_text = 'player.listening_single' | trans %}
 {% else %}
-    {% set limit_listening_text = "écoutes" %}
+    {% set limit_listening_text = 'player.listening_plural' | trans %}
 {% endif %}
 {% set listening = app.session.get('listening') %}
 
@@ -16,15 +16,19 @@
 
 <div id="situation-CO" class="situation">
     {% if questionnaire.mediaText is not null %}
+        {# pour l'instant on affiche la limite d'écoute non contextualisée étant donné que les media sont dupliqués et qu'un media n'est présent que dans un seul test/questionnaire #}
         {% if questionnaire.mediaText.mediaType.name == "audio" %}
-            {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.ListeningLimit, "Objet de la question") }}
+            {{ macros.audio("situation", questionnaire.mediaText, icon, 120, questionnaire.mediaText.mediaLimits[0].listeningLimit, 'player.tooltip.question_object' | trans) }}
         {% elseif questionnaire.mediaText.mediaType.name == "video" %}
-            {{ macros.video("situation", questionnaire.mediaText, questionnaire.ListeningLimit) }}
+            {{ macros.video("situation", questionnaire.mediaText, questionnaire.mediaText.mediaLimits[0].listeningLimit) }}
         {% endif %}
+
+        {% if questionnaire.mediaText.mediaLimits[0].listeningLimit > 0 %}
         <div class="hidden" id="listens-counter">
-            Reste <span data-limit={{ questionnaire.ListeningLimit }} id="listening_number">{{ questionnaire.ListeningLimit }}</span>
+            Reste <span data-limit={{ questionnaire.mediaText.mediaLimits[0].listeningLimit }} id="listening_number">{{ questionnaire.mediaText.mediaLimits[0].listeningLimit }}</span>
             <span id="limit_listening_text">{{ limit_listening_text }}</span>
-            <span class="hidden">sur <span id="limit_listening">{{ questionnaire.ListeningLimit }}</span></span>
+            <span class="hidden">sur <span id="limit_listening">{{ questionnaire.mediaText.mediaLimits[0].listeningLimit }}</span></span>
         </div>
+        {% endif %}
     {% endif %}
 </div>

@@ -81,6 +81,11 @@ class User extends BaseUser
     protected $levelLansad;
 
     /**
+    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="user")
+    */
+    protected $mediaClicks;
+
+    /**
      * Constructor
      */
     public function __construct()

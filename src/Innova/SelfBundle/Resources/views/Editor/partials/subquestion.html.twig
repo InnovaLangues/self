@@ -1,0 +1,34 @@
+{% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+
+<div id="subquestion-{{ subquestion.id }}-container" class="tab-pane{% if i is not defined or i == 0 %} active{% endif %}">
+    <div class="row" style="position:relative">
+        {% if subquestion.mediaAmorce is not null %}
+            {{ macros.deleteAmorce(subquestion) }}
+            {{ macros.displayMedia(test, questionnaire, subquestion.mediaAmorce) }}
+        {% else %}
+            <span class="btn btn-default btn-xs add-amorce" data-subquestion-id="{{ subquestion.id }}">
+                <span class="glyphicon glyphicon-plus"></span> 
+                {{ 'editor.subquestion.add_instruction' | trans }}
+            </span>
+        {% endif %}
+
+        <hr />
+
+        {% set propositions = subquestion.propositions %}
+        <table class="table">
+            {% for proposition in propositions %}
+                {% include "InnovaSelfBundle:Editor/partials:proposition.html.twig" %}
+            {% endfor %}
+            <tr>
+                <td style="border: none;" colspan="3">
+                    <span id="create-proposition" data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs">{{ 'editor.proposition.add' | trans }}</span>
+                </td>
+            </tr>
+        </table>
+
+        <span class="btn btn-default btn-xs delete-subquestion pull-right" data-subquestion-id="{{ subquestion.id }}">
+            <span class="glyphicon glyphicon-remove"></span> 
+            {{ 'editor.subquestion.remove' | trans }}
+        </span>
+    </div>
+</div>

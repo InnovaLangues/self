@@ -96,6 +96,16 @@ class Questionnaire
     protected $languageLevel;
 
     /**
+    * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="questionnaire")
+    */
+    private $mediaLimits;
+
+    /**
+    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="questionnaire")
+    */
+    private $mediaClicks;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="theme", type="string", length=255)
@@ -172,6 +182,15 @@ class Questionnaire
     * @ORM\ManyToMany(targetEntity="Test", mappedBy="questionnaires")
     */
     private $tests;
+
+    /**
+    * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="questionnaire")
+    */
+    private $orderQuestionnaireTests;
+
+
+
+
 
     public function __construct()
     {
@@ -843,5 +862,104 @@ class Questionnaire
     public function getFixedOrder()
     {
         return $this->fixedOrder;
+    }
+
+    /**
+     * Add mediaLimits
+     *
+     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     * @return Questionnaire
+     */
+    public function addMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    {
+        $this->mediaLimits[] = $mediaLimits;
+    
+        return $this;
+    }
+
+    /**
+     * Remove mediaLimits
+     *
+     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     */
+    public function removeMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    {
+        $this->mediaLimits->removeElement($mediaLimits);
+    }
+
+    /**
+     * Get mediaLimits
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMediaLimits()
+    {
+        return $this->mediaLimits;
+    }
+
+    /**
+     * Add mediaClicks
+     *
+     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @return Questionnaire
+     */
+    public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    {
+        $this->mediaClicks[] = $mediaClicks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove mediaClicks
+     *
+     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     */
+    public function removeMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    {
+        $this->mediaClicks->removeElement($mediaClicks);
+    }
+
+    /**
+     * Get mediaClicks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMediaClicks()
+    {
+        return $this->mediaClicks;
+    }
+
+    /**
+     * Add orderQuestionnaireTests
+     *
+     * @param \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
+     * @return Questionnaire
+     */
+    public function addOrderQuestionnaireTest(\Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests)
+    {
+        $this->orderQuestionnaireTests[] = $orderQuestionnaireTests;
+    
+        return $this;
+    }
+
+    /**
+     * Remove orderQuestionnaireTests
+     *
+     * @param \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
+     */
+    public function removeOrderQuestionnaireTest(\Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests)
+    {
+        $this->orderQuestionnaireTests->removeElement($orderQuestionnaireTests);
+    }
+
+    /**
+     * Get orderQuestionnaireTests
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrderQuestionnaireTests()
+    {
+        return $this->orderQuestionnaireTests;
     }
 }

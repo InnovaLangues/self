@@ -11,9 +11,9 @@
 <div id="situation-CO" class="situation">
     {% if questionnaire.mediaText is not null %}
         {% if questionnaire.mediaText.mediaType.name == "audio" %}
-            {{ macros.audio("consigne", questionnaire.mediaText, "oignon.png", 120, questionnaire.ListeningLimit, "Consigne") }}
+            {{ macros.audio("consigne", questionnaire.mediaText, "oignon.png", 120, questionnaire.mediaText.mediaLimits[0].listeningLimit, 'player.tooltip.intruction' | trans) }}
         {% elseif questionnaire.mediaText.mediaType.name == "video" %}
-            {{ macros.video("consigne", questionnaire.mediaText, questionnaire.ListeningLimit) }}
+            {{ macros.video("consigne", questionnaire.mediaText, questionnaire.mediaText.mediaLimits[0].listeningLimit) }}
         {% endif %}
     {% endif %}
 </div>

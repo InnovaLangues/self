@@ -1,0 +1,48 @@
+
+/**********************************
+	TABS
+***********************************/
+
+.nav-tabs > li {
+	min-width: 80px;
+}
+
+.nav-tabs > li > a {
+	color:black;
+	opacity:0.7;
+	border-left:none;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus	{
+	opacity:1;
+	color:white;
+	background-color: #E37E71;
+	border-left:none;
+}
+
+.tab-pane {
+	background-color: #E37E71;
+	color: white;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	padding:20px 20px 20px 20px;
+}
+
+
+/**********************************
+	fix focus on tabs a
+***********************************/
+
+.nav-tab a:focus{
+	outline:none;
+}
+
+
+/**********************************
+	vertical align
+***********************************/
+
+.vertical-middle{
+	vertical-align: middle;
+}

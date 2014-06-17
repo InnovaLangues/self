@@ -1,0 +1,66 @@
+<div class="panel panel-default">
+    <div class="panel-heading">{{ 'editor.questionnaire.general_infos' | trans }}</div>
+    <div class="panel-body">
+        <form class="form-inline" role="form">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="theme">{{ 'editor.questionnaire.title' | trans }}</label>
+                    <input type="text" class="form-control" id="theme" value="{{ questionnaire.theme }}"/>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="skill">{{ 'editor.questionnaire.skill' | trans }}</label>
+                    {% set skills = ["-", "CO", "CE"] %}
+                    <select id="skill" class="form-control">
+                        {% for skill in skills %}
+                            <option {% if questionnaire.skill is not null and questionnaire.skill.name == skill %}selected{% endif %} value="{{ skill }}">
+                                {{ skill }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <!--
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="skill">Niveau</label>
+                    {% set levels = ["-", "A1", "A2", "B1", "B2", "C1"] %}
+                    <select id="level" class="form-control">
+                        {% for level in levels %}
+                            <option {% if questionnaire.level is not null and questionnaire.level.name == level %}selected{% endif %} value="{{ level }}">
+                                {{ level }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            -->
+
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
+                    {% set typologies = ["-", "TVF", "TQRM", "TQRU", "TVFNM", "APPAA", "APPAI", "APPTT"] %}
+                    <select id="typology" class="form-control">
+                        {% for typology in typologies %}
+                            <option {% if questionnaire.questions[0].typology is not null and questionnaire.questions[0].typology.name == typology %}selected{% endif %} value="{{ typology }}">
+                                {{ typology }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="orderfix">{{ 'editor.questionnaire.fixed_order' | trans }} ?</label>
+                    <input id="fixed-order" type="checkbox" class="form-control" {% if questionnaire.fixedOrder == true %}checked{% endif %}/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

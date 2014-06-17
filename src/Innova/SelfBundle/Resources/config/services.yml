@@ -3,7 +3,7 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
-           
+
     twig.extension.array:
         class: Twig_Extensions_Extension_Array
         tags:
@@ -19,13 +19,19 @@ services:
 
     innova_import:
         class: Innova\SelfBundle\Controller\ImportController
-        arguments: 
+        arguments:
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
 
     innova_export:
         class: Innova\SelfBundle\Controller\ExportController
-        arguments: 
+        arguments:
+            kernelRoot: %kernel.root_dir%
+            entityManager: @doctrine.orm.entity_manager
+
+    innova_export_tia:
+        class: Innova\SelfBundle\Controller\ExportTiaController
+        arguments:
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
 
@@ -36,3 +42,36 @@ services:
             entityManager: @doctrine.orm.entity_manager
             session: @session
             router: @router
+
+    innova_editor_upload:
+        class: Innova\SelfBundle\Controller\Editor\UploadController
+        arguments:
+            kernelRoot: %kernel.root_dir%
+        calls:
+            - [setRequest, [@request]]
+        scope: request
+
+    innova_editor_questionnaire:
+        class: Innova\SelfBundle\Controller\Editor\QuestionnaireController
+        arguments:
+            questionnaireManager:   @self.questionnaire.manager
+            questionManager:    @self.question.manager
+            orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
+            entityManager:      @doctrine.orm.entity_manager
+            templating:         @templating
+        calls:
+            - [setRequest, [@request]]
+        scope: request
+
+    innova_editor_media:
+        class: Innova\SelfBundle\Controller\Editor\MediaController
+        arguments:
+            mediaManager:       @self.media.manager
+            propositionManager: @self.proposition.manager
+            appManager:         @self.app.manager
+            entityManager:      @doctrine.orm.entity_manager
+            templating:         @templating
+        calls:
+            - [setRequest, [@request]]
+        scope: request
+

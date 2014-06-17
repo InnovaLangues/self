@@ -4,130 +4,11 @@
         <meta charset="UTF-8" />
         <title>{% block title %}SELF{% endblock %}</title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-
-
-        <script type="text/javascript" src="{{ asset('bundles/innovaself/js/jquery-1.3.2.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/innovaself/js/jquery-ui-1.7.1.custom.min.js') }}"></script>
-
-
-    <style>
-        header, section {
-            display: block;
-        }
-        body {
-            font-family: 'Droid Serif';
-        }
-        h1, h2 {
-            text-align: center;
-            font-weight: normal;
-        }
-        #info {
-    display: block;
-    padding: 10px; margin-bottom: 20px;
-    border: 1px solid #333;
-    background-color: #efefef;
-}
-
-#test-list {
-    list-style: none;
-}
-
-#test-list li {
-    display: block;
-    padding: 20px 10px; margin-bottom: 3px;
-    background-color: #efefef;
-}
-
-#test-list li img.handle {
-    margin-right: 20px;
-    cursor: move;
-}
-
-        #features {
-            margin: auto;
-            width: 460px;
-            font-size: 0.9em;
-        }
-        .connected, .sortable, .exclude, .handles {
-            margin: auto;
-            padding: 0;
-            width: 510px;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        .sortable.grid {
-            overflow: hidden;
-        }
-        .connected li, .sortable li, .exclude li, .handles li {
-            list-style: none;
-            border: 1px solid #CCC;
-            background: #F6F6F6;
-            font-family: "Tahoma";
-            color: #1C94C4;
-            margin: 5px;
-            padding: 5px;
-            height: 32px;
-        }
-        .handles span {
-            cursor: move;
-        }
-        li.disabled {
-            opacity: 0.5;
-        }
-        .sortable.grid li {
-            line-height: 80px;
-            float: left;
-            width: 80px;
-            height: 80px;
-            text-align: center;
-        }
-        li.highlight {
-            background: #FEE25F;
-        }
-        #connected {
-            width: 440px;
-            overflow: hidden;
-            margin: auto;
-        }
-        .connected {
-            float: left;
-            width: 200px;
-        }
-        .connected.no2 {
-            float: right;
-        }
-        li.sortable-placeholder {
-            border: 1px dashed #CCC;
-            background: none;
-        }
-    </style>
-    <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
-
-
+        <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="{{ asset('bundles/innovaself/js/mediaelement-and-player.min.js') }}"></script>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <script type="text/javascript">
-  // When the document is ready set up our sortable with it's inherant function(s)
-  $(document).ready(function() {
-    $("#test-list").sortable({
-      handle : '.handle',
-      update : function (data) {
-          //var order = $('#test-list').sortable('serialize');
-            $.ajax({
-                type: "post",
-                url: Routing.generate('admin_ajax_questionnaire_order'),
-                data: $('#test-list').sortable('serialize')
-            });
-        // $("#info").load(Routing.generate('admin_ajax_questionnaire_order', $('#test-list').sortable('serialize') ));
-        console.log(data);
-      }
-    });
-});
-</script>
     </head>
     <body>
         {% block navbar %}
@@ -140,16 +21,13 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="{{ path('admin_user') }}">Users</a></li>
-                            <!-- Add Questionnaire menu for evolution -->
-                            <li><a href="{{ path('admin_questionnaire') }}">Questionnaire</a></li>
-                            <li><a href="{{ path('csv_export') }}">Export CSV</a></li>
-                            <li><a href="{{ path('test') }}">Voir les tests</a></li>
-                            <li><a href="{{ path('show_tests') }}">Accès aux tests</a></li>
+                            <li><a href="{{ path('admin_user') }}">{{ 'menu.users' | trans }}</a></li>
+                            <li><a href="{{ path('csv_export') }}">{{ 'menu.csv_export' | trans }}</a></li>
+                            <li><a href="{{ path('show_tests') }}">{{ 'menu.tests' | trans }}</a></li>
+                            <li><a href="{{ path('editor_tests_show') }}">{{ 'menu.editor' | trans }}</a></li>
                         {% endif %}
-                        <!-- Help with Modal Bootstrap : http://getbootstrap.com/javascript/#modals -->
-                        <li><a data-toggle="modal" href="#helpModal">{{ 'generic.help' | trans }}</a></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'generic.logout' | trans }}</a></li>
+                        <li><a data-toggle="modal" href="#helpModal">{{ 'menu.help' | trans }}</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'menu.logout' | trans }}</a></li>
                     </ul>
                 </div>
             </nav>
@@ -166,7 +44,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title">{{ 'generic.help' | trans }}</h4>
+                                    <h4 class="modal-title">{{ 'menu.help' | trans }}</h4>
                                 </div>
                                 <div class="modal-body">
                                 <!-- Help file -->
@@ -182,37 +60,7 @@
             </div>
         </div>
 
-        <!-- Window for the Control Action -->
-        <div class="container">
-            <div class="col-md-12">
-            <!-- Button trigger modal -->
-                <!-- Modal -->
-                <div class="modal fade" id="controlModal" >
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Contrôle</h4>
-                            </div>
-                            <div class="modal-body">
-                            <!-- Help file -->
-                                {% include 'InnovaSelfBundle::Main/control.html.twig' %}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'generic.ok' | trans }}</button>
-                          </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-            </div>
-        </div>
-
         {% block javascripts %}
-
-
-            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-
-
             <!-- Jquery first then Bootstrap call -->
             <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>

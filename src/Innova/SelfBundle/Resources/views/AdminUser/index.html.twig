@@ -1,11 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Users list</h1>
+    <h1>{{ 'user.list' | trans }}</h1>
     <table class="records_list table">
         <thead>
             <tr>
-                <th>Nom</th>
+                <th>{{ 'user.name' | trans }}</th>
                 <th></th>
             </tr>
         </thead>
@@ -21,8 +21,5 @@
         </tbody>
     </table>
 
-
-    <a href="{{ path('admin_user_new') }}" class="btn btn-primary">Create a new entry</a>
-
-
-    {% endblock %}
+    <a href="{{ path('admin_user_new') }}" class="btn btn-primary">{{ 'user.create' | trans }}</a>
+{% endblock %}
