@@ -75,3 +75,17 @@ services:
             - [setRequest, [@request]]
         scope: request
 
+    innova_player_trace:
+        class: Innova\SelfBundle\Controller\Player\TraceController
+        arguments:
+            mediaManager:       @self.media.manager
+            propositionManager: @self.proposition.manager
+            traceManager:       @self.trace.manager
+            entityManager:      @doctrine.orm.entity_manager
+            session:            @session
+            router:             @router
+            securityContext:    @security.context
+        calls:
+            - [setRequest, [@request]]
+        scope: request
+

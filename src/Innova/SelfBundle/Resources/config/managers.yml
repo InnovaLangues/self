@@ -29,3 +29,8 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             propositionManager: @self.proposition.manager
+
+    self.trace.manager:
+        class: Innova\SelfBundle\Manager\TraceManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
