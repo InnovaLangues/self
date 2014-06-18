@@ -263,33 +263,21 @@ class AdminUserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
-        $put = $request->request;
 
-        if (!$user) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        // Suppression des affectations, table test_user
         foreach ($user->getTests() as $test) {
             $user->removeTest($test);
-            $em->persist($user);
         }
-        $em->flush();
 
-        // Boucle pour remplir ce tableau
-        foreach ($put as $key => $value) {
+        foreach ($request->request as $key => $value) {
             if ($key == 'test') {
                 foreach ($value as $testId => $testValue) {
                     $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-
-                    if (!$test) {
-                        throw $this->createNotFoundException('Unable to find Test entity.');
-                    }
                     $user->addTest($test);
-                    $em->persist($user);
                 }
             }
         }
+        
+        $em->persist($user);
         $em->flush();
 
         return $this->redirect($this->generateUrl('admin_user'));
