@@ -395,20 +395,9 @@ class ExportController
                 case "APPAI";
                 case "APPTT";
                     foreach ($answers as $answer) {
-                    if ($answer->getProposition()->getRightAnswer()) {
-                        $score++;
-                    }
-                    /*
-                    // Accès à la proposition.
-                    $propositions = $answer->getProposition()->getSubQuestion()->getPropositions();
-                    $cptProposition = 0;
-                    foreach ($propositions as $proposition) {
-                        if ($proposition->getId() === $answer->getProposition()->getId()) {
-                            if ($proposition->getRightAnswer()) {
-                            }
+                        if ($answer->getProposition()->getRightAnswer()) {
+                            $score++;
                         }
-                    }
-                    */
                     }
                     break;
                 case "QRM";
