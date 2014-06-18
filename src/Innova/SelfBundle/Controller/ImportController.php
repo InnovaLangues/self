@@ -13,7 +13,6 @@ use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\Typology;
 
-
 /**
  * Class ImportController
  *
@@ -72,7 +71,6 @@ class ImportController
         // Path + Name:wq
         $csvPath = $csvPathImport . $csvName;
 
-
         // File import path
         // Répertoire où seront stockés les fichiers
         $dir2copy = $csvPathImportMp3; // A modifier quand on aura l'adresse
@@ -80,7 +78,7 @@ class ImportController
         // File copy path
         // Répertoire où seront copiés les fichiers
         $dir_paste = $rootPath . 'web/upload/media/'; // A modifier quand on aura l'adresse
-		// Tableau de trace.
+        // Tableau de trace.
         $nbTrace = 0;
         $tabTrace = array();
 
@@ -103,8 +101,7 @@ class ImportController
         }
 
         // Si je n'ai pas trouvé de répertoire alors je lance le traitement "classique".
-        if (!$existeDir)
-        {
+        if (!$existeDir) {
             if ($dossier = opendir($csvPathImportMp3)) {
                 while (false !== ($fichier = readdir($dossier))) {
                     if ($fichier != '.' && $fichier != '..' && is_file($csvPathImportMp3.$fichier)) {
@@ -140,10 +137,7 @@ class ImportController
                             || (preg_match("/contexte/i", $exp[0])) || (preg_match("/texte/i", $exp[0]))
                             || (preg_match("/amorce/i", $exp[0])) || (preg_match("/reponse/i", $exp[0]))) {
                                 $indice_fileName = 0;
-                            }
-
-                            else
-                            {
+                            } else {
                                 $repertoryName = strtolower($exp[0]);
                             }
                         }
@@ -153,9 +147,7 @@ class ImportController
                             || (preg_match("/contexte/i", $exp[1])) || (preg_match("/texte/i", $exp[1]))
                             || (preg_match("/amorce/i", $exp[1])) || (preg_match("/reponse/i", $exp[1]))) {
                                 $indice_fileName = 1;
-                            }
-                            else
-                            {
+                            } else {
                                 $repertoryName .=  "_" . strtolower($exp[1]);
                             }
                         }
@@ -165,9 +157,7 @@ class ImportController
                             || (preg_match("/contexte/i", $exp[2])) || (preg_match("/texte/i", $exp[2]))
                             || (preg_match("/amorce/i", $exp[2])) || (preg_match("/reponse/i", $exp[2]))) {
                                 $indice_fileName = 2;
-                            }
-                            else
-                            {
+                            } else {
                                 $repertoryName .=  "_" .  strtolower($exp[2]);
                             }
                         }
@@ -177,24 +167,20 @@ class ImportController
                             || (preg_match("/contexte/i", $exp[3])) || (preg_match("/texte/i", $exp[3]))
                             || (preg_match("/amorce/i", $exp[3])) || (preg_match("/reponse/i", $exp[3]))) {
                                 $indice_fileName = 3;
-                            }
-                            else
-                            {
+                            } else {
                                 if (!preg_match("/mp3/i", $exp[3]) && !preg_match("/jpg/i", $exp[3]) && !preg_match("/flv/i", $exp[3])) {
                                     $repertoryName .=   "_" . strtolower($exp[3]);
                                 }
                             }
                         }
 
-                        if ($indice_fileName == 0 ) {
+                        if ($indice_fileName == 0) {
                             if (isset($exp[4])) {
                                 if ((preg_match("/consigne/i", $exp[4])) || (preg_match("/option/i", $exp[4]))
                                 || (preg_match("/contexte/i", $exp[4])) || (preg_match("/texte/i", $exp[4]))
                                 || (preg_match("/amorce/i", $exp[4])) || (preg_match("/reponse/i", $exp[4]))) {
                                     $indice_fileName = 4;
-                                }
-                                else
-                                {
+                                } else {
                                     if (!preg_match("/mp3/i", $exp[4]) && !preg_match("/jpg/i", $exp[4]) && !preg_match("/flv/i", $exp[4])) {
                                         $repertoryName .=   "_" . strtolower($exp[4]);
                                     }
@@ -202,15 +188,13 @@ class ImportController
                             }
                         }
 
-                        if ($indice_fileName == 0 ) {
+                        if ($indice_fileName == 0) {
                             if (isset($exp[5])) {
                                 if ((preg_match("/consigne/i", $exp[5])) || (preg_match("/option/i", $exp[5]))
                                 || (preg_match("/contexte/i", $exp[5])) || (preg_match("/texte/i", $exp[5]))
                                 || (preg_match("/amorce/i", $exp[5])) || (preg_match("/reponse/i", $exp[5]))) {
                                     $indice_fileName = 5;
-                                }
-                                else
-                                {
+                                } else {
                                     if (!preg_match("/mp3/i", $exp[5]) && !preg_match("/jpg/i", $exp[5]) && !preg_match("/flv/i", $exp[5])) {
                                         $repertoryName .= "_" . strtolower($exp[5]);
                                     }
@@ -218,15 +202,13 @@ class ImportController
                             }
                         }
 
-                        if ($indice_fileName == 0 ) {
+                        if ($indice_fileName == 0) {
                             if (isset($exp[6])) {
                                 if ((preg_match("/consigne/i", $exp[6])) || (preg_match("/option/i", $exp[6]))
                                 || (preg_match("/contexte/i", $exp[6])) || (preg_match("/texte/i", $exp[6]))
                                 || (preg_match("/amorce/i", $exp[6])) || (preg_match("/reponse/i", $exp[6]))) {
                                     $indice_fileName = 6;
-                                }
-                               else
-                                {
+                                } else {
                                     if (!preg_match("/mp3/i", $exp[6]) && !preg_match("/jpg/i", $exp[6]) && !preg_match("/flv/i", $exp[6])) {
                                         $repertoryName .= "_" . strtolower($exp[6]);
                                     }
@@ -234,22 +216,19 @@ class ImportController
                             }
                         }
 
-                        if ($indice_fileName == 0 ) {
+                        if ($indice_fileName == 0) {
                             if (isset($exp[7])) {
                                 if ((preg_match("/consigne/i", $exp[7])) || (preg_match("/option/i", $exp[7]))
                                 || (preg_match("/contexte/i", $exp[7])) || (preg_match("/texte/i", $exp[7]))
                                 || (preg_match("/amorce/i", $exp[7])) || (preg_match("/reponse/i", $exp[7]))) {
                                     $indice_fileName = 7;
-                                }
-                                else
-                                {
+                                } else {
                                     if (!preg_match("/mp3/i", $exp[7]) && !preg_match("/jpg/i", $exp[7]) && !preg_match("/flv/i", $exp[7])) {
                                         $repertoryName .= "_" . strtolower($exp[7]);
                                     }
                                 }
                             }
                         }
-
 
                         $fileName = $exp[$indice_fileName]; // = nom de l'option : amorce/consigne/contexte/texte
 
@@ -280,9 +259,7 @@ class ImportController
                             if (isset($exp[$number])) {
                                 $fileName = $fileName . "_" . $exp[$number];
                             }
-                        }
-                        else
-                        {
+                        } else {
                             $nb = explode(".", $fileName);
                             $fileName = $nb[0];
                             $numberExist = false;
@@ -298,14 +275,10 @@ class ImportController
                             if ($numberExist) {
                                 if (isset($exp[$number])) {
                                     copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_". $nb[0] . "_" . $exp[$number]);
-                                }
-                                else
-                                {
+                                } else {
                                     copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option_". $nb[0] . "." . $extension);
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/option." . $extension);
                             }
                         }
@@ -314,14 +287,10 @@ class ImportController
                             if ($numberExist) {
                                 if (isset($exp[$number])) {
                                     copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . "_" . $exp[$number]);
-                                }
-                                else
-                                {
+                                } else {
                                     copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse_". $nb[0] . "." . $extension);
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/reponse." . $extension);
                             }
                         }
@@ -329,9 +298,7 @@ class ImportController
                         if (preg_match("/amorce/i", $fileName)) {
                             if ($numberExist) {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce_". $nb[0] . ".mp3");
-                            }
-                            else
-                            {
+                            } else {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/amorce.mp3");
                             }
                         }
@@ -339,9 +306,7 @@ class ImportController
                         if (preg_match("/consigne/i", $fileName)) {
                             if ($numberExist) {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/consigne_". $nb[0] . ".mp3");
-                            }
-                            else
-                            {
+                            } else {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/consigne.mp3");
                             }
                         }
@@ -350,9 +315,7 @@ class ImportController
                         if (preg_match("/^texte/i", $fileName)) {
                             if ($numberExist) {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte_". $nb[0] . "." . $extension);
-                            }
-                            else
-                            {
+                            } else {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/texte." . $extension);
                             }
                         }
@@ -360,9 +323,7 @@ class ImportController
                         if (preg_match("/contexte/i", $fileName)) {
                             if ($numberExist) {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/contexte_". $nb[0] . ".mp3");
-                            }
-                            else
-                            {
+                            } else {
                                 copy($csvPathImportMp3 . $fichier, $repertoryMkDir . "/contexte.mp3");
                             }
                         }
@@ -993,13 +954,10 @@ class ImportController
         $type = $tab[0];
         if ($type == "QRU") {
             $countTab = count($tab);
-            for ($compteurTab = 1; $compteurTab < $countTab; $compteurTab++)
-            {
+            for ($compteurTab = 1; $compteurTab < $countTab; $compteurTab++) {
                 $this->vfPropositionProcess($rightAnswer, $tab[$compteurTab], $compteurTab, $subQuestion);
             }
-        }
-        else
-        {
+        } else {
             for ($j=1; $j <= $nbProposition; $j++) {
                 $this->propositionProcess(1, $j, $rightAnswer, $data[1], $subQuestion, $dir2copy, $dir_paste, $nbItems);
             }
@@ -1077,9 +1035,7 @@ class ImportController
                 $this->vfPropositionProcess($rightAnswer, $vrai, "V", $subQuestion);
                 $faux = $tab[2];
                 $this->vfPropositionProcess($rightAnswer, $faux, "F", $subQuestion);
-            }
-            else
-            {
+            } else {
                 $this->vfPropositionProcess($rightAnswer, "VRAI", "V", $subQuestion);
                 $this->vfPropositionProcess($rightAnswer, "FAUX", "F", $subQuestion);
             }
@@ -1210,8 +1166,7 @@ class ImportController
 
         $tab = explode("#", $data[12]);
         $countTab = count($tab);
-        for ($j = 1; $j < $countTab; $j++)
-        {
+        for ($j = 1; $j < $countTab; $j++) {
             $this->mediaAppatProcess($tab[$j], $medias);
         }
 
@@ -1229,8 +1184,7 @@ class ImportController
             $em->persist($subQuestion);
 
             $nbMedias = count($medias); #80
-            for ($j=0; $j < $nbMedias; $j++)
-            {
+            for ($j=0; $j < $nbMedias; $j++) {
                 $this->propositionAppatProcess($i, $j, $subQuestion, $medias[$j]);
             }
         }

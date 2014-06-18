@@ -16,7 +16,7 @@ use Innova\SelfBundle\Entity\Media;
  * Symfony command to add or not fixtures. EV.
  *
 */
-class Itcea1FixtureCommand extends ContainerAwareCommand
+class ItCeA1FixtureCommand extends ContainerAwareCommand
 {
 
     protected function configure()
@@ -435,7 +435,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)){
+        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)) {
             $test = new Test();
         }
 
@@ -608,9 +608,7 @@ class Itcea1FixtureCommand extends ContainerAwareCommand
             $media->setDescription(StaticCommand::textSource($title)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image"));
             $media->setUrl($name.".jpg");
-        }
-        else
-        {
+        } else {
             $media->setName(StaticCommand::textSource($title.$name));
             $media->setDescription(StaticCommand::textSource($title.$name)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));

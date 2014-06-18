@@ -12,7 +12,7 @@ class UserType extends BaseType
 
     /**
      * @param string $class The User class name
-     * Go to "RegsitrationFormType" in FriendOfSymfony
+     *                      Go to "RegsitrationFormType" in FriendOfSymfony
      */
     public function __construct($class, ObjectManager $om)
     {
@@ -23,7 +23,7 @@ class UserType extends BaseType
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
-     * LevelLansad part : to have an opt group
+     *                                      LevelLansad part : to have an opt group
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -68,7 +68,7 @@ class UserType extends BaseType
 
     /**
      * @return array
-     * Request to have all skills for all languages
+     *               Request to have all skills for all languages
      */
     private function getArrayOfLevelLansad()
     {

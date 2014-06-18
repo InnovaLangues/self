@@ -9,7 +9,7 @@
 <hr/>
 
 <h3>{{ 'editor.test.edition' | trans }}</h3>
-<form role="form" action="{{ path('editor_test_edit', { 'testId': test.id }) }}" method="POST"> 
+<form role="form" action="{{ path('editor_test_edit', { 'testId': test.id }) }}" method="POST">
     <div class="form-group">
         <label for="test-name">{{ 'editor.test.name' | trans }}</label>
         <input value="{{ test.name }}" id="test-name" type="text" class="form-control" name="test-name" required />

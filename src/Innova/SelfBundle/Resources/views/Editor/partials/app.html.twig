@@ -1,4 +1,4 @@
-<span class="btn btn-default btn-xs app-add-subquestion">{{ 'editor.app.add_pair' | trans }}</span> 
+<span class="btn btn-default btn-xs app-add-subquestion">{{ 'editor.app.add_pair' | trans }}</span>
 {% if questionnaire.questions[0].subquestions | length > 0 %}
     <span class="btn btn-default btn-xs app-add-distractor">{{ 'editor.app.add_distractor' | trans }}</span>
     {% set subquestions = questionnaire.questions[0].subquestions %}
@@ -11,21 +11,21 @@
     {% for subquestion in subquestions %}
         <tr>
         {% if subquestion.media is not null %}
-            
+
                 <td class="col-md-6">
                     {{ macros.displayMedia(test, questionnaire, subquestion.media) }}
                 </td>
                 <td>
                     {{ macros.displayRightAnswerAPP(test, questionnaire, subquestion) }}
                 </td>
-            
+
         {% else %}
-         
+
                 <td>
                     <span class="btn btn-default btn-xs app-add-media" data-subquestion-id="{{ subquestion.id }}">{{ 'editor.app.add_media' | trans }}</span>
                 </td>
-            
-        {% endif %} 
+
+        {% endif %}
             <td>
                 <span class="app-delete-subquestion glyphicon glyphicon-remove btn btn-default btn-sm" data-subquestion-id="{{ subquestion.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.app.remove_pair' | trans }}"></span>
             </td>

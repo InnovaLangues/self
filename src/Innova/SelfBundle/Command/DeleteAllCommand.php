@@ -26,11 +26,10 @@ class DeleteAllCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-
         $name = $input->getArgument('name');
         if ($name != 'sql') {
             $output->writeln("Absence de paramètres. Impossible d'exécuter les requêtes.");
-           
+
         } else {
             $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 

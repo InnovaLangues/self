@@ -11,7 +11,7 @@
     {% for i, tabTrace in tabTraces %}
         <li>{{ tabTraces[i] }}</li>
     {% endfor %}
-    
+
     <h3>{{ 'import.finished' | trans({'%fileName%': csvName}) | raw }}</h3>
 
 {% endblock %}

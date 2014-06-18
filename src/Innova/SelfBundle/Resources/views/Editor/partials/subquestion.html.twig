@@ -7,7 +7,7 @@
             {{ macros.displayMedia(test, questionnaire, subquestion.mediaAmorce) }}
         {% else %}
             <span class="btn btn-default btn-xs add-amorce" data-subquestion-id="{{ subquestion.id }}">
-                <span class="glyphicon glyphicon-plus"></span> 
+                <span class="glyphicon glyphicon-plus"></span>
                 {{ 'editor.subquestion.add_instruction' | trans }}
             </span>
         {% endif %}
@@ -27,7 +27,7 @@
         </table>
 
         <span class="btn btn-default btn-xs delete-subquestion pull-right" data-subquestion-id="{{ subquestion.id }}">
-            <span class="glyphicon glyphicon-remove"></span> 
+            <span class="glyphicon glyphicon-remove"></span>
             {{ 'editor.subquestion.remove' | trans }}
         </span>
     </div>

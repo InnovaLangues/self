@@ -16,7 +16,7 @@ use Innova\SelfBundle\Entity\Media;
  * Symfony command to add or not fixtures. EV.
  *
 */
-class Itceb1FixtureCommand extends ContainerAwareCommand
+class ItCeB1FixtureCommand extends ContainerAwareCommand
 {
 
     protected function configure()
@@ -360,7 +360,6 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         $this->createProposition("una scarsa adesione", true, $questionnaire_6_1_3);
         $this->createProposition("un debole impatto", false, $questionnaire_6_1_3);
 
-
         /*******************************************
                     QUESTIONNAIRE 30 : QRU
         ********************************************/
@@ -408,7 +407,6 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         $this->createPropositionVF("", "VRAI", false, $questionnaire_31_1_3);
         $this->createPropositionVF("", "FAUX", true, $questionnaire_31_1_3);
 
-
         /*******************************************
                     MISE EN BASE
         ********************************************/
@@ -427,7 +425,7 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)){
+        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)) {
             $test = new Test();
         }
 
@@ -459,7 +457,6 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         // Traitement sur le skill
         $skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skill);
         $questionnaire->setSkill($skill);
-
 
         $questionnaire->setAuthor();
         $questionnaire->setInstruction();
@@ -567,7 +564,6 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
         return $proposition;
     }
 
-
     /**
      *createPropositionVF()
      */
@@ -601,9 +597,7 @@ Ad offrire questo insolito servizio è ***Cene In Cielo***, società specializza
             $media->setDescription(StaticCommand::textSource($title)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image"));
             $media->setUrl($name.".jpg");
-        }
-        else
-        {
+        } else {
             $media->setName(StaticCommand::textSource($title.$name));
             $media->setDescription(StaticCommand::textSource($title.$name)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));

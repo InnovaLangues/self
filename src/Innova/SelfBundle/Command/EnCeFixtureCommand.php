@@ -12,12 +12,11 @@ use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\Media;
 
-
 /**
  * Symfony command to add or not fixtures. EV.
  *
 */
-class EnceFixtureCommand extends ContainerAwareCommand
+class EnCeFixtureCommand extends ContainerAwareCommand
 {
 
     protected function configure()
@@ -240,7 +239,6 @@ The theory is that the doves should automatically return to their place of origi
         $this->createProposition("A teacher would think you were losing your temper if you didn’t get some time out of class", false, $questionnaire_10_1_1);
         $this->createProposition("A teacher would think you needed to be treated like a child if you asked to leave class", false, $questionnaire_10_1_1);
 
-
         /*******************************************
                     QUESTIONNAIRE 10 : TVFNM
         ********************************************/
@@ -447,7 +445,6 @@ Opinions abound about who the original Valentine was, with the most popular theo
         return $question;
     }
 
-
     /**
      * #167
      */
@@ -548,9 +545,7 @@ Opinions abound about who the original Valentine was, with the most popular theo
         if ($type != "") {
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image"));
             $media->setUrl("B1_CE_Porsche.png");
-        }
-        else
-        {
+        } else {
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));
             $media->setUrl(NULL);
         }

@@ -57,8 +57,6 @@ class Media
     */
     private $mediaClicks;
 
-
-
     /**
      * To String
      */
@@ -177,17 +175,17 @@ class Media
         $this->mediaLimits = new \Doctrine\Common\Collections\ArrayCollection();
         $this->mediaClicks = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add mediaLimits
      *
-     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     * @param  \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
      * @return Media
      */
     public function addMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
     {
         $this->mediaLimits[] = $mediaLimits;
-    
+
         return $this;
     }
 
@@ -204,7 +202,7 @@ class Media
     /**
      * Get mediaLimits
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMediaLimits()
     {
@@ -214,13 +212,13 @@ class Media
     /**
      * Add mediaClicks
      *
-     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param  \Innova\SelfBundle\Entity\MediaClick $mediaClicks
      * @return Media
      */
     public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
     {
         $this->mediaClicks[] = $mediaClicks;
-    
+
         return $this;
     }
 
@@ -237,7 +235,7 @@ class Media
     /**
      * Get mediaClicks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMediaClicks()
     {

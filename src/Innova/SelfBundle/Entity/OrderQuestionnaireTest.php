@@ -38,11 +38,10 @@ class OrderQuestionnaireTest
      */
     private $displayOrder;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -52,20 +51,20 @@ class OrderQuestionnaireTest
     /**
      * Set displayOrder
      *
-     * @param integer $displayOrder
+     * @param  integer                $displayOrder
      * @return OrderQuestionnaireTest
      */
     public function setDisplayOrder($displayOrder)
     {
         $this->displayOrder = $displayOrder;
-    
+
         return $this;
     }
 
     /**
      * Get displayOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisplayOrder()
     {
@@ -75,20 +74,20 @@ class OrderQuestionnaireTest
     /**
      * Set test
      *
-     * @param \Innova\SelfBundle\Entity\Test $test
+     * @param  \Innova\SelfBundle\Entity\Test $test
      * @return OrderQuestionnaireTest
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
     {
         $this->test = $test;
-    
+
         return $this;
     }
 
     /**
      * Get test
      *
-     * @return \Innova\SelfBundle\Entity\Test 
+     * @return \Innova\SelfBundle\Entity\Test
      */
     public function getTest()
     {
@@ -98,20 +97,20 @@ class OrderQuestionnaireTest
     /**
      * Set questionnaire
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
      * @return OrderQuestionnaireTest
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
     {
         $this->questionnaire = $questionnaire;
-    
+
         return $this;
     }
 
     /**
      * Get questionnaire
      *
-     * @return \Innova\SelfBundle\Entity\Questionnaire 
+     * @return \Innova\SelfBundle\Entity\Questionnaire
      */
     public function getQuestionnaire()
     {

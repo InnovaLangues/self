@@ -9,7 +9,7 @@
 <hr/>
 
 <h3>{{ 'editor.test.new' | trans }}</h3>
-<form role="form" action="{{ path('editor_test_create') }}" method="POST"> 
+<form role="form" action="{{ path('editor_test_create') }}" method="POST">
     <div class="form-group">
         <label for="test-name">{{ 'editor.test.name' | trans }}</label>
         <input id="test-name" type="text" class="form-control" name="test-name" required />
@@ -19,7 +19,7 @@
         <label for="test-language">{{ 'editor.test.language' | trans }}</label>
         <select id="test-language" class="form-control" name="test-language" required />
             {% for language in languages %}
-                <option value="{{ language.id }}">{{ language.name }}</option> 
+                <option value="{{ language.id }}">{{ language.name }}</option>
             {% endfor %}
         </select>
     </div>

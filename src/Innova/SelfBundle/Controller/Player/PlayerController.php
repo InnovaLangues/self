@@ -14,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 
-
 /**
  * Class PlayerController
  *
@@ -36,8 +35,8 @@ class PlayerController
      * Class constructor
      */
     public function __construct(
-        SecurityContextInterface $securityContext, 
-        EntityManager $entityManager, 
+        SecurityContextInterface $securityContext,
+        EntityManager $entityManager,
         SessionInterface $session,
         RouterInterface $router
     )
@@ -49,9 +48,8 @@ class PlayerController
         $this->router = $router;
     }
 
-
     /**
-     * Try to pick a questionnaire entity for a given test not done yet by the user 
+     * Try to pick a questionnaire entity for a given test not done yet by the user
      * and display it if possible.
      *
      * @Route("student/test/start/{id}", name="test_start")
@@ -83,7 +81,6 @@ class PlayerController
         }
     }
 
-
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.
      */
@@ -95,7 +92,7 @@ class PlayerController
 
         foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
             $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
-                array(  'user' => $user->getId(), 
+                array(  'user' => $user->getId(),
                         'test' => $test->getId(),
                         'questionnaire' => $orderedQuestionnaire->getQuestionnaire()->getId()
                 ));
@@ -107,7 +104,6 @@ class PlayerController
 
         return $questionnaireWithoutTrace;
     }
-
 
      /**
      * Gère la vue de fin de test
@@ -134,7 +130,7 @@ class PlayerController
     /**
      *
      * @Route(
-     *      "admin/test/{testId}/questionnaire/{questionnaireId}", 
+     *      "admin/test/{testId}/questionnaire/{questionnaireId}",
      *      name="questionnaire_pick"
      * )
      * @ParamConverter("test", class="InnovaSelfBundle:Test", options={"mapping": {"testId": "id" }})

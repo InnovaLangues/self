@@ -35,7 +35,6 @@ class TraceController
     protected $securityContext;
     protected $request;
 
-
     /**
      * Class constructor
      */
@@ -65,7 +64,6 @@ class TraceController
 
         return $this;
     }
-
 
     /**
      * Save Trace and display a form to set the difficulty
@@ -104,7 +102,6 @@ class TraceController
         }
     }
 
-
     /**
      * display a form to set the difficulty
      *
@@ -121,7 +118,6 @@ class TraceController
 
         return array("traceId" => $traceId, "testId" => $testId);
     }
-
 
     /**
      * Parse post var
@@ -222,7 +218,6 @@ class TraceController
 
         return $answer;
     }
-
 
     /**
      * update a trace to set the difficulty
