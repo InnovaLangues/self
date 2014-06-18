@@ -2,7 +2,6 @@
 
 namespace Innova\SelfBundle\Controller\Player;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -10,10 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Innova\SelfBundle\Entity\Trace;
 use Innova\SelfBundle\Entity\Answer;
-use Innova\SelfBundle\Entity\Media;
-use Innova\SelfBundle\Entity\Proposition;
 
 /**
  * Class TraceController
@@ -162,10 +158,8 @@ class TraceController
 
         $typo = $subquestion->getTypology()->getName();
 
-        // Si on est sur une saisie ...
-        if ($typo == "TLQROCDERIV" or $typo == "TLQROCFIRST" or $typo == "TLQROCSYL"
-        or $typo == "TLQROCNOCLU" or $typo == "TLQROCLEN" or $typo == "TLQROCFIRSTLEN") {
-
+        $typosSaisie = array("TLQROCDERIV", "TLQROCFIRST", "TLQROCSYL", "TLQROCNOCLU", "TLQROCLEN", "TLQROCFIRSTLEN" );
+        if (in_array($typo, $typosSaisie)) {
             $propositions = $em->getRepository('InnovaSelfBundle:Proposition')->findBy(array('subquestion' => $subquestionId));
             $rightAnswer = false;
             $propositionFound = null;
