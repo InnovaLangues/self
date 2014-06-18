@@ -259,7 +259,7 @@ class ExportController
 
                         // création tableau de correspondance subquestion -> réponses
                         foreach ($answers as $answer) {
-                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])){
+                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
                                 $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
                             }
                             $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
@@ -286,11 +286,11 @@ class ExportController
 
                             $nbAnswers = count($answersArray[$subquestion->getId()]);
                             $subquestionOk = true;
-                            if ( $nbAnswers == $nbPropositionRightAnswser) {
+                            if ($nbAnswers == $nbPropositionRightAnswser) {
                                 foreach ($rightProps as $rightProp) {
                                     $found = false;
                                     foreach ($answersArray[$subquestion->getId()] as $answerProp) {
-                                       if ($rightProp == $answerProp->getId()){
+                                       if ($rightProp == $answerProp->getId()) {
                                             $found = true;
                                        }
                                     }
@@ -298,8 +298,7 @@ class ExportController
                                         $subquestionOk = false;
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 $subquestionOk = false;
                             }
 
@@ -315,7 +314,7 @@ class ExportController
                                 $letters[$propLetters[$idAnswer]] = 1;
                             }
                             ksort($letters);
-                            foreach($letters as $key => $value){
+                            foreach ($letters as $key => $value) {
                                 $csv .= $key;
                             }
                             $csv .= ";";
@@ -396,7 +395,7 @@ class ExportController
                 case "APPAI";
                 case "APPTT";
                     foreach ($answers as $answer) {
-                    if ($answer->getProposition()->getRightAnswer()){
+                    if ($answer->getProposition()->getRightAnswer()) {
                         $score++;
                     }
                     /*
@@ -421,7 +420,7 @@ class ExportController
                 case "VFNM";
                 case "TVFNM";
                     foreach ($answers as $answer) {
-                        if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])){
+                        if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
                             $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
                         }
                         $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
@@ -451,11 +450,10 @@ class ExportController
                         // Je calcule le score que si le testeur a répondu à autant de réponses
                         // qu'il y a de propositions.
                         // Si ce n'est pas le cas, il aura forcément ZERO point.
-                        if ( $nbAnswers == $nbPropositionRightAnswser) {
+                        if ($nbAnswers == $nbPropositionRightAnswser) {
 
                             foreach ($rightProps as $rightProp) {
-                                if (in_array($rightProp->getId(),$answersArray[$subQuestion->getId()]))
-                                {
+                                if (in_array($rightProp->getId(),$answersArray[$subQuestion->getId()])) {
                                         $nbRightAnswer++;
                                 }
                             }
@@ -470,6 +468,7 @@ class ExportController
 
             }
         }
+
         return $score;
     }
 

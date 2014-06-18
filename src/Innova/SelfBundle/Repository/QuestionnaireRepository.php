@@ -9,8 +9,8 @@ class QuestionnaireRepository extends EntityRepository
 
     /**
      * findOneNotDoneYetByUserByTest description]
-     * @param  id $testId
-     * @param  id $userId
+     * @param id $testId
+     * @param id $userId
      *
      * @return test+questionnaires
      */
@@ -39,7 +39,7 @@ class QuestionnaireRepository extends EntityRepository
      * @param id $testId
      * @param id $userId
      *
-     * @return  int number of traces for the test and the user
+     * @return int number of traces for the test and the user
      */
     public function countDoneYetByUserByTest($testId, $userId)
     {
@@ -61,7 +61,7 @@ class QuestionnaireRepository extends EntityRepository
      * @param id $questionnaireId
      * @param id $userId
      *
-     * @return  int number of traces for the test and the questionnaire and the user
+     * @return int number of traces for the test and the questionnaire and the user
      */
     public function countTraceByUserByTestByQuestionnaire($testId, $questionnaireId, $userId)
     {
@@ -80,9 +80,9 @@ class QuestionnaireRepository extends EntityRepository
 
     /**
      * findOneByUserByTestByQuestionnaire Trace By user/test/questionnaire
-     * @param  id $testId
-     * @param  id $questionnaireId
-     * @param  id $userId
+     * @param id $testId
+     * @param id $questionnaireId
+     * @param id $userId
      *
      * @return trace
      */
@@ -106,7 +106,7 @@ class QuestionnaireRepository extends EntityRepository
      * @param id $testId
      * @param id $userId
      *
-     * @return  int number of answers for the test and the user
+     * @return int number of answers for the test and the user
      */
     public function countAnswerByUserByTest($testId, $userId)
     {
@@ -126,7 +126,7 @@ class QuestionnaireRepository extends EntityRepository
      * @param id $testId
      * @param id $userId
      *
-     * @return  int number of right answer for the test and the user
+     * @return int number of right answer for the test and the user
      */
     public function countRightAnswerByUserByTest($testId, $userId)
     {

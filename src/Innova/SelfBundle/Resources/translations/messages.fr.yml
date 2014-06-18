@@ -33,7 +33,7 @@ user:
     creation: Création d'un utilisateur
     single: Utilisateur
     plural: Utilisateurs
-    firstname: Prénom 
+    firstname: Prénom
     name: Nom
     email: Adresse mail
 
@@ -168,5 +168,3 @@ trace:
             normal: Normal
             difficult: Difficile
             veryDifficult: Très difficile
-
-

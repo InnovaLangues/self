@@ -88,7 +88,7 @@
         {% set found = false %}
         {% for subquestion in subquestions %}
             {% for propositionOther in subquestion.propositions if found == false %}
-                {% if (propositionOther.media == mediaCurrent) and (propositionOther.rightAnswer == true) %} 
+                {% if (propositionOther.media == mediaCurrent) and (propositionOther.rightAnswer == true) %}
                     {% set found = true %}
                 {% else %}
                 {% endif %}

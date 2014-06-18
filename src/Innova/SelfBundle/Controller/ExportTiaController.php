@@ -126,7 +126,7 @@ class ExportTiaController
 
                         // création tableau de correspondance subquestion -> réponses
                         foreach ($answers as $answer) {
-                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])){
+                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
                                 $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
                             }
                             $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
@@ -151,14 +151,13 @@ class ExportTiaController
                                 $propLetters[$proposition->getId()] = $arr[$cptProposition];
                             }
 
-
                             $letters = array();
                             foreach ($answersArray[$subquestion->getId()] as $answer) {
                                 $idAnswer = $answer->getId();
                                 $letters[$propLetters[$idAnswer]] = 1;
                             }
                             ksort($letters);
-                            foreach($letters as $key => $value){
+                            foreach ($letters as $key => $value) {
                                 $csv .= $key;
                             }
                             $csv .= ";";

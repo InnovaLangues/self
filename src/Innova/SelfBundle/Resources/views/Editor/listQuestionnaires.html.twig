@@ -26,7 +26,7 @@
         {% else %}
             {{ 'editor.task.unnamed' | trans }}
         {% endif %}
-        
+
         <span class="buttons" style="position:absolute;right:5px;top:5px">
             <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'testId': order.test.id, 'questionnaireId': order.questionnaire.id }) }}">
                 <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
@@ -69,5 +69,3 @@
     {{ parent() }}
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-task-list.js") }}"></script>
 {% endblock %}
-
-

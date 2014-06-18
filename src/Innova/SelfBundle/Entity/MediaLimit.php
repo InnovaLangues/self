@@ -46,7 +46,7 @@ class MediaLimit
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -56,20 +56,20 @@ class MediaLimit
     /**
      * Set listeningLimit
      *
-     * @param integer $listeningLimit
+     * @param  integer    $listeningLimit
      * @return MediaLimit
      */
     public function setListeningLimit($listeningLimit)
     {
         $this->listeningLimit = $listeningLimit;
-    
+
         return $this;
     }
 
     /**
      * Get listeningLimit
      *
-     * @return integer 
+     * @return integer
      */
     public function getListeningLimit()
     {
@@ -79,20 +79,20 @@ class MediaLimit
     /**
      * Set media
      *
-     * @param \Innova\SelfBundle\Entity\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media $media
      * @return MediaLimit
      */
     public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
     {
         $this->media = $media;
-    
+
         return $this;
     }
 
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMedia()
     {
@@ -102,20 +102,20 @@ class MediaLimit
     /**
      * Set test
      *
-     * @param \Innova\SelfBundle\Entity\Test $test
+     * @param  \Innova\SelfBundle\Entity\Test $test
      * @return MediaLimit
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
     {
         $this->test = $test;
-    
+
         return $this;
     }
 
     /**
      * Get test
      *
-     * @return \Innova\SelfBundle\Entity\Test 
+     * @return \Innova\SelfBundle\Entity\Test
      */
     public function getTest()
     {
@@ -125,20 +125,20 @@ class MediaLimit
     /**
      * Set questionnaire
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
      * @return MediaLimit
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
     {
         $this->questionnaire = $questionnaire;
-    
+
         return $this;
     }
 
     /**
      * Get questionnaire
      *
-     * @return \Innova\SelfBundle\Entity\Questionnaire 
+     * @return \Innova\SelfBundle\Entity\Questionnaire
      */
     public function getQuestionnaire()
     {

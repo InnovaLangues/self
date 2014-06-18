@@ -16,7 +16,7 @@ use Innova\SelfBundle\Entity\Media;
  * Symfony command to add or not fixtures. EV.
  *
 */
-class Itceb2FixtureCommand extends ContainerAwareCommand
+class ItCeB2FixtureCommand extends ContainerAwareCommand
 {
 
     protected function configure()
@@ -349,7 +349,7 @@ Distinti saluti.@@@Luca Gentile", ""));
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)){
+        if (!$test = $em->getRepository('InnovaSelfBundle:Test')->findOneByName($name)) {
             $test = new Test();
         }
 
@@ -488,7 +488,6 @@ Distinti saluti.@@@Luca Gentile", ""));
         return $proposition;
     }
 
-
     /**
      *createPropositionVF()
      */
@@ -522,9 +521,7 @@ Distinti saluti.@@@Luca Gentile", ""));
             $media->setDescription(StaticCommand::textSource($title)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("image"));
             $media->setUrl($name.".jpg");
-        }
-        else
-        {
+        } else {
             $media->setName(StaticCommand::textSource($title.$name));
             $media->setDescription(StaticCommand::textSource($title.$name)); // Ajout ERV 03/03/2014 car c'est la description que l'on affiche dans la macro.texte
             $media->setMediaType($em->getRepository('InnovaSelfBundle:MediaType')->findOneByName("texte"));

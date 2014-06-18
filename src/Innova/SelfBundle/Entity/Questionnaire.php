@@ -188,10 +188,6 @@ class Questionnaire
     */
     private $orderQuestionnaireTests;
 
-
-
-
-
     public function __construct()
     {
         $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
@@ -844,20 +840,20 @@ class Questionnaire
     /**
      * Set fixedOrder
      *
-     * @param boolean $fixedOrder
+     * @param  boolean       $fixedOrder
      * @return Questionnaire
      */
     public function setFixedOrder($fixedOrder)
     {
         $this->fixedOrder = $fixedOrder;
-    
+
         return $this;
     }
 
     /**
      * Get fixedOrder
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFixedOrder()
     {
@@ -867,13 +863,13 @@ class Questionnaire
     /**
      * Add mediaLimits
      *
-     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     * @param  \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
      * @return Questionnaire
      */
     public function addMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
     {
         $this->mediaLimits[] = $mediaLimits;
-    
+
         return $this;
     }
 
@@ -890,7 +886,7 @@ class Questionnaire
     /**
      * Get mediaLimits
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMediaLimits()
     {
@@ -900,13 +896,13 @@ class Questionnaire
     /**
      * Add mediaClicks
      *
-     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param  \Innova\SelfBundle\Entity\MediaClick $mediaClicks
      * @return Questionnaire
      */
     public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
     {
         $this->mediaClicks[] = $mediaClicks;
-    
+
         return $this;
     }
 
@@ -923,7 +919,7 @@ class Questionnaire
     /**
      * Get mediaClicks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMediaClicks()
     {
@@ -933,13 +929,13 @@ class Questionnaire
     /**
      * Add orderQuestionnaireTests
      *
-     * @param \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
+     * @param  \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
      * @return Questionnaire
      */
     public function addOrderQuestionnaireTest(\Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests)
     {
         $this->orderQuestionnaireTests[] = $orderQuestionnaireTests;
-    
+
         return $this;
     }
 
@@ -956,7 +952,7 @@ class Questionnaire
     /**
      * Get orderQuestionnaireTests
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrderQuestionnaireTests()
     {
