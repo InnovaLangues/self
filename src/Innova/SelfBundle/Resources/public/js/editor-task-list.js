@@ -62,7 +62,6 @@ function deleteTask(){
     .done(function(data) {
         console.log("Tâche supprimée");
         $("#task-"+questionnaireId).remove();
-        saveOrder();
         $('#delete-task-modal').modal('hide');
     });
 }

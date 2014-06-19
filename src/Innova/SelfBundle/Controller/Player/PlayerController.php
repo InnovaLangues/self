@@ -111,11 +111,15 @@ class PlayerController
         $displayOrder = $currentQuestionnaireOrder - 1;
 
 
-        $previousQuestionnaire = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
+        $previousQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
             array(  
                     'test' => $test,
                     'displayOrder' => $displayOrder
-            ))->getQuestionnaire();
+            ));
+        
+        if( $previousQuestionnaireOrder ){
+            $previousQuestionnaire = $previousQuestionnaireOrder->getDisplayOrder();
+        }
 
         return $previousQuestionnaire;
     }
