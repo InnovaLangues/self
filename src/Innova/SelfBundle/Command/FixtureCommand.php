@@ -72,10 +72,9 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             $typologies = array(
-                array("TVF", "Tableau de Vrai-Faux"), array("QRU", "Question à Réponse Unique"), array("VF", "Vrai-Faux"), 
-                array("QRM", "Question à Réponse Multiple"), array("TQRU", "Tableau de QRU"), array("TQRM", "Tableau de QRM"), 
-                array("TVFPM","Tableau de Vrai-Faux-Pas Mentionné"), array("VFPM", "Vrai-Faux-Pas Mentionné"), array("APPAT","Appariemment Audio-Texte"),
-                array("APPAA", "Appariemment Audio-Audio"), array("APPAI", "Appariemment Audio-Image"), array("RE", ""), 
+                array("TVF", "Tableau de Vrai-Faux"), array("QRU", "Question à Réponse Unique"), array("VF", "Vrai-Faux"),
+                array("QRM", "Question à Réponse Multiple"), array("TQRU", "Tableau de QRU"), array("TQRM", "Tableau de QRM"),
+                array("APPAT","Appariemment Audio-Texte"), array("APPAA", "Appariemment Audio-Audio"), array("APPAI", "Appariemment Audio-Image"),
                 array("APPTT", "Appariemment Texte-Texte"), array("TVFNM", "Tableau de Vrai-Faux-Non Mentionné"),
                 array("VFNM", "Vrai-Faux-Non Mentionné"), array("TLCMQRU", ""), array("TLCMTQRU", ""), array("TLCMLDM", ""),
                 array("TLQROCNOCLU", ""), array("TLQROCLEN",""), array("TLQROCFIRST",""), array("TLQROCFIRSTLEN",""), array("TLQROCSYL",""),
