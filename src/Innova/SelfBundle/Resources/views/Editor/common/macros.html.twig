@@ -13,8 +13,7 @@
         {{ macros.listeningLimit(media) }}
     {% elseif mediaType == "audio" %}
         <audio controls preload="auto" class="vertical-middle">
-            <source src="{{ asset('upload/media/') ~ media.url }}.mp3" type="audio/mp3">
-            <source src="{{ asset('upload/media/') ~ media.url }}.ogg" type="audio/ogg">
+            <source src="{{ asset('upload/media/') ~ media.url }}" type="audio/mp3">
             Votre navigateur est trop ancien.
         </audio>
         {{ macros.listeningLimit(test, questionnaire, media) }}

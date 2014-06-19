@@ -46,12 +46,7 @@ class UploadController extends Controller
         foreach ($request->files as $uploadedFile) {
             $originalName = $uploadedFile->getClientOriginalName();
             $ext = pathinfo($originalName, PATHINFO_EXTENSION);
-            // penser à enlever l'extension selon le fileType.
-            if ($fileType == "audio") {
-                $newName = uniqid();
-            } else {
-                $newName = uniqid(). "." . $ext;
-            }
+            $newName = uniqid(). "." . $ext;
 
             $directory = $this->kernelRoot.'/../web/upload/media/';
             $uploadedFile->move($directory, $newName);
