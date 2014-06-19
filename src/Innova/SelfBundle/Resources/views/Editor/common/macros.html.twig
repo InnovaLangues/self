@@ -2,7 +2,7 @@
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     {% set mediaType = media.mediaType.name %}
     {% if mediaType == "texte" %}
-       {{ media.description | raw | striptags }}
+       {{ media.description | raw }}
     {% elseif mediaType == "image" %}
         <img src="{{ asset('upload/media/') ~ media.url }}" height="180px"/>
     {% elseif mediaType == "video" %}
