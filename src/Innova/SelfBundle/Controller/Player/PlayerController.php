@@ -72,13 +72,14 @@ class PlayerController
 
             // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
             // 1 : recherche de la question précédente
-            $questionnaireBefore = $this->findAQuestionnaireBefore($test, $this->user);
+            $previousQuestionnaire = $this->findPrevioustQuestionnaire($test, $questionnaire);
             $displayHelp = true;
-            if ($questionnaireBefore != NULL ) {
+
+            if ($previousQuestionnaire != null ) {
                 // 2 : recherche des informations sur la question
-                $skillBefore = $questionnaireBefore->getSkill();
+                $skillBefore = $previousQuestionnaire->getSkill();
                 $skill = $questionnaire->getSkill();
-                // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a le même niveau
+                // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a la même compétence
                 if ($skillBefore == $skill) $displayHelp = false;
             }
 
@@ -89,36 +90,34 @@ class PlayerController
                 'questionnaire' => $questionnaire,
                 'test' => $test,
                 'counQuestionnaireDone' => $countQuestionnaireDone,
-                'displayHelp' => $displayHelp // Me dit si je dois ou pas afficher l'aide
+                'displayHelp' => $displayHelp
             );
         }
     }
 
-    /**
-     * Pick a questionnaire entity for a given test not done yet by the user.
-     */
-    protected function findAQuestionnaireBefore($test, $user)
+
+    protected function findPrevioustQuestionnaire($test, $questionnaire)
     {
+
         $em = $this->entityManager;
-        $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
-        $questionnaireBefore = null;
+        $previousQuestionnaire = null;
 
-        foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
-            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
-                array(  'user' => $user->getId(),
-                        'test' => $test->getId(),
-                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire()->getId()
-                ));
-            if (count($traces) == 0) {
-                break;
-            }
-            else
-            {
-                $questionnaireBefore = $orderedQuestionnaire->getQuestionnaire();
-            }
-        }
+        $currentQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
+            array(  
+                    'test' => $test,
+                    'questionnaire' => $questionnaire
+            ))->getDisplayOrder();
+       
+        $displayOrder = $currentQuestionnaireOrder - 1;
 
-        return $questionnaireBefore;
+
+        $previousQuestionnaire = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
+            array(  
+                    'test' => $test,
+                    'displayOrder' => $displayOrder
+            ))->getQuestionnaire();
+
+        return $previousQuestionnaire;
     }
 
 
@@ -200,6 +199,7 @@ class PlayerController
             'questionnaire' => $questionnairePicked,
             'test' => $test,
             'counQuestionnaireDone' => $countQuestionnaireDone,
+            'displayHelp' => false
         );
     }
 
