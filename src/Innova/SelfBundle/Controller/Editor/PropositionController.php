@@ -17,7 +17,7 @@ class PropositionController extends Controller
     /**
      *
      * @Route("/questionnaires/toggle_right_answer", name="editor_questionnaire_toggle_right_anwser", options={"expose"=true})
-     * @Method("POST")
+     * @Method("PUT")
      */
     public function toggleRightAnswserAction()
     {
