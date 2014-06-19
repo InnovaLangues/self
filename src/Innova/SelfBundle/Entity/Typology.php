@@ -29,6 +29,13 @@ class Typology
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
     * @ORM\OneToMany(targetEntity="Question", mappedBy="typology")
     */
     protected $questions;
@@ -143,5 +150,28 @@ class Typology
     public function getSubquestions()
     {
         return $this->subquestions;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Typology
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

@@ -71,16 +71,29 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $typologies = array("TVF", "QRU", "VF", "QRM", "TQRU", "TQRM", "TVFPM",
-            "VFPM", "APPAT", "APPAA", "APPAI", "RE", "APPTT", "TVFNM", "VFNM",
-            "TLCMQRU", "TLCMTQRU", "TLCMLDM", "TLQROCNOCLU", "TLQROCLEN", "TLQROCFIRST", "TLQROCFIRSTLEN", "TLQROCSYL",
-            "TLQROCDCTU", "TLQROCDCTM", "TLQROCDERIV", "TLQROCTRANS");
+            $typologies = array(
+                array("TVF", "Tableau de Vrai-Faux"), array("QRU", "Question à Réponse Unique"), array("VF", "Vrai-Faux"), 
+                array("QRM", "Question à Réponse Multiple"), array("TQRU", "Tableau de QRU"), array("TQRM", "Tableau de QRM"), 
+                array("TVFPM","Tableau de Vrai-Faux-Pas Mentionné"), array("VFPM", "Vrai-Faux-Pas Mentionné"), array("APPAT","Appariemment Audio-Texte"),
+                array("APPAA", "Appariemment Audio-Audio"), array("APPAI", "Appariemment Audio-Image"), array("RE", ""), 
+                array("APPTT", "Appariemment Texte-Texte"), array("TVFNM", "Tableau de Vrai-Faux-Non Mentionné"),
+                array("VFNM", "Vrai-Faux-Non Mentionné"), array("TLCMQRU", ""), array("TLCMTQRU", ""), array("TLCMLDM", ""),
+                array("TLQROCNOCLU", ""), array("TLQROCLEN",""), array("TLQROCFIRST",""), array("TLQROCFIRSTLEN",""), array("TLQROCSYL",""),
+                array("TLQROCDCTU", ""), array("TLQROCDCTM", ""), array("TLQROCDERIV", ""), array("TLQROCTRANS", "")
+            );
             foreach ($typologies as $typology) {
-                if (!$em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)) {
+                if (!$typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[0])) {
                     $typo = new Typology();
-                    $typo->setName($typology);
+                    $typo->setName($typology[0]);
+                    $typo->setDescription($typology[1]);
                     $em->persist($typo);
-                    $output->writeln("Add new Typology (".$typology.").");
+                    $output->writeln("Add new Typology (".$typology[0]." : ".$typology[1].").");
+                } else {
+                    if ($typo->getDescription() != $typology[1]) {
+                        $typo->setDescription($typology[1]);
+                        $em->persist($typo);
+                        $output->writeln("Edit ".$typology[0]." description (".$typology[1].").");
+                    }
                 }
             }
 
