@@ -17,7 +17,7 @@ class SubquestionController extends Controller
     /**
      *
      * @Route("/questionnaires/create-subquestion", name="editor_questionnaire_create-subquestion", options={"expose"=true})
-     * @Method("POST")
+     * @Method("PUT")
      */
     public function createSubquestionAction()
     {
@@ -52,7 +52,7 @@ class SubquestionController extends Controller
     /**
      *
      * @Route("/questionnaires/delete-subquestion", name="editor_questionnaire_delete_subquestion", options={"expose"=true})
-     * @Method("POST")
+     * @Method("DELETE")
      */
     public function deleteSubquestionAction()
     {

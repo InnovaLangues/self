@@ -244,7 +244,7 @@ function createMedia(name, description, url, type) {
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-media'),
-        type: 'POST',
+        type: 'PUT',
         data: 
         { 
             testId: testId,
@@ -369,7 +369,7 @@ function unlinkMedia(){
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_unlink-media'),
-        type: 'POST',
+        type: 'DELETE',
         data: 
         {
             testId: testId,
@@ -395,7 +395,7 @@ function createSubquestion(questionnaireId) {
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-subquestion'),
-        type: 'POST',
+        type: 'PUT',
         dataType: 'json',
         data: { 
             testId: testId,
@@ -416,7 +416,7 @@ function deleteSubquestion(questionnaireId, subquestionId){
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_delete_subquestion'),
-        type: 'POST',
+        type: 'DELETE',
         dataType: 'json',
         data: { 
             testId: testId,
@@ -438,7 +438,7 @@ function toggleRightWrong(propositionId){
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_toggle_right_anwser'),
-        type: 'POST',
+        type: 'PUT',
         data: { 
             testId: testId,
             questionnaireId: questionnaireId,

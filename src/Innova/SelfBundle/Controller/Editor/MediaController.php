@@ -70,7 +70,7 @@ class MediaController
 
     /**
      * @Route("/questionnaires/create-media", name="editor_questionnaire_create-media", options={"expose"=true})
-     * @Method("POST")
+     * @Method("PUT")
      */
     public function createMediaAction()
     {
@@ -150,7 +150,7 @@ class MediaController
      * Supprime la relation qu'a un media avec un élément (ou supprime l'élément)... il faudrait supprimer le media dans certains cas.
      *
      * @Route("/questionnaires/unlink-media", name="editor_questionnaire_unlink-media", options={"expose"=true})
-     * @Method("POST")
+     * @Method("DELETE")
      */
     public function unlinkMediaAction()
     {
