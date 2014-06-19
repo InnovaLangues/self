@@ -1,5 +1,6 @@
 <div id="item-count-container" class="row">
     <div id="item-count" class="col-md-1 col-md-offset-11">
-	{{ counQuestionnaireDone + 1 }} {{ 'player.count_task' | trans }} {{ test.questionnaires.count }}
+	{{ questionnaire.questions[0].typology.name }}
+    {{ counQuestionnaireDone + 1 }} {{ 'player.count_task' | trans }} {{ test.questionnaires.count }}
 	</div>
 </div>

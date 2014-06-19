@@ -67,8 +67,20 @@ class PlayerController
         if (is_null($questionnaire)) {
             return new RedirectResponse($this->router->generate('test_end',array("id"=>$test->getId())));
         } else {
-        // sinon on envoie le questionnaire à la vue
+            // sinon on envoie le questionnaire à la vue
             $this->session->set('listening', $questionnaire->getListeningLimit());
+
+            // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
+            // 1 : recherche de la question précédente
+            $questionnaireBefore = $this->findAQuestionnaireBefore($test, $this->user);
+            $displayHelp = true;
+            if ($questionnaireBefore != NULL ) {
+                // 2 : recherche des informations sur la question
+                $skillBefore = $questionnaireBefore->getSkill();
+                $skill = $questionnaire->getSkill();
+                // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a le même niveau
+                if ($skillBefore == $skill) $displayHelp = false;
+            }
 
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $this->user->getId());
@@ -76,10 +88,40 @@ class PlayerController
             return array(
                 'questionnaire' => $questionnaire,
                 'test' => $test,
-                'counQuestionnaireDone' => $countQuestionnaireDone
+                'counQuestionnaireDone' => $countQuestionnaireDone,
+                'displayHelp' => $displayHelp // Me dit si je dois ou pas afficher l'aide
             );
         }
     }
+
+    /**
+     * Pick a questionnaire entity for a given test not done yet by the user.
+     */
+    protected function findAQuestionnaireBefore($test, $user)
+    {
+        $em = $this->entityManager;
+        $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
+        $questionnaireBefore = null;
+
+        foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
+                array(  'user' => $user->getId(),
+                        'test' => $test->getId(),
+                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire()->getId()
+                ));
+            if (count($traces) == 0) {
+                break;
+            }
+            else
+            {
+                $questionnaireBefore = $orderedQuestionnaire->getQuestionnaire();
+            }
+        }
+
+        return $questionnaireBefore;
+    }
+
+
 
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.

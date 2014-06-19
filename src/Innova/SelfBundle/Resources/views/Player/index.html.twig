@@ -7,6 +7,16 @@
 {% block body -%}
     {% import "InnovaSelfBundle:Player:common/macros.html.twig" as macros %}
 
+    <!-- Changement de niveau, je dois afficher l'aide -->
+    {% if displayHelp %}
+        <!-- Les pages d'aide sont en CamelCase : helpCo.html.twig, helpCe.html.twig et helpEEc.html.twig -->
+        <!-- Récupération du niveau avec la première lettre en majuscule -->
+        {% set skill = questionnaire.skill.name|capitalize %}
+        {% set helpName = 'help' ~ skill ~  '.html.twig' %}
+        <!-- Affichage de la page d'aide adéquate -->
+        {% include 'InnovaSelfBundle::Main/' ~ helpName %}
+    {% endif %}
+
     {# item #}
     {% include "InnovaSelfBundle:Player/common:item.html.twig" %}
 
