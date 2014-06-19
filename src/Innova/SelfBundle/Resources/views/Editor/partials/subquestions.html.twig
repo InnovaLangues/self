@@ -11,7 +11,11 @@
                 {% endif %}
         </div>
         <div class="panel-body">
-        {% if ( typoPrefix != "APP") %}
+        {% if ( typoPrefix == "APP") %}
+            {% include "InnovaSelfBundle:Editor/partials:app.html.twig" %}
+        {% elseif typoPrefix == "TLC" or typoPrefix == "TLQ" %}
+            
+        {% else %}
             {% if questionnaire.questions[0].subquestions is not null %}
                 {% set subquestions = questionnaire.questions[0].subquestions %}
                 <ul class="nav nav-tabs">
@@ -32,8 +36,6 @@
                     {% endfor %}
                 </div>
             {% endif %}
-        {% else %}
-            {% include "InnovaSelfBundle:Editor/partials:app.html.twig" %}
         {% endif %}
         </div>
     </div>

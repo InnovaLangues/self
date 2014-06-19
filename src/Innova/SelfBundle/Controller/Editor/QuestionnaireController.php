@@ -102,6 +102,7 @@ class QuestionnaireController
 
         $test = $em->getRepository('InnovaSelfBundle:test')->find($testId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
 
         if (!$questionnaire) {
             throw $this->createNotFoundException('Unable to find Questionnaire entity ! ');
@@ -109,7 +110,8 @@ class QuestionnaireController
 
         return array(
             'test' => $test,
-            'questionnaire' => $questionnaire
+            'questionnaire' => $questionnaire,
+            'typologies' => $typologies
         );
     }
 
