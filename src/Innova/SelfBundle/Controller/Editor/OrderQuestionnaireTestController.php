@@ -89,11 +89,8 @@ class OrderQuestionnaireTestController
                                                                                             'test' => $test,
                                                                                             'questionnaire' => $questionnaire
                                                                                         ));
-
-        $em->remove($taskToRemove);
-        $em->flush();
-        
         $test->removeQuestionnaire($questionnaire);
+        $em->remove($taskToRemove);
         $em->persist($test);
         $em->flush();
 
