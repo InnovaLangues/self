@@ -1,10 +1,10 @@
 anonymous:
-    first: Première visite ?
-    register: Inscrivez-vous pour accéder aux tests
-    registration: Inscription
-    already_registered: Déjà inscrit ?
-    connect: Cliquer sur "Connexion"
-    connection: Connexion
+    first: First visit ?
+    register: Register to get access to tests
+    registration: Registration
+    already_registered: Already Registered ?
+    connect: Click on "Login"
+    connection: Login
 
 menu:
     users: Utilisateurs
@@ -13,6 +13,7 @@ menu:
     editor: Editeur
     help: Aide
     logout: Déconnexion
+    language_change: Change language
 
 export:
     file_generated: Le fichier a été généré
@@ -51,7 +52,7 @@ registration:
     next_step: Etape suivante
 
 test:
-    available: Tests disponibles
+    available: Tests available
     start: Démarrer le test
     list: Liste des tests
     no_registered: Vous êtes inscrit à aucun test.

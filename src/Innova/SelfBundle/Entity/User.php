@@ -43,6 +43,12 @@ class User extends BaseUser
 
     /**
      * @var string
+     * @ORM\Column(name="locale", type="string", length=2, nullable=true)
+     */
+    private $locale;
+
+    /**
+     * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
      */
@@ -93,6 +99,7 @@ class User extends BaseUser
         parent::__construct();
         $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->locale = "fr";
     }
 
     /**
@@ -488,5 +495,61 @@ class User extends BaseUser
     public function getLevelLansad()
     {
         return $this->levelLansad;
+    }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     * @return User
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    
+        return $this;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string 
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Add mediaClicks
+     *
+     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @return User
+     */
+    public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    {
+        $this->mediaClicks[] = $mediaClicks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove mediaClicks
+     *
+     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     */
+    public function removeMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    {
+        $this->mediaClicks->removeElement($mediaClicks);
+    }
+
+    /**
+     * Get mediaClicks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMediaClicks()
+    {
+        return $this->mediaClicks;
     }
 }
