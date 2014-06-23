@@ -62,4 +62,16 @@ class QuestionnaireManager
 
         return $typology;
     }
+
+    public function isUnique($title)
+    {
+        $em = $this->entityManager;
+
+        $isUnique = true;
+        if ($tasksWithSameTitle = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByTheme($title)) {
+            $isUnique = false;
+        }
+
+        return $isUnique;
+    }
 }

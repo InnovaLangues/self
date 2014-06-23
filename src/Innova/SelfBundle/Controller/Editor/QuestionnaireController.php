@@ -149,17 +149,26 @@ class QuestionnaireController
     {
         $request = $this->request;
         $em = $this->entityManager;
+
         $questionnaireId = $request->request->get('questionnaireId');
         $theme = $request->request->get('theme');
-
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        $questionnaire->setTheme($theme);
-        $em->persist($questionnaire);
-        $em->flush();
+        $msg = "";
+
+        if ($this->questionnaireManager->isUnique($theme)) {
+            $questionnaire->setTheme($theme);
+            $em->persist($questionnaire);
+            $em->flush();
+        } else {
+            $msg = "Un tâche avec le même nom existe déja";
+        }
+        
+        
 
         return new JsonResponse(
             array(
                 'theme' => $questionnaire->getTheme(),
+                'msg' => $msg
             )
         );
     }
