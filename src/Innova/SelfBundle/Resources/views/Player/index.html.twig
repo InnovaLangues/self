@@ -15,15 +15,15 @@
         {% set helpName = 'help' ~ skill ~ '.html.twig' %}
         <!-- Affichage de la page d'aide adéquate -->
         {% include 'InnovaSelfBundle::Main/' ~ helpName %}
+    {% else %}
+        {# item #}
+        {% include "InnovaSelfBundle:Player/common:item.html.twig" %}
+
+        {# Compteur n° de la tâche #}
+        {% include "InnovaSelfBundle:Player/common:compteur.html.twig" %}
+
+        {% include "InnovaSelfBundle:Player/common:admin.html.twig" %}
     {% endif %}
-
-    {# item #}
-    {% include "InnovaSelfBundle:Player/common:item.html.twig" %}
-
-    {# Compteur n° de la tâche #}
-    {% include "InnovaSelfBundle:Player/common:compteur.html.twig" %}
-
-    {% include "InnovaSelfBundle:Player/common:admin.html.twig" %}
 
     {% include "InnovaSelfBundle:Player/common:modaleListenContext.html.twig" %}
 

@@ -39,4 +39,8 @@
             </p>
         </div>
     </div>
+
+    {% set displayHelp = 0 %}
+    <a href="{{ path('test_start', { 'id': test.id,  'displayHelp': displayHelp } )}}" class="btn btn-primary">{{ 'trace.test_continue' | trans }}</a>
+
 </div>

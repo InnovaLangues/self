@@ -241,8 +241,6 @@ class TraceController
         return $click;
     }
 
-
-
     /**
      * update a trace to set the difficulty
      *
@@ -260,6 +258,9 @@ class TraceController
         $em->persist($trace);
         $em->flush();
 
-        return new RedirectResponse($this->router->generate('test_start', array('id' => $post["testId"])));
+        $displayHelp = 1;
+
+        return new RedirectResponse($this->router->generate('test_start',
+        array('id' => $post["testId"], 'displayHelp' => $displayHelp)));
     }
 }

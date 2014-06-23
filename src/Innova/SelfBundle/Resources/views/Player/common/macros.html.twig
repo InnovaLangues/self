@@ -29,7 +29,7 @@
 {% macro image(id, media, tooltip, width) %}
     {% import _self as macros %}
     {# {{ macros.modale(id, media, tooltip) }} #}
-    <img data-toggle="modal" width={{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
+    <img data-toggle="modal" width="{{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
 {% endmacro %}
 
 {% macro video(id, media, limitAudio) %}
@@ -82,7 +82,6 @@
     </div>
 {% endmacro %}
 
-
 {% macro translateVF(description, language) %}
     {% set languageShorten = language | slice(0, 2) | lower %}
 
@@ -95,4 +94,58 @@
     {% else %}
             {{ description|raw }}
     {% endif %}
+{% endmacro %}
+
+{% macro situation(subquestion, i, texte, typoQuestion) %}
+
+    {# Ceci est le caractère d'affichage lors des typologies où on affichent la longueur #}
+    {# Il risque de changer d'où la variable #}
+    {% set charSeparate = "-" %}
+    {# Demande de Cristiana et Marie-Pierre, vu avec JJ #}
+    {# La zone "Input" est variable suivant la taille de la proposition/réponse #}
+    {# Il y a 4 tailles de zone Input possibles / {% if typoQuestion == "TLQROCLEN" %} #}
+    {% set tabInputSize = [5, 10, 15, 20, 30] %}
+
+    {% set textRightAnswer = "" %}
+    {% set maxValueSize = 0 %}
+    {# Recherche du texte correct #}
+    {% for j, proposition in subquestion.propositions %}
+        {% if proposition.rightAnswer %}
+            {% set textRightAnswer = proposition.media.description %}
+            {# Recherche/Calcul de la taille d'affichage de la zone Input #}
+            {% for inputSize in tabInputSize %}
+                {% if inputSize > proposition.media.description|length and maxValueSize == 0 %}
+                    {%  set maxValueSize = inputSize %}
+                {% endif %}
+            {% endfor %}
+            {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
+            {% set initTextRightAnswer = "" %}
+            {% if typoQuestion == "TLQROCLEN"  %}
+                {% for i in 1..textRightAnswer|length %}
+                    {% set initTextRightAnswer = initTextRightAnswer~charSeparate %}
+                {% endfor %}
+            {% endif %}
+            {% if typoQuestion == "TLQROCSYL"  %}
+                {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
+                {% set initTextRightAnswer = textRightAnswer %}
+            {% endif %}
+            {% if typoQuestion == "TLQROCFIRST"  %}
+                {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
+                {% set initTextRightAnswer = proposition.media.description|slice(0, 1) %}
+            {% endif %}
+
+            {# Ouverture de la saisie #}
+            {% set html = "" %}
+            {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
+            {% set html = html~"<input class='proposition-input' name='"~ subquestion.id ~"[]' id='input-proposition"~ subquestion.id ~"' placeholder='"~initTextRightAnswer ~"' size="~maxValueSize~" required />" %}
+            {# Fermeture de la liste de choix #}
+            {# Remplacement des données de la base par les listes de choix #}
+            {% set selector = "%"~i~"%" %}
+            {% set texte = texte|replace({(selector): html}) %}
+        {% endif %}
+    {% endfor %}
+
+    {# Affichage de questionnaire.mediaText #}
+    {{ texte | raw }}
+
 {% endmacro %}
