@@ -13,7 +13,7 @@ menu:
     editor: Editeur
     help: Aide
     logout: Déconnexion
-    language_choose: Choose a language
+    language_change: Change language
 
 export:
     file_generated: Le fichier a été généré
