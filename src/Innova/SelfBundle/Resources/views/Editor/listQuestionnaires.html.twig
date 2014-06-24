@@ -8,15 +8,15 @@
 <a id="create-task" class="btn btn-default btn-sm">
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
 </a>
-{#
-<a class="btn btn-info btn-sm" href="{{ path('test_edit', { 'testId': test.id }) }}">
-    <span class="glyphicon glyphicon-plus"></span> Ajouter une tâche déjà existante
-</a>
-#}
+
 <hr/>
 
+<h3>
+    {% autoescape 'html' %}
+    {{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}
+    {% endautoescape %}
+</h3>
 
-<h3>{% autoescape 'html' %}{{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}{% endautoescape %}</h3>
 
 <ul class="list-group" id="sortable">
 {% for order in orders %}
@@ -41,6 +41,7 @@
 
 {% if orders | length > 0 %}
     <span class="btn btn-default btn-sm pull-right" id="save-order">{{ 'editor.task.save_order' | trans }}</span>
+    <img id="loader-img" style="display:none;" class="pull-right" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
 {% endif %}
 
 <div id="delete-task-modal" class="modal fade">

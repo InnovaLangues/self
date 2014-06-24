@@ -20,7 +20,13 @@ class OrderQuestionnaireTestManager
         $orderQuestionnaireTest = new OrderQuestionnaireTest();
         $orderQuestionnaireTest->setTest($test);
         $orderQuestionnaireTest->setQuestionnaire($questionnaire);
-        $orderMax = count($em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
+
+        if($orderQuestionnaireTests = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test)){
+            $orderMax = count($orderQuestionnaireTests);
+        } else {
+            $orderMax = 0;
+        }
+
         $orderQuestionnaireTest->setDisplayOrder($orderMax + 1);
         $em->persist($orderQuestionnaireTest);
 
@@ -29,4 +35,18 @@ class OrderQuestionnaireTestManager
         return $orderQuestionnaireTest;
     }
 
+    public function recalculateOrder($test)
+    {
+        $em = $this->entityManager;
+
+        $orderedQuestionnaires = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test);
+
+        $i = 1;
+        foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
+            $orderedQuestionnaire->setDisplayOrder($i);
+            $em->persist($orderedQuestionnaire);
+            $i++;
+        }
+        $em->flush();
+    }
 }

@@ -88,3 +88,17 @@ services:
         calls:
             - [setRequest, [@request]]
         scope: request
+
+    innova_editor_orderquestionnaire:
+        class: Innova\SelfBundle\Controller\Editor\OrderQuestionnaireTestController
+        arguments:
+            entityManager:          @doctrine.orm.entity_manager
+            orderQuestionnaireTest: @self.order_questionnaire_test.manager
+        calls:
+            - [setRequest, [@request]]
+        scope: request
+
+    innova_locale_controller:
+        class: Innova\SelfBundle\Controller\LocaleController
+        arguments:
+            localeManager:          @self.locale.manager

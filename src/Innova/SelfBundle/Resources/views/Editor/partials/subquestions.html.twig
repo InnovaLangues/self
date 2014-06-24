@@ -6,7 +6,7 @@
             Items
                 {% set typoPrefix = questionnaire.questions[0].typology.name | slice(0,3) %}
                 {# {% if ( typoPrefix != "APP") or (typoPrefix == "APP" and questionnaire.questions[0].subquestions | length < 1)%} #}
-                {% if typoPrefix != "APP" %}
+                {% if typoPrefix != "APP" or typoPrefix != "TLC" or typoPrefix != "TLQ" %}
                     <span id="create-subquestion" class="btn btn-default btn-xs pull-right">{{ 'editor.subquestion.add' | trans }}</span>
                 {% endif %}
         </div>
@@ -14,7 +14,7 @@
         {% if ( typoPrefix == "APP") %}
             {% include "InnovaSelfBundle:Editor/partials:app.html.twig" %}
         {% elseif typoPrefix == "TLC" or typoPrefix == "TLQ" %}
-            
+            Work In Progress
         {% else %}
             {% if questionnaire.questions[0].subquestions is not null %}
                 {% set subquestions = questionnaire.questions[0].subquestions %}

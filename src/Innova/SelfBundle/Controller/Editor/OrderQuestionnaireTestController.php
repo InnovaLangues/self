@@ -3,19 +3,43 @@
 namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Innova\SelfBundle\Entity\OrderQuestionnaireTest;
+
 
 /**
- * OrderQuestionnaireTestController controller for editor
- *
- * @Route("admin/editor")
+ * Class OrderQuestionnaireTestController
+ * @Route(
+ *      "admin/editor",
+ *      name    = "",
+ *      service = "innova_editor_orderquestionnaire"
+ * )
  */
-class OrderQuestionnaireTestController extends Controller
+class OrderQuestionnaireTestController
 {
+    
+    protected $entityManager;
+    protected $orderQuestionnaireTestManager;
+    protected $request;
+
+    public function __construct(
+            $entityManager,
+            $orderQuestionnaireTestManager
+    )
+    {
+        $this->entityManager = $entityManager;
+        $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
+    }
+
+    public function setRequest(Request $request = null)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
     /**
      * @Route("/order-test-questionnaire", name="save-order-test-questionnaire", options={"expose"=true})
      * @Method("POST")
@@ -23,8 +47,8 @@ class OrderQuestionnaireTestController extends Controller
      */
     public function saveOrderAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request')->request;
+        $em = $this->entityManager;
+        $request = $this->request->request;
 
         $newOrderArray = json_decode($request->get('newOrder'));
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
@@ -33,18 +57,12 @@ class OrderQuestionnaireTestController extends Controller
         foreach ($entitiesToRemove as $entity) {
             $em->remove($entity);
         }
+        $em->flush();
 
-        $i = 1;
         foreach ($newOrderArray as $questionnaireId) {
             $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-            $orderQuestionnaireTest = new OrderQuestionnaireTest();
-            $orderQuestionnaireTest->setTest($test);
-            $orderQuestionnaireTest->setQuestionnaire($questionnaire);
-            $orderQuestionnaireTest->setDisplayOrder($i);
-            $em->persist($orderQuestionnaireTest);
-            $i++;
+            $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
         }
-        $em->flush();
 
         return new JsonResponse(null);
     }
@@ -56,24 +74,25 @@ class OrderQuestionnaireTestController extends Controller
      */
     public function deleteTaskAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request')->request;
+        $em = $this->entityManager;
+        $request = $this->request->request;
 
         $testId = $request->get('testId');
         $questionnaireId = $request->get('questionnaireId');
+
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
-        $entityToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array(
+        $taskToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array(
                                                                                             'test' => $test,
                                                                                             'questionnaire' => $questionnaire
                                                                                         ));
-
         $test->removeQuestionnaire($questionnaire);
-
+        $em->remove($taskToRemove);
         $em->persist($test);
-        $em->remove($entityToRemove);
         $em->flush();
+
+        $this->orderQuestionnaireTestManager->recalculateOrder($test);
 
         return new JsonResponse(
             array()

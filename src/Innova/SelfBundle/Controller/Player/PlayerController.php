@@ -72,16 +72,18 @@ class PlayerController
 
             if ($displayHelp)
             {
-                // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
-                // 1 : recherche de la question précédente
-                $questionnaireBefore = $this->findAQuestionnaireBefore($test, $this->user);
-                if ($questionnaireBefore != NULL ) {
-                    // 2 : recherche des informations sur la question
-                    $skillBefore = $questionnaireBefore->getSkill();
-                    $skill = $questionnaire->getSkill();
-                    // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a le même niveau
-                    if ($skillBefore == $skill) $displayHelp = false;
-                }
+            // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
+            // 1 : recherche de la question précédente
+            $previousQuestionnaire = $this->findPreviousQuestionnaire($test, $questionnaire);
+            $displayHelp = true;
+
+            if ($previousQuestionnaire != null ) {
+                // 2 : recherche des informations sur la question
+                $skillBefore = $previousQuestionnaire->getSkill();
+                $skill = $questionnaire->getSkill();
+                // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a la même compétence
+                if ($skillBefore == $skill) $displayHelp = false;
+            }
             }
 
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
@@ -96,32 +98,36 @@ class PlayerController
         }
     }
 
-    /**
-     * Pick a questionnaire entity for a given test not done yet by the user.
-     */
-    protected function findAQuestionnaireBefore($test, $user)
-    {
-        $em = $this->entityManager;
-        $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
-        $questionnaireBefore = null;
 
-        foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
-            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
-                array(  'user' => $user->getId(),
-                        'test' => $test->getId(),
-                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire()->getId()
-                ));
-            if (count($traces) == 0) {
-                break;
-            }
-            else
-            {
-                $questionnaireBefore = $orderedQuestionnaire->getQuestionnaire();
-            }
+    protected function findPreviousQuestionnaire($test, $questionnaire)
+    {
+
+        $em = $this->entityManager;
+        $previousQuestionnaire = null;
+
+        $currentQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
+            array(  
+                    'test' => $test,
+                    'questionnaire' => $questionnaire
+            ))->getDisplayOrder();
+       
+        $displayOrder = $currentQuestionnaireOrder - 1;
+
+
+        $previousQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
+            array(  
+                    'test' => $test,
+                    'displayOrder' => $displayOrder
+            ));
+        
+        if( $previousQuestionnaireOrder ){
+            $previousQuestionnaire = $previousQuestionnaireOrder->getDisplayOrder();
         }
 
-        return $questionnaireBefore;
+        return $previousQuestionnaire;
     }
+
+
 
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.
@@ -200,6 +206,7 @@ class PlayerController
             'questionnaire' => $questionnairePicked,
             'test' => $test,
             'counQuestionnaireDone' => $countQuestionnaireDone,
+            'displayHelp' => false
         );
     }
 

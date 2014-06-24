@@ -280,6 +280,10 @@ function setTheme(questionnaireId) {
         }
     })
     .done(function(data) {
+        $("#theme").val(data.theme);
+        if(data.msg != ""){
+            alert(data.msg);
+        }
         $("#loader-img").hide();
     }); 
 }
