@@ -7,13 +7,13 @@ anonymous:
     connection: Login
 
 menu:
-    users: Utilisateurs
-    csv_export: Export CSV
-    tests: Accès aux tests
-    editor: Editeur
-    help: Aide
-    credit : Crédit
-    logout: Déconnexion
+    users: Users
+    csv_export: CSV Export
+    tests: Tests
+    editor: Editor
+    help: Help
+    credit : Credits
+    logout: Logout
     language_change: Change language
 
 export:
