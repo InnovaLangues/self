@@ -29,4 +29,8 @@
             <p>* Certains Vrai-Faux prévoient l’option « on ne peut pas dire » (i.e. : « Vrai », « Faux » ou « On ne peut pas dire »)</p>
         </div>
     </div>
+
+    {% set displayHelp = 0 %}
+    <a href="{{ path('test_start', { 'id': test.id,  'displayHelp': displayHelp } )}}" class="btn btn-primary">{{ 'trace.test_continue' | trans }}</a>
+
 </div>

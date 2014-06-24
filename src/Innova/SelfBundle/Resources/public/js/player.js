@@ -43,7 +43,7 @@ $(document).ready(function() {
                     playMedia(audio, $(this));
                     updateListenCount();
                 } else {
-                    $('#modal-listen-context').modal('show'); 
+                    $('#modal-listen-context').modal('show');
                 }
             }
         }
@@ -123,7 +123,7 @@ $(document).ready(function() {
                     $("#video").css("opacity","1");
                     updateListenCount();
                 } else {
-                    $('#modal-listen-context').modal('show'); 
+                    $('#modal-listen-context').modal('show');
                 }
             }
         });

@@ -12,6 +12,7 @@ menu:
     tests: Accès aux tests
     editor: Editeur
     help: Aide
+    credit : Crédit
     logout: Déconnexion
     language_change: Changez la langue
 

@@ -23,8 +23,10 @@
                     <div class="panel panel-default  ">
                         <div class="panel-body">
                             <div>
+                                {# Affichage de la liste des tests en fonction de l'avancement.#}
                                 {% if testsProgress[i] != 100 %}
-                                    <a href="{{ path('test_start', { 'id': test.id } )}}">{{ test.name }}</a>
+                                    {% set displayHelp = 1 %}
+                                    <a href="{{ path('test_start', { 'id': test.id,  'displayHelp': displayHelp } )}}">{{ test.name }}</a>
                                 {% else %}
                                     {{ test.name }}
                                 {% endif %}

@@ -52,11 +52,11 @@ class PlayerController
      * Try to pick a questionnaire entity for a given test not done yet by the user
      * and display it if possible.
      *
-     * @Route("student/test/start/{id}", name="test_start")
+     * @Route("student/test/start/{id}/{displayHelp}/", name="test_start")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
-    public function startAction(Test $test)
+    public function startAction(Test $test, $displayHelp)
     {
         $em = $this->entityManager;
 
@@ -70,9 +70,11 @@ class PlayerController
             // sinon on envoie le questionnaire à la vue
             $this->session->set('listening', $questionnaire->getListeningLimit());
 
+            if ($displayHelp)
+            {
             // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
             // 1 : recherche de la question précédente
-            $previousQuestionnaire = $this->findPrevioustQuestionnaire($test, $questionnaire);
+            $previousQuestionnaire = $this->findPreviousQuestionnaire($test, $questionnaire);
             $displayHelp = true;
 
             if ($previousQuestionnaire != null ) {
@@ -82,6 +84,7 @@ class PlayerController
                 // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a la même compétence
                 if ($skillBefore == $skill) $displayHelp = false;
             }
+            }
 
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $this->user->getId());
@@ -90,13 +93,13 @@ class PlayerController
                 'questionnaire' => $questionnaire,
                 'test' => $test,
                 'counQuestionnaireDone' => $countQuestionnaireDone,
-                'displayHelp' => $displayHelp
+                'displayHelp' => $displayHelp // Me dit si je dois ou pas afficher l'aide
             );
         }
     }
 
 
-    protected function findPrevioustQuestionnaire($test, $questionnaire)
+    protected function findPreviousQuestionnaire($test, $questionnaire)
     {
 
         $em = $this->entityManager;

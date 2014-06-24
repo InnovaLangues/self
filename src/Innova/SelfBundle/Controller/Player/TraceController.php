@@ -138,6 +138,7 @@ class TraceController
                             $this->createAnswerProposition($trace, $propositionId, $subquestionId);
                         }
                     }
+                    //$this->createClick($media, $test, $questionnaire, $user);
                 }
             }
         }
@@ -214,6 +215,33 @@ class TraceController
     }
 
     /**
+     * si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
+     */
+    private function createClick($media, $test, $questionnaire, $user)
+    {
+        $em = $this->entityManager;
+        $click = $em->getRepository('InnovaSelfBundle:MediaClick')->find(
+            array('media' => $media, 'test' => $test, 'questionnaire' => $questionnaire, 'user' => $user)
+            );
+
+        $em = $this->entityManager;
+
+        $click = new Trace();
+        $click->setDate(new \DateTime());
+        $click->setQuestionnaire($questionnaire);
+        $click->setTest($test);
+        $click->setUser($user);
+        $click->setTotalTime($totalTime);
+        $click->setListeningTime("");
+        $click->setListeningAfterAnswer("");
+
+        $em->persist($click);
+        $em->flush();
+
+        return $click;
+    }
+
+    /**
      * update a trace to set the difficulty
      *
      * @Route("trace_setDifficulty", name="trace_setDifficulty")
@@ -230,6 +258,9 @@ class TraceController
         $em->persist($trace);
         $em->flush();
 
-        return new RedirectResponse($this->router->generate('test_start', array('id' => $post["testId"])));
+        $displayHelp = 1;
+
+        return new RedirectResponse($this->router->generate('test_start',
+        array('id' => $post["testId"], 'displayHelp' => $displayHelp)));
     }
 }
