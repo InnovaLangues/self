@@ -35,7 +35,11 @@
 				<h4 class="modal-title">{{ 'editor.media.text' | trans }}</h4>
 			</div>
 			<div class="modal-body">
-				<textarea id="create-text-textarea" class="tinymce"></textarea>
+				<label for="text-name">{{ 'editor.media.name' | trans }}</label>
+    			<input type="text" class="form-control media-name" id="text-name" value=""/>
+    			<br/>
+    			<label for="create-text-textarea">{{ 'editor.media.description' | trans }}</label>
+				<textarea id="text-textarea" class="tinymce media-description"></textarea>
 			</div>
 			<div class="modal-footer">
 				<button id="create-text-btn" type="button" class="btn btn-primary">{{ 'generic.save' | trans }}</button>
@@ -56,13 +60,13 @@
 			<div class="modal-body">
 				<form id="" enctype="multipart/form-data" >
 					<label for="theme">{{ 'editor.media.name' | trans }}</label>
-    				<input type="text" class="form-control" id="image-name" value=""/>
+    				<input type="text" class="form-control media-name" id="image-name" value=""/>
     				<label for="theme">{{ 'editor.media.description' | trans }}</label>
-    				<input type="text" class="form-control" id="image-description" value=""/>
+    				<input type="text" class="form-control media-description" id="image-description" value=""/>
 
     				<label for="image-file">{{ 'editor.media.file' | trans }}</label>
-					<input class="file" data-file-type="image" id="image-file" name="userfile" type="file"/>
-					<input type="hidden" id="image-url" value=""/>
+					<input class="file media-file" data-file-type="image" id="image-file" name="userfile" type="file"/>
+					<input class="media-url" type="hidden" id="image-url" value=""/>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -85,13 +89,13 @@
 			<div class="modal-body">
 				<form id="" enctype="multipart/form-data" >
 					<label for="video-name">{{ 'editor.media.name' | trans }}</label>
-    				<input type="text" class="form-control" id="video-name" value=""/>
+    				<input type="text" class="form-control media-name" id="video-name" value=""/>
     				<label for="video-description">{{ 'editor.media.description' | trans }}</label>
-    				<input type="text" class="form-control" id="video-description" value=""/>
+    				<input type="text" class="form-control media-description" id="video-description" value=""/>
 
     				<label for="video-file">{{ 'editor.media.file' | trans }}</label>
-					<input class="file" data-file-type="video" id="video-file" name="userfile" type="file"/>
-					<input type="hidden" id="video-url" value=""/>
+					<input class="file media-file" data-file-type="video" id="video-file" name="userfile" type="file"/>
+					<input class="media-url" type="hidden" id="video-url" value=""/>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -113,13 +117,13 @@
 			<div class="modal-body">
 				<form id="" enctype="multipart/form-data" >
 					<label for="audio-name">{{ 'editor.media.name' | trans }}</label>
-    				<input type="text" class="form-control" id="audio-name" value=""/>
+    				<input type="text" class="form-control media-name" id="audio-name" value=""/>
     				<label for="audio-description">{{ 'editor.media.description' | trans }}</label>
-    				<input type="text" class="form-control" id="audio-description" value=""/>
+    				<input type="text" class="form-control media-description" id="audio-description" value=""/>
 
     				<label for="audio-file">{{ 'editor.media.file' | trans }}</label>
-					<input class="file" data-file-type="audio" id="audio-file" name="userfile" type="file"/>
-					<input type="hidden" id="audio-url" value=""/>
+					<input class="file media-file" data-file-type="audio" id="audio-file" name="userfile" type="file"/>
+					<input class="media-url" type="hidden" id="audio-url" value=""/>
 				</form>
 			</div>
 			<div class="modal-footer">

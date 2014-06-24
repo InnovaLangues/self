@@ -184,7 +184,6 @@ function createMediaModal( media ) {
     $('#modal-media-type').modal('hide');
     var mediaType = media.attr("media-type");
     $('#modal-create-'+mediaType).modal('show');
-    // initTinyMCE();
 }
 
 
@@ -197,8 +196,9 @@ function createMediaModal( media ) {
 **************************************************/
 
 function createText(){
-    var description = $("#create-text-textarea").val();
-    createMedia(null, description, null, "texte");
+    var name = $("#text-name").val();
+    var description = $("#text-textarea").val();
+    createMedia(name, description, null, "texte");
 }
 
 function createImage(){
@@ -284,6 +284,7 @@ function setTheme(questionnaireId) {
         if(data.msg != ""){
             alert(data.msg);
         }
+        fillMediaName(data.theme);
         $("#loader-img").hide();
     }); 
 }
@@ -493,17 +494,14 @@ function setParamForRequest(type, field, id, reloaded){
     $("#entity-to-be-reloaded").val(reloaded);
 }
 
-
 function initializeFormsFields(){
-    $("#create-text-textarea").val("");
-    $("#image-url").val("");
-    $("#image-name").val("");
-    $("#image-description").val("");
-    $("#image-file").val("");
-    $("#video-url").val("");
-    $("#video-name").val("");
-    $("#video-description").val("");
-    $("#video-file").val("");
+    $(".media-url").val("");
+    $(".media-description").val("");
+    $(".media-file").val("");
+}
+
+function fillMediaName(theme){
+    $(".media-name").val(theme+"_");
 }
 
 /************************************************
