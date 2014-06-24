@@ -22,6 +22,7 @@ $( "body" ).on( "click", '#create-task', function() {
 
 
 function saveOrder(){
+    $("#loader-img").show();
     var newOrder = new Array();
     var testId = "";
     $('.questionnaire').each(function() {
@@ -41,7 +42,7 @@ function saveOrder(){
         }
     })
     .done(function(data) {
-        console.log("Ordre sauvegardé");
+        $("#loader-img").hide();
     });
 }
 
