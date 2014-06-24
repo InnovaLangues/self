@@ -30,7 +30,13 @@
                         {% endif %}
                         <li><a data-toggle="modal" href="#helpModal">{{ 'menu.help' | trans }}</a></li>
                         <li><a data-toggle="modal" href="#creditModal">{{ 'menu.credit' | trans }}</a></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'menu.logout' | trans }}</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                        <li>
+                            <a href="{{ path('fos_user_security_logout') }}">
+                                <span class="glyphicon glyphicon-log-out"></span> {{ 'menu.logout' | trans }}
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -57,36 +63,13 @@
             </div> 
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade helpModal" id="helpModal" >
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">{{ 'menu.help' | trans }}</h4>
-                    </div>
-                    <div class="modal-body">
-                    <!-- Help file -->
-                        {% include 'InnovaSelfBundle::Main/help.html.twig' %}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'generic.ok' | trans }}</button>
-                  </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        {% include 'InnovaSelfBundle::Main/helpModale.html.twig' %}
 
+        {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
 
-        
-
-        
-        {% include 'InnovaSelfBundle::Main/locale.html.twig' %}
-
-        {% include 'InnovaSelfBundle::Main/credit.html.twig' %}
-                   
+        {% include 'InnovaSelfBundle::Main/creditModale.html.twig' %}     
 
         {% block javascripts %}
-            <!-- Jquery first then Bootstrap call -->
             <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
