@@ -70,20 +70,19 @@ class PlayerController
             // sinon on envoie le questionnaire à la vue
             $this->session->set('listening', $questionnaire->getListeningLimit());
 
-            if ($displayHelp)
-            {
-            // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
-            // 1 : recherche de la question précédente
-            $previousQuestionnaire = $this->findPreviousQuestionnaire($test, $questionnaire);
-            $displayHelp = true;
+            if ($displayHelp){
+                // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
+                // 1 : recherche de la question précédente
+                $previousQuestionnaire = $this->findPreviousQuestionnaire($test, $questionnaire);
+                $displayHelp = true;
 
-            if ($previousQuestionnaire != null ) {
-                // 2 : recherche des informations sur la question
-                $skillBefore = $previousQuestionnaire->getSkill();
-                $skill = $questionnaire->getSkill();
-                // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a la même compétence
-                if ($skillBefore == $skill) $displayHelp = false;
-            }
+                if ($previousQuestionnaire != null ) {
+                    // 2 : recherche des informations sur la question
+                    $skillBefore = $previousQuestionnaire->getSkill();
+                    $skill = $questionnaire->getSkill();
+                    // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a la même compétence
+                    if ($skillBefore == $skill) $displayHelp = false;
+                }
             }
 
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
@@ -121,7 +120,7 @@ class PlayerController
             ));
         
         if( $previousQuestionnaireOrder ){
-            $previousQuestionnaire = $previousQuestionnaireOrder->getDisplayOrder();
+            $previousQuestionnaire = $previousQuestionnaireOrder->getQuestionnaire();
         }
 
         return $previousQuestionnaire;

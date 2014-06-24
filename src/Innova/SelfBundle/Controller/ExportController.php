@@ -107,26 +107,25 @@ class ExportController
 
         $result = array();
 
-//        foreach ($tests as $test) {
-            $questionnaires = $test->getQuestionnaires();
-            // For THE test, loop on the Questionnaire
-            foreach ($questionnaires as $questionnaire) {
-                // For THE questionnaire, loop on the Trace
-                $traces = $questionnaire->getTraces();
-                foreach ($traces as $trace) {
-                    $userName  = (string) $trace->getUser();
-                    $emailName = (string) $trace->getUser()->getEmail();
-                    $testDate  = date_format($trace->getDate(), 'dm');
-                    if (!isset($result[$userName]["time"])) {
-                        $result[$userName]["time"]=0;
-                    }
-                    $result[$userName]["time"] = $result[$userName]["time"] + $trace->getTotalTime();
-                    $result[$userName]["name"]  = $userName;
-                    $result[$userName]["email"] = $emailName;
-                    $result[$userName]["date"]  = $testDate;
+        $questionnaires = $test->getQuestionnaires();
+        // For THE test, loop on the Questionnaire
+        foreach ($questionnaires as $questionnaire) {
+            // For THE questionnaire, loop on the Trace
+            $traces = $questionnaire->getTraces();
+            foreach ($traces as $trace) {
+                $userId  = $trace->getUser()->getId();
+                $userName  = (string) $trace->getUser();
+                $emailName = (string) $trace->getUser()->getEmail();
+                $testDate  = date_format($trace->getDate(), 'dm');
+                if (!isset($result[$userId]["time"])) {
+                    $result[$userId]["time"]=0;
                 }
+                $result[$userId]["time"] = $result[$userId]["time"] + $trace->getTotalTime();
+                $result[$userId]["name"]  = $userName;
+                $result[$userId]["email"] = $emailName;
+                $result[$userId]["date"]  = $testDate;
             }
-//        }
+        }
 
         $csv .= "\n";
 
@@ -174,7 +173,7 @@ class ExportController
 
         $csv .= "Score total obtenu dans le test (formule du total);" ; // I
 
-        $cpt_questionnaire=0;
+        $cpt_questionnaire = 0;
         if ($cpt_questionnaire == 0) {
             $questionnaires = $test->getQuestionnaires();
             // For THE test, loop on the Questionnaire
@@ -195,14 +194,17 @@ class ExportController
                 $csv .= "T" . $cpt_questionnaire . " - Protocole d'interaction;";
                 $csv .= "T" . $cpt_questionnaire . " - difficulté;";
                 $csv .= "T" . $cpt_questionnaire . " - TEMPS;";
-                $questions = $questionnaire->getQuestions();
 
-                $subquestions = $questions[0]->getSubQuestions();
-                $cpt=0;
-                foreach ($subquestions as $subquestion) {
-                    $cpt++;
-                    $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - CORR-FAUX : 1 pour correct / 0 pour faux;";
-                    $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - PROPOSITION CHOISIE;";
+                $questions = $questionnaire->getQuestions();
+                
+                if(count($questions) > 0){
+                    $subquestions = $questions[0]->getSubquestions();
+                    $cpt=0;
+                    foreach ($subquestions as $subquestion) {
+                        $cpt++;
+                        $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - CORR-FAUX : 1 pour correct / 0 pour faux;";
+                        $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - PROPOSITION CHOISIE;";
+                    }
                 }
             }
         }
@@ -218,14 +220,14 @@ class ExportController
         foreach ($users as $user) {
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $user->getId());
-            if ($countQuestionnaireDone > 0) {
+            if ($countQuestionnaireDone > 0 and isset($result[$user->getId()])) {
                 $csv .= $user->getUserName() . ";" ;
                 $csv .= $user->getFirstName() . ";" ;
                 // For THE test, loop on the Questionnaire
                 // CR
                 //
 
-                $csv .= $result[$user->getUserName()]["date"] . ";" . $result[$user->getUserName()]["time"] . ";";
+                $csv .= $result[$user->getId()]["date"] . ";" . $result[$user->getId()]["time"] . ";";
                 // Add 4 colums for Level
                 $csv .= $user->getCoLevel() . ";";
                 $csv .= $user->getCeLevel() . ";";
@@ -266,7 +268,7 @@ class ExportController
                         }
 
                          // on récupère la subquestion
-                        $subquestions = $questions[0]->getSubQuestions();
+                        $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
                             $propositions = $subquestion->getPropositions();
                             $rightProps = array();
