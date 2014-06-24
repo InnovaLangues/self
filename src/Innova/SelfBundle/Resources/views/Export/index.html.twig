@@ -11,13 +11,14 @@
                 <div class="panel panel-default  ">
                     <div class="panel-body">
                         <div>
-                            <a href="{{ path('csv-export', {'language': test.language.name| slice(0, 2)|lower, 'level': test.orderQuestionnaireTests[0].questionnaire.level.name|lower, 'test': test.id } )}}">{{ test.name }}</a>
+                            {% set level = test.orderQuestionnaireTests[0].questionnaire.level.name|lower %}
+                            <a href="{{ path('csv-export', {'language': test.language.name| slice(0, 2)|lower, 'level': level, 'test': test.id } )}}">{{ test.name }}</a>
                         </div>
                         <div>
-                            <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': test.orderQuestionnaireTests[0].questionnaire.level.name|lower, 'test': test.id } )}}">{{ test.name }} Tia Plus</a>
+                            <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': level, 'test': test.id } )}}">{{ test.name }} Tia Plus</a>
                         </div>
                         <div>
-                            <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': test.orderQuestionnaireTests[0].questionnaire.level.name|lower, 'test': test.id, 'levelId': test.orderQuestionnaireTests[0].questionnaire.level.id } )}}">{{ test.name }} Tia Plus</a>
+                            <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': level, 'test': test.id, 'levelId': test.orderQuestionnaireTests[0].questionnaire.level.id } )}}">{{ test.name }} Tia Plus</a>
                         </div>
                     </div>
                 </div>
