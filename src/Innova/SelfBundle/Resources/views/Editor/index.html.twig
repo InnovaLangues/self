@@ -10,9 +10,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/player.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/dragAndDrop.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor.js") }}"></script>
     {{ tinymce_init() }}
 {% endblock %}

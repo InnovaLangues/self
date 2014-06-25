@@ -186,13 +186,21 @@ class QuestionnaireController
         $questionnaireId = $request->request->get('questionnaireId');
         $isChecked = $request->request->get('isChecked');
 
+        if ($isChecked == "true") {
+            $isChecked = 1;
+        } else {
+            $isChecked = 0;
+        }
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $questionnaire->setFixedOrder($isChecked);
         $em->persist($questionnaire);
         $em->flush();
 
         return new JsonResponse(
-            array()
+            array(
+                'id' => $questionnaire->getId(),
+                'fixed' => $questionnaire->getFixedOrder()
+            )
         );
     }
 
