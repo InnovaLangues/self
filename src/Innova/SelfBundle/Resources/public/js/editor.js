@@ -47,6 +47,11 @@ $(document).ready(function() {
         unlinkMedia();
     });
 
+    $( "body" ).on( "click", '.text-type', function() {
+        var textType = $(this).data("text-type");
+        setTextType(textType);
+    });
+
 
     /**********************
         QUESTION RELATED EVENTS 
@@ -232,7 +237,7 @@ function createAudio(){
 **************************************************/
 
 function createMedia(name, description, url, type) {
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
@@ -261,14 +266,14 @@ function createMedia(name, description, url, type) {
     .done(function(data) {
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
-        $("#loader-img").hide();
+        afterAjax();
         $('*').tooltip({placement:'top'});
     });
 }
 
 
 function setTheme(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-theme'),
@@ -285,12 +290,12 @@ function setTheme(questionnaireId) {
             alert(data.msg);
         }
         fillMediaName(data.theme);
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 }
 
 function setSkill(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-skill'),
         type: 'POST',
@@ -301,12 +306,12 @@ function setSkill(questionnaireId) {
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 }
 
 function setTypology(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
     var testId = $("#test-id").val();
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-typology'),
@@ -321,12 +326,12 @@ function setTypology(questionnaireId) {
     .done(function(data) {
         $("#typology").val(data.typology);
         $("#subquestion-container").replaceWith(data.subquestions);
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 }
 
 function setFixedOrder(isChecked){
-    $("#loader-img").show();
+    beforeAjax();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
@@ -339,13 +344,13 @@ function setFixedOrder(isChecked){
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 
 }
 
 function setLevel(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-level'),
@@ -357,12 +362,12 @@ function setLevel(questionnaireId) {
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 }
 
 function unlinkMedia(){
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
@@ -387,14 +392,14 @@ function unlinkMedia(){
     .done(function(data) {
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
-        $("#loader-img").hide();
+        afterAjax();
         $('*').tooltip({placement:'top'});
     });
 }
 
 
 function createSubquestion(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
 
@@ -409,13 +414,13 @@ function createSubquestion(questionnaireId) {
         }
     })
     .complete(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
         $("#subquestion-container").replaceWith(data.responseText);
     }); 
 }
 
 function deleteSubquestion(questionnaireId, subquestionId){
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
 
@@ -430,13 +435,13 @@ function deleteSubquestion(questionnaireId, subquestionId){
         }
     })
     .complete(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
         $("#subquestion-container").replaceWith(data.responseText);
     });
 }
 
 function toggleRightWrong(propositionId){
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
@@ -451,7 +456,7 @@ function toggleRightWrong(propositionId){
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
         $("#proposition-"+propositionId+"-container").replaceWith(data);
         $('*').tooltip({placement:'top'});
     }); 
@@ -459,7 +464,7 @@ function toggleRightWrong(propositionId){
 
 
 function setListeningLimit(mediaId, listeningLimit){
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
@@ -475,7 +480,28 @@ function setListeningLimit(mediaId, listeningLimit){
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
+    });
+}
+
+function setTextType(textType){
+    beforeAjax();
+
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('set-text-type'),
+        type: 'POST',
+        data: {
+            testId: testId,
+            questionnaireId: questionnaireId,
+            textType: textType,
+        }
+    })
+    .done(function(data) {
+        $("#texte-container").replaceWith(data);
+        afterAjax();
     });
 }
 
@@ -504,6 +530,16 @@ function fillMediaName(theme){
     $(".media-name").val(theme+"_");
 }
 
+function beforeAjax(){
+    $("#loader-img").show();
+    $(".btn, input").attr("disabled", "disabled");
+}
+
+function afterAjax(){
+    $("#loader-img").hide();
+    $(".btn, input").removeAttr("disabled");   
+}
+
 /************************************************
 *************************************************
 
@@ -513,7 +549,7 @@ function fillMediaName(theme){
 **************************************************/
 
 $('.file').on('change', function(event){
-    $("#loader-img").show();
+    beforeAjax();
     var files = event.target.files;
     var fileType = $(this).data("file-type");
     var data = new FormData();
@@ -536,6 +572,6 @@ $('.file').on('change', function(event){
     .done(function(data) {
         $("#"+fileType+"-url").val(data["url"]);
         $("#create-"+fileType+"-btn").prop("disabled", false);
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 });

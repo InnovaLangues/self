@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -185,13 +186,21 @@ class QuestionnaireController
         $questionnaireId = $request->request->get('questionnaireId');
         $isChecked = $request->request->get('isChecked');
 
+        if ($isChecked == "true") {
+            $isChecked = 1;
+        } else {
+            $isChecked = 0;
+        }
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $questionnaire->setFixedOrder($isChecked);
         $em->persist($questionnaire);
         $em->flush();
 
         return new JsonResponse(
-            array()
+            array(
+                'id' => $questionnaire->getId(),
+                'fixed' => $questionnaire->getFixedOrder()
+            )
         );
     }
 
@@ -281,6 +290,32 @@ class QuestionnaireController
                 'subquestions' => $template
             )
         );
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/set-text-type", name="set-text-type", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setTextTypeAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request;
+
+        $questionnaireId = $request->request->get('questionnaireId');
+        $testId = $request->request->get('testId');
+        $textType = $request->request->get('textType');
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        
+        $questionnaire->setDialogue($textType);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+
+        return new Response($template);
     }
 
 }
