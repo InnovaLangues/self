@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    var theme = $("#theme").val();
+    fillMediaName(theme);
+    afterAjax();
     var questionnaireId = $("#questionnaire-id").val();
 
     /* GENERAL INFOS EVENTS */

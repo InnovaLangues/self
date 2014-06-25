@@ -68,8 +68,8 @@ generic:
     register: Inscription
     login: Connexion
     validate: Valider
-    boolTrue: "True"
-    boolFalse: "False"
+    boolTrue: Vrai
+    boolFalse: Faux
     chooseCorrectAnswer: Sélectionner la réponse correcte
     edit: Editer
     remove: Supprimer

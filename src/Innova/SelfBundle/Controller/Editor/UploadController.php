@@ -43,13 +43,17 @@ class UploadController extends Controller
         $request = $this->request;
         $fileType = $request->get("file-type");
 
+        $authorizedExtensions = array('png', 'mp3', 'jpg', 'jpeg');
+
         foreach ($request->files as $uploadedFile) {
             $originalName = $uploadedFile->getClientOriginalName();
             $ext = pathinfo($originalName, PATHINFO_EXTENSION);
-            $newName = uniqid(). "." . $ext;
 
-            $directory = $this->kernelRoot.'/../web/upload/media/';
-            $uploadedFile->move($directory, $newName);
+            if (in_array(strtolower($ext), $authorizedExtensions )) {
+                $newName = uniqid(). "." . $ext;
+                $directory = $this->kernelRoot.'/../web/upload/media/';
+                $uploadedFile->move($directory, $newName);
+            }
         }
 
         return new JsonResponse(
