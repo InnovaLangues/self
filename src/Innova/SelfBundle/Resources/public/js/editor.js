@@ -47,6 +47,11 @@ $(document).ready(function() {
         unlinkMedia();
     });
 
+    $( "body" ).on( "click", '.text-type', function() {
+        var textType = $(this).data("text-type");
+        setTextType(textType);
+    });
+
 
     /**********************
         QUESTION RELATED EVENTS 
@@ -475,6 +480,27 @@ function setListeningLimit(mediaId, listeningLimit){
         }
     })
     .done(function(data) {
+        $("#loader-img").hide();
+    });
+}
+
+function setTextType(textType){
+    $("#loader-img").show();
+
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('set-text-type'),
+        type: 'POST',
+        data: {
+            testId: testId,
+            questionnaireId: questionnaireId,
+            textType: textType,
+        }
+    })
+    .done(function(data) {
+        $("#texte-container").replaceWith(data);
         $("#loader-img").hide();
     });
 }
