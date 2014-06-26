@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Innova\SelfBundle\Entity\Answer;
+use Innova\SelfBundle\Entity\Trace;
 
 /**
  * Class TraceController

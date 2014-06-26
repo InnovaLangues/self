@@ -24,19 +24,6 @@ class LocaleController
         $this->localeManager = $localeManager;
     }
 
-    /**
-     * Select a language
-     *
-     * @Route("/locale/select", name="claroline_locale_select", options = {"expose" = true})
-     *
-     * @Template("ClarolineCoreBundle:Locale:select.html.twig")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function selectLangAction()
-    {
-        return array('locales' => $this->localeManager->getAvailableLocales());
-    }
 
     /**
      * Change locale

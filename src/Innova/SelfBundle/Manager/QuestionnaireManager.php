@@ -68,7 +68,7 @@ class QuestionnaireManager
         $em = $this->entityManager;
 
         $isUnique = true;
-        if ($tasksWithSameTitle = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByTheme($title)) {
+        if ($em->getRepository('InnovaSelfBundle:Questionnaire')->findByTheme($title)) {
             $isUnique = false;
         }
 
