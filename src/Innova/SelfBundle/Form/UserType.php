@@ -47,6 +47,7 @@ class UserType extends BaseType
             )
             ->add('testDialang', 'choice',
                     array(
+                    'choices' => array('Oui' => 'Oui', 'Non' => 'Non'),
                     'required' => true,
                     'multiple' => false,
                     'mapped' => false,
