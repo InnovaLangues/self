@@ -111,10 +111,17 @@
             <div class="tab-pane fade" id="step2">
                 <fieldset>
                     <legend>{{ 'registration.pathway' | trans({}, 'messages') }}</legend>
-                    {# originStudent, user entity #}
+
+                    <div class="legend">
+                        <p class="text-danger text-left">
+                        {{ 'registration.warning_required' | trans({}, 'messages') }}
+                        </p>
+                    </div>
+
+                    {# originStudent, user entity "Dans la langue testée, êtes-vous un étudiant ?"#}
                     <div class="form-group">
                         {{ form_errors(form.originStudent) }}
-                        <label class="col-md-4 control-label" for="fos_user_registration_form_originStudent">
+                        <label class="col-md-4 control-label required" for="fos_user_registration_form_originStudent">
                             {{ 'registration.pathway_question' | trans({}, 'messages') }}
                         </label>
                         <div class="col-md-3">
@@ -142,6 +149,26 @@
 
                 <fieldset>
                     <legend>Dialang</legend>
+
+                    {# test_dialang: Avez-vous déjà passé un test Dialang ? #}
+                    {# voir le formulaire UserType.php #}
+                    <div class="form-group">
+                        {{ form_errors(form.testDialang) }}
+                        <label class="col-md-4 control-label" for="fos_user_registration_form_testDialang">
+                            {{ 'registration.test_dialang' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-3">
+                            <select id="fos_user_registration_form_testDialang" name="fos_user_registration_form[testDialang]"    class="form-control">
+                                {# Traductions #}
+                                <option value="O">{{ 'generic.yes' | trans({}, 'messages') }}</option>
+                                <option value="N">{{ 'generic.no' | trans({}, 'messages') }}</option>
+                            </select>
+                            {# {{ form_widget(form.testDialang, { 'attr': {'class': 'form-control'} }) }}#}
+                        </div>
+                        <div class="col-md-offset-5">
+                        </div>
+                    </div>
+
                     {# coLevel, user entity #}
                     <div class="form-group">
                         {{ form_errors(form.coLevel) }}

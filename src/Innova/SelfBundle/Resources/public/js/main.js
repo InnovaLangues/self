@@ -45,6 +45,37 @@ $(document).ready(function() {
     });
 
 
+    /*En cas de réponse affirmative, indiquez le niveau obtenu dans chaque compétence.
+    Compréhension de l’orale # menu déroulant
+    Compréhension de l’écrit # menu déroulant
+    Expression écrite # menu déroulant". EV, 26/06/2014 */
+    $('#fos_user_registration_form_testDialang').click(function(event) {
+
+        // Je récupère la zone sélectionnée et en minuscules.
+        var choice = $("#fos_user_registration_form_testDialang option:selected").text().toLowerCase();
+
+        // Demande de Cristiana : si je choisis "LANSAD" alors j'affiche la liste suivante sinon je n'affiche pas.
+        if (choice == 'oui')
+        {
+            $('#fos_user_registration_form_coLevel').show();
+            $('#fos_user_registration_form_coLevel').parent().parent().show();
+            $('#fos_user_registration_form_ceLevel').show();
+            $('#fos_user_registration_form_ceLevel').parent().parent().show();
+            $('#fos_user_registration_form_eeLevel').show();
+            $('#fos_user_registration_form_eeLevel').parent().parent().show();
+        }
+        else
+        {
+            $('#fos_user_registration_form_coLevel').hide();
+            $('#fos_user_registration_form_coLevel').parent().parent().hide();
+            $('#fos_user_registration_form_ceLevel').hide();
+            $('#fos_user_registration_form_ceLevel').parent().parent().hide();
+            $('#fos_user_registration_form_eeLevel').hide();
+            $('#fos_user_registration_form_eeLevel').parent().parent().hide();
+        }
+    });
+
+
     //Tabs login page #130
     var $tabs = $('#register-form-tabs li');
 
@@ -52,7 +83,7 @@ $(document).ready(function() {
         $tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
     });
 
- 
+
     $('body').on('click', '.locale-select', function () {
         $.ajax(Routing.generate('locale_change', {'_locale': $(this).html().toLowerCase()}))
         .done(function () {

@@ -51,6 +51,7 @@ registration:
     CE_level: Niveau obtenu en CE (compréhension écrite)
     EE_level: Niveau obtenu en EE (expression écrite)
     next_step: Etape suivante
+    test_dialang: Avez-vous déjà passé un test Dialang ?
 
 test:
     available: Tests disponibles
