@@ -220,7 +220,7 @@ class ExportController
         foreach ($users as $user) {
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $user->getId());
-            if ($countQuestionnaireDone > 0 and isset($result[$user->getId()])) {
+            if ($countQuestionnaireDone > 0 && isset($result[$user->getId()])) {
                 $csv .= $user->getUserName() . ";" ;
                 $csv .= $user->getFirstName() . ";" ;
                 // For THE test, loop on the Questionnaire
