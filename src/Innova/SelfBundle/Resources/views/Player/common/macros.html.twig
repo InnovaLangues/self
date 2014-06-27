@@ -96,15 +96,20 @@
     {% endif %}
 {% endmacro %}
 
+{# #}
+{# Macro "situation" qui regroupe différents cas pour le pilote 3 #}
+{# Voir le fichier views/Player/common/macros.html.twig #}
+{# #}
 {% macro situation(subquestion, i, texte, typoQuestion) %}
 
     {# Ceci est le caractère d'affichage lors des typologies où on affichent la longueur #}
-    {# Il risque de changer d'où la variable #}
+    {# Ce caractère peut changer d'où la variable #}
     {% set charSeparate = "-" %}
     {# Demande de Cristiana et Marie-Pierre, vu avec JJ #}
     {# La zone "Input" est variable suivant la taille de la proposition/réponse #}
-    {# Il y a 4 tailles de zone Input possibles / {% if typoQuestion == "TLQROCLEN" %} #}
-    {% set tabInputSize = [5, 12, 30] %}
+    {# Il y a 3 tailles de zone Input possibles / {% if typoQuestion == "TLQROCLEN" %} #}
+    {# Déclaration d'un tableau en prévision d'un changement des fourchettes #}
+    {% set tabInputSize = [5, 12] %}
 
     {% set textRightAnswer = "" %}
     {% set maxValueSize = 0 %}
@@ -118,6 +123,11 @@
                     {%  set maxValueSize = inputSize %}
                 {% endif %}
             {% endfor %}
+            {# Test si la taille de la solution est plus grande que 12 #}
+            {# Dans ce cas, la taille de la zone Input est la taille de la solution + 5 caractères #}
+            {% if ( maxValueSize == 0 ) %}
+                {% set maxValueSize = proposition.media.description|length + 5 %}
+            {% endif %}
             {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
             {% set initTextRightAnswer = "" %}
             {% if typoQuestion == "TLQROCLEN"  %}
