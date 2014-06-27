@@ -46,3 +46,10 @@
 .vertical-middle{
 	vertical-align: middle;
 }
+
+/**********************************
+	listening limit
+***********************************/
+.media-listening-limit{
+	max-width: 50px;
+}

@@ -85,12 +85,13 @@
 {% macro translateVF(description, language) %}
     {% set languageShorten = language | slice(0, 2) | lower %}
 
+    {% set description = description |striptags %}
     {% if description == "VRAI" %}
-        {{ 'generic.boolTrue' | trans({}, "messages", languageShorten) }}
+        {{ 'generic.boolTrue' | trans }}
     {% elseif description == "FAUX" %}
-        {{ 'generic.boolFalse' | trans({}, "messages", languageShorten) }}
+        {{ 'generic.boolFalse' | trans }}
     {% elseif description == "ND" %}
-       {{ 'generic.boolND' | trans({}, "messages", languageShorten) }}
+       {{ 'generic.boolND' | trans }}
     {% else %}
             {{ description|raw }}
     {% endif %}

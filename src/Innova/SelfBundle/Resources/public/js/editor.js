@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    var theme = $("#theme").val();
+    fillMediaName(theme);
+    afterAjax();
     var questionnaireId = $("#questionnaire-id").val();
 
     /* GENERAL INFOS EVENTS */
@@ -45,6 +48,11 @@ $(document).ready(function() {
     $( "body" ).on( "click", '#delete-text', function() {
         setParamForRequest("questionnaire", "texte", questionnaireId, "texte-container");
         unlinkMedia();
+    });
+
+    $( "body" ).on( "click", '.text-type', function() {
+        var textType = $(this).data("text-type");
+        setTextType(textType);
     });
 
 
@@ -184,7 +192,6 @@ function createMediaModal( media ) {
     $('#modal-media-type').modal('hide');
     var mediaType = media.attr("media-type");
     $('#modal-create-'+mediaType).modal('show');
-    // initTinyMCE();
 }
 
 
@@ -197,8 +204,9 @@ function createMediaModal( media ) {
 **************************************************/
 
 function createText(){
-    var description = $("#create-text-textarea").val();
-    createMedia(null, description, null, "texte");
+    var name = $("#text-name").val();
+    var description = $("#text-textarea").val();
+    createMedia(name, description, null, "texte");
 }
 
 function createImage(){
@@ -232,7 +240,7 @@ function createAudio(){
 **************************************************/
 
 function createMedia(name, description, url, type) {
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
@@ -261,14 +269,14 @@ function createMedia(name, description, url, type) {
     .done(function(data) {
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
-        $("#loader-img").hide();
+        afterAjax();
         $('*').tooltip({placement:'top'});
     });
 }
 
 
 function setTheme(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-theme'),
@@ -284,12 +292,13 @@ function setTheme(questionnaireId) {
         if(data.msg != ""){
             alert(data.msg);
         }
-        $("#loader-img").hide();
+        fillMediaName(data.theme);
+        afterAjax();
     }); 
 }
 
 function setSkill(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-skill'),
         type: 'POST',
@@ -300,12 +309,12 @@ function setSkill(questionnaireId) {
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 }
 
 function setTypology(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
     var testId = $("#test-id").val();
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-typology'),
@@ -320,12 +329,12 @@ function setTypology(questionnaireId) {
     .done(function(data) {
         $("#typology").val(data.typology);
         $("#subquestion-container").replaceWith(data.subquestions);
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 }
 
 function setFixedOrder(isChecked){
-    $("#loader-img").show();
+    beforeAjax();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
@@ -338,13 +347,13 @@ function setFixedOrder(isChecked){
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 
 }
 
 function setLevel(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-level'),
@@ -356,12 +365,12 @@ function setLevel(questionnaireId) {
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 }
 
 function unlinkMedia(){
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
@@ -386,14 +395,14 @@ function unlinkMedia(){
     .done(function(data) {
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
-        $("#loader-img").hide();
+        afterAjax();
         $('*').tooltip({placement:'top'});
     });
 }
 
 
 function createSubquestion(questionnaireId) {
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
 
@@ -408,13 +417,13 @@ function createSubquestion(questionnaireId) {
         }
     })
     .complete(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
         $("#subquestion-container").replaceWith(data.responseText);
     }); 
 }
 
 function deleteSubquestion(questionnaireId, subquestionId){
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
 
@@ -429,13 +438,13 @@ function deleteSubquestion(questionnaireId, subquestionId){
         }
     })
     .complete(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
         $("#subquestion-container").replaceWith(data.responseText);
     });
 }
 
 function toggleRightWrong(propositionId){
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
@@ -450,7 +459,7 @@ function toggleRightWrong(propositionId){
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
         $("#proposition-"+propositionId+"-container").replaceWith(data);
         $('*').tooltip({placement:'top'});
     }); 
@@ -458,7 +467,7 @@ function toggleRightWrong(propositionId){
 
 
 function setListeningLimit(mediaId, listeningLimit){
-    $("#loader-img").show();
+    beforeAjax();
 
     var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
@@ -474,7 +483,28 @@ function setListeningLimit(mediaId, listeningLimit){
         }
     })
     .done(function(data) {
-        $("#loader-img").hide();
+        afterAjax();
+    });
+}
+
+function setTextType(textType){
+    beforeAjax();
+
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('set-text-type'),
+        type: 'POST',
+        data: {
+            testId: testId,
+            questionnaireId: questionnaireId,
+            textType: textType,
+        }
+    })
+    .done(function(data) {
+        $("#texte-container").replaceWith(data);
+        afterAjax();
     });
 }
 
@@ -493,17 +523,24 @@ function setParamForRequest(type, field, id, reloaded){
     $("#entity-to-be-reloaded").val(reloaded);
 }
 
-
 function initializeFormsFields(){
-    $("#create-text-textarea").val("");
-    $("#image-url").val("");
-    $("#image-name").val("");
-    $("#image-description").val("");
-    $("#image-file").val("");
-    $("#video-url").val("");
-    $("#video-name").val("");
-    $("#video-description").val("");
-    $("#video-file").val("");
+    $(".media-url").val("");
+    $(".media-description").val("");
+    $(".media-file").val("");
+}
+
+function fillMediaName(theme){
+    $(".media-name").val(theme+"_");
+}
+
+function beforeAjax(){
+    $("#loader-img").show();
+    $(".btn, input").attr("disabled", "disabled");
+}
+
+function afterAjax(){
+    $("#loader-img").hide();
+    $(".btn, input").removeAttr("disabled");   
 }
 
 /************************************************
@@ -515,7 +552,7 @@ function initializeFormsFields(){
 **************************************************/
 
 $('.file').on('change', function(event){
-    $("#loader-img").show();
+    beforeAjax();
     var files = event.target.files;
     var fileType = $(this).data("file-type");
     var data = new FormData();
@@ -538,6 +575,6 @@ $('.file').on('change', function(event){
     .done(function(data) {
         $("#"+fileType+"-url").val(data["url"]);
         $("#create-"+fileType+"-btn").prop("disabled", false);
-        $("#loader-img").hide();
+        afterAjax();
     }); 
 });

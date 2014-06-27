@@ -70,8 +70,7 @@ class PlayerController
             // sinon on envoie le questionnaire à la vue
             $this->session->set('listening', $questionnaire->getListeningLimit());
 
-            if ($displayHelp)
-            {
+            if ($displayHelp){
                 // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
                 // 1 : recherche de la question précédente
                 $previousQuestionnaire = $this->findPreviousQuestionnaire($test, $questionnaire);
@@ -106,19 +105,20 @@ class PlayerController
         $previousQuestionnaire = null;
 
         $currentQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
-            array(
+            array(  
                     'test' => $test,
                     'questionnaire' => $questionnaire
             ))->getDisplayOrder();
-
+       
         $displayOrder = $currentQuestionnaireOrder - 1;
 
+
         $previousQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
-            array(
+            array(  
                     'test' => $test,
                     'displayOrder' => $displayOrder
             ));
-
+        
         if( $previousQuestionnaireOrder ){
             $previousQuestionnaire = $previousQuestionnaireOrder->getQuestionnaire();
         }

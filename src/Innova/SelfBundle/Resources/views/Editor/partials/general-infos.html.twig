@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <!--
+            
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="skill">Niveau</label>
@@ -38,7 +38,7 @@
                     </select>
                 </div>
             </div>
-            -->
+            
 
             <div class="col-md-3">
                 <div class="form-group">
@@ -60,7 +60,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="orderfix">{{ 'editor.questionnaire.fixed_order' | trans }} ?</label>
-                    <input id="fixed-order" type="checkbox" class="form-control" {% if questionnaire.fixedOrder == true %}checked{% endif %}/>
+                    <input id="fixed-order" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
                 </div>
             </div>
         </form>

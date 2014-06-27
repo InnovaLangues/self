@@ -133,6 +133,15 @@ class FixtureCommand extends ContainerAwareCommand
                 $output->writeln("Add new Language (Italian).");
             }
 
+            if (!$em->getRepository('InnovaSelfBundle:Language')->findOneByName("Chinese")) {
+                $langCn = new Language();
+                $langCn->setName("Chinese");
+                $langCn->setColor("pink");
+                $em->persist($langCn);
+                $em->flush();
+                $output->writeln("Add new Language (Chinese).");
+            }
+
             /*
                 New table for version 1.2 or version 2 (2014)
                 fixtures for levelLansad table

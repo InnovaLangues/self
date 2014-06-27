@@ -32,6 +32,7 @@ class AppManager
         // reste à ajouter les propositions des autres à la subquestion courante.
         foreach ($propositions as $proposition) {
             $mediaId = $proposition->getMedia()->getId();
+            $media = $proposition->getMedia();
             $found = false;
             foreach ($currentSubquestion->getPropositions() as $currentSubquestionProposition) {
                 $currentMediaId = $currentSubquestionProposition->getMedia()->getId();
@@ -40,7 +41,7 @@ class AppManager
                 }
             }
             if ($found == false) {
-                $proposition = $this->propositionManager->createProposition($currentSubquestion, media, false);
+                $proposition = $this->propositionManager->createProposition($currentSubquestion, $media, false);
             }
         }
 
