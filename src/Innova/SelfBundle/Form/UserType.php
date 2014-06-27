@@ -34,7 +34,10 @@ class UserType extends BaseType
             ->add('email', 'email')
             ->add('lastName')
             ->add('firstName')
-            ->add('originStudent')
+            ->add('originStudent', 'entity', array(
+                    'class'   => 'InnovaSelfBundle:originStudent',
+                    'required' => true,
+                ))
             ->add('levelLansad', 'entity',
                 array(
                     'label'   => 'Category',
@@ -42,6 +45,13 @@ class UserType extends BaseType
                     'choices' => $this->getArrayOfLevelLansad()
                 )
             )
+            ->add('testDialang', 'choice',
+                    array(
+                    'choices' => array('Oui' => 'Oui', 'Non' => 'Non'),
+                    'required' => true,
+                    'multiple' => false,
+                    'mapped' => false,
+                ))
             ->add('coLevel')
             ->add('ceLevel')
             ->add('eeLevel')

@@ -46,11 +46,13 @@ registration:
     password_confirmation: Confirmation du mot de passe
     pathway: Filière
     pathway_question: Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / UJF / Autres)
+    dialang: Dialang
     last_lansad:  Quel était le niveau du dernier cours LANSAD que vous avez validé ?
     CO_level: Niveau obtenu en CO (compréhension orale)
     CE_level: Niveau obtenu en CE (compréhension écrite)
     EE_level: Niveau obtenu en EE (expression écrite)
     next_step: Etape suivante
+    test_dialang: Avez-vous déjà passé un test Dialang ?
 
 test:
     available: Tests disponibles

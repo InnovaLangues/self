@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Subquestion
  * 13/11/2013 : Add mediaAmorce column. AB/EV.
+ * 24/06/2014 : Add mediaClue and mediaSyllable for pilote 3. EV.
  *
  * @ORM\Table("subquestion")
  * @ORM\Entity
@@ -53,6 +54,16 @@ class Subquestion
     * @ORM\OneToMany(targetEntity="Proposition", mappedBy="subquestion", cascade={"remove", "persist"})
     */
     protected $propositions;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaClue;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaSyllable;
 
     /**
     * @ORM\OneToMany(targetEntity="Answer", mappedBy="subquestion")
@@ -279,5 +290,51 @@ class Subquestion
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    /**
+     * Set mediaClue
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaClue
+     * @return Subquestion
+     */
+    public function setMediaClue(\Innova\SelfBundle\Entity\Media $mediaClue = null)
+    {
+        $this->mediaClue = $mediaClue;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaClue
+     *
+     * @return \Innova\SelfBundle\Entity\Media 
+     */
+    public function getMediaClue()
+    {
+        return $this->mediaClue;
+    }
+
+    /**
+     * Set mediaSyllable
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaSyllable
+     * @return Subquestion
+     */
+    public function setMediaSyllable(\Innova\SelfBundle\Entity\Media $mediaSyllable = null)
+    {
+        $this->mediaSyllable = $mediaSyllable;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaSyllable
+     *
+     * @return \Innova\SelfBundle\Entity\Media 
+     */
+    public function getMediaSyllable()
+    {
+        return $this->mediaSyllable;
     }
 }
