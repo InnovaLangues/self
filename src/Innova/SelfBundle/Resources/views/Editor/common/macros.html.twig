@@ -6,11 +6,11 @@
     {% elseif mediaType == "image" %}
         <img src="{{ asset('upload/media/') ~ media.url }}" height="180px"/>
     {% elseif mediaType == "video" %}
-        <video id="video" controls class="vertical-middle">
-            <source src="{{ asset('upload/media/') ~ media.url }}.webm" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
+        <video id="video" controls class="vertical-middle" height="180px">
+            <source src="{{ asset('upload/media/') ~ media.url }}" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
             Your browser does not support the video tag.
         </video>
-        {{ macros.listeningLimit(media) }}
+        {{ macros.listeningLimit(test, questionnaire, media) }}
     {% elseif mediaType == "audio" %}
         <audio controls preload="auto" class="vertical-middle">
             <source src="{{ asset('upload/media/') ~ media.url }}" type="audio/mp3">
