@@ -75,7 +75,20 @@ fos_user:
         form:
             type: innova_selfbundle_user
 
-
 stfalcon_tinymce:
     include_jquery: false
     tinymce_jquery: true
+
+
+avalanche_imagine:
+    source_root:  %kernel.root_dir%/../web/upload/media
+    web_root:     %kernel.root_dir%/../web
+    cache_prefix: media/cache
+    driver:       gd
+    filters:
+        app4:
+            type:    thumbnail
+            options: { size: [120, 118], mode: outbound }
+        app3:
+            type:    thumbnail
+            options: { size: [174, 118], mode: outbound }

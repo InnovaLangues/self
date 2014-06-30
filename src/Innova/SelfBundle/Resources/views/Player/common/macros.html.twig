@@ -32,6 +32,11 @@
     <img data-toggle="modal" width="{{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
 {% endmacro %}
 
+{% macro imageAPP(id, media, tooltip, filter) %}
+    {% import _self as macros %}
+    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ media.url | apply_filter(filter) }}" />
+{% endmacro %}
+
 {% macro video(id, media, limitAudio) %}
     <video id="video" data-listened=0 data-limit={{ limitAudio }}>
         <source src="{{ asset('upload/media/') ~ media.url }}.webm" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
