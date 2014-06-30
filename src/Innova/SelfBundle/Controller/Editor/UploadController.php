@@ -63,4 +63,25 @@ class UploadController extends Controller
         );
     }
 
+    /**
+     *
+     * @Route("/editor/crop-image", name="editor_crop_image", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function cropImageAction()
+    {
+        $request = $this->request;
+        $ur = $request->get("url");
+        $x = $request->get("x");
+        $y = $request->get("y");
+        $w = $request->get("w");
+        $h = $request->get("h");
+
+        return new JsonResponse(
+            array(
+                'plop' => $x,
+            )
+        );
+    }
+
 }
