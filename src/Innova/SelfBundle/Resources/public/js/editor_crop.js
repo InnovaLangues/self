@@ -7,7 +7,7 @@
     });
 
     $( "body" ).on( "click", '.crop-open-modale', function() {
-        $("#cropbox").attr("src",$(this).data("url"));
+        $("#cropbox").attr("src",$(this).data("url") + "?timestamp=" + new Date().getTime());
         $("#crop-url").val($(this).data("url"));
         
         $('#cropbox').Jcrop({
@@ -49,6 +49,7 @@ function crop(jcrop_api)
         type: 'PUT',
         data: 
         { 
+            url: url,
             x:x,
             y:y,
             w:w,
@@ -56,9 +57,14 @@ function crop(jcrop_api)
         }
     })
     .done(function(data) {
-        console.log(data);
         jcrop_api.destroy();
+        $("#cropbox").removeAttr("src");
         $("#modal-image-crop").modal('hide');
+
+        var x = $("img[src^='"+url+"']");
+        var newUrl = url + "?timestamp=" + new Date().getTime();
+        x.removeAttr("src");
+        x.attr("src", newUrl );
     });
 };
 
