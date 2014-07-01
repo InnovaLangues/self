@@ -75,6 +75,17 @@ services:
             - [setRequest, [@request]]
         scope: request
 
+    innova_editor_subquestion:
+        class: Innova\SelfBundle\Controller\Editor\SubquestionController
+        arguments:
+            mediaManager:       @self.media.manager
+            propositionManager: @self.proposition.manager
+            entityManager:      @doctrine.orm.entity_manager
+            templating:         @templating
+        calls:
+            - [setRequest, [@request]]
+        scope: request
+
     innova_player_trace:
         class: Innova\SelfBundle\Controller\Player\TraceController
         arguments:

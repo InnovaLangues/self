@@ -22,7 +22,7 @@ class Proposition
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Subquestion", inversedBy="propositions")
+    * @ORM\ManyToOne(targetEntity="Subquestion", inversedBy="propositions", cascade={"persist"})
     */
     protected $subquestion;
 
