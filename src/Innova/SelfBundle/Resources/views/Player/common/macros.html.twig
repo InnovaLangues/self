@@ -113,9 +113,10 @@
     {% set charSeparate = "-" %}
     {# Demande de Cristiana et Marie-Pierre, vu avec JJ #}
     {# La zone "Input" est variable suivant la taille de la proposition/réponse #}
-    {# Il y a 3 tailles de zone Input possibles / {% if typoQuestion == "TLQROCLEN" %} #}
+    {# Il y a des tailles de zone Input possibles / {% if typoQuestion == "TLQROCLEN" %} #}
     {# Déclaration d'un tableau en prévision d'un changement des fourchettes #}
-    {% set tabInputSize = [5, 12] %}
+    {# Voir document de JJ #}
+    {% set tabInputSize = [5, 10, 15, 20, 25, 30] %}
 
     {% set textRightAnswer = "" %}
     {% set maxValueSize = 0 %}
@@ -133,7 +134,10 @@
             {# Dans ce cas, la taille de la zone Input est la taille de la solution + 5 caractères #}
             {% if ( maxValueSize == 0 ) %}
                 {% set maxValueSize = proposition.media.description|length + 5 %}
+            {% else %}
+                {% set maxValueSize = maxValueSize + 1 %}
             {% endif %}
+
             {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
             {% set initTextRightAnswer = "" %}
             {% if typoQuestion == "TLQROCLEN"  %}
@@ -149,7 +153,7 @@
                 {% set initTextRightAnswer = textRightAnswer %}
                 {% set html = html~"<div class='input-group'>
                     <span class='input-group-addon'>"~syllable~"</span>
-                    <input type='text' class='form-control' placeholder='Username'>
+                    <input data-right-answer-length='"~textRightAnswer|length~"' type='text' class='form-control mask'>
                 </div>" %}
                 {% set selector = "%"~i~"%" %}
                 {% set texte = texte|replace({(selector): html}) %}
