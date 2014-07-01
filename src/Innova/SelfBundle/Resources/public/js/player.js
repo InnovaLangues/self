@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    maskManager();
     getListenCount();
     uncheckEverything();
     checkBadges();
@@ -314,3 +315,27 @@ function uncheckEverything(){
     $('input[type="radio"],input[type="checkbox"]').prop('checked', false);
 }
 
+
+/**************
+    MASKS
+**************/
+function maskManager(){
+    $('.mask').each(function() {
+        var length = $(this).data("right-answer-length");
+        var mask = constructMask(length, "*");
+        var placeholder = constructMask(length, "_");
+
+        $(this).attr("placeholder", placeholder);
+        $(this).mask(mask, {placeholder:'_'});
+    });
+}
+
+function constructMask(count, char){
+    var mask = "";
+    for (var i = 0; i < count; i++) {
+        mask = mask + char;
+    };
+
+    console.log(mask);
+    return mask;
+}
