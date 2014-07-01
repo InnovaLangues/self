@@ -4,7 +4,7 @@
     {% if mediaType == "texte" %}
        {{ media.description | raw }}
     {% elseif mediaType == "image" %}
-        <img src="{{ asset('upload/media/') ~ media.url }}" width="120px"/>
+        <img src="{{ asset('upload/media/') ~ media.url }}" height="180px"/>
         <br/>
         <span class="btn btn-default btn-xs crop-open-modale" data-url="{{ asset('upload/media/') ~ media.url }}">crop</span>
     {% elseif mediaType == "video" %}
