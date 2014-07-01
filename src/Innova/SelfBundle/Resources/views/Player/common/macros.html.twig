@@ -39,7 +39,7 @@
 
 {% macro video(id, media, limitAudio) %}
     <video id="video" data-listened=0 data-limit={{ limitAudio }}>
-        <source src="{{ asset('upload/media/') ~ media.url }}.webm" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
+        <source src="{{ asset('upload/media/') ~ media.url }}" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
         Your browser does not support the video tag.
     </video>
     <div id="video-controls" class="row">
