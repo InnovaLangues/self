@@ -79,11 +79,10 @@ stfalcon_tinymce:
     include_jquery: false
     tinymce_jquery: true
 
-
 avalanche_imagine:
     source_root:  %kernel.root_dir%/../web/upload/media
     web_root:     %kernel.root_dir%/../web
-    cache_prefix: media/cache
+    cache_prefix: upload/thumbnail
     driver:       gd
     filters:
         app4:

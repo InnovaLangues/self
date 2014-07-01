@@ -32,6 +32,9 @@ composer.lock
 app/sessions/*
 !app/sessions/.gitkeep
 
-# Session
+# export csv
 web/upload/export/csv/*
 !web/upload/export/csv/.gitkeep
+
+# avalanche thumbnail
+web/upload/thumbnail/*
