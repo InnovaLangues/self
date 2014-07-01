@@ -23,7 +23,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
     	"doctrine/doctrine-migrations-bundle": "dev-master",
         "friendsofsymfony/jsrouting-bundle": "~1.1",
-        "stfalcon/tinymce-bundle": "dev-master"
+        "stfalcon/tinymce-bundle": "dev-master",
+        "avalanche123/imagine-bundle": "v2.1"
     },
     "scripts": {
         "post-install-cmd": [

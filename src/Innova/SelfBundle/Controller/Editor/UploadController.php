@@ -63,4 +63,47 @@ class UploadController extends Controller
         );
     }
 
+    /**
+     *
+     * @Route("/editor/crop-image", name="editor_crop_image", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function cropImageAction()
+    {
+        $request = $this->request;
+        $url = $request->get("url");
+        $x = $request->get("x");
+        $y = $request->get("y");
+        $w = $request->get("w");
+        $h = $request->get("h");
+
+        $src = $this->kernelRoot.'/../web/upload/media/'.basename($url);
+
+        $type = strtolower(substr(strrchr($src,"."),1));
+        if($type == 'jpeg') $type = 'jpg';
+            switch($type){
+            case 'bmp': $img_r = imagecreatefromwbmp($src); break;
+            case 'gif': $img_r = imagecreatefromgif($src); break;
+            case 'jpg': $img_r = imagecreatefromjpeg($src); break;
+            case 'png': $img_r = imagecreatefrompng($src); break;
+            default : return "Unsupported picture type!";
+        }
+
+
+        $dst_r = ImageCreateTrueColor( $w, $h );
+        imagecopyresampled($dst_r,$img_r,0,0,$x,$y,$w,$h,$w,$h);
+
+        switch($type){
+            case 'bmp': imagewbmp($dst_r, $src); break;
+            case 'gif': imagegif($dst_r, $src); break;
+            case 'jpg': imagejpeg($dst_r, $src); break;
+            case 'png': imagepng($dst_r, $src); break;
+        }
+
+
+        return new JsonResponse(
+            array()
+        );
+    }
+
 }
