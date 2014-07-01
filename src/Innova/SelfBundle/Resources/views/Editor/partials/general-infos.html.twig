@@ -46,6 +46,7 @@
                     {% set excludedTypo = ["VF", "QRU", "QRM", "VFNM", "VFPM", "RE", "TVFPM"] %}
 
                     <select id="typology" class="form-control">
+                        <option value="-">-</option>
                         {% for typology in typologies %}
                             {% if typology.name not in excludedTypo %}
                             <option {% if questionnaire.questions[0].typology is not null and questionnaire.questions[0].typology == typology %}selected{% endif %} value="{{ typology.name }}">
