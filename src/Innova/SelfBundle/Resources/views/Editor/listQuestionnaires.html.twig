@@ -27,7 +27,7 @@
 {% for order in orders %}
     <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
 
-        {% if order.questionnaire.status %}
+        {% if order.questionnaire.status is not null %}
             {% set statusId = order.questionnaire.status.id %}
         {% else %}
             {% set statusId = 0 %}
