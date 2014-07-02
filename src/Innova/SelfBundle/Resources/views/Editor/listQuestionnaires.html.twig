@@ -1,5 +1,10 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+    <link href="{{ asset("bundles/innovaself/css/editor-task-list.css") }}" rel="stylesheet" />
+{% endblock %}
+
+
 {% block body -%}
 
 <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
@@ -21,6 +26,11 @@
 <ul class="list-group" id="sortable">
 {% for order in orders %}
     <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
+
+        {% if order.questionnaire.status %}
+            <span class="label label-default label-{{ order.questionnaire.status.id }}">{{ order.questionnaire.status.name }}</span>
+        {% endif %}
+
         {% if order.questionnaire.theme != "" %}
             {{ order.questionnaire.theme }}
         {% else %}
@@ -40,7 +50,7 @@
 </ul>
 
 {% if orders | length > 0 %}
-    <span class="btn btn-default btn-sm pull-right" id="save-order">{{ 'editor.task.save_order' | trans }}</span>
+    <span class="btn btn-default btn-primary btn-sm pull-right" id="save-order">{{ 'editor.task.save_order' | trans }}</span>
     <img id="loader-img" style="display:none;" class="pull-right" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
 {% endif %}
 

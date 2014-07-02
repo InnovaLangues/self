@@ -1,8 +1,8 @@
 <div class="panel panel-default">
     <div class="panel-heading">{{ 'editor.questionnaire.general_infos' | trans }}</div>
     <div class="panel-body">
-        <form class="form-inline" role="form">
-
+        
+        <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="theme">{{ 'editor.questionnaire.title' | trans }}</label>
@@ -57,13 +57,34 @@
                     </select>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="status">Status</label>
+
+                    <select id="status" class="form-control">
+                        {% for s in status %}
+                            <option {% if questionnaire.status is not null and questionnaire.status == s %}selected{% endif %} value="{{ s.id }}">
+                               {{ s.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="orderfix">{{ 'editor.questionnaire.fixed_order' | trans }} ?</label>
-                    <input id="fixed-order" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
+                    <div class="checkbox-inline">
+                        <label for="orderfix">
+                            {{ 'editor.questionnaire.fixed_order' | trans }} ? <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/> 
+                        </label>
+                    </div>                    
                 </div>
             </div>
-        </form>
+
+        </div>
     </div>
 </div>
