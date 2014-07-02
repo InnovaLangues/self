@@ -64,12 +64,13 @@ class SubquestionController
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $question = $questionnaire->getQuestions()[0];
+        $arrayLikeTypos = array("TQRU", "TQRM", "TVFNM", "TVF");
 
         $subquestion = new Subquestion();
-        if (mb_substr($questionnaireTypology, 0, 3) != "APP") {
-            $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($questionnaireTypology, 1));
-        } else {
+        if (!in_array($questionnaireTypology, $arrayLikeTypos)) {
             $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
+        } else {
+            $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($questionnaireTypology, 1));
         }
         $subquestion->setTypology($typology);
         $subquestion->setQuestion($question);
