@@ -37,13 +37,6 @@ class MediaClick
     protected $questionnaire;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="clickCount", type="integer")
-     */
-    private $clickCount;
-
-    /**
     * @ORM\ManyToOne(targetEntity="User", inversedBy="mediaClicks")
     */
     protected $user;
@@ -56,29 +49,6 @@ class MediaClick
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set clickCount
-     *
-     * @param  integer    $clickCount
-     * @return MediaClick
-     */
-    public function setClickCount($clickCount)
-    {
-        $this->clickCount = $clickCount;
-
-        return $this;
-    }
-
-    /**
-     * Get clickCount
-     *
-     * @return integer
-     */
-    public function getClickCount()
-    {
-        return $this->clickCount;
     }
 
     /**

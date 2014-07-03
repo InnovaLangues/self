@@ -92,7 +92,7 @@ $(document).ready(function() {
 
     $( "body" ).on( "click", '#create-proposition', function() {
         var subquestionId = $(this).data("subquestion-id");
-        setParamForRequest("proposition", null, subquestionId, "subquestion-"+subquestionId+"-container");
+        setParamForRequest("proposition", "proposition", subquestionId, "subquestion-"+subquestionId+"-container");
         chooseMediaTypeModal();
     });
 
