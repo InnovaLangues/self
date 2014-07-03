@@ -29,7 +29,7 @@ class MediaPurpose
     private $name;
     
     /**
-    * @ORM\OneToMany(targetEntity="Media", mappedBy="medias")
+    * @ORM\OneToMany(targetEntity="Media", mappedBy="mediaPurpose")
     */
     private $medias;
 
