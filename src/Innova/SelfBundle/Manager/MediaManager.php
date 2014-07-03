@@ -14,13 +14,26 @@ class MediaManager
         $this->entityManager = $entityManager;
     }
 
-    public function createMedia($test, $questionnaire, $mediaTypeName, $name, $description, $url, $mediaLimit)
+    public function createMedia($test, $questionnaire, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
     {
+
+        $entityField2Purpose = array(
+            "texte" => "objet de la question",
+            "contexte" => "contexte",
+            "amorce" => "question",
+            "media" => "question",
+            "app-answer" => "proposition",
+            "app-distractor" => "proposition",
+            "proposition" => "proposition"
+        );
+
         $em = $this->entityManager;
         $type = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($mediaTypeName);
+        $purpose = $em->getRepository('InnovaSelfBundle:MediaPurpose')->findOneByName($entityField2Purpose[$entityField]);
 
         $media = new Media();
         $media->setMediaType($type);
+        $media->setMediaPurpose($purpose);
         $media->setName($name);
         $media->setDescription($description);
         $media->setUrl($url);

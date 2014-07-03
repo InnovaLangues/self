@@ -74,17 +74,16 @@ class MediaController
      */
     public function createMediaAction()
     {
-        $request = $this->request->request;
         $em = $this->entityManager;
 
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $media = $this->mediaManager->createMedia($test, $questionnaire, $request->get('type'), $request->get('name'), $request->get('description'), $request->get('url'), 0);
-
-        /* Création de la relation avec une entité */
+        $request = $this->request->request;
         $entityType = $request->get('entityType');
         $entityId = $request->get('entityId');
         $entityField = $request->get('entityField');
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+        $media = $this->mediaManager->createMedia($test, $questionnaire, $request->get('type'), $request->get('name'), $request->get('description'), $request->get('url'), 0, $entityField);
 
         $template = "";
         switch ($entityType) {
