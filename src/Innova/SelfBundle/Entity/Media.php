@@ -58,6 +58,11 @@ class Media
     private $mediaClicks;
 
     /**
+    * @ORM\ManyToOne(targetEntity="MediaPurpose", inversedBy="medias")
+    */
+    protected $mediaPurpose;
+
+    /**
      * To String
      */
 
@@ -286,5 +291,28 @@ class Media
     public function getClue()
     {
         return $this->clue;
+    }
+
+    /**
+     * Set mediaPurpose
+     *
+     * @param \Innova\SelfBundle\Entity\MediaPurpose $mediaPurpose
+     * @return Media
+     */
+    public function setMediaPurpose(\Innova\SelfBundle\Entity\MediaPurpose $mediaPurpose = null)
+    {
+        $this->mediaPurpose = $mediaPurpose;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaPurpose
+     *
+     * @return \Innova\SelfBundle\Entity\MediaPurpose 
+     */
+    public function getMediaPurpose()
+    {
+        return $this->mediaPurpose;
     }
 }
