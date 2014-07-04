@@ -32,6 +32,11 @@
 	height:100px;
 	padding:25px;
 	text-align: center;
+	margin-top: 0px;
+    padding: 25px;
+    position: relative;
+    text-align: left;
+    top: 50%;
 }
 
 .hr {
@@ -116,7 +121,6 @@
 }
 
 #left-container-EEC {
-	padding-top: 90px;
 	text-align:center;
 }
 /**********************************
@@ -193,7 +197,7 @@
 	QUESTION
 ***********************************/
 
-.question-CE {
+.question-CE, .question-EEC {
 	margin: 0 0 0 15px;
 	min-height: 85px;
 }

@@ -1,0 +1,26 @@
+<div id="contexte-icon">
+    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" rel="tooltip" data-original-title="{{ 'player.tooltip.context' | trans }}" />
+</div>
+
+{# Demande de JJ : on n'affiche pas cette image dans ce cas. #}
+{% if questionnaire.mediaInstruction is null %}
+    <div id="situation-icon">
+        <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-EEC.png" rel="tooltip" data-original-title="Objet de la question" />
+    </div>
+{% endif %}
+
+{% for question in questionnaire.questions %}
+<div id="left-container-EEC" class="col-md-12 left-container">
+    <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+        {# CONTEXTE #}
+        {% include "InnovaSelfBundle:Player/EEC:contexte.html.twig" %}
+        {# CONSIGNE #}
+        {% include "InnovaSelfBundle:Player/EEC:tab-content-consigne.html.twig" %}
+        {% include "InnovaSelfBundle:Player/EEC:situation.html.twig" %}
+        {% include "InnovaSelfBundle:Player/EEC:tab-content.html.twig" %}
+        {# SUBMIT BUTTON #}
+        {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
+    </form>
+</div>
+{% endfor %}
+
