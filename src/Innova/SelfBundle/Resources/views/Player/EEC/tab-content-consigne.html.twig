@@ -1,0 +1,16 @@
+<div class="tab-content">
+
+    {% for i, subquestion in question.subquestions %}
+
+    <div class="tab-pane-EEC {% if i == 0 %} active {% endif %}" id="tab-{{ i }}" data-subquestion-id="{{ subquestion.id }}">
+        <div class="row">
+
+            {# CONSIGNE #}
+            {% include "InnovaSelfBundle:Player/EEC:consigne.html.twig" %}
+
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>

@@ -3,6 +3,7 @@ $(document).ready(function() {
     getListenCount();
     uncheckEverything();
     checkBadges();
+    checkSelect();
 
     /**************
         GESTION AUDIO
@@ -68,6 +69,11 @@ $(document).ready(function() {
 
     $(":checkbox, :radio").change(function(){
         checkBadges();
+    });
+
+    /** pour le cas EEC, afin d'activer ou pas le bouton "Submit" **/
+    $(".check-select").change(function(){
+        checkSelect();
     });
 
 
@@ -197,7 +203,6 @@ function playMedia(media, btn){
 /**************
    CHECK BADGES
 **************/
-
 function checkBadges(){
     var incomplete_tab = 0;
     $( ".tab-pane" ).each(function( index ) {
@@ -218,11 +223,27 @@ function checkBadges(){
     }
 }
 
+/**************
+   CHECK SELECT
+   pour le cas EEC, afin d'activer ou pas le bouton "Submit"
+**************/
+function checkSelect(){
+    var complete_select = true;
+    $( ".check-select" ).each(function( index ) {
+        if ( $(this).val() == '' ) {
+            complete_select = false;        }
+    });
+
+    if (complete_select) {
+        $("#submit").removeAttr("disabled", "disabled");
+    } else {
+        $("#submit").attr("disabled", "disabled");
+    }
+}
 
 /**************
     WORD "ECOUTE" DISPLAY WITH OR WITHOUT "s"
 **************/
-
 function pluralizeListen(limit, listened) {
     if ((limit - listened) < 0){
         var diff = listened - limit;
