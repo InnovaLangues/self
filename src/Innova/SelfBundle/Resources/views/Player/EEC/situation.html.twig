@@ -8,8 +8,8 @@
             {% set charSeparate = "-" %}
             {# Demande de Cristiana et Marie-Pierre, vu avec JJ #}
             {# La zone "Input" est variable suivant la taille de la proposition/réponse #}
-            {# Il y a 4 tailles de zone Input possibles #}
-            {% set tabInputSize = [5, 10, 15, 20, 30] %}
+            {# Il y a plusieurs tailles de zone Input possibles #}
+           {% set tabInputSize = [5, 10, 15, 20, 25, 30] %}
 
             {# Variante : LISTE des MOTS (attention, dans ce cas, l’objet de la question est composé d’une image et d’un texte en même temps) #}
             {% if questionnaire.mediaInstruction.mediaType.name == "image" %}
