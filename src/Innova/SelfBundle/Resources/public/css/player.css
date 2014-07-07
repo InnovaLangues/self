@@ -71,12 +71,16 @@
 	margin-top:-10px;
 }
 
+/** pour le cas EEC **/
 #situation-EEC {
 	width:100%;
-	padding: 5px 5px 0 5px;
+	padding: 15px;
 	max-height: 500px;
 	overflow: auto;
-/*	text-align: justify;*/
+	background-color: #E37E71;
+	color: black;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
 }
 
 #situation-EEC img {
@@ -167,7 +171,13 @@
 	padding:20px 20px 20px 20px;
 }
 
-.tab-pane {
+/** pour le cas EEC **/
+.tab-pane-EEC {
+	background-color: #E37E71;
+	color: white;
+	padding:20px 20px 20px 20px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
 }
 
 .badge {
