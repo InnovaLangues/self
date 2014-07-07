@@ -29,10 +29,12 @@
 
         {% if order.questionnaire.status is not null %}
             {% set statusId = order.questionnaire.status.id %}
+            {% set statusName = order.questionnaire.status.name %}
         {% else %}
             {% set statusId = 0 %}
+            {% set statusName = "Ecriture" %}
         {% endif %}
-        <span class="label label-default label-{{ statusId }}">{{ order.questionnaire.status.name }}</span>
+        <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
 
         {% if order.questionnaire.theme != "" %}
             {{ order.questionnaire.theme }}
