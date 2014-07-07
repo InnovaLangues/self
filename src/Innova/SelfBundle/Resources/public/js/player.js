@@ -1,6 +1,6 @@
 $(document).ready(function() {
     maskManager();
-    getListenCount();
+    getRemainingListening();
     uncheckEverything();
     checkBadges();
     checkSelect();
@@ -35,20 +35,25 @@ $(document).ready(function() {
 
         var sound = $(this).attr("sound");
         var audio = document.getElementById(sound);
+        var mediaId = $(this).data("media-id");
 
-        if(((listened === null || listened <= limit) && listened > 0 || sound != "situation" || limit == 0) && !play_in_progress) {
-            if (sound != "situation"){
-                playMedia(audio, $(this));
-            } else {
-                var context = getSessionContextListenNumber();
-                if (context > 0 || questionnaireHasContext == false) {
-                    playMedia(audio, $(this));
-                    updateListenCount();
-                } else {
-                    $('#modal-listen-context').modal('show');
+        if(!play_in_progress){
+            checkMediaClicks(mediaId, function(isPlayable){
+                if(isPlayable && !play_in_progress) {
+                    if (sound != "situation"){
+                        playMedia(audio, $(this), mediaId);
+                    } else {
+                        var context = getSessionContextListenNumber();
+                        if (context > 0 || questionnaireHasContext == false) {
+                            playMedia(audio, $(this), mediaId);
+                        } else {
+                            $('#modal-listen-context').modal('show');
+                        }
+                    }
                 }
-            }
+            });
         }
+
     });
 
     /**************
@@ -93,7 +98,7 @@ $(document).ready(function() {
         if(cbx.filter(':checked').length>0){
             cbx.removeAttr('required');
 
-        }else{
+        } else {
             cbx.attr('required','required');
         }
     });
@@ -120,19 +125,20 @@ $(document).ready(function() {
         playButton.click(function(){
             var limit = Number(videoContainer.attr("data-limit"));
             var listened = $("#listening_number").html();
+            var mediaId = $(this).data("media-id");
 
-            if(((listened === null || listened <= limit) && listened > 0 || limit == 0) && !play_in_progress) {
-
-                var context = getSessionContextListenNumber();
-                if (context > 0 || questionnaireHasContext == false) {
-                    playButton.attr("disabled", "disabled");
-                    playMedia(video, $(this));
-                    $("#video").css("opacity","1");
-                    updateListenCount();
-                } else {
-                    $('#modal-listen-context').modal('show');
+            checkMediaClicks(mediaId, function(isPlayable){
+                if(isPlayable && !play_in_progress) {
+                    var context = getSessionContextListenNumber();
+                    if (context > 0 || questionnaireHasContext == false) {
+                        playButton.attr("disabled", "disabled");
+                        playMedia(video, $(this), mediaId);
+                        $("#video").css("opacity","1");
+                    } else {
+                        $('#modal-listen-context').modal('show');
+                    }
                 }
-            }
+            });
         });
 
         video.addEventListener("timeupdate", function() {
@@ -193,8 +199,9 @@ function incrementeSessionContextListenNumber() {
 }
 
 
-function playMedia(media, btn){
+function playMedia(media, btn, mediaId){
     play_in_progress = true;
+    updateMediaClicks(mediaId);
     $(".item_audio_button").css("opacity","0.5");
     btn.css("opacity","1");
     media.play();
@@ -244,13 +251,8 @@ function checkSelect(){
 /**************
     WORD "ECOUTE" DISPLAY WITH OR WITHOUT "s"
 **************/
-function pluralizeListen(limit, listened) {
-    if ((limit - listened) < 0){
-        var diff = listened - limit;
-    } else {
-        var diff = limit - listened;
-    }
-    if(diff < 2){
+function pluralizeListen(remainingListening) {
+    if(remainingListening < 2){
         return 'écoute';
     };
     return 'écoutes';
@@ -258,64 +260,79 @@ function pluralizeListen(limit, listened) {
 
 
 /**************
-   AJAX REQUEST TO GET LISTENING COUNT
+   AJAX REQUEST TO HANDLE MEDIA LIMITS
 **************/
-
-function getListenCount() {
+function checkMediaClicks(mediaId, callBack){
+    var questionnaireId = $("#questionnaireId").val();
+    var testId = $("#testId").val();
     $.ajax({
-        url: Routing.generate('sessionSituationListenNumber'),
+        url: Routing.generate('is-media-playable'),
         type: 'GET',
-        dataType: 'json'
+        dataType: 'json',
+        data: 
+        {
+            questionnaireId: questionnaireId,
+            testId: testId,
+            mediaId: mediaId 
+        }
+    })
+    .done(function(data, isPlayable ) {
+        isPlayable = data['isPlayable'];
+        return callBack(isPlayable);
+    });
+}
+
+function getRemainingListening(){
+    if ($('[sound="situation"]').data("media-id")){
+        var questionnaireId = $("#questionnaireId").val();
+        var testId = $("#testId").val();
+        var mediaId = $('[sound="situation"]').data("media-id");
+        alert(mediaId);
+        $.ajax({
+            url: Routing.generate('get-remaining-listening'),
+            type: 'GET',
+            dataType: 'json',
+            data: 
+            {
+                questionnaireId: questionnaireId,
+                testId: testId,
+                mediaId: mediaId 
+            }
+        })
+        .done(function(data) {
+            $("#listening_number").html(data.remainingListening);
+            $("#limit_listening_text").html(pluralizeListen(data.remainingListening));
+            $('#listens-counter').removeClass('hidden');
+        });
+    }
+}
+
+function updateMediaClicks(mediaId){
+    var questionnaireId = $("#questionnaireId").val();
+    var testId = $("#testId").val();
+
+    $.ajax({
+        url: Routing.generate('increment-media-clicks'),
+        type: 'GET',
+        dataType: 'json',
+        data: 
+        {
+            questionnaireId: questionnaireId,
+            testId: testId,
+            mediaId: mediaId 
+        }
     })
     .done(function(data) {
-        var number = $("#listening_number").html();
-        if (data.situationListenNumber !== null) {
-            var limit = $('#listening_number').html()
-            var listened = data.situationListenNumber;
-
-            $("#listening_number").html(limit - listened);
-
-            $("#limit_listening_text").html(
-                pluralizeListen(limit, listened)
-            );
-        };
-
+        $("#listening_number").html(data.remainingListening);
+        $("#limit_listening_text").html(pluralizeListen(data.remainingListening));
         $('#listens-counter').removeClass('hidden');
     });
 }
 
 /**************
-   AJAX REQUEST TO INCREMENT LISTENING COUNT
-**************/
-function updateListenCount() {
-    $.ajax({
-        url: Routing.generate('incrementeSessionSituationListenNumber'),
-        type: 'PUT',
-        dataType: 'json'
-    })
-    .done(function(data) {
-        var limitListening = $("#limit_listening").html();
-        var reste = $("#limit_listening").html() - data.situationListenNumber;
-        var consigne = data.consigneListenNumber;
-        $("#listening_number").html(reste);
-        var limit = $("#limit_listening").html();
-        var listened = data.situationListenNumber;
-        $("#limit_listening_text").html( pluralizeListen(limit, listened));
-    });
-}
-
-
-/**************
    AJAX REQUEST TO RESET LISTENING COUNT
 **************/
 function resetListenCount() {
-    $.ajax({
-         url: Routing.generate('resetSessionSituationListenNumber'),
-         async: false,
-         type: 'PUT',
-         dataType: 'json'
-    });
-
     $.ajax({
          url: Routing.generate('resetSessionContextListenNumber'),
          async: false,
@@ -323,6 +340,7 @@ function resetListenCount() {
          dataType: 'json'
     });
 }
+
 
 /**************
     Timestamp function
@@ -359,6 +377,5 @@ function constructMask(count, char){
         mask = mask + char;
     };
 
-    console.log(mask);
     return mask;
 }
