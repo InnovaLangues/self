@@ -24,7 +24,8 @@ class MediaManager
             "media" => "question",
             "app-answer" => "proposition",
             "app-distractor" => "proposition",
-            "proposition" => "proposition"
+            "proposition" => "proposition",
+            "reponse" => "reponse"
         );
 
         $em = $this->entityManager;
