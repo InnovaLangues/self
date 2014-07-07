@@ -8,8 +8,8 @@
             {% set charSeparate = "-" %}
             {# Demande de Cristiana et Marie-Pierre, vu avec JJ #}
             {# La zone "Input" est variable suivant la taille de la proposition/réponse #}
-            {# Il y a 4 tailles de zone Input possibles #}
-            {% set tabInputSize = [5, 10, 15, 20, 30] %}
+            {# Il y a plusieurs tailles de zone Input possibles #}
+           {% set tabInputSize = [5, 10, 15, 20, 25, 30] %}
 
             {# Variante : LISTE des MOTS (attention, dans ce cas, l’objet de la question est composé d’une image et d’un texte en même temps) #}
             {% if questionnaire.mediaInstruction.mediaType.name == "image" %}
@@ -136,6 +136,13 @@
                                         {%  set maxValueSize = inputSize %}
                                     {% endif %}
                                 {% endfor %}
+                                {# Test si la taille de la solution est plus grande que 12 #}
+                                {# Dans ce cas, la taille de la zone Input est la taille de la solution + 5 caractères #}
+                                {% if ( maxValueSize == 0 ) %}
+                                    {% set maxValueSize = proposition.media.description|length + 5 %}
+                                {% else %}
+                                    {% set maxValueSize = maxValueSize + 1 %}
+                                {% endif %}
                                 {# Ouverture de la saisie #}
                                 {% set html = "" %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
