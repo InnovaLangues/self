@@ -38,8 +38,57 @@ class AjaxController extends Controller
 
         $em->persist($mediaClick);
         $em->flush();
+
+        $isPlayable = $this->isMediaPlayable($media, $test, $questionnaire);
+
+        return new JsonResponse(
+            array(
+                'isPlayable' => $isPlayable,
+            )
+        );
+
     }
 
+    /**
+     * @Route("/is-media-playable", name="is-media-playable", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function checkMediaClicksAction()
+    {
+        $isPlayable = false;
+
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+
+        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->request->get('mediaId'));
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
+
+        $isPlayable = $this->isMediaPlayable($media, $test, $questionnaire);
+
+        return new JsonResponse(
+            array(
+                'isPlayable' => $isPlayable,
+            )
+        );
+
+    }
+
+    private function isMediaPlayable($media, $test, $questionnaire)
+    {
+        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
+        $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findBy(array(
+                                                                                    'media' => $media,
+                                                                                    'test' => $test,
+                                                                                    'questionnaire' => $questionnaire
+                                                                                ));
+
+        if($mediaLimit || $mediaLimit > $nbClick){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private function getMediaClickCount($media, $test, $questionnaire)
     {
@@ -54,44 +103,4 @@ class AjaxController extends Controller
 
         return count($mediaClicks);
     }
-
-
-    /**
-     * @Route("/is-media-playable", name="is-media-playable", options={"expose"=true})
-     * @Method("GET")
-     */
-    public function isMediaPlayableAction()
-    {
-        $isPlayable = false;
-
-        $request = $this->get('request');
-        $em = $this->getDoctrine()->getManager();
-
-        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->request->get('mediaId'));
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
-        $user = $this->get('security.context')->getToken()->getUser();
-
-
-        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
-        $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findBy(array(
-                                                                                    'media' => $media,
-                                                                                    'test' => $test,
-                                                                                    'questionnaire' => $questionnaire
-                                                                                ));
-
-       
-        if($mediaLimit || $mediaLimit > $nbClick){
-            $isPlayable = true;
-        }
-
-        return new JsonResponse(
-            array(
-                'isPlayable' => $isPlayable,
-            )
-        );
-
-    }
-
-
 }
