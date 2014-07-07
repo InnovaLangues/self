@@ -1,174 +1,174 @@
 anonymous:
-    first: Première visite ?
-    register: Inscrivez-vous pour accéder aux tests
-    registration: Inscription
-    already_registered: Déjà inscrit ?
-    connect: Cliquer sur "Connexion"
-    connection: Connexion
+    first: Sei un nuovo utente?
+    register: Iscriviti per accedere ai test
+    registration: Iscrizione
+    already_registered: Sei già iscritto?
+    connect: Clicca su Accedi
+    connection: Accedi
 
 menu:
-    users: Utilisateurs
-    csv_export: Export CSV
-    tests: Accès aux tests
-    editor: Editeur
-    help: Aide
-    credit : Credit
-    logout: Déconnexion
-    language_change: Changez la langue
+    users: Utenti
+    csv_export: Risultati pilotaggio
+    tests: Accedi al test
+    editor: Tool autore
+    help: Aiuto
+    credit : Credits
+    logout: Esci
+    language_change: Modifica la lingua
 
 export:
-    file_generated: Le fichier a été généré
-    file_download: Télécharger le fichier au format CSV
-    files_list: Liste des fichiers générés
-    files_count: %nbFile% fichier(s) dans le dossier
-    tests_list: Tests exportés
+    file_generated: Il file è stato generato
+    file_download: Scarica il file in formato CSV
+    files_list: Lista dei file (generati)
+    files_count: %nbFile% file(s) nella cartella 
+    tests_list: Test esportati
 
 import:
-    traces: Traces
-    finished: Traitement du fichier <u>%fileName%</u> terminé
+    traces: Tracciamento
+    finished: File finalizzato (chiedere arnaud)
 
 user:
-    edit: Edition d'un utilisateur
-    back_to_list: Retour à la liste des utilisateurs
-    list: Liste des utilisateurs
-    create: Créer un utilisateur
-    creation: Création d'un utilisateur
-    single: Utilisateur
-    plural: Utilisateurs
-    firstname: Prénom
-    name: Nom
-    email: Adresse mail
+    edit: Modifica la lista degli utenti
+    back_to_list: Ritorno alla lista degli utenti
+    list: LLista degli utenti
+    create: Aggiungi un utente
+    creation: Creazione di un utente
+    single: Utente
+    plural: Utenti
+    firstname: Nome
+    name: Cognome
+    email: Indirizzo mail
 
 registration:
-    warning_required: Les zones avec un astérisque rouge sont obligatoires
+    test_dialang: Hai già effettuato il test Dialang?
+    warning_required: I campi con un asterisco rosso sono obbligatori
     username: Login
-    password: Mot de passe
-    password_confirmation: Confirmation du mot de passe
-    pathway: Filière
-    pathway_question: Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / UJF / Autres)
-    dialang: Dialang
-    last_lansad:  Quel était le niveau du dernier cours LANSAD que vous avez validé ?
-    CO_level: Niveau obtenu en CO (compréhension orale)
-    CE_level: Niveau obtenu en CE (compréhension écrite)
-    EE_level: Niveau obtenu en EE (expression écrite)
-    next_step: Etape suivante
+    password: Password
+    password_confirmation: Conferma password
+    pathway: Indirizzo
+    pathway_question: Nella lingua testata, sei uno studente? (Lansad / LLCE / LEA / UJF / Altro)
+    last_lansad:  Qual è il livello dell'ultimo corso che hai seguito?
+    CO_level: Livello ottenuto in CO (Comprensione orale)
+    CE_level: Livello ottenuto in CE (Comprensione scritta)
+    EE_level: Livello ottenuto in PE(Produzione scritta)
+    next_step: Fase successiva
     test_dialang: Avez-vous déjà passé un test Dialang ?
 
 test:
-    available: Tests disponibles
-    start: Démarrer le test
-    list: Liste des tests
-    no_registered: Vous êtes inscrit à aucun test.
+    available: Test disponibili
+    start: Inizia il test
+    list: Lista dei test
+    no_registered: Non risulti iscritto a nessun test
 
 generic:
-    index: Lister
-    create: Ajouter
-    show: Afficher
-    ok: OK
-    edit: Mettre à jour
-    delete: Supprimer
-    register: Inscription
-    login: Connexion
-    validate: Valider
-    boolTrue: "True"
-    boolFalse: "False"
-    chooseCorrectAnswer: Sélectionner la réponse correcte
-    edit: Editer
-    remove: Supprimer
-    add: Ajouter
-    close: Fermer
-    save: Sauvegarder
-    yes: Oui
-    no: Non
+    index: Indice
+    create: Aggiungi
+    show: Mostra
+    ok: Ok
+    edit: Aggiorna
+    delete: Cancella
+    register: Iscrizione
+    login: Accesso
+    validate: Conferma
+    boolTrue: Vero
+    boolFalse: Falso
+    chooseCorrectAnswer: Seleziona la risposta corretta
+    edit: Modifica
+    remove: Elimina
+    add: Aggiungi
+    close: Chiudi
+    save: Salva
+    yes: Si
+    no: No 
 
 editor:
     test:
-        create: Créer un test
-        list: Liste des tests
-        name: Nom du test
-        language: Langue
-        is_active: Actif
-        edition: Edition d'un test
-        edit: Editer
-        back_to_list: Revenir à la liste des tests
-        new: Nouveau test
+        create: Crea un test
+        list: Lista dei test
+        name: Nome del test
+        language: Lingua
+        is_active: Attivo
+        edition: Modifica il test
+        edit: Modifica
+        back_to_list: Ritorna alla lista dei test
+        new: Nuovo test
     task:
-        back_to_list: Retour à la liste des tâches
-        list: Liste des tâches pour le test <strong>%testName%</strong>
-        manage: Gérer les tâches
-        count: Nombre de tâches
-        create: Créer une tâche
-        save_order: Sauvegarder l'ordre des tâches
-        delete: Suppression d'une tâche
-        delete_confirm: Êtes-vous sûr de vouloir supprimer cette tâche de ce test ?
-        delete_confirm_yes: Oui, supprimer la tâche
-        delete_confirm_no: Non
-        unnamed: Tâche sans nom
+        back_to_list: Ritorna alla lista dei task di valutazione 
+        list: Lista di task per il test <strong>%testName%</strong>
+        manage: Gestire le task
+        count: Numero di task
+        create: Crea un task
+        save_order: Salva l'ordine dei task
+        delete: Elimina un task
+        delete_confirm: Sei sicuro di voler eliminare questo task dal test?
+        delete_confirm_yes: Si, elimina la task
+        delete_confirm_no: No
+        unnamed: Task senza nome
     questionnaire:
-        general_infos: Informations générales
-        title: Titre
-        typology: Typologie
-        fixed_order: Ordre fixe
-        context: Contexte
-        question_object: Objet de la question
-        skill: Compétence
+        general_infos: Informazioni generali
+        title: Titolo
+        typology: Tipologia
+        fixed_order: Ordine fisso
+        context: Contesto
+        question_object: Testo fonte
+        skill: Competenza
     subquestion:
-        subquestions: Items
-        add: Ajouter un item
-        remove: Supprimer l'item
-        add_instruction: Ajouter une consigne / question / amorce
-        remove_instruction: Supprimer la consigne / question / amorce
+        subquestions: Item
+        add: Aggiungi un item
+        remove: Elimina l'item
+        add_instruction: Aggiungi una domanda 
+        remove_instruction: Elimina la domanda
     proposition:
-        add: Ajouter une proposition
-        remove: Supprimer la proposition
-        right: Bonne réponse
-        wrong: Mauvaise réponse
-        make_it_right: Passer en bonne réponse
-        make_it_wrong: Passer en mauvaise réponse
+        add: Aggiungi una risposta
+        remove: Elimina la risposta
+        right: Risposta corretta
+        wrong: Risposta errata
+        make_it_right: Trasforma in risposta corretta
+        make_it_wrong: Trasforma in risposta errata
     media:
-        choose: Choix d'un type de média
+        choose: Scegli il tipo di file
         audio: Audio
-        picture: Image
-        video: Vidéo
-        text: Texte
-        listening_limit: Définir le nombre d'écoutes (0 = illimité)
-        name: Nom
-        description: Description
-        file: Fichier
+        picture: Immagine
+        video: Video
+        text: Testo
+        listening_limit: Definisci il numero di ascolti
+        name: Nome
+        description: Descrizione
+        file: File
     app:
-        add_pair: Ajouter une paire
-        remove_pair: Supprimer la paire
-        add_distractor: Ajouter un distracteur
-        remove_distractor: Supprimer le distracteur
-        add_media: Ajouter un media
-        distractors: Distracteurs
-        proposition: Proposition
-        associated_answer: Réponse associée
-        add_answer: Ajouter une réponse
+        add_pair: Aggiungi una coppia
+        remove_pair: Elimina la coppia 
+        add_distractor: Aggiungi un distrattore
+        remove_distractor: Elimina il distrattore
+        add_media: Aggiungi un supporto
+        distractors: Distrattori
+        proposition: Risposta
+        associated_answer: Risposta associata
+        add_answer: Aggiungi una risposta
 
 
 player:
-    listen_context: Il vous faut d'abord écouter le contexte.
-    fullscreen: Plein écran
-    count_task: sur
-    listening_single: écoute
-    listening_plural: écoutes
+    listen_context: Devi ascoltare prima il contesto.
+    fullscreen: Schermo intero
+    count_task: su
+    listening_single: ascolto
+    listening_plural: ascolti
     tooltip:
-        question_object: Objet de la question
-        proposition: Proposition de réponse
-        enlarge: Cliquer pour agrandir
-        context: Contexte
-        question: Question
-        intruction: Consigne
+        question_object: Testo fonte
+        proposition: Opzione (guardare balboni)
+        enlarge: Clicca qui per ingrandire
+        context: Contesto
+        question: Domanda
+        intruction: Consegna
 
 trace:
-    test_continue: Continuer le test
+    test_continue: Continua il test
     action:
-        evaluate: Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
+        evaluate: Valuta la difficoltà dei task che hai appena effettuato. Seleziona l'opzione più adatta / adeguata
     field:
         difficulty:
-            veryEasy: Très facile
+            veryEasy: Molto facile
             easy: Facile
-            normal: Normal
+            normal: Normale
             difficult: Difficile
-            veryDifficult: Très difficile
+            veryDifficult: Molto difficile
