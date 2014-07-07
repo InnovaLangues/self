@@ -72,6 +72,7 @@ generic:
     validate: Conferma
     boolTrue: Vero
     boolFalse: Falso
+    boolND: On ne peut pas dire
     chooseCorrectAnswer: Seleziona la risposta corretta
     edit: Modifica
     remove: Elimina
