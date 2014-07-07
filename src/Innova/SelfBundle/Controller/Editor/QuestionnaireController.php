@@ -104,6 +104,7 @@ class QuestionnaireController
         $test = $em->getRepository('InnovaSelfBundle:test')->find($testId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
+        $status = $em->getRepository('InnovaSelfBundle:Status')->findAll();
 
         if (!$questionnaire) {
             throw $this->createNotFoundException('Unable to find Questionnaire entity ! ');
@@ -112,7 +113,8 @@ class QuestionnaireController
         return array(
             'test' => $test,
             'questionnaire' => $questionnaire,
-            'typologies' => $typologies
+            'typologies' => $typologies,
+            'status' => $status
         );
     }
 
@@ -288,6 +290,32 @@ class QuestionnaireController
             array(
                 'typology'=> $typologyName,
                 'subquestions' => $template
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/set-status", name="editor_questionnaire_set-status", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setStatusAction()
+    {
+        $request = $this->request;
+        $questionnaireId = $request->request->get('questionnaireId');
+        $statusId = $request->request->get('status');
+
+        $em = $this->entityManager;
+        $status = $em->getRepository('InnovaSelfBundle:Status')->find($statusId);
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+
+        $questionnaire->setStatus($status);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'status'=> $statusId,
             )
         );
     }

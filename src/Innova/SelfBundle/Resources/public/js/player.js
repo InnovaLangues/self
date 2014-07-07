@@ -143,14 +143,16 @@ $(document).ready(function() {
         });
 
         $("#video").bind("ended", function(){
+
             var limit = Number(videoContainer.attr("data-limit"));
             var listened = $("#listening_number").html();
+
 
             play_in_progress = false;
             $(".item_audio_button").css("opacity","1");
             progress.attr("aria-valuenow",0).css("width","0%");
 
-            if (listened <= limit) {
+            if (listened <= limit || limit == 0) {
                 playButton.removeAttr("disabled", "disabled");
             };
         });

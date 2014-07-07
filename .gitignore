@@ -18,9 +18,7 @@ app/config/parameters.yml
 sql/*
 
 # Build
-build/api/
-build/logs/
-build/code-browser/
+build/*
 
 
 *.php~
@@ -38,3 +36,7 @@ web/upload/export/csv/*
 
 # avalanche thumbnail
 web/upload/thumbnail/*
+
+web/media/cache/*
+
+

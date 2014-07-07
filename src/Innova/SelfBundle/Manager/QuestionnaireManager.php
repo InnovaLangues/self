@@ -23,6 +23,7 @@ class QuestionnaireManager
         $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);
         $questionnaire->setFixedOrder(0);
+        $questionnaire->setStatus($em->getRepository('InnovaSelfBundle:Status')->find(1));
         $em->persist($questionnaire);
 
         $em->flush();
@@ -33,6 +34,7 @@ class QuestionnaireManager
     public function setTypology($questionnaire, $typologyName)
     {
         $em = $this->entityManager;
+        $arrayLikeTypos = array("TQRU", "TQRM", "TVFNM", "TVF");
 
         if (!$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typologyName)) {
             $typology = null;
@@ -41,12 +43,11 @@ class QuestionnaireManager
                 $em->persist($subquestion);
             }
         } else {
-            if (mb_substr($typology->getName(), 0, 3) == "APP") {
+            if (!in_array($typology->getName(), $arrayLikeTypos)) {
                 foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
                     $subquestion->setTypology($typology);
                     $em->persist($subquestion);
                 }
-
             } else {
                 $typologySubquestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($typologyName, 1));
                 foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {

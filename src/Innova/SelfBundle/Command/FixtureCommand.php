@@ -14,6 +14,8 @@ use Innova\SelfBundle\Entity\Typology;
 use Innova\SelfBundle\Entity\OriginStudent;
 use Innova\SelfBundle\Entity\Language;
 use Innova\SelfBundle\Entity\LevelLansad;
+use Innova\SelfBundle\Entity\Status;
+use Innova\SelfBundle\Entity\MediaPurpose;
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -171,6 +173,31 @@ class FixtureCommand extends ContainerAwareCommand
                     $output->writeln("Add new LevelLansad (".$levelLansadIt.").");
                 }
             }
+
+
+
+            /* Gestion du statut des tâches */
+            $status = array("Ecriture", "Révision", "Validation", "Modification post-pilotage");
+            foreach ($status as $s) {
+                if (!$em->getRepository('InnovaSelfBundle:Status')->findOneByName($s)) {
+                    $stat = new Status();
+                    $stat->setName($s);
+                    $em->persist($stat);
+                    $output->writeln("Add new Status (".$s.").");
+                }
+            }
+
+            /* Gestion du mediaPurpose... à quoi sert le media (consigne, contexte, proposition, etc.) */
+            $purposes = array("contexte", "objet de la question", "question", "proposition");
+            foreach ($purposes as $purpose) {
+                if (!$em->getRepository('InnovaSelfBundle:MediaPurpose')->findOneByName($purpose)) {
+                    $p = new MediaPurpose();
+                    $p->setName($purpose);
+                    $em->persist($p);
+                    $output->writeln("Add new MediaPurpose (".$purpose.").");
+                }
+            }
+
 
             $em->flush();
 

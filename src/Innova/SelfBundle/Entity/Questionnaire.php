@@ -96,6 +96,11 @@ class Questionnaire
     protected $languageLevel;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Status", inversedBy="questionnaires")
+    */
+    protected $status;
+
+    /**
     * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="questionnaire")
     */
     private $mediaLimits;
@@ -957,5 +962,28 @@ class Questionnaire
     public function getOrderQuestionnaireTests()
     {
         return $this->orderQuestionnaireTests;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \Innova\SelfBundle\Entity\Status $status
+     * @return Questionnaire
+     */
+    public function setStatus(\Innova\SelfBundle\Entity\Status $status = null)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \Innova\SelfBundle\Entity\Status 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }
