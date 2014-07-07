@@ -210,8 +210,10 @@ function checkBadges(){
     });
 
     if (incomplete_tab == 0) {
+    alert("remove");
         $("#submit").removeAttr("disabled", "disabled");
     } else {
+    alert("attr");
         $("#submit").attr("disabled", "disabled");
     }
 }
