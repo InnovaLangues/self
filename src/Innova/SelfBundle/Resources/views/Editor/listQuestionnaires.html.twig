@@ -22,7 +22,6 @@
     {% endautoescape %}
 </h3>
 
-
 <ul class="list-group" id="sortable">
 {% for order in orders %}
     <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
@@ -55,7 +54,7 @@
 </ul>
 
 {% if orders | length > 0 %}
-    <span class="btn btn-default btn-primary btn-sm pull-right" id="save-order">{{ 'editor.task.save_order' | trans }}</span>
+    <span disabled="disabled" class="btn btn-default btn-primary btn-sm pull-right" id="save-order">{{ 'editor.task.save_order' | trans }}</span>
     <img id="loader-img" style="display:none;" class="pull-right" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
 {% endif %}
 

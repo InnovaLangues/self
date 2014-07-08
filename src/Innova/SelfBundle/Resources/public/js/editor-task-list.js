@@ -3,6 +3,10 @@ $(function() {
     $( "#sortable" ).disableSelection();
 });
 
+$( "#sortable" ).on( "sortupdate", function( event, ui ) {
+    $("#save-order").removeAttr('disabled');
+} );
+
 $( "body" ).on( "click", '.delete-task', function() {
     $("#questionnaire-id").val($(this).data("questionnaire-id"));
     $('#delete-task-modal').modal('show');
