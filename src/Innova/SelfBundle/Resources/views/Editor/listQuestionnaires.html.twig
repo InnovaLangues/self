@@ -14,6 +14,13 @@
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
 </a>
 
+{% if orders | length > 0 %}
+    <a disabled="disabled" class="btn btn-default btn-sm" id="save-order">
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+        {{ 'editor.task.save_order' | trans }}
+    </a>
+    <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
+{% endif %}
 <hr/>
 
 <h3>
@@ -52,11 +59,6 @@
     </li>
 {% endfor %}
 </ul>
-
-{% if orders | length > 0 %}
-    <span disabled="disabled" class="btn btn-default btn-primary btn-sm pull-right" id="save-order">{{ 'editor.task.save_order' | trans }}</span>
-    <img id="loader-img" style="display:none;" class="pull-right" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
-{% endif %}
 
 <div id="delete-task-modal" class="modal fade">
     <div class="modal-dialog">
