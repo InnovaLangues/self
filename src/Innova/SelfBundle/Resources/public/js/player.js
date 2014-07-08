@@ -1,15 +1,14 @@
 $(document).ready(function() {
+    uncheckEverything();
     maskManager();
     getRemainingListening();
-    uncheckEverything();
-    checkBadges();
     checkSelect();
+    checkBadges();
 
     /**************
         GESTION AUDIO
     **************/
     play_in_progress = false;
-
 
     $("audio").bind("ended", function(){
         play_in_progress = false;
@@ -26,13 +25,6 @@ $(document).ready(function() {
     }
 
     $(".item_audio_button").click(function(){
-        // Number of possible listens
-        var limit = Number($(this).attr("data-limit"));
-
-        // Number of times listened
-        //var listened = Number($(this).attr("data-listened"));
-        var listened = $("#listening_number").html();
-
         var sound = $(this).attr("sound");
         var audio = document.getElementById(sound);
         var mediaId = $(this).data("media-id");
@@ -149,18 +141,10 @@ $(document).ready(function() {
         });
 
         $("#video").bind("ended", function(){
-
-            var limit = Number(videoContainer.attr("data-limit"));
-            var listened = $("#listening_number").html();
-
-
             play_in_progress = false;
             $(".item_audio_button").css("opacity","1");
             progress.attr("aria-valuenow",0).css("width","0%");
-
-            if (listened <= limit || limit == 0) {
-                playButton.removeAttr("disabled", "disabled");
-            };
+            playButton.removeAttr("disabled", "disabled");
         });
 
         videoContainer.bind('contextmenu',function() { return false; });
@@ -287,7 +271,7 @@ function getRemainingListening(){
         var questionnaireId = $("#questionnaireId").val();
         var testId = $("#testId").val();
         var mediaId = $('[sound="situation"]').data("media-id");
-        alert(mediaId);
+
         $.ajax({
             url: Routing.generate('get-remaining-listening'),
             type: 'GET',
@@ -323,9 +307,11 @@ function updateMediaClicks(mediaId){
         }
     })
     .done(function(data) {
-        $("#listening_number").html(data.remainingListening);
-        $("#limit_listening_text").html(pluralizeListen(data.remainingListening));
-        $('#listens-counter').removeClass('hidden');
+        if ($('[sound="situation"]').data("media-id") == mediaId){
+            $("#listening_number").html(data.remainingListening);
+            $("#limit_listening_text").html(pluralizeListen(data.remainingListening));
+            $('#listens-counter').removeClass('hidden');
+        }
     });
 }
 
