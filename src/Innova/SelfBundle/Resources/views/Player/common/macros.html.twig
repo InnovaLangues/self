@@ -9,7 +9,7 @@
 
 {% macro audio(id, media, icon, height, limitAudio, tooltip) %}
 
-    <img rel="tooltip" data-original-title="{{ tooltip }}" data-listened=0 data-limit={{ limitAudio }} sound="{{ id }}" statut="pause" class="item_audio_button" height="{{ height }}px" data-media-id="{{ media.id }}" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+    <img rel="tooltip" data-original-title="{{ tooltip }}" sound="{{ id }}" class="item_audio_button" height="{{ height }}px" data-media-id="{{ media.id }}" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
 
     <audio preload="auto" id="{{ id }}" class="item_audio">
         <source src="{{ asset('upload/media/') ~ media.url }}" type="audio/mp3">
@@ -41,7 +41,7 @@
 {% endmacro %}
 
 {% macro video(id, media, limitAudio) %}
-    <video id="video" data-listened=0 data-limit={{ limitAudio }}>
+    <video id="video">
         <source src="{{ asset('upload/media/') ~ media.url }}" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
         Your browser does not support the video tag.
     </video>
@@ -64,12 +64,6 @@
     <div id="modal-{{ id }}" class="modal fade modales">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-            <!--
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{ title }}</h4>
-                </div>
-            -->
                 <div class="modal-body">
                 {% if media.mediaType.name == "image" %}
                     <img src="{{ asset('upload/media/') ~ media.url }}"/>
@@ -91,8 +85,6 @@
 {% endmacro %}
 
 {% macro translateVF(description, language) %}
-    {% set languageShorten = language | slice(0, 2) | lower %}
-
     {% set description = description |striptags %}
     {% if description == "VRAI" %}
         {{ 'generic.boolTrue' | trans }}
