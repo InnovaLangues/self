@@ -69,6 +69,55 @@ class MediaController
     }
 
     /**
+     * @Route("/get-media-info", name="get-media-info", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function getMediaInfoAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->query;
+
+        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
+
+        return new JsonResponse(
+            array(
+                'url' => $media->getUrl(),
+                'name' => $media->getName(),
+                'description' => $media->getDescription(),
+                'mediaType' => $media->getMediaType()->getName(),
+                'id' => $media->getId()
+            )
+        );
+    }
+
+    /**
+     * @Route("/editor_questionnaire_update-media", name="editor_questionnaire_update-media", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function updateMediaAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
+
+        $media->setUrl($request->get('url'));
+        $media->setName($request->get('name'));
+        $media->setDescription($request->get('description'));
+
+        $em->persist($media);
+        $em->flush();
+
+        return new JsonResponse(
+            array()
+        );
+    }
+
+
+
+
+
+    /**
      * @Route("/questionnaires/create-media", name="editor_questionnaire_create-media", options={"expose"=true})
      * @Method("PUT")
      */

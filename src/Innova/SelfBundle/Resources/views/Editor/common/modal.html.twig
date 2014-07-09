@@ -35,14 +35,16 @@
 				<h4 class="modal-title">{{ 'editor.media.text' | trans }}</h4>
 			</div>
 			<div class="modal-body">
-				<label for="text-name">{{ 'editor.media.name' | trans }}</label>
-    			<input type="text" class="form-control media-name" id="text-name" value=""/>
+				<label for="texte-name">{{ 'editor.media.name' | trans }}</label>
+    			<input type="text" class="form-control media-name" id="texte-name" value=""/>
     			<br/>
-    			<label for="create-text-textarea">{{ 'editor.media.description' | trans }}</label>
-				<textarea id="text-textarea" class="tinymce media-description"></textarea>
+    			<label for="texte-description">{{ 'editor.media.description' | trans }}</label>
+				<textarea id="texte-description" class="tinymce media-description"></textarea>
+				<input class="media-id" type="hidden" id="texte-id"/>
 			</div>
 			<div class="modal-footer">
-				<button id="create-text-btn" type="button" class="btn btn-primary">{{ 'generic.save' | trans }}</button>
+				<button id="create-texte-btn" type="button" class="btn btn-primary create-media-btn">{{ 'generic.save' | trans }}</button>
+				<button style="display:none" data-media-type="texte" id="edit-texte-btn" type="button" class="btn btn-primary edit-media-btn">{{ 'generic.edit' | trans }}</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
 			</div>
 		</div>
@@ -66,11 +68,13 @@
 
     				<label for="image-file">{{ 'editor.media.file' | trans }}</label>
 					<input class="file media-file" data-file-type="image" id="image-file" name="userfile" type="file"/>
+					<input class="media-id" type="hidden" id="image-id"/>
 					<input class="media-url" type="hidden" id="image-url" value=""/>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button id="create-image-btn" type="button" disabled class="btn btn-primary">{{ 'generic.save' | trans }}</button>
+				<button id="create-image-btn" type="button" disabled class="btn btn-primary create-media-btn">{{ 'generic.save' | trans }}</button>
+				<button style="display:none" data-media-type="image" id="edit-image-btn" type="button" class="btn btn-primary edit-media-btn">{{ 'generic.edit' | trans }}</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
 			</div>
 		</div>
@@ -95,11 +99,13 @@
 
     				<label for="video-file">{{ 'editor.media.file' | trans }}</label>
 					<input class="file media-file" data-file-type="video" id="video-file" name="userfile" type="file"/>
+					<input class="media-id" type="hidden" id="video-id"/>
 					<input class="media-url" type="hidden" id="video-url" value=""/>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button id="create-video-btn" type="button" disabled class="btn btn-primary">{{ 'generic.save' | trans }}</button>
+				<button id="create-video-btn" type="button" disabled class="btn btn-primary create-media-btn">{{ 'generic.save' | trans }}</button>
+				<button style="display:none" data-media-type="video" id="edit-video-btn" type="button" class="btn btn-primary edit-media-btn">{{ 'generic.edit' | trans }}</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
 			</div>
 		</div>
@@ -123,11 +129,13 @@
 
     				<label for="audio-file">{{ 'editor.media.file' | trans }}</label>
 					<input class="file media-file" data-file-type="audio" id="audio-file" name="userfile" type="file"/>
+					<input class="media-id" type="hidden" id="audio-id"/>
 					<input class="media-url" type="hidden" id="audio-url" value=""/>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button id="create-audio-btn" type="button" disabled class="btn btn-primary">{{ 'generic.save' | trans }}</button>
+				<button id="create-audio-btn" type="button" disabled class="btn btn-primary create-media-btn">{{ 'generic.save' | trans }}</button>
+				<button style="display:none" data-media-type="audio" id="edit-audio-btn" type="button" class="btn btn-primary edit-media-btn">{{ 'generic.edit' | trans }}</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
 			</div>
 		</div>
@@ -149,7 +157,6 @@
 		            <input type="hidden" id="y" name="y" />
 		            <input type="hidden" id="w" name="w" />
 		            <input type="hidden" id="h" name="h" />
-
 			</div>
 			<div class="modal-footer">
 				<button id="jcrop-btn" type="button" class="btn btn-primary">{{ 'generic.save' | trans }}</button>

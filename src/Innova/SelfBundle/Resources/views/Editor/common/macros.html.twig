@@ -49,6 +49,12 @@
     </button>
 {% endmacro %}
 
+{% macro editMedia(media) %}
+    <button class="btn btn-default btn-xs edit-media vertical-middle"  data-media-type="{{ media.mediaType.name }}" data-media-id="{{ media.id }}" data-toggle="tooltip" data-original-title="Editer le média">
+        <span class="glyphicon glyphicon-pencil"></span>
+    </button>
+{% endmacro %}
+
 {% macro deleteAmorce(subquestion) %}
     <button rel="tooltip" data-original-title="{{ 'editor.subquestion.remove_instruction' | trans }}" class="btn btn-default btn-xs delete-amorce vertical-middle" data-subquestion-id="{{ subquestion.id }}">
         <span class="glyphicon glyphicon-remove"></span>
