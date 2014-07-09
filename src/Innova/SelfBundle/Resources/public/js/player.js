@@ -253,11 +253,11 @@ function checkMediaClicks(mediaId, callBack){
         url: Routing.generate('is-media-playable'),
         type: 'GET',
         dataType: 'json',
-        data: 
+        data:
         {
             questionnaireId: questionnaireId,
             testId: testId,
-            mediaId: mediaId 
+            mediaId: mediaId
         }
     })
     .done(function(data, isPlayable ) {
@@ -276,11 +276,11 @@ function getRemainingListening(){
             url: Routing.generate('get-remaining-listening'),
             type: 'GET',
             dataType: 'json',
-            data: 
+            data:
             {
                 questionnaireId: questionnaireId,
                 testId: testId,
-                mediaId: mediaId 
+                mediaId: mediaId
             }
         })
         .done(function(data) {
@@ -299,11 +299,11 @@ function updateMediaClicks(mediaId){
         url: Routing.generate('increment-media-clicks'),
         type: 'GET',
         dataType: 'json',
-        data: 
+        data:
         {
             questionnaireId: questionnaireId,
             testId: testId,
-            mediaId: mediaId 
+            mediaId: mediaId
         }
     })
     .done(function(data) {
