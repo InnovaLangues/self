@@ -1,43 +1,51 @@
 <div id="subquestion-container">
 {% if questionnaire.questions[0].typology is not null %}
+    {% set typoPrefix = questionnaire.questions[0].typology.name | slice(0,3) %}
     <div class="panel panel-default">
-        {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
         <div class="panel-heading">
-            Items
-                {% set typoPrefix = questionnaire.questions[0].typology.name | slice(0,3) %}
-                {# {% if ( typoPrefix != "APP") or (typoPrefix == "APP" and questionnaire.questions[0].subquestions | length < 1)%} #}
-                {% if typoPrefix != "APP" and typoPrefix != "TLC" and typoPrefix != "TLQ" %}
+        {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+
+        {% if typoPrefix == "TLC" or typoPrefix == "TLQ" %}
+            Lacunes / indices
+            <span id="create-lacunes" class="btn btn-default btn-xs pull-right">Générer lacunes</span>
+            </div>
+            <div class="panel-body">
+                {% include "InnovaSelfBundle:Editor/partials:eec.html.twig" %}
+            </div>
+        {% else %}
+                Items
+                {% if typoPrefix != "APP"  %}
                     <span id="create-subquestion" class="btn btn-default btn-xs pull-right">{{ 'editor.subquestion.add' | trans }}</span>
                 {% endif %}
-        </div>
-        <div class="panel-body">
-        {% if ( typoPrefix == "APP") %}
-            {% include "InnovaSelfBundle:Editor/partials:app.html.twig" %}
-        {% elseif typoPrefix == "TLC" or typoPrefix == "TLQ" %}
-            Work In Progress
-        {% else %}
-            {% if questionnaire.questions[0].subquestions is not null %}
-                {% set subquestions = questionnaire.questions[0].subquestions %}
-                <ul class="nav nav-tabs">
-                    {% for i, subquestion in subquestions %}
-                        <li {% if i == 0 %}class="active"{% endif %}>
-                            <a href="#subquestion-{{ subquestion.id }}-container" data-toggle="tab">
-                                {% if subquestion.typology %}
-                                    {{ subquestion.typology.name}}
-                                {% endif %}
-                                #{{ i+1 }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-                <div class="tab-content">
-                    {% for i, subquestion in subquestions %}
-                        {% include "InnovaSelfBundle:Editor/partials:subquestion.html.twig" %}
-                    {% endfor %}
-                </div>
+            </div>
+            <div class="panel-body">
+            {% if ( typoPrefix == "APP") %}
+                {% include "InnovaSelfBundle:Editor/partials:app.html.twig" %}
+            {% else %}
+                {% if questionnaire.questions[0].subquestions is not null %}
+                    {% set subquestions = questionnaire.questions[0].subquestions %}
+                    <ul class="nav nav-tabs">
+                        {% for i, subquestion in subquestions %}
+                            <li {% if i == 0 %}class="active"{% endif %}>
+                                <a href="#subquestion-{{ subquestion.id }}-container" data-toggle="tab">
+                                    {% if subquestion.typology %}
+                                        {{ subquestion.typology.name}}
+                                    {% endif %}
+                                    #{{ i+1 }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for i, subquestion in subquestions %}
+                            {% include "InnovaSelfBundle:Editor/partials:subquestion.html.twig" %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             {% endif %}
-        {% endif %}
-        </div>
-    </div>
+            </div>
+       
+    {% endif %}
+     </div>
 {% endif %}
 </div>

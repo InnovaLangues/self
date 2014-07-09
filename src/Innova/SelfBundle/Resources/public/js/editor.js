@@ -73,7 +73,6 @@ $(document).ready(function() {
         deleteSubquestion(questionnaireId, subquestionId);
     });
 
-
     $( "body" ).on( "click", '.add-amorce', function() {
         var subquestionId = $(this).data("subquestion-id");
         setParamForRequest("subquestion", "amorce", subquestionId, "subquestion-"+subquestionId+"-container");
@@ -84,6 +83,28 @@ $(document).ready(function() {
         var subquestionId = $(this).data("subquestion-id");
         setParamForRequest("subquestion", "amorce", subquestionId, "subquestion-"+subquestionId+"-container");
         unlinkMedia();
+    });
+
+
+     /**********************
+        EEC RELATED EVENTS 
+    ************************/
+
+    $( "body" ).on( "click", '#create-lacunes', function() {
+        createLacunes();
+    });
+
+
+    $('.clue').on('blur',function(e){
+        var clue = $(this).val();
+        var subquestionId = $(this).data("subquestion-id");
+        setClue(clue, subquestionId);
+    });
+
+    $('.syllable').on('blur',function(e){
+        var syllable = $(this).val();
+        var subquestionId = $(this).data("subquestion-id");
+        setSyllable(syllable, subquestionId);
     });
 
     /**********************
@@ -465,6 +486,7 @@ function deleteSubquestion(questionnaireId, subquestionId){
     });
 }
 
+
 function toggleRightWrong(propositionId){
     beforeAjax();
 
@@ -528,6 +550,60 @@ function setTextType(textType){
         $("#texte-container").replaceWith(data);
         afterAjax();
     });
+}
+
+
+
+/************************************************
+*************************************************
+
+                    EEC
+
+*************************************************
+**************************************************/
+
+
+function setClue(clue, subquestionId){
+    beforeAjax();
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_create-clue'),
+        type: 'PUT',
+        dataType: 'json',
+        data: { 
+            testId: testId,
+            questionnaireId: questionnaireId,
+            subquestionId: subquestionId,
+            clue: clue 
+        }
+    })
+    .complete(function(data) {
+        afterAjax();
+    }); 
+}
+
+
+function setSyllable(syllable, subquestionId){
+    beforeAjax();
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_create-syllable'),
+        type: 'PUT',
+        dataType: 'json',
+        data: { 
+            testId: testId,
+            questionnaireId: questionnaireId,
+            subquestionId: subquestionId,
+            syllable: syllable 
+        }
+    })
+    .complete(function(data) {
+        afterAjax();
+    }); 
 }
 
 /************************************************

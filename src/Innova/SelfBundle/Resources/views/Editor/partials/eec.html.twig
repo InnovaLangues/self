@@ -1,0 +1,18 @@
+{% set subquestions = questionnaire.questions[0].subquestions %}
+liste lacunes : 
+<table class="table">
+    {% for subquestion in subquestions %}
+            {% set propositions = subquestion.propositions %}
+            {% for proposition in propositions %}
+                {% include "InnovaSelfBundle:Editor/partials:proposition.html.twig" %}
+            {% endfor %}
+            <tr>
+                <td style="width:200px; border: none;">
+                    indice : <input class="clue" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaClue is not null %}{{ subquestion.mediaClue.description }}{% endif %}"/>
+                </td>
+                 <td style="width:120px; border: none;">
+                    syllabe : <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
+                </td>
+            </tr>
+    {% endfor %}
+</table>
