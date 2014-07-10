@@ -27,8 +27,8 @@ class MediaClickController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
 
         $remainingListening = $this->getRemainingListening($media, $test, $questionnaire);
 
@@ -106,11 +106,10 @@ class MediaClickController extends Controller
         $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
         $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array(
                                                                                     'media' => $media,
-                                                                                    'test' => $test,
                                                                                     'questionnaire' => $questionnaire
                                                                                 ));
 
-        if($mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0){
+        if(is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 ){
             return true;
         } else {
             return false;
@@ -138,14 +137,13 @@ class MediaClickController extends Controller
         $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
         $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array(
                                                                                     'media' => $media,
-                                                                                    'test' => $test,
                                                                                     'questionnaire' => $questionnaire
                                                                                 ));
 
-        if($mediaLimit->getListeningLimit() != 0){
-            $remainingListening = $mediaLimit->getListeningLimit() - $nbClick;
-        } else {
+        if(is_null($mediaLimit) || $mediaLimit->getListeningLimit() == 0){
             $remainingListening = "X";
+        } else {
+            $remainingListening = $mediaLimit->getListeningLimit() - $nbClick;
         }
         
         return $remainingListening;

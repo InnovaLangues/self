@@ -12,13 +12,13 @@
             <source src="{{ asset('upload/media/') ~ media.url }}" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
             Your browser does not support the video tag.
         </video>
-        {{ macros.listeningLimit(test, questionnaire, media) }}
+        {{ macros.listeningLimit(questionnaire, media) }}
     {% elseif mediaType == "audio" %}
         <audio controls preload="auto" class="vertical-middle">
             <source src="{{ asset('upload/media/') ~ media.url }}" type="audio/mp3">
             Votre navigateur est trop ancien.
         </audio>
-        {{ macros.listeningLimit(test, questionnaire, media) }}
+        {{ macros.listeningLimit(questionnaire, media) }}
     {% endif %}
 {% endmacro %}
 
@@ -49,16 +49,22 @@
     </button>
 {% endmacro %}
 
+{% macro editMedia(media, where) %}
+    <button class="btn btn-default btn-xs edit-media vertical-middle"  data-entity-reloaded="{{ where }}" data-media-type="{{ media.mediaType.name }}" data-media-id="{{ media.id }}" data-toggle="tooltip" data-original-title="Editer le média">
+        <span class="glyphicon glyphicon-pencil"></span>
+    </button>
+{% endmacro %}
+
 {% macro deleteAmorce(subquestion) %}
     <button rel="tooltip" data-original-title="{{ 'editor.subquestion.remove_instruction' | trans }}" class="btn btn-default btn-xs delete-amorce vertical-middle" data-subquestion-id="{{ subquestion.id }}">
         <span class="glyphicon glyphicon-remove"></span>
     </button>
 {% endmacro %}
 
-{% macro listeningLimit(test, questionnaire, media) %}
+{% macro listeningLimit(questionnaire, media) %}
     {% set limit = 0 %}
     {% for limits in media.mediaLimits %}
-        {% if limits.test == test and limits.questionnaire == questionnaire %}
+        {% if limits.questionnaire == questionnaire %}
         {% set limit = limits.listeningLimit %}
         {% endif %}
     {% endfor %}

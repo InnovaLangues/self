@@ -3,6 +3,7 @@
 {% if proposition %}
     <tr id="proposition-{{ proposition.id }}-container" data-subquestion-id="{{ proposition.subquestion.id }}">
         <td style="width:20px; border: none;">{{ macros.deleteProposition(proposition) }}</td>
+        <td style="width:20px; border: none;">{{ macros.editMedia(proposition.media, "subquestion") }}</td>
         <td style="width:120px; border: none;">{{ macros.isRightAnswer(proposition) }}</td>
         {# {{ macros.inputs(proposition.subquestion, proposition) }} #}
         <td style="border: none;">{{ macros.displayMedia(test, questionnaire, proposition.media) }}</td>

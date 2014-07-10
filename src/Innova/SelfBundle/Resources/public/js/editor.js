@@ -1,8 +1,7 @@
 $(document).ready(function() {
-    var theme = $("#theme").val();
-    fillMediaName(theme);
-    afterAjax();
     var questionnaireId = $("#questionnaire-id").val();
+    fillMediaName($("#theme").val());
+    afterAjax();
 
     /* GENERAL INFOS EVENTS */
     $('#theme').on('blur',function(e){
@@ -73,7 +72,6 @@ $(document).ready(function() {
         deleteSubquestion(questionnaireId, subquestionId);
     });
 
-
     $( "body" ).on( "click", '.add-amorce', function() {
         var subquestionId = $(this).data("subquestion-id");
         setParamForRequest("subquestion", "amorce", subquestionId, "subquestion-"+subquestionId+"-container");
@@ -84,6 +82,28 @@ $(document).ready(function() {
         var subquestionId = $(this).data("subquestion-id");
         setParamForRequest("subquestion", "amorce", subquestionId, "subquestion-"+subquestionId+"-container");
         unlinkMedia();
+    });
+
+
+     /**********************
+        EEC RELATED EVENTS 
+    ************************/
+
+    $( "body" ).on( "click", '#create-lacunes', function() {
+        createLacunes();
+    });
+
+
+    $('.clue').on('blur',function(e){
+        var clue = $(this).val();
+        var subquestionId = $(this).data("subquestion-id");
+        setClue(clue, subquestionId);
+    });
+
+    $('.syllable').on('blur',function(e){
+        var syllable = $(this).val();
+        var subquestionId = $(this).data("subquestion-id");
+        setSyllable(syllable, subquestionId);
     });
 
     /**********************
@@ -113,10 +133,19 @@ $(document).ready(function() {
      ************************/
 
     $( "body" ).on( "click", '.media-type-choice', function() {
-        createMediaModal( $(this) );
+        createMediaModal( $(this).attr("media-type"), null);
     });
 
-    $( "body" ).on( "click", '#create-text-btn', function() {
+    $( "body" ).on( "click", '.edit-media', function() {
+        $("#entity-to-be-reloaded").val($(this).data("entity-reloaded"));
+        editMediaModal( $(this).data("media-type"), $(this).data("media-id"));
+    });
+
+    $( "body" ).on( "click", '.edit-media-btn', function() {
+        editMedia($(this).data("media-type"));
+    });
+
+    $( "body" ).on( "click", '#create-texte-btn', function() {
         createText();
         $("*").modal('hide');
     });
@@ -192,24 +221,39 @@ function chooseMediaTypeModal() {
     $('#modal-media-type').modal('show');
 }
 
-function createMediaModal( media ) {
+function createMediaModal(mediaType, mediaId) {
     $('#modal-media-type').modal('hide');
-    var mediaType = media.attr("media-type");
-    $('#modal-create-'+mediaType).modal('show');
+    $('#modal-create-'+mediaType).modal('show');  
+}
+
+function editMediaModal(mediaType, mediaId) {
+    $('#modal-media-type').modal('hide');
+
+    getMediaInfo(mediaId, function(data){
+        $("#"+data.mediaType+"-description").val(data.description);
+        $("#"+data.mediaType+"-name").val(data.name);
+        $("#"+data.mediaType+"-url").val(data.url);
+        $("#"+data.mediaType+"-id").val(data.id);
+
+        $("#create-"+data.mediaType+"-btn").hide();
+        $("#edit-"+data.mediaType+"-btn").show();
+
+        $('#modal-create-'+mediaType).modal('show');
+    });
 }
 
 
 /************************************************
 *************************************************
 
-                    CREATE MEDIA
+                    CREATE / EDIT MEDIA MEDIA
 
 *************************************************
 **************************************************/
 
 function createText(){
-    var name = $("#text-name").val();
-    var description = $("#text-textarea").val();
+    var name = $("#texte-name").val();
+    var description = $("#texte-description").val();
     createMedia(name, description, null, "texte");
 }
 
@@ -242,6 +286,38 @@ function createAudio(){
 
 *************************************************
 **************************************************/
+function editMedia(mediaType){
+    beforeAjax();
+
+    var mediaId = $("#"+mediaType+"-id").val();
+    var name = $("#"+mediaType+"-name").val();
+    var description = $("#"+mediaType+"-description").val();
+    var url = $("#"+mediaType+"-url").val();
+    var toBeReloaded = $("#entity-to-be-reloaded").val();
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_update-media'),
+        type: 'PUT',
+        data: 
+        { 
+            name: name,
+            description: description,
+            url: url,
+            mediaId: mediaId,
+            toBeReloaded: toBeReloaded,
+            testId: testId,
+            questionnaireId: questionnaireId
+        }
+    })
+    .done(function(data) {
+        $("#"+toBeReloaded+"-container").replaceWith(data);
+        initializeFormsFields();
+        afterAjax();
+        $("*").modal('hide');
+    });
+}
 
 function createMedia(name, description, url, type) {
     beforeAjax();
@@ -277,7 +353,6 @@ function createMedia(name, description, url, type) {
         $('*').tooltip({placement:'top'});
     });
 }
-
 
 function setTheme(questionnaireId) {
     beforeAjax();
@@ -465,6 +540,7 @@ function deleteSubquestion(questionnaireId, subquestionId){
     });
 }
 
+
 function toggleRightWrong(propositionId){
     beforeAjax();
 
@@ -491,14 +567,12 @@ function toggleRightWrong(propositionId){
 function setListeningLimit(mediaId, listeningLimit){
     beforeAjax();
 
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
         url: Routing.generate('set-listening-limit'),
         type: 'POST',
         data: { 
-            testId: testId,
             questionnaireId: questionnaireId,
             mediaId: mediaId,
             listeningLimit: listeningLimit
@@ -530,6 +604,91 @@ function setTextType(textType){
     });
 }
 
+function getMediaInfo(mediaId, callBack){
+    $.ajax({
+        url: Routing.generate('get-media-info'),
+        type: 'GET',
+        dataType: 'json',
+        data:
+        {
+            mediaId: mediaId
+        }
+    })
+    .done(function(data) {
+        return callBack(data);
+    });
+}
+
+/************************************************
+*************************************************
+
+                    EEC
+
+*************************************************
+**************************************************/
+function createLacunes(){
+    beforeAjax();
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_create-lacunes'),
+        type: 'PUT',
+        dataType: 'json',
+        data: { 
+            testId: testId,
+            questionnaireId: questionnaireId,
+        }
+    })
+    .complete(function(data) {
+        afterAjax();
+        $("#subquestion-container").replaceWith(data.responseText);
+    }); 
+}
+
+function setClue(clue, subquestionId){
+    beforeAjax();
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_create-clue'),
+        type: 'PUT',
+        dataType: 'json',
+        data: { 
+            testId: testId,
+            questionnaireId: questionnaireId,
+            subquestionId: subquestionId,
+            clue: clue 
+        }
+    })
+    .complete(function(data) {
+        afterAjax();
+    }); 
+}
+
+
+function setSyllable(syllable, subquestionId){
+    beforeAjax();
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_create-syllable'),
+        type: 'PUT',
+        dataType: 'json',
+        data: { 
+            testId: testId,
+            questionnaireId: questionnaireId,
+            subquestionId: subquestionId,
+            syllable: syllable 
+        }
+    })
+    .complete(function(data) {
+        afterAjax();
+    }); 
+}
+
 /************************************************
 *************************************************
 
@@ -546,6 +705,8 @@ function setParamForRequest(type, field, id, reloaded){
 }
 
 function initializeFormsFields(){
+    $(".edit-media-btn").hide();
+    $(".create-media-btn").show();
     $(".media-url").val("");
     $(".media-description").val("");
     $(".media-file").val("");

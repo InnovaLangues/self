@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Innova\SelfBundle\Entity\Subquestion;
 
 
@@ -77,13 +78,13 @@ class SubquestionController
 
         // création automatique en cas de vrai/faux/(nd)?
         if($questionnaireTypology == "VF" || $questionnaireTypology == "TVF" || $questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {  
-            $true = $this->mediaManager->createMedia($test, $questionnaire, "texte", "VRAI", "VRAI", null, 0);
+            $true = $this->mediaManager->createMedia($test, $questionnaire, "texte", "VRAI", "VRAI", null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $true, false);
-            $false = $this->mediaManager->createMedia($test, $questionnaire, "texte", "FAUX", "FAUX", null, 0);
+            $false = $this->mediaManager->createMedia($test, $questionnaire, "texte", "FAUX", "FAUX", null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $false, false);
         }
         if($questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {  
-            $nd = $this->mediaManager->createMedia($test, $questionnaire, "texte", "ND", "ND", null, 0);
+            $nd = $this->mediaManager->createMedia($test, $questionnaire, "texte", "ND", "ND", null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $nd, false);
         }
 
@@ -121,4 +122,110 @@ class SubquestionController
         return new Response($template);
     }
 
+    /**
+     *
+     * @Route("/questionnaires/create-lacunes", name="editor_questionnaire_create-lacunes", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function createLacunesAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+        $question = $questionnaire->getQuestions()[0];
+
+        $texte = $questionnaire->getMediaText()->getDescription();
+
+        preg_match_all("/#(.*?)#/", $texte, $lacunes);
+
+        foreach ($lacunes[1] as $lacune){
+            $subquestion = new Subquestion();
+            $typology = $question->getTypology();
+            $subquestion->setTypology($typology);
+            $subquestion->setQuestion($question);
+            $em->persist($subquestion);
+            
+
+            $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
+            $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
+            $em->flush();
+            $em->refresh($subquestion);
+        }
+        
+
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+
+        return new Response($template);
+    }
+
+
+
+    /**
+     *
+     * @Route("/questionnaires/create-clue", name="editor_questionnaire_create-clue", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function createClueAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
+        $clue = $request->get('clue');
+
+        if (!$clueMedia = $subquestion->getMediaClue()) {
+            $clueMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $clue, $clue, null, 0, "clue");
+        } else {
+            $clueMedia->setDescription($clue);
+            $clueMedia->setName($clue);
+            $em->persist($clueMedia);
+        
+        }
+        $subquestion->setMediaClue($clueMedia);
+        $em->persist($subquestion);
+        $em->flush();
+
+        return new JsonResponse(
+            array()
+        );
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/create-syllable", name="editor_questionnaire_create-syllable", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function createSyllableAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
+        $syllable = $request->get('syllable');
+
+        if (!$syllableMedia = $subquestion->getMediaSyllable()) {
+            $syllableMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $syllable, $syllable, null, 0, "syllable");
+        } else {
+            $syllableMedia->setDescription($syllable);
+            $syllableMedia->setName($syllable);
+            $em->persist($syllableMedia);
+        
+        }
+        $subquestion->setMediaSyllable($syllableMedia);
+        $em->persist($subquestion);
+        $em->flush();
+
+        return new JsonResponse(
+            array()
+        );
+    }
+
+    
 }

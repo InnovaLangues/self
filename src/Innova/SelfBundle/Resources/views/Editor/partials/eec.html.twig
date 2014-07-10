@@ -1,0 +1,24 @@
+{% set subquestions = questionnaire.questions[0].subquestions %}
+<table class="table">
+     <tr>
+        <th></th>
+        <th>Indice</th>
+        <th>Syllabe</th>
+    </tr>
+    {% for subquestion in subquestions %}
+        <tr>
+            {% set propositions = subquestion.propositions %}
+            {% for proposition in propositions %}
+            <td>
+                {{ proposition.media.description }}
+            </td>
+            {% endfor %}
+            <td>
+                indice : <input class="clue" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaClue is not null %}{{ subquestion.mediaClue.description }}{% endif %}"/>
+            </td>
+             <td>
+                syllabe : <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

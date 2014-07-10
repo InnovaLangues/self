@@ -25,7 +25,10 @@ class MediaManager
             "app-answer" => "proposition",
             "app-distractor" => "proposition",
             "proposition" => "proposition",
-            "reponse" => "reponse"
+            "reponse" => "reponse", 
+            "clue" => "clue",
+            "syllable" => "syllable"
+
         );
 
         $em = $this->entityManager;
@@ -43,7 +46,7 @@ class MediaManager
         $em->flush();
 
         if ($mediaTypeName == "audio" || $mediaTypeName == "video") {
-            $this->updateMediaLimit($test, $questionnaire, $media, $mediaLimit);
+            $this->updateMediaLimit($questionnaire, $media, $mediaLimit);
         }
 
         return $media;
@@ -52,13 +55,12 @@ class MediaManager
     /**
      * UpdateMediaLimit a mediaLimit entity or create one for a given media, and questionnaire
      */
-    public function updateMediaLimit($test, $questionnaire, $media, $limit)
+    public function updateMediaLimit($questionnaire, $media, $limit)
     {
         $em = $this->entityManager;
 
-        if (!$mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array('test' => $test, 'questionnaire' => $questionnaire, 'media' => $media))) {
+        if (!$mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array('questionnaire' => $questionnaire, 'media' => $media))) {
             $mediaLimit = new MediaLimit();
-            $mediaLimit->setTest($test);
             $mediaLimit->setQuestionnaire($questionnaire);
             $mediaLimit->setMedia($media);
         }

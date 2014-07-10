@@ -3,7 +3,10 @@
     <div class="panel-heading">
         {{ 'editor.questionnaire.question_object' | trans }}
         {% if questionnaire.mediaText is not null %}
-            <span id="delete-text" class="glyphicon glyphicon-remove btn btn-default btn-sm pull-right" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}"></span>
+            <div class="pull-right">
+                {{ macros.editMedia(questionnaire.mediaText, "texte") }}
+                <span id="delete-text" class="glyphicon glyphicon-remove btn btn-default btn-sm" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}"></span>
+            </div>
         {% endif %}
     </div>
     <div class="panel-body">
