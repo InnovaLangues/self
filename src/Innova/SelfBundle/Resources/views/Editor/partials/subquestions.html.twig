@@ -7,7 +7,12 @@
 
         {% if typoPrefix == "TLC" or typoPrefix == "TLQ" %}
             Lacunes : Indice / Syllabe
-            <span id="create-lacunes" class="btn btn-default btn-xs pull-right">Générer lacunes</span>
+            {% if questionnaire.questions[0].subquestions|length == 0  %}
+                <span id="create-lacunes" class="btn btn-default btn-xs pull-right">Générer lacunes</span>
+            {% else %}
+                <span id="create-lacunes" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Attention cela
+                supprimera les indices et syllabes">Regénérer lacunes</span>
+            {% endif %}
             </div>
             <div class="panel-body">
                 {% include "InnovaSelfBundle:Editor/partials:eec.html.twig" %}

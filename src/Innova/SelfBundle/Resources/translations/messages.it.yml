@@ -113,6 +113,7 @@ editor:
         context: Contesto
         question_object: Testo fonte
         skill: Competenza
+        instruction: Domanda
     subquestion:
         subquestions: Item
         add: Aggiungi un item
