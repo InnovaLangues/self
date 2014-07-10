@@ -105,13 +105,13 @@ $(document).ready(function() {
     });
 
 
-    $('.clue').on('blur',function(e){
+    $('body').on('blur', '.clue',function(e){
         var clue = $(this).val();
         var subquestionId = $(this).data("subquestion-id");
         setClue(clue, subquestionId);
     });
 
-    $('.syllable').on('blur',function(e){
+    $('body').on('blur', ".syllable", function(e){
         var syllable = $(this).val();
         var subquestionId = $(this).data("subquestion-id");
         setSyllable(syllable, subquestionId);
@@ -361,7 +361,6 @@ function createMedia(name, description, url, type) {
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
         afterAjax();
-        $('*').tooltip({placement:'top'});
     });
 }
 
@@ -504,7 +503,6 @@ function unlinkMedia(){
         $("#"+toBeReloaded).replaceWith(data);
         initializeFormsFields();
         afterAjax();
-        $('*').tooltip({placement:'top'});
     });
 }
 
@@ -570,7 +568,6 @@ function toggleRightWrong(propositionId){
     .done(function(data) {
         afterAjax();
         $("#proposition-"+propositionId+"-container").replaceWith(data);
-        $('*').tooltip({placement:'top'});
     }); 
 }
 
@@ -652,8 +649,8 @@ function createLacunes(){
         }
     })
     .complete(function(data) {
-        afterAjax();
         $("#subquestion-container").replaceWith(data.responseText);
+        afterAjax();
     }); 
 }
 
@@ -735,6 +732,7 @@ function beforeAjax(){
 function afterAjax(){
     $("#loader-img").hide();
     $(".btn, input").removeAttr("disabled");   
+    $('*').tooltip({placement:'top'});
 }
 
 /************************************************

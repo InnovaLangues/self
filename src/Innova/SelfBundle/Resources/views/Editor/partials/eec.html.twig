@@ -1,6 +1,7 @@
 {% if questionnaire.mediaInstruction is not null %}
     {{ macros.deleteInstruction(questionnaire) }}
     {{ macros.editMedia(questionnaire.mediaInstruction, "subquestion") }}
+    {{ 'editor.questionnaire.instruction' | trans }} :
     {{ macros.displayMedia(test, questionnaire, questionnaire.mediaInstruction) }}
 {% else %}
     <span class="btn btn-default btn-xs add-instruction">
@@ -11,7 +12,7 @@
 
 <hr />
 
-        {% set subquestions = questionnaire.questions[0].subquestions %}
+{% set subquestions = questionnaire.questions[0].subquestions %}
 <table class="table">
      <tr>
         <th></th>

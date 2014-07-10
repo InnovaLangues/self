@@ -136,6 +136,13 @@ class SubquestionController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $question = $questionnaire->getQuestions()[0];
 
+        $subquestions = $question->getSubquestions();
+        foreach ($subquestions as $subquestion) {
+            $em->remove($subquestion);
+        }
+        $em->flush();
+        $em->refresh($question);
+
         $texte = $questionnaire->getMediaText()->getDescription();
 
         preg_match_all("/#(.*?)#/", $texte, $lacunes);
@@ -154,7 +161,6 @@ class SubquestionController
             $em->refresh($subquestion);
         }
         
-
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
 
