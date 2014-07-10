@@ -92,6 +92,11 @@ class User extends BaseUser
     protected $mediaClicks;
 
     /**
+    * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+    */
+    private $comments;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -551,5 +556,38 @@ class User extends BaseUser
     public function getMediaClicks()
     {
         return $this->mediaClicks;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Innova\SelfBundle\Entity\Comment $comments
+     * @return User
+     */
+    public function addComment(\Innova\SelfBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Innova\SelfBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Innova\SelfBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
