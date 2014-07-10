@@ -137,6 +137,7 @@ $(document).ready(function() {
     });
 
     $( "body" ).on( "click", '.edit-media', function() {
+        $("#entity-to-be-reloaded").val($(this).data("entity-reloaded"));
         editMediaModal( $(this).data("media-type"), $(this).data("media-id"));
     });
 
@@ -292,20 +293,26 @@ function editMedia(mediaType){
     var name = $("#"+mediaType+"-name").val();
     var description = $("#"+mediaType+"-description").val();
     var url = $("#"+mediaType+"-url").val();
+    var toBeReloaded = $("#entity-to-be-reloaded").val();
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_update-media'),
         type: 'PUT',
-        dataType: 'json',
         data: 
         { 
             name: name,
             description: description,
             url: url,
-            mediaId: mediaId
+            mediaId: mediaId,
+            toBeReloaded: toBeReloaded,
+            testId: testId,
+            questionnaireId: questionnaireId
         }
     })
     .done(function(data) {
+        $("#"+toBeReloaded+"-container").replaceWith(data);
         initializeFormsFields();
         afterAjax();
         $("*").modal('hide');
@@ -560,14 +567,12 @@ function toggleRightWrong(propositionId){
 function setListeningLimit(mediaId, listeningLimit){
     beforeAjax();
 
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
         url: Routing.generate('set-listening-limit'),
         type: 'POST',
         data: { 
-            testId: testId,
             questionnaireId: questionnaireId,
             mediaId: mediaId,
             listeningLimit: listeningLimit

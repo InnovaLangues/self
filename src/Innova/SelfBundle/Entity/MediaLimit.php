@@ -27,11 +27,6 @@ class MediaLimit
     protected $media;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Test", inversedBy="mediaLimits")
-    */
-    protected $test;
-
-    /**
     * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="mediaLimits")
     */
     protected $questionnaire;
@@ -99,28 +94,6 @@ class MediaLimit
         return $this->media;
     }
 
-    /**
-     * Set test
-     *
-     * @param  \Innova\SelfBundle\Entity\Test $test
-     * @return MediaLimit
-     */
-    public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
-    {
-        $this->test = $test;
-
-        return $this;
-    }
-
-    /**
-     * Get test
-     *
-     * @return \Innova\SelfBundle\Entity\Test
-     */
-    public function getTest()
-    {
-        return $this->test;
-    }
 
     /**
      * Set questionnaire

@@ -56,11 +56,6 @@ class Test
     protected $language;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="test")
-    */
-    private $mediaLimits;
-
-    /**
     * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="test")
     */
     private $mediaClicks;
@@ -262,38 +257,6 @@ class Test
         return $this->actif;
     }
 
-    /**
-     * Add mediaLimits
-     *
-     * @param  \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
-     * @return Test
-     */
-    public function addMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
-    {
-        $this->mediaLimits[] = $mediaLimits;
-
-        return $this;
-    }
-
-    /**
-     * Remove mediaLimits
-     *
-     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
-     */
-    public function removeMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
-    {
-        $this->mediaLimits->removeElement($mediaLimits);
-    }
-
-    /**
-     * Get mediaLimits
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMediaLimits()
-    {
-        return $this->mediaLimits;
-    }
 
     /**
      * Add mediaClicks

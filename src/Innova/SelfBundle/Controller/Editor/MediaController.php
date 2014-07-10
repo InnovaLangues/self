@@ -56,12 +56,11 @@ class MediaController
         $em = $this->entityManager;
         $request = $this->request->request;
 
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
         $limit = $request->get('listeningLimit');
 
-        $this->mediaManager->updateMediaLimit($test, $questionnaire, $media, $limit);
+        $this->mediaManager->updateMediaLimit($questionnaire, $media, $limit);
 
         return new JsonResponse(
             array()
@@ -98,6 +97,9 @@ class MediaController
     {
         $em = $this->entityManager;
         $request = $this->request->request;
+        $toBeReloaded = $request->get('toBeReloaded');
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
         $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
 
@@ -108,13 +110,20 @@ class MediaController
         $em->persist($media);
         $em->flush();
 
-        return new JsonResponse(
-            array()
-        );
+        switch ($toBeReloaded) {
+            case 'contexte':
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+                break;
+            case 'texte':
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+                break;
+            case 'subquestion':
+                $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+                break;
+        }
+
+         return new Response($template);
     }
-
-
-
 
 
     /**
