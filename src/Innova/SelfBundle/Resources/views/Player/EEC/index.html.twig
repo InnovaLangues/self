@@ -3,7 +3,7 @@
 </div>
 
 {# Demande de JJ : on n'affiche pas cette image dans ce cas. #}
-{% if questionnaire.mediaInstruction is null %}
+{% if questionnaire.mediaInstruction is not null %}
     <div id="situation-icon">
         <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-EEC.png" rel="tooltip" data-original-title="Objet de la question" />
     </div>
