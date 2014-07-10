@@ -28,8 +28,8 @@ class MediaManager
             "reponse" => "reponse", 
             "clue" => "clue",
             "syllable" => "syllable",
-            "instruction" => "instruction"
-
+            "instruction" => "instruction",
+            "functional-instruction" => "functional-instruction"
         );
 
         $em = $this->entityManager;

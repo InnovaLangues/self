@@ -155,6 +155,11 @@ class Questionnaire
     protected $mediaText;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaFunctionalInstruction;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="originText", type="string", length=255, nullable=true)
@@ -985,5 +990,28 @@ class Questionnaire
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set mediaFunctionalInstruction
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaFunctionalInstruction
+     * @return Questionnaire
+     */
+    public function setMediaFunctionalInstruction(\Innova\SelfBundle\Entity\Media $mediaFunctionalInstruction = null)
+    {
+        $this->mediaFunctionalInstruction = $mediaFunctionalInstruction;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaFunctionalInstruction
+     *
+     * @return \Innova\SelfBundle\Entity\Media 
+     */
+    public function getMediaFunctionalInstruction()
+    {
+        return $this->mediaFunctionalInstruction;
     }
 }

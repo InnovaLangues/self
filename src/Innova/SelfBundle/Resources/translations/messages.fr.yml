@@ -113,7 +113,8 @@ editor:
         context: Contexte
         question_object: Objet de la question
         skill: Compétence
-        instruction: Consigne
+        didactic_instruction: Consigne didactique
+        functional_instruction: Consigne fonctionnelle
     subquestion:
         subquestions: Items
         add: Ajouter un item

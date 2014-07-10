@@ -14,7 +14,7 @@
                 supprimera les indices et syllabes">Regénérer lacunes</span>
             {% endif %}
             </div>
-            <div class="panel-body">
+            <div class="panel-body tab-pane">
                 {% include "InnovaSelfBundle:Editor/partials:eec.html.twig" %}
             </div>
         {% else %}
@@ -23,10 +23,11 @@
                     <span id="create-subquestion" class="btn btn-default btn-xs pull-right">{{ 'editor.subquestion.add' | trans }}</span>
                 {% endif %}
             </div>
-            <div class="panel-body">
             {% if ( typoPrefix == "APP") %}
+                <div class="panel-body tab-pane">
                 {% include "InnovaSelfBundle:Editor/partials:app.html.twig" %}
             {% else %}
+                <div class="panel-body">
                 {% if questionnaire.questions[0].subquestions is not null %}
                     {% set subquestions = questionnaire.questions[0].subquestions %}
                     <ul class="nav nav-tabs">
@@ -49,7 +50,6 @@
                 {% endif %}
             {% endif %}
             </div>
-       
     {% endif %}
      </div>
 {% endif %}
