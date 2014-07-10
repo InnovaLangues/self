@@ -159,6 +159,12 @@ class MediaController
                     $em->flush();
 
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
+                } elseif ($entityField == "instruction") {
+                    $entity->setMediaInstruction($media);
+                    $em->persist($entity);
+                    $em->flush();
+
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $entity));
                 }
                 break;
             case "subquestion":
@@ -231,7 +237,11 @@ class MediaController
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText(null);
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('test'=> $test, 'questionnaire' => $entity));
+                } elseif ($entityField == "instruction") {
+                    $entity->setMediaInstruction(null);
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('test'=> $test, 'questionnaire' => $entity));
                 }
+
                 $em->persist($entity);
                 $em->flush();
                 break;

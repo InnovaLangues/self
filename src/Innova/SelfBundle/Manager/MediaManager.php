@@ -27,7 +27,8 @@ class MediaManager
             "proposition" => "proposition",
             "reponse" => "reponse", 
             "clue" => "clue",
-            "syllable" => "syllable"
+            "syllable" => "syllable",
+            "instruction" => "instruction"
 
         );
 

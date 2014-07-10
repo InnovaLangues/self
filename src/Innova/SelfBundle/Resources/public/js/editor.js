@@ -58,6 +58,17 @@ $(document).ready(function() {
         setTextType(textType);
     });
 
+    $( "body" ).on( "click", '.add-instruction', function() {
+        setParamForRequest("questionnaire", "instruction", questionnaireId, "subquestion-container");
+        chooseMediaTypeModal();
+    });
+
+    $( "body" ).on( "click", '.delete-instruction', function() {
+        setParamForRequest("questionnaire", "instruction", questionnaireId, "subquestion-container");
+        unlinkMedia();
+    });
+    
+
 
     /**********************
         QUESTION RELATED EVENTS 
