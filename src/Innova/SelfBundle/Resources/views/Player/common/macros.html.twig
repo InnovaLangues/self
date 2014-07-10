@@ -150,7 +150,7 @@
                     <span class='input-group-addon'>"~syllable~"</span>
                     <input data-right-answer-length='"~textRightAnswer|length~"' type='text' class='form-control mask'>
                 </div>" %}
-                {% set selector = "%"~i~"%" %}
+                {% set selector = "#"~proposition.media.description~"#" %}
                 {% set texte = texte|replace({(selector): html}) %}
             {% endif %}
 
