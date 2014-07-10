@@ -11,6 +11,7 @@
     {% if displayHelp %}
         <!-- Les pages d'aide sont en CamelCase : helpCo.html.twig, helpCe.html.twig et helpEEc.html.twig -->
         <!-- Récupération du niveau avec la première lettre en majuscule -->
+        {{ questionnaire.skill.name }}
         {% set skill = questionnaire.skill.name|capitalize %}
         {% set helpName = 'help' ~ skill ~ '.html.twig' %}
         <!-- Affichage de la page d'aide adéquate -->
