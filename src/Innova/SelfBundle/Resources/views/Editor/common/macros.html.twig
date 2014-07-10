@@ -61,6 +61,12 @@
     </button>
 {% endmacro %}
 
+{% macro deleteInstruction() %}
+    <button rel="tooltip" data-original-title="{{ 'editor.subquestion.remove_instruction' | trans }}" class="btn btn-default btn-xs delete-instruction vertical-middle">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+{% endmacro %}
+
 {% macro listeningLimit(questionnaire, media) %}
     {% set limit = 0 %}
     {% for limits in media.mediaLimits %}
