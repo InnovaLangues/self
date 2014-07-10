@@ -43,6 +43,11 @@ $(document).ready(function() {
         chooseMediaTypeModal();
     });
 
+    $( "body" ).on( "click", '#add-functional-instruction', function() {
+        setParamForRequest("questionnaire", "functional-instruction", questionnaireId, "functional-instruction-container");
+        chooseMediaTypeModal();
+    });
+
     $( "body" ).on( "click", '#delete-context', function() {
         setParamForRequest("questionnaire", "contexte", questionnaireId, "contexte-container");
         unlinkMedia();
@@ -52,6 +57,12 @@ $(document).ready(function() {
         setParamForRequest("questionnaire", "texte", questionnaireId, "texte-container");
         unlinkMedia();
     });
+
+    $( "body" ).on( "click", '#delete-functional-instruction', function() {
+        setParamForRequest("questionnaire", "functional-instruction", questionnaireId, "functional-instruction-container");
+        unlinkMedia();
+    });
+
 
     $( "body" ).on( "click", '.text-type', function() {
         var textType = $(this).data("text-type");

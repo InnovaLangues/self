@@ -1,0 +1,23 @@
+<div id="functional-instruction-container" class="panel panel-default">
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+    <div class="panel-heading">
+        {{ 'editor.questionnaire.functional_instruction' | trans }}
+        {% if questionnaire.mediaFunctionalInstruction is not null %}
+            <div class="pull-right">
+                {{ macros.editMedia(questionnaire.mediaFunctionalInstruction, "functional-instruction") }}
+                <span id="delete-functional-instruction" class="glyphicon glyphicon-remove btn btn-default btn-sm" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}"></span>
+            </div>
+        {% endif %}
+    </div>
+    <div class="panel-body">
+        {% if questionnaire.mediaFunctionalInstruction is null %}
+        <div class="text-center">
+            <span id="add-functional-instruction" class="btn btn-default">
+                {{ 'generic.add' | trans }}
+            </span>
+        </div>
+        {% else %}
+            {{ macros.displayMedia(test, questionnaire, questionnaire.mediaFunctionalInstruction) }}
+        {% endif %}
+    </div>
+</div>
