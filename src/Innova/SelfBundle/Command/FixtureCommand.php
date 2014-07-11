@@ -76,7 +76,7 @@ class FixtureCommand extends ContainerAwareCommand
             $typologies = array(
                 array("TVF", "Tableau de Vrai-Faux"), array("QRU", "Question à Réponse Unique"), array("VF", "Vrai-Faux"),
                 array("QRM", "Question à Réponse Multiple"), array("TQRU", "Tableau de QRU"), array("TQRM", "Tableau de QRM"),
-                array("APPAT","Appariemment Audio-Texte"), array("APPAA", "Appariemment Audio-Audio"), array("APPAI", "Appariemment Audio-Image"),
+                array("APPAT","Appariemment Audio-Texte"), array("APPIT","Appariemment Image-Texte"), array("APPAA", "Appariemment Audio-Audio"), array("APPAI", "Appariemment Audio-Image"),
                 array("APPTT", "Appariemment Texte-Texte"), array("TVFNM", "Tableau de Vrai-Faux-Non Mentionné"),
                 array("VFNM", "Vrai-Faux-Non Mentionné"), array("TLCMQRU", ""), array("TLCMTQRU", ""), array("TLCMLDM", ""),
                 array("TLQROCNOCLU", ""), array("TLQROCLEN",""), array("TLQROCFIRST",""), array("TLQROCFIRSTLEN",""), array("TLQROCSYL",""),
@@ -188,7 +188,7 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             /* Gestion du mediaPurpose... à quoi sert le media (consigne, contexte, proposition, etc.) */
-            $purposes = array("contexte", "objet de la question", "question", "proposition", "reponse", "syllable", "clue", "instruction", "functional-instruction");
+            $purposes = array("contexte", "objet de la question", "question", "proposition", "reponse", "syllable", "clue", "instruction", "functional-instruction", "comment");
             foreach ($purposes as $purpose) {
                 if (!$em->getRepository('InnovaSelfBundle:MediaPurpose')->findOneByName($purpose)) {
                     $p = new MediaPurpose();

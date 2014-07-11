@@ -21,6 +21,7 @@ class MediaController
     protected $mediaManager;
     protected $propositionManager;
     protected $appManager;
+    protected $commentManager;
     protected $entityManager;
     protected $request;
     protected $templating;
@@ -29,12 +30,14 @@ class MediaController
             $mediaManager,
             $propositionManager,
             $appManager,
+            $commentManager,
             $entityManager,
             $templating
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
         $this->appManager = $appManager;
+        $this->commentManager = $commentManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
 
@@ -175,6 +178,10 @@ class MediaController
                     $em->flush();
 
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $entity));
+                } elseif ($entityField == "comment") {
+                    $comment = $this->commentManager->createComment($questionnaire, $media);
+                    $em->refresh($questionnaire);
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:comments.html.twig',array('test'=> $test, 'questionnaire' => $entity));
                 }
 
                 break;

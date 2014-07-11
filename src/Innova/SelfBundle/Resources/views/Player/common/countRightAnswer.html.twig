@@ -1,4 +1,4 @@
-{% if questionnaire.mediaFunctionalInstruction is not null %}
+{% if questionnaire.mediaFunctionalInstruction.description is not null %}
     <div class="info-right-answer">
         {{ questionnaire.mediaFunctionalInstruction.description|raw }}
     </div>

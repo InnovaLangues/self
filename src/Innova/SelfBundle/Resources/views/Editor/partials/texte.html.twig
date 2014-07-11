@@ -18,18 +18,20 @@
         </div>
         {% else %}
             {{ macros.displayMedia(test, questionnaire, questionnaire.mediaText) }}
-            <hr/>
-            <div class="text-center">
-                {% for i, textType in ['monologue', 'dialogue', 'dialogue interrompu'] %}
-                     <span class="btn btn-default btn-xs text-type" data-text-type="{{ i }}"> 
-                     {% if questionnaire.dialogue == i %}
-                        <strong>{{ textType }}</strong>
-                    {% else %}
-                        {{ textType }} 
-                    {% endif %}
-                    </span>
-                {% endfor %}
-            </div>
+            {% if questionnaire.mediaText.mediaType.name == "audio" %}
+                <hr/>
+                <div class="text-center">
+                    {% for i, textType in ['monologue', 'dialogue', 'dialogue interrompu'] %}
+                         <span class="btn btn-default btn-xs text-type" data-text-type="{{ i }}"> 
+                         {% if questionnaire.dialogue == i %}
+                            <strong>{{ textType }}</strong>
+                        {% else %}
+                            {{ textType }} 
+                        {% endif %}
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 </div>

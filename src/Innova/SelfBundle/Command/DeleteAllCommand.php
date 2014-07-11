@@ -75,6 +75,12 @@ class DeleteAllCommand extends ContainerAwareCommand
                 $em->remove($limit);
             }
 
+            $output->writeln("Suppression ECOUTES MEDIA ...");
+            $clicks = $em->getRepository('InnovaSelfBundle:MediaClick')->findAll();
+            foreach ($clicks as $click) {
+                $em->remove($click);
+            }
+
             $output->writeln("Suppression MEDIA ...");
             $medias = $em->getRepository('InnovaSelfBundle:Media')->findAll();
             foreach ($medias as $media) {

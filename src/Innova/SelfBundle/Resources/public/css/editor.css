@@ -13,14 +13,14 @@
 	border-left:none;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus	{
+#subquestion-container .nav-tabs > li.active > a, #subquestion-container .nav-tabs > li.active > a:hover, #subquestion-container .nav-tabs > li.active > a:focus	{
 	opacity:1;
 	color:white;
 	background-color: #E37E71;
 	border-left:none;
 }
 
-.tab-pane {
+#subquestion-container .tab-pane {
 	background-color: #E37E71;
 	color: white;
 	border-top-right-radius: 5px;

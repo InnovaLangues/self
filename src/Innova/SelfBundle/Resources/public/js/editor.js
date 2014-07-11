@@ -30,6 +30,15 @@ $(document).ready(function() {
     });
 
     /**********************
+        COMMENT RELATED EVENTS 
+    ************************/
+
+    $( "body" ).on( "click", '#add-comment', function() {
+        setParamForRequest("questionnaire", "comment", questionnaireId, "comments-container");
+        chooseMediaTypeModal();
+    });
+
+    /**********************
         QUESTIONNAIRE RELATED EVENTS 
     ************************/
 
@@ -256,13 +265,27 @@ function editMediaModal(mediaType, mediaId) {
         $("#"+data.mediaType+"-name").val(data.name);
         $("#"+data.mediaType+"-url").val(data.url);
         $("#"+data.mediaType+"-id").val(data.id);
-
-        $("#create-"+data.mediaType+"-btn").hide();
-        $("#edit-"+data.mediaType+"-btn").show();
-
+        switchEditMode();
         $('#modal-create-'+mediaType).modal('show');
     });
 }
+
+
+$( "body" ).on( "click", '.close-modal', function() {
+    switchCreateMode();
+});
+
+function switchCreateMode(){
+    $(".create-media-btn").show();
+    $(".edit-media-btn").hide();
+}
+
+function switchEditMode(){
+    $(".create-media-btn").hide();
+    $(".edit-media-btn").show();
+}
+
+
 
 
 /************************************************

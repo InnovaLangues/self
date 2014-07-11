@@ -111,6 +111,12 @@ class Questionnaire
     private $mediaClicks;
 
     /**
+    * @ORM\OneToMany(targetEntity="Comment", mappedBy="questionnaire")
+    */
+    private $comments;
+
+
+    /**
      * @var string
      *
      * @ORM\Column(name="theme", type="string", length=255)
@@ -1013,5 +1019,38 @@ class Questionnaire
     public function getMediaFunctionalInstruction()
     {
         return $this->mediaFunctionalInstruction;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Innova\SelfBundle\Entity\Comment $comments
+     * @return Questionnaire
+     */
+    public function addComment(\Innova\SelfBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Innova\SelfBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Innova\SelfBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
