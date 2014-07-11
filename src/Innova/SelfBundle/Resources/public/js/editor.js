@@ -30,6 +30,15 @@ $(document).ready(function() {
     });
 
     /**********************
+        COMMENT RELATED EVENTS 
+    ************************/
+
+    $( "body" ).on( "click", '#add-comment', function() {
+        setParamForRequest("questionnaire", "comment", questionnaireId, "comments-container");
+        chooseMediaTypeModal();
+    });
+
+    /**********************
         QUESTIONNAIRE RELATED EVENTS 
     ************************/
 

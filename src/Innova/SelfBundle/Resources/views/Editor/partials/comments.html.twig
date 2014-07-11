@@ -1,0 +1,31 @@
+<div id="comments-container">
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+            Commentaires <button id="add-comment" class="btn btn-default btn-xs pull-right">Ajouter un commentaire</button>
+            </h3>
+        </div>
+        <div class="panel-body">
+        {% if questionnaire.comments|length > 0 %}
+            {% for comment in questionnaire.comments %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{ macros.displayMedia(test, questionnaire, comment.description) }}
+                        <div class="pull-right">
+                            Par <i>{{ comment.user.username }}</i> 
+                            <span>le {{ comment.date|date('d-m-Y') }} à {{ comment.date|date('H:i:s') }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                Aucun commentaire
+            </div>
+        </div>
+    {% endif %}
+        </div>
+    </div>
+</div>

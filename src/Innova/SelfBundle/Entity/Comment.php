@@ -32,11 +32,9 @@ class Comment
     protected $user;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    private $description;
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $description;
 
     /**
      * @var \DateTime
@@ -53,29 +51,6 @@ class Comment
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Comment
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -145,5 +120,51 @@ class Comment
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set mediaInstruction
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaInstruction
+     * @return Comment
+     */
+    public function setMediaInstruction(\Innova\SelfBundle\Entity\Media $mediaInstruction = null)
+    {
+        $this->mediaInstruction = $mediaInstruction;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaInstruction
+     *
+     * @return \Innova\SelfBundle\Entity\Media 
+     */
+    public function getMediaInstruction()
+    {
+        return $this->mediaInstruction;
+    }
+
+    /**
+     * Set description
+     *
+     * @param \Innova\SelfBundle\Entity\Media $description
+     * @return Comment
+     */
+    public function setDescription(\Innova\SelfBundle\Entity\Media $description = null)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return \Innova\SelfBundle\Entity\Media 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

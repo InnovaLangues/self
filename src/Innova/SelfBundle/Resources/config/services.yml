@@ -69,6 +69,7 @@ services:
             mediaManager:       @self.media.manager
             propositionManager: @self.proposition.manager
             appManager:         @self.app.manager
+            commentManager:     @self.comment.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
         calls:
