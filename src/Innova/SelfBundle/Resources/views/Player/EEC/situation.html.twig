@@ -1,12 +1,4 @@
-{# Variante : LISTE des MOTS (attention, dans ce cas, l’objet de la question est composé d’une image et d’un texte en même temps)#}
-{% if questionnaire.mediaInstruction is not null %}
-    {% if questionnaire.mediaInstruction.mediaType.name == "image" %}
-        <div id="image-EEC" class="image-EEC">
-            {{ macros.image("situation-image", questionnaire.mediaInstruction, "Objet de la question - Cliquer pour agrandir", "" ) }}
-            {{ macros.modale("situation-image", questionnaire.mediaInstruction, "Objet de la question") }}
-        </div>
-    {% endif %}
-{% endif %}
+
 
 <div id="situation-EEC" class="situation">
 
