@@ -1,6 +1,6 @@
 <div id="contexte">
     {% if questionnaire.mediaContext is not null %}
-        {{ questionnaire.mediaContext.description|striptags }}
+        {{ questionnaire.mediaContext.description|raw }}
         <div class="hr"></div>
     {% endif %}
 </div>

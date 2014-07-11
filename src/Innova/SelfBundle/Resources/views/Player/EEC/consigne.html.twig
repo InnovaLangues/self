@@ -1,6 +1,6 @@
 <div class=" tab-pane-EEC ">
     {% if questionnaire.mediaInstruction is not null %}
-    <img width="70px" src="{{ asset("bundles/innovaself/images/") }}oignon.png" rel="tooltip" data-original-title="{{ 'player.tooltip.question' | trans }}" />
+        <img width="70px" src="{{ asset("bundles/innovaself/images/") }}oignon.png" rel="tooltip" data-original-title="{{ 'player.tooltip.question' | trans }}" />
         <div class="question-EEC-text">
             {% autoescape %}
                 {{ questionnaire.mediaInstruction.description|raw }}
