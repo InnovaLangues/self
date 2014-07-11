@@ -21,6 +21,14 @@
                 <span class="glyphicon glyphicon-comment"></span> Commentaires
             </a>
         </li>
+        <li>
+            <a href="#identity" role="tab" data-toggle="tab">
+                <span class="glyphicon glyphicon-list-alt"></span> Fiche d'identité
+            </a>
+        </li>
+        <li class='pull-right'>
+            <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
+        </li>
     </ul>
 
     <br/>
@@ -31,6 +39,9 @@
         </div>
         <div class="tab-pane" id="comments">
             {% include "InnovaSelfBundle:Editor/partials:comments.html.twig" %}
+        </div>
+        <div class="tab-pane" id="identity">
+            {% include "InnovaSelfBundle:Editor/partials:identity.html.twig" %}
         </div>
     </div>
 
