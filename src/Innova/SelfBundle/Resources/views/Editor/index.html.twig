@@ -5,7 +5,37 @@
 {% endblock %}
 
 {% block body -%}
-    {% include "InnovaSelfBundle:Editor/partials:questionnaire.html.twig" %}
+    <ul class="nav nav-tabs" role="tablist">
+        <li>
+            <a href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
+                <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.task.back_to_list' | trans }}
+            </a>
+        </li>
+        <li class="active">
+            <a href="#task" role="tab" data-toggle="tab">
+                <span class="glyphicon glyphicon-file"></span> Tâches
+            </a>
+        </li>
+        <li>
+            <a href="#comments" role="tab" data-toggle="tab">
+                <span class="glyphicon glyphicon-comment"></span> Commentaires
+            </a>
+        </li>
+    </ul>
+
+    <br/>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="task">
+            {% include "InnovaSelfBundle:Editor/partials:questionnaire.html.twig" %}
+        </div>
+        <div class="tab-pane" id="comments">
+            {% include "InnovaSelfBundle:Editor/partials:comments.html.twig" %}
+        </div>
+    </div>
+
+    {% include "InnovaSelfBundle:Editor/common:modal.html.twig" %}
+
 {% endblock %}
 
 {% block javascripts %}
@@ -15,3 +45,6 @@
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor_crop.js") }}"></script>
     {{ tinymce_init() }}
 {% endblock %}
+
+
+
