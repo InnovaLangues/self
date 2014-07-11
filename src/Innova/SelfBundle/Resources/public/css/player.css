@@ -282,6 +282,32 @@ input.proposition-input, label{
 	cursor: hand;
 }
 
+/*
+.tooltip{
+	background-color:#FF0000;
+}
+
+.test{
+	background-color:#FFFF00;
+}
+
+
+ */
+
+
+/*.red-tooltip + .tooltip > .tooltip-inner {background-color: #f00;}*/
+
+.red-tooltip { background-color:red; padding:5px; display:block;border-radius:3px;}
+.yellow-tooltip { background-color:#ff0; padding:5px; display:block;border-radius:3px;}
+
+/*
+.tooltip.top .tooltip-inner {
+    background-color:red;
+}
+.tooltip.top .tooltip-arrow {
+      border-top-color: red;
+}
+*/
 .proposition-CO, .proposition-CE, .proposition-EEC {
 	margin-bottom:8px;
 }
