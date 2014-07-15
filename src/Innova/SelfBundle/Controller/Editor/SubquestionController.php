@@ -148,21 +148,31 @@ class SubquestionController
 
         preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
-        foreach ($lacunes[1] as $lacune){
+        $i = 0;
+        for ($i=0; $i < count($lacunes[1]); $i++) { 
+            $lacune = $lacunes[1][$i];
             $subquestion = new Subquestion();
             $typology = $question->getTypology();
             $subquestion->setTypology($typology);
             $subquestion->setQuestion($question);
             $em->persist($subquestion);
 
-
             $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
+
+            if ($question->getTypology()->getName() == "TLCMLDM") {
+                for ($j=0; $j < count($lacunes[1]); $j++) {
+                    if ($j != $i) {
+                        $lacune = $lacunes[1][$j];
+                        $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition"); 
+                        $this->propositionManager->createProposition($subquestion, $lacuneMedia, false);   
+                    }
+                }
+            }
             $em->flush();
             $em->refresh($subquestion);
         }
-
-
+            
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
 
         return new Response($template);
@@ -265,5 +275,58 @@ class SubquestionController
         );
     }
 
+
+    /**
+     *
+     * @Route("/questionnaires/add-distractor", name="editor_questionnaire_add-distractor", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function addDistractorAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+
+        $media = $this->mediaManager->createMedia($test, $questionnaire, "texte", "", "", null, 0, "distractor"); 
+        foreach($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion){
+
+            $this->propositionManager->createProposition($subquestion, $media, false);  
+
+            $em->persist($subquestion);
+            $em->refresh($subquestion);
+        }
+       
+        $em->flush();
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+
+        return new Response($template);
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/edit-distractor", name="editor_questionnaire_edit-distractor", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function editDistractorAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
+        $text = $request->get('text');
+
+
+        $media->setDescription($text);
+        $media->setName($text);
+        $em->persist($media);
+        $em->flush();
+
+        return new JsonResponse(
+            array()
+        );
+    }
 
 }
