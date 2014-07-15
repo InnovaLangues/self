@@ -166,6 +166,11 @@ class Questionnaire
     protected $mediaFunctionalInstruction;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
+    protected $mediaFeedback;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="originText", type="string", length=255, nullable=true)
@@ -1052,5 +1057,28 @@ class Questionnaire
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set mediaFeedback
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaFeedback
+     * @return Questionnaire
+     */
+    public function setMediaFeedback(\Innova\SelfBundle\Entity\Media $mediaFeedback = null)
+    {
+        $this->mediaFeedback = $mediaFeedback;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaFeedback
+     *
+     * @return \Innova\SelfBundle\Entity\Media 
+     */
+    public function getMediaFeedback()
+    {
+        return $this->mediaFeedback;
     }
 }
