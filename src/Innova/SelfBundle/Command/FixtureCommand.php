@@ -189,7 +189,7 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             /* Gestion du mediaPurpose... à quoi sert le media (consigne, contexte, proposition, etc.) */
-            $purposes = array("contexte", "objet de la question", "question", "proposition", "reponse", "syllable", "clue", "instruction", "functional-instruction", "comment", "feedback");
+            $purposes = array("contexte", "objet de la question", "question", "proposition", "reponse", "syllable", "clue", "instruction", "functional-instruction", "comment", "feedback", "distractor");
             foreach ($purposes as $purpose) {
                 if (!$em->getRepository('InnovaSelfBundle:MediaPurpose')->findOneByName($purpose)) {
                     $p = new MediaPurpose();

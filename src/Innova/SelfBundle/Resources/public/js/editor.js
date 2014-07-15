@@ -143,6 +143,17 @@ $(document).ready(function() {
         setSyllable(syllable, subquestionId);
     });
 
+    $('body').on('click', '.eec-add-distractor',function(e){
+        addDistractor();
+    });
+
+    $('body').on('blur', '.eec-distractor',function(e){
+        var mediaId = $(this).data("media-id");
+        var text =  $(this).val();
+        editDistractor(mediaId, text);
+    });
+    
+
     /**********************
         PROPOSITION RELATED EVENTS 
     ************************/
@@ -752,6 +763,48 @@ function setSyllable(syllable, subquestionId){
         afterAjax();
     }); 
 }
+
+
+function addDistractor(){
+    beforeAjax();
+    var questionnaireId = $("#questionnaire-id").val();
+    var testId = $("#test-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_add-distractor'),
+        type: 'PUT',
+        data: {
+            questionnaireId: questionnaireId,
+            testId: testId
+        }
+    })
+    .complete(function(data) {
+        $("#subquestion-container").replaceWith(data.responseText);
+        afterAjax();
+    }); 
+}
+
+function editDistractor(mediaId, text){
+    beforeAjax();
+    var questionnaireId = $("#questionnaire-id").val();
+    var testId = $("#test-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_edit-distractor'),
+        type: 'PUT',
+        dataType: 'json',
+        data: {
+            mediaId: mediaId,
+            text: text
+        }
+    })
+    .complete(function(data) {
+        afterAjax();
+    }); 
+}
+
+
+
 
 /************************************************
 *************************************************

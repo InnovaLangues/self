@@ -45,6 +45,12 @@ class DeleteAllCommand extends ContainerAwareCommand
                 $em->remove($trace);
             }
 
+            $output->writeln("Suppression COMMENTAIRE ...");
+            $comments = $em->getRepository('InnovaSelfBundle:Comment')->findAll();
+            foreach ($comments as $comment) {
+                $em->remove($comment);
+            }
+
             $output->writeln("Suppression PROPOSITION ...");
             $propositions = $em->getRepository('InnovaSelfBundle:Proposition')->findAll();
             foreach ($propositions as $proposition) {
@@ -61,6 +67,12 @@ class DeleteAllCommand extends ContainerAwareCommand
             $questions = $em->getRepository('InnovaSelfBundle:Question')->findAll();
             foreach ($questions as $question) {
                 $em->remove($question);
+            }
+
+            $output->writeln("Suppression CLUE ...");
+            $clues = $em->getRepository('InnovaSelfBundle:Clue')->findAll();
+            foreach ($clues as $clue) {
+                $em->remove($clue);
             }
 
             $output->writeln("Suppression QUESTIONNAIRE ...");
