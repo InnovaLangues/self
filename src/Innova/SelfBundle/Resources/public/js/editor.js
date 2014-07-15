@@ -131,6 +131,12 @@ $(document).ready(function() {
         setClue(clue, subquestionId);
     });
 
+    $('body').on('click', '.clue-type',function(e){
+        var clueType = $(this).val();
+        var clueId = $(this).data("clue-id");
+        setClueType(clueType, clueId);
+    });
+
     $('body').on('blur', ".syllable", function(e){
         var syllable = $(this).val();
         var subquestionId = $(this).data("subquestion-id");
@@ -696,19 +702,35 @@ function setClue(clue, subquestionId){
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-clue'),
         type: 'PUT',
-        dataType: 'json',
         data: { 
             testId: testId,
             questionnaireId: questionnaireId,
             subquestionId: subquestionId,
-            clue: clue 
+            clue: clue,
+        }
+    })
+    .complete(function(data) {
+        $("#subquestion-container").replaceWith(data.responseText);
+        afterAjax();
+    }); 
+}
+
+function setClueType(clueType, clueId){
+    beforeAjax();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_set-clue-type'),
+        type: 'PUT',
+        dataType: 'json',
+        data: { 
+            clueType: clueType,
+            clueId: clueId
         }
     })
     .complete(function(data) {
         afterAjax();
     }); 
 }
-
 
 function setSyllable(syllable, subquestionId){
     beforeAjax();

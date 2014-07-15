@@ -56,9 +56,9 @@ class Subquestion
     protected $propositions;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Clue", cascade={"persist"})
     */
-    protected $mediaClue;
+    protected $clue;
 
     /**
     * @ORM\ManyToOne(targetEntity="Media")
@@ -293,29 +293,6 @@ class Subquestion
     }
 
     /**
-     * Set mediaClue
-     *
-     * @param \Innova\SelfBundle\Entity\Media $mediaClue
-     * @return Subquestion
-     */
-    public function setMediaClue(\Innova\SelfBundle\Entity\Media $mediaClue = null)
-    {
-        $this->mediaClue = $mediaClue;
-    
-        return $this;
-    }
-
-    /**
-     * Get mediaClue
-     *
-     * @return \Innova\SelfBundle\Entity\Media 
-     */
-    public function getMediaClue()
-    {
-        return $this->mediaClue;
-    }
-
-    /**
      * Set mediaSyllable
      *
      * @param \Innova\SelfBundle\Entity\Media $mediaSyllable
@@ -336,5 +313,28 @@ class Subquestion
     public function getMediaSyllable()
     {
         return $this->mediaSyllable;
+    }
+
+    /**
+     * Set clue
+     *
+     * @param \Innova\SelfBundle\Entity\Clue $clue
+     * @return Subquestion
+     */
+    public function setClue(\Innova\SelfBundle\Entity\Clue $clue = null)
+    {
+        $this->clue = $clue;
+    
+        return $this;
+    }
+
+    /**
+     * Get clue
+     *
+     * @return \Innova\SelfBundle\Entity\Clue 
+     */
+    public function getClue()
+    {
+        return $this->clue;
     }
 }
