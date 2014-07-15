@@ -16,6 +16,7 @@ use Innova\SelfBundle\Entity\Language;
 use Innova\SelfBundle\Entity\LevelLansad;
 use Innova\SelfBundle\Entity\Status;
 use Innova\SelfBundle\Entity\MediaPurpose;
+use Innova\SelfBundle\Entity\ClueType;
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -188,13 +189,25 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             /* Gestion du mediaPurpose... à quoi sert le media (consigne, contexte, proposition, etc.) */
-            $purposes = array("contexte", "objet de la question", "question", "proposition", "reponse", "syllable", "clue", "instruction", "functional-instruction", "comment");
+            $purposes = array("contexte", "objet de la question", "question", "proposition", "reponse", "syllable", "clue", "instruction", "functional-instruction", "comment", "feedback");
             foreach ($purposes as $purpose) {
                 if (!$em->getRepository('InnovaSelfBundle:MediaPurpose')->findOneByName($purpose)) {
                     $p = new MediaPurpose();
                     $p->setName($purpose);
                     $em->persist($p);
                     $output->writeln("Add new MediaPurpose (".$purpose.").");
+                }
+            }
+
+            /* Gestion du mediaPurpose... à quoi sert le media (consigne, contexte, proposition, etc.) */
+            $clueTypes = array(array("fonctionnel", ".clue-fonctionnel"), array("didactique", ".clue-didactique"));
+            foreach ($clueTypes as $clueType) {
+                if (!$em->getRepository('InnovaSelfBundle:ClueType')->findOneByName($clueType[0])) {
+                    $c = new clueType();
+                    $c->setName($clueType[0]);
+                    $c->setColor($clueType[1]);
+                    $em->persist($c);
+                    $output->writeln("Add new clueType (".$clueType[0].").");
                 }
             }
 

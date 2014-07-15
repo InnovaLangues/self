@@ -30,7 +30,8 @@ class MediaManager
             "syllable" => "syllable",
             "instruction" => "instruction",
             "functional-instruction" => "functional-instruction",
-            "comment" => "comment"
+            "comment" => "comment",
+            "feedback" => "feedback"
         );
 
         $em = $this->entityManager;

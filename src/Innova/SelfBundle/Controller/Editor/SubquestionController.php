@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Clue;
 
 
 
@@ -182,24 +183,56 @@ class SubquestionController
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
-        $clue = $request->get('clue');
+        $clueName = $request->get('clue');
+        $clueTypeName = $request->get('clueTypeName');
 
-        if (!$clueMedia = $subquestion->getMediaClue()) {
-            $clueMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $clue, $clue, null, 0, "clue");
-        } else {
-            $clueMedia->setDescription($clue);
-            $clueMedia->setName($clue);
-            $em->persist($clueMedia);
-        
+        if (!$clue = $subquestion->getClue()) {
+            $clue = new Clue();
+            $subquestion->setClue($clue);
         }
-        $subquestion->setMediaClue($clueMedia);
-        $em->persist($subquestion);
+
+        if (!$media = $subquestion->getClue()->getMedia()) {
+            $media = $this->mediaManager->createMedia($test, $questionnaire, "texte", $clueName, $clueName, null, 0, "clue");
+        } else {
+            $media->setDescription($clueName);
+            $media->setName($clueName);
+            $em->persist($media);
+        }
+
+        $clue->setMedia($media);
+        $em->persist($clue);
+        $em->flush();
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+
+        return new Response($template);
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/set-clue-type", name="editor_questionnaire_set-clue-type", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function setClueTypeAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        
+        $clueId = $request->get('clueId');
+        $clueTypeName = $request->get('clueType');
+
+        $clue = $em->getRepository('InnovaSelfBundle:Clue')->find($clueId);
+        $clue->setClueType($em->getRepository('InnovaSelfBundle:ClueType')->findOneByName($clueTypeName));
+
+        $em->persist($clue);
         $em->flush();
 
         return new JsonResponse(
             array()
         );
     }
+
 
     /**
      *
