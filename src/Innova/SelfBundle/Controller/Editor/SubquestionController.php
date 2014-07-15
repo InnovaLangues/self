@@ -78,13 +78,13 @@ class SubquestionController
         $subquestion->setQuestion($question);
 
         // création automatique en cas de vrai/faux/(nd)?
-        if($questionnaireTypology == "VF" || $questionnaireTypology == "TVF" || $questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {  
+        if($questionnaireTypology == "VF" || $questionnaireTypology == "TVF" || $questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {
             $true = $this->mediaManager->createMedia($test, $questionnaire, "texte", "VRAI", "VRAI", null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $true, false);
             $false = $this->mediaManager->createMedia($test, $questionnaire, "texte", "FAUX", "FAUX", null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $false, false);
         }
-        if($questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {  
+        if($questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {
             $nd = $this->mediaManager->createMedia($test, $questionnaire, "texte", "ND", "ND", null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $nd, false);
         }
@@ -154,21 +154,19 @@ class SubquestionController
             $subquestion->setTypology($typology);
             $subquestion->setQuestion($question);
             $em->persist($subquestion);
-            
+
 
             $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
             $em->flush();
             $em->refresh($subquestion);
         }
-        
+
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
 
         return new Response($template);
     }
-
-
 
     /**
      *
@@ -188,6 +186,7 @@ class SubquestionController
 
         if (!$clue = $subquestion->getClue()) {
             $clue = new Clue();
+            $clue->setClueType($em->getRepository('InnovaSelfBundle:ClueType')->findOneByName("fonctionnel"));
             $subquestion->setClue($clue);
         }
 
@@ -218,7 +217,7 @@ class SubquestionController
         $em = $this->entityManager;
         $request = $this->request->request;
 
-        
+
         $clueId = $request->get('clueId');
         $clueTypeName = $request->get('clueType');
 
@@ -255,7 +254,7 @@ class SubquestionController
             $syllableMedia->setDescription($syllable);
             $syllableMedia->setName($syllable);
             $em->persist($syllableMedia);
-        
+
         }
         $subquestion->setMediaSyllable($syllableMedia);
         $em->persist($subquestion);
@@ -266,5 +265,5 @@ class SubquestionController
         );
     }
 
-    
+
 }
