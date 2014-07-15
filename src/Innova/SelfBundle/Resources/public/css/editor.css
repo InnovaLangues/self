@@ -29,6 +29,9 @@
 	padding:20px 20px 20px 20px;
 }
 
+input[type=text] {
+	color:#4C4C4C;
+}
 
 /**********************************
 	fix focus on tabs a
