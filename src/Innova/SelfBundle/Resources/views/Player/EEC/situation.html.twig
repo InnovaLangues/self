@@ -34,15 +34,22 @@
                 {% for i, subquestion in questionnaire.questions[0].subquestions %}
 
                     {# #}
+                    {# Traitement sur l'indice car il s'affiche suivant le type #}
+                    {# #}
+                    {% if subquestion.clue is not null %}
+                        {# Récupération de l'indice pour affichage lors du survol de la zone de saisie #}
+                        {% set clue = subquestion.clue.media.description|escape %}
+                        {% set cssClueColor = subquestion.clue.clueType.color %}
+                        {% set dataTitle = '<span class="'~cssClueColor~'">'~clue~'</span>' %}
+                    {% else %}
+                        {% set clue = '' %}
+                        {% set dataTitle = '' %}
+                    {% endif %}
+
+                    {# #}
                     {# TL/QROC dérivation et transformation #}
                     {# #}
                     {% if typoQuestion == "TLQROCDERIV" or typoQuestion == "TLQROCTRANS" %}
-                        {% if subquestion.mediaClue is not null %}
-                            {# Récupération de l'indice pour affichage lors du survol de la zone de saisie #}
-                            {% set clue = subquestion.mediaClue.description|escape %}
-                        {% else %}
-                            {% set clue = '' %}
-                        {% endif %}
 
                         {% set textRightAnswer = "" %}
                         {% set maxValueSize = 0 %}
@@ -66,7 +73,7 @@
                                 {# Ouverture de la saisie #}
                                 {% set html = "" %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input data-html="true" class="proposition-input" data-original-title="<span class=\'yellow-tooltip\'>'~clue~'</span>" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'" size="'~maxValueSize ~'" required />' %}
+                                {% set html = html~'<input data-html="true" class="proposition-input" data-original-title="'~ dataTitle|escape ~'" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'" size="'~maxValueSize ~'" required />' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
@@ -267,9 +274,9 @@
                     {% endif %}
 
                     {# #}
-                    {# TL tout type #}
+                    {# TL type "Liste de mots" LDM #}
                     {# #}
-                    {% if typoQuestion == "TLCMTQRU"  or typoQuestion == "TLCMQRU" or typoQuestion == "TLCMLDM"  %}
+                    {% if typoQuestion == "TLCMLDM"  %}
                         {# Ouverture de la liste de choix #}
                         {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
                         {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
@@ -277,12 +284,35 @@
                         {% for j, proposition in subquestion.propositions %}
                             {% set html = html~"<option id='input-proposition"~ proposition.id ~"' value='"~ proposition.id ~"'>"~proposition.media.description~"</option>" %}
                         {% endfor %}
-                        {% set html = html~"</select>" %}
                         {# Fermeture de la liste de choix #}
+                        {% set html = html~"</select>" %}
                         {# Remplacement des données de la base par les listes de choix #}
-                        {% set selector = "%"~i~"%" %}
-                        {% set texte = texte|replace({(selector): html}) %}
+                        {% for j, proposition in subquestion.propositions %}
+                            {% set selector = "#"~proposition.media.description~"#" %}
+                            {% set texte = texte|replace({(selector): html}) %}
+                        {% endfor %}
                     {% endif %}
+
+                    {# #}
+                    {# TL tout type #}
+                    {# #}
+                    {% if typoQuestion == "TLCMTQRU"  or typoQuestion == "TLCMQRU" %}
+                        {# Ouverture de la liste de choix #}
+                        {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
+                        {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
+                        {% set html = html~"<option value=''>"~"</option>" %}
+                        {% for j, proposition in subquestion.propositions %}
+                            {% set html = html~"<option id='input-proposition"~ proposition.id ~"' value='"~ proposition.id ~"'>"~proposition.media.description~"</option>" %}
+                            {# Remplacement des données de la base par les listes de choix #}
+                            {% set selector = "#"~proposition.media.description~"#" %}
+                            {% set texte = texte|replace({(selector): html}) %}
+                        {% endfor %}
+                        {# Fermeture de la liste de choix #}
+                        {% set html = html~"</select>" %}
+                    {% endif %}
+
+
+
                 {% endfor %}
                 {# Affichage de questionnaire.mediaText #}
                 {{ texte | raw }}
