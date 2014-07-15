@@ -17,6 +17,9 @@ use Innova\SelfBundle\Entity\LevelLansad;
 use Innova\SelfBundle\Entity\Status;
 use Innova\SelfBundle\Entity\MediaPurpose;
 use Innova\SelfBundle\Entity\ClueType;
+use Innova\SelfBundle\Entity\EditorLogAction;
+use Innova\SelfBundle\Entity\EditorLogObject;
+
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -199,7 +202,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            /* Gestion du mediaPurpose... à quoi sert le media (consigne, contexte, proposition, etc.) */
+            /* Gestion des indices */
             $clueTypes = array(array("fonctionnel", ".clue-fonctionnel"), array("didactique", ".clue-didactique"));
             foreach ($clueTypes as $clueType) {
                 if (!$em->getRepository('InnovaSelfBundle:ClueType')->findOneByName($clueType[0])) {
@@ -211,6 +214,31 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
+            /* Gestion des logs éditeur */
+            $editorLogActions = array("editor_create", "editor_edit", "editor_delete");
+            foreach ($editorLogActions as $editorAction) {
+                if (!$em->getRepository('InnovaSelfBundle:EditorLogAction')->findOneByName($editorAction)) {
+                    $e = new EditorLogAction();
+                    $e->setName($editorAction);
+                    $em->persist($e);
+                    $output->writeln("Add new editorLogAction (".$editorAction.")");
+                }
+            }
+
+            $editorLogObjects = array(
+                "contexte", "objet de la question", "question", "proposition", 
+                "reponse", "syllable", "clue", "instruction", "functional-instruction", 
+                "comment", "feedback", "distractor", "app-paire", "app-media", "app-answer",
+                "app-distractor", "listening-limit", "clue-type", "task"
+            );
+            foreach ($editorLogObjects as $editorLogObject) {
+                if (!$em->getRepository('InnovaSelfBundle:EditorLogObject')->findOneByName($editorLogObject)) {
+                    $e = new EditorLogObject();
+                    $e->setName($editorLogObject);
+                    $em->persist($e);
+                    $output->writeln("Add new editorLogObject (".$editorLogObject.")");
+                }
+            }
 
             $em->flush();
 

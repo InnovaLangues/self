@@ -115,6 +115,11 @@ class Questionnaire
     */
     private $comments;
 
+    /**
+    * @ORM\OneToMany(targetEntity="EditorLog", mappedBy="questionnaire")
+    */
+    private $editorLogs;
+
 
     /**
      * @var string
@@ -1080,5 +1085,38 @@ class Questionnaire
     public function getMediaFeedback()
     {
         return $this->mediaFeedback;
+    }
+
+    /**
+     * Add editorLogs
+     *
+     * @param \Innova\SelfBundle\Entity\EditorLog $editorLogs
+     * @return Questionnaire
+     */
+    public function addEditorLog(\Innova\SelfBundle\Entity\EditorLog $editorLogs)
+    {
+        $this->editorLogs[] = $editorLogs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove editorLogs
+     *
+     * @param \Innova\SelfBundle\Entity\EditorLog $editorLogs
+     */
+    public function removeEditorLog(\Innova\SelfBundle\Entity\EditorLog $editorLogs)
+    {
+        $this->editorLogs->removeElement($editorLogs);
+    }
+
+    /**
+     * Get editorLogs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEditorLogs()
+    {
+        return $this->editorLogs;
     }
 }

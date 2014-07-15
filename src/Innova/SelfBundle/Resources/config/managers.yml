@@ -3,6 +3,7 @@ services:
         class: Innova\SelfBundle\Manager\QuestionnaireManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            editorLogManager:   @self.editor_log.manager
 
     self.question.manager:
         class: Innova\SelfBundle\Manager\QuestionManager
@@ -48,6 +49,12 @@ services:
 
     self.comment.manager:
         class: Innova\SelfBundle\Manager\CommentManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context
+
+    self.editor_log.manager:
+        class: Innova\SelfBundle\Manager\EditorLogManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context

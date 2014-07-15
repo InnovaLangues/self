@@ -22,6 +22,7 @@ class MediaController
     protected $propositionManager;
     protected $appManager;
     protected $commentManager;
+    protected $editorLogManager;
     protected $entityManager;
     protected $request;
     protected $templating;
@@ -31,6 +32,7 @@ class MediaController
             $propositionManager,
             $appManager,
             $commentManager,
+            $editorLogManager,
             $entityManager,
             $templating
     ) {
@@ -38,6 +40,7 @@ class MediaController
         $this->propositionManager = $propositionManager;
         $this->appManager = $appManager;
         $this->commentManager = $commentManager;
+        $this->editorLogManager = $editorLogManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
 
@@ -64,6 +67,7 @@ class MediaController
         $limit = $request->get('listeningLimit');
 
         $this->mediaManager->updateMediaLimit($questionnaire, $media, $limit);
+        $this->editorLogManager->createEditorLog("editor_edit", "listening-limit", $questionnaire);
 
         return new JsonResponse(
             array()
@@ -129,7 +133,9 @@ class MediaController
                 break;
         }
 
-         return new Response($template);
+        $this->editorLogManager->createEditorLog("editor_edit", $media->getMediaPurpose()->getName(), $questionnaire);
+
+        return new Response($template);
     }
 
 
@@ -158,7 +164,7 @@ class MediaController
                     $entity->setMediaContext($media);
                     $em->persist($entity);
                     $em->flush();
-
+    
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('test'=> $test, 'questionnaire' => $entity));
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText($media);
@@ -193,7 +199,7 @@ class MediaController
                     $em->flush();
 
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
-                } elseif ($entityField == "media") {
+                } elseif ($entityField == "app-media") {
                     $entity->setMedia($media);
                     $em->persist($entity);
                     $em->flush();
@@ -223,6 +229,7 @@ class MediaController
                 }
                 break;
         }
+        $this->editorLogManager->createEditorLog("editor_create", $entityField, $questionnaire);
 
         return new Response($template);
     }
@@ -274,7 +281,7 @@ class MediaController
                     $em->flush();
 
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion.html.twig', array('test'=> $test, 'questionnaire' => $questionnaire, 'subquestion' => $entity));
-                } elseif ($entityField == "app") {
+                } elseif ($entityField == "app-paire") {
                     if ($rightProposition = $em->getRepository('InnovaSelfBundle:Proposition')->findOneBy(array("subquestion" => $entity, "rightAnswer" => true))) {
                         $mediaToSearch = $rightProposition->getMedia();
                         $question = $entity->getQuestion();
@@ -304,6 +311,8 @@ class MediaController
                 }
                 break;
         }
+
+        $this->editorLogManager->createEditorLog("editor_delete", $entityField, $questionnaire);
 
         return new Response($template);
     }

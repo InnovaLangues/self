@@ -124,6 +124,9 @@ $(document).ready(function() {
         createLacunes();
     });
 
+    $( "body" ).on( "click", '#create-liste', function() {
+        createListe();
+    });
 
     $('body').on('blur', '.clue',function(e){
         var clue = $(this).val();
@@ -131,7 +134,7 @@ $(document).ready(function() {
         setClue(clue, subquestionId);
     });
 
-    $('body').on('click', '.clue-type',function(e){
+    $('body').on('change', '.clue-type',function(e){
         var clueType = $(this).val();
         var clueId = $(this).data("clue-id");
         setClueType(clueType, clueId);
@@ -229,7 +232,7 @@ $(document).ready(function() {
 
     $( "body" ).on( "click", '.app-add-media', function() {
         var subquestionId = $(this).data("subquestion-id");
-        setParamForRequest("subquestion", "media", subquestionId, "subquestion-container");
+        setParamForRequest("subquestion", "app-media", subquestionId, "subquestion-container");
         chooseMediaTypeModal();
     });
 
@@ -246,7 +249,7 @@ $(document).ready(function() {
 
     $( "body" ).on( "click", '.app-delete-subquestion', function() {
         var subquestionId = $(this).data("subquestion-id");
-        setParamForRequest("subquestion", "app", subquestionId, "subquestion-container");
+        setParamForRequest("subquestion", "app-paire", subquestionId, "subquestion-container");
         unlinkMedia();
     });
 
@@ -705,6 +708,26 @@ function createLacunes(){
     }); 
 }
 
+function createListe(){
+    beforeAjax();
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_create-liste'),
+        type: 'PUT',
+        dataType: 'json',
+        data: { 
+            testId: testId,
+            questionnaireId: questionnaireId,
+        }
+    })
+    .complete(function(data) {
+        $("#subquestion-container").replaceWith(data.responseText);
+        afterAjax();
+    }); 
+}
+
 function setClue(clue, subquestionId){
     beforeAjax();
     var testId = $("#test-id").val();
@@ -729,13 +752,16 @@ function setClue(clue, subquestionId){
 function setClueType(clueType, clueId){
     beforeAjax();
 
+    var questionnaireId = $("#questionnaire-id").val();
+
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-clue-type'),
         type: 'PUT',
         dataType: 'json',
         data: { 
             clueType: clueType,
-            clueId: clueId
+            clueId: clueId,
+            questionnaireId: questionnaireId
         }
     })
     .complete(function(data) {
@@ -787,13 +813,13 @@ function addDistractor(){
 function editDistractor(mediaId, text){
     beforeAjax();
     var questionnaireId = $("#questionnaire-id").val();
-    var testId = $("#test-id").val();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_edit-distractor'),
         type: 'PUT',
         dataType: 'json',
         data: {
+            questionnaireId: questionnaireId,
             mediaId: mediaId,
             text: text
         }

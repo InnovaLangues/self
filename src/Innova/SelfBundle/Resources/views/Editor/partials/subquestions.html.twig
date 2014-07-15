@@ -5,13 +5,25 @@
         <div class="panel-heading">
         {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
 
-        {% if typoPrefix == "TLC" or typoPrefix == "TLQ" %}
-            Lacunes : Indice / Syllabe
+        {% if typoPrefix == "TLQ" %}
+            Lacunes/indices
             {% if questionnaire.questions[0].subquestions|length == 0  %}
                 <span id="create-lacunes" class="btn btn-default btn-xs pull-right">Générer lacunes</span>
             {% else %}
                 <span id="create-lacunes" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Attention cela
                 supprimera les indices et syllabes">Regénérer lacunes</span>
+            {% endif %}
+            </div>
+            <div class="panel-body tab-pane">
+                {% include "InnovaSelfBundle:Editor/partials:eec.html.twig" %}
+            </div>
+        {% elseif typoPrefix == "TLC" %}
+            Liste de mots
+            {% if questionnaire.questions[0].subquestions|length == 0  %}
+                <span id="create-liste" class="btn btn-default btn-xs pull-right">Générer listes</span>
+            {% else %}
+                <span id="create-liste" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Attention cela
+                supprimera les distracteur">Regénérer listes</span>
             {% endif %}
             </div>
             <div class="panel-body tab-pane">

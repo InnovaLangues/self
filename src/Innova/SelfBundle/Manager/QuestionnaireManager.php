@@ -7,10 +7,12 @@ use Innova\SelfBundle\Entity\Questionnaire;
 class QuestionnaireManager
 {
     protected $entityManager;
+    protected $editorLogManager;
 
-    public function __construct($entityManager)
+    public function __construct($entityManager, $editorLogManager)
     {
         $this->entityManager = $entityManager;
+        $this->editorLogManager = $editorLogManager;
     }
 
     public function createQuestionnaire($test)
@@ -27,6 +29,8 @@ class QuestionnaireManager
         $em->persist($questionnaire);
 
         $em->flush();
+
+        $this->editorLogManager->createEditorLog("editor_create", "task", $questionnaire);
 
         return $questionnaire;
     }

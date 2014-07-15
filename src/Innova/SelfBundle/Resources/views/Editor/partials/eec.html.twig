@@ -16,20 +16,19 @@
 {% set subquestions = questionnaire.questions[0].subquestions %}
 
 {% if questionnaire.questions[0].typology.name == "TLCMLDM" %}
-    
-    <strong>Liste de mots :</strong>
-    {% for subquestion in subquestions %}
-        {% for proposition in subquestion.propositions if proposition.rightAnswer == true %}
-            <p>{{ proposition.media.description }}</p>
-        {% endfor %}
-    {% endfor %}
-    {% for proposition in subquestions[0].propositions if proposition.media.mediaPurpose.name == "distractor" %}
-        <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor"/><br/>
-    {% endfor %}
-
-    <hr/>
-
     {% if subquestions|length > 0 %}
+        <strong>Liste de mots :</strong>
+        {% for subquestion in subquestions %}
+            {% for proposition in subquestion.propositions if proposition.rightAnswer == true %}
+                <p>{{ proposition.media.description }}</p>
+            {% endfor %}
+        {% endfor %}
+        {% for proposition in subquestions[0].propositions if proposition.media.mediaPurpose.name == "distractor" %}
+            <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor"/><br/>
+        {% endfor %}
+
+        <hr/>
+        
         <span class="btn btn-default btn-xs eec-add-distractor">{{ 'editor.app.add_distractor' | trans }}</span> <br/>
     {% endif %}
 {% else %}

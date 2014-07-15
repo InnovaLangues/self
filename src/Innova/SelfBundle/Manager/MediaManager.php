@@ -21,7 +21,7 @@ class MediaManager
             "texte" => "objet de la question",
             "contexte" => "contexte",
             "amorce" => "question",
-            "media" => "question",
+            "app-media" => "question",
             "app-answer" => "proposition",
             "app-distractor" => "proposition",
             "proposition" => "proposition",
