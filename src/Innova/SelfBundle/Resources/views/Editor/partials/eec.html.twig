@@ -6,7 +6,7 @@
 {% else %}
     <span class="btn btn-default btn-xs add-instruction">
         <span class="glyphicon glyphicon-plus"></span>
-        {{ 'editor.subquestion.add_instruction' | trans }} 
+        {{ 'editor.subquestion.add_instruction' | trans }}
     </span>
     <br/>
 {% endif %}
@@ -23,43 +23,43 @@
                 <p>{{ proposition.media.description }}</p>
             {% endfor %}
         {% endfor %}
-        {% for proposition in subquestions[0].propositions if proposition.media.mediaPurpose.name == "distractor" %}
+        {% for proposition in questionnaire.questions[0].subquestions[0].propositions if proposition.media.mediaPurpose.name == "distractor" %}
             <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor"/><br/>
         {% endfor %}
 
         <hr/>
-        
+
         <span class="btn btn-default btn-xs eec-add-distractor">{{ 'editor.app.add_distractor' | trans }}</span> <br/>
     {% endif %}
 {% else %}
-<table class="table">
-     <tr>
-        <th></th>
-        <th>Indice</th>
-        <th>Syllabe</th>
-    </tr>
-    {% for subquestion in subquestions %}
-        <tr>
-            {% set propositions = subquestion.propositions %}
-            {% for proposition in propositions %}
-            <td>
-                {{ proposition.media.description }}
-            </td>
-            {% endfor %}
-            <td>
-                indice : <input class="clue" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.clue is not null %}{{ subquestion.clue.media.description }}{% endif %}"/>
-                {% if subquestion.clue is not null %}
-                    <span rel="tooltip" data-original-title="fonctionnel">f</span>
-                    <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="fonctionnel" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "fonctionnel" %}checked{% endif %}/> 
-
-                    <span rel="tooltip" data-original-title="didactique">d</span>
-                    <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="didactique" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "didactique" %}checked{% endif %}/>
-                {% endif %}
-            </td>
-             <td>
-                syllabe : <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
-            </td>
+    <table class="table">
+         <tr>
+            <th></th>
+            <th>Indice</th>
+            <th>Syllabe</th>
         </tr>
-    {% endfor %}
-</table>
+        {% for subquestion in subquestions %}
+            <tr>
+                {% set propositions = subquestion.propositions %}
+                {% for proposition in propositions %}
+                <td>
+                    {{ proposition.media.description }}
+                </td>
+                {% endfor %}
+                <td>
+                    indice : <input class="clue" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.clue is not null %}{{ subquestion.clue.media.description }}{% endif %}"/>
+                    {% if subquestion.clue is not null %}
+                        <span rel="tooltip" data-original-title="fonctionnel">f</span>
+                        <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="fonctionnel" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "fonctionnel" %}checked{% endif %}/>
+
+                        <span rel="tooltip" data-original-title="didactique">d</span>
+                        <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="didactique" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "didactique" %}checked{% endif %}/>
+                    {% endif %}
+                </td>
+                 <td>
+                    syllabe : <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endif %}

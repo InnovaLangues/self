@@ -23,7 +23,6 @@
                 </div>
             </div>
 
-            
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="skill">Niveau</label>
@@ -37,9 +36,8 @@
                     </select>
                 </div>
             </div>
-            
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
                     {% set excludedTypo = ["VFPM", "RE", "TVFPM"] %}
@@ -49,7 +47,7 @@
                         {% for typology in typologies %}
                             {% if typology.name not in excludedTypo %}
                             <option {% if questionnaire.questions[0].typology is not null and questionnaire.questions[0].typology == typology %}selected{% endif %} value="{{ typology.name }}">
-                               {{ typology.name }}
+                               {{ typology.name ~ " - " ~ typology.description }}
                             </option>
                             {% endif %}
                         {% endfor %}
@@ -73,14 +71,13 @@
                 </div>
             </div>
 
-
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="checkbox-inline">
                         <label for="orderfix">
-                            {{ 'editor.questionnaire.fixed_order' | trans }} ? <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/> 
+                            {{ 'editor.questionnaire.fixed_order' | trans }} ? <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
                         </label>
-                    </div>                    
+                    </div>
                 </div>
             </div>
 

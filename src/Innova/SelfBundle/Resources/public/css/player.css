@@ -256,7 +256,6 @@
 	padding: 5px 20px;
 }
 
-
 /**********************************
 	PROPOSITION
 ***********************************/
@@ -282,32 +281,22 @@ input.proposition-input, label{
 	cursor: hand;
 }
 
-/*
-.tooltip{
-	background-color:#FF0000;
-}
+/*.clue-fonctionnel + .tooltip > .tooltip-inner {background-color: #f00;}*/
 
-.test{
-	background-color:#FFFF00;
-}
+/**********************************
+	CLUE DISPLAY
+***********************************/
 
+.clue-fonctionnel { background-color:red; padding:5px; display:block;border-radius:3px;}
+.clue-didactique { background-color:black; padding:5px; display:block;border-radius:3px;}
 
- */
-
-
-/*.red-tooltip + .tooltip > .tooltip-inner {background-color: #f00;}*/
-
-.red-tooltip { background-color:red; padding:5px; display:block;border-radius:3px;}
-.yellow-tooltip { background-color:#ff0; padding:5px; display:block;border-radius:3px;}
-
-/*
 .tooltip.top .tooltip-inner {
     background-color:red;
 }
 .tooltip.top .tooltip-arrow {
       border-top-color: red;
 }
-*/
+
 .proposition-CO, .proposition-CE, .proposition-EEC {
 	margin-bottom:8px;
 }
