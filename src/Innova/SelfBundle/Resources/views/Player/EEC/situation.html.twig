@@ -83,24 +83,6 @@
                     {% endif %}
 
                     {# #}
-                    {# TL/DCT #}
-                    {# #}
-                    {% if typoQuestion == "TLQROCDCTM" or typoQuestion == "TLQROCDCTU" %}
-                        {# Affichage de questionnaire.mediaText #}
-                        {{ texte | raw }}
-                        {% for j, proposition in subquestion.propositions %}
-                            {% set bulleCount = j + 1 %}
-                            <div class="proposition-EEC">
-                                {{ macros.inputs(subquestion, proposition) }}
-                                <label for="input-proposition{{ proposition.id }}" class="proposition-EEC-text">
-                                    {{ macros.translateVF(proposition.media.description, test.language.name) }}
-                                </label>
-                            </div>
-                        {% endfor %}
-                        {% set texte =  "" %}
-                    {% endif %}
-
-                    {# #}
                     {# TL/QROC avec la longueur du mot ou des groupes de mots #}
                     {# #}
                     {% if typoQuestion == "TLQROCLEN"  %}
@@ -276,22 +258,60 @@
                     {# #}
                     {# TL type "Liste de mots" LDM #}
                     {# #}
-                    {% if typoQuestion == "TLCMLDM"  %}
+                    {% if typoQuestion == "TLCMLDM" %}
                         {# Ouverture de la liste de choix #}
                         {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
                         {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
                         {% set html = html~"<option value=''>"~"</option>" %}
+                        {% set rightAnswer = '' %}
                         {% for j, proposition in subquestion.propositions %}
                             {% set html = html~"<option id='input-proposition"~ proposition.id ~"' value='"~ proposition.id ~"'>"~proposition.media.description~"</option>" %}
+                            {% if proposition.rightAnswer %}
+                                {% set rightAnswer = proposition.media.description %}
+                            {% endif %}
                         {% endfor %}
                         {# Fermeture de la liste de choix #}
                         {% set html = html~"</select>" %}
                         {# Remplacement des données de la base par les listes de choix #}
-                        {% for j, proposition in subquestion.propositions %}
-                            {% set selector = "#"~proposition.media.description~"#" %}
-                            {% set texte = texte|replace({(selector): html}) %}
-                        {% endfor %}
+                        {% set selector = "#"~rightAnswer~"#" %}
+                        {% set texte = texte|replace({(selector): html}) %}
                     {% endif %}
+
+                    {# #}
+                    {# TL/DCT #}
+                    {# #}
+                    {% if typoQuestion == "TLQROCDCTM" or typoQuestion == "TLQROCDCTU" %}
+                        {# Ouverture de la liste de choix #}
+                        {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
+                        {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
+                        {% set html = html~"<option value=''>"~"</option>" %}
+                        {% set rightAnswer = '' %}
+                        {% for j, proposition in subquestion.propositions %}
+                            {% set html = html~"<option id='input-proposition"~ proposition.id ~"' value='"~ proposition.id ~"'>"~proposition.media.description~"</option>" %}
+                            {% if proposition.rightAnswer %}
+                                {% set rightAnswer = proposition.media.description %}
+                            {% endif %}
+                        {% endfor %}
+                        {# Fermeture de la liste de choix #}
+                        {% set html = html~"</select>" %}
+                        {# Remplacement des données de la base par les listes de choix #}
+                        {% set selector = "#"~rightAnswer~"#" %}
+                        {% set texte = texte|replace({(selector): html}) %}
+                    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     {# #}
                     {# TL tout type #}

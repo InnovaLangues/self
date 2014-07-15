@@ -175,8 +175,6 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-
-
             /* Gestion du statut des tâches */
             $status = array("Ecriture", "Révision", "Validation", "Modification post-pilotage");
             foreach ($status as $s) {
@@ -210,7 +208,6 @@ class FixtureCommand extends ContainerAwareCommand
                     $output->writeln("Add new clueType (".$clueType[0].").");
                 }
             }
-
 
             $em->flush();
 
