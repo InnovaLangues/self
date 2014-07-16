@@ -117,6 +117,7 @@ class Questionnaire
 
     /**
     * @ORM\OneToMany(targetEntity="EditorLog", mappedBy="questionnaire")
+    * @ORM\OrderBy({"date" = "DESC"})
     */
     private $editorLogs;
 

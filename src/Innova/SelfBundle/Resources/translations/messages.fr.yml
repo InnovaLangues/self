@@ -152,6 +152,25 @@ editor:
         editor_create: Création de
         editor_edit: Edition de
         editor_delete: Suppression de
+        contexte: contexte
+        objet de la question: objet de la question
+        question: 
+        proposition: proposition
+        reponse: réponse
+        syllable: syllabe
+        clue: indice
+        instruction: consigne didactique
+        functional-instruction: consigne fonctionnelle
+        comment: commentaire
+        feedback: feedback
+        distractor: distracteur
+        app-paire: paire
+        app-media: media
+        app-answer: réponse
+        app-distractor: distracteur
+        listening-limit: limite d'écoutes
+        clue-type: type d'indice
+        task: tâche
 
 player:
     listen_context: Il vous faut d'abord écouter le contexte.
