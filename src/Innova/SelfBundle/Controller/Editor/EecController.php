@@ -72,33 +72,34 @@ class EecController
         }
         $em->flush();
         $em->refresh($question);
+        if ($questionnaire->getMediaText()) {
+            $texte = $questionnaire->getMediaText()->getDescription();
 
-        $texte = $questionnaire->getMediaText()->getDescription();
+            preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
-        preg_match_all("/#(.*?)#/", $texte, $lacunes);
+            $i = 0;
+            for ($i=0; $i < count($lacunes[1]); $i++) { 
+                $lacune = $lacunes[1][$i];
+                $subquestion = new Subquestion();
+                $typology = $question->getTypology();
+                $subquestion->setTypology($typology);
+                $subquestion->setQuestion($question);
+                $em->persist($subquestion);
 
-        $i = 0;
-        for ($i=0; $i < count($lacunes[1]); $i++) { 
-            $lacune = $lacunes[1][$i];
-            $subquestion = new Subquestion();
-            $typology = $question->getTypology();
-            $subquestion->setTypology($typology);
-            $subquestion->setQuestion($question);
-            $em->persist($subquestion);
+                $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
+                $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
 
-            $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
-            $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
-
-            for ($j=0; $j < count($lacunes[1]); $j++) {
-                if ($j != $i) {
-                    $lacune = $lacunes[1][$j];
-                    $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition"); 
-                    $this->propositionManager->createProposition($subquestion, $lacuneMedia, false);   
+                for ($j=0; $j < count($lacunes[1]); $j++) {
+                    if ($j != $i) {
+                        $lacune = $lacunes[1][$j];
+                        $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition"); 
+                        $this->propositionManager->createProposition($subquestion, $lacuneMedia, false);   
+                    }
                 }
-            }
 
-            $em->flush();
-            $em->refresh($subquestion);
+                $em->flush();
+                $em->refresh($subquestion);
+            }
         }
             
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
@@ -127,24 +128,26 @@ class EecController
         $em->flush();
         $em->refresh($question);
 
-        $texte = $questionnaire->getMediaText()->getDescription();
+        if ($questionnaire->getMediaText()) {
+            $texte = $questionnaire->getMediaText()->getDescription();
 
-        preg_match_all("/#(.*?)#/", $texte, $lacunes);
+            preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
-        $i = 0;
-        for ($i=0; $i < count($lacunes[1]); $i++) { 
-            $lacune = $lacunes[1][$i];
-            $subquestion = new Subquestion();
-            $typology = $question->getTypology();
-            $subquestion->setTypology($typology);
-            $subquestion->setQuestion($question);
-            $em->persist($subquestion);
+            $i = 0;
+            for ($i=0; $i < count($lacunes[1]); $i++) { 
+                $lacune = $lacunes[1][$i];
+                $subquestion = new Subquestion();
+                $typology = $question->getTypology();
+                $subquestion->setTypology($typology);
+                $subquestion->setQuestion($question);
+                $em->persist($subquestion);
 
-            $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
-            $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
+                $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
+                $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
 
-            $em->flush();
-            $em->refresh($subquestion);
+                $em->flush();
+                $em->refresh($subquestion);
+            }
         }
             
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
@@ -176,24 +179,26 @@ class EecController
         $em->flush();
         $em->refresh($question);
 
-        $texte = $questionnaire->getMediaText()->getDescription();
+        if ($questionnaire->getMediaText()) {
+            $texte = $questionnaire->getMediaText()->getDescription();
 
-        preg_match_all("/#(.*?)#/", $texte, $lacunes);
+            preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
-        $i = 0;
-        for ($i=0; $i < count($lacunes[1]); $i++) { 
-            $lacune = $lacunes[1][$i];
-            $subquestion = new Subquestion();
-            $typology = $question->getTypology();
-            $subquestion->setTypology($typology);
-            $subquestion->setQuestion($question);
-            $em->persist($subquestion);
+            $i = 0;
+            for ($i=0; $i < count($lacunes[1]); $i++) { 
+                $lacune = $lacunes[1][$i];
+                $subquestion = new Subquestion();
+                $typology = $question->getTypology();
+                $subquestion->setTypology($typology);
+                $subquestion->setQuestion($question);
+                $em->persist($subquestion);
 
-            $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
-            $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
+                $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
+                $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
 
-            $em->flush();
-            $em->refresh($subquestion);
+                $em->flush();
+                $em->refresh($subquestion);
+            }
         }
             
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
