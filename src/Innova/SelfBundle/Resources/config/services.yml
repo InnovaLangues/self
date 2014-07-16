@@ -82,6 +82,7 @@ services:
         arguments:
             mediaManager:       @self.media.manager
             propositionManager: @self.proposition.manager
+            subquestionManager:     @self.subquestion.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
         calls:
@@ -91,12 +92,13 @@ services:
     innova_editor_eec:
         class: Innova\SelfBundle\Controller\Editor\EecController
         arguments:
-            mediaManager:       @self.media.manager
-            propositionManager: @self.proposition.manager
-            questionManager:    @self.question.manager
+            mediaManager:           @self.media.manager
+            propositionManager:     @self.proposition.manager
+            questionManager:        @self.question.manager
+            subquestionManager:     @self.subquestion.manager
             editorLogManager:   @self.editor_log.manager
-            entityManager:      @doctrine.orm.entity_manager
-            templating:         @templating
+            entityManager:          @doctrine.orm.entity_manager
+            templating:             @templating
         calls:
             - [setRequest, [@request]]
         scope: request

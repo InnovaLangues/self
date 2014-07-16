@@ -10,6 +10,11 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
+    self.subquestion.manager:
+        class: Innova\SelfBundle\Manager\SubquestionManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
     self.order_questionnaire_test.manager:
         class: Innova\SelfBundle\Manager\OrderQuestionnaireTestManager
         arguments:
