@@ -23,8 +23,9 @@ use Innova\SelfBundle\Entity\Clue;
  */
 class SubquestionController
 {
-    protected $propositionManager;
     protected $mediaManager;
+    protected $propositionManager;
+    protected $subquestionManager;
     protected $entityManager;
     protected $request;
     protected $templating;
@@ -32,14 +33,15 @@ class SubquestionController
     public function __construct(
             $mediaManager,
             $propositionManager,
+            $subquestionManager,
             $entityManager,
             $templating
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
+        $this->subquestionManager = $subquestionManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
-
     }
 
     public function setRequest(Request $request = null)
@@ -68,14 +70,13 @@ class SubquestionController
         $question = $questionnaire->getQuestions()[0];
         $arrayLikeTypos = array("TQRU", "TQRM", "TVFNM", "TVF");
 
-        $subquestion = new Subquestion();
         if (!in_array($questionnaireTypology, $arrayLikeTypos)) {
             $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
         } else {
             $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($questionnaireTypology, 1));
         }
-        $subquestion->setTypology($typology);
-        $subquestion->setQuestion($question);
+        $subquestion = $this->subquestionManager->createSubquestion($typology, $question);
+
 
         // création automatique en cas de vrai/faux/(nd)?
         if($questionnaireTypology == "VF" || $questionnaireTypology == "TVF" || $questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {

@@ -25,6 +25,7 @@ class EecController
 {
     protected $propositionManager;
     protected $questionManager;
+    protected $subquestion;
     protected $mediaManager;
     protected $entityManager;
     protected $editorLogManager;
@@ -35,6 +36,7 @@ class EecController
             $mediaManager,
             $propositionManager,
             $questionManager,
+            $subquestionManager,
             $editorLogManager,
             $entityManager,
             $templating
@@ -42,10 +44,10 @@ class EecController
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
         $this->questionManager = $questionManager;
+        $this->subquestionManager = $subquestionManager;
         $this->editorLogManager = $editorLogManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
-
     }
 
     public function setRequest(Request $request = null)
@@ -77,16 +79,11 @@ class EecController
             $i = 0;
             for ($i=0; $i < count($lacunes[1]); $i++) { 
                 $lacune = $lacunes[1][$i];
-                $subquestion = new Subquestion();
-                $typology = $question->getTypology();
-                $subquestion->setTypology($typology);
-                $subquestion->setQuestion($question);
-                $em->persist($subquestion);
-
+                $subquestion = $this->subquestionManager->createSubquestion($question->getTypology(), $question);
                 $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
                 $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
 
-                if ($typology->getName() == "TLCMLDM") {
+                if ($question->getTypology()->getName() == "TLCMLDM") {
                     for ($j=0; $j < count($lacunes[1]); $j++) {
                         if ($j != $i) {
                             $lacune = $lacunes[1][$j];
@@ -128,12 +125,7 @@ class EecController
             $i = 0;
             for ($i=0; $i < count($lacunes[1]); $i++) { 
                 $lacune = $lacunes[1][$i];
-                $subquestion = new Subquestion();
-                $typology = $question->getTypology();
-                $subquestion->setTypology($typology);
-                $subquestion->setQuestion($question);
-                $em->persist($subquestion);
-
+                $subquestion = $this->subquestionManager->createSubquestion($question->getTypology(), $question);
                 $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
                 $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
 
