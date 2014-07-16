@@ -233,7 +233,7 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             $editorLogObjects = array(
-                "contexte", "objet de la question", "question", "proposition", 
+                "contexte", "texte", "objet de la question", "question", "proposition", 
                 "reponse", "syllable", "clue", "instruction", "functional-instruction", 
                 "comment", "feedback", "distractor", "app-paire", "app-media", "app-answer",
                 "app-distractor", "listening-limit", "clue-type", "task"
