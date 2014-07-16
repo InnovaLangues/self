@@ -106,6 +106,53 @@ class EecController
         return new Response($template);
     }
 
+    /**
+     *
+     * @Route("/questionnaires/create-listes", name="editor_questionnaire_create-listes", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function createListeMultAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+        $question = $questionnaire->getQuestions()[0];
+
+        $subquestions = $question->getSubquestions();
+        foreach ($subquestions as $subquestion) {
+            $em->remove($subquestion);
+        }
+        $em->flush();
+        $em->refresh($question);
+
+        $texte = $questionnaire->getMediaText()->getDescription();
+
+        preg_match_all("/#(.*?)#/", $texte, $lacunes);
+
+        $i = 0;
+        for ($i=0; $i < count($lacunes[1]); $i++) { 
+            $lacune = $lacunes[1][$i];
+            $subquestion = new Subquestion();
+            $typology = $question->getTypology();
+            $subquestion->setTypology($typology);
+            $subquestion->setQuestion($question);
+            $em->persist($subquestion);
+
+            $lacuneMedia = $this->mediaManager->createMedia($test, $questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
+            $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
+
+            $em->flush();
+            $em->refresh($subquestion);
+        }
+            
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+
+        return new Response($template);
+    }
+
+
 
 
     /**

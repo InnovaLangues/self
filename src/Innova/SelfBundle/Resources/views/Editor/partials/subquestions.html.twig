@@ -17,12 +17,24 @@
             <div class="panel-body tab-pane">
                 {% include "InnovaSelfBundle:Editor/partials:eec.html.twig" %}
             </div>
-        {% elseif typoPrefix == "TLC" %}
+        {% elseif questionnaire.questions[0].typology.name == "TLCMLDM" %}
             Liste de mots
             {% if questionnaire.questions[0].subquestions|length == 0  %}
-                <span id="create-liste" class="btn btn-default btn-xs pull-right">Générer listes</span>
+                <span id="create-liste" class="btn btn-default btn-xs pull-right">Générer liste</span>
             {% else %}
                 <span id="create-liste" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Attention cela
+                supprimera les distracteur">Regénérer liste</span>
+            {% endif %}
+            </div>
+            <div class="panel-body tab-pane">
+                {% include "InnovaSelfBundle:Editor/partials:eec.html.twig" %}
+            </div>
+        {% elseif questionnaire.questions[0].typology.name == "TLCMLMULT" %}
+            Liste de mots
+            {% if questionnaire.questions[0].subquestions|length == 0  %}
+                <span id="create-listes" class="btn btn-default btn-xs pull-right">Générer listes</span>
+            {% else %}
+                <span id="create-listes" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Attention cela
                 supprimera les distracteur">Regénérer listes</span>
             {% endif %}
             </div>

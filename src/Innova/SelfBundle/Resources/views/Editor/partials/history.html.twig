@@ -1,0 +1,31 @@
+<div id="history-container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+            Historique
+            </h3>
+        </div>
+        <div class="panel-body">
+        {% if questionnaire.editorLogs|length > 0 %}
+            {% for logEditor in questionnaire.editorLogs %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {% set action_transl = "editor.log."~logEditor.action.name %}
+                        {{ action_transl | trans }}  {% if logEditor.object is not null %}{{ logEditor.object.name | trans }}{% endif %}
+                        <div class="pull-right">
+                            Par <i>{{ logEditor.user.username }}</i> 
+                            <span>le {{ logEditor.date|date('d-m-Y') }} à {{ logEditor.date|date('H:i:s') }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                Aucun Log
+            </div>
+        </div>
+    {% endif %}
+        </div>
+    </div>
+</div>
