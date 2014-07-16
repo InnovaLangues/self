@@ -24,6 +24,7 @@ use Innova\SelfBundle\Entity\Clue;
 class EecController
 {
     protected $propositionManager;
+    protected $questionManager;
     protected $mediaManager;
     protected $entityManager;
     protected $editorLogManager;
@@ -33,12 +34,14 @@ class EecController
     public function __construct(
             $mediaManager,
             $propositionManager,
+            $questionManager,
             $editorLogManager,
             $entityManager,
             $templating
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
+        $this->questionManager = $questionManager;
         $this->editorLogManager = $editorLogManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
@@ -64,14 +67,8 @@ class EecController
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $question = $questionnaire->getQuestions()[0];
+        $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);   
 
-        $subquestions = $question->getSubquestions();
-        foreach ($subquestions as $subquestion) {
-            $em->remove($subquestion);
-        }
-        $em->flush();
-        $em->refresh($question);
         if ($questionnaire->getMediaText()) {
             $texte = $questionnaire->getMediaText()->getDescription();
 
@@ -119,14 +116,7 @@ class EecController
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $question = $questionnaire->getQuestions()[0];
-
-        $subquestions = $question->getSubquestions();
-        foreach ($subquestions as $subquestion) {
-            $em->remove($subquestion);
-        }
-        $em->flush();
-        $em->refresh($question);
+        $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);   
 
         if ($questionnaire->getMediaText()) {
             $texte = $questionnaire->getMediaText()->getDescription();
@@ -170,14 +160,7 @@ class EecController
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $question = $questionnaire->getQuestions()[0];
-
-        $subquestions = $question->getSubquestions();
-        foreach ($subquestions as $subquestion) {
-            $em->remove($subquestion);
-        }
-        $em->flush();
-        $em->refresh($question);
+        $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);
 
         if ($questionnaire->getMediaText()) {
             $texte = $questionnaire->getMediaText()->getDescription();
