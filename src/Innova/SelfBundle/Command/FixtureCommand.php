@@ -82,9 +82,9 @@ class FixtureCommand extends ContainerAwareCommand
                 array("QRM", "Question à Réponse Multiple"), array("TQRU", "Tableau de QRU"), array("TQRM", "Tableau de QRM"),
                 array("APPAT","Appariemment Audio-Texte"), array("APPIT","Appariemment Image-Texte"), array("APPAA", "Appariemment Audio-Audio"), array("APPAI", "Appariemment Audio-Image"),
                 array("APPTT", "Appariemment Texte-Texte"), array("TVFNM", "Tableau de Vrai-Faux-Non Mentionné"),
-                array("VFNM", "Vrai-Faux-Non Mentionné"), array("TLCMQRU", ""), array("TLCMTQRU", ""), array("TLCMLDM", "Liste de mots"),
+                array("VFNM", "Vrai-Faux-Non Mentionné"), array("TLCMLDM", "Liste de mots"),
                 array("TLQROCNOCLU", "Aucune indice"), array("TLQROCLEN","Longueur"), array("TLQROCFIRST","Premier caractère"), array("TLQROCFIRSTLEN","1er caractère et longueur"), array("TLQROCSYL","Syllabe"),
-                array("TLQROCDCTU", ""), array("TLQROCDCTM", ""), array("TLQROCDERIV", "Dérivation"), array("TLQROCTRANS", "Transformation")
+                array("TLCMLMULT", "Listes de choix multiple"), array("TLQROCDERIV", "Dérivation"), array("TLQROCTRANS", "Transformation")
             );
             foreach ($typologies as $typology) {
                 if (!$typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[0])) {
@@ -102,6 +102,13 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
+            $typologiesToDelete = array("TLCMQRU", "TLCMTQRU", "TLQROCDCTU", "TLQROCDCTM");
+            foreach ($typologiesToDelete as $typology) {
+                if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)) {
+                    $em->remove($typo);
+                    $output->writeln("Delete Typology (".$typology.").");
+                }
+            }
             /*
                 New table for version 1.2 or version 2 (2014)
                 fixtures for originStudent table

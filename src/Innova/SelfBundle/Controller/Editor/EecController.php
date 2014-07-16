@@ -292,6 +292,34 @@ class EecController
 
     /**
      *
+     * @Route("/questionnaires/add-distractor-mult", name="editor_questionnaire_add-distractor-mult", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function addDistractorMultAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
+
+        $media = $this->mediaManager->createMedia($test, $questionnaire, "texte", "", "", null, 0, "distractor");
+        $this->editorLogManager->createEditorLog("editor_create", "distractor", $questionnaire);
+ 
+        $this->propositionManager->createProposition($subquestion, $media, false);  
+
+        $em->persist($subquestion);
+        $em->refresh($subquestion);
+        $em->flush();
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+
+        return new Response($template);
+    }
+
+    /**
+     *
      * @Route("/questionnaires/edit-distractor", name="editor_questionnaire_edit-distractor", options={"expose"=true})
      * @Method("PUT")
      */
