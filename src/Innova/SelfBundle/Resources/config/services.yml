@@ -93,6 +93,7 @@ services:
         arguments:
             mediaManager:       @self.media.manager
             propositionManager: @self.proposition.manager
+            questionManager:    @self.question.manager
             editorLogManager:   @self.editor_log.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating

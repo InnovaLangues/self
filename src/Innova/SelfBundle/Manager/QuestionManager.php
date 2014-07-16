@@ -24,4 +24,17 @@ class QuestionManager
 
         return $question;
     }
+
+    public function removeSubquestions($question)
+    {
+        $em = $this->entityManager;
+
+        $subquestions = $question->getSubquestions();
+        foreach ($subquestions as $subquestion) {
+            $em->remove($subquestion);
+        }
+        $em->flush();
+        $em->refresh($question);
+        return $question;
+    }
 }
