@@ -153,6 +153,7 @@ editor:
         editor_edit: Edition de
         editor_delete: Suppression de
         contexte: contexte
+        texte: objet de la question
         objet de la question: objet de la question
         question: 
         proposition: proposition
