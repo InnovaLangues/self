@@ -10,10 +10,26 @@
             {% for logEditor in questionnaire.editorLogs %}
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        {% set action_transl = "editor.log."~logEditor.action.name %}
-                        {{ action_transl | trans }}  {% if logEditor.object is not null %}{{ logEditor.object.name | trans }}{% endif %}
+                        {% if logEditor.action is not null %}
+                            {% set action = logEditor.action.name %}
+                            {% set action_transl = "editor.log."~action %}
+                            {% if action == "editor_create" %}
+                                <span class="glyphicon glyphicon-plus"></span>
+                            {% elseif  action == "editor_edit" %}
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            {% elseif  action == "editor_delete" %}
+                                <span class="glyphicon glyphicon-remove"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-cog"></span>
+                            {% endif %}
+                            {{ action_transl | trans }}
+                        {% endif %}
+                        {% if logEditor.object is not null %}
+                            {% set object_transl = "editor.log."~logEditor.object.name %}
+                                {{ object_transl | trans }}
+                        {% endif %}
                         <div class="pull-right">
-                            Par <i>{{ logEditor.user.username }}</i> 
+                            Par <strong>{{ logEditor.user.username }}</strong> 
                             <span>le {{ logEditor.date|date('d-m-Y') }} à {{ logEditor.date|date('H:i:s') }}</span>
                         </div>
                     </div>
