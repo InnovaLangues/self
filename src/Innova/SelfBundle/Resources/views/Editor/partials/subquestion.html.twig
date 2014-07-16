@@ -5,7 +5,7 @@
         {% if subquestion.mediaAmorce is not null %}
             {{ macros.deleteAmorce(subquestion) }}
             {{ macros.editMedia(subquestion.mediaAmorce, "subquestion") }}
-            {{ macros.displayMedia(test, questionnaire, subquestion.mediaAmorce) }}
+            {{ macros.displayMedia(questionnaire, subquestion.mediaAmorce) }}
         {% else %}
             <span class="btn btn-default btn-xs add-amorce" data-subquestion-id="{{ subquestion.id }}">
                 <span class="glyphicon glyphicon-plus"></span>

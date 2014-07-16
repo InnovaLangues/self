@@ -6,11 +6,13 @@
 
 {% block body -%}
     <ul class="nav nav-tabs" role="tablist">
+        {% if test is defined %}
         <li>
             <a href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
                 <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.task.back_to_list' | trans }}
             </a>
         </li>
+        {% endif %}
         <li class="active">
             <a href="#task" role="tab" data-toggle="tab">
                 <span class="glyphicon glyphicon-file"></span> Tâches

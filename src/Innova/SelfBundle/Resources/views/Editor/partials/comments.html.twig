@@ -11,7 +11,7 @@
             {% for comment in questionnaire.comments %}
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        {{ macros.displayMedia(test, questionnaire, comment.description) }}
+                        {{ macros.displayMedia(questionnaire, comment.description) }}
                         <div class="pull-right">
                             Par <strong>{{ comment.user.username }}</strong> 
                             <span>le {{ comment.date|date('d-m-Y') }} à {{ comment.date|date('H:i:s') }}</span>

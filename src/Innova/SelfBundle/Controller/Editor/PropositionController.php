@@ -24,7 +24,6 @@ class PropositionController extends Controller
         $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
 
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
         $propositionId = $request->request->get('propositionId');
         $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
@@ -38,7 +37,7 @@ class PropositionController extends Controller
         $em->persist($proposition);
         $em->flush();
 
-        $template = $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('test' => $test, 'questionnaire' => $questionnaire, 'proposition' => $proposition));
+        $template = $this->renderView('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('questionnaire' => $questionnaire, 'proposition' => $proposition));
 
         return new Response($template);
     }
