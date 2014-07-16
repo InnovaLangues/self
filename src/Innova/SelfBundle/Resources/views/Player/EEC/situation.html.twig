@@ -223,9 +223,6 @@
                     {# #}
                     {% if typoQuestion == "TLQROCNOCLU" %}
 
-                        {# Récupération de l'indice pour affichage lors du survol de la zone de saisie #}
-                        {% set clue = subquestion.mediaClue.description|escape %}
-
                         {% set textRightAnswer = "" %}
                         {% set maxValueSize = 0 %}
                         {# Recherche du texte correct #}
@@ -299,20 +296,6 @@
                         {% set texte = texte|replace({(selector): html}) %}
                     {% endif %}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     {# #}
                     {# TL tout type #}
                     {# #}
@@ -330,8 +313,6 @@
                         {# Fermeture de la liste de choix #}
                         {% set html = html~"</select>" %}
                     {% endif %}
-
-
 
                 {% endfor %}
                 {# Affichage de questionnaire.mediaText #}
