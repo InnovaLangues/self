@@ -17,6 +17,8 @@
 
 {% if questionnaire.questions[0].typology.name == "TLCMLDM" %}
     {% include "InnovaSelfBundle:Editor/partials:eec_tlcmldm.html.twig" %}
+{% elseif questionnaire.questions[0].typology.name == "TLCMLMULT" %}
+    {% include "InnovaSelfBundle:Editor/partials:eec_tlcmlmult.html.twig" %}
 {% else %}
     {% include "InnovaSelfBundle:Editor/partials:eec_others.html.twig" %}
 {% endif %}

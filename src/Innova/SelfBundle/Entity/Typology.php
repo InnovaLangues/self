@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Typology
  *
  * @ORM\Table("typology")
- * @ORM\Entity
+* @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\TypologyRepository")
  */
 class Typology
 {

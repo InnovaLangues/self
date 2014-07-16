@@ -150,12 +150,16 @@ $(document).ready(function() {
         addDistractor();
     });
 
+    $('body').on('click', '.eec-add-distractor-mult',function(e){
+        var subquestionId = $(this).data("subquestion-id");
+        addDistractorMult(subquestionId);
+    });
+
     $('body').on('blur', '.eec-distractor',function(e){
         var mediaId = $(this).data("media-id");
         var text =  $(this).val();
         editDistractor(mediaId, text);
     });
-    
 
     /**********************
         PROPOSITION RELATED EVENTS 
@@ -800,6 +804,26 @@ function addDistractor(){
         url: Routing.generate('editor_questionnaire_add-distractor'),
         type: 'PUT',
         data: {
+            questionnaireId: questionnaireId,
+            testId: testId
+        }
+    })
+    .complete(function(data) {
+        $("#subquestion-container").replaceWith(data.responseText);
+        afterAjax();
+    }); 
+}
+
+function addDistractorMult(subquestionId){
+    beforeAjax();
+    var questionnaireId = $("#questionnaire-id").val();
+    var testId = $("#test-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_add-distractor-mult'),
+        type: 'PUT',
+        data: {
+            subquestionId: subquestionId,
             questionnaireId: questionnaireId,
             testId: testId
         }
