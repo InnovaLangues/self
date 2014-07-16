@@ -2,7 +2,7 @@
     {{ macros.deleteInstruction(questionnaire) }}
     {{ macros.editMedia(questionnaire.mediaInstruction, "subquestion") }}
     {{ 'editor.questionnaire.didactic_instruction' | trans }} :
-    {{ macros.displayMedia(test, questionnaire, questionnaire.mediaInstruction) }}
+    {{ macros.displayMedia(questionnaire, questionnaire.mediaInstruction) }}
 {% else %}
     <span class="btn btn-default btn-xs add-instruction">
         <span class="glyphicon glyphicon-plus"></span>

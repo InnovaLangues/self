@@ -61,8 +61,6 @@ class SubquestionController
         $em = $this->entityManager;
         $request = $this->request->request;
 
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
-
         $questionnaireId = $request->get('questionnaireId');
         $questionnaireTypology = $request->get('questionnaireTypology');
 
@@ -80,20 +78,20 @@ class SubquestionController
 
         // création automatique en cas de vrai/faux/(nd)?
         if($questionnaireTypology == "VF" || $questionnaireTypology == "TVF" || $questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {
-            $true = $this->mediaManager->createMedia($test, $questionnaire, "texte", "VRAI", "VRAI", null, 0, "proposition");
+            $true = $this->mediaManager->createMedia($questionnaire, "texte", "VRAI", "VRAI", null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $true, false);
-            $false = $this->mediaManager->createMedia($test, $questionnaire, "texte", "FAUX", "FAUX", null, 0, "proposition");
+            $false = $this->mediaManager->createMedia($questionnaire, "texte", "FAUX", "FAUX", null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $false, false);
         }
         if($questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {
-            $nd = $this->mediaManager->createMedia($test, $questionnaire, "texte", "ND", "ND", null, 0, "proposition");
+            $nd = $this->mediaManager->createMedia($questionnaire, "texte", "ND", "ND", null, 0, "proposition");
             $this->propositionManager->createProposition($subquestion, $nd, false);
         }
 
         $em->persist($subquestion);
         $em->flush();
         $em->refresh($subquestion);
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }
@@ -108,8 +106,6 @@ class SubquestionController
         $em = $this->entityManager;
         $request = $this->request->request;
 
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
-
         $subquestionId = $request->get('subquestionId');
         $questionnaireId = $request->get('questionnaireId');
 
@@ -119,7 +115,7 @@ class SubquestionController
         $em->remove($subquestion);
         $em->flush();
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }

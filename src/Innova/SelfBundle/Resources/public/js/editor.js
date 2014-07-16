@@ -363,7 +363,6 @@ function editMedia(mediaType){
     var description = $("#"+mediaType+"-description").val();
     var url = $("#"+mediaType+"-url").val();
     var toBeReloaded = $("#entity-to-be-reloaded").val();
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
@@ -376,7 +375,6 @@ function editMedia(mediaType){
             url: url,
             mediaId: mediaId,
             toBeReloaded: toBeReloaded,
-            testId: testId,
             questionnaireId: questionnaireId
         }
     })
@@ -391,7 +389,6 @@ function editMedia(mediaType){
 function createMedia(name, description, url, type) {
     beforeAjax();
 
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     var entityField = $("#entity-field").val();
@@ -404,7 +401,6 @@ function createMedia(name, description, url, type) {
         type: 'PUT',
         data: 
         { 
-            testId: testId,
             questionnaireId: questionnaireId,
             name: name,
             description: description,
@@ -462,14 +458,12 @@ function setSkill(questionnaireId) {
 
 function setTypology(questionnaireId) {
     beforeAjax();
-    var testId = $("#test-id").val();
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-typology'),
         type: 'POST',
         dataType: 'json',
         data: { 
             questionnaireId: questionnaireId,
-            testId: testId,
             typology: $("#typology").val() 
         }
     })
@@ -537,7 +531,6 @@ function setLevel(questionnaireId) {
 function unlinkMedia(){
     beforeAjax();
 
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     var entityField = $("#entity-field").val();
@@ -550,7 +543,6 @@ function unlinkMedia(){
         type: 'DELETE',
         data: 
         {
-            testId: testId,
             questionnaireId: questionnaireId, 
             entityType: entityType,
             entityId: entityId,
@@ -568,14 +560,12 @@ function unlinkMedia(){
 function createSubquestion(questionnaireId) {
     beforeAjax();
 
-    var testId = $("#test-id").val();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-subquestion'),
         type: 'PUT',
         dataType: 'json',
         data: { 
-            testId: testId,
             questionnaireId: questionnaireId,
             questionnaireTypology: $("#typology").val()
         }
@@ -589,14 +579,12 @@ function createSubquestion(questionnaireId) {
 function deleteSubquestion(questionnaireId, subquestionId){
     beforeAjax();
 
-    var testId = $("#test-id").val();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_delete_subquestion'),
         type: 'DELETE',
         dataType: 'json',
         data: { 
-            testId: testId,
             questionnaireId: questionnaireId,
             subquestionId: subquestionId,
         }
@@ -611,14 +599,12 @@ function deleteSubquestion(questionnaireId, subquestionId){
 function toggleRightWrong(propositionId){
     beforeAjax();
 
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_toggle_right_anwser'),
         type: 'PUT',
         data: { 
-            testId: testId,
             questionnaireId: questionnaireId,
             propositionId: propositionId,
         }
@@ -652,14 +638,12 @@ function setListeningLimit(mediaId, listeningLimit){
 function setTextType(textType){
     beforeAjax();
 
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
         url: Routing.generate('set-text-type'),
         type: 'POST',
         data: {
-            testId: testId,
             questionnaireId: questionnaireId,
             textType: textType,
         }
@@ -694,7 +678,6 @@ function getMediaInfo(mediaId, callBack){
 **************************************************/
 function createLacunes(){
     beforeAjax();
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
@@ -702,7 +685,6 @@ function createLacunes(){
         type: 'PUT',
         dataType: 'json',
         data: { 
-            testId: testId,
             questionnaireId: questionnaireId,
         }
     })
@@ -714,7 +696,6 @@ function createLacunes(){
 
 function createListe(){
     beforeAjax();
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
@@ -722,7 +703,6 @@ function createListe(){
         type: 'PUT',
         dataType: 'json',
         data: { 
-            testId: testId,
             questionnaireId: questionnaireId,
         }
     })
@@ -734,14 +714,12 @@ function createListe(){
 
 function setClue(clue, subquestionId){
     beforeAjax();
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-clue'),
         type: 'PUT',
         data: { 
-            testId: testId,
             questionnaireId: questionnaireId,
             subquestionId: subquestionId,
             clue: clue,
@@ -775,7 +753,6 @@ function setClueType(clueType, clueId){
 
 function setSyllable(syllable, subquestionId){
     beforeAjax();
-    var testId = $("#test-id").val();
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
@@ -783,7 +760,6 @@ function setSyllable(syllable, subquestionId){
         type: 'PUT',
         dataType: 'json',
         data: { 
-            testId: testId,
             questionnaireId: questionnaireId,
             subquestionId: subquestionId,
             syllable: syllable 
@@ -798,14 +774,12 @@ function setSyllable(syllable, subquestionId){
 function addDistractor(){
     beforeAjax();
     var questionnaireId = $("#questionnaire-id").val();
-    var testId = $("#test-id").val();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_add-distractor'),
         type: 'PUT',
         data: {
             questionnaireId: questionnaireId,
-            testId: testId
         }
     })
     .complete(function(data) {
@@ -817,7 +791,6 @@ function addDistractor(){
 function addDistractorMult(subquestionId){
     beforeAjax();
     var questionnaireId = $("#questionnaire-id").val();
-    var testId = $("#test-id").val();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_add-distractor-mult'),
@@ -825,7 +798,6 @@ function addDistractorMult(subquestionId){
         data: {
             subquestionId: subquestionId,
             questionnaireId: questionnaireId,
-            testId: testId
         }
     })
     .complete(function(data) {

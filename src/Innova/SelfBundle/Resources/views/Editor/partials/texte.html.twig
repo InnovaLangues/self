@@ -17,7 +17,7 @@
             </span>
         </div>
         {% else %}
-            {{ macros.displayMedia(test, questionnaire, questionnaire.mediaText) }}
+            {{ macros.displayMedia(questionnaire, questionnaire.mediaText) }}
             {% if questionnaire.mediaText.mediaType.name == "audio" %}
                 <hr/>
                 <div class="text-center">

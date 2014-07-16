@@ -92,16 +92,15 @@ class QuestionnaireController
     /**
      * Finds and displays a Questionnaire entity.
      *
-     * @Route("/test/{testId}/questionnaire/{questionnaireId}", name="editor_questionnaire_show", options={"expose"=true})
+     * @Route("/questionnaire/{questionnaireId}", name="editor_questionnaire_show", options={"expose"=true})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:index.html.twig")
      */
-    public function showAction($testId, $questionnaireId)
+    public function showAction($questionnaireId)
     {
 
         $em = $this->entityManager;
 
-        $test = $em->getRepository('InnovaSelfBundle:test')->find($testId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
         $status = $em->getRepository('InnovaSelfBundle:Status')->findAll();
@@ -111,7 +110,6 @@ class QuestionnaireController
         }
 
         return array(
-            'test' => $test,
             'questionnaire' => $questionnaire,
             'typologies' => $typologies,
             'status' => $status
@@ -270,12 +268,10 @@ class QuestionnaireController
     {
         $request = $this->request;
         $questionnaireId = $request->request->get('questionnaireId');
-        $testId = $request->request->get('testId');
         $typologyName = $request->request->get('typology');
 
         $em = $this->entityManager;
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
         $typology = $this->questionnaireManager->setTypology($questionnaire, $typologyName);
 
@@ -284,7 +280,7 @@ class QuestionnaireController
             $typologyName = $typology->getName();
         }
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('test' => $test, 'questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
         return new JsonResponse(
             array(
@@ -331,17 +327,14 @@ class QuestionnaireController
         $request = $this->request;
 
         $questionnaireId = $request->request->get('questionnaireId');
-        $testId = $request->request->get('testId');
         $textType = $request->request->get('textType');
 
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        
         $questionnaire->setDialogue($textType);
         $em->persist($questionnaire);
         $em->flush();
 
-        $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('test'=> $test, 'questionnaire' => $questionnaire));
+        $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }
