@@ -148,7 +148,10 @@ editor:
         proposition: Proposition
         associated_answer: Réponse associée
         add_answer: Ajouter une réponse
-
+    log:
+        editor_create: Création de
+        editor_edit: Edition de
+        editor_delete: Suppression de
 
 player:
     listen_context: Il vous faut d'abord écouter le contexte.

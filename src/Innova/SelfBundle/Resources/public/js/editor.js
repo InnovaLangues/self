@@ -128,6 +128,10 @@ $(document).ready(function() {
         createListe();
     });
 
+      $( "body" ).on( "click", '#create-listes', function() {
+        createListes();
+    });
+
     $('body').on('blur', '.clue',function(e){
         var clue = $(this).val();
         var subquestionId = $(this).data("subquestion-id");
@@ -719,6 +723,26 @@ function createListe(){
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-liste'),
+        type: 'PUT',
+        dataType: 'json',
+        data: { 
+            testId: testId,
+            questionnaireId: questionnaireId,
+        }
+    })
+    .complete(function(data) {
+        $("#subquestion-container").replaceWith(data.responseText);
+        afterAjax();
+    }); 
+}
+
+function createListes(){
+    beforeAjax();
+    var testId = $("#test-id").val();
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_create-listes'),
         type: 'PUT',
         dataType: 'json',
         data: { 
