@@ -72,7 +72,6 @@ $(document).ready(function() {
         unlinkMedia();
     });
 
-
     $( "body" ).on( "click", '.text-type', function() {
         var textType = $(this).data("text-type");
         setTextType(textType);
@@ -88,7 +87,15 @@ $(document).ready(function() {
         unlinkMedia();
     });
     
+    $( "body" ).on( "click", '#add-feedback', function() {
+        setParamForRequest("questionnaire", "feedback", questionnaireId, "feedback-container");
+        chooseMediaTypeModal();
+    });
 
+    $( "body" ).on( "click", '#delete-feedback', function() {
+        setParamForRequest("questionnaire", "feedback", questionnaireId, "feedback-container");
+        unlinkMedia();
+    });
 
     /**********************
         QUESTION RELATED EVENTS 

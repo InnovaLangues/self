@@ -71,6 +71,7 @@ class EecController
         $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);   
 
         if ($questionnaire->getMediaText()) {
+            $this->editorLogManager->createEditorLog("editor_create", "words-list", $questionnaire);
             $texte = $questionnaire->getMediaText()->getDescription();
 
             preg_match_all("/#(.*?)#/", $texte, $lacunes);
@@ -116,6 +117,7 @@ class EecController
         $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);
 
         if ($questionnaire->getMediaText()) {
+            $this->editorLogManager->createEditorLog("editor_create", "blanks", $questionnaire);
             $texte = $questionnaire->getMediaText()->getDescription();
 
             preg_match_all("/#(.*?)#/", $texte, $lacunes);

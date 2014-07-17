@@ -115,6 +115,7 @@ editor:
         skill: Compétence
         didactic_instruction: Consigne didactique
         functional_instruction: Consigne fonctionnelle
+        feedback: Feedback
     subquestion:
         subquestions: Items
         add: Ajouter un item
@@ -172,6 +173,8 @@ editor:
         listening-limit: limite d'écoutes
         clue-type: type d'indice
         task: tâche
+        words-list: liste de mots
+        blanks: lacunes
 
 player:
     listen_context: Il vous faut d'abord écouter le contexte.

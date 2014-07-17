@@ -126,7 +126,9 @@ class MediaController
             case 'functional-instruction':
                 $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig',array('questionnaire' => $questionnaire));
                 break;
-
+            case 'feedback':
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig',array('questionnaire' => $questionnaire));
+                break;
             case 'subquestion':
                 $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
                 break;
@@ -176,6 +178,12 @@ class MediaController
                     $em->flush();
 
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig',array('questionnaire' => $entity));
+                }  elseif ($entityField == "feedback") {
+                    $entity->setMediaFeedback($media);
+                    $em->persist($entity);
+                    $em->flush();
+
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig',array('questionnaire' => $entity));
                 } elseif ($entityField == "instruction") {
                     $entity->setMediaInstruction($media);
                     $em->persist($entity);
@@ -259,6 +267,9 @@ class MediaController
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText(null);
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('questionnaire' => $entity));
+                } elseif ($entityField == "feedback") {
+                    $entity->setMediaFeedback(null);
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig', array('questionnaire' => $entity));
                 } elseif ($entityField == "functional-instruction") {
                     $entity->setMediaFunctionalInstruction(null);
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig', array('questionnaire' => $entity));
