@@ -26,7 +26,16 @@
                             {# <li><a href="{{ path('admin_user') }}">{{ 'menu.users' | trans }}</a></li> #}
                             <li><a href="{{ path('csv_export') }}">{{ 'menu.csv_export' | trans }}</a></li>
                             <li><a href="{{ path('show_tests') }}">{{ 'menu.tests' | trans }}</a></li>
-                            <li><a href="{{ path('editor_tests_show') }}">{{ 'menu.editor' | trans }}</a></li>
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'menu.editor' | trans }} <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('editor_tests_show') }}">Tests</a></li>
+                                <li><a href="{{ path('editor_questionnaires_show') }}">Tâches</a></li>
+                            </ul>
+                        </li>
+                            
                         {% endif %}
                         <li><a data-toggle="modal" href="#helpModal">{{ 'menu.help' | trans }}</a></li>
                         <li><a data-toggle="modal" href="#creditModal">{{ 'menu.credit' | trans }}</a></li>

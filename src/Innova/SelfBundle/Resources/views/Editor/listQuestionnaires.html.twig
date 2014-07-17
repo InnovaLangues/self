@@ -1,84 +1,44 @@
 {% extends '::base.html.twig' %}
 
-{% block stylesheets %}
-    <link href="{{ asset("bundles/innovaself/css/editor-task-list.css") }}" rel="stylesheet" />
-{% endblock %}
-
-
 {% block body -%}
-
-<a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
-    <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
-</a>
-<a id="create-task" class="btn btn-default btn-sm">
+<a id="create-task" class="btn btn-default btn-sm" data-test-id = "">
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
 </a>
 
-{% if orders | length > 0 %}
-    <a disabled="disabled" class="btn btn-default btn-sm" id="save-order">
-        <span class="glyphicon glyphicon-floppy-disk"></span>
-        {{ 'editor.task.save_order' | trans }}
-    </a>
-    <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
-{% endif %}
 <hr/>
 
-<h3>
-    {% autoescape 'html' %}
-    {{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}
-    {% endautoescape %}
-</h3>
-
-<ul class="list-group" id="sortable">
-{% for order in orders %}
-    <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
-
-        {% if order.questionnaire.status is not null %}
-            {% set statusId = order.questionnaire.status.id %}
-            {% set statusName = order.questionnaire.status.name %}
-        {% else %}
-            {% set statusId = 0 %}
-            {% set statusName = "Ecriture" %}
-        {% endif %}
-        <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
-
-        {% if order.questionnaire.theme != "" %}
-            {{ order.questionnaire.theme }}
-        {% else %}
-            {{ 'editor.task.unnamed' | trans }}
-        {% endif %}
-
-        <span class="buttons" style="position:absolute;right:5px;top:5px">
-            <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id }) }}">
-                <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
-            </a>
-            <a class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
-                <span class="glyphicon glyphicon-remove"></span> {{ 'generic.remove' | trans }}
-            </a>
-        </span>
-    </li>
-{% endfor %}
-</ul>
-
-<div id="delete-task-modal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">{{ 'editor.task.delete' | trans }}</h4>
-            </div>
-            <div class="modal-body">
-                {{ 'editor.task.delete_confirm' | trans }}
-                <input id="test-id" type="hidden" value="{{ test.id }}"/>
-                <input id="questionnaire-id" type="hidden" value=""/>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'editor.task.delete_confirm_no' | trans }}</button>
-                <button type="button" id="delete-task-confirmation" class="btn btn-primary">{{ 'editor.task.delete_confirm_yes' | trans }}</button>
-            </div>
-        </div>
-    </div>
-</div>
+<h3>Liste des tâches</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Niveau</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for questionnaire in questionnaires %}
+        <tr>
+            <td>
+                {% if questionnaire.theme != "" %}
+                    {{ questionnaire.theme }}
+                {% else %}
+                    {{ 'editor.task.unnamed' | trans }}
+                {% endif %} 
+            </td>
+            <td>
+                {% if questionnaire.level is not null %}
+                    {{ questionnaire.level.name }}
+                {% endif %} 
+            </td>
+            <td class="text-right">
+                <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
+                    <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
 

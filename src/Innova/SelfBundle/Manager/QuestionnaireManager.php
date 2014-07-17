@@ -15,13 +15,13 @@ class QuestionnaireManager
         $this->editorLogManager = $editorLogManager;
     }
 
-    public function createQuestionnaire($test)
+    public function createQuestionnaire()
     {
         $em = $this->entityManager;
 
         $questionnaire = new Questionnaire();
         $questionnaire->setTheme("");
-        $questionnaire->addTest($test);
+        //$questionnaire->addTest($test);
         $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);
         $questionnaire->setFixedOrder(0);
