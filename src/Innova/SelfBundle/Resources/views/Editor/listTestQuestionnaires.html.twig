@@ -31,36 +31,7 @@
     {% endautoescape %}
 </h3>
 
-<ul class="list-group" id="sortable">
-{% for order in orders %}
-    <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
-
-        {% if order.questionnaire.status is not null %}
-            {% set statusId = order.questionnaire.status.id %}
-            {% set statusName = order.questionnaire.status.name %}
-        {% else %}
-            {% set statusId = 0 %}
-            {% set statusName = "Ecriture" %}
-        {% endif %}
-        <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
-
-        {% if order.questionnaire.theme != "" %}
-            {{ order.questionnaire.theme }}
-        {% else %}
-            {{ 'editor.task.unnamed' | trans }}
-        {% endif %}
-
-        <span class="buttons" style="position:absolute;right:5px;top:5px">
-            <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id }) }}">
-                <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
-            </a>
-            <a class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
-                <span class="glyphicon glyphicon-remove"></span> {{ 'generic.remove' | trans }}
-            </a>
-        </span>
-    </li>
-{% endfor %}
-</ul>
+{% include "InnovaSelfBundle:Editor/partials:tasksList.html.twig" %}
 
 <div id="add-task-modal" class="modal fade">
     <div class="modal-dialog">
@@ -73,7 +44,7 @@
                 <ul class="list-group">
                 {% for potentialQuestionnaire in potentialQuestionnaires %}
                     <li class="list-group-item">
-                        <span class="btn btn-default">Ajouter</span>
+                        <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</span> 
                         {% if potentialQuestionnaire.theme != "" %}
                             {{ potentialQuestionnaire.theme }}
                         {% else %}
