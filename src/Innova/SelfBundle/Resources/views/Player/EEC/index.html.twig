@@ -12,21 +12,21 @@
 {% for question in questionnaire.questions %}
     {# Ici, je regroupe les cas identiques à la CE #}
     {% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
-    {% if (question.typology.name in typoCe|keys) %}
+    {% if (question.typology.name in typoCe) %}
         <div id="right-container-CO" class="col-md-7 right-container">
             <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+                {# CONTEXTE #}
+                {% include "InnovaSelfBundle:Player/EEC:contexte.html.twig" %}
                 {# ONGLETS #}
                 {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
-
                 {# CONTENU DES ONGLETS #}
                 {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
-
                 {# SUBMIT BUTTON #}
                 {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
             </form>
         </div>
-    {# Ici, les cas propres à la EEC #}
     {% else %}
+    {# Ici, les cas propres à la EEC #}
         <div id="left-container-EEC" class="col-md-12 left-container">
             <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
                 {# CONTEXTE #}
@@ -35,7 +35,6 @@
                 {% include "InnovaSelfBundle:Player/EEC:consigne.html.twig" %}
                 {# CORPS #}
                 {% include "InnovaSelfBundle:Player/EEC:situation.html.twig" %}
-
                 {% include "InnovaSelfBundle:Player/EEC:tab-content.html.twig" %}
                 {# SUBMIT BUTTON #}
                 {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
