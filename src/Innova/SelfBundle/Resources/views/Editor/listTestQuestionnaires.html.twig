@@ -4,7 +4,6 @@
     <link href="{{ asset("bundles/innovaself/css/editor-task-list.css") }}" rel="stylesheet" />
 {% endblock %}
 
-
 {% block body -%}
 
 <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
@@ -13,7 +12,7 @@
 <a id="create-task" class="btn btn-default btn-sm" data-test-id = "{{ test.id }}">
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }} pour ce test
 </a>
-<a id="add-existing-task" class="btn btn-default btn-sm">
+<a id="add-existing-task" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-task-modal">
     <span class="glyphicon glyphicon-plus"></span> Ajouter une tâche existante
 </a>
 
@@ -62,6 +61,34 @@
     </li>
 {% endfor %}
 </ul>
+
+<div id="add-task-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Ajouter une tâche existante</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                {% for potentialQuestionnaire in potentialQuestionnaires %}
+                    <li class="list-group-item">
+                        <span class="btn btn-default">Ajouter</span>
+                        {% if potentialQuestionnaire.theme != "" %}
+                            {{ potentialQuestionnaire.theme }}
+                        {% else %}
+                            {{ 'editor.task.unnamed' | trans }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="delete-task-modal" class="modal fade">
     <div class="modal-dialog">

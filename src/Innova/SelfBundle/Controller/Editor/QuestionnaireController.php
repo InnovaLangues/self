@@ -103,9 +103,24 @@ class QuestionnaireController
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($testId);
 
+        $orderedQuestionnaires = array();
+        foreach ($orders as $order) {
+            $orderedQuestionnaires[] = $order->getQuestionnaire();
+        }
+
+        // passer par une requête DQL
+        $potentialQuestionnaires = array();
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+        foreach ($questionnaires as $questionnaire) {
+            if (!in_array($questionnaire, $orderedQuestionnaires)) {
+                $potentialQuestionnaires[] = $questionnaire;
+            }
+        }
+
         return array(
             'test' => $test,
-            'orders' => $orders
+            'orders' => $orders,
+            'potentialQuestionnaires' => $potentialQuestionnaires
         );
     }
 
