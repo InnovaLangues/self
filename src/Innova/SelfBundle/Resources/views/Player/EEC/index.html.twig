@@ -13,10 +13,15 @@
     {# Ici, je regroupe les cas identiques à la CE #}
     {% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
     {% if (question.typology.name in typoCe) %}
+
+        <div id="left-container-CE" class="col-md-5 left-container">
+                {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
+        {% include "InnovaSelfBundle:Player/CE:situation.html.twig" %}
+        </div>
+
         <div id="right-container-CO" class="col-md-7 right-container">
             <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
                 {# CONTEXTE #}
-                {% include "InnovaSelfBundle:Player/EEC:contexte.html.twig" %}
                 {# ONGLETS #}
                 {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
                 {# CONTENU DES ONGLETS #}

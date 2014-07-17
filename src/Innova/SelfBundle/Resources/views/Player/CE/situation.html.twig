@@ -1,13 +1,13 @@
 <div id="situation-CE" class="situation">
-{% if questionnaire.mediaText is not null %}
-    {% if questionnaire.mediaText.mediaType.name == "texte" %}
-        {% autoescape 'html' %}
-            {{ questionnaire.mediaText.description | raw }}
-        {% endautoescape %}
-    {% elseif questionnaire.mediaText.mediaType.name == "image" %}
-            {{ questionnaire.mediaText.description|raw }}
-        {{ macros.image("situation-image", questionnaire.mediaText, 'player.tooltip.enlarge' | trans, "" ) }}
-        {{ macros.modale("situation-image", questionnaire.mediaText, 'player.tooltip.question_object' | trans) }}
+    {% if questionnaire.mediaText is not null %}
+        {% if questionnaire.mediaText.mediaType.name == "texte" %}
+            {% autoescape 'html' %}
+                {{ questionnaire.mediaText.description | raw }}
+            {% endautoescape %}
+        {% elseif questionnaire.mediaText.mediaType.name == "image" %}
+                {{ questionnaire.mediaText.description|raw }}
+            {{ macros.image("situation-image", questionnaire.mediaText, 'player.tooltip.enlarge' | trans, "" ) }}
+            {{ macros.modale("situation-image", questionnaire.mediaText, 'player.tooltip.question_object' | trans) }}
+        {% endif %}
     {% endif %}
-{% endif %}
 </div>
