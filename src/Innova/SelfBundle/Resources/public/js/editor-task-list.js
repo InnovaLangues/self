@@ -21,9 +21,9 @@ $( "body" ).on( "click", '#delete-task-confirmation', function() {
 });
 
 $( "body" ).on( "click", '#create-task', function() {
-    createTask();
+    var testId = $(this).data("testId");
+    createTask(testId);
 });
-
 
 function saveOrder(){
     $("#loader-img").show();
@@ -71,19 +71,16 @@ function deleteTask(){
     });
 }
 
-function createTask(){
-    var testId = $("#test-id").val();
-
+function createTask(testId){
     $.ajax({
         url: Routing.generate('editor_questionnaire_create'),
         type: 'POST',
         dataType: 'json',
-        data: 
-        { 
-            testId: testId,
+        data: {
+            testId : testId
         }
     })
     .done(function(data) {
-        window.location = Routing.generate('editor_questionnaire_show', {'testId': data.testId, 'questionnaireId': data.questionnaireId });
+        window.location = Routing.generate('editor_questionnaire_show', {'questionnaireId': data.questionnaireId });
     });
 }

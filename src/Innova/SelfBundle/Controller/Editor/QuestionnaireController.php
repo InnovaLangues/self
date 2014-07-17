@@ -72,11 +72,31 @@ class QuestionnaireController
     /**
      * Lists all Questionnaire entities.
      *
-     * @Route("/test/{testId}/questionnaires", name="editor_test_questionnaires_show")
+     * @Route("/questionnaires", name="editor_questionnaires_show")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
-    public function listQuestionnairesAction($testId)
+    public function listQuestionnairesAction()
+    {
+        $em = $this->entityManager;
+
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+
+        return array(
+            'questionnaires' => $questionnaires,
+        );
+    }
+
+
+
+    /**
+     * Lists all Questionnaire entities for a test (ordered)
+     *
+     * @Route("/test/{testId}/questionnaires", name="editor_test_questionnaires_show")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listTestQuestionnaires.html.twig")
+     */
+    public function listTestQuestionnairesAction($testId)
     {
         $em = $this->entityManager;
 
@@ -118,7 +138,7 @@ class QuestionnaireController
 
     /**
      *
-     * @Route("questionnaire/create", name="editor_questionnaire_create", options={"expose"=true})
+     * @Route("/questionnaire/create", name="editor_questionnaire_create", options={"expose"=true})
      * @Method("POST")
      */
     public function createQuestionnaireAction()
@@ -126,16 +146,17 @@ class QuestionnaireController
 
         $em = $this->entityManager;
         $request = $this->request->request;
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
 
-        $questionnaire = $this->questionnaireManager->createQuestionnaire($test);
+        $questionnaire = $this->questionnaireManager->createQuestionnaire();
         $this->questionManager->createQuestion($questionnaire);
-        $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
+        
+        if($test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'))){
+            $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
+        }
 
         return new JsonResponse(
             array(
                 'questionnaireId' =>  $questionnaire->getId(),
-                'testId' => $test->getId()
             )
         );
 
