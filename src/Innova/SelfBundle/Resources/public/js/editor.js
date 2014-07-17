@@ -162,6 +162,17 @@ $(document).ready(function() {
         addDistractorMult(subquestionId);
     });
 
+    $('body').on('click', '#add-blank-text',function(e){
+        setParamForRequest("questionnaire", "blank-text", questionnaireId, "subquestion-container");
+        chooseMediaTypeModal();
+    });
+
+    $('body').on('click', '#delete-blank-text',function(e){
+                setParamForRequest("questionnaire", "blank-text", questionnaireId, "subquestion-container");
+
+      unlinkMedia();
+    });
+
     $('body').on('blur', '.eec-distractor',function(e){
         var mediaId = $(this).data("media-id");
         var text =  $(this).val();

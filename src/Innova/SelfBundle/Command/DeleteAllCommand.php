@@ -75,6 +75,12 @@ class DeleteAllCommand extends ContainerAwareCommand
                 $em->remove($clue);
             }
 
+            $output->writeln("Suppression EditorLOG ...");
+            $logs = $em->getRepository('InnovaSelfBundle:EditorLog')->findAll();
+            foreach ($logs as $log) {
+                $em->remove($log);
+            }
+
             $output->writeln("Suppression QUESTIONNAIRE ...");
             $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
             foreach ($questionnaires as $questionnaire) {

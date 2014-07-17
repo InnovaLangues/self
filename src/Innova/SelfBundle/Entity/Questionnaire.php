@@ -169,6 +169,12 @@ class Questionnaire
     /**
     * @ORM\ManyToOne(targetEntity="Media")
     */
+    protected $mediaBlankText;
+
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Media")
+    */
     protected $mediaFunctionalInstruction;
 
     /**
@@ -1119,5 +1125,28 @@ class Questionnaire
     public function getEditorLogs()
     {
         return $this->editorLogs;
+    }
+
+    /**
+     * Set mediaBlankText
+     *
+     * @param \Innova\SelfBundle\Entity\Media $mediaBlankText
+     * @return Questionnaire
+     */
+    public function setMediaBlankText(\Innova\SelfBundle\Entity\Media $mediaBlankText = null)
+    {
+        $this->mediaBlankText = $mediaBlankText;
+    
+        return $this;
+    }
+
+    /**
+     * Get mediaBlankText
+     *
+     * @return \Innova\SelfBundle\Entity\Media 
+     */
+    public function getMediaBlankText()
+    {
+        return $this->mediaBlankText;
     }
 }
