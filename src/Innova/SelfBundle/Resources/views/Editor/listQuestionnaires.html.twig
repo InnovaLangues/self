@@ -8,7 +8,15 @@
 <hr/>
 
 <h3>Liste des tâches</h3>
-<table class="table table-hover">
+
+<div class="input-group">
+    <span class="input-group-addon">Filtre </span>
+    <input type="text" id="search" class="form-control" value="">
+</div>
+
+<br/>
+
+<table id="tasks-table" class="table table-hover">
     <thead>
         <tr>
             <th>Nom</th>
@@ -44,5 +52,6 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/jquery.quicksearch.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-task-list.js") }}"></script>
 {% endblock %}

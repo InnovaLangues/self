@@ -1,6 +1,7 @@
 $(function() {
     sortableInit();
     $('input#search').quicksearch('#tasks li');
+    $('input#search').quicksearch('#tasks-table tbody tr');
 });
 
 
