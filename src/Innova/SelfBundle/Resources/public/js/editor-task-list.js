@@ -77,6 +77,7 @@ function saveOrder(){
         }
     })
     .done(function(data) {
+        $("#save-order").attr('disabled', true);
         $("#loader-img").hide();
     });
 }
