@@ -122,6 +122,7 @@ services:
         arguments:
             entityManager:          @doctrine.orm.entity_manager
             orderQuestionnaireTest: @self.order_questionnaire_test.manager
+            templating:             @templating
         calls:
             - [setRequest, [@request]]
         scope: request

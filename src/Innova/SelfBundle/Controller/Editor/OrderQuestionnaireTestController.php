@@ -4,9 +4,11 @@ namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 
 
 /**
@@ -22,15 +24,19 @@ class OrderQuestionnaireTestController
     
     protected $entityManager;
     protected $orderQuestionnaireTestManager;
+    protected $templating;
     protected $request;
 
     public function __construct(
             $entityManager,
-            $orderQuestionnaireTestManager
+            $orderQuestionnaireTestManager,
+            $templating
     )
     {
         $this->entityManager = $entityManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
+        $this->templating = $templating;
+
     }
 
     public function setRequest(Request $request = null)
@@ -65,6 +71,28 @@ class OrderQuestionnaireTestController
         }
 
         return new JsonResponse(null);
+    }
+
+    /**
+     * @Route("/editor_add_task_to_test", name="editor_add_task_to_test", options={"expose"=true})
+     * @Method("POST")
+     * @Template("")
+     */
+    public function addTaskToTestAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+
+        $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
+
+        $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test);
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig',array('orders' => $orders));
+        
+        return new Response($template);
     }
 
     /**

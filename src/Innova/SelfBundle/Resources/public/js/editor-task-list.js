@@ -1,11 +1,8 @@
 $(function() {
-    $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
+    sortableInit();
 });
 
-$( "#sortable" ).on( "sortupdate", function( event, ui ) {
-    $("#save-order").removeAttr('disabled');
-} );
+
 
 $( "body" ).on( "click", '.delete-task', function() {
     $("#questionnaire-id").val($(this).data("questionnaire-id"));
@@ -16,6 +13,13 @@ $( "body" ).on( "click", '#save-order', function() {
     saveOrder();
 });
 
+$( "body" ).on( "click", '.add-task', function() {
+    $(this).attr("disabled", true);
+    var testId = $(this).data("testId");
+    var questionnaireId = $(this).data("questionnaireId");
+    addTaskToTest(questionnaireId, testId);
+});
+
 $( "body" ).on( "click", '#delete-task-confirmation', function() {
     deleteTask();
 });
@@ -23,7 +27,34 @@ $( "body" ).on( "click", '#delete-task-confirmation', function() {
 $( "body" ).on( "click", '#create-task', function() {
     var testId = $(this).data("testId");
     createTask(testId);
+
 });
+
+function sortableInit(){
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+    $( "#sortable" ).on( "sortupdate", function( event, ui ) {
+        $("#save-order").removeAttr('disabled');
+    });
+}
+
+function addTaskToTest(questionnaireId, testId){
+    $("#loader-img").show();
+    $.ajax({
+        url: Routing.generate('editor_add_task_to_test'),
+        type: 'POST',
+        data: 
+        { 
+            testId: testId,
+            questionnaireId: questionnaireId
+        }
+    })
+    .done(function(data) {
+        $("#sortable").replaceWith(data);
+        sortableInit();
+        $("#loader-img").hide();
+    });
+}
 
 function saveOrder(){
     $("#loader-img").show();
