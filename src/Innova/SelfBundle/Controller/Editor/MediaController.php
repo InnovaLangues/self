@@ -190,7 +190,14 @@ class MediaController
                     $em->flush();
 
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $entity));
-                } elseif ($entityField == "comment") {
+                } elseif ($entityField == "blank-text") {
+                    $entity->setMediaBlankText($media);
+                    $em->persist($entity);
+                    $em->flush();
+
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $entity));
+                }
+                elseif ($entityField == "comment") {
                     $comment = $this->commentManager->createComment($questionnaire, $media);
                     $em->refresh($questionnaire);
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:comments.html.twig',array('questionnaire' => $entity));
@@ -270,7 +277,10 @@ class MediaController
                 } elseif ($entityField == "feedback") {
                     $entity->setMediaFeedback(null);
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig', array('questionnaire' => $entity));
-                } elseif ($entityField == "functional-instruction") {
+                } elseif ($entityField == "blank-text") {
+                    $entity->setMediaBlankText(null);
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $entity));
+                }  elseif ($entityField == "functional-instruction") {
                     $entity->setMediaFunctionalInstruction(null);
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig', array('questionnaire' => $entity));
                 } elseif ($entityField == "instruction") {

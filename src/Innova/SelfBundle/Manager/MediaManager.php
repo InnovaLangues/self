@@ -32,7 +32,8 @@ class MediaManager
             "functional-instruction" => "functional-instruction",
             "comment" => "comment",
             "feedback" => "feedback",
-            "distractor" => "distractor"
+            "distractor" => "distractor",
+            "blank-text" => "blank-text"
         );
 
         $em = $this->entityManager;

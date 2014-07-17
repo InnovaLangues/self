@@ -70,9 +70,9 @@ class EecController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);   
 
-        if ($questionnaire->getMediaText()) {
+        if ($questionnaire->getMediaBlankText()) {
             $this->editorLogManager->createEditorLog("editor_create", "words-list", $questionnaire);
-            $texte = $questionnaire->getMediaText()->getDescription();
+            $texte = $questionnaire->getMediaBlankText()->getDescription();
 
             preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
@@ -116,9 +116,9 @@ class EecController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);
 
-        if ($questionnaire->getMediaText()) {
+        if ($questionnaire->getMediaBlankText()) {
             $this->editorLogManager->createEditorLog("editor_create", "blanks", $questionnaire);
-            $texte = $questionnaire->getMediaText()->getDescription();
+            $texte = $questionnaire->getMediaBlankText()->getDescription();
 
             preg_match_all("/#(.*?)#/", $texte, $lacunes);
 

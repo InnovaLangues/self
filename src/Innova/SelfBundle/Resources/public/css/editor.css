@@ -56,3 +56,7 @@ input[type=text] {
 .media-listening-limit{
 	max-width: 50px;
 }
+
+#blank-text-container{
+	color: #4C4C4C;
+}
