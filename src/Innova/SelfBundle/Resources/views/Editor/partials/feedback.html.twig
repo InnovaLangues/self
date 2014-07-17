@@ -1,0 +1,21 @@
+<div id="feedback-container" class="panel panel-default">
+    {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
+    <div class="panel-heading">
+        {{ 'editor.questionnaire.feedback' | trans }}
+        {% if questionnaire.mediaFeedback is not null %}
+            <div class="pull-right">
+                {{ macros.editMedia(questionnaire.mediaFeedback, "feedback") }}
+                <button id="delete-feedback" class="glyphicon glyphicon-remove btn btn-default btn-sm" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}"></button>
+            </div>
+        {% endif %}
+    </div>
+    <div class="panel-body">
+        {% if questionnaire.mediaFeedback is null %}
+            <div class="text-center">
+                <span id="add-feedback" class="btn btn-default">{{ 'generic.add' | trans }}</span>
+            </div>
+        {% else %}
+           {{ macros.displayMedia(questionnaire, questionnaire.mediaFeedback) }}
+        {% endif %}
+    </div>
+</div>
