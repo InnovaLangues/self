@@ -41,7 +41,12 @@
                 <h4 class="modal-title">Ajouter une tâche existante</h4>
             </div>
             <div class="modal-body">
-                <ul class="list-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Filtre </span>
+                    <input type="text" id="search" class="form-control" value="">
+                </div>
+                <hr/>
+                <ul id="tasks" class="list-group">
                 {% for potentialQuestionnaire in potentialQuestionnaires %}
                     <li class="list-group-item">
                         <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</span> 
@@ -85,5 +90,6 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/jquery.quicksearch.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-task-list.js") }}"></script>
 {% endblock %}

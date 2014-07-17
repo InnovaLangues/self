@@ -1,5 +1,6 @@
 $(function() {
     sortableInit();
+    $('input#search').quicksearch('#tasks li');
 });
 
 
@@ -57,6 +58,7 @@ function addTaskToTest(questionnaireId, testId){
 }
 
 function saveOrder(){
+    $("#save-order").attr('disabled', true);
     $("#loader-img").show();
     var newOrder = new Array();
     var testId = "";
@@ -77,7 +79,6 @@ function saveOrder(){
         }
     })
     .done(function(data) {
-        $("#save-order").attr('disabled', true);
         $("#loader-img").hide();
     });
 }

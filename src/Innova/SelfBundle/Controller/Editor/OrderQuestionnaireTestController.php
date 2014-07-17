@@ -115,9 +115,7 @@ class OrderQuestionnaireTestController
                                                                                             'test' => $test,
                                                                                             'questionnaire' => $questionnaire
                                                                                         ));
-        $test->removeQuestionnaire($questionnaire);
         $em->remove($taskToRemove);
-        $em->persist($test);
         $em->flush();
 
         $this->orderQuestionnaireTestManager->recalculateOrder($test);
