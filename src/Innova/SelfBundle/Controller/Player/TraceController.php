@@ -139,7 +139,6 @@ class TraceController
                             $this->createAnswerProposition($trace, $propositionId, $subquestionId);
                         }
                     }
-                    //$this->createClick($media, $test, $questionnaire, $user);
                 }
             }
         }
@@ -213,33 +212,6 @@ class TraceController
         $em->flush();
 
         return $answer;
-    }
-
-    /**
-     * si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
-     */
-    private function createClick($media, $test, $questionnaire, $user)
-    {
-        $em = $this->entityManager;
-        $click = $em->getRepository('InnovaSelfBundle:MediaClick')->find(
-            array('media' => $media, 'test' => $test, 'questionnaire' => $questionnaire, 'user' => $user)
-            );
-
-        $em = $this->entityManager;
-
-        $click = new Trace();
-        $click->setDate(new \DateTime());
-        $click->setQuestionnaire($questionnaire);
-        $click->setTest($test);
-        $click->setUser($user);
-        $click->setTotalTime($totalTime);
-        $click->setListeningTime("");
-        $click->setListeningAfterAnswer("");
-
-        $em->persist($click);
-        $em->flush();
-
-        return $click;
     }
 
     /**

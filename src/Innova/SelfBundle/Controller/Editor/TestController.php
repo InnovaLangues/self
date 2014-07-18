@@ -15,6 +15,31 @@ use Innova\SelfBundle\Entity\Test;
  */
 class TestController extends Controller
 {
+
+    /**
+     * Lists all Test entities.
+     *
+     * @Route("/tests", name="editor_tests_show")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
+     */
+    public function listTestsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+        $taskCount = array();
+        foreach ($tests as $test) {
+            $taskCount[] = count($orderQuestionnaireTests = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
+        }
+
+        return array(
+            'tests' => $tests,
+            'taskCount' => $taskCount
+        );
+    }
+
+
     /**
      * Display form to create a new Questionnaire entity.
      *
