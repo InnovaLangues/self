@@ -87,11 +87,13 @@ class PlayerController
 
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $this->user->getId());
+            $countQuestionnaireTotal = count($orderQuestionnaireTests = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
 
             return array(
                 'questionnaire' => $questionnaire,
                 'test' => $test,
-                'counQuestionnaireDone' => $countQuestionnaireDone,
+                'countQuestionnaireDone' => $countQuestionnaireDone,
+                'countQuestionnaireTotal' => $countQuestionnaireTotal,
                 'displayHelp' => $displayHelp // Me dit si je dois ou pas afficher l'aide
             );
         }

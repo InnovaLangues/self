@@ -26,9 +26,8 @@ class TestController extends Controller
 
         $testsProgress = array();
         foreach ($userTests as $test) {
-            $countDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-            ->countDoneYetByUserByTest($test->getId(), $user->getId());
-            $countTotal = count($test->getQuestionnaires());
+            $countDone = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
+            $countTotal = count($orderQuestionnaireTests = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
             if ($countTotal < 1) $countTotal=1;
             $number = $countDone/$countTotal*100;
 
