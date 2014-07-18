@@ -13,19 +13,36 @@
     {# Si j'ai une image à afficher ... #}
     {% if questionnaire.mediaText is not null %}
         <div id="left-container-CE" class="col-md-5 left-container">
-                {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
+        {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
         {% include "InnovaSelfBundle:Player/CE:situation.html.twig" %}
         </div>
         <div id="right-container-CO" class="col-md-7 right-container">
-            <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
-                {# CONTEXTE #}
-                {# ONGLETS #}
-                {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
-                {# CONTENU DES ONGLETS #}
-                {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
-                {# SUBMIT BUTTON #}
-                {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
-            </form>
+            {# Ici, je regroupe les cas identiques à la CE
+            {% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
+            {% if (question.typology.name in typoCe) %} #}
+            {% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
+            {% if (question.typology.name in typoCe) %} #}
+                <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+                    {# CONTEXTE #}
+                    {# ONGLETS #}
+                    {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
+                    {# CONTENU DES ONGLETS #}
+                    {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
+                    {# SUBMIT BUTTON #}
+                    {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
+                </form>
+            {% else %}
+            {# Ici, les cas propres à la EEC #}
+                <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+                    {# CONSIGNE#}
+                    {% include "InnovaSelfBundle:Player/EEC:consigne.html.twig" %}
+                    {# CORPS #}
+                    {% include "InnovaSelfBundle:Player/EEC:situation.html.twig" %}
+                    {% include "InnovaSelfBundle:Player/EEC:tab-content.html.twig" %}
+                    {# SUBMIT BUTTON #}
+                    {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
+                </form>
+            {% endif %}
         </div>
     {% else %}
         {# Ici, je regroupe les cas identiques à la CE
@@ -34,7 +51,7 @@
         {% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
         {% if (question.typology.name in typoCe) %} #}
             <div id="left-container-CE" class="col-md-5 left-container">
-                    {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
+            {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
             {% include "InnovaSelfBundle:Player/CE:situation.html.twig" %}
             </div>
             <div id="right-container-CO" class="col-md-7 right-container">

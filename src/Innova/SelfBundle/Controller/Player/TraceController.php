@@ -177,7 +177,7 @@ class TraceController
             }
 
             if ($propositionFound == null) {
-                $media = $this->mediaManager->createMedia(null, null, "texte", $saisie, $saisie, null, 0, "reponse");
+                $media = $this->mediaManager->createMedia(null, "texte", $saisie, $saisie, null, 0, "reponse");
                 $proposition = $this->propositionManager->createProposition($subquestion, $media, $rightAnswer);
             } else {
                 $proposition = $propositionFound;
