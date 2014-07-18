@@ -24,6 +24,7 @@ class QuestionnaireController
     protected $questionnaireManager;
     protected $questionManager;
     protected $orderQuestionnaireTestManager;
+    protected $editorLogManager;
     protected $entityManager;
     protected $request;
     protected $templating;
@@ -32,6 +33,7 @@ class QuestionnaireController
             $questionnaireManager,
             $questionManager,
             $orderQuestionnaireTestManager,
+            $editorLogManager,
             $entityManager,
             $templating
     )
@@ -39,6 +41,7 @@ class QuestionnaireController
         $this->questionnaireManager = $questionnaireManager;
         $this->questionManager = $questionManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
+        $this->editorLogManager = $editorLogManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
 
@@ -200,7 +203,7 @@ class QuestionnaireController
             $msg = "Un tâche avec le même nom existe déja";
         }
         
-        
+        $this->editorLogManager->createEditorLog("editor_edit", "theme", $questionnaire);
 
         return new JsonResponse(
             array(
@@ -232,6 +235,8 @@ class QuestionnaireController
         $em->persist($questionnaire);
         $em->flush();
 
+        $this->editorLogManager->createEditorLog("editor_edit", "fixed-order", $questionnaire);
+
         return new JsonResponse(
             array(
                 'id' => $questionnaire->getId(),
@@ -261,6 +266,8 @@ class QuestionnaireController
         $em->persist($questionnaire);
         $em->flush();
 
+        $this->editorLogManager->createEditorLog("editor_edit", "skill", $questionnaire);
+
         return new JsonResponse(
             array(
                 'skill' => $skill,
@@ -287,6 +294,8 @@ class QuestionnaireController
         $questionnaire->setLevel($level);
         $em->persist($questionnaire);
         $em->flush();
+
+        $this->editorLogManager->createEditorLog("editor_edit", "level", $questionnaire);
 
         return new JsonResponse(
             array(
@@ -318,6 +327,8 @@ class QuestionnaireController
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
+        $this->editorLogManager->createEditorLog("editor_edit", "typology", $questionnaire);
+
         return new JsonResponse(
             array(
                 'typology'=> $typologyName,
@@ -345,6 +356,8 @@ class QuestionnaireController
         $em->persist($questionnaire);
         $em->flush();
 
+        $this->editorLogManager->createEditorLog("editor_edit", "status", $questionnaire);
+
         return new JsonResponse(
             array(
                 'status'=> $statusId,
@@ -369,6 +382,8 @@ class QuestionnaireController
         $questionnaire->setDialogue($textType);
         $em->persist($questionnaire);
         $em->flush();
+
+        $this->editorLogManager->createEditorLog("editor_edit", "text-type", $questionnaire);
 
         $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $questionnaire));
 

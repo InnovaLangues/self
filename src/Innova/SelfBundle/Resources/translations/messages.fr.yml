@@ -175,6 +175,13 @@ editor:
         task: tâche
         words-list: liste de mots
         blanks: lacunes
+        theme: nom de la tâche
+        fixed-order: ordre fixe
+        skill: compétence
+        level: niveau
+        typology: typologie
+        status: status
+        text-type: type d'objet de la question
 
 player:
     listen_context: Il vous faut d'abord écouter le contexte.

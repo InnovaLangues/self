@@ -21,6 +21,7 @@
         <tr>
             <th>Nom</th>
             <th>Niveau</th>
+            <th>Compétence</th>
         </tr>
     </thead>
     <tbody>
@@ -36,6 +37,11 @@
             <td>
                 {% if questionnaire.level is not null %}
                     {{ questionnaire.level.name }}
+                {% endif %} 
+            </td>
+            <td>
+                {% if questionnaire.skill is not null %}
+                    {{ questionnaire.skill.name }}
                 {% endif %} 
             </td>
             <td class="text-right">
