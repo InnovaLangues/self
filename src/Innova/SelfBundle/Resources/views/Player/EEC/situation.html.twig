@@ -10,9 +10,9 @@
 
 <div id="situation-EEC" class="situation">
 
-    {% if questionnaire.mediaText is not null %}
+    {% if questionnaire.mediaBlankText is not null %}
 
-        {% if questionnaire.mediaText.mediaType.name == "texte" %}
+        {% if questionnaire.mediaBlankText.mediaType.name == "texte" %}
             {# Ceci est le caractère d'affichage lors des typologies où on affichent la longueur #}
             {# Il risque de changer d'où la variable #}
             {% set charSeparate = "-" %}
@@ -25,7 +25,7 @@
                 {# Récupération de la typologie de la question #}
                 {% set typoQuestion = questionnaire.questions[0].typology.name %}
                 {# Récupération du texte de la question #}
-                {% set texte = questionnaire.mediaText.description %}
+                {% set texte = questionnaire.mediaBlankText.description %}
 
                 {# #}
                 {# Deux sortes de typologies : le type "saisie" et l'autre type (choix dans une liste, checkbox, radiobox) #}
