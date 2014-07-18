@@ -63,3 +63,9 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
+
+    self.answer.manager:
+        class: Innova\SelfBundle\Manager\AnswerManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context

@@ -26,6 +26,7 @@ class TraceController
     protected $mediaManager;
     protected $propositionManager;
     protected $traceManager;
+    protected $answerManager;
     protected $entityManager;
     protected $session;
     protected $router;
@@ -39,6 +40,7 @@ class TraceController
         $mediaManager,
         $propositionManager,
         $traceManager,
+        $answerManager,
         $entityManager,
         $session,
         $router,
@@ -48,6 +50,7 @@ class TraceController
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
         $this->traceManager = $traceManager;
+        $this->answerManager = $answerManager;
         $this->entityManager = $entityManager;
         $this->session = $session;
         $this->router = $router;
@@ -139,7 +142,6 @@ class TraceController
                             $this->createAnswerProposition($trace, $propositionId, $subquestionId);
                         }
                     }
-                    //$this->createClick($media, $test, $questionnaire, $user);
                 }
             }
         }
@@ -153,10 +155,6 @@ class TraceController
         $em = $this->entityManager;
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
-
-        $answer = new Answer();
-        $answer->setTrace($trace);
-        $answer->setSubquestion($subquestion);
 
         $typo = $subquestion->getTypology()->getName();
 
@@ -184,12 +182,9 @@ class TraceController
             } else {
                 $proposition = $propositionFound;
             }
-
-            $answer->setProposition($proposition);
         }
 
-        $em->persist($answer);
-        $em->flush();
+        $answer = $this->answerManager->createAnswer($trace, $subquestion, $proposition);
 
         return $answer;
     }
@@ -204,42 +199,9 @@ class TraceController
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
         $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
 
-        $answer = new Answer();
-        $answer->setTrace($trace);
-        $answer->setSubquestion($subquestion);
-        $answer->setProposition($proposition);
-        $em->persist($answer);
-
-        $em->flush();
+        $answer = $this->answerManager->createAnswer($trace, $subquestion, $proposition);
 
         return $answer;
-    }
-
-    /**
-     * si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
-     */
-    private function createClick($media, $test, $questionnaire, $user)
-    {
-        $em = $this->entityManager;
-        $click = $em->getRepository('InnovaSelfBundle:MediaClick')->find(
-            array('media' => $media, 'test' => $test, 'questionnaire' => $questionnaire, 'user' => $user)
-            );
-
-        $em = $this->entityManager;
-
-        $click = new Trace();
-        $click->setDate(new \DateTime());
-        $click->setQuestionnaire($questionnaire);
-        $click->setTest($test);
-        $click->setUser($user);
-        $click->setTotalTime($totalTime);
-        $click->setListeningTime("");
-        $click->setListeningAfterAnswer("");
-
-        $em->persist($click);
-        $em->flush();
-
-        return $click;
     }
 
     /**

@@ -206,7 +206,7 @@ class PlayerController
         return array(
             'questionnaire' => $questionnairePicked,
             'test' => $test,
-            'counQuestionnaireDone' => $countQuestionnaireDone,
+            'countQuestionnaireDone' => $countQuestionnaireDone,
             'displayHelp' => false
         );
     }
