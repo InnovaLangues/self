@@ -20,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for test in tests %}
+    {% for i, test in tests %}
         <tr>
             <td>
                 {{ test.name }}
@@ -29,7 +29,7 @@
                 {{ test.language.name }}
             </td>
             <td>
-                {{ test.questionnaires | length }}
+                {{ taskCount[i] }}
             </td>
             <td>
                 {% if test.actif %}
