@@ -110,6 +110,7 @@ services:
             mediaManager:       @self.media.manager
             propositionManager: @self.proposition.manager
             traceManager:       @self.trace.manager
+            answerManager:    @self.answer.manager
             entityManager:      @doctrine.orm.entity_manager
             session:            @session
             router:             @router

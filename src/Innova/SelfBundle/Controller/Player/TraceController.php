@@ -26,6 +26,7 @@ class TraceController
     protected $mediaManager;
     protected $propositionManager;
     protected $traceManager;
+    protected $answerManager;
     protected $entityManager;
     protected $session;
     protected $router;
@@ -39,6 +40,7 @@ class TraceController
         $mediaManager,
         $propositionManager,
         $traceManager,
+        $answerManager,
         $entityManager,
         $session,
         $router,
@@ -48,6 +50,7 @@ class TraceController
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
         $this->traceManager = $traceManager;
+        $this->answerManager = $answerManager;
         $this->entityManager = $entityManager;
         $this->session = $session;
         $this->router = $router;
@@ -153,10 +156,6 @@ class TraceController
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
 
-        $answer = new Answer();
-        $answer->setTrace($trace);
-        $answer->setSubquestion($subquestion);
-
         $typo = $subquestion->getTypology()->getName();
 
         $typosSaisie = array("TLQROCDERIV", "TLQROCFIRST", "TLQROCSYL", "TLQROCNOCLU", "TLQROCLEN", "TLQROCFIRSTLEN" );
@@ -183,12 +182,9 @@ class TraceController
             } else {
                 $proposition = $propositionFound;
             }
-
-            $answer->setProposition($proposition);
         }
 
-        $em->persist($answer);
-        $em->flush();
+        $answer = $this->answerManager->createAnswer($trace, $subquestion, $proposition);
 
         return $answer;
     }
@@ -203,13 +199,7 @@ class TraceController
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
         $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
 
-        $answer = new Answer();
-        $answer->setTrace($trace);
-        $answer->setSubquestion($subquestion);
-        $answer->setProposition($proposition);
-        $em->persist($answer);
-
-        $em->flush();
+        $answer = $this->answerManager->createAnswer($trace, $subquestion, $proposition);
 
         return $answer;
     }
