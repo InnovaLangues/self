@@ -183,20 +183,6 @@ class Questionnaire
     protected $mediaFeedback;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="originText", type="string", length=255, nullable=true)
-     */
-    private $originText;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="exerciceText", type="string", length=255, nullable=true)
-     */
-    private $exerciceText;
-
-    /**
     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires")
     */
     protected $skill;
