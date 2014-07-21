@@ -51,7 +51,7 @@ class Subquestion
     protected $question;
 
     /**
-    * @ORM\OneToMany(targetEntity="Proposition", mappedBy="subquestion", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="Proposition", mappedBy="subquestion", cascade={"persist", "remove"})
     */
     protected $propositions;
 
