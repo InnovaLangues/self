@@ -7,53 +7,56 @@
 
 <hr/>
 
-<h3>Liste des tâches</h3>
+{% if questionnaires|length <1  %}
+    Il n'y aucune tâche de créée actuellement.
+{% else %}
+    <h3>Liste des tâches</h3>
 
-<div class="input-group">
-    <span class="input-group-addon">Filtre </span>
-    <input type="text" id="search" class="form-control" value="">
-</div>
+    <div class="input-group">
+        <span class="input-group-addon">Filtre </span>
+        <input type="text" id="search" class="form-control" value="">
+    </div>
 
-<br/>
+    <br/>
 
-<table id="tasks-table" class="table table-hover">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Niveau</th>
-            <th>Compétence</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for questionnaire in questionnaires %}
-        <tr>
-            <td>
-                {% if questionnaire.theme != "" %}
-                    {{ questionnaire.theme }}
-                {% else %}
-                    {{ 'editor.task.unnamed' | trans }}
-                {% endif %} 
-            </td>
-            <td>
-                {% if questionnaire.level is not null %}
-                    {{ questionnaire.level.name }}
-                {% endif %} 
-            </td>
-            <td>
-                {% if questionnaire.skill is not null %}
-                    {{ questionnaire.skill.name }}
-                {% endif %} 
-            </td>
-            <td class="text-right">
-                <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
-                    <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
+    <table id="tasks-table" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Niveau</th>
+                <th>Compétence</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for questionnaire in questionnaires %}
+            <tr>
+                <td>
+                    {% if questionnaire.theme != "" %}
+                        {{ questionnaire.theme }}
+                    {% else %}
+                        {{ 'editor.task.unnamed' | trans }}
+                    {% endif %} 
+                </td>
+                <td>
+                    {% if questionnaire.level is not null %}
+                        {{ questionnaire.level.name }}
+                    {% endif %} 
+                </td>
+                <td>
+                    {% if questionnaire.skill is not null %}
+                        {{ questionnaire.skill.name }}
+                    {% endif %} 
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
+                        <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %} 
 {% endblock %}
 
 {% block javascripts %}
