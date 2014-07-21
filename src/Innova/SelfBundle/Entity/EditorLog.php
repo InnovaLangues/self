@@ -34,7 +34,7 @@ class EditorLog
     private $date;
 
     /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="comments", cascade={"remove"})
+    * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
     */
     protected $user;
     

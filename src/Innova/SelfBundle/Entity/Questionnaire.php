@@ -188,12 +188,12 @@ class Questionnaire
     protected $skill;
 
     /**
-    * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"remove", "persist"})
+    * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"persist"})
     */
     protected $questions;
 
     /**
-    * @ORM\OneToMany(targetEntity="Trace", mappedBy="questionnaire", cascade={"remove", "persist"})
+    * @ORM\OneToMany(targetEntity="Trace", mappedBy="questionnaire", cascade={"persist"})
     */
     protected $traces;
 
