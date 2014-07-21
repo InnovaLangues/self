@@ -168,15 +168,20 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '#delete-blank-text',function(e){
-                setParamForRequest("questionnaire", "blank-text", questionnaireId, "subquestion-container");
-
-      unlinkMedia();
+            setParamForRequest("questionnaire", "blank-text", questionnaireId, "subquestion-container");
+            unlinkMedia();
     });
 
     $('body').on('blur', '.eec-distractor',function(e){
         var mediaId = $(this).data("media-id");
         var text =  $(this).val();
         editDistractor(mediaId, text);
+    });
+
+    $('body').on('click', ' .eec-distractor-delete',function(e){
+        var propositionId = $(this).data("proposition-id");
+        setParamForRequest("proposition", "distractor", propositionId, "subquestion-container");
+        unlinkMedia();
     });
 
     /**********************

@@ -22,7 +22,7 @@ class Question
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="questions")
+    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="questions",  cascade={"remove"})
     */
     protected $questionnaire;
 
@@ -32,7 +32,7 @@ class Question
     protected $typology;
 
     /**
-    * @ORM\OneToMany(targetEntity="Subquestion", mappedBy="question", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="Subquestion", mappedBy="question", cascade={"persist", "remove"})
     */
     protected $subquestions;
 

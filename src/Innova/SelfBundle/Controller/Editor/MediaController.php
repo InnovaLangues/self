@@ -313,16 +313,30 @@ class MediaController
                 }
                 break;
             case "proposition":
+                $proposition =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
+
                 if ($entityField == "app-distractor") {
-                    $proposition =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
+                    
                     $mediaToSearch = $proposition->getMedia();
                     $question = $proposition->getSubquestion()->getQuestion();
                     $this->appManager->appDeletePropositions($mediaToSearch, $question);
 
                     $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+                }  elseif ($entityField == "distractor") {
+                    $question = $proposition->getSubquestion()->getQuestion();
+                    $media = $proposition->getMedia();
+                    foreach ($question->getSubquestions() as $subquestion) {
+                        foreach ($subquestion->getPropositions() as $needle) {
+                            if ($needle->getMedia() == $media) {
+                                $em->remove($needle);
+                            }
+                        }
+                    }
+                    $em->remove($media);
+                    $em->flush();
+                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
                 } else {
-                    $entity =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
-                    $em->remove($entity);
+                    $em->remove($proposition);
                     $em->flush();
 
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:proposition.html.twig', array('questionnaire' => $questionnaire, 'proposition' => null));

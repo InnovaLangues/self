@@ -32,7 +32,7 @@ class Trace
     protected $test;
 
     /**
-    * @ORM\OneToMany(targetEntity="Answer", mappedBy="trace", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="Answer", mappedBy="trace", cascade={"persist", "remove"})
     */
     protected $answers;
 

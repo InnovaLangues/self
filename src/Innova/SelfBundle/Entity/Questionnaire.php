@@ -193,7 +193,7 @@ class Questionnaire
     protected $questions;
 
     /**
-    * @ORM\OneToMany(targetEntity="Trace", mappedBy="questionnaire", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="Trace", mappedBy="questionnaire", cascade={"persist", "remove"})
     */
     protected $traces;
 

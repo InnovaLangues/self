@@ -4,9 +4,11 @@
             <p>{{ proposition.media.description }}</p>
         {% endfor %} 
         {% for proposition in subquestion.propositions if proposition.media.mediaPurpose.name == "distractor" %}
-            <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor"/><br/>
+            <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor"/>
+            <span class="btn btn-default btn-sm glyphicon glyphicon-remove eec-distractor-delete" data-toggle="tooltip" data-original-title="Supprimer" data-proposition-id="{{ proposition.id }}"></span>
+            <br/>
         {% endfor %}
-        <span  data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs eec-add-distractor-mult">{{ 'editor.app.add_distractor' | trans }}</span> <br/>
+        <span  data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs eec-add-distractor-mult">{{ 'editor.app.add_distractor' | trans }}</span><br/>
         <hr/>
     {% endfor %}
 {% endif %}
