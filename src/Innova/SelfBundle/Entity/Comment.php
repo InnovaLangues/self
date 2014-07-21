@@ -22,12 +22,12 @@ class Comment
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="comments", cascade={"remove"})
+    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="comments")
     */
     protected $questionnaire;
 
     /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="comments", cascade={"remove"})
+    * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
     */
     protected $user;
 

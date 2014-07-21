@@ -1,30 +1,35 @@
 <ul class="list-group" id="sortable">
-{% for order in orders %}
-    <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
 
-        {% if order.questionnaire.status is not null %}
-            {% set statusId = order.questionnaire.status.id %}
-            {% set statusName = order.questionnaire.status.name %}
-        {% else %}
-            {% set statusId = 0 %}
-            {% set statusName = "Ecriture" %}
-        {% endif %}
-        <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
+{% if orders|length < 1 %}
+    Il n'y a aucune tâche associée à ce test.
+{% else %}
+    {% for order in orders %}
+        <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
 
-        {% if order.questionnaire.theme != "" %}
-            {{ order.questionnaire.theme }}
-        {% else %}
-            {{ 'editor.task.unnamed' | trans }}
-        {% endif %}
+            {% if order.questionnaire.status is not null %}
+                {% set statusId = order.questionnaire.status.id %}
+                {% set statusName = order.questionnaire.status.name %}
+            {% else %}
+                {% set statusId = 0 %}
+                {% set statusName = "Ecriture" %}
+            {% endif %}
+            <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
 
-        <span class="buttons" style="position:absolute;right:5px;top:5px">
-            <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id }) }}">
-                <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
-            </a>
-            <a class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
-                <span class="glyphicon glyphicon-remove"></span> {{ 'generic.remove' | trans }}
-            </a>
-        </span>
-    </li>
-{% endfor %}
+            {% if order.questionnaire.theme != "" %}
+                {{ order.questionnaire.theme }}
+            {% else %}
+                {{ 'editor.task.unnamed' | trans }}
+            {% endif %}
+
+            <span class="buttons" style="position:absolute;right:5px;top:5px">
+                <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id }) }}">
+                    <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
+                </a>
+                <a class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
+                    <span class="glyphicon glyphicon-remove"></span> {{ 'generic.remove' | trans }}
+                </a>
+            </span>
+        </li>
+    {% endfor %}
+{% endif %}
 </ul>

@@ -12,11 +12,12 @@
 <a id="create-task" class="btn btn-default btn-sm" data-test-id = "{{ test.id }}">
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }} pour ce test
 </a>
+
 <a id="add-existing-task" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-task-modal">
     <span class="glyphicon glyphicon-plus"></span> Ajouter une tâche existante
 </a>
 
-{% if orders | length > 0 %}
+{% if orders|length > 0 %}
     <a disabled="disabled" class="btn btn-default btn-sm" id="save-order">
         <span class="glyphicon glyphicon-floppy-disk"></span>
         {{ 'editor.task.save_order' | trans }}
@@ -25,11 +26,13 @@
 {% endif %}
 <hr/>
 
+{% if orders|length > 0 %}
 <h3>
     {% autoescape 'html' %}
     {{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}
     {% endautoescape %}
 </h3>
+{% endif %}
 
 {% include "InnovaSelfBundle:Editor/partials:tasksList.html.twig" %}
 
@@ -41,12 +44,16 @@
                 <h4 class="modal-title">Ajouter une tâche existante</h4>
             </div>
             <div class="modal-body">
+                {% if potentialQuestionnaires|length <1  %}
+                    Il n'y aucune tâche à associer à cette item.
+                {% else %}
                 <div class="input-group">
                     <span class="input-group-addon">Filtre </span>
                     <input type="text" id="search" class="form-control" value="">
                 </div>
                 <hr/>
                 <ul id="tasks" class="list-group">
+
                 {% for potentialQuestionnaire in potentialQuestionnaires %}
                     <li class="list-group-item">
                         <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</span> 
@@ -57,6 +64,7 @@
                         {% endif %}
                     </li>
                 {% endfor %}
+                {% endif %}
                 </ul>
             </div>
             <div class="modal-footer">
