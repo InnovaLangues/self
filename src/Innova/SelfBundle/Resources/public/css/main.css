@@ -1,5 +1,5 @@
 #footer {
-	background-color: #222222;
+    background-color: #222222;
     color: #999;
     margin-top: 60px;
     height: 28px;
@@ -10,13 +10,5 @@
 }
 
 #body{
-	padding-bottom: 50px;
-}
-
-.form-control{
-    cursor: e-resize;
-}
-
-#situation{
-    cursor: text;
+    padding-bottom: 50px;
 }

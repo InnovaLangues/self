@@ -1,7 +1,7 @@
 <div id="subquestion-container">
 {% if questionnaire.questions[0].typology is not null %}
     {% set typoPrefix = questionnaire.questions[0].typology.name | slice(0,3) %}
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
         {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
 
