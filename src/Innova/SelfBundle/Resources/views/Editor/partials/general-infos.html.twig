@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="skill">{{ 'editor.questionnaire.skill' | trans }}</label>
                     {% set skills = ["-", "CO", "CE", "EEC"] %}
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
                     {% set excludedTypo = ["VFPM", "RE", "TVFPM"] %}
@@ -54,6 +54,17 @@
                     </select>
                 </div>
             </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="checkbox-inline">
+                        <label for="orderfix">
+                            {{ 'editor.questionnaire.fixed_order' | trans }} ? <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="row">
@@ -68,16 +79,6 @@
                             </option>
                         {% endfor %}
                     </select>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <div class="checkbox-inline">
-                        <label for="orderfix">
-                            {{ 'editor.questionnaire.fixed_order' | trans }} ? <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
-                        </label>
-                    </div>
                 </div>
             </div>
 
