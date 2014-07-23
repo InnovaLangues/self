@@ -111,6 +111,37 @@ class QuestionnaireController
     }
 
     /**
+     * Get questionnaires not associated yet to a test 
+     *
+     * @Route("/test/{testId}/potentials", name="editor_test_questionnaires_potentials", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function getPotentialQuestionnaires($testId){
+        $em = $this->entityManager;
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($testId);
+
+        $orderedQuestionnaires = array();
+        foreach ($orders as $order) {
+            $orderedQuestionnaires[] = $order->getQuestionnaire();
+        }
+
+        // passer par une requête DQL
+        $potentialQuestionnaires = array();
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+        foreach ($questionnaires as $questionnaire) {
+            if (!in_array($questionnaire, $orderedQuestionnaires)) {
+                $potentialQuestionnaires[] = $questionnaire;
+            }
+        }
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig',array('test'=> $test, 'potentialQuestionnaires' => $potentialQuestionnaires));
+        return new Response($template);
+    }
+
+
+    /**
      * Finds and displays a Questionnaire entity.
      *
      * @Route("/questionnaire/{questionnaireId}", name="editor_questionnaire_show", options={"expose"=true})

@@ -62,7 +62,7 @@ test:
 
 generic:
     index: Lister
-    create: Ajouter
+    create: Créer
     show: Afficher
     ok: OK
     edit: Mettre à jour
@@ -81,6 +81,7 @@ generic:
     save: Sauvegarder
     yes: Oui
     no: Non
+    filter: Filtre
 
 editor:
     test:
@@ -96,15 +97,21 @@ editor:
     task:
         back_to_list: Retour à la liste des tâches
         list: Liste des tâches pour le test <strong>%testName%</strong>
+        list_global: Liste des tâches
         manage: Gérer les tâches
         count: Nombre de tâches
         create: Créer une tâche
+        create_test: Créer une tâche pour ce test
+        add_existing: Ajouter une tâche existante
         save_order: Sauvegarder l'ordre des tâches
         delete: Suppression d'une tâche
         delete_confirm: Êtes-vous sûr de vouloir supprimer cette tâche de ce test ?
         delete_confirm_yes: Oui, supprimer la tâche
         delete_confirm_no: Non
         unnamed: Tâche sans nom
+        no_potential: Aucune tâche à associer
+        no_task:  Il n'y aucune tâche de créée actuellement.
+
     questionnaire:
         general_infos: Informations générales
         title: Titre

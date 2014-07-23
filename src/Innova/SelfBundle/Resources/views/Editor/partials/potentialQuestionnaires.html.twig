@@ -1,0 +1,22 @@
+{% if potentialQuestionnaires|length <1  %}
+    {{ 'editor.task.no_potential' | trans }}
+{% else %}
+    <div class="input-group">
+        <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
+        <input type="text" id="search" class="form-control" value="">
+    </div>
+    <hr/>
+    <ul id="tasks" class="list-group">
+    {% for potentialQuestionnaire in potentialQuestionnaires %}
+        <li class="list-group-item">
+            <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}"><span class="glyphicon glyphicon-plus"></span> {{ 'generic.add' | trans }}</span> 
+            {% if potentialQuestionnaire.theme != "" %}
+                {{ potentialQuestionnaire.theme }}
+            {% else %}
+                {{ 'editor.task.unnamed' | trans }}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+            

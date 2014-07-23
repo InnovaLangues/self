@@ -1,5 +1,9 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+    <link href="{{ asset("bundles/innovaself/css/editor-task-list.css") }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body -%}
 <a id="create-task" class="btn btn-default btn-sm" data-test-id = "">
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
@@ -8,12 +12,12 @@
 <hr/>
 
 {% if questionnaires|length <1  %}
-    Il n'y aucune tâche de créée actuellement.
+    {{ 'editor.task.no_task' | trans }}
 {% else %}
-    <h3>Liste des tâches</h3>
+    <h3>{{ 'editor.task.list_global' | trans }}</h3>
 
     <div class="input-group">
-        <span class="input-group-addon">Filtre </span>
+        <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
         <input type="text" id="search" class="form-control" value="">
     </div>
 
@@ -22,14 +26,25 @@
     <table id="tasks-table" class="table table-hover">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Niveau</th>
-                <th>Compétence</th>
+                <th>{{ 'editor.log.status'|trans|capitalize}}</th>
+                <th>{{ 'editor.log.theme'|trans|capitalize}}</th>
+                <th>{{ 'editor.log.level'|trans|capitalize}}</th>
+                <th>{{ 'editor.log.skill'|trans|capitalize}}</th>
             </tr>
         </thead>
         <tbody>
         {% for questionnaire in questionnaires %}
             <tr>
+                <td>
+                    {% if questionnaire.status is not null %}
+                        {% set statusId = questionnaire.status.id %}
+                        {% set statusName = questionnaire.status.name %}
+                    {% else %}
+                        {% set statusId = 0 %}
+                        {% set statusName = "Ecriture" %}
+                    {% endif %}
+                    <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
+                </td>
                 <td>
                     {% if questionnaire.theme != "" %}
                         {{ questionnaire.theme }}

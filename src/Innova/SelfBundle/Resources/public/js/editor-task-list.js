@@ -4,8 +4,6 @@ $(function() {
     $('input#search').quicksearch('#tasks-table tbody tr');
 });
 
-
-
 $( "body" ).on( "click", '.delete-task', function() {
     $("#questionnaire-id").val($(this).data("questionnaire-id"));
     $('#delete-task-modal').modal('show');
@@ -26,11 +24,27 @@ $( "body" ).on( "click", '#delete-task-confirmation', function() {
     deleteTask();
 });
 
+$( "body" ).on( "click", '#refresh-potentials', function() {
+    var testId = $(this).data("testId");
+    refreshPotentials(testId);
+});
+
 $( "body" ).on( "click", '#create-task', function() {
     var testId = $(this).data("testId");
     createTask(testId);
-
 });
+
+function refreshPotentials(testId){
+    $("#refresh-potentials").attr('disabled', true);
+    $.ajax({
+        url: Routing.generate('editor_test_questionnaires_potentials', {'testId': testId }),
+        type: 'GET'
+    })
+    .done(function(data) {
+        $("#refresh-potentials").removeAttr('disabled');
+        $("#potential-questionnaires").html(data);
+    });
+}
 
 function sortableInit(){
     $( "#sortable" ).sortable();

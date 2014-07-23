@@ -10,11 +10,10 @@
     <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
 </a>
 <a id="create-task" class="btn btn-default btn-sm" data-test-id = "{{ test.id }}">
-    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }} pour ce test
+    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create_test' | trans }}
 </a>
-
 <a id="add-existing-task" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-task-modal">
-    <span class="glyphicon glyphicon-plus"></span> Ajouter une tâche existante
+    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.add_existing' | trans }}
 </a>
 
 {% if orders|length > 0 %}
@@ -24,6 +23,7 @@
     </a>
     <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
 {% endif %}
+
 <hr/>
 
 {% if orders|length > 0 %}
@@ -41,33 +41,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Ajouter une tâche existante</h4>
+                <h4 class="modal-title">{{ 'editor.task.add_existing' | trans }}</h4>
             </div>
-            <div class="modal-body">
-                {% if potentialQuestionnaires|length <1  %}
-                    Il n'y aucune tâche à associer à cette item.
-                {% else %}
-                <div class="input-group">
-                    <span class="input-group-addon">Filtre </span>
-                    <input type="text" id="search" class="form-control" value="">
-                </div>
-                <hr/>
-                <ul id="tasks" class="list-group">
-
-                {% for potentialQuestionnaire in potentialQuestionnaires %}
-                    <li class="list-group-item">
-                        <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</span> 
-                        {% if potentialQuestionnaire.theme != "" %}
-                            {{ potentialQuestionnaire.theme }}
-                        {% else %}
-                            {{ 'editor.task.unnamed' | trans }}
-                        {% endif %}
-                    </li>
-                {% endfor %}
-                {% endif %}
-                </ul>
+            <div id="potential-questionnaires" class="modal-body">
+                {% include "InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig" %}
             </div>
             <div class="modal-footer">
+                <button type="button" data-test-id="{{ test.id }}" id="refresh-potentials" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
             </div>
         </div>
@@ -93,6 +73,7 @@
         </div>
     </div>
 </div>
+
 
 {% endblock %}
 

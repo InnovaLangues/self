@@ -14,4 +14,11 @@
     background-color:#5BC0DE;
 }
 
+.questionnaire.list-group-item{
+    cursor:move;
+}
+
+.questionnaire.list-group-item .btn{
+    cursor:pointer;
+}
 
