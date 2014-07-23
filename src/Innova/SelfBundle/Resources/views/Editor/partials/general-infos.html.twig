@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-info">
     <div class="panel-heading"><h3 class="panel-title">{{ 'editor.questionnaire.general_infos' | trans }}</h3></div>
     <div class="panel-body">
         <div class="row">
@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="skill">{{ 'editor.questionnaire.skill' | trans }}</label>
                     {% set skills = ["-", "CO", "CE", "EEC"] %}
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
                     {% set excludedTypo = ["VFPM", "RE", "TVFPM"] %}
@@ -54,24 +54,8 @@
                     </select>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="status">Status</label>
-
-                    <select id="status" class="form-control">
-                        {% for s in status %}
-                            <option {% if questionnaire.status is not null and questionnaire.status == s %}selected{% endif %} value="{{ s.id }}">
-                               {{ s.name }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <div class="checkbox-inline">
                         <label for="orderfix">
@@ -81,6 +65,6 @@
                 </div>
             </div>
 
-        </div>
+        </div><!-- row -->
     </div>
 </div>

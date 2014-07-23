@@ -1,12 +1,29 @@
 <div id="identity-container">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">
             Fiche d'identité
             </h3>
         </div>
         <div class="panel-body">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="status">Status</label>
+
+                            <select id="status" class="form-control">
+                                {% for s in status %}
+                                <option {% if questionnaire.status is not null and questionnaire.status == s %}selected{% endif %} value="{{ s.id }}">
+                                {{ s.name }}
+                                </option>
+                                {% endfor %}
+                             </select>
+                    </div>
+                </div>
+
+             </div>
         </div>
     </div>
 </div>

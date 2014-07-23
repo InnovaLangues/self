@@ -13,16 +13,15 @@
 	border-left:none;
 }
 
+
 #subquestion-container .nav-tabs > li.active > a, #subquestion-container .nav-tabs > li.active > a:hover, #subquestion-container .nav-tabs > li.active > a:focus	{
 	opacity:1;
-	color:white;
-	background-color: #E37E71;
+	background-color: #D9EDF7;
 	border-left:none;
 }
 
 #subquestion-container .tab-pane {
-	background-color: #E37E71;
-	color: white;
+
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
@@ -55,8 +54,4 @@ input[type=text] {
 ***********************************/
 .media-listening-limit{
 	max-width: 50px;
-}
-
-#blank-text-container{
-	color: #4C4C4C;
 }
