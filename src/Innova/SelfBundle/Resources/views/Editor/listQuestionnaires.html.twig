@@ -40,7 +40,7 @@
                         {% set statusId = questionnaire.status.id %}
                         {% set statusName = questionnaire.status.name %}
                     {% else %}
-                        {% set statusId = 0 %}
+                        {% set statusId = 1 %}
                         {% set statusName = "Ecriture" %}
                     {% endif %}
                     <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
