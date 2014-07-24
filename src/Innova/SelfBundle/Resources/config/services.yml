@@ -58,6 +58,7 @@ services:
             questionManager:    @self.question.manager
             orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
             editorLogManager:   @self.editor_log.manager
+            testManager: @self.test.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
         calls:

@@ -25,6 +25,7 @@ class QuestionnaireController
     protected $questionManager;
     protected $orderQuestionnaireTestManager;
     protected $editorLogManager;
+    protected $testManager;
     protected $entityManager;
     protected $request;
     protected $templating;
@@ -34,6 +35,7 @@ class QuestionnaireController
             $questionManager,
             $orderQuestionnaireTestManager,
             $editorLogManager,
+            $testManager,
             $entityManager,
             $templating
     )
@@ -42,9 +44,9 @@ class QuestionnaireController
         $this->questionManager = $questionManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
         $this->editorLogManager = $editorLogManager;
+        $this->testManager = $testManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
-
     }
 
     public function setRequest(Request $request = null)
@@ -74,7 +76,6 @@ class QuestionnaireController
     }
 
 
-
     /**
      * Lists all Questionnaire entities for a test (ordered)
      *
@@ -88,21 +89,8 @@ class QuestionnaireController
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($testId);
-
-        $orderedQuestionnaires = array();
-        foreach ($orders as $order) {
-            $orderedQuestionnaires[] = $order->getQuestionnaire();
-        }
-
-        // passer par une requête DQL
-        $potentialQuestionnaires = array();
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
-        foreach ($questionnaires as $questionnaire) {
-            if (!in_array($questionnaire, $orderedQuestionnaires)) {
-                $potentialQuestionnaires[] = $questionnaire;
-            }
-        }
-
+        $potentialQuestionnaires = $this->testManager->getPotentialQuestionnaires($test);
+       
         return array(
             'test' => $test,
             'orders' => $orders,
@@ -120,21 +108,7 @@ class QuestionnaireController
         $em = $this->entityManager;
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($testId);
-
-        $orderedQuestionnaires = array();
-        foreach ($orders as $order) {
-            $orderedQuestionnaires[] = $order->getQuestionnaire();
-        }
-
-        // passer par une requête DQL
-        $potentialQuestionnaires = array();
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
-        foreach ($questionnaires as $questionnaire) {
-            if (!in_array($questionnaire, $orderedQuestionnaires)) {
-                $potentialQuestionnaires[] = $questionnaire;
-            }
-        }
+        $potentialQuestionnaires = $this->testManager->getPotentialQuestionnaires($test);
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig',array('test'=> $test, 'potentialQuestionnaires' => $potentialQuestionnaires));
         return new Response($template);
