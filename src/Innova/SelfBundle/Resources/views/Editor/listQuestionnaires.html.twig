@@ -30,6 +30,7 @@
                 <th>{{ 'editor.log.theme'|trans|capitalize}}</th>
                 <th>{{ 'editor.log.level'|trans|capitalize}}</th>
                 <th>{{ 'editor.log.skill'|trans|capitalize}}</th>
+                <th>Test(s)</th>
             </tr>
         </thead>
         <tbody>
@@ -61,6 +62,21 @@
                     {% if questionnaire.skill is not null %}
                         {{ questionnaire.skill.name }}
                     {% endif %} 
+                </td>
+                <td>
+                    {% set countTests = questionnaire.orderQuestionnaireTests|length %}
+                    {% if countTests == 0 %}
+                        -
+                    {% else %}
+                        {% set tooltip = "" %}
+                        {{ countTests }}
+                        {% for orderedQuestionnaireTest in questionnaire.orderQuestionnaireTests %}
+                            {% set tooltip = tooltip ~ orderedQuestionnaireTest.test.name ~"<br />" %}
+                        {% endfor %}
+                        <span data-html="true" class="glyphicon glyphicon-eye-open" rel="tooltip" data-original-title="{{ tooltip }}"></span>
+                    {% endif %}
+
+
                 </td>
                 <td class="text-right">
                     <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">

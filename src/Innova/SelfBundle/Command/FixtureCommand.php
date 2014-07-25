@@ -210,14 +210,18 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             /* Gestion du mediaPurpose... à quoi sert le media (consigne, contexte, proposition, etc.) */
-            $clueTypes = array(array("fonctionnel", ".clue-fonctionnel"), array("didactique", ".clue-didactique"));
+            $clueTypes = array(array("fonctionnel", "clue-fonctionnel"), array("didactique", "clue-didactique"));
             foreach ($clueTypes as $clueType) {
-                if (!$em->getRepository('InnovaSelfBundle:ClueType')->findOneByName($clueType[0])) {
+                if (!$clueTyp = $em->getRepository('InnovaSelfBundle:ClueType')->findOneByName($clueType[0])) {
                     $c = new clueType();
                     $c->setName($clueType[0]);
                     $c->setColor($clueType[1]);
                     $em->persist($c);
                     $output->writeln("Add new clueType (".$clueType[0].").");
+                } elseif($clueTyp->getColor() != $clueType[1]) {
+                    $clueTyp->setColor($clueType[1]);
+                    $em->persist($clueTyp);
+                    $output->writeln("Edit clueType (".$clueType[0].").");
                 }
             }
 
