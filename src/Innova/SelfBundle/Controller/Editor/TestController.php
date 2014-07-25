@@ -26,16 +26,10 @@ class TestController extends Controller
     public function listTestsAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-        $taskCount = array();
-        foreach ($tests as $test) {
-            $taskCount[] = count($orderQuestionnaireTests = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
-        }
 
         return array(
-            'tests' => $tests,
-            'taskCount' => $taskCount
+            'tests' => $tests
         );
     }
 

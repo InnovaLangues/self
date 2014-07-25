@@ -33,10 +33,10 @@
 	padding:25px;
 	text-align: center;
 	margin-top: 0px;
-    padding: 25px;
-    position: relative;
-    text-align: left;
-    top: 50%;
+	padding: 25px;
+	position: relative;
+	text-align: left;
+	top: 50%;
 }
 
 .hr {
@@ -205,9 +205,9 @@
 	height:20px;
 	padding-left:3px;
 	transform: rotate(-25deg);
-    -moz-transform: rotate(-25deg);
-    -webkit-transform: rotate(-25deg);
-    -khtml-transform: rotate(-25deg);
+	-moz-transform: rotate(-25deg);
+	-webkit-transform: rotate(-25deg);
+	-khtml-transform: rotate(-25deg);
 }
 
 .subquestion-not-ok {
@@ -287,14 +287,14 @@ input.proposition-input, label{
 	CLUE DISPLAY
 ***********************************/
 
-.clue-fonctionnel { background-color:red; padding:5px; display:block;border-radius:3px;}
-.clue-didactique { background-color:black; padding:5px; display:block;border-radius:3px;}
+.tooltip .clue-fonctionnel { background-color:red; padding:5px; display:block;border-radius:3px;}
+.tooltip .clue-didactique { background-color:black; padding:5px; display:block;border-radius:3px;}
 
-.tooltip.top .tooltip-inner {
-    background-color:red;
+.clue-fonctionnel + .tooltip.top .tooltip-inner {
+	background-color:red;
 }
-.tooltip.top .tooltip-arrow {
-      border-top-color: red;
+.clue-fonctionnel + .tooltip.top .tooltip-arrow {
+	border-top-color: red;
 }
 
 .proposition-CO, .proposition-CE, .proposition-EEC {

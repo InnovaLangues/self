@@ -7,7 +7,7 @@
     {% for subquestion in subquestions %}
         <tr>
             {% set propositions = subquestion.propositions %}
-            {% for proposition in propositions %}
+            {% for proposition in propositions if proposition.media.mediaPurpose.name == "proposition" %}
             <td>
                 {{ proposition.media.description }}
             </td>

@@ -2,53 +2,37 @@
     <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" rel="tooltip" data-original-title="{{ 'player.tooltip.context' | trans }}" />
 </div>
 
-{# Demande de JJ : on n'affiche pas cette image dans ce cas. #}
 {% if questionnaire.mediaInstruction is not null %}
     <div id="situation-icon">
         <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-EEC.png" rel="tooltip" data-original-title="Objet de la question" />
     </div>
 {% endif %}
 
+{% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
+
 {% for question in questionnaire.questions %}
-    {# Si j'ai une image à afficher ... #}
     {% if questionnaire.mediaText is not null %}
         <div id="left-container-CE" class="col-md-5 left-container">
         {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
         {% include "InnovaSelfBundle:Player/CE:situation.html.twig" %}
         </div>
         <div id="right-container-CO" class="col-md-7 right-container">
-            {# Ici, je regroupe les cas identiques à la CE
-            {% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
-            {% if (question.typology.name in typoCe) %} #}
-            {% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
             {% if (question.typology.name in typoCe) %} #}
                 <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
-                    {# CONTEXTE #}
-                    {# ONGLETS #}
                     {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
-                    {# CONTENU DES ONGLETS #}
                     {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
-                    {# SUBMIT BUTTON #}
                     {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
                 </form>
             {% else %}
-            {# Ici, les cas propres à la EEC #}
                 <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
-                    {# CONSIGNE#}
                     {% include "InnovaSelfBundle:Player/EEC:consigne.html.twig" %}
-                    {# CORPS #}
                     {% include "InnovaSelfBundle:Player/EEC:situation.html.twig" %}
                     {% include "InnovaSelfBundle:Player/EEC:tab-content.html.twig" %}
-                    {# SUBMIT BUTTON #}
                     {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
                 </form>
             {% endif %}
         </div>
     {% else %}
-        {# Ici, je regroupe les cas identiques à la CE
-        {% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
-        {% if (question.typology.name in typoCe) %} #}
-        {% set typoCe = ['QRM', 'QRU', 'TQRM', 'TQRU'] %}
         {% if (question.typology.name in typoCe) %} #}
             <div id="left-container-CE" class="col-md-5 left-container">
             {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
@@ -56,34 +40,21 @@
             </div>
             <div id="right-container-CO" class="col-md-7 right-container">
                 <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
-                    {# CONTEXTE #}
-                    {# ONGLETS #}
                     {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
-                    {# CONTENU DES ONGLETS #}
                     {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
-                    {# SUBMIT BUTTON #}
                     {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
                 </form>
             </div>
         {% else %}
-        {# Ici, les cas propres à la EEC #}
             <div id="left-container-EEC" class="col-md-12 left-container">
                 <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
-                    {# CONTEXTE #}
                     {% include "InnovaSelfBundle:Player/EEC:contexte.html.twig" %}
-                    {# CONSIGNE#}
                     {% include "InnovaSelfBundle:Player/EEC:consigne.html.twig" %}
-                    {# CORPS #}
                     {% include "InnovaSelfBundle:Player/EEC:situation.html.twig" %}
                     {% include "InnovaSelfBundle:Player/EEC:tab-content.html.twig" %}
-                    {# SUBMIT BUTTON #}
                     {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
                 </form>
             </div>
+        {% endif %}
     {% endif %}
-{% endif %}
-
-
-
-
 {% endfor %}

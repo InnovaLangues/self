@@ -65,16 +65,6 @@ services:
             - [setRequest, [@request]]
         scope: request
 
-    innova_editor_identity:
-        class: Innova\SelfBundle\Controller\Editor\IdentityController
-        arguments:
-            editorLogManager:   @self.editor_log.manager
-            entityManager:      @doctrine.orm.entity_manager
-            templating:         @templating
-        calls:
-            - [setRequest, [@request]]
-        scope: request
-
     innova_editor_media:
         class: Innova\SelfBundle\Controller\Editor\MediaController
         arguments:

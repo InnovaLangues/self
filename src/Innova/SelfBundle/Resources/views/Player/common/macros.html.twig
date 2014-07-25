@@ -97,24 +97,14 @@
     {% endif %}
 {% endmacro %}
 
-{# #}
-{# Macro "situation" qui regroupe différents cas pour le pilote 3 #}
-{# Voir le fichier views/Player/common/macros.html.twig #}
-{# #}
+{# Macro pour l'EEC #}
 {% macro situation(subquestion, i, texte, typoQuestion) %}
 
-    {# Ceci est le caractère d'affichage lors des typologies où on affichent la longueur #}
-    {# Ce caractère peut changer d'où la variable #}
     {% set charSeparate = "-" %}
-    {# Demande de Cristiana et Marie-Pierre, vu avec JJ #}
-    {# La zone "Input" est variable suivant la taille de la proposition/réponse #}
-    {# Il y a des tailles de zone Input possibles / {% if typoQuestion == "TLQROCLEN" %} #}
-    {# Déclaration d'un tableau en prévision d'un changement des fourchettes #}
-    {# Voir document de JJ #}
     {% set tabInputSize = [5, 10, 15, 20, 25, 30] %}
-
     {% set textRightAnswer = "" %}
     {% set maxValueSize = 0 %}
+
     {# Recherche du texte correct #}
     {% for j, proposition in subquestion.propositions %}
         {% if proposition.rightAnswer %}
@@ -139,9 +129,8 @@
                 {% for i in 1..textRightAnswer|length %}
                     {% set initTextRightAnswer = initTextRightAnswer~charSeparate %}
                 {% endfor %}
-            {% endif %}
 
-            {% if typoQuestion == "TLQROCSYL"  %}
+            {% elseif typoQuestion == "TLQROCSYL"  %}
                 {% set syllable = subquestion.mediaSyllable.description %}
                 {% set html = "" %}
                 {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
@@ -152,14 +141,11 @@
                 </div>" %}
                 {% set selector = "#"~proposition.media.description~"#" %}
                 {% set texte = texte|replace({(selector): html}) %}
-            {% endif %}
 
-            {% if typoQuestion == "TLQROCFIRST"  %}
+            {% elseif typoQuestion == "TLQROCFIRST"  %}
                 {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
                 {% set initTextRightAnswer = proposition.media.description|slice(0, 1) %}
             {% endif %}
-
-
         {% endif %}
     {% endfor %}
 
