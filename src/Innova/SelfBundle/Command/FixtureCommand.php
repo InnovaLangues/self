@@ -106,7 +106,8 @@ class FixtureCommand extends ContainerAwareCommand
             foreach ($typologiesToDelete as $typology) {
                 if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)) {
                     $em->remove($typo);
-                    $output->writeln("Delete Typology (".$typology.").");
+                    /* Database queries should use parameter binding fix #397 */
+                    $output->writeln("Delete Typology (".$typo->getName().").");
                 }
             }
             /*
@@ -237,8 +238,8 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             $editorLogObjects = array(
-                "contexte", "texte", "objet de la question", "question", "proposition", 
-                "reponse", "syllable", "clue", "instruction", "functional-instruction", 
+                "contexte", "texte", "objet de la question", "question", "proposition",
+                "reponse", "syllable", "clue", "instruction", "functional-instruction",
                 "comment", "feedback", "distractor", "app-paire", "app-media", "app-answer",
                 "app-distractor", "listening-limit", "clue-type", "task", "words-list", "blanks", "blank-text",
                 "theme", "fixed-order", "skill", "level", "typology", "status", "text-type"
