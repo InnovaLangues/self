@@ -110,7 +110,7 @@ class FixtureCommand extends ContainerAwareCommand
                     /* Database queries should use parameter binding fix #397 */
                     $typoName = $typo->getName();
                     $text = "Delete Typology (". $typoName .").";
-                    printf($text . "\n");
+                    printf($text);
                 }
             }
             /*
