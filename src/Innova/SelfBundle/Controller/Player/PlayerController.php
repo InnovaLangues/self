@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\USer;
 use Innova\SelfBundle\Entity\Questionnaire;
 
 /**
@@ -107,20 +108,20 @@ class PlayerController
         $previousQuestionnaire = null;
 
         $currentQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
-            array(  
+            array(
                     'test' => $test,
                     'questionnaire' => $questionnaire
             ))->getDisplayOrder();
-       
+
         $displayOrder = $currentQuestionnaireOrder - 1;
 
 
         $previousQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
-            array(  
+            array(
                     'test' => $test,
                     'displayOrder' => $displayOrder
             ));
-        
+
         if( $previousQuestionnaireOrder ){
             $previousQuestionnaire = $previousQuestionnaireOrder->getQuestionnaire();
         }
@@ -133,7 +134,7 @@ class PlayerController
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.
      */
-    protected function findAQuestionnaireWithoutTrace($test, $user)
+    protected function findAQuestionnaireWithoutTrace(Test $test, User $user)
     {
         $em = $this->entityManager;
         $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
