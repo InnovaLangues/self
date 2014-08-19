@@ -102,15 +102,13 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $typoName = '';
-            $typologiesToDelete = array("TLCMQRU", "TLCMTQRU", "TLQROCDCTU", "TLQROCDCTM", "titi");
+            $typologiesToDelete = array("TLCMQRU", "TLCMTQRU", "TLQROCDCTU", "TLQROCDCTM");
             foreach ($typologiesToDelete as $typology) {
                 if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)) {
                     $em->remove($typo);
                     /* Database queries should use parameter binding fix #397 */
-                    $typoName = $typo->getName();
-                    //$text = "Delete Typology (". $typoName .").";
-                    printf($typoName);
+                    $text = "Delete Typology (". $typo->getName() .").";
+                    printf($text . "\n");
                 }
             }
             /*
