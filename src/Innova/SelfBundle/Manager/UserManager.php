@@ -1,7 +1,7 @@
 <?php
 
 namespace Innova\SelfBundle\Manager;
-
+use Innova\SelfBundle\Entity\User;
 
 class UserManager
 {
@@ -12,12 +12,12 @@ class UserManager
         $this->entityManager = $entityManager;
     }
 
-    public function setLocale($user, $locale)
+    public function setLocale(User $user, $locale)
     {
         $em = $this->entityManager;
 
         $user->setLocale($locale);
-        
+
         $em->persist($user);
         $em->flush();
 

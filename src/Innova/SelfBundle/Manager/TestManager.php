@@ -1,6 +1,7 @@
 <?php
 
 namespace Innova\SelfBundle\Manager;
+use Innova\SelfBundle\Entity\Test;
 
 class TestManager
 {
@@ -11,9 +12,8 @@ class TestManager
         $this->entityManager = $entityManager;
     }
 
-    public function getQuestionnaires($test)
+    public function getQuestionnaires(Test $test)
     {
-        $em = $this->entityManager;
         $orders = $test->getOrderQuestionnaireTests();
         $questionnaires = array();
 

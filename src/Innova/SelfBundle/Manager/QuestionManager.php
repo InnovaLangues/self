@@ -25,7 +25,7 @@ class QuestionManager
         return $question;
     }
 
-    public function removeSubquestions($question)
+    public function removeSubquestions(Question $question)
     {
         $em = $this->entityManager;
 

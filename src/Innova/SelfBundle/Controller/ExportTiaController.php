@@ -35,7 +35,7 @@ class ExportTiaController
      *     name = "csv-export-tia"
      * )
      *
-     * @Method("GET|POST")
+     * @Method("GET")
      * @Template("InnovaSelfBundle:Export:exportTiaCsvSQL.html.twig")
      */
     public function exportTiaCsvSQLAction($language, $level, $test)
@@ -145,8 +145,6 @@ class ExportTiaController
                                 $cptProposition++;
                                 if ($proposition->getRightAnswer()) {
                                     $nbPropositionRightAnswser++;
-                                    $rightProps[] = $proposition->getId();
-
                                 }
                                 $propLetters[$proposition->getId()] = $arr[$cptProposition];
                             }

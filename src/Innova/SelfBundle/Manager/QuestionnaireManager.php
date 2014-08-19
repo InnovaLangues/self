@@ -34,7 +34,7 @@ class QuestionnaireManager
         return $questionnaire;
     }
 
-    public function setTypology($questionnaire, $typologyName)
+    public function setTypology(Questionnaire $questionnaire, $typologyName)
     {
         $em = $this->entityManager;
         $arrayLikeTypos = array("TQRU", "TQRM", "TVFNM", "TVF");
