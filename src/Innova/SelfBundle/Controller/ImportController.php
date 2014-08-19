@@ -42,7 +42,7 @@ class ImportController
      *     name = "csv-import",
      *     requirements={"language" = "en|it", "level" = "a1|b1|b2"}
      * )
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      * @Template()
      */
     public function importCsvSQLAction($language, $level)
