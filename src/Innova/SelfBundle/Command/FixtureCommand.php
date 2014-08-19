@@ -107,7 +107,9 @@ class FixtureCommand extends ContainerAwareCommand
                 if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)) {
                     $em->remove($typo);
                     /* Database queries should use parameter binding fix #397 */
-                    $output->writeln("Delete Typology (".$typo->getName().").");
+                    $typoName = $typo->getName();
+                    $text = "Delete Typology (". $typoName .").";
+                    $output->writeln($text);
                 }
             }
             /*

@@ -42,7 +42,7 @@ class MediaClickController extends Controller
 
     /**
      * @Route("/increment-media-clicks", name="increment-media-clicks", options={"expose"=true})
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
     public function incrementMediaClicksAction()
     {

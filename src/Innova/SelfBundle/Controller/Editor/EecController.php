@@ -73,14 +73,15 @@ class EecController
             preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
             $i = 0;
-            for ($i=0; $i < count($lacunes[1]); $i++) {
+            $countLacunes = count($lacunes[1]);
+            for ($i=0; $i < $countLacunes; $i++) {
                 $lacune = $lacunes[1][$i];
                 $subquestion = $this->subquestionManager->createSubquestion($question->getTypology(), $question);
                 $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
                 $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
 
                 if ($question->getTypology()->getName() == "TLCMLDM") {
-                    for ($j=0; $j < count($lacunes[1]); $j++) {
+                    for ($j=0; $j < $countLacunes; $j++) {
                         if ($j != $i) {
                             $lacune = $lacunes[1][$j];
                             $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
@@ -120,7 +121,8 @@ class EecController
             preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
             $i = 0;
-            for ($i=0; $i < count($lacunes[1]); $i++) {
+            $countLacunes = count($lacunes[1]);
+            for ($i=0; $i < $countLacunes; $i++) {
                 $lacune = $lacunes[1][$i];
                 $subquestion = $this->subquestionManager->createSubquestion($question->getTypology(), $question);
                 $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");

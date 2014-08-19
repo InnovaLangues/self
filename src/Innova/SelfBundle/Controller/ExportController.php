@@ -58,7 +58,7 @@ class ExportController
      *     name = "csv-export"
      * )
      *
-     * @Method("GET|POST")
+     * @Method("GET")
      * @Template()
      */
     public function exportCsvSQLAction($language, $level, $test)
@@ -196,7 +196,7 @@ class ExportController
                 $csv .= "T" . $cpt_questionnaire . " - TEMPS;";
 
                 $questions = $questionnaire->getQuestions();
-                
+
                 if(count($questions) > 0){
                     $subquestions = $questions[0]->getSubquestions();
                     $cpt=0;
@@ -368,7 +368,7 @@ class ExportController
      * calculateScore function
      *
      */
-    private function calculateScore($user, $test)
+    private function calculateScore(User $user, Test $test)
     {
         $em = $this->entityManager;
 
