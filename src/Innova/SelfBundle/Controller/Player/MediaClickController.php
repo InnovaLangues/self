@@ -119,13 +119,14 @@ class MediaClickController extends Controller
     private function getMediaClickCount($media, $test, $questionnaire)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
 
-        $mediaClicks = $em->getRepository('InnovaSelfBundle:MediaClick')->findBy(array(
-                                                                                    'media' => $media,
-                                                                                    'test' => $test,
-                                                                                    'questionnaire' => $questionnaire
-                                                                                ));
+        $mediaClicks = $em->getRepository('InnovaSelfBundle:MediaClick')
+                        ->findBy(array(
+                                        'media' => $media,
+                                        'test' => $test,
+                                        'questionnaire' => $questionnaire
+                                      )
+                                );
 
         return count($mediaClicks);
     }
@@ -145,7 +146,7 @@ class MediaClickController extends Controller
         } else {
             $remainingListening = $mediaLimit->getListeningLimit() - $nbClick;
         }
-        
+
         return $remainingListening;
     }
 }

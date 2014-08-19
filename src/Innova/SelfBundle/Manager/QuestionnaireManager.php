@@ -21,7 +21,6 @@ class QuestionnaireManager
 
         $questionnaire = new Questionnaire();
         $questionnaire->setTheme("");
-        //$questionnaire->addTest($test);
         $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);
         $questionnaire->setFixedOrder(0);
