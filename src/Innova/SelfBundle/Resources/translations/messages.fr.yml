@@ -163,7 +163,7 @@ editor:
         contexte: contexte
         texte: objet de la question
         objet de la question: objet de la question
-        question: 
+        question:
         proposition: proposition
         reponse: réponse
         syllable: syllabe
@@ -187,7 +187,8 @@ editor:
         skill: compétence
         level: niveau
         typology: typologie
-        status: status
+        status: statut
+        test: Test(s)
         text-type: type d'objet de la question
 
 player:
