@@ -30,7 +30,7 @@
                 <th>{{ 'editor.log.theme'|trans|capitalize}}</th>
                 <th>{{ 'editor.log.level'|trans|capitalize}}</th>
                 <th>{{ 'editor.log.skill'|trans|capitalize}}</th>
-                <th>Test(s)</th>
+                <th>{{ 'editor.log.test'|trans|capitalize}}</th>
             </tr>
         </thead>
         <tbody>
@@ -51,17 +51,17 @@
                         {{ questionnaire.theme }}
                     {% else %}
                         {{ 'editor.task.unnamed' | trans }}
-                    {% endif %} 
+                    {% endif %}
                 </td>
                 <td>
                     {% if questionnaire.level is not null %}
                         {{ questionnaire.level.name }}
-                    {% endif %} 
+                    {% endif %}
                 </td>
                 <td>
                     {% if questionnaire.skill is not null %}
                         {{ questionnaire.skill.name }}
-                    {% endif %} 
+                    {% endif %}
                 </td>
                 <td>
                     {% set countTests = questionnaire.orderQuestionnaireTests|length %}
@@ -86,8 +86,15 @@
             </tr>
         {% endfor %}
         </tbody>
+        <tr>
+            <th>{{ 'editor.log.status'|trans|capitalize}}</th>
+            <th>{{ 'editor.log.theme'|trans|capitalize}}</th>
+            <th>{{ 'editor.log.level'|trans|capitalize}}</th>
+            <th>{{ 'editor.log.skill'|trans|capitalize}}</th>
+            <th>{{ 'editor.log.test'|trans|capitalize}}</th>
+        </tr>
     </table>
-{% endif %} 
+{% endif %}
 {% endblock %}
 
 {% block javascripts %}
