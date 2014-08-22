@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block body -%}
+    <!-- #420 : ajout d'un bouton "Revenir à la liste des tâches"
+    et ainsi faire comme pour les tests -->
+    <a class="btn btn-default" href="{{ path('editor_questionnaires_show') }}">
+        <span class="glyphicon glyphicon-chevron-left"></span>{{ 'editor.task.back_to_list' | trans }}
+    </a>
+    <hr/>
     <ul class="nav nav-tabs" role="tablist">
         {% if test is defined %}
         <li>
@@ -66,6 +72,3 @@
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor_crop.js") }}"></script>
     {{ tinymce_init() }}
 {% endblock %}
-
-
-

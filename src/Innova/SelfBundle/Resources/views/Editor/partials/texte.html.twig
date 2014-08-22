@@ -22,11 +22,11 @@
                 <hr/>
                 <div class="text-center">
                     {% for i, textType in ['monologue', 'dialogue', 'dialogue interrompu'] %}
-                         <span class="btn btn-default btn-xs text-type" data-text-type="{{ i }}"> 
+                         <span class="btn btn-default btn-xs text-type" data-text-type="{{ i }}">
                          {% if questionnaire.dialogue == i %}
                             <strong>{{ textType }}</strong>
                         {% else %}
-                            {{ textType }} 
+                            {{ textType }}
                         {% endif %}
                         </span>
                     {% endfor %}
