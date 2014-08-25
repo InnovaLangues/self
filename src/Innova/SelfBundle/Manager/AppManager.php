@@ -2,6 +2,10 @@
 
 namespace Innova\SelfBundle\Manager;
 
+use Innova\SelfBundle\Entity\Proposition;
+use Innova\SelfBundle\Entity\Media;
+use Innova\SelfBundle\Entity\Question;
+
 class AppManager
 {
     protected $entityManager;
@@ -13,7 +17,7 @@ class AppManager
         $this->propositionManager = $propositionManager;
     }
 
-    public function createAppFakeAnswer($currentProposition)
+    public function createAppFakeAnswer(Proposition $currentProposition)
     {
         $currentSubquestion = $currentProposition->getSubquestion();
         $question = $currentSubquestion->getQuestion();
@@ -48,7 +52,7 @@ class AppManager
         return true;
     }
 
-    public function appDeletePropositions($media, $question)
+    public function appDeletePropositions(Media $media, Question $question)
     {
         $em = $this->entityManager;
 

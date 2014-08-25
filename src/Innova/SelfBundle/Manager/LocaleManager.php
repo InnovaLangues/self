@@ -2,6 +2,8 @@
 
 namespace Innova\SelfBundle\Manager;
 
+use Symfony\Component\HttpFoundation\Request;
+
 class LocaleManager
 {
     private $securityContext;
@@ -32,7 +34,7 @@ class LocaleManager
      *
      * @return string The locale string as en, fr, es, etc.
      */
-    public function getUserLocale($request)
+    public function getUserLocale(Request $request)
     {
         $locale = "fr";
 
