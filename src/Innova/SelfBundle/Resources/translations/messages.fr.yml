@@ -91,6 +91,7 @@ editor:
         back_to_list: Revenir à la liste des tests
         new: Nouveau test
     task:
+        tasks: Tâches
         back_to_list: Retour à la liste des tâches
         list: Liste des tâches pour le test <strong>%testName%</strong>
         list_global: Liste des tâches
@@ -105,9 +106,11 @@ editor:
         delete_confirm_yes: Oui, supprimer la tâche
         delete_confirm_no: Non
         unnamed: Tâche sans nom
+        comments: Commentaires
+        identity: Fiche d'identité
+        history: Historique
         no_potential: Aucune tâche à associer
         no_task:  Il n'y aucune tâche de créée actuellement.
-
     questionnaire:
         general_infos: Informations générales
         title: Titre
