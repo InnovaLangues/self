@@ -23,10 +23,6 @@ export:
     files_count: %nbFile% fichier(s) dans le dossier
     tests_list: Tests exportés
 
-import:
-    traces: Traces
-    finished: Traitement du fichier <u>%fileName%</u> terminé
-
 user:
     edit: Edition d'un utilisateur
     back_to_list: Retour à la liste des utilisateurs
