@@ -87,6 +87,7 @@ editor:
         back_to_list: Revenir à la liste des tests
         new: Nouveau test
     task:
+        tasks: Tâches
         back_to_list: Retour à la liste des tâches
         list: Liste des tâches pour le test <strong>%testName%</strong>
         manage: Gérer les tâches
@@ -98,6 +99,11 @@ editor:
         delete_confirm_yes: Oui, supprimer la tâche
         delete_confirm_no: Non
         unnamed: Tâche sans nom
+        comments: Commentaires
+        identity: Fiche d'identité
+        history: Historique
+        no_potential: Aucune tâche à associer
+        no_task:  Il n'y aucune tâche de créée actuellement.
     questionnaire:
         general_infos: Informations générales
         title: Titre
@@ -139,6 +145,40 @@ editor:
         proposition: Proposition
         associated_answer: Réponse associée
         add_answer: Ajouter une réponse
+    log:
+        editor_create: Création de
+        editor_edit: Edition de
+        editor_delete: Suppression de
+        contexte: contexte
+        texte: objet de la question
+        objet de la question: objet de la question
+        question:
+        proposition: proposition
+        reponse: réponse
+        syllable: syllabe
+        clue: indice
+        instruction: consigne didactique
+        functional-instruction: consigne fonctionnelle
+        comment: commentaire
+        feedback: feedback
+        distractor: distracteur
+        app-paire: paire
+        app-media: media
+        app-answer: réponse
+        app-distractor: distracteur
+        listening-limit: limite d'écoutes
+        clue-type: type d'indice
+        task: tâche
+        words-list: liste de mots
+        blanks: lacunes
+        theme: nom de la tâche
+        fixed-order: ordre fixe
+        skill: compétence
+        level: niveau
+        typology: typologie
+        status: statut
+        test: Test(s)
+        text-type: type d'objet de la question
 
 
 player:
