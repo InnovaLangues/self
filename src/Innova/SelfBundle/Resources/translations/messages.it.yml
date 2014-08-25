@@ -23,10 +23,6 @@ export:
     files_count: %nbFile% file(s) nella cartella 
     tests_list: Test esportati
 
-import:
-    traces: Tracciamento
-    finished: File finalizzato (chiedere arnaud)
-
 user:
     edit: Modifica la lista degli utenti
     back_to_list: Ritorno alla lista degli utenti
