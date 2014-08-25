@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Proposition;
+use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Media;
 
 class PropositionManager
 {
@@ -13,7 +15,7 @@ class PropositionManager
         $this->entityManager = $entityManager;
     }
 
-    public function createProposition($subquestion, $media, $rightAnswer)
+    public function createProposition(Subquestion $subquestion, Media $media, $rightAnswer)
     {
         $em = $this->entityManager;
 
