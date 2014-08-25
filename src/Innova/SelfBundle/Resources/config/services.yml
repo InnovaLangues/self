@@ -49,9 +49,20 @@ services:
         class: Innova\SelfBundle\Controller\Editor\QuestionnaireController
         arguments:
             questionnaireManager:   @self.questionnaire.manager
-            questionManager:    @self.question.manager
             orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
             editorLogManager:   @self.editor_log.manager
+            entityManager:      @doctrine.orm.entity_manager
+            templating:         @templating
+        calls:
+            - [setRequest, [@request]]
+        scope: request
+
+    innova_editor_task:
+        class: Innova\SelfBundle\Controller\Editor\TaskController
+        arguments:
+            questionnaireManager:   @self.questionnaire.manager
+            questionManager:    @self.question.manager
+            orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
             testManager: @self.test.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
