@@ -91,9 +91,10 @@ class EecController
                 }
 
                 $em->persist($lacuneMedia);
-                $em->flush();
                 $em->refresh($subquestion);
             }
+            
+            $em->flush();
         }
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
@@ -130,12 +131,12 @@ class EecController
 
                 $em->persist($subquestion);
                 $em->persist($lacuneMedia);
-                $em->flush();
                 $em->refresh($subquestion);
             }
+            $em->flush();
         }
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }
