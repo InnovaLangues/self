@@ -90,7 +90,7 @@ class QuestionnaireController
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($testId);
         $potentialQuestionnaires = $this->testManager->getPotentialQuestionnaires($test);
-       
+
         return array(
             'test' => $test,
             'orders' => $orders,
@@ -99,7 +99,7 @@ class QuestionnaireController
     }
 
     /**
-     * Get questionnaires not associated yet to a test 
+     * Get questionnaires not associated yet to a test
      *
      * @Route("/test/{testId}/potentials", name="editor_test_questionnaires_potentials", options={"expose"=true})
      * @Method("GET")
@@ -155,7 +155,7 @@ class QuestionnaireController
 
         $questionnaire = $this->questionnaireManager->createQuestionnaire();
         $this->questionManager->createQuestion($questionnaire);
-        
+
         if($test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'))){
             $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
         }
@@ -188,16 +188,16 @@ class QuestionnaireController
             $em->persist($questionnaire);
             $em->flush();
         } else {
-            $msg = "Un tâche avec le même nom existe déja";
+            $msg = "Une tâche avec le même nom existe déja";
         }
-        
+
         $this->editorLogManager->createEditorLog("editor_edit", "theme", $questionnaire);
 
         return new JsonResponse(
             array(
-                'theme' => $questionnaire->getTheme(),
-                'msg' => $msg
-            )
+               'theme' => $questionnaire->getTheme(),
+               'msg' => $msg
+           )
         );
     }
 

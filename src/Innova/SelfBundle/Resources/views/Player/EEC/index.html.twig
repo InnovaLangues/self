@@ -17,7 +17,7 @@
         {% include "InnovaSelfBundle:Player/CE:situation.html.twig" %}
         </div>
         <div id="right-container-CO" class="col-md-7 right-container">
-            {% if (question.typology.name in typoCe) %} #}
+            {% if (question.typology.name in typoCe) %}
                 <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
                     {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
                     {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
@@ -33,7 +33,7 @@
             {% endif %}
         </div>
     {% else %}
-        {% if (question.typology.name in typoCe) %} #}
+        {% if (question.typology.name in typoCe) %}
             <div id="left-container-CE" class="col-md-5 left-container">
             {% include "InnovaSelfBundle:Player/CE:contexte.html.twig" %}
             {% include "InnovaSelfBundle:Player/CE:situation.html.twig" %}
