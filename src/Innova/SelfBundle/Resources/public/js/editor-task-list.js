@@ -129,6 +129,6 @@ function createTask(testId){
         }
     })
     .done(function(data) {
-        window.location = Routing.generate('editor_questionnaire_show', {'questionnaireId': data.questionnaireId });
+        window.location = Routing.generate('editor_questionnaire_show', {'questionnaireId': data.questionnaireId, 'testId' : data.testId });
     });
 }
