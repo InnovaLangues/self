@@ -75,7 +75,7 @@ class OrderQuestionnaireTestController
 
     /**
      * @Route("/editor_add_task_to_test", name="editor_add_task_to_test", options={"expose"=true})
-     * @Method("POST")
+     * @Method("PUT")
      * @Template("")
      */
     public function addTaskToTestAction()

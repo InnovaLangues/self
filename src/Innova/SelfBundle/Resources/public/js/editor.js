@@ -667,7 +667,7 @@ function setTextType(textType){
 
     $.ajax({
         url: Routing.generate('set-text-type'),
-        type: 'POST',
+        type: 'PUT',
         data: {
             questionnaireId: questionnaireId,
             textType: textType,
