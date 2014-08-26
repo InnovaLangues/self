@@ -2,7 +2,8 @@
     <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" rel="tooltip" data-original-title="{{ 'player.tooltip.context' | trans }}" />
 </div>
 
-{% if questionnaire.mediaInstruction is not null %}
+{#fix #433 : Enlever l'image texte #}
+{% if questionnaire.mediaText is not null %}
     <div id="situation-icon">
         <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-EEC.png" rel="tooltip" data-original-title="Objet de la question" />
     </div>
