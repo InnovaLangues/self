@@ -59,7 +59,7 @@ class ExportController
      *     name = "csv-export"
      * )
      *
-     * @Method("GET")
+     * @Method("PUT")
      * @Template()
      */
     public function exportCsvSQLAction($language, $level, $test)
@@ -343,20 +343,15 @@ class ExportController
         if ($dossier = opendir($csvPathExport)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..') {
-                    $nbFile++; // Number of files + 1
+                    $nbFile++; 
                     $fileList[$nbFile] = $fichier;
                 }
             }
         }
 
-        closedir($dossier); // Directory close
-
-        //Sort file
+        closedir($dossier);
         arsort($fileList);
 
-        //
-        // To view
-        //
         return array(
             "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
             "csvName"             => $csvName,
