@@ -12,13 +12,13 @@
                     <div class="panel-body">
                         <div>
                             {% set level = test.orderQuestionnaireTests[0].questionnaire.level.name|lower %}
-                            <a href="{{ path('csv-export', {'language': test.language.name| slice(0, 2)|lower, 'level': level, 'test': test.id } )}}">{{ test.name }}</a>
+                            <a href="{{ path('csv-export', {'language': test.language.name| slice(0, 2)|lower, 'level': level, 'test': test.id } )}}" data-method="PUT" class="rest">{{ test.name }}</a>
                         </div>
                         <div>
-                            <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': level, 'test': test.id } )}}">{{ test.name }} Tia Plus</a>
+                            <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': level, 'test': test.id } )}}" data-method="PUT" class="rest">{{ test.name }} Tia Plus</a>
                         </div>
                         <div>
-                            <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': level, 'test': test.id, 'levelId': test.orderQuestionnaireTests[0].questionnaire.level.id } )}}">{{ test.name }} Tia Plus</a>
+                            <a href="{{ path('csv-export-tia', { 'language': test.language.name| slice(0, 2)|lower, 'level': level, 'test': test.id, 'levelId': test.orderQuestionnaireTests[0].questionnaire.level.id } )}}" data-method="PUT" class="rest">{{ test.name }} Tia Plus</a>
                         </div>
                     </div>
                 </div>
@@ -26,4 +26,10 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/jquery.restfulizer.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/export.js") }}"></script>
 {% endblock %}

@@ -35,7 +35,7 @@ class ExportTiaController
      *     name = "csv-export-tia"
      * )
      *
-     * @Method("GET")
+     * @Method("PUT")
      * @Template("InnovaSelfBundle:Export:exportTiaCsvSQL.html.twig")
      */
     public function exportTiaCsvSQLAction($language, $level, $test)
