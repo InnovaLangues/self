@@ -115,11 +115,11 @@ class TaskController
     /**
      * Finds and displays a Questionnaire entity.
      *
-     * @Route("/questionnaire/{questionnaireId}", name="editor_questionnaire_show", options={"expose"=true})
+     * @Route("/questionnaire/{questionnaireId}/{testId}", name="editor_questionnaire_show", options={"expose"=true} , defaults={"testId" = null})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:index.html.twig")
      */
-    public function showAction($questionnaireId)
+    public function showAction($questionnaireId, $testId)
     {
 
         $em = $this->entityManager;
@@ -135,7 +135,8 @@ class TaskController
         return array(
             'questionnaire' => $questionnaire,
             'typologies' => $typologies,
-            'status' => $status
+            'status' => $status, 
+            'testId' => $testId
         );
     }
 
@@ -155,11 +156,15 @@ class TaskController
 
         if($test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'))){
             $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
+            $testId = $test->getId();
+        } else {
+            $testId = NULL;
         }
 
         return new JsonResponse(
             array(
                 'questionnaireId' =>  $questionnaire->getId(),
+                'testId' => $testId
             )
         );
 
