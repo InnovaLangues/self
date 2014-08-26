@@ -58,7 +58,7 @@ function addTaskToTest(questionnaireId, testId){
     $("#loader-img").show();
     $.ajax({
         url: Routing.generate('editor_add_task_to_test'),
-        type: 'POST',
+        type: 'PUT',
         data: 
         { 
             testId: testId,

@@ -237,7 +237,7 @@ class QuestionnaireController
     /**
      *
      * @Route("/questionnaires/set-text-type", name="set-text-type", options={"expose"=true})
-     * @Method("POST")
+     * @Method("PUT")
      */
     public function setTextTypeAction()
     {
