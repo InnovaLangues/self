@@ -33,6 +33,13 @@
 
                 {% for i, subquestion in questionnaire.questions[0].subquestions %}
 
+                    {# fix #438 : Affichage aléatoires des valeurs dans les listes de choix #}
+                    {% if questionnaire.fixedOrder %}
+                        {% set propositions = subquestion.propositions %}
+                    {% else %}
+                        {% set propositions = subquestion.propositions | shuffle %}
+                    {% endif %}
+
                     {# #}
                     {# Traitement sur l'indice car il s'affiche suivant le type #}
                     {# #}
@@ -283,7 +290,7 @@
                         {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
                         {% set html = html~"<option value=''>"~"</option>" %}
                         {% set rightAnswer = '' %}
-                        {% for j, proposition in subquestion.propositions %}
+                        {% for j, proposition in subquestion.propositions | shuffle %}
                             {% set html = html~"<option id='input-proposition"~ proposition.id ~"' value='"~ proposition.id ~"'>"~proposition.media.description~"</option>" %}
                             {% if proposition.rightAnswer %}
                                 {% set rightAnswer = proposition.media.description %}
