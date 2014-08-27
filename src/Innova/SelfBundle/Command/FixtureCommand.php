@@ -108,7 +108,7 @@ class FixtureCommand extends ContainerAwareCommand
                     $em->remove($typo);
                     /* Database queries should use parameter binding fix #397 */
                     $typoName = $typo->getName();
-                    $output->writeln("Delete Typo (".$typoName.")");
+                    $output->writeln(" Typo ".$typoName." removed");
                 }
             }
             /*
