@@ -26,10 +26,8 @@ php app/console cache:clear --no-debug --env=prod
 ### Create needed dirs and Set up rights 
 ``` bash
 mkdir -p web/upload/media/
-mkdir web/upload/import/
-mkdir web/upload/export/
-sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ web/upload/media web/upload/import web/upload/export app/cache app/logs app/sessions
-sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ web/upload/media web/upload/import web/upload/export app/cache app/logs app/sessions
+sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ web/upload/media app/cache app/logs app/sessions app/data
+sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ web/upload/media app/cache app/logs app/sessions app/data
 ```
 
 ### Create a new admin user :
@@ -37,17 +35,11 @@ sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ web/upload/media
 php app/console fos:user:create admin --super-admin
 ```
 
-### Copy mp3 files and csv files into web/upload/import...
-
 ### Convert wav -> mp3 if needed
 ``` bash
-cd web/upload/import/mp3..
 find . -iname "*.wav" -exec sox {} {}.mp3 \;
 rename "s/wav\.//g" *wav.mp3
 ``` 
-
-### Connect with admin user and go to /admin/csv-import
-> wait :)
 
 ### Convert mp3 -> ogg and flv -> webm
 ``` bash

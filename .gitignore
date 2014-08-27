@@ -5,7 +5,6 @@ app/bootstrap*
 vendor/*
 */logs/*
 */cache/*
-web/uploads/*
 web/bundles/*
 web/upload/*
 
@@ -31,8 +30,8 @@ app/sessions/*
 !app/sessions/.gitkeep
 
 # export csv
-web/upload/export/csv/*
-!web/upload/export/csv/.gitkeep
+app/data/export/*
+!app/data/export/.gitkeep
 
 # avalanche thumbnail
 web/upload/thumbnail/*

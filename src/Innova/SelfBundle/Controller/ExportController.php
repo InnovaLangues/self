@@ -5,6 +5,9 @@ namespace Innova\SelfBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\HttpFoundation\Response;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
 /**
@@ -50,63 +53,63 @@ class ExportController
         );
     }
 
+
     /**
      * exportCsvSQL function
      * Update : 04/2014 by EV pilote 2
      *
      * @Route(
-     *     "/admin/csv-export/{language}/{level}/{test}",
+     *     "/admin/test/{testId}/file/{filename}",
+     *     name = "get-file"
+     * )
+     *
+     * @Method("GET")
+     */
+    public function getFileAction($testId, $filename)
+    {
+        $file = $this->kernelRoot ."/data/export/".$testId."/".$filename;
+
+        $response = new Response();
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($file));
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($file) . '";');
+        $response->headers->set('Content-length', filesize($file));
+        $response->sendHeaders();
+
+        $response->setContent(readfile($file));
+
+        return $response;
+    }
+
+
+    /**
+     * exportCsvSQL function   
+     * @Route(
+     *     "/admin/csv-export/test/{testId}",
      *     name = "csv-export"
      * )
      *
      * @Method("PUT")
      * @Template()
      */
-    public function exportCsvSQLAction($language, $level, $test)
+    public function exportCsvAction($testId)
     {
+        $fs = new Filesystem();
         $em = $this->entityManager;
-
-        //
-        // CSV Export part
-        //
-
-        $rootPath = $this->kernelRoot . "/../";
-
-        // File export name
-        // Spécificité Anglais : on a un seul test pour le pilote 2.
-        if ($language == "en") {
-            // File export name
-            $csvName = 'export-' . $language . "_" . date("d-m-Y_H:i:s") . '.csv';
-            // File export path
-            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language;
-            // Symfony
-            $urlCSVRelativeToWeb = 'upload/export/csv/p2/' . $language . "/";
-        } elseif ($language == "it") {
-            // File export name
-            $csvName = 'export-' . $language . "-" . $level . "_" . date("d-m-Y_H:i:s") . '.csv';
-            // File export path
-            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language . "/" . $level;
-            // Symfony
-            $urlCSVRelativeToWeb = 'upload/export/csv/p2/' . $language . "/" . $level . "/";
-        }
-        // Path + Name
-        $csvPath = $csvPathExport . "/" . $csvName;
-
-        // Open file
-        $csvh = fopen($csvPath, 'w+');
-
-        // Init csv write variable
-        $csv = '';
-
-        // Loop for THE test
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($test);
-
+        $csv = "";
         $result = array();
+        
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        //$csvPathExport = $this->kernelRoot ."/../web/upload/export/".$testId;
+        $csvPathExport = $this->kernelRoot ."/data/export/".$testId."/";
+        $urlRelativeToWeb = 'upload/export/' . $testId . "/";
+        $csvName = 'export-' . $testId . "_" . date("d-m-Y_H:i:s") . '.csv';
+        $csvPath = $csvPathExport . "/" . $csvName;
+        $fs->mkdir($csvPathExport, 0777);
+        $csvh = fopen($csvPathExport . "/" . $csvName, 'w+');
 
         $questionnaires = $test->getQuestionnaires();
-        // For THE test, loop on the Questionnaire
         foreach ($questionnaires as $questionnaire) {
-            // For THE questionnaire, loop on the Trace
             $traces = $questionnaire->getTraces();
             foreach ($traces as $trace) {
                 $userId  = $trace->getUser()->getId();
@@ -323,15 +326,10 @@ class ExportController
 
         }
 
-        // FOOTER
-        // Empty
-
         fwrite($csvh, $csv);
         fclose($csvh);
 
-        //
         // Export file list
-        //
         $fileList = array();
         $nbFile = 0;
         if ($dossier = opendir($csvPathExport)) {
@@ -347,10 +345,10 @@ class ExportController
         arsort($fileList);
 
         return array(
-            "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
-            "csvName"             => $csvName,
-            "fileList"            => $fileList,
-            "nbFile"              => $nbFile
+            "csvName" => $csvName,
+            'testId' => $testId,
+            "fileList"=> $fileList,
+            "nbFile" => $nbFile
         );
     }
 

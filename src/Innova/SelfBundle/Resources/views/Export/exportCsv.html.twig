@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+        <h3>{{ 'export.file_generated' | trans }}</h3>
+
+        <h3>
+            <a href="{{ path('get-file', {'testId': testId, 'filename': csvName } )}}">{{ 'export.file_download' | trans }}</a>
+        </h3>
+
+        <h3>{{ 'export.files_list' | trans }}</h3>
+
+        <h4>{{ 'export.files_count' | trans({'%nbFile%': nbFile}) }}</h4>
+        {% for file in fileList %}
+            <h5>
+                <a href="{{ path('get-file', {'testId': testId, 'filename': file } )}}">{{ file }}</a>
+            </h5>
+        {% endfor %}
+{% endblock %}
