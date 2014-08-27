@@ -25,9 +25,8 @@ php app/console cache:clear --no-debug --env=prod
 
 ### Create needed dirs and Set up rights 
 ``` bash
-mkdir -p web/upload/media/
-sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ web/upload/media app/cache app/logs app/sessions app/data/export
-sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ web/upload/media app/cache app/logs app/sessions app/data/export
+sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/sessions app/data/export
+sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/sessions app/data/export
 ```
 
 ### Create a new admin user :
