@@ -178,7 +178,7 @@
                                 {% set initTextRightAnswer = textRightAnswer %}
                                 {% set html = html~"<span class='form-group'><span class='input-group'>
                                     <span class='input-group-addon'>"~syllable~"</span>
-                                    <input size='"~maxValueSize ~"' data-right-answer-length='"~textRightAnswer|length~"' type='text' class='form-control mask'>
+                                    <input name='"~ subquestion.id ~"[]' size='"~maxValueSize ~"' data-right-answer-length='"~textRightAnswer|length~"' type='text' class='form-control'>
                                 </span></span>" %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}

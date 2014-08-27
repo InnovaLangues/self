@@ -73,6 +73,7 @@ class TraceController
     {
         $em = $this->entityManager;
 
+
         $post = $this->request->request->all();
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($post["questionnaireId"]);
@@ -121,14 +122,20 @@ class TraceController
      */
     private function parsePost($post, $trace)
     {
+
+var_dump($post);
         $this->session->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
-        foreach ($post as $subquestionId => $postVar) {
+        foreach ($post as $subquestionId => $postVar)
+        {
             // Cas classique
-            if (is_array($postVar)) {
-                foreach ($postVar as $key => $propositionId) {
+            if (is_array($postVar))
+            {
+                foreach ($postVar as $key => $propositionId)
+                {
                     // Cas 1 : si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
-                    if (is_numeric($propositionId)) {
+                    if (is_numeric($propositionId))
+                    {
                         foreach ($postVar as $key => $propositionId) {
                             $this->createAnswer($trace, $propositionId, $subquestionId);
                         }
@@ -139,9 +146,9 @@ class TraceController
                             $this->createAnswerProposition($trace, $propositionId, $subquestionId);
                         }
                     }
-                }
+                } // Fin foreach dans if
             }
-        }
+        } // Fin foreach principal
     }
 
     /**
