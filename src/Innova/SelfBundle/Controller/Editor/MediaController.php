@@ -198,7 +198,7 @@ class MediaController
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $entity));
                 }
                 elseif ($entityField == "comment") {
-                    $comment = $this->commentManager->createComment($questionnaire, $media);
+                    $this->commentManager->createComment($questionnaire, $media);
                     $em->refresh($questionnaire);
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:comments.html.twig',array('questionnaire' => $entity));
                 }
@@ -231,12 +231,12 @@ class MediaController
                     $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
                     $subquestions = $questionnaire->getQuestions()[0]->getSubquestions();
                     foreach ($subquestions as $subquestion) {
-                        $proposition = $this->propositionManager->createProposition($subquestion, $media, false);
+                        $this->propositionManager->createProposition($subquestion, $media, false);
                     }
                     $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
                 } else {
                     $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
-                    $proposition = $this->propositionManager->createProposition($subquestion, $media, false);
+                    $this->propositionManager->createProposition($subquestion, $media, false);
 
                     $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('questionnaire' => $questionnaire, 'subquestion' => $subquestion));
                 }

@@ -75,18 +75,13 @@ class ExportController
         // File export name
         // Spécificité Anglais : on a un seul test pour le pilote 2.
         if ($language == "en") {
-            // File export path
-            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language;
             // File export name
             $csvName = 'export-' . $language . "_" . date("d-m-Y_H:i:s") . '.csv';
             // File export path
             $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language;
             // Symfony
             $urlCSVRelativeToWeb = 'upload/export/csv/p2/' . $language . "/";
-        }
-        if ($language == "it") {
-            // File export path
-            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language . "/" . $level;
+        } elseif ($language == "it") {
             // File export name
             $csvName = 'export-' . $language . "-" . $level . "_" . date("d-m-Y_H:i:s") . '.csv';
             // File export path
@@ -216,7 +211,6 @@ class ExportController
         // PARTIE BODY
         //
         // Loop to display all data
-        $rightProps = array();
         $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
         foreach ($users as $user) {
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
@@ -369,7 +363,7 @@ class ExportController
         $em = $this->entityManager;
 
         // Initialisation des variables.
-        $score = $nbAnswers = 0;
+        $score = 0;
 
         // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
         $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(

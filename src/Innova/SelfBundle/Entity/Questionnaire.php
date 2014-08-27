@@ -130,21 +130,21 @@ class Questionnaire
     private $theme;
 
      /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(name="listeningLimit", type="integer")
      */
     private $listeningLimit;
 
      /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(name="dialogue", type="integer")
      */
     private $dialogue;
 
      /**
-     * @var string
+     * @var boolean
      *
      * @ORM\Column(name="fixedOrder", type="boolean")
      *
@@ -271,52 +271,6 @@ class Questionnaire
     public function getTheme()
     {
         return $this->theme;
-    }
-
-    /**
-     * Set originText
-     *
-     * @param  string        $originText
-     * @return Questionnaire
-     */
-    public function setOriginText($originText)
-    {
-        $this->originText = $originText;
-
-        return $this;
-    }
-
-    /**
-     * Get originText
-     *
-     * @return string
-     */
-    public function getOriginText()
-    {
-        return $this->originText;
-    }
-
-    /**
-     * Set exerciceText
-     *
-     * @param  string        $exerciceText
-     * @return Questionnaire
-     */
-    public function setExerciceText($exerciceText)
-    {
-        $this->exerciceText = $exerciceText;
-
-        return $this;
-    }
-
-    /**
-     * Get exerciceText
-     *
-     * @return string
-     */
-    public function getExerciceText()
-    {
-        return $this->exerciceText;
     }
 
     /**
@@ -767,7 +721,7 @@ class Questionnaire
     /**
      * Set dialogue
      *
-     * @param  boolean       $dialogue
+     * @param  integer       $dialogue
      * @return Questionnaire
      */
     public function setDialogue($dialogue)
@@ -780,7 +734,7 @@ class Questionnaire
     /**
      * Get dialogue
      *
-     * @return boolean
+     * @return integer
      */
     public function getDialogue()
     {
