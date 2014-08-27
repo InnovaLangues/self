@@ -187,7 +187,7 @@ class QuestionnaireController
         $em = $this->entityManager;
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
-        $typology = $this->questionnaireManager->setTypology($questionnaire, $typologyName);
+        $this->questionnaireManager->setTypology($questionnaire, $typologyName);
 
         $typologyName = "-";
         if ($typology = $questionnaire->getQuestions()[0]->getTypology()) {

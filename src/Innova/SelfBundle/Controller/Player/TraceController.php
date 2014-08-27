@@ -29,6 +29,7 @@ class TraceController
     protected $router;
     protected $securityContext;
     protected $request;
+    protected $user;
 
     /**
      * Class constructor
@@ -72,7 +73,6 @@ class TraceController
     public function saveTraceAction()
     {
         $em = $this->entityManager;
-
 
         $post = $this->request->request->all();
 
@@ -123,7 +123,6 @@ class TraceController
     private function parsePost($post, $trace)
     {
 
-var_dump($post);
         $this->session->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
         foreach ($post as $subquestionId => $postVar)

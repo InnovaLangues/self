@@ -41,7 +41,6 @@ class UploadController extends Controller
     public function uploadFileAction()
     {
         $request = $this->request;
-        $fileType = $request->get("file-type");
 
         $authorizedExtensions = array('png', 'mp3', 'jpg', 'jpeg', 'webm');
 

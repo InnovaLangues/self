@@ -31,6 +31,7 @@ class PlayerController
     protected $entityManager;
     protected $session;
     protected $router;
+    protected $user;
 
     /**
      * Class constructor
@@ -45,8 +46,8 @@ class PlayerController
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
         $this->session = $session;
-        $this->user = $this->securityContext->getToken()->getUser();
         $this->router = $router;
+        $this->user = $this->securityContext->getToken()->getUser();
     }
 
     /**

@@ -43,14 +43,10 @@ class ExportTiaController
         $fs = new Filesystem();
         $em = $this->entityManager;
         $csv = "";
-        $result = array();
         
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        //$csvPathExport = $this->kernelRoot ."/../web/upload/export/".$testId;
         $csvPathExport = $this->kernelRoot ."/data/export/".$testId."/";
-        $urlRelativeToWeb = 'upload/export/' . $testId . "/";
         $csvName = 'export-tia-' . $testId . "_" . date("d-m-Y_H:i:s") . '.csv';
-        $csvPath = $csvPathExport . "/" . $csvName;
         $fs->mkdir($csvPathExport, 0777);
         $csvh = fopen($csvPathExport . "/" . $csvName, 'w+');
 
@@ -72,7 +68,6 @@ class ExportTiaController
         //
         //  BODY
         //
-        $rightProps = array();
         $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
         foreach ($users as $user) {
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
@@ -110,7 +105,6 @@ class ExportTiaController
                         $subquestions = $questions[0]->getSubQuestions();
                         foreach ($subquestions as $subquestion) {
                             $propositions = $subquestion->getPropositions();
-                            $rightProps = array();
                             $nbPropositionRightAnswser = 0;
                             $cptProposition = 0;
                             $propLetters = array();
@@ -158,9 +152,7 @@ class ExportTiaController
             }
         }
 
-        closedir($dossier); // Directory close
-
-        //Sort file
+        closedir($dossier);
         arsort($fileList);
 
         return array(
