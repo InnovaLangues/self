@@ -5,8 +5,11 @@ app/bootstrap*
 vendor/*
 */logs/*
 */cache/*
+
+# Web directories
 web/bundles/*
 web/upload/*
+web/media/*
 
 # Configuration files
 app/config/parameters.ini
@@ -19,7 +22,6 @@ sql/*
 # Build
 build/*
 
-
 *.php~
 *.orig
 composer.phar
@@ -29,13 +31,6 @@ composer.lock
 app/sessions/*
 !app/sessions/.gitkeep
 
-# export csv
+# Export
 app/data/export/*
 !app/data/export/.gitkeep
-
-# avalanche thumbnail
-web/upload/thumbnail/*
-
-web/media/cache/*
-
-
