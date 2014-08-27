@@ -5,6 +5,8 @@ namespace Innova\SelfBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * Class ExportTiaController
@@ -27,58 +29,30 @@ class ExportTiaController
     }
 
     /**
-     * exportTiaCsvSQL function
-     * Update : 04/2014 by EV pilote 2
-     *
+     * exportCsvSQL function   
      * @Route(
-     *     "/admin/csv-export-tia/{language}/{level}/{test}",
-     *     name = "csv-export-tia"
+     *     "/admin/csv-tia-export/test/{testId}",
+     *     name = "csv-tia-export"
      * )
      *
      * @Method("PUT")
-     * @Template("InnovaSelfBundle:Export:exportTiaCsvSQL.html.twig")
+     * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
-    public function exportTiaCsvSQLAction($language, $level, $test)
+    public function exportCsvAction($testId)
     {
+        $fs = new Filesystem();
         $em = $this->entityManager;
-        //
-        // CSV Export part
-        //
-        $rootPath = $this->kernelRoot . "/../";
-
-        // File export name
-        // Spécificité Anglais : on a un seul test pour le pilote 2.
-        if ($language == "en") {
-            // File export path
-            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language . "/tia";
-            // File export name
-            $csvName = 'export-' . $language . "_" . date("d-m-Y_H:i:s") . '.csv';
-            // File export path
-            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language . "/tia";
-            // Symfony
-            $urlCSVRelativeToWeb = 'upload/export/csv/p2/' . $language . "/tia/";
-        }
-        if ($language == "it") {
-            // File export path
-            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language . "/" . $level . "/tia";
-            // File export name
-            $csvName = 'export-' . $language . "-" . $level . "_" . date("d-m-Y_H:i:s") . '.csv';
-            // File export path
-            $csvPathExport = $rootPath . 'web/upload/export/csv/p2/' . $language . "/" . $level . "/tia";
-            // Symfony
-            $urlCSVRelativeToWeb = 'upload/export/csv/p2/' . $language . "/" . $level . "/tia/";
-        }
-        // Path + Name
+        $csv = "";
+        $result = array();
+        
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        //$csvPathExport = $this->kernelRoot ."/../web/upload/export/".$testId;
+        $csvPathExport = $this->kernelRoot ."/data/export/".$testId."/";
+        $urlRelativeToWeb = 'upload/export/' . $testId . "/";
+        $csvName = 'export-tia-' . $testId . "_" . date("d-m-Y_H:i:s") . '.csv';
         $csvPath = $csvPathExport . "/" . $csvName;
-
-        // Open file
-        $csvh = fopen($csvPath, 'w+');
-
-        // Init csv write variable
-        $csv = '';
-
-        // Loop for THE test
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($test);
+        $fs->mkdir($csvPathExport, 0777);
+        $csvh = fopen($csvPathExport . "/" . $csvName, 'w+');
 
         //
         // HEADER
@@ -189,16 +163,12 @@ class ExportTiaController
         //Sort file
         arsort($fileList);
 
-        //
-        // To view
-        //
         return array(
-            "urlCSVRelativeToWeb" => $urlCSVRelativeToWeb,
-            "csvName"             => $csvName,
-            "fileList"            => $fileList,
-            "nbFile"              => $nbFile
+            "csvName" => $csvName,
+            'testId' => $testId,
+            "fileList"=> $fileList,
+            "nbFile" => $nbFile
         );
 
     }
-
 }
