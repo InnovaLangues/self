@@ -60,8 +60,6 @@ class User extends BaseUser
     private $tests;
 
     /**
-     * @var string
-     *
      * @ORM\ManyToOne(targetEntity="OriginStudent", inversedBy="originStudents")
      */
     private $originStudent;
@@ -153,39 +151,7 @@ class User extends BaseUser
         return $this;
     }
 
-    /**
-     * Get prenom
-     *
-     * @return string
-     */
-    public function getPrenom()
-    {
-        return $this->prenom;
-    }
-
-    /**
-     * Set login
-     *
-     * @param  string $login
-     * @return User
-     */
-    public function setLogin($login)
-    {
-        $this->login = $login;
-
-        return $this;
-    }
-
-    /**
-     * Get login
-     *
-     * @return string
-     */
-    public function getLogin()
-    {
-        return $this->login;
-    }
-
+  
     /**
      * Set password
      *
@@ -411,29 +377,6 @@ class User extends BaseUser
     }
 
     /**
-     * Set lastLevel
-     *
-     * @param  \Innova\SelfBundle\Entity\Level $lastLevel
-     * @return User
-     */
-    public function setLastLevel(\Innova\SelfBundle\Entity\Level $lastLevel = null)
-    {
-        $this->lastLevel = $lastLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get lastLevel
-     *
-     * @return \Innova\SelfBundle\Entity\Level
-     */
-    public function getLastLevel()
-    {
-        return $this->lastLevel;
-    }
-
-    /**
      * Set originStudent
      *
      * @param  \Innova\SelfBundle\Entity\OriginStudent $originStudent
@@ -454,29 +397,6 @@ class User extends BaseUser
     public function getOriginStudent()
     {
         return $this->originStudent;
-    }
-
-    /**
-     * Set lLansad
-     *
-     * @param  \Innova\SelfBundle\Entity\LevelLansad $lLansad
-     * @return User
-     */
-    public function setLLansad(\Innova\SelfBundle\Entity\LevelLansad $lLansad = null)
-    {
-        $this->lLansad = $lLansad;
-
-        return $this;
-    }
-
-    /**
-     * Get lLansad
-     *
-     * @return \Innova\SelfBundle\Entity\LevelLansad
-     */
-    public function getLLansad()
-    {
-        return $this->lLansad;
     }
 
     /**
