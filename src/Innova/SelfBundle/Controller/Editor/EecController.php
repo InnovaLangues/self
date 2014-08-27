@@ -21,7 +21,7 @@ class EecController
 {
     protected $propositionManager;
     protected $questionManager;
-    protected $subquestion;
+    protected $subquestionManager;
     protected $mediaManager;
     protected $entityManager;
     protected $editorLogManager;
@@ -72,7 +72,6 @@ class EecController
 
             preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
-            $i = 0;
             $countLacunes = count($lacunes[1]);
             for ($i=0; $i < $countLacunes; $i++) {
                 $lacune = $lacunes[1][$i];
@@ -121,7 +120,6 @@ class EecController
 
             preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
-            $i = 0;
             $countLacunes = count($lacunes[1]);
             for ($i=0; $i < $countLacunes; $i++) {
                 $lacune = $lacunes[1][$i];
