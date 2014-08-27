@@ -100,11 +100,8 @@ class ExportController
         $result = array();
         
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        //$csvPathExport = $this->kernelRoot ."/../web/upload/export/".$testId;
         $csvPathExport = $this->kernelRoot ."/data/export/".$testId."/";
-        $urlRelativeToWeb = 'upload/export/' . $testId . "/";
         $csvName = 'export-' . $testId . "_" . date("d-m-Y_H:i:s") . '.csv';
-        $csvPath = $csvPathExport . "/" . $csvName;
         $fs->mkdir($csvPathExport, 0777);
         $csvh = fopen($csvPathExport . "/" . $csvName, 'w+');
 
