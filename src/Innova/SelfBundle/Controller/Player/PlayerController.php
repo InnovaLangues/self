@@ -89,7 +89,7 @@ class PlayerController
 
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $this->user->getId());
-            $countQuestionnaireTotal = count($orderQuestionnaireTests = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
+            $countQuestionnaireTotal = count($em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
 
             return array(
                 'questionnaire' => $questionnaire,

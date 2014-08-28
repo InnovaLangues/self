@@ -2,6 +2,7 @@
 
 namespace Innova\SelfBundle\Manager;
 
+use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Media;
 use Innova\SelfBundle\Entity\MediaLimit;
 
@@ -14,7 +15,7 @@ class MediaManager
         $this->entityManager = $entityManager;
     }
 
-    public function createMedia($questionnaire, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
+    public function createMedia(Questionnaire $questionnaire, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
     {
 
         $entityField2Purpose = array(
@@ -60,7 +61,7 @@ class MediaManager
     /**
      * UpdateMediaLimit a mediaLimit entity or create one for a given media, and questionnaire
      */
-    public function updateMediaLimit($questionnaire, $media, $limit)
+    public function updateMediaLimit(Questionnaire $questionnaire, Media $media, $limit)
     {
         $em = $this->entityManager;
 

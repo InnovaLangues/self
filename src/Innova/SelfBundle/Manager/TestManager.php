@@ -25,7 +25,7 @@ class TestManager
     }
 
 
-    public function getPotentialQuestionnaires($test)
+    public function getPotentialQuestionnaires(Test $test)
     {
         $em = $this->entityManager;
         $testQuestionnaires = $this->getQuestionnaires($test);
