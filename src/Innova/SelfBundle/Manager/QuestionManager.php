@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Question;
+use Innova\SelfBundle\Entity\Questionnaire;
 
 class QuestionManager
 {
@@ -13,7 +14,7 @@ class QuestionManager
         $this->entityManager = $entityManager;
     }
 
-    public function createQuestion($questionnaire)
+    public function createQuestion(Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
 

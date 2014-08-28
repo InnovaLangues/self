@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Typology;
+use Innova\SelfBundle\Entity\Question;
 
 class SubquestionManager
 {
@@ -13,7 +15,7 @@ class SubquestionManager
         $this->entityManager = $entityManager;
     }
 
-    public function createSubquestion($typology, $question)
+    public function createSubquestion(Typology $typology, Question $question)
     {
         $em = $this->entityManager;
 
