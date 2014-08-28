@@ -95,7 +95,6 @@ class ExportController
     {
         $fs = new Filesystem();
         $em = $this->entityManager;
-        $result = array();
         
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $csvPathExport = $this->kernelRoot ."/data/export/".$testId."/";
@@ -233,9 +232,10 @@ class ExportController
         return $score;
     }
 
-    private function getCvsContent($test){
+    private function getCvsContent(Test $test){
         $em = $this->entityManager;
         $csv = "";
+        $result = array();
         $questionnaires = $test->getQuestionnaires();
         foreach ($questionnaires as $questionnaire) {
             $traces = $questionnaire->getTraces();
@@ -456,7 +456,7 @@ class ExportController
         return $csv;
     }
 
-    private function getCvsTiaContent($test){
+    private function getCvsTiaContent(Test $test){
         $em = $this->entityManager;
         $csv = "";
         //
