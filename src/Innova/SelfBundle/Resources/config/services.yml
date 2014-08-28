@@ -23,12 +23,6 @@ services:
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
 
-    innova_export_tia:
-        class: Innova\SelfBundle\Controller\ExportTiaController
-        arguments:
-            kernelRoot: %kernel.root_dir%
-            entityManager: @doctrine.orm.entity_manager
-
     innova_player:
         class: Innova\SelfBundle\Controller\Player\PlayerController
         arguments:
