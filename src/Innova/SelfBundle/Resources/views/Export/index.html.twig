@@ -10,7 +10,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i, test in tests if test.orderQuestionnaireTests[0].questionnaire.level is not null %}
+                    {% for i, test in tests %}
                         <tr>
                         <td>{{ test.name }}</td>
                         <td class="text-right">
