@@ -13,7 +13,7 @@
         <div class="proposition-EEC">
             {{ macros.inputs(subquestion, proposition) }}
             <label for="input-proposition{{ proposition.id }}" class="proposition-EEC-text">
-                {{ macros.translateVF(proposition.media.description, test.language.name) }}
+                {{ macros.translateVF(proposition.media.description) }}
             </label>
         </div>
     {% endfor %}

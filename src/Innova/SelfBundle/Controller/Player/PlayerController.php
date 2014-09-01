@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\USer;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Manager\TestManager;
 
 /**
  * Class PlayerController
@@ -27,6 +28,7 @@ use Innova\SelfBundle\Entity\Questionnaire;
 class PlayerController
 {
 
+    protected $testManager;
     protected $securityContext;
     protected $entityManager;
     protected $session;
@@ -37,12 +39,14 @@ class PlayerController
      * Class constructor
      */
     public function __construct(
+        TestManager $testManager,
         SecurityContextInterface $securityContext,
         EntityManager $entityManager,
         SessionInterface $session,
         RouterInterface $router
     )
     {
+        $this->testManager = $testManager;
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
         $this->session = $session;
@@ -64,6 +68,7 @@ class PlayerController
 
         // on récupère un questionnaire sans trace pour un test et un utilisateur donné
         $questionnaire = $this->findAQuestionnaireWithoutTrace($test, $this->user);
+        $questionnaires = $this->testManager->getQuestionnaires($test);
 
         // s'il n'y a pas de questionnaire dispo, on renvoie vers la fonction qui gère la fin de test
         if (is_null($questionnaire)) {
@@ -92,8 +97,9 @@ class PlayerController
             $countQuestionnaireTotal = count($em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
 
             return array(
-                'questionnaire' => $questionnaire,
                 'test' => $test,
+                'questionnaire' => $questionnaire,
+                'questionnaires' => $questionnaires,
                 'countQuestionnaireDone' => $countQuestionnaireDone,
                 'countQuestionnaireTotal' => $countQuestionnaireTotal,
                 'displayHelp' => $displayHelp // Me dit si je dois ou pas afficher l'aide
@@ -194,7 +200,7 @@ class PlayerController
 
         $this->session->set('listening', $questionnairePicked->getListeningLimit());
 
-        $questionnaires = $test->getQuestionnaires();
+        $questionnaires = $this->testManager->getQuestionnaires($test);
 
         $i = 0;
         foreach ($questionnaires as $q) {
@@ -206,8 +212,9 @@ class PlayerController
         }
 
         return array(
-            'questionnaire' => $questionnairePicked,
             'test' => $test,
+            'questionnaires' => $questionnaires,
+            'questionnaire' => $questionnairePicked,
             'countQuestionnaireDone' => $countQuestionnaireDone,
             'displayHelp' => false
         );

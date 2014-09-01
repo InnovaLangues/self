@@ -9,7 +9,7 @@ Et dans ce cas, j'affiche un message d'erreur et je le route vers le questionnai
 #}
 
     {% if traceId == 0 %} {# Dans ce cas, l'utilisateur a déjà une trace et il a fait "back" #}
-        <form action="{{ path('test_start', { 'id': testId }) }}" method="get">
+        <form action="{{ path('test_start', { 'id': testId,  'displayHelp': 0 }) }}" method="get">
             {% for flashMessage in app.session.flashbag.get('notice') %}
                 <div class="alert alert-danger">{{ flashMessage }}</div>
             {% endfor %}

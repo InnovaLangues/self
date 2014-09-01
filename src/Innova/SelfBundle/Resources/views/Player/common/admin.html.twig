@@ -1,6 +1,6 @@
 {% if is_granted('ROLE_ADMIN') %}
     <div id="pick-a-questionaire" class="row text-center">
-        {% for i, questionnaire in test.questionnaires %}
+        {% for i, questionnaire in questionnaires %}
             <a class="btn btn-default" data-toggle="tooltip" data-original-title="{{ questionnaire.theme}}" href="{{ path('questionnaire_pick', { testId: test.id, questionnaireId: questionnaire.id }) }}">{{ i+1 }}</a>
         {% endfor %}
     </div>
