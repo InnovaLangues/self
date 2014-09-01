@@ -84,7 +84,7 @@
     </div>
 {% endmacro %}
 
-{% macro translateVF(description, language) %}
+{% macro translateVF(description) %}
     {% set description = description |striptags %}
     {% if description == "VRAI" %}
         {{ 'generic.boolTrue' | trans }}

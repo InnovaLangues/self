@@ -14,7 +14,7 @@
                 {{ macros.audio("proposition-"~ proposition.id, proposition.media, "audio"~bulleCount~".png", 90, 0, 'player.tooltip.proposition' | trans ) }}
             {% elseif proposition.media.mediaType.name == "texte" %}
                 <label for="input-proposition{{ proposition.id }}" class="proposition-CO-text">
-                {{ macros.translateVF(proposition.media.description, test.language.name) }}
+                {{ macros.translateVF(proposition.media.description) }}
                 </label>
             {% elseif proposition.media.mediaType.name == "image" %}
                 {{ macros.image(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans, 110) }}

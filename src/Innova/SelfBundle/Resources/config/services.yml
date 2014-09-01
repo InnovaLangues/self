@@ -27,6 +27,7 @@ services:
     innova_player:
         class: Innova\SelfBundle\Controller\Player\PlayerController
         arguments:
+            testManager: @self.test.manager
             securityContext: @security.context
             entityManager: @doctrine.orm.entity_manager
             session: @session

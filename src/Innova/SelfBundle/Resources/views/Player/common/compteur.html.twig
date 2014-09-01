@@ -1,5 +1,7 @@
+{% if countQuestionnaireTotal is defined and countQuestionnaireDone is defined  %}
 <div id="item-count-container" class="row">
     <div id="item-count" class="col-md-1 col-md-offset-11">
         {{ countQuestionnaireDone + 1 }} {{ 'player.count_task' | trans }} {{ countQuestionnaireTotal }}
     </div>
 </div>
+{% endif %}
