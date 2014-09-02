@@ -102,7 +102,7 @@ class PlayerController
                 'questionnaires' => $questionnaires,
                 'countQuestionnaireDone' => $countQuestionnaireDone,
                 'countQuestionnaireTotal' => $countQuestionnaireTotal,
-                'displayHelp' => $displayHelp // Me dit si je dois ou pas afficher l'aide
+                'displayHelp' => $displayHelp
             );
         }
     }

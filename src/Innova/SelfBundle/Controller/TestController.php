@@ -17,15 +17,13 @@ class TestController extends Controller
     public function showTestsAction()
     {
 
-        $session = $this->container->get('request')->getSession();
-        $session->set('item', 0);
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->get('security.context')->getToken()->getUser();
-        $userTests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
         $testsProgress = array();
-        foreach ($userTests as $test) {
+        foreach ($tests as $test) {
             $countDone = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
             $countTotal = count($test->getOrderQuestionnaireTests());
             if ($countTotal < 1) $countTotal=1;
@@ -36,7 +34,7 @@ class TestController extends Controller
 
         return array(
             'user' => $user,
-            'tests' => $userTests,
+            'tests' => $tests,
             'testsProgress' => $testsProgress
         );
     }
