@@ -135,4 +135,17 @@ class QuestionnaireRepository extends EntityRepository
 
          return $query->getResult();
     }
+
+    public function getByTest($test){
+        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        LEFT JOIN q.orderQuestionnaireTests qo
+        WHERE qo.test = :test
+        ORDER BY qo.displayOrder
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test);
+
+         return $query->getResult();
+    }
 }

@@ -24,7 +24,6 @@ class TaskController
     protected $questionnaireManager;
     protected $questionManager;
     protected $orderQuestionnaireTestManager;
-    protected $testManager;
     protected $entityManager;
     protected $request;
     protected $templating;
@@ -33,7 +32,6 @@ class TaskController
             $questionnaireManager,
             $questionManager,
             $orderQuestionnaireTestManager,
-            $testManager,
             $entityManager,
             $templating
     )
@@ -41,7 +39,6 @@ class TaskController
         $this->questionnaireManager = $questionnaireManager;
         $this->questionManager = $questionManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
-        $this->testManager = $testManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
     }
