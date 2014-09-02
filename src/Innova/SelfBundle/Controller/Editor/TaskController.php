@@ -85,7 +85,7 @@ class TaskController
         $em = $this->entityManager;
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($testId);
+        $orders = $test->getOrderQuestionnaireTests();
         $potentialQuestionnaires = $this->testManager->getPotentialQuestionnaires($test);
 
         return array(
