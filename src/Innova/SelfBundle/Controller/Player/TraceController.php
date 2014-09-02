@@ -163,7 +163,7 @@ class TraceController
 
         $typosSaisie = array("TLQROCDERIV", "TLQROCFIRST", "TLQROCSYL", "TLQROCNOCLU", "TLQROCLEN", "TLQROCFIRSTLEN" );
         if (in_array($typo, $typosSaisie)) {
-            $subquestion->getPropositions();
+            $propositions = $subquestion->getPropositions();
             $rightAnswer = false;
             $propositionFound = null;
             foreach ($propositions as $proposition) {
