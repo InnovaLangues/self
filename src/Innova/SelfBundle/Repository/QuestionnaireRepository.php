@@ -78,28 +78,6 @@ class QuestionnaireRepository extends EntityRepository
         return count($query->getResult());
     }
 
-    /**
-     * findOneByUserByTestByQuestionnaire Trace By user/test/questionnaire
-     * @param id $testId
-     * @param id $questionnaireId
-     * @param id $userId
-     *
-     * @return trace
-     */
-    public function findOneByUserByTestByQuestionnaire($testId, $questionnaireId, $userId)
-    {
-        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
-        WHERE t.user = :userId
-        AND t.test = :testId
-        AND t.questionnaire = :questionnaireId";
-
-        $query = $this->_em->createQuery($dql)
-                ->setParameter('testId', $testId)
-                ->setParameter('questionnaireId', $questionnaireId)
-                ->setParameter('userId', $userId);
-
-        return $query->getResult();
-    }
 
     /**
      * countAnswerByUserByTest Count Answer By user/test
@@ -140,5 +118,34 @@ class QuestionnaireRepository extends EntityRepository
                 ->setParameter('userId', $userId);
 
         return count($query->getResult());
+    }
+
+
+    public function getPotentialByTest($test){
+        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        WHERE NOT EXISTS (
+            SELECT otq FROM Innova\SelfBundle\Entity\orderQuestionnaireTest otq
+            WHERE otq.questionnaire = q 
+            AND otq.test = :test
+        )
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test);
+
+         return $query->getResult();
+    }
+
+    public function getByTest($test){
+        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        LEFT JOIN q.orderQuestionnaireTests qo
+        WHERE qo.test = :test
+        ORDER BY qo.displayOrder
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test);
+
+         return $query->getResult();
     }
 }

@@ -22,12 +22,10 @@ services:
         arguments:
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
-            testManager: @self.test.manager
 
     innova_player:
         class: Innova\SelfBundle\Controller\Player\PlayerController
         arguments:
-            testManager: @self.test.manager
             securityContext: @security.context
             entityManager: @doctrine.orm.entity_manager
             session: @session
@@ -59,7 +57,6 @@ services:
             questionnaireManager:   @self.questionnaire.manager
             questionManager:    @self.question.manager
             orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
-            testManager: @self.test.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
         calls:

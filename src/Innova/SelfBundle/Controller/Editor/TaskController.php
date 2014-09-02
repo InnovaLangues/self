@@ -24,7 +24,6 @@ class TaskController
     protected $questionnaireManager;
     protected $questionManager;
     protected $orderQuestionnaireTestManager;
-    protected $testManager;
     protected $entityManager;
     protected $request;
     protected $templating;
@@ -33,7 +32,6 @@ class TaskController
             $questionnaireManager,
             $questionManager,
             $orderQuestionnaireTestManager,
-            $testManager,
             $entityManager,
             $templating
     )
@@ -41,7 +39,6 @@ class TaskController
         $this->questionnaireManager = $questionnaireManager;
         $this->questionManager = $questionManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
-        $this->testManager = $testManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
     }
@@ -86,7 +83,7 @@ class TaskController
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $orders = $test->getOrderQuestionnaireTests();
-        $potentialQuestionnaires = $this->testManager->getPotentialQuestionnaires($test);
+        $potentialQuestionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getPotentialByTest($test);
 
         return array(
             'test' => $test,
@@ -105,7 +102,7 @@ class TaskController
         $em = $this->entityManager;
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $potentialQuestionnaires = $this->testManager->getPotentialQuestionnaires($test);
+        $potentialQuestionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getPotentialByTest($test);
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig',array('test'=> $test, 'potentialQuestionnaires' => $potentialQuestionnaires));
         return new Response($template);

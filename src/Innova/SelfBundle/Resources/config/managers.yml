@@ -69,8 +69,3 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
-
-    self.test.manager:
-        class: Innova\SelfBundle\Manager\TestManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager 

@@ -22,13 +22,11 @@ class ExportController
 {
     protected $kernelRoot;
     protected $entityManager;
-    protected $testManager;
 
-    public function __construct($kernelRoot, $entityManager, $testManager)
+    public function __construct($kernelRoot, $entityManager)
     {
         $this->kernelRoot = $kernelRoot;
         $this->entityManager = $entityManager;
-        $this->testManager = $testManager;
     }
 
     /**
@@ -224,7 +222,7 @@ class ExportController
         $em = $this->entityManager;
         $csv = "";
         $result = array();
-        $questionnaires = $this->testManager->getQuestionnaires($test);
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
         foreach ($questionnaires as $questionnaire) {
             $traces = $questionnaire->getTraces();
             foreach ($traces as $trace) {
@@ -326,7 +324,7 @@ class ExportController
 
                 $answersArray = array();
 
-                $questionnaires = $this->testManager->getQuestionnaires($test);
+                $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
                 foreach ($questionnaires as $questionnaire) {
                     $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),'questionnaire' => $questionnaire->getId()));
                     $questions = $questionnaire->getQuestions();
@@ -411,7 +409,7 @@ class ExportController
 
     private function getCvsTiaContent(Test $test){
         $em = $this->entityManager;
-        $questionnaires = $this->testManager->getQuestionnaires($test);
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
         $csv = "";
 
         // HEADER
