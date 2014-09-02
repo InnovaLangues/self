@@ -23,20 +23,4 @@ class TestManager
 
         return $questionnaires;
     }
-
-
-    public function getPotentialQuestionnaires(Test $test)
-    {
-        $em = $this->entityManager;
-        $testQuestionnaires = $this->getQuestionnaires($test);
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
-        $potentialQuestionnaires = array();
-        foreach ($questionnaires as $questionnaire) {
-            if (!in_array($questionnaire, $testQuestionnaires)) {
-                $potentialQuestionnaires[] = $questionnaire;
-            }
-        }
-
-        return $potentialQuestionnaires;
-    }
 }
