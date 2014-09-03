@@ -88,8 +88,10 @@ editor:
         edit: Editer
         back_to_list: Revenir à la liste des tests
         new: Nouveau test
+        all_tests: All tests
     task:
         tasks: Tasks
+        all_tasks: All tasks
         back_to_list: Retour à la liste des tâches
         list: Liste des tâches pour le test <strong>%testName%</strong>
         manage: Gérer les tâches
