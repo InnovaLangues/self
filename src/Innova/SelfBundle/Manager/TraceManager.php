@@ -3,6 +3,9 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Trace;
+use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\User;
 
 class TraceManager
 {
@@ -13,7 +16,7 @@ class TraceManager
         $this->entityManager = $entityManager;
     }
 
-    public function createTrace($questionnaire, $test, $user, $totalTime)
+    public function createTrace(Questionnaire $questionnaire, Test $test, User $user, $totalTime)
     {
         $em = $this->entityManager;
 

@@ -9,6 +9,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    twig.extension.get_languages:
+        class: Innova\SelfBundle\Twig\LanguageExtension
+        arguments:
+            entityManager: @doctrine.orm.entity_manager
+        tags:
+            - { name: twig.extension }
+
     innova_user.registration.form.type:
         class: Innova\SelfBundle\Form\UserType
         arguments:
@@ -19,12 +26,6 @@ services:
 
     innova_export:
         class: Innova\SelfBundle\Controller\ExportController
-        arguments:
-            kernelRoot: %kernel.root_dir%
-            entityManager: @doctrine.orm.entity_manager
-
-    innova_export_tia:
-        class: Innova\SelfBundle\Controller\ExportTiaController
         arguments:
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
@@ -63,7 +64,6 @@ services:
             questionnaireManager:   @self.questionnaire.manager
             questionManager:    @self.question.manager
             orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
-            testManager: @self.test.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
         calls:

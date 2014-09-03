@@ -59,7 +59,7 @@ class OrderQuestionnaireTestController
         $newOrderArray = json_decode($request->get('newOrder'));
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
 
-        $entitiesToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test);
+        $entitiesToRemove = $test->getOrderQuestionnaireTests();
         foreach ($entitiesToRemove as $entity) {
             $em->remove($entity);
         }
@@ -87,8 +87,7 @@ class OrderQuestionnaireTestController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
         $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
-
-        $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test);
+        $orders = $test->getOrderQuestionnaireTests();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig',array('orders' => $orders));
         

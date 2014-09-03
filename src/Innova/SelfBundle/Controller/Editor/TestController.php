@@ -33,6 +33,26 @@ class TestController extends Controller
         );
     }
 
+    /**
+     * Lists all Test entities.
+     *
+     * @Route("/tests/language/{languageId}", name="editor_tests_by_language_show")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
+     */
+    public function listTestsByLanguageAction($languageId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $language = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($languageId);
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findByLanguage($language);
+
+        return array(
+            'tests' => $tests
+        );
+    }
+    
+
 
     /**
      * Display form to create a new Questionnaire entity.
@@ -44,9 +64,8 @@ class TestController extends Controller
     public function createTestFormAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $languages = $em->getRepository('InnovaSelfBundle:Language')->findAll();
 
-        return array('languages' => $languages);
+        return array();
     }
 
     /**
@@ -84,11 +103,8 @@ class TestController extends Controller
         $em = $this->getDoctrine()->getManager();
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
-        $languages = $em->getRepository('InnovaSelfBundle:Language')->findAll();
-
         return array(
                     'test' => $test,
-                    'languages' => $languages
         );
     }
 
@@ -106,7 +122,10 @@ class TestController extends Controller
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $test->setName($request->request->get('test-name'));
-        $test->setLanguage($em->getRepository('InnovaSelfBundle:Language')->find($request->request->get('test-language')));
+        $language = $em->getRepository('InnovaSelfBundle:Language')->find($request->request->get('test-language'));
+
+        $test->setLanguage($language);
+        // changer la langue des tâches de ce test !
 
         $display = $request->request->get('test-display');
         if ($display == "actif") {
@@ -120,4 +139,36 @@ class TestController extends Controller
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
+
+    /**
+     * Edits a test entity.
+     *
+     * @Route("/test/{testId}/delete", name="editor_test_delete")
+     * @Method("DELETE")
+     * @Template("")
+     */
+    public function deleteTestAction($testId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        foreach ($test->getOrderQuestionnaireTests() as $order) {
+            $em->remove($order);
+        }
+
+        foreach ($test->getMediaClicks() as $mediaClick) {
+            $em->remove($mediaClick);
+        }
+
+         foreach ($test->getTraces() as $trace) {
+            $em->remove($trace);
+        }
+
+        $em->remove($test);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('editor_tests_show'));
+    }
+
 }

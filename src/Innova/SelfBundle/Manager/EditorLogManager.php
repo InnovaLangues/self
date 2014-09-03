@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\EditorLog;
+use Innova\SelfBundle\Entity\Questionnaire;
 
 class EditorLogManager
 {
@@ -15,7 +16,7 @@ class EditorLogManager
         $this->securityContext = $securityContext;
     }
 
-    public function createEditorLog($action, $object, $questionnaire)
+    public function createEditorLog($action, $object, Questionnaire $questionnaire)
     {
         $user = $this->securityContext->getToken()->getUser();
         $em = $this->entityManager;

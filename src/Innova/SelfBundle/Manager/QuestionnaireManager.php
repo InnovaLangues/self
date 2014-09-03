@@ -67,12 +67,13 @@ class QuestionnaireManager
         return $typology;
     }
 
-    public function isUnique($title)
+    public function isUnique($theme, $language)
     {
         $em = $this->entityManager;
 
         $isUnique = true;
-        if ($em->getRepository('InnovaSelfBundle:Questionnaire')->findByTheme($title)) {
+
+        if ($em->getRepository('InnovaSelfBundle:Questionnaire')->findBy(array('theme' =>$theme, 'language'=>$language))) {
             $isUnique = false;
         }
 

@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Comment;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Media;
 
 class CommentManager
 {
@@ -15,7 +17,7 @@ class CommentManager
         $this->securityContext = $securityContext;
     }
 
-    public function createComment($questionnaire, $media)
+    public function createComment(Questionnaire $questionnaire, Media $media)
     {
         $user = $this->securityContext->getToken()->getUser();
         $em = $this->entityManager;

@@ -26,16 +26,34 @@
                             {# <li><a href="{{ path('admin_user') }}">{{ 'menu.users' | trans }}</a></li> #}
                             <li><a href="{{ path('csv_export') }}">{{ 'menu.csv_export' | trans }}</a></li>
                             <li><a href="{{ path('show_tests') }}">{{ 'menu.tests' | trans }}</a></li>
-
-
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'menu.editor' | trans }} <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ path('editor_tests_show') }}">Tests</a></li>
-                                <li><a href="{{ path('editor_questionnaires_show') }}">Tâches</a></li>
-                            </ul>
-                        </li>
-                            
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'menu.editor' | trans }} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Tests</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
+                                            <li class="divider"></li>
+                                            {% set languages = get_languages() %}
+                                            {% for language in languages %}
+                                                {% set languageTransl =   'language.'~language.name %}
+                                                <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{languageTransl | trans }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">{{ 'editor.task.tasks' | trans }}</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{path('editor_questionnaires_show')}}">{{ 'editor.task.all_tasks' | trans }}</a></li>
+                                            <li class="divider"></li>
+                                            {% for language in languages %}
+                                                {% set languageTransl =   'language.'~language.name %}
+                                                <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{languageTransl | trans }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
                         {% endif %}
                         <li><a data-toggle="modal" href="#helpModal">{{ 'menu.help' | trans }}</a></li>
                         <li><a data-toggle="modal" href="#creditModal">{{ 'menu.credit' | trans }}</a></li>
@@ -84,6 +102,7 @@
 			<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            <script src="{{ asset("bundles/innovaself/js/jquery.restfulizer.js") }}"></script>
             <script src="{{ asset('bundles/innovaself/js/main.js') }}"></script>
         {% endblock %}
     </body>

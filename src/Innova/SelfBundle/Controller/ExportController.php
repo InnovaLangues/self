@@ -6,7 +6,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\Response;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
@@ -85,30 +84,145 @@ class ExportController
     /**
      * exportCsvSQL function   
      * @Route(
-     *     "/admin/csv-export/test/{testId}",
+     *     "/admin/csv-export/test/{testId}/{tia}",
      *     name = "csv-export"
      * )
      *
      * @Method("PUT")
      * @Template()
      */
-    public function exportCsvAction($testId)
+    public function exportCsvAction($testId, $tia)
     {
         $fs = new Filesystem();
         $em = $this->entityManager;
-        $csv = "";
-        $result = array();
         
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        //$csvPathExport = $this->kernelRoot ."/../web/upload/export/".$testId;
+        
+        if ($tia == 0) {
+            $tia = "";
+            $csvContent = $this->getCvsContent($test);
+        } else {
+            $tia = "-tia";
+            $csvContent = $this->getCvsTiaContent($test);
+        }
+
+        $csvName = "self_export-test_" . $testId . "-" . date("d-m-Y_H:i:s") . $tia . '.csv';
         $csvPathExport = $this->kernelRoot ."/data/export/".$testId."/";
-        $urlRelativeToWeb = 'upload/export/' . $testId . "/";
-        $csvName = 'export-' . $testId . "_" . date("d-m-Y_H:i:s") . '.csv';
-        $csvPath = $csvPathExport . "/" . $csvName;
+
         $fs->mkdir($csvPathExport, 0777);
         $csvh = fopen($csvPathExport . "/" . $csvName, 'w+');
+        fwrite($csvh, $csvContent);
+        fclose($csvh);
 
-        $questionnaires = $test->getQuestionnaires();
+        // Export file list
+        $fileList = array();
+        if ($dossier = opendir($csvPathExport)) {
+            while (false !== ($fichier = readdir($dossier))) {
+                if ($fichier != '.' && $fichier != '..') {
+                    $fileList[] = $fichier;
+                }
+            }
+        }
+
+        closedir($dossier);
+        arsort($fileList);
+
+        return array(
+            "csvName" => $csvName,
+            'test' => $test,
+            "fileList"=> $fileList,
+        );
+    }
+
+    /**
+     * calculateScore function
+     *
+     */
+    private function calculateScore(User $user, Test $test)
+    {
+        $em = $this->entityManager;
+        $score = 0;
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),'test' => $test->getId()));
+
+        foreach ($traces as $trace) {
+            $answers = $trace->getAnswers();
+            $answersArray = array();
+            $typology = $answers[0]->getProposition()->getSubQuestion()->getTypology()->getName();
+
+            switch ($typology) {
+                case "APPAT";
+                case "APPAA";
+                case "APPAI";
+                case "APPTT";
+                    foreach ($answers as $answer) {
+                        if ($answer->getProposition()->getRightAnswer()) {
+                            $score++;
+                        }
+                    }
+                    break;
+                case "QRM";
+                case "TQRM";
+                case "QRU";
+                case "TQRU";
+                case "VF";
+                case "TVF";
+                case "VFNM";
+                case "TVFNM";
+                    foreach ($answers as $answer) {
+                        if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
+                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                        }
+                        $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
+                    }
+
+                    foreach ($answersArray as $subquestionId => $answers) {
+                        // Initialisation des variables.
+                        $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
+                        // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
+                        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
+                        $propositions = $subquestion->getPropositions();
+
+                        // Calcul du nombre de réponses.
+                        $nbAnswers = count($answers);
+                        $rightProps = array();
+                        // Accès à la proposition.
+                        // Calcul du nombre de proposition et
+                        // calcul du nombre de bonnes réponses.
+                        foreach ($propositions as $proposition) {
+                                $nbProposition++;
+                                if ($proposition->getRightAnswer()) {
+                                    $nbPropositionRightAnswser++;
+                                    $rightProps[] = $proposition;
+                                }
+                        }
+
+                        // Je calcule le score que si le testeur a répondu à autant de réponses
+                        // qu'il y a de propositions.
+                        // Si ce n'est pas le cas, il aura forcément ZERO point.
+                        if ($nbAnswers == $nbPropositionRightAnswser) {
+                            foreach ($rightProps as $rightProp) {
+                                if (in_array($rightProp->getId(),$answersArray[$subquestionId])) {
+                                        $nbRightAnswer++;
+                                }
+                            }
+                        }
+
+                        if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
+                            $score++;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        return $score;
+    }
+
+    private function getCvsContent(Test $test){
+        $em = $this->entityManager;
+        $csv = "";
+        $result = array();
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
         foreach ($questionnaires as $questionnaire) {
             $traces = $questionnaire->getTraces();
             foreach ($traces as $trace) {
@@ -125,13 +239,8 @@ class ExportController
                 $result[$userId]["date"]  = $testDate;
             }
         }
-
         $csv .= "\n";
 
-        //
-        // PARTIE HEADER
-        //
-        // Difficulty part
         $csv .= "Difficulté" . ";" ;
         $csv .= "Libellé" . ";" ;
         $csv .= "\n";
@@ -154,28 +263,19 @@ class ExportController
         $csv .= "\n";
         $csv .= "\n";
 
-        //
-        // PARTIE HEADER COLONNES DU TABLEAU
-        //
-        // Loop to display all questionnaire of the test
-        // $csv .= "Mail;" ; // A
+        // CSV HEADER
         $csv .= "Nom;" ; // A
         $csv .= "Prénom;" ; // B
         $csv .= "Date;" ; // C
         $csv .= "Temps en secondes (pour le test entier);" ; // D
-
-        //$csv .= "filiere;" ; // F
         $csv .= "Niveau Dialang CO;" ; // E
         $csv .= "Niveau Dialang CE;" ; // F
         $csv .= "Niveau Dialang EEC;" ; // G
         $csv .= "Niveau Lansad acquis;" ; // H
-
         $csv .= "Score total obtenu dans le test (formule du total);" ; // I
 
         $cpt_questionnaire = 0;
         if ($cpt_questionnaire == 0) {
-            $questionnaires = $test->getQuestionnaires();
-            // For THE test, loop on the Questionnaire
             foreach ($questionnaires as $questionnaire) {
                 $cpt_questionnaire++;
                 // Suite réception nouvelle version du fichier le 29/11/2013 :
@@ -207,52 +307,32 @@ class ExportController
                 }
             }
         }
-
         $csv .= "\n";
 
-        //
-        // PARTIE BODY
-        //
-        // Loop to display all data
+        // CSV BODY
         $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
         foreach ($users as $user) {
-            $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                ->countDoneYetByUserByTest($test->getId(), $user->getId());
-            if ($countQuestionnaireDone > 0 && isset($result[$user->getId()])) {
+           if ($this ->countQuestionnaireDone($test, $user) > 0 && isset($result[$user->getId()])) {
                 $csv .= $user->getUserName() . ";" ;
                 $csv .= $user->getFirstName() . ";" ;
-                // For THE test, loop on the Questionnaire
-                // CR
-                //
-
                 $csv .= $result[$user->getId()]["date"] . ";" . $result[$user->getId()]["time"] . ";";
-                // Add 4 colums for Level
                 $csv .= $user->getCoLevel() . ";";
                 $csv .= $user->getCeLevel() . ";";
                 $csv .= $user->getEeLevel() . ";";
                 $csv .= $user->getlevelLansad() . ";";
+                $csv .= $this->calculateScore($user, $test) . ";";
 
-                $csv .= $this->calculateScore($user, $test) . ";"; // Calcul du score
-
-                $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
                 $answersArray = array();
 
-                $questionnaires = $test->getQuestionnaires();
+                $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
                 foreach ($questionnaires as $questionnaire) {
-
-                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),
-                                    'questionnaire' => $questionnaire->getId()
-                                    )
-                                );
-
-                    $questions = $em->getRepository('InnovaSelfBundle:Question')->findBy(
-                                    array('questionnaire' => $questionnaire->getId())
-                                );
+                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),'questionnaire' => $questionnaire->getId()));
+                    $questions = $questionnaire->getQuestions();
 
                     foreach ($traces as $trace) {
                         $answers = $trace->getAnswers();
                         $csv .= $questionnaire->getTheme() . ";" ;
-                        $csv .= $questions[0]->getTypology()->getName() .  ";" ; // Typologie
+                        $csv .= $questions[0]->getTypology()->getName() .  ";" ;
                         $csv .= $trace->getDifficulty() . ";" ;
                         $csv .= $trace->getTotalTime() . ";" ;
 
@@ -265,7 +345,6 @@ class ExportController
                             $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
                         }
 
-                         // on récupère la subquestion
                         $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
                             $propositions = $subquestion->getPropositions();
@@ -281,7 +360,7 @@ class ExportController
                                     $rightProps[] = $proposition->getId();
 
                                 }
-                                $propLetters[$proposition->getId()] = $arr[$cptProposition];
+                                $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                             }
 
                             $nbAnswers = count($answersArray[$subquestion->getId()]);
@@ -323,132 +402,95 @@ class ExportController
                 }
                 $csv .= "\n";
             }
-
         }
 
-        fwrite($csvh, $csv);
-        fclose($csvh);
-
-        // Export file list
-        $fileList = array();
-        $nbFile = 0;
-        if ($dossier = opendir($csvPathExport)) {
-            while (false !== ($fichier = readdir($dossier))) {
-                if ($fichier != '.' && $fichier != '..') {
-                    $nbFile++; 
-                    $fileList[$nbFile] = $fichier;
-                }
-            }
-        }
-
-        closedir($dossier);
-        arsort($fileList);
-
-        return array(
-            "csvName" => $csvName,
-            'testId' => $testId,
-            "fileList"=> $fileList,
-            "nbFile" => $nbFile
-        );
+        return $csv;
     }
 
-    /**
-     * calculateScore function
-     *
-     */
-    private function calculateScore(User $user, Test $test)
-    {
+    private function getCvsTiaContent(Test $test){
         $em = $this->entityManager;
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
+        $csv = "";
 
-        // Initialisation des variables.
-        $score = 0;
+        // HEADER
+        $csv .= "Etudiant;" ;
+        foreach ($questionnaires as $questionnaire) {
+            $i = 0;
+            foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestions) {
+                $i++;
+                $csv .= $questionnaire->getTheme() . " " . $questionnaire->getQuestions()[0]->getTypology()->getName() . " " . $i . ";" ;
+            }
+        }
+        $csv .= "\n";
 
-        // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
-            array('user' => $user->getId(),
-                  'test' => $test->getId()
-                 )
-            );
+        //  BODY
+        $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
+        foreach ($users as $user) {
+            if ($this ->countQuestionnaireDone($test, $user) > 0) {
+                $csv .= $user->getUserName() . " " . $user->getFirstName() . ";" ;
 
-        // Parcours des traces
-        foreach ($traces as $trace) {
-            $answers = $trace->getAnswers();
-            $answersArray = array();
+                $answersArray = array();
+                foreach ($questionnaires as $questionnaire) {
+                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),'questionnaire' => $questionnaire->getId()));
+                    $questions = $questionnaire->getQuestions();
 
-            // Récupération de la typologie.
-            $answer = $answers[0];
-            $typology = $answer->getProposition()->getSubQuestion()->getTypology()->getName();
+                    foreach ($traces as $trace) {
+                        $answers = $trace->getAnswers();
 
-            switch ($typology) {
-                case "APPAT";
-                case "APPAA";
-                case "APPAI";
-                case "APPTT";
-                    foreach ($answers as $answer) {
-                        if ($answer->getProposition()->getRightAnswer()) {
-                            $score++;
+                        // création tableau de correspondance subquestion -> réponses
+                        foreach ($answers as $answer) {
+                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
+                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                            }
+                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
                         }
-                    }
-                    break;
-                case "QRM";
-                case "TQRM";
-                case "QRU";
-                case "TQRU";
-                case "VF";
-                case "TVF";
-                case "VFNM";
-                case "TVFNM";
-                    foreach ($answers as $answer) {
-                        if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                        }
-                        $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
-                    }
 
-                    foreach ($answersArray as $subQuestionId => $answers) {
-                        // Initialisation des variables.
-                        $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
-                        // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                        $subQuestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subQuestionId);
-                        $propositions = $subQuestion->getPropositions();
-
-                        // Calcul du nombre de réponses.
-                        $nbAnswers = count($answers);
-                        $rightProps = array();
-                        // Accès à la proposition.
-                        // Calcul du nombre de proposition et
-                        // calcul du nombre de bonnes réponses.
-                        foreach ($propositions as $proposition) {
-                                $nbProposition++;
+                        $subquestions = $questions[0]->getSubQuestions();
+                        foreach ($subquestions as $subquestion) {
+                            $propositions = $subquestion->getPropositions();
+                            $nbPropositionRightAnswser = 0;
+                            $cptProposition = 0;
+                            $propLetters = array();
+                            // on compte les bonnes propositions
+                            foreach ($propositions as $proposition) {
+                                $cptProposition++;
                                 if ($proposition->getRightAnswer()) {
                                     $nbPropositionRightAnswser++;
-                                    $rightProps[] = $proposition;
                                 }
-                        }
-
-                        // Je calcule le score que si le testeur a répondu à autant de réponses
-                        // qu'il y a de propositions.
-                        // Si ce n'est pas le cas, il aura forcément ZERO point.
-                        if ($nbAnswers == $nbPropositionRightAnswser) {
-
-                            foreach ($rightProps as $rightProp) {
-                                if (in_array($rightProp->getId(),$answersArray[$subQuestion->getId()])) {
-                                        $nbRightAnswer++;
-                                }
+                                $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                             }
 
-                        }
-
-                        if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                            $score++;
+                            $letters = array();
+                            foreach ($answersArray[$subquestion->getId()] as $answer) {
+                                $idAnswer = $answer->getId();
+                                $letters[$propLetters[$idAnswer]] = 1;
+                            }
+                            ksort($letters);
+                            foreach ($letters as $key => $value) {
+                                $csv .= $key;
+                            }
+                            $csv .= ";";
                         }
                     }
-                    break;
-
+                }
+                $csv .= "\n";
             }
-        }
 
-        return $score;
+        }
+        return $csv;
     }
 
+    private function countQuestionnaireDone(Test $test, User $user){
+        $em = $this->entityManager;
+        $count = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                ->countDoneYetByUserByTest($test->getId(), $user->getId());
+
+        return  $count;
+    }
+
+    private function intToLetter($int){
+        $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
+
+        return $arr[$int];
+    }
 }

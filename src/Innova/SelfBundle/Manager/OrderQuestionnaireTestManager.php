@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\OrderQuestionnaireTest;
+use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Questionnaire;
 
 class OrderQuestionnaireTestManager
 {
@@ -13,7 +15,7 @@ class OrderQuestionnaireTestManager
         $this->entityManager = $entityManager;
     }
 
-    public function createOrderQuestionnaireTest($test, $questionnaire)
+    public function createOrderQuestionnaireTest(Test $test, Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
 
@@ -27,6 +29,9 @@ class OrderQuestionnaireTestManager
             $orderMax = 0;
         }
 
+        $questionnaire->setLanguage($test->getLanguage());
+        $em->persist($questionnaire);
+           
         $orderQuestionnaireTest->setDisplayOrder($orderMax + 1);
         $em->persist($orderQuestionnaireTest);
 
@@ -35,7 +40,7 @@ class OrderQuestionnaireTestManager
         return $orderQuestionnaireTest;
     }
 
-    public function recalculateOrder($test)
+    public function recalculateOrder(Test $test)
     {
         $em = $this->entityManager;
 

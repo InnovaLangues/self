@@ -31,6 +31,7 @@ class PlayerController
     protected $entityManager;
     protected $session;
     protected $router;
+    protected $user;
 
     /**
      * Class constructor
@@ -45,8 +46,8 @@ class PlayerController
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
         $this->session = $session;
-        $this->user = $this->securityContext->getToken()->getUser();
         $this->router = $router;
+        $this->user = $this->securityContext->getToken()->getUser();
     }
 
     /**
@@ -63,6 +64,7 @@ class PlayerController
 
         // on récupère un questionnaire sans trace pour un test et un utilisateur donné
         $questionnaire = $this->findAQuestionnaireWithoutTrace($test, $this->user);
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
         // s'il n'y a pas de questionnaire dispo, on renvoie vers la fonction qui gère la fin de test
         if (is_null($questionnaire)) {
@@ -88,14 +90,15 @@ class PlayerController
 
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $this->user->getId());
-            $countQuestionnaireTotal = count($orderQuestionnaireTests = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test));
+            $countQuestionnaireTotal = count($test->getOrderQuestionnaireTests());
 
             return array(
-                'questionnaire' => $questionnaire,
                 'test' => $test,
+                'questionnaire' => $questionnaire,
+                'questionnaires' => $questionnaires,
                 'countQuestionnaireDone' => $countQuestionnaireDone,
                 'countQuestionnaireTotal' => $countQuestionnaireTotal,
-                'displayHelp' => $displayHelp // Me dit si je dois ou pas afficher l'aide
+                'displayHelp' => $displayHelp
             );
         }
     }
@@ -193,7 +196,7 @@ class PlayerController
 
         $this->session->set('listening', $questionnairePicked->getListeningLimit());
 
-        $questionnaires = $test->getQuestionnaires();
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
         $i = 0;
         foreach ($questionnaires as $q) {
@@ -205,8 +208,9 @@ class PlayerController
         }
 
         return array(
-            'questionnaire' => $questionnairePicked,
             'test' => $test,
+            'questionnaires' => $questionnaires,
+            'questionnaire' => $questionnairePicked,
             'countQuestionnaireDone' => $countQuestionnaireDone,
             'displayHelp' => false
         );

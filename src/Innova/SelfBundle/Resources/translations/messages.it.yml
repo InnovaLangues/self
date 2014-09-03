@@ -81,6 +81,8 @@ generic:
 editor:
     test:
         create: Crea un test
+        create_the: Crea il test
+        delete: Elimina il test
         list: Lista dei test
         name: Nome del test
         language: Lingua
@@ -89,8 +91,10 @@ editor:
         edit: Modifica
         back_to_list: Ritorna alla lista dei test
         new: Nuovo test
+        all_tests: Tutti i test
     task:
         tasks: Task
+        all_tasks: Tutte le task
         back_to_list: Ritorna alla lista dei task di valutazione 
         list: Lista di task per il test <strong>%testName%</strong>
         manage: Gestire le task
@@ -210,3 +214,8 @@ trace:
             normal: Normale
             difficult: Difficile
             veryDifficult: Molto difficile
+
+language:
+    English: Inglese
+    Italian: Italiano
+    Chinese: Cinese

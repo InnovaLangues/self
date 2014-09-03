@@ -207,6 +207,11 @@ class Questionnaire
     */
     private $orderQuestionnaireTests;
 
+     /**
+    * @ORM\ManyToOne(targetEntity="Language", inversedBy="tests")
+    */
+    protected $language;
+
     public function __construct()
     {
         $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1088,5 +1093,28 @@ class Questionnaire
     public function getMediaBlankText()
     {
         return $this->mediaBlankText;
+    }
+
+    /**
+     * Set language
+     *
+     * @param \Innova\SelfBundle\Entity\Language $language
+     * @return Questionnaire
+     */
+    public function setLanguage(\Innova\SelfBundle\Entity\Language $language = null)
+    {
+        $this->language = $language;
+    
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return \Innova\SelfBundle\Entity\Language 
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }

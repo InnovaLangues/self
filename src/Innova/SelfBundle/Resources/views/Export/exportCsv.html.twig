@@ -1,19 +1,18 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+        <a class="btn btn-default btn-sm" href="{{ path('csv_export') }}">
+        <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
+        </a>
+        <hr/>
 
-        <h3>{{ 'export.file_generated' | trans }}</h3>
+        <h3> Export CSV pour le test <strong>{{ test.name }}</strong></h3>
+        <div class="alert alert-success" role="alert">{{ 'export.file_generated' | trans }} - <a href="{{ path('get-file', {'testId': test.id, 'filename': csvName } )}}">{{ 'export.file_download' | trans }}</a></div>
 
-        <h3>
-            <a href="{{ path('get-file', {'testId': testId, 'filename': csvName } )}}">{{ 'export.file_download' | trans }}</a>
-        </h3>
-
-        <h3>{{ 'export.files_list' | trans }}</h3>
-
-        <h4>{{ 'export.files_count' | trans({'%nbFile%': nbFile}) }}</h4>
+        <h4>{{ 'export.files_list' | trans }}</h4>
         {% for file in fileList %}
             <h5>
-                <a href="{{ path('get-file', {'testId': testId, 'filename': file } )}}">{{ file }}</a>
+                <a href="{{ path('get-file', {'testId': test.id, 'filename': file } )}}">{{ file }}</a>
             </h5>
         {% endfor %}
 {% endblock %}
