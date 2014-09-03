@@ -69,6 +69,24 @@ class TaskController
         );
     }
 
+    /**
+     * Lists all Questionnaire entities.
+     *
+     * @Route("/questionnaires/language/{languageId}", name="editor_questionnaires_by_language_show")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
+     */
+    public function listQuestionnairesByLanguageAction($languageId)
+    {
+        $em = $this->entityManager;
+
+        $language = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($languageId);
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($language);
+
+        return array(
+            'questionnaires' => $questionnaires,
+        );
+    }
 
     /**
      * Lists all Questionnaire entities for a test (ordered)

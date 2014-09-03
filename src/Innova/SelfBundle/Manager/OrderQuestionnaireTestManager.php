@@ -29,6 +29,9 @@ class OrderQuestionnaireTestManager
             $orderMax = 0;
         }
 
+        $questionnaire->setLanguage($test->getLanguage());
+        $em->persist($questionnaire);
+           
         $orderQuestionnaireTest->setDisplayOrder($orderMax + 1);
         $em->persist($orderQuestionnaireTest);
 

@@ -9,6 +9,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    twig.extension.get_languages:
+        class: Innova\SelfBundle\Twig\LanguageExtension
+        arguments:
+            entityManager: @doctrine.orm.entity_manager
+        tags:
+            - { name: twig.extension }
+
     innova_user.registration.form.type:
         class: Innova\SelfBundle\Form\UserType
         arguments:
