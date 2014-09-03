@@ -193,7 +193,7 @@ class PlayerController
      */
     public function pickAQuestionnaireAction(Test $test, Questionnaire $questionnairePicked)
     {
-
+        $em = $this->entityManager;
         $this->session->set('listening', $questionnairePicked->getListeningLimit());
 
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
