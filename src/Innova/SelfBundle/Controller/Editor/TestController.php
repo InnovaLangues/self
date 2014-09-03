@@ -125,7 +125,11 @@ class TestController extends Controller
         $language = $em->getRepository('InnovaSelfBundle:Language')->find($request->request->get('test-language'));
 
         $test->setLanguage($language);
-        // changer la langue des tâches de ce test !
+        foreach ($test->getOrderQuestionnaireTests() as $order) {
+            $questionnaire = $order->getQuestionnaire();
+            $questionnaire->setLanguage($language);
+            $em->persist($questionnaire);
+        }
 
         $display = $request->request->get('test-display');
         if ($display == "actif") {
