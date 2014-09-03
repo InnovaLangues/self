@@ -34,6 +34,11 @@ sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/lo
 php app/console fos:user:create admin --super-admin
 ```
 
+### Change password or role or something else :
+``` bash
+https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/Resources/doc/command_line_tools.md
+```
+
 ### Convert wav -> mp3 if needed
 ``` bash
 find . -iname "*.wav" -exec sox {} {}.mp3 \;
