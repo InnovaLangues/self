@@ -27,7 +27,8 @@
                         <label for="language">Langue</label>
                             <select id="language" class="form-control">
                                 {% for language in get_languages() %}
-                                    <option {% if questionnaire.language is not null and questionnaire.language == language %}selected{% endif %} value="{{ language.id }}"> {{ language.name }}
+                                    {% set languageTransl =   'language.'~language.name %}
+                                    <option {% if questionnaire.language is not null and questionnaire.language == language %}selected{% endif %} value="{{ language.id }}"> {{languageTransl | trans }}
                                 {% endfor %}
                              </select>
                     </div>
