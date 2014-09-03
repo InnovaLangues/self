@@ -279,8 +279,6 @@ class QuestionnaireController
         $em->persist($questionnaire);
         $em->flush();
 
-        //$this->editorLogManager->createEditorLog("editor_edit", "language", $questionnaire);
-
         return new JsonResponse(
             array(
                 'language'=> $languageId,
