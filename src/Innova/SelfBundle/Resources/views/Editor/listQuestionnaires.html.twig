@@ -75,8 +75,6 @@
                         {% endfor %}
                         <span data-html="true" class="glyphicon glyphicon-eye-open" rel="tooltip" data-original-title="{{ tooltip }}"></span>
                     {% endif %}
-
-
                 </td>
                 <td class="text-right">
                     <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
@@ -86,13 +84,6 @@
             </tr>
         {% endfor %}
         </tbody>
-        <tr>
-            <th>{{ 'editor.log.status'|trans|capitalize}}</th>
-            <th>{{ 'editor.log.theme'|trans|capitalize}}</th>
-            <th>{{ 'editor.log.level'|trans|capitalize}}</th>
-            <th>{{ 'editor.log.skill'|trans|capitalize}}</th>
-            <th>{{ 'editor.log.test'|trans|capitalize}}</th>
-        </tr>
     </table>
 {% endif %}
 {% endblock %}

@@ -26,16 +26,28 @@
                             {# <li><a href="{{ path('admin_user') }}">{{ 'menu.users' | trans }}</a></li> #}
                             <li><a href="{{ path('csv_export') }}">{{ 'menu.csv_export' | trans }}</a></li>
                             <li><a href="{{ path('show_tests') }}">{{ 'menu.tests' | trans }}</a></li>
-
-
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'menu.editor' | trans }} <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ path('editor_tests_show') }}">Tests</a></li>
-                                <li><a href="{{ path('editor_questionnaires_show') }}">Tâches</a></li>
-                            </ul>
-                        </li>
-                            
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'menu.editor' | trans }} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Tests</a>
+                                        <ul class="dropdown-menu">
+                                            {% set languages = get_languages() %}
+                                            {% for language in languages %}
+                                                <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}">{{ language.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Tâches</a>
+                                        <ul class="dropdown-menu">
+                                            {% for language in languages %}
+                                                <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{ language.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
                         {% endif %}
                         <li><a data-toggle="modal" href="#helpModal">{{ 'menu.help' | trans }}</a></li>
                         <li><a data-toggle="modal" href="#creditModal">{{ 'menu.credit' | trans }}</a></li>

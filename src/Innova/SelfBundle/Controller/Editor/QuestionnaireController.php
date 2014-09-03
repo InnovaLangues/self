@@ -64,15 +64,17 @@ class QuestionnaireController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $msg = "";
 
-        if ($this->questionnaireManager->isUnique($theme)) {
-            $questionnaire->setTheme($theme);
-            $em->persist($questionnaire);
-            $em->flush();
-        } else {
-            $msg = "Une tâche avec le même nom existe déja";
-        }
+        if ($questionnaire->getTheme() != $theme) {
+            if ($this->questionnaireManager->isUnique($theme, $questionnaire->getLanguage())) {
+                $questionnaire->setTheme($theme);
+                $em->persist($questionnaire);
+                $em->flush();
+            } else {
+                $msg = "Une tâche avec le même nom existe déja";
+            }
 
-        $this->editorLogManager->createEditorLog("editor_edit", "theme", $questionnaire);
+            $this->editorLogManager->createEditorLog("editor_edit", "theme", $questionnaire);
+        }
 
         return new JsonResponse(
             array(
@@ -233,6 +235,35 @@ class QuestionnaireController
             )
         );
     }
+
+    /**
+     *
+     * @Route("/questionnaires/set-language", name="editor_questionnaire_set-language", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setLanguageAction()
+    {
+        $request = $this->request;
+        $questionnaireId = $request->request->get('questionnaireId');
+        $languageId = $request->request->get('language');
+
+        $em = $this->entityManager;
+        $language = $em->getRepository('InnovaSelfBundle:Language')->find($languageId);
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+
+        $questionnaire->setLanguage($language);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        //$this->editorLogManager->createEditorLog("editor_edit", "language", $questionnaire);
+
+        return new JsonResponse(
+            array(
+                'language'=> $languageId,
+            )
+        );
+    }
+
 
     /**
      *

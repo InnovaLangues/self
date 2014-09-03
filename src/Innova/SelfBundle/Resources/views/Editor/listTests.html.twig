@@ -17,7 +17,6 @@
     <thead>
         <tr>
             <th>{{ 'editor.test.name' | trans }}</th>
-            <th>{{ 'editor.test.language' | trans }}</th>
             <th>{{ 'editor.task.count' | trans }}</th>
             <th>{{ 'editor.test.is_active' | trans }}</th>
             <th></th>
@@ -28,9 +27,6 @@
         <tr>
             <td>
                 {{ test.name }}
-            </td>
-            <td>
-                {{ test.language.name }}
             </td>
             <td>
                 {{ test.orderQuestionnaireTests|length }}

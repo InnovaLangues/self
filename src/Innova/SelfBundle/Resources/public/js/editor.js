@@ -24,6 +24,10 @@ $(document).ready(function() {
         setStatus(questionnaireId);
     });
 
+    $('#language').on('change',function(e){
+        setLanguage(questionnaireId);
+    });
+
     $('#fixed-order').on('change',function(e){
         isChecked = $('#fixed-order').prop('checked');
         setFixedOrder(isChecked);
@@ -512,6 +516,23 @@ function setStatus(questionnaireId) {
     })
     .done(function(data) {
         $("#status").val(data.status);
+        afterAjax();
+    }); 
+}
+
+function setLanguage(questionnaireId) {
+    beforeAjax();
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_set-language'),
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            questionnaireId: questionnaireId,
+            language: $("#language").val() 
+        }
+    })
+    .done(function(data) {
+        $("#language").val(data.language);
         afterAjax();
     }); 
 }

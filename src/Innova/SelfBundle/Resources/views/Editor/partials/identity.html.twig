@@ -22,7 +22,16 @@
                              </select>
                     </div>
                 </div>
-
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="language">Langue</label>
+                            <select id="language" class="form-control">
+                                {% for language in get_languages() %}
+                                    <option {% if questionnaire.language is not null and questionnaire.language == language %}selected{% endif %} value="{{ language.id }}"> {{ language.name }}
+                                {% endfor %}
+                             </select>
+                    </div>
+                </div>
              </div>
         </div>
     </div>

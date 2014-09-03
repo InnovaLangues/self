@@ -33,6 +33,26 @@ class TestController extends Controller
         );
     }
 
+    /**
+     * Lists all Test entities.
+     *
+     * @Route("/tests/language/{languageId}", name="editor_tests_by_language_show")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
+     */
+    public function listTestsByLanguageAction($languageId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $language = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($languageId);
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findByLanguage($language);
+
+        return array(
+            'tests' => $tests
+        );
+    }
+    
+
 
     /**
      * Display form to create a new Questionnaire entity.
@@ -106,7 +126,10 @@ class TestController extends Controller
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $test->setName($request->request->get('test-name'));
-        $test->setLanguage($em->getRepository('InnovaSelfBundle:Language')->find($request->request->get('test-language')));
+        $language = $em->getRepository('InnovaSelfBundle:Language')->find($request->request->get('test-language'));
+
+        $test->setLanguage($language);
+        // changer la langue des tâches de ce test !
 
         $display = $request->request->get('test-display');
         if ($display == "actif") {
