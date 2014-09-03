@@ -36,11 +36,6 @@ class Test
     private $actif;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Questionnaire", inversedBy="tests")
-    */
-    private $questionnaires;
-
-    /**
     * @ORM\OneToMany(targetEntity="Trace", mappedBy="test")
     */
     private $traces;
@@ -86,39 +81,6 @@ class Test
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Add questionnaires
-     *
-     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     * @return Session
-     */
-    public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
-    {
-        $this->questionnaires[] = $questionnaires;
-
-        return $this;
-    }
-
-    /**
-     * Remove questionnaires
-     *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     */
-    public function removeQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
-    {
-        $this->questionnaires->removeElement($questionnaires);
-    }
-
-    /**
-     * Get questionnaires
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getQuestionnaires()
-    {
-        return $this->questionnaires;
     }
 
     /**

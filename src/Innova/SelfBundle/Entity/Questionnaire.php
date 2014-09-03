@@ -205,11 +205,6 @@ class Questionnaire
     protected $traces;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Test", mappedBy="questionnaires")
-    */
-    private $tests;
-
-    /**
     * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="questionnaire")
     */
     private $orderQuestionnaireTests;
@@ -349,40 +344,6 @@ class Questionnaire
     public function getTraces()
     {
         return $this->traces;
-    }
-
-    /**
-     * Add tests
-     *
-     * @param  \Innova\SelfBundle\Entity\Test $tests
-     * @return Questionnaire
-     */
-    public function addTest(\Innova\SelfBundle\Entity\Test $tests)
-    {
-        $this->tests[] = $tests;
-        $tests->addQuestionnaire($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove tests
-     *
-     * @param \Innova\SelfBundle\Entity\Test $tests
-     */
-    public function removeTest(\Innova\SelfBundle\Entity\Test $tests)
-    {
-        $this->tests->removeElement($tests);
-    }
-
-    /**
-     * Get tests
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTests()
-    {
-        return $this->tests;
     }
 
     /**
