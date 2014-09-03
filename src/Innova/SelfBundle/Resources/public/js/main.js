@@ -1,6 +1,6 @@
 $(document).ready(function() {
-	/* TOOLTIP */
-	$('*').tooltip({placement:'top'});
+    /* TOOLTIP */
+    $('*').tooltip({placement:'top'});
 
     /*Login form validation*/
     $('.fos_user_registration_register #_submit').click(function(event) {
@@ -95,4 +95,5 @@ $(document).ready(function() {
         $("#locale-modale").modal('show');
     });
 
+    $(".rest").restfulizer();
 });

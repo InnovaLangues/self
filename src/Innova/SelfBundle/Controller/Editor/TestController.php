@@ -143,4 +143,36 @@ class TestController extends Controller
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
+
+    /**
+     * Edits a test entity.
+     *
+     * @Route("/test/{testId}/delete", name="editor_test_delete")
+     * @Method("DELETE")
+     * @Template("")
+     */
+    public function deleteTestAction($testId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        foreach ($test->getOrderQuestionnaireTests() as $order) {
+            $em->remove($order);
+        }
+
+        foreach ($test->getMediaClicks() as $mediaClick) {
+            $em->remove($mediaClick);
+        }
+
+         foreach ($test->getTraces() as $trace) {
+            $em->remove($trace);
+        }
+
+        $em->remove($test);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('editor_tests_show'));
+    }
+
 }
