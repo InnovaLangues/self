@@ -31,6 +31,10 @@
                         </span>
                     {% endfor %}
                 </div>
+            {% elseif questionnaire.mediaText.mediaType.name == "image" %}
+                <div class="form-group">
+                    <input type="text" class="form-control" id="text-title" placeholder="Image title" value="{{ questionnaire.textTitle}}">
+                </div>
             {% endif %}
         {% endif %}
     </div>

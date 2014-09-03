@@ -8,6 +8,10 @@ $(document).ready(function() {
         setTheme(questionnaireId);
     });
 
+    $('#text-title').on('blur',function(e){
+        setTextTitle(questionnaireId);
+    });
+
     $('#skill').on('change',function(e){
         setSkill(questionnaireId);
     });
@@ -468,6 +472,25 @@ function setTheme(questionnaireId) {
         afterAjax();
     }); 
 }
+
+function setTextTitle(questionnaireId) {
+    beforeAjax();
+
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_set-text-title'),
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            questionnaireId: questionnaireId,
+            title: $("#text-title").val() 
+        }
+    })
+    .done(function(data) {
+        $("#text-title").val(data.title);
+        afterAjax();
+    }); 
+}
+
 
 function setSkill(questionnaireId) {
     beforeAjax();

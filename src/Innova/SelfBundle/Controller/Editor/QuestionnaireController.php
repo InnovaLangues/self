@@ -86,6 +86,30 @@ class QuestionnaireController
 
     /**
      *
+     * @Route("/questionnaires/set-text-title", name="editor_questionnaire_set-text-title", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setTextTitleAction()
+    {
+        $request = $this->request;
+        $em = $this->entityManager;
+
+        $title = $request->request->get('title');
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
+
+        $questionnaire->setTextTitle($title);
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+               'title' => $questionnaire->getTextTitle(),
+           )
+        );
+    }
+
+    /**
+     *
      * @Route("/questionnaires/set-fixed-order", name="editor_questionnaire_set-fixed-order", options={"expose"=true})
      * @Method("POST")
      */

@@ -129,6 +129,13 @@ class Questionnaire
      */
     private $theme;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="textTitle", type="string", length=255)
+     */
+    private $textTitle;
+
      /**
      * @var integer
      *
@@ -1116,5 +1123,28 @@ class Questionnaire
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Set textTitle
+     *
+     * @param string $textTitle
+     * @return Questionnaire
+     */
+    public function setTextTitle($textTitle)
+    {
+        $this->textTitle = $textTitle;
+    
+        return $this;
+    }
+
+    /**
+     * Get textTitle
+     *
+     * @return string 
+     */
+    public function getTextTitle()
+    {
+        return $this->textTitle;
     }
 }
