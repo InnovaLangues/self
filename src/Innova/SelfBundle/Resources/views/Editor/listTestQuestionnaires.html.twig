@@ -16,13 +16,12 @@
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.add_existing' | trans }}
 </a>
 
-{% if orders|length > 0 %}
-    <a disabled="disabled" class="btn btn-default btn-sm" id="save-order">
-        <span class="glyphicon glyphicon-floppy-disk"></span>
-        {{ 'editor.task.save_order' | trans }}
-    </a>
-    <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
-{% endif %}
+<a disabled="disabled" class="btn btn-default btn-sm" id="save-order">
+    <span class="glyphicon glyphicon-floppy-disk"></span>
+    {{ 'editor.task.save_order' | trans }}
+</a>
+<img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
+
 
 <hr/>
 
