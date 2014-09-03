@@ -129,6 +129,13 @@ class Questionnaire
      */
     private $theme;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="textTitle", type="string", length=255)
+     */
+    private $textTitle;
+
      /**
      * @var integer
      *
@@ -196,11 +203,6 @@ class Questionnaire
     * @ORM\OneToMany(targetEntity="Trace", mappedBy="questionnaire", cascade={"persist", "remove"})
     */
     protected $traces;
-
-    /**
-    * @ORM\ManyToMany(targetEntity="Test", mappedBy="questionnaires")
-    */
-    private $tests;
 
     /**
     * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="questionnaire")
@@ -342,40 +344,6 @@ class Questionnaire
     public function getTraces()
     {
         return $this->traces;
-    }
-
-    /**
-     * Add tests
-     *
-     * @param  \Innova\SelfBundle\Entity\Test $tests
-     * @return Questionnaire
-     */
-    public function addTest(\Innova\SelfBundle\Entity\Test $tests)
-    {
-        $this->tests[] = $tests;
-        $tests->addQuestionnaire($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove tests
-     *
-     * @param \Innova\SelfBundle\Entity\Test $tests
-     */
-    public function removeTest(\Innova\SelfBundle\Entity\Test $tests)
-    {
-        $this->tests->removeElement($tests);
-    }
-
-    /**
-     * Get tests
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTests()
-    {
-        return $this->tests;
     }
 
     /**
@@ -1116,5 +1084,28 @@ class Questionnaire
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Set textTitle
+     *
+     * @param string $textTitle
+     * @return Questionnaire
+     */
+    public function setTextTitle($textTitle)
+    {
+        $this->textTitle = $textTitle;
+    
+        return $this;
+    }
+
+    /**
+     * Get textTitle
+     *
+     * @return string 
+     */
+    public function getTextTitle()
+    {
+        return $this->textTitle;
     }
 }
