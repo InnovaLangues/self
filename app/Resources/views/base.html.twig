@@ -32,6 +32,8 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#">Tests</a>
                                         <ul class="dropdown-menu">
+                                            <li><a href="{{path('editor_tests_show')}}">Tous les tests</a></li>
+                                            <li class="divider"></li>
                                             {% set languages = get_languages() %}
                                             {% for language in languages %}
                                                 <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}">{{ language.name }}</a></li>
@@ -41,6 +43,8 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#">Tâches</a>
                                         <ul class="dropdown-menu">
+                                            <li><a href="{{path('editor_questionnaires_show')}}">Toutes les tâches</a></li>
+                                            <li class="divider"></li>
                                             {% for language in languages %}
                                                 <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{ language.name }}</a></li>
                                             {% endfor %}
