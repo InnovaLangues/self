@@ -1,8 +1,8 @@
 <table class="table">
      <tr>
         <th></th>
-        <th>Indice</th>
-        <th>Syllabe</th>
+        <th>Info-bulle</th>
+        <th>Indice morphologique</th>
     </tr>
     {% for subquestion in subquestions %}
         <tr>
@@ -13,7 +13,7 @@
             </td>
             {% endfor %}
             <td>
-                indice : <input class="clue" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.clue is not null %}{{ subquestion.clue.media.description }}{% endif %}"/>
+                <input class="clue" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.clue is not null %}{{ subquestion.clue.media.description }}{% endif %}"/>
                 {% if subquestion.clue is not null %}
                     <span rel="tooltip" data-original-title="fonctionnel">f</span>
                     <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="fonctionnel" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "fonctionnel" %}checked{% endif %}/>
@@ -23,7 +23,7 @@
                 {% endif %}
             </td>
              <td>
-                syllabe : <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
+                <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
             </td>
         </tr>
     {% endfor %}
