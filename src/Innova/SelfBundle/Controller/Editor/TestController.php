@@ -63,7 +63,6 @@ class TestController extends Controller
      */
     public function createTestFormAction()
     {
-        $em = $this->getDoctrine()->getManager();
 
         return array();
     }
@@ -154,7 +153,6 @@ class TestController extends Controller
     public function deleteTestAction($testId)
     {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request');
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         foreach ($test->getOrderQuestionnaireTests() as $order) {
