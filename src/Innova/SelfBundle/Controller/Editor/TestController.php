@@ -64,9 +64,8 @@ class TestController extends Controller
     public function createTestFormAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $languages = $em->getRepository('InnovaSelfBundle:Language')->findAll();
 
-        return array('languages' => $languages);
+        return array();
     }
 
     /**
@@ -104,11 +103,8 @@ class TestController extends Controller
         $em = $this->getDoctrine()->getManager();
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
-        $languages = $em->getRepository('InnovaSelfBundle:Language')->findAll();
-
         return array(
                     'test' => $test,
-                    'languages' => $languages
         );
     }
 

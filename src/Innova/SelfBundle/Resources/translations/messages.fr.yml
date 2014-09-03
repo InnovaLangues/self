@@ -82,6 +82,8 @@ generic:
 editor:
     test:
         create: Créer un test
+        create_the: Créer le test
+        delete: Supprimer le test
         list: Liste des tests
         name: Nom du test
         language: Langue
@@ -217,3 +219,9 @@ trace:
             normal: Normal
             difficult: Difficile
             veryDifficult: Très difficile
+
+language:
+    English: Anglais
+    Italian: Italien
+    Chinese: Chinois
+

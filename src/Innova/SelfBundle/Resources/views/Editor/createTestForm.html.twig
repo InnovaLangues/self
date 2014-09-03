@@ -18,14 +18,15 @@
     <div class="form-group">
         <label for="test-language">{{ 'editor.test.language' | trans }}</label>
         <select id="test-language" class="form-control" name="test-language" required />
-            {% for language in languages %}
-                <option value="{{ language.id }}">{{ language.name }}</option>
+            {% for language in get_languages()  %}
+                {% set languageTransl =   'language.'~language.name %}
+                <option value="{{ language.id }}">{{languageTransl | trans }}</option>
             {% endfor %}
         </select>
     </div>
 
     <div class="form-group">
-        <input type="submit" value="Créer le test" class="btn btn-primary pull-right">
+        <input type="submit" value="{{ 'editor.test.create_the' | trans }}" class="btn btn-primary pull-right">
     </div>
 </form>
 
