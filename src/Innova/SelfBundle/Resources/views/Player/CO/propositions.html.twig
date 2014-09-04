@@ -13,9 +13,19 @@
             {% if proposition.media.mediaType.name == "audio" %}
                 {{ macros.audio("proposition-"~ proposition.id, proposition.media, "audio"~bulleCount~".png", 90, 0, 'player.tooltip.proposition' | trans ) }}
             {% elseif proposition.media.mediaType.name == "texte" %}
-                <label for="input-proposition{{ proposition.id }}" class="proposition-CO-text">
-                {{ macros.translateVF(proposition.media.description) }}
-                </label>
+                {# #490 Demande de Cristiana : pour les vrai/faux, afficher une zone moins grande. ERV. #}
+                {% set vraifaux = proposition.media.description|lower %}
+                {{ vraifaux }}
+                {% set myArray = ["vrai", "faux", "nd"] %}
+                {% if vraifaux in myArray %}
+                    <label for="input-proposition{{ proposition.id }}" class="proposition-CO-text proposition-text-vraifaux">
+                    {{ macros.translateVF(proposition.media.description) }}
+                    </label>
+                {% else %}
+                    <label for="input-proposition{{ proposition.id }}" class="proposition-CO-text">
+                    {{ macros.translateVF(proposition.media.description) }}
+                    </label>
+                {% endif %}
             {% elseif proposition.media.mediaType.name == "image" %}
                 {{ macros.image(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans, 110) }}
                 {{ macros.modale(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans) }}

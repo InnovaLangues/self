@@ -317,6 +317,11 @@ input.proposition-input, label{
 	width:85%;
 }
 
+/* #490 Demande de Cristiana : pour les vrai/faux, afficher une zone moins grande. ERV. */
+.proposition-text-vraifaux {
+	width:40%;
+}
+
 .proposition-APP {
 	border-radius:3px;
 	margin-bottom:4px;
