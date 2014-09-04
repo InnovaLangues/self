@@ -91,6 +91,7 @@ class MediaClickController extends Controller
 
         $isPlayable = $this->isMediaPlayable($media, $test, $questionnaire);
 
+var_dump($test);die();
         return new JsonResponse(
             array(
                 'isPlayable' => $isPlayable,

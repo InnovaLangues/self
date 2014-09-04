@@ -12,9 +12,18 @@
         {% set bulleCount = i + 1 %}
         <div class="proposition-CE">
             {{ macros.inputs(subquestion, proposition) }}
-            <label for="input-proposition{{ proposition.id }}" class="proposition-CE-text">
-                {{ macros.translateVF(proposition.media.description) }}
-            </label>
+            {# #490 Demande de Cristiana : pour les vrai/faux, afficher une zone moins grande. ERV. #}
+            {% set vraifaux = proposition.media.description|lower %}
+            {% set myArray = ["vrai", "faux", "nd"] %}
+            {% if vraifaux in myArray %}
+                <label for="input-proposition{{ proposition.id }}" class="proposition-CE-text proposition-text-vraifaux">
+                    {{ macros.translateVF(proposition.media.description) }}
+                </label>
+            {% else %}
+                <label for="input-proposition{{ proposition.id }}" class="proposition-CE-text">
+                    {{ macros.translateVF(proposition.media.description) }}
+                </label>
+            {% endif %}
         </div>
     {% endfor %}
 </div>
