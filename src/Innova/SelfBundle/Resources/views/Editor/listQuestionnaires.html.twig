@@ -67,8 +67,7 @@
                 </td>
                 {# Add to display typology. EV. #}
                 <td>
-                    {% if questionnaire.questions is not empty
-                    and questionnaire.questions[0].typology.name is not null %}
+                    {% if questionnaire.questions is not empty and questionnaire.questions[0].typology is not null %}
                             {{ questionnaire.questions[0].typology.name }}
                     {% else %}
                         {{ '-' }}

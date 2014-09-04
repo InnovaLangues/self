@@ -67,7 +67,7 @@ class EecController
 
         // récupération des medias des distracteurs
         $i = 0;
-        $distractors= array();
+        $distractors = array();
         foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
             $distractors[$i] = array();
             foreach ($subquestion->getPropositions() as $proposition) {
@@ -92,7 +92,6 @@ class EecController
                 $subquestion = $this->subquestionManager->createSubquestion($question->getTypology(), $question);
                 $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
                 $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
-
 
                 if ($question->getTypology()->getName() == "TLCMLDM") {
                     for ($j=0; $j < $countLacunes; $j++) {
@@ -133,8 +132,16 @@ class EecController
         $request = $this->request->request;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);
 
+        // récupération des indices
+        $i = 0;
+        $clues = array();
+        foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
+            $clues[$i] = $subquestion->getClue();
+            $i++;
+        }
+
+        $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);
         if ($questionnaire->getMediaBlankText()) {
             $this->editorLogManager->createEditorLog("editor_create", "blanks", $questionnaire);
             $texte = $questionnaire->getMediaBlankText()->getDescription();
@@ -148,9 +155,14 @@ class EecController
                 $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
                 $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
 
+                
                 $em->persist($subquestion);
                 $em->persist($lacuneMedia);
                 $em->refresh($subquestion);
+
+
+                $subquestion->setClue($clues[$i]);
+                $em->persist($subquestion);
             }
             $em->flush();
         }
