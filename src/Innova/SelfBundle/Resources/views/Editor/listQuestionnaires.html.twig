@@ -30,6 +30,8 @@
                 <th>{{ 'editor.log.theme'|trans|capitalize}}</th>
                 <th>{{ 'editor.log.level'|trans|capitalize}}</th>
                 <th>{{ 'editor.log.skill'|trans|capitalize}}</th>
+                {# Add to display typology. EV. #}
+                <th>{{ 'editor.log.typology'|trans|capitalize}}</th>
                 <th>{{ 'editor.log.test'|trans|capitalize}}</th>
             </tr>
         </thead>
@@ -58,9 +60,18 @@
                         {{ questionnaire.level.name }}
                     {% endif %}
                 </td>
-                <td>
+                 <td>
                     {% if questionnaire.skill is not null %}
                         {{ questionnaire.skill.name }}
+                    {% endif %}
+                </td>
+                {# Add to display typology. EV. #}
+                <td>
+                    {% if questionnaire.questions is not empty
+                    and questionnaire.questions[0].typology.name is not null %}
+                            {{ questionnaire.questions[0].typology.name }}
+                    {% else %}
+                        {{ '-' }}
                     {% endif %}
                 </td>
                 <td>
