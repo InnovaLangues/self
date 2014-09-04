@@ -162,8 +162,8 @@ class EecController
 
                 if(!empty($clues[$i])){
                     $subquestion->setClue($clues[$i]);    
+                    $em->persist($subquestion);
                 }
-                $em->persist($subquestion);
             }
             $em->flush();
         }
