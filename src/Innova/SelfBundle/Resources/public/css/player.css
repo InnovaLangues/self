@@ -27,6 +27,10 @@
 /**********************************
 	CONTEXTE
 ***********************************/
+/* fix #469 Alignement des textes à gauche par défaut */
+p {
+    text-align: left;
+}
 
 #contexte {
 	height:100px;

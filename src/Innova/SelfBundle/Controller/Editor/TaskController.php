@@ -50,7 +50,6 @@ class TaskController
         return $this;
     }
 
-
     /**
      * Lists all Questionnaire entities.
      *
@@ -126,7 +125,6 @@ class TaskController
         return new Response($template);
     }
 
-
     /**
      * Finds and displays a Questionnaire entity.
      *
@@ -150,7 +148,7 @@ class TaskController
         return array(
             'questionnaire' => $questionnaire,
             'typologies' => $typologies,
-            'status' => $status, 
+            'status' => $status,
             'testId' => $testId
         );
     }
