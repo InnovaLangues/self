@@ -160,8 +160,9 @@ class EecController
                 $em->persist($lacuneMedia);
                 $em->refresh($subquestion);
 
-
-                $subquestion->setClue($clues[$i]);
+                if(!empty($clues[$i])){
+                    $subquestion->setClue($clues[$i]);    
+                }
                 $em->persist($subquestion);
             }
             $em->flush();
