@@ -64,6 +64,20 @@ class EecController
         $request = $this->request->request;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+
+        // récupération des medias des distracteurs
+        $i = 0;
+        $distractors= array();
+        foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
+            $distractors[$i] = array();
+            foreach ($subquestion->getPropositions() as $proposition) {
+                if ($proposition->getMedia()->getMediaPurpose()->getName() == "distractor") {
+                    $distractors[$i][] = $proposition->getMedia();
+                }
+            }
+            $i++;
+        }
+
         $question = $this->questionManager->removeSubquestions($questionnaire->getQuestions()[0]);
 
         if ($questionnaire->getMediaBlankText()) {
@@ -79,6 +93,7 @@ class EecController
                 $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
                 $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
 
+
                 if ($question->getTypology()->getName() == "TLCMLDM") {
                     for ($j=0; $j < $countLacunes; $j++) {
                         if ($j != $i) {
@@ -86,6 +101,12 @@ class EecController
                             $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
                             $this->propositionManager->createProposition($subquestion, $lacuneMedia, false);
                         }
+                    }
+                }
+                // réinjection des distracteurs.
+                if(!empty($distractors[$i])){
+                    foreach ($distractors[$i] as $media) {
+                        $this->propositionManager->createProposition($subquestion, $media, false);
                     }
                 }
 
