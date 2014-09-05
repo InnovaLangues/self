@@ -438,3 +438,19 @@ input.proposition-input, label{
 	padding:20px;
 	border-radius: 10px;
 }
+
+
+
+.lacune .input-group-addon {
+	background-color: #FFF;
+	padding: 0 0 0 15px;
+}
+
+.lacune input.form-control {
+	padding: 0 15px 0 0;
+
+}
+
+.lacune .form-control {
+	border-left: none;
+}

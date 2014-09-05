@@ -72,7 +72,7 @@
                                 {# Ouverture de la saisie #}
                                 {% set html = "" %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input data-html="true" class="proposition-input '~cssClueColor~'" data-original-title="'~ dataTitle|escape ~'" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'" size="'~maxValueSize ~'" required />' %}
+                                {% set html = html~'<input data-html="true" class="proposition-input '~cssClueColor~'" data-original-title="'~ dataTitle|escape ~'" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'" size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" required />' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
@@ -110,7 +110,8 @@
                                 {# Ouverture de la saisie #}
                                 {% set html = "" %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input data-html="true" class="proposition-input '~cssClueColor~'" data-original-title="'~ dataTitle|escape ~'" rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'" size="'~maxValueSize ~'" value="'~initTextRightAnswer~'" required />' %}
+                                {% set html = html~'<input data-html="true" class="proposition-input '~cssClueColor~'" data-original-title="'~ dataTitle|escape ~'" rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'" size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
+                                value="'~initTextRightAnswer~'" required />' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
@@ -138,11 +139,11 @@
                                 {% set html = "" %}
                                 {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
                                 {% set initTextRightAnswer = textRightAnswer %}
-                                {% set html = html~'<span class="form-group"><span class="input-group">
-                                    <span class="input-group-addon">'~initTextRightAnswer~'</span>
+                                {% set html = html~'<span class="form-group"><span class="input-group lacune">
+                                    <span class="input-group-addon">s'~initTextRightAnswer~'</span>
                                     <input type="text" class="form-control '~cssClueColor~'"
-                                    data-html="true" size="'~ maxValueSize ~'" name="'~ subquestion.id ~'[]"
-                                    data-right-answer-length="'~textRightAnswer|length~'"
+                                    data-html="true" size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
+                                    name="'~ subquestion.id ~'[]" data-right-answer-length="'~maxValueSize~'"
                                     data-original-title="'~ dataTitle|escape ~'">
                                 </span></span>' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
@@ -181,7 +182,9 @@
                                 {% set html = "" %}
                                 {% set html = html~'<div class="input-group">
                                     <span class="input-group-addon">'~initTextRightAnswer~'</span>
-                                    <input type="text" class="form-control '~cssClueColor~'" data-html="true" data-original-title="'~ dataTitle|escape ~'">
+                                    <input type="text" class="form-control '~cssClueColor~'"
+                                    size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
+                                    data-html="true" data-original-title="'~ dataTitle|escape ~'">
                                 </div>' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
@@ -220,7 +223,10 @@
                                 {% set html = "" %}
                                 {% set html = html~'<div class="input-group">
                                     <span class="input-group-addon">'~first~'</span>
-                                    <input type="text" placeholder='~initTextRightAnswer ~' class="form-control '~cssClueColor~'" data-html="true" data-original-title="'~ dataTitle|escape ~'">
+                                    <input type="text" placeholder='~initTextRightAnswer ~'
+                                    size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
+                                    class="form-control '~cssClueColor~'" data-html="true"
+                                    data-original-title="'~ dataTitle|escape ~'">
                                 </div>' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
@@ -255,7 +261,8 @@
                                 {# Ouverture de la saisie #}
                                 {% set html = "" %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input class="proposition-input" data-original-title="'~clue~'" rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'" size="'~maxValueSize ~'" required />' %}
+                                {% set html = html~'<input class="proposition-input" data-original-title="'~clue~'" rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
+                                size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" required />' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
