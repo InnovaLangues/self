@@ -331,6 +331,21 @@ input.proposition-input, label{
 	max-height:130px;
 }
 
+/* travail sur les lacunes et l'input group-add-on afin de le coller à la zone de saisie
+et de faire disparaître la séparation entre les deux zones (affichage/saisie) */
+.lacune .input-group-addon {
+	background-color: #FFF;
+	padding: 0 0 0 15px;
+}
+
+.lacune input.form-control {
+	padding: 0 15px 0 0;
+}
+
+.lacune .form-control {
+	border-left: none;
+}
+
 /**********************************
 	SUBMIT
 ***********************************/
@@ -439,18 +454,3 @@ input.proposition-input, label{
 	border-radius: 10px;
 }
 
-
-
-.lacune .input-group-addon {
-	background-color: #FFF;
-	padding: 0 0 0 15px;
-}
-
-.lacune input.form-control {
-	padding: 0 15px 0 0;
-
-}
-
-.lacune .form-control {
-	border-left: none;
-}
