@@ -13,7 +13,7 @@ class DeleteMediaFileCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('self:delete:media')
+            ->setName('self:delete:files')
             ->setDescription('Delete unused media files')
             ->addArgument('name')
            ;
@@ -26,7 +26,7 @@ class DeleteMediaFileCommand extends ContainerAwareCommand
         $dialog = $this->getHelper('dialog');
 
         $finder = new Finder();
-        $iterator = $finder->files()->in($mediaDir);
+        $finder->files()->in($mediaDir);
         $orphanFiles = array();
 
         foreach ($finder as $file) {
