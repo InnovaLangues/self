@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table form-inline">
      <tr>
         <th></th>
         <th>Info-bulle</th>
@@ -13,17 +13,17 @@
             </td>
             {% endfor %}
             <td>
-                <input class="clue" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.clue is not null %}{{ subquestion.clue.media.description }}{% endif %}"/>
+                <input class="clue form-control" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.clue is not null %}{{ subquestion.clue.media.description }}{% endif %}"/>
                 {% if subquestion.clue is not null %}
                     <span rel="tooltip" data-original-title="fonctionnel">f</span>
-                    <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="fonctionnel" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "fonctionnel" %}checked{% endif %}/>
+                    <input class="clue-type form-control" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="fonctionnel" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "fonctionnel" %}checked{% endif %}/>
 
                     <span rel="tooltip" data-original-title="didactique">d</span>
-                    <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="didactique" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "didactique" %}checked{% endif %}/>
+                    <input class="clue-type form-control" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="didactique" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "didactique" %}checked{% endif %}/>
                 {% endif %}
             </td>
              <td>
-                <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
+                <input class="syllable form-control" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
             </td>
         </tr>
     {% endfor %}
