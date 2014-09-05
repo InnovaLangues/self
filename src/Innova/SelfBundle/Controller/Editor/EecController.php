@@ -133,11 +133,13 @@ class EecController
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
-        // récupération des indices
+        // récupération des indices et syllabes
         $i = 0;
         $clues = array();
+        $syllables = array();
         foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
             $clues[$i] = $subquestion->getClue();
+            $syllables[$i] = $subquestion->getMediaSyllable();
             $i++;
         }
 
@@ -153,15 +155,18 @@ class EecController
                 $lacune = $lacunes[1][$i];
                 $subquestion = $this->subquestionManager->createSubquestion($question->getTypology(), $question);
                 $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
-                $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
-
-                
-                $em->persist($subquestion);
                 $em->persist($lacuneMedia);
+                $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
                 $em->refresh($subquestion);
 
+                // réinjection des indices et syllabes
                 if(!empty($clues[$i])){
                     $subquestion->setClue($clues[$i]);    
+                    $em->persist($subquestion);
+                }
+
+                 if(!empty($syllables[$i])){
+                    $subquestion->setMediaSyllable($syllables[$i]);    
                     $em->persist($subquestion);
                 }
             }
