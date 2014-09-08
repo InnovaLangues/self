@@ -146,9 +146,7 @@ $(document).ready(function() {
     $('body').on('blur', '.clue',function(e){
         var clue = $(this).val();
         var subquestionId = $(this).data("subquestion-id");
-        if(clue != ""){
-            setClue(clue, subquestionId);
-        }
+        setClue(clue, subquestionId);
     });
 
     $('body').on('change', '.clue-type',function(e){

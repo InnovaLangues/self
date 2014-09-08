@@ -192,25 +192,29 @@ class EecController
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
         $clueName = $request->get('clue');
 
-        if (!$clue = $subquestion->getClue()) {
-            $clue = new Clue();
-            $clue->setClueType($em->getRepository('InnovaSelfBundle:ClueType')->findOneByName("fonctionnel"));
+        if ($clueName == "" && $clue = $subquestion->getClue())  {
+             $subquestion->setClue(null);
+        } else {
+            if (!$clue = $subquestion->getClue()) {
+                $clue = new Clue();
+                $clue->setClueType($em->getRepository('InnovaSelfBundle:ClueType')->findOneByName("fonctionnel"));
 
-            $subquestion->setClue($clue);
-            $em->persist($clue);
-            $em->persist($subquestion);
-            $this->editorLogManager->createEditorLog("editor_create", "clue", $questionnaire);
-        }
+                $subquestion->setClue($clue);
+                $em->persist($clue);
+                $em->persist($subquestion);
+                $this->editorLogManager->createEditorLog("editor_create", "clue", $questionnaire);
+            }
 
-        if (!$media = $subquestion->getClue()->getMedia()) {
-            $media = $this->mediaManager->createMedia($questionnaire, "texte", $clueName, $clueName, null, 0, "clue");
-            $clue->setMedia($media);
-            $em->persist($clue);
-        } elseif($media->getDescription() != $clueName) {
-            $this->editorLogManager->createEditorLog("editor_edit", "clue", $questionnaire);
-            $media->setDescription($clueName);
-            $media->setName($clueName);
-            $em->persist($media);
+            if (!$media = $subquestion->getClue()->getMedia()) {
+                $media = $this->mediaManager->createMedia($questionnaire, "texte", $clueName, $clueName, null, 0, "clue");
+                $clue->setMedia($media);
+                $em->persist($clue);
+            } elseif($media->getDescription() != $clueName) {
+                $this->editorLogManager->createEditorLog("editor_edit", "clue", $questionnaire);
+                $media->setDescription($clueName);
+                $media->setName($clueName);
+                $em->persist($media);
+            }
         }
 
         $em->flush();
