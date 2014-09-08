@@ -54,14 +54,17 @@ class MediaClickController extends Controller
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $mediaClick = new MediaClick();
-        $mediaClick->setMedia($media);
-        $mediaClick->setUser($user);
-        $mediaClick->setTest($test);
-        $mediaClick->setQuestionnaire($questionnaire);
 
-        $em->persist($mediaClick);
-        $em->flush();
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')){
+            $mediaClick = new MediaClick();
+            $mediaClick->setMedia($media);
+            $mediaClick->setUser($user);
+            $mediaClick->setTest($test);
+            $mediaClick->setQuestionnaire($questionnaire);
+
+            $em->persist($mediaClick);
+            $em->flush();
+        }
 
         $remainingListening = $this->getRemainingListening($media, $test, $questionnaire);
 
@@ -70,7 +73,6 @@ class MediaClickController extends Controller
                 'remainingListening' => $remainingListening,
             )
         );
-
     }
 
     /**
@@ -84,7 +86,6 @@ class MediaClickController extends Controller
         $request = $this->get('request')->query;
         $em = $this->getDoctrine()->getManager();
 
-
         $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
@@ -96,7 +97,6 @@ class MediaClickController extends Controller
                 'isPlayable' => $isPlayable,
             )
         );
-
     }
 
     private function isMediaPlayable($media, $test, $questionnaire)
@@ -104,12 +104,9 @@ class MediaClickController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
-        $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array(
-                                                                                    'media' => $media,
-                                                                                    'questionnaire' => $questionnaire
-                                                                                ));
+        $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array('media' => $media, 'questionnaire' => $questionnaire));
 
-        if(is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 ){
+        if(is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 || $this->get('security.context')->isGranted('ROLE_ADMIN')){
             return true;
         } else {
             return false;
@@ -120,11 +117,14 @@ class MediaClickController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $user = $this->get('security.context')->getToken()->getUser();
+
         $mediaClicks = $em->getRepository('InnovaSelfBundle:MediaClick')
                         ->findBy(array(
                                         'media' => $media,
                                         'test' => $test,
-                                        'questionnaire' => $questionnaire
+                                        'questionnaire' => $questionnaire,
+                                        'user' => $user
                                       )
                                 );
 
