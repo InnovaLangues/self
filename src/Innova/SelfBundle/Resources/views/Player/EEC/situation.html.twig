@@ -21,6 +21,7 @@
             {# Il y a plusieurs tailles de zone Input possibles #}
             {% set tabInputSize = [5, 10, 15, 20, 25, 30] %}
 
+            {% set firstLacune = false %}
             {% autoescape 'html' %}
                 {# Récupération de la typologie de la question #}
                 {% set typoQuestion = questionnaire.questions[0].typology.name %}
@@ -30,7 +31,6 @@
                 {# #}
                 {# Deux sortes de typologies : le type "saisie" et l'autre type (choix dans une liste, checkbox, radiobox) #}
                 {# #}
-
                 {% for i, subquestion in questionnaire.questions[0].subquestions %}
 
                     {# #}
@@ -221,13 +221,13 @@
                                     {% set initTextRightAnswer = initTextRightAnswer~charSeparate %}
                                 {% endfor %}
                                 {% set html = "" %}
-                                {% set html = html~'<div class="input-group">
+                                {% set html = html~'<span class="input-group">
                                     <span class="input-group-addon">'~first~'</span>
                                     <input type="text" placeholder='~initTextRightAnswer ~'
                                     size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
                                     class="form-control '~cssClueColor~'" data-html="true"
                                     data-original-title="'~ dataTitle|escape ~'">
-                                </div>' %}
+                                </span>' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
@@ -260,9 +260,22 @@
                                 {% endif %}
                                 {# Ouverture de la saisie #}
                                 {% set html = "" %}
+
+                                {% set initTextRightAnswer = "" %}
+                                {% if (firstLacune == false) %}
+                                    {% set initTextRightAnswer = proposition.media.description %}
+                                {% endif %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input class="proposition-input" data-original-title="'~clue~'" rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
-                                size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" required />' %}
+                                {% set html = html~'<input class="proposition-input" data-original-title="'~clue~'"
+                                rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
+                                placeholder="'~initTextRightAnswer ~'" size="'~ maxValueSize ~'"
+                                maxlength="'~ maxValueSize ~'" required ' %}
+                                {% if (firstLacune == false) %}
+                                    {% set html = html~'disabled />' %}
+                                    {% set firstLacune = true %}
+                                {% else %}
+                                    {% set html = html~' />' %}
+                                {% endif %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
