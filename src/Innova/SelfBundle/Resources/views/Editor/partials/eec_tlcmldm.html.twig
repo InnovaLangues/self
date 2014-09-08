@@ -6,11 +6,14 @@
         {% endfor %}
     {% endfor %}
     {% for proposition in questionnaire.questions[0].subquestions[0].propositions if proposition.media.mediaPurpose.name == "distractor" %}
-        <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor form-control" />
-        <span class="btn btn-default btn-sm glyphicon glyphicon-remove eec-distractor-delete" data-toggle="tooltip" data-original-title="Supprimer" data-proposition-id="{{ proposition.id }}"></span>
+        <div class="input-group input-group-sm col-md-6">
+            <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor form-control"/>
+            <span class="input-group-btn">
+                <button class="btn btn-default eec-distractor-delete" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-proposition-id="{{ proposition.id }}"><span class=" glyphicon glyphicon-remove"></span></button>
+            </span>
+        </div>
         <br/>
     {% endfor %}
-    <hr/>
     <span class="btn btn-default btn-xs eec-add-distractor">{{ 'editor.app.add_distractor' | trans }}</span> <br/>
 {% endif %}
 </form>
