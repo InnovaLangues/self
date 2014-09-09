@@ -71,6 +71,13 @@ class Subquestion
     protected $answers;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="display", type="boolean")
+     */
+    private $display;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -301,14 +308,14 @@ class Subquestion
     public function setMediaSyllable(\Innova\SelfBundle\Entity\Media $mediaSyllable = null)
     {
         $this->mediaSyllable = $mediaSyllable;
-    
+
         return $this;
     }
 
     /**
      * Get mediaSyllable
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMediaSyllable()
     {
@@ -324,17 +331,40 @@ class Subquestion
     public function setClue(\Innova\SelfBundle\Entity\Clue $clue = null)
     {
         $this->clue = $clue;
-    
+
         return $this;
     }
 
     /**
      * Get clue
      *
-     * @return \Innova\SelfBundle\Entity\Clue 
+     * @return \Innova\SelfBundle\Entity\Clue
      */
     public function getClue()
     {
         return $this->clue;
+    }
+
+    /**
+     * Set display
+     *
+     * @param boolean $display
+     * @return Subquestion
+     */
+    public function setDisplay($display)
+    {
+        $this->display = $display;
+    
+        return $this;
+    }
+
+    /**
+     * Get display
+     *
+     * @return boolean 
+     */
+    public function getDisplay()
+    {
+        return $this->display;
     }
 }
