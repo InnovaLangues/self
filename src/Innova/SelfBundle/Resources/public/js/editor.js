@@ -36,11 +36,7 @@ $(document).ready(function() {
         isChecked = $('#fixed-order').prop('checked');
         setFixedOrder(isChecked);
     });
-
-    $('#display').on('change',function(e){
-        isDisplay = $('#display').prop('checked');
-        setDisplay(isDisplay);
-    });
+    
     /**********************
         COMMENT RELATED EVENTS
     ************************/
@@ -165,10 +161,10 @@ $(document).ready(function() {
         setSyllable(syllable, subquestionId);
     });
 
-    $('body').on('blur', ".display", function(e){
-        var display = $(this).val();
+    $('body').on('click', "#display", function(e){
+        var isDisplay = $('#display').prop('checked');
         var subquestionId = $(this).data("subquestion-id");
-        setDisplay(display, subquestionId);
+        setDisplay(isDisplay, subquestionId);
     });
 
     $('body').on('click', '.eec-add-distractor',function(e){
@@ -848,15 +844,14 @@ function setSyllable(syllable, subquestionId){
 }
 
 function setDisplay(display, subquestionId){
-    beforeAjax();
-    var questionnaireId = $("#questionnaire-id").val();
+    //beforeAjax();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-display'),
-        type: 'POST',
+        type: 'PUT',
         dataType: 'json',
         data: {
-            questionnaireId: questionnaireId,
+            subquestionId: subquestionId,
             display: display
         }
     })

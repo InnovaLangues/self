@@ -79,11 +79,11 @@ class TaskController
     {
         $em = $this->entityManager;
 
-        $language = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($languageId);
+        $language = $em->getRepository('InnovaSelfBundle:Language')->find($languageId);
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($language);
 
         return array(
-            'questionnaires' => $questionnaires,
+            'questionnaires' => $questionnaires
         );
     }
 

@@ -293,14 +293,18 @@ class EecController
         $em = $this->entityManager;
         $request = $this->request->request;
 
-        $display = $request->get('display');
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+        if ($request->get('display') == "true") {
+            $display = 1;
+        } else {
+            $display = 0;
+        }
 
-        $this->editorLogManager->createEditorLog("editor_edit", "display", $questionnaire);
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
+        $subquestion->setDisplayAnswer($display) ;
 
-        $em->persist($display);
+        $em->persist($subquestion);
         $em->flush();
-echo "ici";die();
+
         return new JsonResponse(
             array()
         );

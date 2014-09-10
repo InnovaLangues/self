@@ -71,11 +71,10 @@ class Subquestion
     protected $answers;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="display", type="boolean")
+     * @ORM\Column(name="displayAnswer", type="boolean")
      */
-    private $display;
+    private $displayAnswer;
 
     /**
      * Constructor
@@ -345,26 +344,27 @@ class Subquestion
         return $this->clue;
     }
 
+
     /**
-     * Set display
+     * Set displayAnswer
      *
-     * @param boolean $display
+     * @param boolean $displayAnswer
      * @return Subquestion
      */
-    public function setDisplay($display)
+    public function setDisplayAnswer($displayAnswer)
     {
-        $this->display = $display;
+        $this->displayAnswer = $displayAnswer;
     
         return $this;
     }
 
     /**
-     * Get display
+     * Get displayAnswer
      *
      * @return boolean 
      */
-    public function getDisplay()
+    public function getDisplayAnswer()
     {
-        return $this->display;
+        return $this->displayAnswer;
     }
 }
