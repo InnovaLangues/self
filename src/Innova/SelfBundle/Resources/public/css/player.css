@@ -290,6 +290,9 @@ input.proposition-input, label{
 /**********************************
 	CLUE DISPLAY
 ***********************************/
+.tooltip {
+    position: fixed;
+}
 
 .tooltip .clue-fonctionnel { background-color:red; padding:5px; display:block;border-radius:3px;}
 .tooltip .clue-didactique { background-color:black; padding:5px; display:block;border-radius:3px;}
@@ -375,8 +378,13 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 	padding:5px;
 	border: 1px solid #E37E71;
 	background-color: #F19588;
-	border-radius:3px;
+	border-radius:5px;
 }
+
+.info-right-answer p {
+	text-align: center;
+}
+
 
 /**********************************
 	fix focus on tabs a
@@ -471,3 +479,4 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 	display: inline-block;
 	height: 20px;
 }*/
+
