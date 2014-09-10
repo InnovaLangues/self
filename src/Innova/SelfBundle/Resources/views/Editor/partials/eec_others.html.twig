@@ -31,7 +31,7 @@
              <td>
                 <input class="syllable form-control" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
             </td>
-	<td>
+        	<td>
                 {% if i == 0 %}
                     <input id="display" data-subquestion-id="{{ subquestion.id }}" type="checkbox" name="displayType[]" {% if subquestion.displayAnswer  %}checked {% endif %} />
                 {% endif %}
