@@ -82,6 +82,7 @@ stfalcon_tinymce:
         # Simple theme: same as default theme
         # Advanced theme with almost all enabled plugins
         simple:
+            forced_root_block: false
             plugins:
                 "charmap advlist autolink link image charmap hr searchreplace  visualchars  emoticons  paste"
             toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | emoticons charmap"
