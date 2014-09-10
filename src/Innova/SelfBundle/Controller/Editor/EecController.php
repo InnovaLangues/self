@@ -112,7 +112,7 @@ class EecController
                 $em->persist($lacuneMedia);
                 $em->refresh($subquestion);
             }
-
+            
             $em->flush();
         }
 
@@ -133,11 +133,13 @@ class EecController
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
-        // récupération des indices
+        // récupération des indices et syllabes
         $i = 0;
         $clues = array();
+        $syllables = array();
         foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
             $clues[$i] = $subquestion->getClue();
+            $syllables[$i] = $subquestion->getMediaSyllable();
             $i++;
         }
 
@@ -153,17 +155,20 @@ class EecController
                 $lacune = $lacunes[1][$i];
                 $subquestion = $this->subquestionManager->createSubquestion($question->getTypology(), $question);
                 $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
-                $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
-
-
-                $em->persist($subquestion);
                 $em->persist($lacuneMedia);
+                $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
                 $em->refresh($subquestion);
 
+                // réinjection des indices et syllabes
                 if(!empty($clues[$i])){
-                    $subquestion->setClue($clues[$i]);
+                    $subquestion->setClue($clues[$i]);    
+                    $em->persist($subquestion);
                 }
-                $em->persist($subquestion);
+
+                 if(!empty($syllables[$i])){
+                    $subquestion->setMediaSyllable($syllables[$i]);    
+                    $em->persist($subquestion);
+                }
             }
             $em->flush();
         }
@@ -187,25 +192,29 @@ class EecController
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
         $clueName = $request->get('clue');
 
-        if (!$clue = $subquestion->getClue()) {
-            $clue = new Clue();
-            $clue->setClueType($em->getRepository('InnovaSelfBundle:ClueType')->findOneByName("fonctionnel"));
+        if ($clueName == "" && $clue = $subquestion->getClue())  {
+             $subquestion->setClue(null);
+        } else {
+            if (!$clue = $subquestion->getClue()) {
+                $clue = new Clue();
+                $clue->setClueType($em->getRepository('InnovaSelfBundle:ClueType')->findOneByName("fonctionnel"));
 
-            $subquestion->setClue($clue);
-            $em->persist($clue);
-            $em->persist($subquestion);
-            $this->editorLogManager->createEditorLog("editor_create", "clue", $questionnaire);
-        }
+                $subquestion->setClue($clue);
+                $em->persist($clue);
+                $em->persist($subquestion);
+                $this->editorLogManager->createEditorLog("editor_create", "clue", $questionnaire);
+            }
 
-        if (!$media = $subquestion->getClue()->getMedia()) {
-            $media = $this->mediaManager->createMedia($questionnaire, "texte", $clueName, $clueName, null, 0, "clue");
-            $clue->setMedia($media);
-            $em->persist($clue);
-        } elseif($media->getDescription() != $clueName) {
-            $this->editorLogManager->createEditorLog("editor_edit", "clue", $questionnaire);
-            $media->setDescription($clueName);
-            $media->setName($clueName);
-            $em->persist($media);
+            if (!$media = $subquestion->getClue()->getMedia()) {
+                $media = $this->mediaManager->createMedia($questionnaire, "texte", $clueName, $clueName, null, 0, "clue");
+                $clue->setMedia($media);
+                $em->persist($clue);
+            } elseif($media->getDescription() != $clueName) {
+                $this->editorLogManager->createEditorLog("editor_edit", "clue", $questionnaire);
+                $media->setDescription($clueName);
+                $media->setName($clueName);
+                $em->persist($media);
+            }
         }
 
         $em->flush();

@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table form-inline">
      <tr>
         <th></th>
         <th>Info-bulle</th>
@@ -17,20 +17,22 @@
             </td>
             {% endfor %}
             <td>
-                <input class="clue" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.clue is not null %}{{ subquestion.clue.media.description }}{% endif %}"/>
-                {% if subquestion.clue is not null %}
-                    <span rel="tooltip" data-original-title="fonctionnel">f</span>
-                    <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="fonctionnel" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "fonctionnel" %}checked{% endif %}/>
-
-                    <span rel="tooltip" data-original-title="didactique">d</span>
-                    <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="didactique" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "didactique" %}checked{% endif %}/>
-                {% endif %}
+                <div class="input-group ">
+                        <input class="clue form-control" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.clue is not null %}{{ subquestion.clue.media.description }}{% endif %}"/>
+                        {% if subquestion.clue is not null %}
+                        <span class="input-group-addon">
+                                <span rel="tooltip" data-original-title="fonctionnel">f</span>
+                                <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="fonctionnel" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "fonctionnel" %}checked{% endif %} />
+                                <span rel="tooltip" data-original-title="didactique">d</span>
+                                <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="didactique" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "didactique" %}checked{% endif %}/>
+                        </span>
+                        {% endif %}
+                </div>
             </td>
              <td>
-                <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" />
+                <input class="syllable form-control" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
             </td>
-            <!-- Nouvelle zone, demande Cristiana -->
-             <td>
+			<td>
                 {% if first %}
                     <input class="display" data-subquestion-id="{{ subquestion.id }}" type="checkbox" name="displayType[]" {% if subquestion.display  %}checked {% endif %} />
                     {% set first = false %} <!-- Pour n'afficher qu'une seule ligne/subquestion-->
