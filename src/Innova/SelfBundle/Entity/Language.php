@@ -45,6 +45,11 @@ class Language
     */
     protected $tests;
 
+     /**
+    * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="language")
+    */
+    protected $questionnaires;
+
     /**
      * Constructor
      */
@@ -183,5 +188,38 @@ class Language
     public function getTests()
     {
         return $this->tests;
+    }
+
+    /**
+     * Add questionnaires
+     *
+     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @return Language
+     */
+    public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
+    {
+        $this->questionnaires[] = $questionnaires;
+    
+        return $this;
+    }
+
+    /**
+     * Remove questionnaires
+     *
+     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     */
+    public function removeQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
+    {
+        $this->questionnaires->removeElement($questionnaires);
+    }
+
+    /**
+     * Get questionnaires
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getQuestionnaires()
+    {
+        return $this->questionnaires;
     }
 }

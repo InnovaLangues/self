@@ -22,6 +22,7 @@ class SubquestionManager
         $subquestion = new SubQuestion();
         $subquestion->setTypology($typology);
         $subquestion->setQuestion($question);
+        $subquestion->setDisplayAnswer(true);
 
         $em->persist($subquestion);
         $em->flush();

@@ -44,7 +44,7 @@ class TestController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $language = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($languageId);
+        $language = $em->getRepository('InnovaSelfBundle:Language')->find($languageId);
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findByLanguage($language);
 
         return array(

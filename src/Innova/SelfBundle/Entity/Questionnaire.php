@@ -210,7 +210,7 @@ class Questionnaire
     private $orderQuestionnaireTests;
 
      /**
-    * @ORM\ManyToOne(targetEntity="Language", inversedBy="tests")
+    * @ORM\ManyToOne(targetEntity="Language", inversedBy="questionnaires")
     */
     protected $language;
 
