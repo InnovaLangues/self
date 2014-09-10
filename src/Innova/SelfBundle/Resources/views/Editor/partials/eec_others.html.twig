@@ -2,8 +2,12 @@
      <tr>
         <th></th>
         <th>Info-bulle</th>
-        <th>Indice morphologique</th>
+        <th>Indice : syllabe</th> <!-- Changement, demande Cristiana -->
+        <th>En clair</th> <!-- Nouvelle zone, demande Cristiana -->
     </tr>
+    <!-- Initialisation de la variable qui va me dire si on n'est sur
+    la première occurrence ou pas -->
+    {% set first = true %}
     {% for subquestion in subquestions %}
         <tr>
             {% set propositions = subquestion.propositions %}
@@ -27,6 +31,12 @@
             </td>
              <td>
                 <input class="syllable form-control" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
+            </td>
+			<td>
+                {% if first %}
+                    <input class="display" data-subquestion-id="{{ subquestion.id }}" type="checkbox" name="displayType[]" {% if subquestion.display  %}checked {% endif %} />
+                    {% set first = false %} <!-- Pour n'afficher qu'une seule ligne/subquestion-->
+                {% endif %}
             </td>
         </tr>
     {% endfor %}

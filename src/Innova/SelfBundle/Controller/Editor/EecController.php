@@ -283,6 +283,28 @@ class EecController
         );
     }
 
+    /**
+     *
+     * @Route("/questionnaires/set-display", name="editor_questionnaire_set-display", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function setDisplayAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $display = $request->get('display');
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+
+        $this->editorLogManager->createEditorLog("editor_edit", "display", $questionnaire);
+
+        $em->persist($display);
+        $em->flush();
+echo "ici";die();
+        return new JsonResponse(
+            array()
+        );
+    }
 
     /**
      *

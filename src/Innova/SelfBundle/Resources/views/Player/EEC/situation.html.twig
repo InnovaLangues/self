@@ -220,8 +220,8 @@
                                     {% set initTextRightAnswer = initTextRightAnswer~charSeparate %}
                                 {% endfor %}
                                 {% set html = "" %}
-                                {% set html = html~'<span class="input-group">
-                                    <span class="input-group-addon">'~first~'</span>
+                                {% set html = html~'<span class="">
+                                    <span class="input-group-addon lacune">'~first~'</span>
                                     <input type="text" placeholder='~initTextRightAnswer ~'
                                     size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
                                     class="form-control '~cssClueColor~'" data-html="true"
