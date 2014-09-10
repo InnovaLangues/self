@@ -136,11 +136,19 @@
                                 {% endfor %}
                                 {% set syllable = subquestion.mediaSyllable.description %}
                                 {% set html = "" %}
+                                {% set displayAnswer = "" %}
+                                {% set placeH =  "" %}
+                                {% if subquestion.displayAnswer %}
+                                    {% set syllable = "" %}
+                                    {% set displayAnswer = " disabled " %}
+                                    {% set placeH = proposition.media.description %}
+                                {% endif %}
                                 {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
                                 {% set initTextRightAnswer = textRightAnswer %}
                                 {% set html = html~'<span class="form-group"><span class="input-group lacune">
-                                    <span class="input-group-addon">s'~initTextRightAnswer~'</span>
-                                    <input type="text" class="form-control '~cssClueColor~'"
+                                    <span class="input-group-addon">'~syllable~'</span>
+                                    <input '~displayAnswer~' type="text" class="form-control '~cssClueColor~'"
+                                     placeholder="'~placeH~'"
                                     data-html="true" size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
                                     name="'~ subquestion.id ~'[]" data-right-answer-length="'~maxValueSize~'"
                                     data-original-title="'~ dataTitle|escape ~'">
@@ -259,11 +267,17 @@
                                 {% endif %}
                                 {# Ouverture de la saisie #}
                                 {% set html = "" %}
-
+                                {% set displayAnswer = "" %}
+                                {% set placeH =  "" %}
+                                {% if subquestion.displayAnswer %}
+                                    {% set displayAnswer = " disabled " %}
+                                    {% set placeH = proposition.media.description %}
+                                {% endif %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
                                 {% set html = html~'<input class="proposition-input" data-original-title="'~clue~'"
                                 rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
-                                size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" required />' %}
+                                size="'~ maxValueSize ~'" placeholder="'~placeH~'"
+                                ~maxlength="'~ maxValueSize ~'" required ' ~displayAnswer~ '/>' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
