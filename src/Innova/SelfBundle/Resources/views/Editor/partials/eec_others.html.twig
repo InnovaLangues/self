@@ -27,13 +27,13 @@
                 {% endif %}
             </td>
              <td>
-                <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.mediaSyllable is not null %}{{ subquestion.mediaSyllable.description }}{% endif %}"/>
+                <input class="syllable" data-subquestion-id="{{ subquestion.id }}" type="text" />
             </td>
             <!-- Nouvelle zone, demande Cristiana -->
              <td>
                 {% if first %}
-                    <input class="display" data-subquestion-id="{{ subquestion.id }}" type="checkbox" name="displayType[]" />
-                    {% set first = false %}
+                    <input class="display" data-subquestion-id="{{ subquestion.id }}" type="checkbox" name="displayType[]" {% if subquestion.display  %}checked {% endif %} />
+                    {% set first = false %} <!-- Pour n'afficher qu'une seule ligne/subquestion-->
                 {% endif %}
             </td>
         </tr>
