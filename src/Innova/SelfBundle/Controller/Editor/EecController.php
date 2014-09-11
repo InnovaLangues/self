@@ -71,7 +71,7 @@ class EecController
         foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
             $distractors[$i] = array();
             foreach ($subquestion->getPropositions() as $proposition) {
-                if ($proposition->getMedia()->getMediaPurpose()->getName() == "distractor") {
+                if ($proposition->getMedia()->getMediaPurpose() && $proposition->getMedia()->getMediaPurpose()->getName() == "distractor") {
                     $distractors[$i][] = $proposition->getMedia();
                 }
             }
@@ -112,7 +112,7 @@ class EecController
                 $em->persist($lacuneMedia);
                 $em->refresh($subquestion);
             }
-            
+
             $em->flush();
         }
 
@@ -161,12 +161,12 @@ class EecController
 
                 // réinjection des indices et syllabes
                 if(!empty($clues[$i])){
-                    $subquestion->setClue($clues[$i]);    
+                    $subquestion->setClue($clues[$i]);
                     $em->persist($subquestion);
                 }
 
                  if(!empty($syllables[$i])){
-                    $subquestion->setMediaSyllable($syllables[$i]);    
+                    $subquestion->setMediaSyllable($syllables[$i]);
                     $em->persist($subquestion);
                 }
             }
