@@ -187,12 +187,12 @@
                                 {# Extrait du premier caractère #}
                                 {% set initTextRightAnswer = proposition.media.description|slice(0, 1) %}
                                 {% set html = "" %}
-                                {% set html = html~'<div class="form-group"><div class="input-group">
+                                {% set html = html~'<span class="form-group"><span class="input-group lacune">
                                     <span class="input-group-addon">'~initTextRightAnswer~'</span>
                                     <input type="text" class="form-control '~cssClueColor~'"
                                     size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
                                     data-html="true" data-original-title="'~ dataTitle|escape ~'">
-                                </div></div>' %}
+                                </span></span>' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
@@ -228,13 +228,13 @@
                                     {% set initTextRightAnswer = initTextRightAnswer~charSeparate %}
                                 {% endfor %}
                                 {% set html = "" %}
-                                {% set html = html~'<div class="form-group"><div class="input-group">
-                                    <span class="input-group-addon lacune">'~first~'</span>
+                                {% set html = html~'<span class="form-group"><span class="input-group lacune">
+                                    <span class="input-group-addon">'~first~'</span>
                                     <input type="text" placeholder='~initTextRightAnswer ~'
                                     size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
                                     class="form-control '~cssClueColor~'" data-html="true"
                                     data-original-title="'~ dataTitle|escape ~'">
-                                </div></div>' %}
+                                </span></span>' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
