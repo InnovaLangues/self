@@ -22,7 +22,8 @@ class SubquestionManager
         $subquestion = new SubQuestion();
         $subquestion->setTypology($typology);
         $subquestion->setQuestion($question);
-        $subquestion->setDisplayAnswer(true);
+        // Initialisation de cette zone à FALSE et non pas à TRUE fix #519
+        $subquestion->setDisplayAnswer(false);
 
         $em->persist($subquestion);
         $em->flush();
