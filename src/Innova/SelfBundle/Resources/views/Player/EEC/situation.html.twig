@@ -74,7 +74,7 @@
                                 {% set placeH =  "" %}
                                 {% if subquestion.displayAnswer %}
                                     {% set syllable = "" %}
-                                    {% set displayAnswer = " disabled " %}
+                                    {% set displayAnswer = " readonly " %}
                                     {% set placeH = proposition.media.description %}
                                 {% endif %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
@@ -121,7 +121,7 @@
                                 {% set placeH =  "" %}
                                 {% if subquestion.displayAnswer %}
                                     {% set syllable = "" %}
-                                    {% set displayAnswer = " disabled " %}
+                                    {% set displayAnswer = " readonly " %}
                                     {% set placeH = proposition.media.description %}
                                 {% endif %}
 
@@ -162,7 +162,7 @@
                                 {% set placeH =  "" %}
                                 {% if subquestion.displayAnswer %}
                                     {% set syllable = "" %}
-                                    {% set displayAnswer = " disabled " %}
+                                    {% set displayAnswer = " readonly " %}
                                     {% set placeH = proposition.media.description %}
                                 {% endif %}
                                 {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
