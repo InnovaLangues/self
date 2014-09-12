@@ -210,10 +210,19 @@
                                 {# Extrait du premier caractère #}
                                 {% set initTextRightAnswer = proposition.media.description|slice(0, 1) %}
                                 {% set html = "" %}
+                                {% set displayAnswer = "" %}
+                                {% set placeH =  "" %}
+                                {% if subquestion.displayAnswer %}
+                                    {% set syllable = "" %}
+                                    {% set displayAnswer = " readonly " %}
+                                    {% set placeH = proposition.media.description %}
+                                    {% set initTextRightAnswer = "" %}
+                                {% endif %}
                                 {% set html = html~'<span class="form-group"><span class="input-group lacune">
                                     <span class="input-group-addon">'~initTextRightAnswer~'</span>
-                                    <input type="text" class="form-control '~cssClueColor~'"
+                                    <input '~displayAnswer~' type="text" class="form-control '~cssClueColor~'"
                                     size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
+                                    placeholder="'~placeH~'"
                                     data-html="true" data-original-title="'~ dataTitle|escape ~'">
                                 </span></span>' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
@@ -251,9 +260,17 @@
                                     {% set initTextRightAnswer = initTextRightAnswer~charSeparate %}
                                 {% endfor %}
                                 {% set html = "" %}
+                                {% set displayAnswer = "" %}
+                                {% set placeH =  "" %}
+                                {% if subquestion.displayAnswer %}
+                                    {% set syllable = "" %}
+                                    {% set displayAnswer = " readonly " %}
+                                    {% set initTextRightAnswer = proposition.media.description %}
+                                    {% set first = "" %}
+                                {% endif %}
                                 {% set html = html~'<span class="form-group"><span class="input-group lacune">
                                     <span class="input-group-addon">'~first~'</span>
-                                    <input type="text" placeholder='~initTextRightAnswer ~'
+                                    <input '~displayAnswer~' type="text" placeholder='~initTextRightAnswer ~'
                                     size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
                                     class="form-control '~cssClueColor~'" data-html="true"
                                     data-original-title="'~ dataTitle|escape ~'">
