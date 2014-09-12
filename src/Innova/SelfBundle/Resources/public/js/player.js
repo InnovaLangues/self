@@ -350,10 +350,10 @@ function maskManager(){
     $('.mask').each(function() {
         var length = $(this).data("right-answer-length");
         var mask = constructMask(length, "*");
-        var placeholder = constructMask(length, "_");
+        var placeholder = constructMask(length, "-");
 
         $(this).attr("placeholder", placeholder);
-        $(this).mask(mask, {placeholder:'_'});
+        $(this).mask(mask, {placeholder:'-'});
     });
 }
 

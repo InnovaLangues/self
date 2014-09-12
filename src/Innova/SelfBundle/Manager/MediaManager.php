@@ -15,7 +15,7 @@ class MediaManager
         $this->entityManager = $entityManager;
     }
 
-    public function createMedia(Questionnaire $questionnaire, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
+    public function createMedia(Questionnaire $questionnaire = null, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
     {
 
         $entityField2Purpose = array(
@@ -26,7 +26,7 @@ class MediaManager
             "app-answer" => "proposition",
             "app-distractor" => "proposition",
             "proposition" => "proposition",
-            "reponse" => "reponse", 
+            "reponse" => "reponse",
             "clue" => "clue",
             "syllable" => "syllable",
             "instruction" => "instruction",
