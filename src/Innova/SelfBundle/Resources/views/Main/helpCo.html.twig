@@ -1,43 +1,10 @@
 <div class="col-md-12">
     <div class="panel panel-default">
-        <div class="panel-heading">Pour la compréhension orale</div>
-        <div class="panel-body">
-            <p>Chaque tâche est composée de :
-            	<ul>
-              		<li>1) un <b>‘OBJET DE LA QUESTION’</b> sous forme <b>audio</b>, soit :
-              			<ul>
-              				<li><img width="45px" src="{{ asset("bundles/innovaself/images/situation_monologue.png") }}"/> un monologue</li>
-              				<li><img width="45px" src="{{ asset("bundles/innovaself/images/situation_dialogue.png") }}"/> un dialogue</li>
-                            <li><img width="45px" src="{{ asset("bundles/innovaself/images/situation_interrompue.png") }}"/> un dialogue interrompu</li>
-              			</ul>
-                        ou un ‘objet de la question’ sous forme <b>vidéo</b>.
-                    </li>
-              		<li>2) une série de <b>‘propositions de réponse</b> <img height="45px" src="{{ asset("bundles/innovaself/images/audio1.png") }}"/> sous forme de QCM (questions à choix multiples), de Vrai-Faux ou d’Appariement.
-                    </li>
-            	</ul>
-            </p>
-            <p>Mais aussi :</p>
-            	<ul>
-            		<li>3) d’une ou plusieurs <b>questions</b> <img height="45px" src="{{ asset("bundles/innovaself/images/oignon") }}"/></li>
-                    <li>4) d’un <b>contexte</b> <img height="45px" src="{{ asset("bundles/innovaself/images/contexte.png") }}"/>
-                    <br/> N.B. cette icône est grisée si le contexte n’est pas donné</li>
-            	</ul>
-            </p>
-            <hr/>
-            <p><strong>Attention :</strong>
-                <p>* Certaines tâches prévoient plusieurs questions. Dans ce cas, chaque ‘question’ est affichée dans un onglet différent.<br/><img width="45px" src="{{ asset("bundles/innovaself/images/valider.png") }}"/> Vous ne pourrez valider qu’après avoir répondu à toutes les questions.</p>
-                <p>* Certains QCM peuvent prévoir plusieurs réponses correctes (dans ce cas, la phrase « <i>plusieurs réponses sont correctes</i> » est affichée en dessous des propositions de réponse);</p>
-                <p>* Certains Vrai-Faux prévoient l’option « on ne peut pas dire » (i.e. : « Vrai », « Faux » ou « On ne peut pas dire »)</p>
-            </p>
-            <hr/>
-            <p><strong>Nombre d'écoutes :</strong>
-                <ul>
-                    <li>Limité (de 1 à 2 écoutes possibles) : l’objet de la question (monologue ou dialogue) ;</li>
-                    <li>Illimité : la question, le contexte et les propositions de réponse.</li>
-                </ul>
-                Nous vous conseillons d’écouter le contexte et la question en premier. A noter qu'une écoute ne peut pas être interrompue.
-            </p>
-        </div>
+        <div class="panel-heading">La vidéo d'aide pour la compréhension orale</div>
+        <video controls>
+            <source src="{{ asset('upload/media/') ~ 'Tuto-SELF-Indications-Visuelles-1-co.webm' }}" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
+            Your browser does not support the video tag.
+        </video>
     </div>
 
     {% set displayHelp = 0 %}
