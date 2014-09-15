@@ -31,7 +31,7 @@
     {# {{ macros.modale(id, media, tooltip) }} #}
     <div style='position: relative;'>
         <img data-toggle="modal" width="{{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
-        <img style='position: absolute; right: 50px; top :50px; height :18px; width :18px' data-toggle="modal" rel="tooltip" data-original-title="Loupe" src="{{ asset('bundles/innovaself/images/loupe.png') }}" />
+        <img style='position: absolute; right: 50px; top :50px; height :60px; width :60px' data-target="#modal-situation-image" data-toggle="modal" rel="tooltip" data-original-title="Loupe" src="{{ asset('bundles/innovaself/images/loupe.png') }}" />
     </div>
 {% endmacro %}
 
