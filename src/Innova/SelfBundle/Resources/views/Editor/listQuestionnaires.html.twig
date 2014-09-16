@@ -37,7 +37,7 @@
         </thead>
         <tbody>
         {% for questionnaire in questionnaires %}
-            <tr>
+            <tr id="task-{{ questionnaire.id }}">
                 <td>
                     {% if questionnaire.status is not null %}
                         {% set statusId = questionnaire.status.id %}
@@ -73,22 +73,21 @@
                         {{ '-' }}
                     {% endif %}
                 </td>
+                {% set countTests = questionnaire.orderQuestionnaireTests|length %}
                 <td>
-                    {% set countTests = questionnaire.orderQuestionnaireTests|length %}
-                    {% if countTests == 0 %}
-                        -
-                    {% else %}
-                        {% set tooltip = "" %}
-                        {{ countTests }}
-                        {% for orderedQuestionnaireTest in questionnaire.orderQuestionnaireTests %}
-                            {% set tooltip = tooltip ~ orderedQuestionnaireTest.test.name ~"<br />" %}
-                        {% endfor %}
-                        <span data-html="true" class="glyphicon glyphicon-eye-open" rel="tooltip" data-original-title="{{ tooltip }}"></span>
-                    {% endif %}
+                {% set tooltip = "" %}
+                {{ countTests }}
+                {% for orderedQuestionnaireTest in questionnaire.orderQuestionnaireTests %}
+                    {% set tooltip = tooltip ~ orderedQuestionnaireTest.test.name ~"<br />" %}
+                {% endfor %}
+                <span data-html="true" class="glyphicon glyphicon-eye-open" rel="tooltip" data-original-title="{{ tooltip }}"></span>
                 </td>
                 <td class="text-right">
                     <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
                         <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
+                    </a>
+                    <a class="btn btn-default btn-danger btn-sm delete-task" {% if countTests != 0 %}disabled{% endif %} data-questionnaire-id="{{ questionnaire.id}}">
+                        <span class="glyphicon glyphicon-trash"></span> {{ 'generic.remove' | trans }}
                     </a>
                 </td>
             </tr>
@@ -96,6 +95,29 @@
         </tbody>
     </table>
 {% endif %}
+
+
+<div id="delete-task-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ 'editor.task.delete' | trans }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ 'editor.task.delete_confirm' | trans }}
+                <input id="questionnaire-id" type="hidden" value=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'editor.task.delete_confirm_no' | trans }}</button>
+                <button type="button" id="delete-task-list-confirmation" class="btn btn-primary">{{ 'editor.task.delete_confirm_yes' | trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock %}
 
 {% block javascripts %}

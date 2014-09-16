@@ -9,6 +9,11 @@ $( "body" ).on( "click", '.delete-task', function() {
     $('#delete-task-modal').modal('show');
 });
 
+$( "body" ).on( "click", '.delete-task-list', function() {
+    $("#questionnaire-id").val($(this).data("questionnaire-id"));
+    $('#delete-task-modal').modal('show');
+});
+
 $( "body" ).on( "click", '#save-order', function() {
     saveOrder();
 });
@@ -22,6 +27,10 @@ $( "body" ).on( "click", '.add-task', function() {
 
 $( "body" ).on( "click", '#delete-task-confirmation', function() {
     deleteTask();
+});
+
+$( "body" ).on( "click", '#delete-task-list-confirmation', function() {
+    deleteTaskList();
 });
 
 $( "body" ).on( "click", '#refresh-potentials', function() {
@@ -59,8 +68,8 @@ function addTaskToTest(questionnaireId, testId){
     $.ajax({
         url: Routing.generate('editor_add_task_to_test'),
         type: 'PUT',
-        data: 
-        { 
+        data:
+        {
             testId: testId,
             questionnaireId: questionnaireId
         }
@@ -87,8 +96,8 @@ function saveOrder(){
         url: Routing.generate('save-order-test-questionnaire'),
         type: 'POST',
         dataType: 'json',
-        data: 
-        { 
+        data:
+        {
             testId: testId,
             newOrder: newOrder
         }
@@ -106,9 +115,28 @@ function deleteTask(){
         url: Routing.generate('delete-task'),
         type: 'POST',
         dataType: 'json',
-        data: 
-        { 
+        data:
+        {
             testId: testId,
+            questionnaireId: questionnaireId
+        }
+    })
+    .done(function(data) {
+        console.log("Tâche supprimée");
+        $("#task-"+questionnaireId).remove();
+        $('#delete-task-modal').modal('hide');
+    });
+}
+
+function deleteTaskList(){
+    var questionnaireId = $("#questionnaire-id").val();
+
+    $.ajax({
+        url: Routing.generate('delete-task-list'),
+        type: 'DELETE',
+        dataType: 'json',
+        data:
+        {
             questionnaireId: questionnaireId
         }
     })
