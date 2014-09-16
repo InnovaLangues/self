@@ -56,7 +56,8 @@
                             </li>
                         {% endif %}
                         <li><a data-toggle="modal" href="#helpModal">{{ 'menu.help' | trans }}</a></li>
-                        <li><a data-toggle="modal" href="#creditModal">{{ 'menu.credit' | trans }}</a></li>
+                        {# Cette page n'est pas prête pour le pilote 3. #}
+                        {# <li><a data-toggle="modal" href="#creditModal">{{ 'menu.credit' | trans }}</a></li> #}
                     </ul>
                     <ul class="nav navbar-nav pull-right">
                         <li>
@@ -88,14 +89,14 @@
                         </span>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 
         {% include 'InnovaSelfBundle::Main/helpModale.html.twig' %}
 
         {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
 
-        {% include 'InnovaSelfBundle::Main/creditModale.html.twig' %}     
+        {% include 'InnovaSelfBundle::Main/creditModale.html.twig' %}
 
         {% block javascripts %}
             <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
