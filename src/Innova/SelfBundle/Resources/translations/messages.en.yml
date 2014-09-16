@@ -17,44 +17,44 @@ menu:
     language_change: Change language
 
 export:
-    file_generated: Le fichier a été généré
-    file_download: Télécharger le fichier au format CSV
-    files_list: Liste des fichiers générés
-    files_count: %nbFile% fichier(s) dans le dossier
-    tests_list: Tests exportés
+    file_generated: The file has been generated
+    file_download: Download the file in CSV format
+    files_list: List of generated files
+    files_count: %nbFile% of files in the folder
+    tests_list: Exported tests
 
 user:
-    edit: Edition d'un utilisateur
-    back_to_list: Retour à la liste des utilisateurs
-    list: Liste des utilisateurs
-    create: Créer un utilisateur
-    creation: Création d'un utilisateur
-    single: Utilisateur
-    plural: Utilisateurs
-    firstname: Prénom
-    name: Nom
-    email: Adresse mail
+    edit: Edit a user
+    back_to_list: Return to list of users
+    list: List of users
+    create: Create user
+    creation: Creation of a user
+    single: User
+    plural: Users
+    firstname: firstname
+    name: Name
+    email: Email address
 
 registration:
-    warning_required: Les zones avec un astérisque rouge sont obligatoires
+    warning_required: Zones with red asterisk are required
     username: Login
-    password: Mot de passe
-    password_confirmation: Confirmation du mot de passe
-    pathway: Filière
-    pathway_question: Dans la langue testée, êtes-vous un étudiant ? (LANSAD / LLCE / LEA / UJF / Autres)
+    password: Password
+    password_confirmation: Password confirmation
+    pathway: Major
+    pathway_question: In the language being tested, are you a student  at... ( LANSAD / LLCE / LEA / UJF / Other)
     dialang: Dialang
-    last_lansad:  Quel était le niveau du dernier cours LANSAD que vous avez validé ?
-    CO_level: Niveau obtenu en CO (compréhension orale)
-    CE_level: Niveau obtenu en CE (compréhension écrite)
-    EE_level: Niveau obtenu en EE (expression écrite)
-    next_step: Etape suivante
-    test_dialang: Avez-vous déjà passé un test Dialang ?
+    last_lansad:  What is the level of the last LANSAD course you successfully completed ?
+    CO_level: Level obtained in oral comprehension
+    CE_level: Level obtained in written comprehension
+    EE_level: Level obtained in written expression
+    next_step: Next step
+    test_dialang: Have you already taken a Dialang test ?
 
 test:
     available: Tests available
-    start: Démarrer le test
-    list: Liste des tests
-    no_registered: Vous êtes inscrit à aucun test.
+    start: Start the test
+    list: List of tests
+    no_registered:  You are not signed up for any test.
 
 generic:
     index: List
@@ -79,31 +79,31 @@ generic:
 
 editor:
     test:
-        create: Créer un test
+        create: Create a test
         create_the: Create the test
         delete: Delete the test
-        list: Liste des tests
-        name: Nom du test
-        language: Langue
-        is_active: Actif
-        edition: Edition d'un test
-        edit: Editer
-        back_to_list: Revenir à la liste des tests
-        new: Nouveau test
+        list: List of tests
+        name: Name of test
+        language: Language
+        is_active: Active
+        edition: Edit a test
+        edit: Edit
+        back_to_list: Return to the list of tests
+        new: New test
         all_tests: All tests
     task:
         tasks: Tasks
         all_tasks: All tasks
-        back_to_list: Retour à la liste des tâches
-        list: Liste des tâches pour le test <strong>%testName%</strong>
-        manage: Gérer les tâches
-        count: Nombre de tâches
-        create: Créer une tâche
-        save_order: Sauvegarder l'ordre des tâches
-        delete: Suppression d'une tâche
-        delete_confirm: Êtes-vous sûr de vouloir supprimer cette tâche de ce test ?
-        delete_confirm_yes: Oui, supprimer la tâche
-        delete_confirm_no: Non
+        back_to_list: Return to the list of tests
+        list:  List of tasks for the test <strong>%testName%</strong>
+        manage: Manage tasks
+        count: Number of tasks
+        create: Create a task
+        save_order: Save order of tasks
+        delete:  Delete a task
+        delete_confirm: Are you sure you want to delete this task from this test ?
+        delete_confirm_yes: Yes, delete the task
+        delete_confirm_no: No, do not delete the task.
         unnamed: Unnamed task
         comments: Comments
         identity: Identity card
@@ -111,107 +111,106 @@ editor:
         no_potential: No potential task to add
         no_task:  No task created
     questionnaire:
-        general_infos: Informations générales
-        title: Titre
-        typology: Typologie
-        fixed_order: Ordre fixe
-        context: Contexte
-        question_object: Objet de la question
-        skill: Compétence
+        general_infos: General information
+        title: Title
+        typology: Typology
+        fixed_order:  Set order
+        context: Context
+        question_object: Text
+        skill: Skill
     subquestion:
         subquestions: Items
-        add: Ajouter un item
-        remove: Supprimer l'item
-        add_instruction: Ajouter une consigne / question / amorce
-        remove_instruction: Supprimer la consigne / question / amorce
+        add: Add an item
+        remove: Delete an item
+        add_instruction: Add instructions/question/question stem
+        remove_instruction: Delete the instructions/question/question stem
     proposition:
-        add: Ajouter une proposition
-        remove: Supprimer la proposition
-        right: Bonne réponse
-        wrong: Mauvaise réponse
-        make_it_right: Passer en bonne réponse
-        make_it_wrong: Passer en mauvaise réponse
+        add: Add an option
+        remove: Delete the option
+        right: Correct answer
+        wrong: Incorrect answer
+        make_it_right: Make correct
+        make_it_wrong: Make incorrect
     media:
-        choose: Choix d'un type de média
+        choose: Choose a type of media
         audio: Audio
         picture: Image
-        video: Vidéo
-        text: Texte
-        listening_limit: Définir le nombre d'écoutes (0 = illimité)
-        name: Nom
+        video: Video
+        text: Text
+        listening_limit: Define number of listenings (0=unlimited)
+        name: Name
         description: Description
-        file: Fichier
+        file: File
     app:
-        add_pair: Ajouter une paire
-        remove_pair: Supprimer la paire
-        add_distractor: Ajouter un distracteur
-        remove_distractor: Supprimer le distracteur
-        add_media: Ajouter un media
-        distractors: Distracteurs
-        proposition: Proposition
-        associated_answer: Réponse associée
-        add_answer: Ajouter une réponse
+        add_pair: Add a pair
+        remove_pair: Delete a pair
+        add_distractor: Add a distractor
+        remove_distractor: Delete distractor
+        add_media: Add media
+        distractors: Distractors
+        proposition: Option
+        associated_answer: Related answer
+        add_answer: Add an answer
     log:
-        editor_create: Création de
-        editor_edit: Edition de
-        editor_delete: Suppression de
-        contexte: contexte
-        texte: objet de la question
-        objet de la question: objet de la question
-        question:
-        proposition: proposition
-        reponse: réponse
-        syllable: syllabe
-        clue: indice
-        instruction: consigne didactique
-        functional-instruction: consigne fonctionnelle
-        comment: commentaire
+        editor_create: Create
+        editor_edit: Edit
+        editor_delete: Delete
+        contexte: Context
+        texte: Text 
+        objet de la question: Text 
+        question: Question
+        proposition: option
+        reponse: Response
+        syllable: Syllable
+        clue: clue
+        instruction: Didactic instruction
+        functional-instruction: Functional instruction
+        comment: comment
         feedback: feedback
-        distractor: distracteur
-        app-paire: paire
+        distractor: distractor
+        app-paire: pair
         app-media: media
-        app-answer: réponse
-        app-distractor: distracteur
-        listening-limit: limite d'écoutes
-        clue-type: type d'indice
-        task: tâche
-        words-list: liste de mots
-        blanks: lacunes
-        theme: nom de la tâche
-        fixed-order: ordre fixe
-        skill: compétence
-        level: niveau
-        typology: typologie
-        status: statut
-        test: Test(s)
-        text-type: type d'objet de la question
+        app-answer: answer
+        app-distractor: distractor
+        listening-limit: Listening limit
+        clue-type: clue type
+        task: task
+        words-list: word list
+        blanks: blanks
+        theme: Name
+        fixed-order: Set order
+        skill: Skill
+        level: Level
+        typology: Typology
+        status: Status
+        test: Test
+        text-type: Question type
 
 
 player:
-    listen_context: Il vous faut d'abord écouter le contexte.
-    fullscreen: Plein écran
-    count_task: sur
-    listening_single: écoute
-    listening_plural: écoutes
+    listen_context: First listen to the context
+    fullscreen: Fullscreen
+    count_task: on
+    listening_single: listening
+    listening_plural: listenings
     tooltip:
-        question_object: Objet de la question
-        proposition: Proposition de réponse
-        enlarge: Cliquer pour agrandir
-        context: Contexte
+        question_object: text
+        proposition: option
+        enlarge: Click to enlarge
+        context: Context
         question: Question
-        intruction: Consigne
-
+        intruction: Instruction
 trace:
-    test_continue: Continuer le test
+    test_continue: Continue the test
     action:
-        evaluate: Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
+        evaluate: Rate the difficulty of the task you just completed.  Tick the corresponding box.
     field:
         difficulty:
-            veryEasy: Très facile
-            easy: Facile
+            veryEasy: Very easy
+            easy: Easy
             normal: Normal
-            difficult: Difficile
-            veryDifficult: Très difficile
+            difficult: Difficult
+            veryDifficult: Very difficult
 
 language:
     English: English
