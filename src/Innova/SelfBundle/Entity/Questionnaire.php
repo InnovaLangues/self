@@ -116,7 +116,7 @@ class Questionnaire
     private $comments;
 
     /**
-    * @ORM\OneToMany(targetEntity="EditorLog", mappedBy="questionnaire")
+    * @ORM\OneToMany(targetEntity="EditorLog", mappedBy="questionnaire", cascade={"persist", "remove"})
     * @ORM\OrderBy({"date" = "DESC"})
     */
     private $editorLogs;
@@ -195,7 +195,7 @@ class Questionnaire
     protected $skill;
 
     /**
-    * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"persist", "remove"})
     */
     protected $questions;
 
@@ -914,14 +914,14 @@ class Questionnaire
     public function setStatus(\Innova\SelfBundle\Entity\Status $status = null)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return \Innova\SelfBundle\Entity\Status 
+     * @return \Innova\SelfBundle\Entity\Status
      */
     public function getStatus()
     {
@@ -937,14 +937,14 @@ class Questionnaire
     public function setMediaFunctionalInstruction(\Innova\SelfBundle\Entity\Media $mediaFunctionalInstruction = null)
     {
         $this->mediaFunctionalInstruction = $mediaFunctionalInstruction;
-    
+
         return $this;
     }
 
     /**
      * Get mediaFunctionalInstruction
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMediaFunctionalInstruction()
     {
@@ -960,7 +960,7 @@ class Questionnaire
     public function addComment(\Innova\SelfBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -977,7 +977,7 @@ class Questionnaire
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
@@ -993,14 +993,14 @@ class Questionnaire
     public function setMediaFeedback(\Innova\SelfBundle\Entity\Media $mediaFeedback = null)
     {
         $this->mediaFeedback = $mediaFeedback;
-    
+
         return $this;
     }
 
     /**
      * Get mediaFeedback
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMediaFeedback()
     {
@@ -1016,7 +1016,7 @@ class Questionnaire
     public function addEditorLog(\Innova\SelfBundle\Entity\EditorLog $editorLogs)
     {
         $this->editorLogs[] = $editorLogs;
-    
+
         return $this;
     }
 
@@ -1033,7 +1033,7 @@ class Questionnaire
     /**
      * Get editorLogs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEditorLogs()
     {
@@ -1049,14 +1049,14 @@ class Questionnaire
     public function setMediaBlankText(\Innova\SelfBundle\Entity\Media $mediaBlankText = null)
     {
         $this->mediaBlankText = $mediaBlankText;
-    
+
         return $this;
     }
 
     /**
      * Get mediaBlankText
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media
      */
     public function getMediaBlankText()
     {
@@ -1072,14 +1072,14 @@ class Questionnaire
     public function setLanguage(\Innova\SelfBundle\Entity\Language $language = null)
     {
         $this->language = $language;
-    
+
         return $this;
     }
 
     /**
      * Get language
      *
-     * @return \Innova\SelfBundle\Entity\Language 
+     * @return \Innova\SelfBundle\Entity\Language
      */
     public function getLanguage()
     {
@@ -1095,14 +1095,14 @@ class Questionnaire
     public function setTextTitle($textTitle)
     {
         $this->textTitle = $textTitle;
-    
+
         return $this;
     }
 
     /**
      * Get textTitle
      *
-     * @return string 
+     * @return string
      */
     public function getTextTitle()
     {

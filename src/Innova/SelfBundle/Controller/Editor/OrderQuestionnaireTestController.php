@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Question;
 
 /**
  * Class OrderQuestionnaireTestController
@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class OrderQuestionnaireTestController
 {
-    
+
     protected $entityManager;
     protected $orderQuestionnaireTestManager;
     protected $templating;
@@ -90,7 +90,7 @@ class OrderQuestionnaireTestController
         $orders = $test->getOrderQuestionnaireTests();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig',array('orders' => $orders));
-        
+
         return new Response($template);
     }
 
@@ -123,5 +123,35 @@ class OrderQuestionnaireTestController
             array()
         );
     }
+
+    /**
+     * @Route("/delete-task-list", name="delete-task-list", options={"expose"=true})
+     * @Method("DELETE")
+     * @Template("")
+     */
+    public function deleteTaskListAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $questionnaireId = $request->get('questionnaireId');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+/*
+        $question = $em->getRepository('InnovaSelfBundle:Question')->findBy(array(
+                                                                            'questionnaire' => $questionnaire->getId()
+                                                                                 ));
+
+        $em->remove($question);
+*/
+        $em->remove($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array()
+        );
+    }
+
+
 
 }

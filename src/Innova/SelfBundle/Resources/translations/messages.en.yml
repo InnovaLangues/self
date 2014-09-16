@@ -57,25 +57,25 @@ test:
     no_registered: Vous êtes inscrit à aucun test.
 
 generic:
-    index: Lister
-    create: Ajouter
-    show: Afficher
+    index: List
+    create: Create
+    show: Show
     ok: OK
-    edit: Mettre à jour
-    delete: Supprimer
-    register: Inscription
-    login: Connexion
-    validate: Valider
+    edit: Edit
+    delete: Delete
+    register: Register
+    login: Login
+    validate: Validate
     boolTrue: "True"
     boolFalse: "False"
-    chooseCorrectAnswer: Sélectionner la réponse correcte
-    edit: Editer
-    remove: Supprimer
-    add: Ajouter
-    close: Fermer
-    save: Sauvegarder
-    yes: Oui
-    no: Non
+    chooseCorrectAnswer: Chosse correct answer
+    edit: Edit
+    remove: Remove
+    add: Add
+    close: Close
+    save: Save
+    yes: Yes
+    no: No
 
 editor:
     test:
@@ -217,4 +217,3 @@ language:
     English: English
     Italian: Italian
     Chinese: Chinese
-    
