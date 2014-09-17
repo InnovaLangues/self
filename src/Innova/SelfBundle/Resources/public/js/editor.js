@@ -525,6 +525,7 @@ function setTypology(questionnaireId) {
     })
     .done(function(data) {
         $("#typology").val(data.typology);
+        $("#typology").attr('disabled', 'disabled')
         $("#subquestion-container").replaceWith(data.subquestions);
         afterAjax();
     });
@@ -844,7 +845,7 @@ function setSyllable(syllable, subquestionId){
 }
 
 function setDisplay(display, subquestionId){
-    //beforeAjax();
+    beforeAjax();
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_set-display'),
