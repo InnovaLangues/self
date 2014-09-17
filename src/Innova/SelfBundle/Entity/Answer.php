@@ -22,7 +22,7 @@ class Answer
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Trace", inversedBy="answers")
+    * @ORM\ManyToOne(targetEntity="Trace", inversedBy="answers", cascade={"remove"})
     */
     protected $trace;
 
