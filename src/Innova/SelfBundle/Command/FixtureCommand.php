@@ -111,6 +111,18 @@ class FixtureCommand extends ContainerAwareCommand
             $typologiesToDelete = array("TLCMQRU", "TLCMTQRU", "TLQROCDCTU", "TLQROCDCTM", "TLQROCFIRSTLEN");
             foreach ($typologiesToDelete as $typology) {
                 if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)) {
+
+                    if($questions = $em->getRepository('InnovaSelfBundle:Question')->findByTypology($typo)){
+                        foreach ($questions as $question) {
+                            $question->setTypology(null);
+                            $em->persist($question);
+                            foreach ($question->getSubquestions() as $subquestion) {
+                                $subquestion->setTypology(null);
+                                $em->persist($subquestion);
+                            }
+                        }
+                    }
+
                     $em->remove($typo);
                     /* Database queries should use parameter binding fix #397 */
                     $typoName = $typo->getName();
