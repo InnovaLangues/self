@@ -6,12 +6,21 @@
 
 
 {% block body -%}
-    {% if tests is not empty %}
-        <div class="panel panel-default">
-            <div class="panel-body">
-                {% include 'InnovaSelfBundle::Main/help.html.twig' %}
-            </div>
+    
+    <div class="row">
+<div id="video-help"  class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">Vidéo d'aide</div>
+        <div class="panel-body text-center">
+    {% include 'InnovaSelfBundle::Main/help.html.twig' %}
         </div>
+    </div>
+</div>
+</div>
+
+
+
+    {% if tests is not empty %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">{{ 'test.available' | trans }}</h3>
