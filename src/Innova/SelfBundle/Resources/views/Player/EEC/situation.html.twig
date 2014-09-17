@@ -231,56 +231,6 @@
                     {% endif %}
 
                     {# #}
-                    {# TL/QROC avec première lettre, AVEC longueur #}
-                    {# #}
-                    {% if typoQuestion == "TLQROCFIRSTLEN" %}
-                        {% set textRightAnswer = "" %}
-                        {% set maxValueSize = 0 %}
-                        {# Recherche du texte correct #}
-                        {% for j, proposition in subquestion.propositions %}
-                            {% if proposition.rightAnswer %}
-                                {% set textRightAnswer = proposition.media.description %}
-                                {# Recherche/Calcul de la taille d'affichage de la zone Input #}
-                                {% for inputSize in tabInputSize %}
-                                    {% if inputSize > proposition.media.description|length and maxValueSize == 0 %}
-                                        {%  set maxValueSize = inputSize %}
-                                    {% endif %}
-                                {% endfor %}
-                                {# Test si la taille de la solution est plus grande que 12 #}
-                                {# Dans ce cas, la taille de la zone Input est la taille de la solution + 5 caractères #}
-                                {% if ( maxValueSize == 0 ) %}
-                                    {% set maxValueSize = proposition.media.description|length + 2 %}
-                                {% endif %}
-                                {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
-                                {% set initTextRightAnswer = "" %}
-                                {% set first = textRightAnswer|slice(0, 1) %}
-                                {% for i in 2..textRightAnswer|length %}
-                                    {% set initTextRightAnswer = initTextRightAnswer~charSeparate %}
-                                {% endfor %}
-                                {% set html = "" %}
-                                {% set displayAnswer = "" %}
-                                {% set placeH =  "" %}
-                                {% if subquestion.displayAnswer %}
-                                    {% set syllable = "" %}
-                                    {% set displayAnswer = " readonly " %}
-                                    {% set initTextRightAnswer = proposition.media.description %}
-                                    {% set first = "" %}
-                                {% endif %}
-                                {% set html = html~'<span class="form-group"><span class="input-group lacune">
-                                    <span class="input-group-addon">'~first~'</span>
-                                    <input '~displayAnswer~' type="text" placeholder='~initTextRightAnswer ~'
-                                    size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
-                                    class="form-control '~cssClueColor~'" data-html="true"
-                                    data-original-title="'~ dataTitle|escape ~'">
-                                </span></span>' %}
-                                {% set selector = "#"~proposition.media.description~"#" %}
-                                {% set texte = texte|replace({(selector): html}) %}
-                            {% endif %}
-                        {% endfor %}
-                        {# {{ macros.situation(subquestion, i, texte, typoQuestion) }} #}
-                    {% endif %}
-
-                    {# #}
                     {# TL/QROC sans indice #}
                     {# #}
                     {% if typoQuestion == "TLQROCNOCLU" %}

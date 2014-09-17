@@ -137,13 +137,7 @@ class OrderQuestionnaireTestController
         $questionnaireId = $request->get('questionnaireId');
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-/*
-        $question = $em->getRepository('InnovaSelfBundle:Question')->findBy(array(
-                                                                            'questionnaire' => $questionnaire->getId()
-                                                                                 ));
 
-        $em->remove($question);
-*/
         $em->remove($questionnaire);
         $em->flush();
 
