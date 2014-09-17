@@ -1,13 +1,14 @@
-<div class="col-md-12">
+<div class="col-md-4">
     <div class="panel panel-default">
-        <div class="panel-heading">La vidéo d'aide pour la compréhension orale</div>
-        <video controls>
+        <div class="panel-heading">Vidéo d'aide pour la compréhension orale</div>
+        <div class="panel-body text-center">
+            <video controls>
             <source src="{{ asset('upload/media/') ~ 'Tuto-SELF-Indications-Visuelles-1-co.webm' }}" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
             Your browser does not support the video tag.
-        </video>
+            </video>
+        </div>
     </div>
 
     {% set displayHelp = 0 %}
     <a href="{{ path('test_start', { 'id': test.id,  'displayHelp': displayHelp } )}}" class="btn btn-primary">{{ 'trace.test_continue' | trans }}</a>
-
 </div>
