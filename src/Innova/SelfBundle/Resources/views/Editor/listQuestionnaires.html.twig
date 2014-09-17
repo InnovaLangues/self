@@ -73,6 +73,7 @@
                         {{ '-' }}
                     {% endif %}
                 </td>
+                {# Ajout d'un bouton "Supprimer" pour supprimer une tâche (si pas d'affectation à un test). EV. #}
                 {% set countTests = questionnaire.orderQuestionnaireTests|length %}
                 <td>
                 {% set tooltip = "" %}
@@ -80,7 +81,7 @@
                 {% for orderedQuestionnaireTest in questionnaire.orderQuestionnaireTests %}
                     {% set tooltip = tooltip ~ orderedQuestionnaireTest.test.name ~"<br />" %}
                 {% endfor %}
-                <span data-html="true" class="glyphicon glyphicon-eye-open" rel="tooltip" data-original-title="{{ tooltip }}"></span>
+                {% if countTests != 0 %}<span data-html="true" class="glyphicon glyphicon-eye-open" rel="tooltip" data-original-title="{{ tooltip }}"></span>{% endif %}
                 </td>
                 <td class="text-right">
                     <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
@@ -115,9 +116,6 @@
         </div>
     </div>
 </div>
-
-
-
 {% endblock %}
 
 {% block javascripts %}
