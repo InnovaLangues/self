@@ -25,7 +25,7 @@ class CheckMediaCommand extends ContainerAwareCommand
         $output->writeln("");
         $output->writeln("Vérification des MEDIAS en cours ...");
         $output->writeln("");
-        $output->writeln("<error>ID</error> NOM | DESCRIPTION");
+        $output->writeln("<error>ID</error> NOM");
         $output->writeln("");
 
         $medias = $em->getRepository('InnovaSelfBundle:Media')->findAll();
@@ -42,7 +42,7 @@ class CheckMediaCommand extends ContainerAwareCommand
         foreach ($medias as $media) {
             foreach ($patterns as $pattern) {
                  if (strstr($media->getDescription(),$pattern)){
-                    $output->writeln("<error>".$media->getId() . "</error> " . $media->getName() . " | " . $media->getDescription());
+                    $output->writeln("<error>".$media->getId() . "</error> " . $media->getName());
                     $output->writeln("");
                     $output->writeln("");
 
