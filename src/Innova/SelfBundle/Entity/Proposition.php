@@ -27,7 +27,7 @@ class Proposition
     protected $subquestion;
 
     /**
-    * @ORM\OneToMany(targetEntity="Answer", mappedBy="proposition")
+    * @ORM\OneToMany(targetEntity="Answer", mappedBy="proposition", cascade={"remove"})
     */
     protected $answers;
 

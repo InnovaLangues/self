@@ -42,7 +42,7 @@
                     <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
                     {% set excludedTypo = ["VFPM", "RE", "TVFPM"] %}
 
-                    <select id="typology" class="form-control">
+                    <select id="typology" class="form-control" {% if questionnaire.questions[0].typology is not null %} disabled{% endif %}>
                         <option value="-">-</option>
                         {% for typology in typologies %}
                             {% if typology.name not in excludedTypo %}
