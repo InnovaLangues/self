@@ -6,11 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Symfony command to delete tests. EV. 12/03/2014
- * We must execute this command with parameter "sql" like :
- * php app/console self:delete:all sql
-*/
 class CheckMediaCommand extends ContainerAwareCommand
 {
 
@@ -30,23 +25,30 @@ class CheckMediaCommand extends ContainerAwareCommand
         $output->writeln("");
         $output->writeln("Vérification des MEDIAS en cours ...");
         $output->writeln("");
-        $output->writeln("NOM | DESCRIPTION | ID");
+        $output->writeln("<error>ID</error> NOM | DESCRIPTION");
         $output->writeln("");
 
         $medias = $em->getRepository('InnovaSelfBundle:Media')->findAll();
+
+        $patterns = array(
+                                        "<div",
+                                        "original",
+                                        "href",
+                                        "<xml>",
+                                        "<!--",
+                                        "MsoNormal",
+                                        );
+
         foreach ($medias as $media) {
-            if (
-                strstr($media->getDescription(),"<div")
-                or strstr($media->getDescription(),"original")
-                or strstr($media->getDescription(),"href")
-                or strstr($media->getDescription(),"ffice")
-            ) {
-                $output->writeln($media->getId() . " | " . $media->getName() . " | " . $media->getDescription());
-                $output->writeln("");
-                $output->writeln("");
+            foreach ($patterns as $pattern) {
+                 if (strstr($media->getDescription(),$pattern)){
+                    $output->writeln("<error>".$media->getId() . "</error> " . $media->getName() . " | " . $media->getDescription());
+                    $output->writeln("");
+                    $output->writeln("");
+
+                    break;
+                 }
             }
         }
-
     }
-
 }
