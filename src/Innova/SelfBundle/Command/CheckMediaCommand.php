@@ -38,17 +38,22 @@ class CheckMediaCommand extends ContainerAwareCommand
                         "MsoNormal",
                         );
 
+        $numberOfErros = 0;
         foreach ($medias as $media) {
             foreach ($patterns as $pattern) {
                 if (strstr($media->getDescription(),$pattern)){
                     if ($purpose = $media->getMediaPurpose()) {$purpose = "(".$purpose->getName().")";} else {$purpose = "";}
                     $table->addRow(array($media->getId(), $media->getName(), $purpose));
+                    $numberOfErros++;
                     break;
                 }
             }
         }
+        $table->addRow(array("", "", ""));
+        $table->addRow(array("Nombre d'erreurs", $numberOfErros, ""));
 
         $table->render($output);
+
 
     }
 }
