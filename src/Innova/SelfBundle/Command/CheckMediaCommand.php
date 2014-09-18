@@ -42,10 +42,7 @@ class CheckMediaCommand extends ContainerAwareCommand
         foreach ($medias as $media) {
             foreach ($patterns as $pattern) {
                  if (strstr($media->getDescription(),$pattern)){
-                    $output->writeln("<error>".$media->getId() . "</error> " . $media->getName());
-                    $output->writeln("");
-                    $output->writeln("");
-
+                    $output->writeln("<error>".$media->getId() . "</error> " . $media->getName() . " (".$media->getMediaPurpose()->getName().")");
                     break;
                  }
             }
