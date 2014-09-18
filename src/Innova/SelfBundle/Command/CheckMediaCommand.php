@@ -25,7 +25,7 @@ class CheckMediaCommand extends ContainerAwareCommand
 
         $table = $this->getHelperSet()->get('table');
 
-        $table->setHeaders(array('ID', 'TACHE', 'MEDIA'));
+        $table->setHeaders(array('ID', 'TACHE', 'MEDIA', 'CAUSE'));
 
         $medias = $em->getRepository('InnovaSelfBundle:Media')->findAll();
 
@@ -43,14 +43,14 @@ class CheckMediaCommand extends ContainerAwareCommand
             foreach ($patterns as $pattern) {
                 if (strstr($media->getDescription(),$pattern)){
                     if ($purpose = $media->getMediaPurpose()) {$purpose = "(".$purpose->getName().")";} else {$purpose = "";}
-                    $table->addRow(array($media->getId(), $media->getName(), $purpose));
+                    $table->addRow(array($media->getId(), $media->getName(), $purpose, $pattern));
                     $numberOfErros++;
                     break;
                 }
             }
         }
         $table->addRow(array("", "", ""));
-        $table->addRow(array("Nombre d'erreurs", $numberOfErros, ""));
+        $table->addRow(array("Nombre d'erreurs", $numberOfErros, "", ""));
 
         $table->render($output);
 
