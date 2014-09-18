@@ -37,6 +37,7 @@
                     {# #}
                     {% set clue = '' %}
                     {% set dataTitle = '' %}
+                    {% set cssClueColor = '' %}
                     {% if subquestion.clue is not null %}
                         {# Récupération de l'indice pour affichage lors du survol de la zone de saisie #}
                         {% set clue = subquestion.clue.media.description|escape %}
@@ -77,7 +78,7 @@
                                     {% set placeH = proposition.media.description %}
                                 {% endif %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input '~displayAnswer~' data-html="true" class="proposition-input '~cssClueColor~'" data-original-title="'~ dataTitle|escape ~'" name="'~ subquestion.id ~'[]"
+                                {% set html = html~'<input '~displayAnswer~' data-html="true" class="mask form-control proposition-input '~cssClueColor~'" data-original-title="'~ dataTitle|escape ~'" name="'~ subquestion.id ~'[]"
                                 placeholder="'~placeH~'" id="input-proposition'~ proposition.id ~'"
                                 size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" required />' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
@@ -124,12 +125,12 @@
                                 {% endif %}
 
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input '~displayAnswer~' data-html="true" class="mask form-control proposition-input '~cssClueColor~'"
+                                {% set html = html~'<input '~displayAnswer~' data-html="true" class="form-control proposition-input '~cssClueColor~'"
                                 data-original-title="'~ dataTitle|escape ~'" rel="tooltip"
                                 placeholder="'~placeH~'"
                                 name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
-                                size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" data-right-answer-length="'~maxValueSize~'"
-                                value="'~initTextRightAnswer~'" required />' %}
+                                size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" data-right-answer-length="'~maxValueSize~'" value="'~initTextRightAnswer~'"
+                                 required />' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
 
                                 {% set texte = texte|replace({(selector): html}) %}
@@ -262,7 +263,7 @@
                                     {% set placeH = proposition.media.description %}
                                 {% endif %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input class="proposition-input" data-original-title="'~clue~'"
+                                {% set html = html~'<input class="proposition-input form-control" data-original-title="'~clue~'"
                                 rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
                                 size="'~ maxValueSize ~'" placeholder="'~placeH~'"
                                 ~maxlength="'~ maxValueSize ~'" required ' ~displayAnswer~ '/>' %}
