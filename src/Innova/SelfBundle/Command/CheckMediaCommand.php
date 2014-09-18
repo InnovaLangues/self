@@ -31,18 +31,19 @@ class CheckMediaCommand extends ContainerAwareCommand
         $medias = $em->getRepository('InnovaSelfBundle:Media')->findAll();
 
         $patterns = array(
-                                        "<div",
-                                        "original",
-                                        "href",
-                                        "<xml>",
-                                        "<!--",
-                                        "MsoNormal",
-                                        );
+                                    "<div",
+                                    "original",
+                                    "href",
+                                    "<xml>",
+                                    "<!--",
+                                    "MsoNormal",
+                                    );
 
         foreach ($medias as $media) {
             foreach ($patterns as $pattern) {
                  if (strstr($media->getDescription(),$pattern)){
-                    $output->writeln("<error>".$media->getId() . "</error> " . $media->getName() . " (".$media->getMediaPurpose()->getName().")");
+                    if ($purpose = $media->getMediaPurpose()) {$purpose = "(".$purpose->getName().")";} else {$purpose = "";}
+                    $output->writeln("<error>".$media->getId() . "</error> " . $media->getName() . " ".$purpose);
                     break;
                  }
             }
