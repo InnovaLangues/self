@@ -5,6 +5,7 @@ namespace Innova\SelfBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\TableHelper;
 
 class CheckMediaCommand extends ContainerAwareCommand
 {
@@ -22,31 +23,32 @@ class CheckMediaCommand extends ContainerAwareCommand
 
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
-        $output->writeln("");
-        $output->writeln("Vérification des MEDIAS en cours ...");
-        $output->writeln("");
-        $output->writeln("<error>ID</error> NOM");
-        $output->writeln("");
+        $table = $this->getHelperSet()->get('table');
+
+        $table->setHeaders(array('ID', 'TACHE', 'MEDIA'));
 
         $medias = $em->getRepository('InnovaSelfBundle:Media')->findAll();
 
         $patterns = array(
-                                    "<div",
-                                    "original",
-                                    "href",
-                                    "<xml>",
-                                    "<!--",
-                                    "MsoNormal",
-                                    );
+                        "<div",
+                        "original",
+                        "href",
+                        "<xml>",
+                        "<!--",
+                        "MsoNormal",
+                        );
 
         foreach ($medias as $media) {
             foreach ($patterns as $pattern) {
-                 if (strstr($media->getDescription(),$pattern)){
+                if (strstr($media->getDescription(),$pattern)){
                     if ($purpose = $media->getMediaPurpose()) {$purpose = "(".$purpose->getName().")";} else {$purpose = "";}
-                    $output->writeln("<error>".$media->getId() . "</error> " . $media->getName() . " ".$purpose);
+                    $table->addRow(array($media->getId(), $media->getName(), $purpose));
                     break;
-                 }
+                }
             }
         }
+
+        $table->render($output);
+
     }
 }
