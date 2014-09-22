@@ -419,6 +419,7 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 	max-height:130px;
 	height:130px;
 	color:black;
+	
 }
 
 .answer-APP > img{
@@ -439,6 +440,10 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 	background-color:#FCF6BC;
 }
 
+.proposition-APP.draggable{
+	border:1px solid black;
+	color:black;
+} 
 /**************************
  		Video
 ***************************/
