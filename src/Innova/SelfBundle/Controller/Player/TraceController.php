@@ -78,7 +78,6 @@ class TraceController
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($post["questionnaireId"]);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($post["testId"]);
-        $typo = $post["typoName"];
         $user = $this->user;
 
         $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')
@@ -168,13 +167,15 @@ class TraceController
      */
     private function createAnswerProposition($trace, $saisie, $subquestionId)
     {
+
         $em = $this->entityManager;
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
 
         $typo = $subquestion->getTypology()->getName();
+        $displayAnswer = $subquestion->getDisplayAnswer();
 
-        $typosSaisie = array("TLQROCDERIV", "TLQROCFIRST", "TLQROCSYL", "TLQROCNOCLU", "TLQROCLEN", "TLQROCFIRSTLEN" );
+        $typosSaisie = array("TLQROCDERIV", "TLQROCTRANS", "TLQROCFIRST", "TLQROCSYL", "TLQROCNOCLU", "TLQROCLEN", "TLQROCFIRSTLEN" );
         if (in_array($typo, $typosSaisie)) {
             $propositions = $subquestion->getPropositions();
             $rightAnswer = false;
@@ -196,6 +197,7 @@ class TraceController
             }
 
             foreach ($propositions as $proposition) {
+
                 $text = $proposition->getMedia()->getName();
 
                 if ($text == $saisie) {
@@ -213,6 +215,10 @@ class TraceController
                 $media = $this->mediaManager->createMedia(null, "texte", $saisie, $saisie, null, 0, "reponse");
                 $proposition = $this->propositionManager->createProposition($subquestion, $media, $rightAnswer);
             } else {
+                if ($displayAnswer) {
+                    $media = $this->mediaManager->createMedia(null, "texte", $saisie, $saisie, null, 0, "reponse");
+                    $proposition = $this->propositionManager->createProposition($subquestion, $media, $rightAnswer);
+                }
                 $proposition = $propositionFound;
             }
         }
