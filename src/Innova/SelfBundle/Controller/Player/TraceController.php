@@ -90,7 +90,6 @@ class TraceController
             return array("traceId" => 0, "testId" => $test->getId());
         } else {
             $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"]);
-
             $this->parsePost($post, $trace);
 
             $session = $this->session;
@@ -124,6 +123,7 @@ class TraceController
     private function parsePost($post, $trace)
     {
         $this->session->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
+
         foreach ($post as $subquestionId => $postVar)
         {
             // Cas classique
@@ -156,7 +156,6 @@ class TraceController
     private function parsePost2($post, $trace, $typo)
     {
 
-echo $typo;
         $this->session->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
         foreach ($post as $subquestionId => $postVar)
@@ -214,7 +213,6 @@ echo $typo;
     {
         $em = $this->entityManager;
 
-echo "Answer";
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
 
         $typo = $subquestion->getTypology()->getName();
@@ -224,21 +222,25 @@ echo "Answer";
             $propositions = $subquestion->getPropositions();
             $rightAnswer = false;
             $propositionFound = null;
+
+            // Il faut concaténer la syllabe avec la saisie.
+            $syllableAnswer = "";
+            if ($typo == "TLQROCSYL" ) {
+                $syllableAnswer = $subquestion->getMediaSyllable()->getDescription();
+                $saisie = $syllableAnswer . $saisie;
+            }
+
+            // Il faut concaténer le premier caractère de la réponse avec la saisie.
+            $firstAnswer = "";
+            if ($typo == "TLQROCFIRST" ) {
+                $firstAnswer = $propositions[0]->getMedia()->getDescription();
+                $firstAnswer = $firstAnswer[0];
+                $saisie = $firstAnswer . $saisie;
+            }
+
             foreach ($propositions as $proposition) {
                 $text = $proposition->getMedia()->getName();
 
-                // Il faut concaténer la syllabe avec la saisie.
-                $syllableAnswer = "";
-                if ($typo == "TLQROCSYL" ) {
-                    $syllableAnswer = $subquestion->getMediaSyllable()->getDescription();
-                    //echo "<br />saisie avant : " . $saisie;
-                    //echo "syllable ajouté " . $syllableAnswer;
-                    $saisie = $syllableAnswer . $saisie;
-                    //echo "<br />saisie après : " . $saisie;
-                }
-
-                //echo "<br />saisie : " . $saisie;
-                //echo "<br />text : " . $text;
                 if ($text == $saisie) {
                     $propositionFound = $proposition;
                     if ($proposition->getRightAnswer() == true) {
@@ -251,7 +253,6 @@ echo "Answer";
             }
 
             if ($propositionFound == null) {
-                echo "<br />createMedia";
                 $media = $this->mediaManager->createMedia(null, "texte", $saisie, $saisie, null, 0, "reponse");
                 $proposition = $this->propositionManager->createProposition($subquestion, $media, $rightAnswer);
             } else {
