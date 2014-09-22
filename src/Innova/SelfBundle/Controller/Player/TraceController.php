@@ -149,49 +149,6 @@ class TraceController
         } // Fin foreach principal
     }
 
-
-    /**
-     * Parse post var
-     */
-    private function parsePost2($post, $trace, $typo)
-    {
-
-        $this->session->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
-
-        foreach ($post as $subquestionId => $postVar)
-        {
-            // Cas classique
-            if (is_array($postVar))
-            {
-                foreach ($postVar as $key => $propositionId)
-                {
-                    if ($typo = "TLQROCSYL") {
-                        $concatArea = "";
-                        foreach ($postVar as $key => $value) {
-                            $concatArea .= $value;
-                        }
-                        $this->createAnswerProposition($trace, $concatArea, $subquestionId);
-                    }
-                    else {
-                        // Cas 1 : si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
-                        if (is_numeric($propositionId))
-                        {
-                            foreach ($postVar as $key => $propositionId) {
-                                $this->createAnswer($trace, $propositionId, $subquestionId);
-                            }
-                        }
-                        // Cas 2 : si la proposition N'est PAS de type numéric alors on est dans le cas d'une SAISIE
-                        else {
-                            foreach ($postVar as $key => $propositionId) {
-                                $this->createAnswerProposition($trace, $propositionId, $subquestionId);
-                            }
-                        }
-                    }
-                } // Fin foreach dans if
-            }
-        } // Fin foreach principal
-    }
-
     /**
      * si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
      */
