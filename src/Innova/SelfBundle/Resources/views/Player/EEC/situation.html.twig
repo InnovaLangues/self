@@ -49,7 +49,6 @@
                     {# TL/QROC dérivation et transformation #}
                     {# #}
                     {% if typoQuestion == "TLQROCDERIV" or typoQuestion == "TLQROCTRANS" %}
-
                         {% set textRightAnswer = "" %}
                         {% set maxValueSize = 0 %}
                         {# Recherche du texte correct #}
@@ -78,15 +77,13 @@
                                     {% set placeH = proposition.media.description %}
                                 {% endif %}
                                 {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input '~displayAnswer~' data-html="true" class="mask form-control proposition-input '~cssClueColor~'" data-original-title="'~ dataTitle|escape ~'" name="'~ subquestion.id ~'[]"
+                                {% set html = html~'<input '~displayAnswer~' data-html="true" class="form-control proposition-input '~cssClueColor~'" data-original-title="'~ dataTitle|escape ~'" name="'~ subquestion.id ~'[]"
                                 placeholder="'~placeH~'" id="input-proposition'~ proposition.id ~'"
                                 size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" required />' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
                         {% endfor %}
-
-
                     {% endif %}
 
                     {# #}
@@ -179,7 +176,6 @@
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
                         {% endfor %}
-                        {# Récupération de la syllabe pour affichage lors de la saisie #}
                         {# {{ macros.situation(subquestion, i, texte, typoQuestion) }} #}
                     {% endif %}
 
@@ -221,7 +217,7 @@
                                     <span class="input-group-addon">'~initTextRightAnswer~'</span>
                                     <input '~displayAnswer~' type="text" class="form-control '~cssClueColor~'"
                                     size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
-                                    placeholder="'~placeH~'"
+                                    name="'~ subquestion.id ~'[]" placeholder="'~placeH~'"
                                     data-html="true" data-original-title="'~ dataTitle|escape ~'">
                                 </span></span>' %}
                                 {% set selector = "#"~proposition.media.description~"#" %}

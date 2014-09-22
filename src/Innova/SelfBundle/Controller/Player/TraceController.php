@@ -78,6 +78,7 @@ class TraceController
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($post["questionnaireId"]);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($post["testId"]);
+        $typo = $post["typoName"];
         $user = $this->user;
 
         $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')
@@ -89,7 +90,6 @@ class TraceController
             return array("traceId" => 0, "testId" => $test->getId());
         } else {
             $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"]);
-
             $this->parsePost($post, $trace);
 
             $session = $this->session;
@@ -118,11 +118,10 @@ class TraceController
     }
 
     /**
-     * Parse post var
-     */
+    * Parse post var
+    */
     private function parsePost($post, $trace)
     {
-
         $this->session->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
 
         foreach ($post as $subquestionId => $postVar)
@@ -151,6 +150,20 @@ class TraceController
     }
 
     /**
+     * si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
+     */
+    private function createAnswer($trace, $propositionId, $subquestionId)
+    {
+        $em = $this->entityManager;
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
+        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
+
+        $answer = $this->answerManager->createAnswer($trace, $subquestion, $proposition);
+
+        return $answer;
+    }
+
+    /**
      * si la proposition N'est PAS de type numéric alors on est dans le cas d'une SAISIE
      */
     private function createAnswerProposition($trace, $saisie, $subquestionId)
@@ -166,8 +179,25 @@ class TraceController
             $propositions = $subquestion->getPropositions();
             $rightAnswer = false;
             $propositionFound = null;
+
+            // Il faut concaténer la syllabe avec la saisie.
+            $syllableAnswer = "";
+            if ($typo == "TLQROCSYL" ) {
+                $syllableAnswer = $subquestion->getMediaSyllable()->getDescription();
+                $saisie = $syllableAnswer . $saisie;
+            }
+
+            // Il faut concaténer le premier caractère de la réponse avec la saisie.
+            $firstAnswer = "";
+            if ($typo == "TLQROCFIRST" ) {
+                $firstAnswer = $propositions[0]->getMedia()->getDescription();
+                $firstAnswer = $firstAnswer[0];
+                $saisie = $firstAnswer . $saisie;
+            }
+
             foreach ($propositions as $proposition) {
                 $text = $proposition->getMedia()->getName();
+
                 if ($text == $saisie) {
                     $propositionFound = $proposition;
                     if ($proposition->getRightAnswer() == true) {
@@ -186,21 +216,6 @@ class TraceController
                 $proposition = $propositionFound;
             }
         }
-
-        $answer = $this->answerManager->createAnswer($trace, $subquestion, $proposition);
-
-        return $answer;
-    }
-
-
-    /**
-     * si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
-     */
-    private function createAnswer($trace, $propositionId, $subquestionId)
-    {
-        $em = $this->entityManager;
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
-        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
 
         $answer = $this->answerManager->createAnswer($trace, $subquestion, $proposition);
 

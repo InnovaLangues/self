@@ -2,6 +2,14 @@
 <input type="hidden" id="totalTime" name="totalTime" value=""/>
 <input type="hidden" id="testId" name="testId" value="{{ test.id }}"/>
 <input type="hidden" name="testName" value="{{ test.name }}"/>
+
+<input type="hidden" name="typoName" value="{{ questionnaire.questions[0].typology.name }}"/>
+
+
+
+
+
+
 <div class="submit-container row">
     <input id="submit" type="submit" class="btn btn-default reset-listening-number" value="{{ 'generic.validate' | trans }}" disabled />
 </div>
