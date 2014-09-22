@@ -20,7 +20,7 @@ export:
     file_generated: Il file è stato generato
     file_download: Scarica il file in formato CSV
     files_list: Lista dei file (generati)
-    files_count: %nbFile% file(s) nella cartella 
+    files_count: %nbFile% file(s) nella cartella
     tests_list: Test esportati
 
 user:
@@ -76,7 +76,8 @@ generic:
     close: Chiudi
     save: Salva
     yes: Si
-    no: No 
+    no: No
+    filter: Filtro
 
 editor:
     test:
@@ -95,11 +96,14 @@ editor:
     task:
         tasks: Task
         all_tasks: Tutte le task
-        back_to_list: Ritorna alla lista dei task di valutazione 
+        back_to_list: Ritorna alla lista dei task di valutazione
         list: Lista di task per il test <strong>%testName%</strong>
+        list_global: Lista dei task
         manage: Gestire le task
         count: Numero di task
         create: Crea un task
+        create_test: Creare un task per questo test
+        add_existing: Aggiungere un task presistente
         save_order: Salva l'ordine dei task
         delete: Elimina un task
         delete_confirm: Sei sicuro di voler eliminare questo task dal test?
@@ -107,10 +111,10 @@ editor:
         delete_confirm_no: No
         unnamed: Task senza nome
         comments: Commentaires
-        identity: Fiche d'identité
-        history: Historique
-        no_potential: Aucune tâche à associer
-        no_task:  Il n'y aucune tâche de créée actuellement.
+        identity: Carta d’identità
+        history: Registro delle modifiche
+        no_potential: Non ci sono task da associare
+        no_task:  Non c’è nessun task già creato per questo test
     questionnaire:
         general_infos: Informazioni generali
         title: Titolo
@@ -119,12 +123,15 @@ editor:
         context: Contesto
         question_object: Testo fonte
         skill: Competenza
+        didactic_instruction: Consegna didattica
+        functional_instruction: Consegna funzionale
         instruction: Domanda
+        feedback: Feedback
     subquestion:
         subquestions: Item
         add: Aggiungi un item
         remove: Elimina l'item
-        add_instruction: Aggiungi una domanda 
+        add_instruction: Aggiungi una domanda
         remove_instruction: Elimina la domanda
     proposition:
         add: Aggiungi una risposta
@@ -145,7 +152,7 @@ editor:
         file: File
     app:
         add_pair: Aggiungi una coppia
-        remove_pair: Elimina la coppia 
+        remove_pair: Elimina la coppia
         add_distractor: Aggiungi un distrattore
         remove_distractor: Elimina il distrattore
         add_media: Aggiungi un supporto
@@ -154,39 +161,39 @@ editor:
         associated_answer: Risposta associata
         add_answer: Aggiungi una risposta
     log:
-        editor_create: Création de
-        editor_edit: Edition de
-        editor_delete: Suppression de
-        contexte: contexte
-        texte: objet de la question
-        objet de la question: objet de la question
+        editor_create: Creazione di
+        editor_edit: Modifica di
+        editor_delete: Eliminazione di
+        contexte: Contesto
+        texte: Testo
+        objet de la question: Testo
         question:
-        proposition: proposition
-        reponse: réponse
-        syllable: syllabe
-        clue: indice
-        instruction: consigne didactique
-        functional-instruction: consigne fonctionnelle
-        comment: commentaire
+        proposition: Proposta
+        reponse: Risposta
+        syllable: Sillaba
+        clue: Indizio
+        instruction: Consegna didattica
+        functional-instruction: Consegna funzionale
+        comment: Commento
         feedback: feedback
-        distractor: distracteur
-        app-paire: paire
-        app-media: media
-        app-answer: réponse
-        app-distractor: distracteur
-        listening-limit: limite d'écoutes
-        clue-type: type d'indice
-        task: tâche
-        words-list: liste de mots
-        blanks: lacunes
-        theme: nom de la tâche
-        fixed-order: ordre fixe
-        skill: compétence
-        level: niveau
-        typology: typologie
-        status: statut
+        distractor: Distrattore
+        app-paire: Coppia
+        app-media: Tipo di file
+        app-answer: Risposta
+        app-distractor: Distrattore
+        listening-limit: Numero di ascolti
+        clue-type: Tipo di indizio
+        task: Task
+        words-list: Lista di parole
+        blanks: Lacune
+        theme: Nome del task
+        fixed-order: Ordine fisso
+        skill: Competenza
+        level: Livello
+        typology: Tipologia
+        status: Status
         test: Test(s)
-        text-type: type d'objet de la question
+        text-type: Tipo di testo
 
 
 player:
