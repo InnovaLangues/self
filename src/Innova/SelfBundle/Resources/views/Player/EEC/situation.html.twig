@@ -165,10 +165,10 @@
                                 {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
                                 {% set initTextRightAnswer = textRightAnswer %}
                                 {% set html = html~'<span class="form-group">
-                                    <span class="input-group lacune">
-                                    <span class="input-group-addon">'~syllable~'</span>
-                                    <input '~displayAnswer~' type="text" class="form-control '~cssClueColor~'"
-                                    placeholder="'~placeH~'"
+                                    <span class="input-group lacune">' %}
+                                {% if not subquestion.displayAnswer %} {% set html = html~'<span class="input-group-addon">'~syllable~'</span>' %} {% endif %}
+                                    {% set html = html~'<input '~displayAnswer~' type="text" class="form-control '~cssClueColor~'"
+                                    placeholder="'~placeH~'" value="'~placeH~'"
                                     data-html="true" size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
                                     name="'~ subquestion.id ~'[]" data-right-answer-length="'~maxValueSize~'"
                                     data-original-title="'~ dataTitle|escape ~'">
@@ -214,9 +214,10 @@
                                     {% set placeH = proposition.media.description %}
                                     {% set initTextRightAnswer = "" %}
                                 {% endif %}
-                                {% set html = html~'<span class="form-group"><span class="input-group lacune">
-                                    <span class="input-group-addon">'~initTextRightAnswer~'</span>
-                                    <input '~displayAnswer~' type="text" class="form-control '~cssClueColor~'"
+                                {% set html = html~'<span class="form-group">
+                                    <span class="input-group lacune">' %}
+                                {% if not subquestion.displayAnswer %} {% set html = html~'<span class="input-group-addon">'~initTextRightAnswer~'</span>' %} {% endif %}
+                                    {% set html = html~'<input '~displayAnswer~' type="text" class="form-control '~cssClueColor~'"
                                     size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
                                     name="'~ subquestion.id ~'[]" placeholder="'~placeH~'"
                                     data-html="true" data-original-title="'~ dataTitle|escape ~'">
