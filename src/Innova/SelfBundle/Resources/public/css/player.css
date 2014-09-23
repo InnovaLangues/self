@@ -349,6 +349,10 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 	border-left: none;
 }
 
+.clear-lacune {
+	padding: 0 15px 0 0;
+}
+
 /**********************************
 	SUBMIT
 ***********************************/
