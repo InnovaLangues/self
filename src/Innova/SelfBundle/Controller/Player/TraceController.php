@@ -146,6 +146,7 @@ class TraceController
                 } // Fin foreach dans if
             }
         } // Fin foreach principal
+        //die();
     }
 
     /**
@@ -200,7 +201,7 @@ class TraceController
 
                 $text = $proposition->getMedia()->getName();
 
-                if ($text == $saisie) {
+                if (strtolower($text) == htmlentities(strtolower($saisie))) {
                     $propositionFound = $proposition;
                     if ($proposition->getRightAnswer() == true) {
                         $rightAnswer = true;
