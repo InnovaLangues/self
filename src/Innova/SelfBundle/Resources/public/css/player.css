@@ -95,9 +95,8 @@ p {
 }
 
 #situation-EEC .emoticones {
-	max-width: 2%;
 	margin:auto;
-	width:2%;
+	width:18px;
 	display:inline;
 }
 
