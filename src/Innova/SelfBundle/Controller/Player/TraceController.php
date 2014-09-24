@@ -171,7 +171,6 @@ class TraceController
 
         $em = $this->entityManager;
 
-//var_dump($subquestionId);
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
 
         $typo = $subquestion->getTypology()->getName();
@@ -200,14 +199,8 @@ class TraceController
 
             foreach ($propositions as $proposition) {
 
-//var_dump($proposition->getId());
                 $text = $proposition->getMedia()->getName();
-                //$lacune = html_entity_decode($lacune);
-//echo "<br />" . $proposition->getMedia()->getId() . " - " . $text;
-//var_dump(htmlentities(strtolower($text)));
-//var_dump($saisie);
-//var_dump(htmlentities(strtolower($saisie)));
-//die();
+
                 if (strtolower($text) == htmlentities(strtolower($saisie))) {
                     $propositionFound = $proposition;
                     if ($proposition->getRightAnswer() == true) {
