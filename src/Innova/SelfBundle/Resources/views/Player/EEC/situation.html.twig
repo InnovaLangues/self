@@ -357,7 +357,6 @@
 
                 {% endfor %}
                 {# Affichage de questionnaire.mediaText #}
-                {% set texte =  texte|replace({"/../": "/../../../"}) %}
                 {% set texte =  texte|replace({"<img": "<img class='emoticones'"}) %}
                 {{ texte | raw }}
 
