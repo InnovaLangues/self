@@ -232,7 +232,7 @@
                                     name="'~ subquestion.id ~'[]" placeholder="'~placeH~'"
                                     data-html="true" data-original-title="'~ dataTitle|escape ~'">
                                 </span></span>' %}
-                                {% set selector = "#"~proposition.media.description~"#" %}
+                                {% set selector = "#"~proposition.media.description ~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
                         {% endfor %}

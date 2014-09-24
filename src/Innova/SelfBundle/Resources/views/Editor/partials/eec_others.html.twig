@@ -12,7 +12,7 @@
             {% set propositions = subquestion.propositions %}
             {% for proposition in propositions if proposition.media.mediaPurpose.name == "proposition" %}
             <td>
-                {{ proposition.media.description }}
+                {{ proposition.media.description|raw }}
             </td>
             {% endfor %}
             <td>
