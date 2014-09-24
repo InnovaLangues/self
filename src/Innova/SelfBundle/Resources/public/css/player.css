@@ -95,10 +95,10 @@ p {
 }
 
 #situation-EEC .emoticones {
-	display:inline;
 	max-width: 2%;
 	margin:auto;
 	width:2%;
+	display:inline;
 }
 
 #situation-CE, #situation-APP {
