@@ -94,11 +94,11 @@ p {
 	margin:auto;
 }
 
-.smiley {
+#situation-EEC .smiley {
 	display:inline;
-	max-width: 100%;
+	max-width: 10%;
 	margin:auto;
-	width:100%;
+	width:10%;
 }
 
 #situation-CE, #situation-APP {
