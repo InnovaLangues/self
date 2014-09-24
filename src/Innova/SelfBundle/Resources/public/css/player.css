@@ -94,6 +94,13 @@ p {
 	margin:auto;
 }
 
+#situation-EEC .smiley {
+	display:inline;
+	max-width: 10%;
+	margin:auto;
+	width:10%;
+}
+
 #situation-CE, #situation-APP {
 	padding: 5px 5px 0 5px;
 	max-height: 500px;
