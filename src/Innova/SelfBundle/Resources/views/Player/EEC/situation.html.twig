@@ -356,8 +356,9 @@
                     {% endif %}
 
                 {% endfor %}
-                {# Affichage de questionnaire.mediaText #}
+                {# Pour l'affichage des émoticones. #}
                 {% set texte =  texte|replace({"<img": "<img class='emoticones'"}) %}
+                {# Affichage de questionnaire.mediaText #}
                 {{ texte | raw }}
 
             {% endautoescape %}
