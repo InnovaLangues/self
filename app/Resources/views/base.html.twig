@@ -14,60 +14,7 @@
     </head>
     <body>
         {% block navbar %}
-            <nav class="navbar navbar-inverse navbar-static-top">
-                <div class="navbar-header">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a style="cursor: default;" href="#">SELF</a></li>
-                    </ul>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        {% if app.user is not null and is_granted('ROLE_ADMIN') %}
-                            {# <li><a href="{{ path('admin_user') }}">{{ 'menu.users' | trans }}</a></li> #}
-                            <li><a href="{{ path('csv_export') }}">{{ 'menu.csv_export' | trans }}</a></li>
-                            <li><a href="{{ path('show_tests') }}">{{ 'menu.tests' | trans }}</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'menu.editor' | trans }} <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-submenu">
-                                        <a tabindex="-1" href="#">Tests</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
-                                            <li class="divider"></li>
-                                            {% set languages = get_languages() %}
-                                            {% for language in languages %}
-                                                {% set languageTransl =   'language.'~language.name %}
-                                                <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{languageTransl | trans }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a tabindex="-1" href="#">{{ 'editor.task.tasks' | trans }}</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="{{path('editor_questionnaires_show')}}">{{ 'editor.task.all_tasks' | trans }}</a></li>
-                                            <li class="divider"></li>
-                                            {% for language in languages %}
-                                                {% set languageTransl =   'language.'~language.name %}
-                                                <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{languageTransl | trans }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        {% endif %}
-                        <li><a data-toggle="modal" href="#helpModal">{{ 'menu.help' | trans }}</a></li>
-                        {# Cette page n'est pas prête pour le pilote 3. #}
-                        {# <li><a data-toggle="modal" href="#creditModal">{{ 'menu.credit' | trans }}</a></li> #}
-                    </ul>
-                    <ul class="nav navbar-nav pull-right">
-                        <li>
-                            <a href="{{ path('fos_user_security_logout') }}">
-                                <span class="glyphicon glyphicon-log-out"></span> {{ 'menu.logout' | trans }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            {% include 'InnovaSelfBundle::Main/navbarBlock.html.twig' %}
         {% endblock %}
 
         <div id="body" class="container">
