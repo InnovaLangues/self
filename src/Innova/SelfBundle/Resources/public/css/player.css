@@ -96,7 +96,7 @@ p {
 
 #situation-EEC .emoticones {
 	margin:auto;
-	width:18px;
+	width:32px;
 	display:inline;
 }
 
@@ -429,7 +429,7 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 	max-height:130px;
 	height:130px;
 	color:black;
-	
+
 }
 
 .answer-APP > img{
@@ -453,7 +453,7 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 .proposition-APP.draggable{
 	border:1px solid black;
 	color:black;
-} 
+}
 /**************************
  		Video
 ***************************/
