@@ -25,3 +25,5 @@
     max-width: 100%;
     height: auto;
 }
+
+.mce-i-selfemoticon:before{content:"\e021"}
