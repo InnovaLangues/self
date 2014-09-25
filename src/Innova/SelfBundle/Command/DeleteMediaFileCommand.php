@@ -31,8 +31,8 @@ class DeleteMediaFileCommand extends ContainerAwareCommand
 
         foreach ($finder as $file) {
             $fileName =  $file->getRelativePathname();
-            
-            if(!$media = $em->getRepository('InnovaSelfBundle:Media')->findOneByUrl($fileName)){
+
+            if(!$em->getRepository('InnovaSelfBundle:Media')->findOneByUrl($fileName)){
                 $orphanFiles[] = $fileName;
             }
         }

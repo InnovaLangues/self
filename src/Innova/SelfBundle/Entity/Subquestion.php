@@ -354,14 +354,14 @@ class Subquestion
     public function setDisplayAnswer($displayAnswer)
     {
         $this->displayAnswer = $displayAnswer;
-    
+
         return $this;
     }
 
     /**
      * Get displayAnswer
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDisplayAnswer()
     {

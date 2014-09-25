@@ -146,7 +146,6 @@ class TraceController
                 } // Fin foreach dans if
             }
         } // Fin foreach principal
-        //die();
     }
 
     /**
