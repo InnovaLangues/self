@@ -114,6 +114,12 @@ p {
 	margin:auto;
 }
 
+#situation-CE .emoticones {
+	margin:auto;
+	width:32px;
+	display:inline;
+}
+
 .title-situation {
 	display:block;
 	font-weight: bold;
