@@ -30,7 +30,7 @@ class CheckMediaCommand extends ContainerAwareCommand
 
         $patterns = array(
                         "<div",
-                        "original",
+                        "data-original-title",
                         "href",
                         "<xml>",
                         "<!--",
