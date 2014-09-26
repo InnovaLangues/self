@@ -191,7 +191,17 @@ p {
 .tab-pane-EEC {
 	background-color: #E37E71;
 	color: white;
-	padding:20px 20px 20px 20px;
+	padding:20px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	text-align: left;
+}
+
+/** pour le cas EEC **/
+.tab-pane-EEC-empty {
+	background-color: #E37E71;
+	color: white;
+	padding:5px;
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
 	text-align: left;
