@@ -5,7 +5,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * Class TaskController
- * @Route("", name = "", service = "innova.twig.get_languages"
+ * @Route("", name = "", sservice = "innova.twig.get_languages"
  * )
  */
 class LanguageExtension extends \Twig_Extension

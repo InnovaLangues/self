@@ -51,7 +51,7 @@ class CheckMediaCommand extends ContainerAwareCommand
         $table->addRow(array("", "", ""));
         $table->addRow(array("Nombre d'erreurs", $numberOfErros, "", ""));
 
-        $table->render($output);
+        //$table->render($output);
 
 
     }

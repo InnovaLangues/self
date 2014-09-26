@@ -1,10 +1,13 @@
-<div class="tab-pane-EEC">
-    {% if questionnaire.mediaInstruction is not null %}
+{# #589 Pour diminuer l'écart avant l'affichage du texte #}
+{% if questionnaire.mediaInstruction is not null %}
+    <div class="tab-pane-EEC">
         <img width="70px" src="{{ asset("bundles/innovaself/images/") }}oignon.png" rel="tooltip" data-original-title="{{ 'player.tooltip.question' | trans }}" />
         <div class="question-EEC-text">
             {% autoescape %}
                 {{ questionnaire.mediaInstruction.description|raw }}
             {% endautoescape %}
         </div>
-    {% endif %}
-</div>
+    </div>
+{% else %}
+    <div class="tab-pane-EEC-empty"></div>
+{% endif %}
