@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "28b224395aa5c65630c6bc800320c81e",
+    "hash": "daf63f3ec9adabb1ac22aaabf7356514",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -1845,16 +1845,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "2.3.x-dev",
+            "version": "v2.3.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "4af20505a6c709c59542d6a64e580f22cbe94ab0"
+                "reference": "5ef0ea8414fd61df090f6aa60a3d78bfb4d8bd1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/4af20505a6c709c59542d6a64e580f22cbe94ab0",
-                "reference": "4af20505a6c709c59542d6a64e580f22cbe94ab0",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/5ef0ea8414fd61df090f6aa60a3d78bfb4d8bd1c",
+                "reference": "5ef0ea8414fd61df090f6aa60a3d78bfb4d8bd1c",
                 "shasum": ""
             },
             "require": {
@@ -1949,7 +1949,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-09-29 06:58:14"
+            "time": "2014-09-28 16:24:47"
         },
         {
             "name": "twig/extensions",
