@@ -81,3 +81,10 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
+
+    self.export.manager:
+        class: Innova\SelfBundle\Manager\ExportManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context
+            kernelRoot: %kernel.root_dir%
