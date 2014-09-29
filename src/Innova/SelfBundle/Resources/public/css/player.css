@@ -427,7 +427,7 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 .dropzone {
 	border-radius:3px;
 	border:1px dashed #931E11;
-	height:130px;
+	height:120px;
 }
 
 .drag-and-drop-input {
