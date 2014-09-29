@@ -3,8 +3,6 @@
 {% else %}
     {% set limit_listening_text = 'player.listening_plural' | trans %}
 {% endif %}
-{% set listening = app.session.get('listening') %}
-
 
 {% if questionnaire.dialogue == 0 %}
     {% set icon = "situation_monologue.png" %}
