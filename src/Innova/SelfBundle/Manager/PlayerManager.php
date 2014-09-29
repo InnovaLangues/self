@@ -1,7 +1,9 @@
 <?php
 
 namespace Innova\SelfBundle\Manager;
+
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Questionnaire;
 
 class PlayerManager
 {
@@ -65,7 +67,7 @@ class PlayerManager
         return $previousQuestionnaire;
     }
 
-    public function displayHelp($test, $questionnaire){
+    public function displayHelp(Test $test, Questionnaire $questionnaire){
         // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
         // 1 : recherche de la question précédente
         $previousQuestionnaire = $this->findPreviousQuestionnaire($test, $questionnaire);

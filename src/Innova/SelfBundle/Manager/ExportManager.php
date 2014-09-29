@@ -21,10 +21,9 @@ class ExportManager
         $this->user = $this->securityContext->getToken()->getUser();
     }
 
-    public function exportCsvAction($test, $tia)
+    public function exportCsvAction(Test $test, $tia)
     {
         $fs = new Filesystem();
-        $em = $this->entityManager;
         $testId = $test->getId();
 
         if ($tia == 0) {
@@ -46,7 +45,7 @@ class ExportManager
         return $csvName;
     }
 
-    public function getFileList($test)
+    public function getFileList(Test $test)
     {
         $testId = $test->getId();
         $csvPathExport = $this->kernelRoot ."/data/export/".$testId."/";
