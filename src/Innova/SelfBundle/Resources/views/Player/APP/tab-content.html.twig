@@ -13,7 +13,7 @@
         </div>
          <div class="hr"></div>
          <div class="row answers-APPT source">
-            {% for proposition in question.subquestions[0].propositions | shuffle %}
+            {% for i, proposition in question.subquestions[0].propositions | shuffle %}
                 {% include "InnovaSelfBundle:Player/APP:answers.html.twig" %}
             {% endfor %}
         </div>
