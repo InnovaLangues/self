@@ -9,7 +9,7 @@
                         <div class="answer-APP-text">{{ proposition.media.description | raw }}</div>
                 {% elseif mediaType == "audio" %}
                         <!-- fix #508 -->
-                        {{ macros.audio(proposition.id, proposition.media, "audio.png", 100, 0, "") }}
+                        {{ macros.audio(proposition.id, proposition.media, "audio.png", 90, 0, "") }}
                 {% elseif mediaType == "image" %}
                         {{ macros.imageAPP(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans, "app"~question.subquestions |length ) }}
                 {% endif %}
