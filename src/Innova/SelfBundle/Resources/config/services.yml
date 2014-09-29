@@ -139,3 +139,11 @@ services:
         class: Innova\SelfBundle\Controller\LocaleController
         arguments:
             localeManager:          @self.locale.manager
+
+    innova_mediaclick:
+        class: Innova\SelfBundle\Controller\Player\MediaClickController
+        arguments:
+            mediaClickManager: @self.mediaclick.manager
+        calls:
+            - [setRequest, [@request]]
+        scope: request

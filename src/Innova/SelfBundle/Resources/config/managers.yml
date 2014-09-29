@@ -69,3 +69,9 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
+
+    self.mediaclick.manager:
+        class: Innova\SelfBundle\Manager\MediaClickManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context
