@@ -7,15 +7,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Innova\SelfBundle\Entity\MediaClick;
+use Innova\SelfBundle\Manager\MediaClickManager;
 
 /**
- * MediaClick controller.
+ * Class MediaClickController
  *
- * @Route("/ajax")
+ * @Route(
+ *      "",
+ *      name = "innova_mediaclick",
+ *      service = "innova_mediaclick"
+ * )
  */
-class MediaClickController extends Controller
+class MediaClickController
 {
+    protected $request;
+    protected $mediaClickManager;
+
+    public function __construct(MediaClickManager $mediaClickManager)
+    {
+        $this->mediaClickManager = $mediaClickManager;
+    }
+
+    public function setRequest(Request $request = null)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
 
     /**
      * @Route("/get-remaining-listening", name="get-remaining-listening", options={"expose"=true})
@@ -23,21 +41,17 @@ class MediaClickController extends Controller
      */
     public function getRemainingListeningAction()
     {
-        $request = $this->get('request')->query;
-        $em = $this->getDoctrine()->getManager();
+        $mediaId = $this->request->get('mediaId');
+        $questionnaireId = $this->request->get('questionnaireId');
+        $testId = $this->request->get('testId');
 
-        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
-
-        $remainingListening = $this->getRemainingListening($media, $test, $questionnaire);
+        $remainingListening = $this->mediaClickManager->getRemainingListening($mediaId, $questionnaireId, $testId);
 
         return new JsonResponse(
             array(
                 'remainingListening' => $remainingListening,
             )
         );
-
     }
 
     /**
@@ -46,27 +60,13 @@ class MediaClickController extends Controller
      */
     public function incrementMediaClicksAction()
     {
-        $request = $this->get('request')->query;
-        $em = $this->getDoctrine()->getManager();
+        $mediaId = $this->request->get('mediaId');
+        $questionnaireId = $this->request->get('questionnaireId');
+        $testId = $this->request->get('testId');
 
-        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $user = $this->get('security.context')->getToken()->getUser();
+        $this->mediaClickManager->createMediaClick($mediaId, $questionnaireId, $testId);
 
-
-        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')){
-            $mediaClick = new MediaClick();
-            $mediaClick->setMedia($media);
-            $mediaClick->setUser($user);
-            $mediaClick->setTest($test);
-            $mediaClick->setQuestionnaire($questionnaire);
-
-            $em->persist($mediaClick);
-            $em->flush();
-        }
-
-        $remainingListening = $this->getRemainingListening($media, $test, $questionnaire);
+        $remainingListening = $this->mediaClickManager->getRemainingListening($mediaId, $questionnaireId, $testId);
 
         return new JsonResponse(
             array(
@@ -79,74 +79,18 @@ class MediaClickController extends Controller
      * @Route("/is-media-playable", name="is-media-playable", options={"expose"=true})
      * @Method("GET")
      */
-    public function checkMediaClicksAction(Request $request)
+    public function isMediaPlayableAction()
     {
-        $isPlayable = false;
+        $mediaId = $this->request->get('mediaId');
+        $questionnaireId = $this->request->get('questionnaireId');
+        $testId = $this->request->get('testId');
 
-        $request = $this->get('request')->query;
-        $em = $this->getDoctrine()->getManager();
-
-        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-
-        $isPlayable = $this->isMediaPlayable($media, $test, $questionnaire);
+        $isPlayable = $this->mediaClickManager->isMediaPlayable($mediaId, $testId, $questionnaireId);
 
         return new JsonResponse(
             array(
                 'isPlayable' => $isPlayable,
             )
         );
-    }
-
-    private function isMediaPlayable($media, $test, $questionnaire)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
-        $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array('media' => $media, 'questionnaire' => $questionnaire));
-
-        if(is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 || $this->get('security.context')->isGranted('ROLE_ADMIN')){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private function getMediaClickCount($media, $test, $questionnaire)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $mediaClicks = $em->getRepository('InnovaSelfBundle:MediaClick')
-                        ->findBy(array(
-                                        'media' => $media,
-                                        'test' => $test,
-                                        'questionnaire' => $questionnaire,
-                                        'user' => $user
-                                      )
-                                );
-
-        return count($mediaClicks);
-    }
-
-    private function getRemainingListening($media, $test, $questionnaire)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
-        $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array(
-                                                                                    'media' => $media,
-                                                                                    'questionnaire' => $questionnaire
-                                                                                ));
-
-        if(is_null($mediaLimit) || $mediaLimit->getListeningLimit() == 0){
-            $remainingListening = "X";
-        } else {
-            $remainingListening = $mediaLimit->getListeningLimit() - $nbClick;
-        }
-
-        return $remainingListening;
     }
 }
