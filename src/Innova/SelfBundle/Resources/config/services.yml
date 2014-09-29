@@ -29,6 +29,7 @@ services:
         arguments:
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
+            exportManager: @self.export.manager
 
     innova_player:
         class: Innova\SelfBundle\Controller\Player\PlayerController
