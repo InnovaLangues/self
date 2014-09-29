@@ -6,7 +6,7 @@
         {% if mediaType == "texte" %}
                 {{ subquestion.media.description | raw }}
         {% elseif mediaType == "audio" %}
-            {{ macros.audio(subquestion.media.id, subquestion.media, "situation_dialogue.png", 100, 0, "") }}
+            {{ macros.audio(subquestion.media.id, subquestion.media, "situation_dialogue.png", 90, 0, "") }}
         {% elseif mediaType == "image" %}
             {{ macros.imageAPP(subquestion.media.id, subquestion.media, 'player.tooltip.enlarge' | trans, "app"~question.subquestions |length ) }}
         {% endif %}
