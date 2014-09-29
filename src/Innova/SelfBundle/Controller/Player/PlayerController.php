@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
-use Innova\SelfBundle\Entity\USer;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Manager\PlayerManager;
 
