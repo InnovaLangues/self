@@ -75,3 +75,9 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
+
+    self.player.manager:
+        class: Innova\SelfBundle\Manager\PlayerManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context

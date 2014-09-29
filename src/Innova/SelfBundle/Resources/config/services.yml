@@ -37,6 +37,7 @@ services:
             entityManager: @doctrine.orm.entity_manager
             session: @session
             router: @router
+            playerManager: @self.player.manager
 
     innova_editor_upload:
         class: Innova\SelfBundle\Controller\Editor\UploadController

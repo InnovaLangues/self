@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\USer;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Manager\PlayerManager;
 
 /**
  * Class PlayerController
@@ -32,15 +33,14 @@ class PlayerController
     protected $session;
     protected $router;
     protected $user;
+    protected $playerManager;
 
-    /**
-     * Class constructor
-     */
     public function __construct(
         SecurityContextInterface $securityContext,
         EntityManager $entityManager,
         SessionInterface $session,
-        RouterInterface $router
+        RouterInterface $router,
+        PlayerManager $playerManager
     )
     {
         $this->securityContext = $securityContext;
@@ -48,6 +48,7 @@ class PlayerController
         $this->session = $session;
         $this->router = $router;
         $this->user = $this->securityContext->getToken()->getUser();
+        $this->playerManager = $playerManager;
     }
 
     /**
@@ -62,35 +63,17 @@ class PlayerController
     {
         $em = $this->entityManager;
 
-        // on récupère un questionnaire sans trace pour un test et un utilisateur donné
-        $questionnaire = $this->findAQuestionnaireWithoutTrace($test, $this->user);
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-
-        // s'il n'y a pas de questionnaire dispo, on renvoie vers la fonction qui gère la fin de test
+        $questionnaire = $this->playerManager->findAQuestionnaireWithoutTrace($test);
         if (is_null($questionnaire)) {
             return new RedirectResponse($this->router->generate('test_end',array("id"=>$test->getId())));
         } else {
-            // sinon on envoie le questionnaire à la vue
-            $this->session->set('listening', $questionnaire->getListeningLimit());
-
             if ($displayHelp){
-                // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
-                // 1 : recherche de la question précédente
-                $previousQuestionnaire = $this->findPreviousQuestionnaire($test, $questionnaire);
-                $displayHelp = true;
-
-                if ($previousQuestionnaire != null ) {
-                    // 2 : recherche des informations sur la question
-                    $skillBefore = $previousQuestionnaire->getSkill();
-                    $skill = $questionnaire->getSkill();
-                    // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a la même compétence
-                    if ($skillBefore == $skill) $displayHelp = false;
-                }
+                    $displayHelp = $this->playerManager->displayHelp($test, $questionnaire);
             }
 
-            $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                ->countDoneYetByUserByTest($test->getId(), $this->user->getId());
-            $countQuestionnaireTotal = count($test->getOrderQuestionnaireTests());
+            $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $this->user->getId());
+            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
+            $countQuestionnaireTotal = count($questionnaires);
 
             return array(
                 'test' => $test,
@@ -102,62 +85,7 @@ class PlayerController
             );
         }
     }
-
-
-    protected function findPreviousQuestionnaire($test, $questionnaire)
-    {
-
-        $em = $this->entityManager;
-        $previousQuestionnaire = null;
-
-        $currentQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
-            array(
-                    'test' => $test,
-                    'questionnaire' => $questionnaire
-            ))->getDisplayOrder();
-
-        $displayOrder = $currentQuestionnaireOrder - 1;
-
-
-        $previousQuestionnaireOrder = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
-            array(
-                    'test' => $test,
-                    'displayOrder' => $displayOrder
-            ));
-
-        if( $previousQuestionnaireOrder ){
-            $previousQuestionnaire = $previousQuestionnaireOrder->getQuestionnaire();
-        }
-
-        return $previousQuestionnaire;
-    }
-
-
-
-    /**
-     * Pick a questionnaire entity for a given test not done yet by the user.
-     */
-    protected function findAQuestionnaireWithoutTrace(Test $test, User $user)
-    {
-        $em = $this->entityManager;
-        $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
-        $questionnaireWithoutTrace = null;
-
-        foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
-            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
-                array(  'user' => $user->getId(),
-                        'test' => $test->getId(),
-                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire()->getId()
-                ));
-            if (count($traces) == 0) {
-                $questionnaireWithoutTrace = $orderedQuestionnaire->getQuestionnaire();
-                break;
-            }
-        }
-
-        return $questionnaireWithoutTrace;
-    }
-
+    
      /**
      * Gère la vue de fin de test
      *
@@ -181,7 +109,6 @@ class PlayerController
     }
 
     /**
-     *
      * @Route(
      *      "admin/test/{testId}/questionnaire/{questionnaireId}",
      *      name="questionnaire_pick"
@@ -194,7 +121,6 @@ class PlayerController
     public function pickAQuestionnaireAction(Test $test, Questionnaire $questionnairePicked)
     {
         $em = $this->entityManager;
-        $this->session->set('listening', $questionnairePicked->getListeningLimit());
 
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
