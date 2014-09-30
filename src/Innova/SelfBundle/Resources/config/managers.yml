@@ -30,6 +30,7 @@ services:
         class: Innova\SelfBundle\Manager\MediaManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            editorLogManager: @self.editor_log.manager
 
     self.app.manager:
         class: Innova\SelfBundle\Manager\AppManager

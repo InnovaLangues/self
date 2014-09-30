@@ -9,10 +9,12 @@ use Innova\SelfBundle\Entity\MediaLimit;
 class MediaManager
 {
     protected $entityManager;
+    protected $editorLogManager;
 
-    public function __construct($entityManager)
+    public function __construct($entityManager, $editorLogManager)
     {
         $this->entityManager = $entityManager;
+        $this->editorLogManager = $editorLogManager;
     }
 
     public function createMedia(Questionnaire $questionnaire = null, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
@@ -54,6 +56,23 @@ class MediaManager
         if ($mediaTypeName == "audio" || $mediaTypeName == "video") {
             $this->updateMediaLimit($questionnaire, $media, $mediaLimit);
         }
+
+        return $media;
+    }
+
+    public function updateMedia($mediaId, $url, $name, $description, Questionnaire $questionnaire)
+    {
+        $em = $this->entityManager;
+
+        $media = $em->getRepository('InnovaSelfBundle:Media')->find($mediaId);
+        $media->setUrl($url);
+        $media->setName($name);
+        $media->setDescription($description);
+
+        $em->persist($media);
+        $em->flush();
+
+        $this->editorLogManager->createEditorLog("editor_edit", $media->getMediaPurpose()->getName(), $questionnaire);
 
         return $media;
     }
