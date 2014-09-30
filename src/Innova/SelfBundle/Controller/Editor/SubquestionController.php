@@ -69,23 +69,12 @@ class SubquestionController
         }
         $subquestion = $this->subquestionManager->createSubquestion($typology, $question);
 
-
-        // création automatique en cas de vrai/faux/(nd)?
-        if($questionnaireTypology == "VF" || $questionnaireTypology == "TVF" || $questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {
-            $true = $this->mediaManager->createMedia($questionnaire, "texte", "VRAI", "VRAI", null, 0, "proposition");
-            $this->propositionManager->createProposition($subquestion, $true, false);
-            $false = $this->mediaManager->createMedia($questionnaire, "texte", "FAUX", "FAUX", null, 0, "proposition");
-            $this->propositionManager->createProposition($subquestion, $false, false);
-        }
-        if($questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {
-            $nd = $this->mediaManager->createMedia($questionnaire, "texte", "ND", "ND", null, 0, "proposition");
-            $this->propositionManager->createProposition($subquestion, $nd, false);
-        }
+        $this->propositionManager->createVfPropositions($questionnaire, $subquestion, $questionnaireTypology);
 
         $em->persist($subquestion);
         $em->flush();
         $em->refresh($subquestion);
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }

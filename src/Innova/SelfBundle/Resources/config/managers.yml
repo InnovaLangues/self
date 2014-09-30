@@ -24,6 +24,7 @@ services:
         class: Innova\SelfBundle\Manager\PropositionManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            mediaManager:     @self.media.manager
 
     self.media.manager:
         class: Innova\SelfBundle\Manager\MediaManager
