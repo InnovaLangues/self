@@ -104,19 +104,11 @@ class MediaController
     {
         $em = $this->entityManager;
         $request = $this->request->request;
-        $toBeReloaded = $request->get('toBeReloaded');
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
-        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
+        $this->mediaManager->updateMedia($request->get('mediaId'), $request->get('url'), $request->get('name'), $request->get('description'), $questionnaire);
 
-        $media->setUrl($request->get('url'));
-        $media->setName($request->get('name'));
-        $media->setDescription($request->get('description'));
-
-        $em->persist($media);
-        $em->flush();
-
-        switch ($toBeReloaded) {
+        switch ($request->get('toBeReloaded')) {
             case 'contexte':
                 $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('questionnaire' => $questionnaire));
                 break;
@@ -133,8 +125,6 @@ class MediaController
                 $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
                 break;
         }
-
-        $this->editorLogManager->createEditorLog("editor_edit", $media->getMediaPurpose()->getName(), $questionnaire);
 
         return new Response($template);
     }
