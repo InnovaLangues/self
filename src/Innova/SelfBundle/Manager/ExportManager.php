@@ -220,7 +220,7 @@ class ExportManager
                                             $found = true;
                                        }
                                     }
-                                    if ($found == false) {
+                                    if ($found === false) {
                                         $subquestionOk = false;
                                     }
                                 }

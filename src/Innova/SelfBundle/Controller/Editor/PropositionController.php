@@ -28,7 +28,7 @@ class PropositionController extends Controller
         $propositionId = $request->request->get('propositionId');
         $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
 
-        if ($proposition->getRightAnswer() == true) {
+        if ($proposition->getRightAnswer() === true) {
             $proposition->setRightAnswer(false);
         } else {
             $proposition->setRightAnswer(true);
