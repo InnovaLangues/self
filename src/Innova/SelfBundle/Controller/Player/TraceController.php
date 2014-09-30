@@ -202,7 +202,7 @@ class TraceController
 
                 if (strtolower($text) == htmlentities(strtolower($saisie))) {
                     $propositionFound = $proposition;
-                    if ($proposition->getRightAnswer() == true) {
+                    if ($proposition->getRightAnswer() === true) {
                         $rightAnswer = true;
                     } else {
                         $rightAnswer = false;
@@ -211,7 +211,7 @@ class TraceController
                 }
             }
 
-            if ($propositionFound == null) {
+            if ($propositionFound === null) {
                 $media = $this->mediaManager->createMedia(null, "texte", $saisie, $saisie, null, 0, "reponse");
                 $proposition = $this->propositionManager->createProposition($subquestion, $media, $rightAnswer);
             } else {

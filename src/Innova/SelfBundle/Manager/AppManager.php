@@ -44,7 +44,7 @@ class AppManager
                     $found = true;
                 }
             }
-            if ($found == false) {
+            if ($found === false) {
                 $proposition = $this->propositionManager->createProposition($currentSubquestion, $media, false);
             }
         }

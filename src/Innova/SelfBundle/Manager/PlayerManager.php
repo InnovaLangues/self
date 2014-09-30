@@ -73,7 +73,7 @@ class PlayerManager
         $previousQuestionnaire = $this->findPreviousQuestionnaire($test, $questionnaire);
         $displayHelp = true;
 
-        if ($previousQuestionnaire != null ) {
+        if ($previousQuestionnaire !== null ) {
             // 2 : recherche des informations sur la question
             $skillBefore = $previousQuestionnaire->getSkill();
             $skill = $questionnaire->getSkill();
