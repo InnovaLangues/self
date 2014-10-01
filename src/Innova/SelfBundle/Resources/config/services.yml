@@ -149,3 +149,9 @@ services:
         calls:
             - [setRequest, [@request]]
         scope: request
+
+    innova_test:
+        class: Innova\SelfBundle\Controller\TestController
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            testManager:    @self.test.manager

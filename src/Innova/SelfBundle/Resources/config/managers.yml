@@ -90,3 +90,9 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
             kernelRoot: %kernel.root_dir%
+
+    self.test.manager:
+        class: Innova\SelfBundle\Manager\TestManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context
