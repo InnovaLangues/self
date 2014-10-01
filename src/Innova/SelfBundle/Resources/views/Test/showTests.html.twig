@@ -4,60 +4,58 @@
     <link rel="stylesheet" href="{{ asset("bundles/innovaself/css/showTests.css") }}" />
 {% endblock %}
 
-
 {% block body -%}
     
-    <div class="row">
-<div id="video-help"  class="col-md-4">
-    <div class="panel panel-default">
-        <div class="panel-heading">Vidéo d'aide</div>
-        <div class="panel-body text-center">
-    {% include 'InnovaSelfBundle::Main/help.html.twig' %}
+<div class="row">
+    <div id="video-help"  class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Vidéo d'aide</div>
+            <div class="panel-body text-center">
+                {% include 'InnovaSelfBundle::Main/help.html.twig' %}
+            </div>
         </div>
     </div>
 </div>
-</div>
 
-
-
-    {% if tests is not empty %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{ 'test.available' | trans }}</h3>
-            </div>
-            <div class="panel-body">
-                {% for i, test in tests if test.actif == true %}
-                <div class='row pull-left col-md-3 test-available'>
-                    <div class="panel panel-default  ">
-                        <div class="panel-body">
-                            <div>
-                                {# Affichage de la liste des tests en fonction de l'avancement.#}
-                                {% if testsProgress[i] != 100 %}
-                                    <a href="{{ path('test_start', { 'id': test.id,  'displayHelp': 1} )}}">{{ test.name }}</a>
-                                {% else %}
-                                    {{ test.name }}
-                                {% endif %}
-                            </div>
-                            <div>
-                                <div class="progress" rel="tooltip" data-original-title="Progression : {{ testsProgress[i] }}%">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ testsProgress[i] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ testsProgress[i] }}%;">
-                                    <span class="sr-only">{{ testsProgress[i] }}% Complete</span>
-                                    </div>
+{% if tests is not empty %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ 'test.available' | trans }}</h3>
+        </div>
+        <div class="panel-body">
+            {% for i, test in tests if test.actif == true %}
+            <div class='row pull-left col-md-3 test-available'>
+                <div class="panel panel-default  ">
+                    <div class="panel-body">
+                        <div>
+                            {# Affichage de la liste des tests en fonction de l'avancement.#}
+                            {% if testsProgress[i] != 100 %}
+                                <a href="{{ path('test_start', { 'id': test.id,  'displayHelp': 1} )}}">{{ test.name }}</a>
+                            {% else %}
+                                {{ test.name }}
+                            {% endif %}
+                        </div>
+                        <div>
+                            <div class="progress" rel="tooltip" data-original-title="Progression : {{ testsProgress[i] }}%">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ testsProgress[i] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ testsProgress[i] }}%;">
+                                <span class="sr-only">{{ testsProgress[i] }}% Complete</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
-    {% else %}
-        <div class="panel panel-default ">
-            <div class="panel-body">
-                <p class="alert alert-danger">{{ 'test.no_registered' | trans }}</p>
-            </div>
+    </div>
+{% else %}
+    <div class="panel panel-default ">
+        <div class="panel-body">
+            <p class="alert alert-danger">{{ 'test.no_registered' | trans }}</p>
         </div>
-    {% endif %}
+    </div>
+{% endif %}
+
 {% endblock %}
 
 {% block javascripts %}
