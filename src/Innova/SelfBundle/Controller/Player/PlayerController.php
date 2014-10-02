@@ -66,10 +66,12 @@ class PlayerController
         if (is_null($questionnaire)) {
             return new RedirectResponse($this->router->generate('test_end',array("id"=>$test->getId())));
         } else {
+            /* en attendant que les videos soient prêtes
             if ($displayHelp){
                     $displayHelp = $this->playerManager->displayHelp($test, $questionnaire);
             }
-
+            */
+            $displayHelp = false;
             $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $this->user->getId());
             $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
             $countQuestionnaireTotal = count($questionnaires);
