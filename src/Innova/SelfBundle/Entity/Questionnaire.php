@@ -101,17 +101,17 @@ class Questionnaire
     protected $status;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="questionnaire")
+    * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="questionnaire", cascade={"persist", "remove"})
     */
     private $mediaLimits;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="questionnaire")
+    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="questionnaire", cascade={"persist", "remove"})
     */
     private $mediaClicks;
 
     /**
-    * @ORM\OneToMany(targetEntity="Comment", mappedBy="questionnaire")
+    * @ORM\OneToMany(targetEntity="Comment", mappedBy="questionnaire", cascade={"persist", "remove"})
     */
     private $comments;
 
