@@ -991,3 +991,24 @@ $('.file').on('change', function(event){
         afterAjax();
     });
 });
+
+
+/************************************************
+*************************************************
+
+                    fix tiny bug
+
+*************************************************
+**************************************************/
+
+$.widget("ui.dialog", $.ui.dialog, {
+    _allowInteraction: function(event) {
+    return !!$(event.target).closest(".mce-container,.moxman-container").length || this._super( event );
+    }
+});
+
+$(document).on('focusin', function(e) {
+    if ($(event.target).closest(".mce-window,.moxman-container").length) {
+    e.stopImmediatePropagation();
+    }
+});
