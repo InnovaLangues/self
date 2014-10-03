@@ -80,7 +80,7 @@
                                 placeholder="'~placeH~'" id="input-proposition'~ proposition.id ~'"
                                 value="'~placeH~'"
                                 size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" required />' %}
-                                {% set selector = "#"~proposition.media.description~"#" %}
+                                {% set selector = "#"~i~"#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
                         {% endfor %}
@@ -128,7 +128,7 @@
                                 name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
                                 size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" data-right-answer-length="'~maxValueSize~'" value="'~initTextRightAnswer~'"
                                  required />' %}
-                                {% set selector = "#"~proposition.media.description~"#" %}
+                                {% set selector = "#"~i~"#"~proposition.media.description~"#" %}
 
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
