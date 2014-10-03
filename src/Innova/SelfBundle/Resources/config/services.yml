@@ -16,6 +16,11 @@ services:
         tags:
             - { name: twig.extension }
 
+    twig.extension.disambiguate:
+        class: Innova\SelfBundle\Twig\DisambiguateExtension
+        tags:
+            - { name: twig.extension }
+
     innova_user.registration.form.type:
         class: Innova\SelfBundle\Form\UserType
         arguments:

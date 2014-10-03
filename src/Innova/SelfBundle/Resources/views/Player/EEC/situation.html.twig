@@ -25,13 +25,13 @@
                 {# Récupération de la typologie de la question #}
                 {% set typoQuestion = questionnaire.questions[0].typology.name %}
                 {# Récupération du texte de la question #}
-                {% set texte = questionnaire.mediaBlankText.description %}
+                {% set texte = questionnaire.mediaBlankText.description|disambiguate %}
 
                 {# #}
                 {# Deux sortes de typologies : le type "saisie" et l'autre type (choix dans une liste, checkbox, radiobox) #}
                 {# #}
                 {% for i, subquestion in questionnaire.questions[0].subquestions %}
-
+                    {% set subquestionCount = i %}
                     {# #}
                     {# Traitement sur l'indice car il s'affiche suivant le type #}
                     {# #}
@@ -178,7 +178,7 @@
                                     name="'~ subquestion.id ~'[]" data-right-answer-length="'~maxValueSize~'"
                                     data-original-title="'~ dataTitle|escape ~'">
                                 </span></span>' %}
-                                {% set selector = "#"~proposition.media.description~"#" %}
+                                {% set selector = "#"~i~"#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
                         {% endfor %}
@@ -232,7 +232,7 @@
                                     name="'~ subquestion.id ~'[]" placeholder="'~placeH~'"
                                     data-html="true" data-original-title="'~ dataTitle|escape ~'">
                                 </span></span>' %}
-                                {% set selector = "#"~proposition.media.description ~"#" %}
+                                {% set selector = "#"~i~"#"~proposition.media.description ~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
                         {% endfor %}
@@ -275,7 +275,7 @@
                                 rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
                                 size="'~ maxValueSize ~'" placeholder="'~placeH~'"
                                 ~maxlength="'~ maxValueSize ~'" required ' ~displayAnswer~ '/>' %}
-                                {% set selector = "#"~proposition.media.description~"#" %}
+                                {% set selector = "#"~i~"#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
                         {% endfor %}
@@ -305,7 +305,7 @@
                         {# Fermeture de la liste de choix #}
                         {% set html = html~"</select>" %}
                         {# Remplacement des données de la base par les listes de choix #}
-                        {% set selector = "#"~rightAnswer~"#" %}
+                        {% set selector = "#"~i~"#"~rightAnswer~"#" %}
                         {% set texte = texte|replace({(selector): html}) %}
                     {% endif %}
 
@@ -333,7 +333,7 @@
                         {# Fermeture de la liste de choix #}
                         {% set html = html~"</select>" %}
                         {# Remplacement des données de la base par les listes de choix #}
-                        {% set selector = "#"~rightAnswer~"#" %}
+                        {% set selector = "#"~i~"#"~rightAnswer~"#" %}
                         {% set texte = texte|replace({(selector): html}) %}
                     {% endif %}
 
@@ -348,7 +348,7 @@
                         {% for j, proposition in subquestion.propositions %}
                             {% set html = html~"<option id='input-proposition"~ proposition.id ~"' value='"~ proposition.id ~"'>"~proposition.media.description~"</option>" %}
                             {# Remplacement des données de la base par les listes de choix #}
-                            {% set selector = "#"~proposition.media.description~"#" %}
+                            {% set selector =  "#"~i~"#"~proposition.media.description~"#" %}
                             {% set texte = texte|replace({(selector): html}) %}
                         {% endfor %}
                         {# Fermeture de la liste de choix #}
