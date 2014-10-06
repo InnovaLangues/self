@@ -133,6 +133,7 @@ editor:
         remove: Elimina l'item
         add_instruction: Aggiungi una domanda
         remove_instruction: Elimina la domanda
+        answers: Risposte
     proposition:
         add: Aggiungi una risposta
         remove: Elimina la risposta

@@ -198,6 +198,17 @@ $(document).ready(function() {
         unlinkMedia();
     });
 
+    $('body').on('click', ' .btn-display-answers',function(e){
+       $('#answers-modal .modal-body').html("Loading...");
+       var subquestionId = $(this).data("subquestion-id");
+       getAnswers(subquestionId);
+    });
+
+    $('body').on('click', ' .btn-toggle-right-answer',function(e){
+       var propositionId = $(this).data("proposition-id");
+       toggleRightAnswer(propositionId);
+    });
+
     /**********************
         PROPOSITION RELATED EVENTS
     ************************/
@@ -915,7 +926,38 @@ function editDistractor(mediaId, text){
     });
 }
 
+function getAnswers(subquestionId){
+    beforeAjax();
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_get_answers'),
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            subquestionId: subquestionId,
+        }
+    })
+    .complete(function(data) {
+        $("#answers-modal .modal-body").replaceWith(data.responseText);
+        $('#answers-modal').modal('show');
+        afterAjax();
+    });
+}
 
+function toggleRightAnswer(propositionId){
+    beforeAjax();
+    $.ajax({
+        url: Routing.generate('ecc_toggle_answer'),
+        type: 'PUT',
+        dataType: 'json',
+        data: {
+            propositionId: propositionId,
+        }
+    })
+    .complete(function(data) {
+        $("#answer-"+propositionId).html(data.responseText);
+        afterAjax();
+    });
+}
 
 
 /************************************************
@@ -1008,7 +1050,7 @@ $.widget("ui.dialog", $.ui.dialog, {
 });
 
 $(document).on('focusin', function(e) {
-    if ($(event.target).closest(".mce-window,.moxman-container").length) {
+    if ($(e.target).closest(".mce-window,.moxman-container").length) {
     e.stopImmediatePropagation();
     }
 });

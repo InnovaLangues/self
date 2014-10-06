@@ -124,6 +124,7 @@ editor:
         remove: Delete an item
         add_instruction: Add instructions/question/question stem
         remove_instruction: Delete the instructions/question/question stem
+        answers: Answers
     proposition:
         add: Add an option
         remove: Delete the option

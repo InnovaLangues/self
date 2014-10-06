@@ -132,6 +132,7 @@ editor:
         remove: Supprimer l'item
         add_instruction: Ajouter une consigne / question / amorce
         remove_instruction: Supprimer la consigne / question / amorce
+        answers: Réponses
     proposition:
         add: Ajouter une proposition
         remove: Supprimer la proposition

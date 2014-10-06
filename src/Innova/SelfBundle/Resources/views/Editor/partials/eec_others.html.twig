@@ -4,6 +4,7 @@
         <th>Info-bulle</th>
         <th>Indice : syllabe</th> <!-- Changement, demande Cristiana -->
         <th>En clair</th> <!-- Nouvelle zone, demande Cristiana -->
+        <th></th>
     </tr>
     <!-- Initialisation de la variable qui va me dire si on n'est sur
     la première occurrence ou pas -->
@@ -33,9 +34,25 @@
             </td>
         	<td>
                 {% if i == 0 %}
-                    <input id="display" data-subquestion-id="{{ subquestion.id }}" type="checkbox" name="displayType[]" {% if subquestion.displayAnswer  %}checked {% endif %} />
+                    <input id="display" data-subquestion-id="{{ subquestion.id }}" type="checkbox" name="displayType[]" {% if subquestion.displayAnswer %}checked {% endif %} />
                 {% endif %}
+            </td>
+             <td>
+                <button data-original-title="{{ 'editor.subquestion.answers' | trans }}" data-toggle="tooltip" class="btn btn-default btn-xs btn-display-answers" data-subquestion-id="{{ subquestion.id }}">?</button>
             </td>
         </tr>
     {% endfor %}
 </table>
+
+<div class="modal fade" id="answers-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{ 'editor.subquestion.answers' | trans }}</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
