@@ -160,3 +160,13 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             testManager:    @self.test.manager
+
+    innova_editor_proposition:
+        class: Innova\SelfBundle\Controller\Editor\PropositionController
+        arguments:
+            propositionManager: @self.proposition.manager
+            entityManager:          @doctrine.orm.entity_manager
+            templating:                @templating
+        calls:
+            - [setRequest, [@request]]
+        scope: request
