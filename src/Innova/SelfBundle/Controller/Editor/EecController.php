@@ -392,4 +392,47 @@ class EecController
             array()
         );
     }
+
+    /**
+     *
+     * @Route("/questionnaires/ecc_get_answer", name="editor_questionnaire_get_answers", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function getAnswersAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->query;
+
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
+        $propositions = $subquestion->getPropositions();
+        $answers = array();
+
+        foreach ($propositions as $proposition) {
+            if ($proposition->getMedia()->getMediaPurpose()->getName() == "reponse") {
+                $answers[] = $proposition;
+            }
+        }
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers));
+
+        return new Response($template);
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/ecc_toggle_answer", name="ecc_toggle_answer", options={"expose"=true})
+     * @Method("PUT")
+     */
+    public function toggleRightAnswerAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($request->get('propositionId'));
+        $proposition = $this->propositionManager->toggleRightAnswer($proposition);
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answer.html.twig', array('answer' => $proposition));
+
+        return new Response($template);
+    }
 }

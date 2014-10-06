@@ -1,0 +1,10 @@
+  {{ answer.media.description }}
+ {% if answer.rightAnswer == true %}
+      <button type="button" class="btn btn-success btn-xs vertical-middle pull-right btn-toggle-right-answer" data-proposition-id="{{ answer.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.proposition.make_it_wrong' | trans }}">
+          {{ 'editor.proposition.right' | trans }}
+      </button>
+  {% else %}
+      <button type="button" class="btn btn-danger btn-xs vertical-middle pull-right btn-toggle-right-answer" data-proposition-id="{{ answer.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.proposition.make_it_right' | trans }}">
+          {{ 'editor.proposition.wrong' | trans }}
+      </button>
+  {% endif %}

@@ -47,4 +47,20 @@ class PropositionManager
 
         return $this;
     }
+
+    public function toggleRightAnswer(Proposition $proposition)
+    {
+        $em = $this->entityManager;
+        
+        if ($proposition->getRightAnswer() === true) {
+            $proposition->setRightAnswer(false);
+        } else {
+            $proposition->setRightAnswer(true);
+        }
+
+        $em->persist($proposition);
+        $em->flush();
+
+        return $proposition;
+    }
 }
