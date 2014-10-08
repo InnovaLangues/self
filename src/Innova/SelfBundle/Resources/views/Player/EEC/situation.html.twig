@@ -9,283 +9,93 @@
 {% endif %}
 
 <div id="situation-EEC" class="situation">
-
     {% if questionnaire.mediaBlankText is not null %}
-
         {% if questionnaire.mediaBlankText.mediaType.name == "texte" %}
-            {# Ceci est le caractère d'affichage lors des typologies où on affichent la longueur #}
-            {# Il risque de changer d'où la variable #}
-            {% set charSeparate = "-" %}
-            {# Demande de Cristiana et Marie-Pierre, vu avec JJ #}
-            {# La zone "Input" est variable suivant la taille de la proposition/réponse #}
-            {# Il y a plusieurs tailles de zone Input possibles #}
-            {% set tabInputSize = [5, 10, 15, 20, 25, 30] %}
-
             {% autoescape 'html' %}
-                {# Récupération de la typologie de la question #}
                 {% set typoQuestion = questionnaire.questions[0].typology.name %}
-                {# Récupération du texte de la question #}
                 {% set texte = questionnaire.mediaBlankText.description|disambiguate %}
+                {% set typoQROC = ['TLQROCDERIV', 'TLQROCDERIV', 'TLQROCNOCLU', 'TLQROCLEN', 'TLQROCSYL'] %}
 
-                {# #}
-                {# Deux sortes de typologies : le type "saisie" et l'autre type (choix dans une liste, checkbox, radiobox) #}
-                {# #}
                 {% for i, subquestion in questionnaire.questions[0].subquestions %}
-                    {# #}
-                    {# Traitement sur l'indice car il s'affiche suivant le type #}
-                    {# #}
-                    {% set clue = '' %}
-                    {% set dataTitle = '' %}
-                    {% set cssClueColor = '' %}
-                    {% if subquestion.clue is not null %}
-                        {# Récupération de l'indice pour affichage lors du survol de la zone de saisie #}
-                        {% set clue = subquestion.clue.media.description|escape %}
-                        {% set cssClueColor = subquestion.clue.clueType.color %}
-                        {% set dataTitle = '<span class="'~cssClueColor~'">'~clue~'</span>' %}
-                    {% endif %}
-
-                    {# #}
-                    {# TL/QROC dérivation et transformation #}
-                    {# #}
-                    {% if typoQuestion == "TLQROCDERIV" or typoQuestion == "TLQROCTRANS" %}
+                    {% if typoQuestion in typoQROC %}
+                        {# VAR INIT. #}
+                        {% set charSeparate = "-" %}
+                        {% set tabInputSize = [5, 10, 15, 20, 25, 30] %}
                         {% set textRightAnswer = "" %}
                         {% set maxValueSize = 0 %}
-                        {# Recherche du texte correct #}
+                        {% set clue = '' %}
+                        {% set dataTitle = '' %}
+                        {% set cssClueColor = '' %}
+                        {% set syllable = "" %}
+                        {% set displayAnswer = "" %}
+                        {% set placeH =  "" %}
+
+                        {# INDICE #}
+                        {% if subquestion.clue is not null %}
+                            {% set clue = subquestion.clue.media.description|escape %}
+                            {% set cssClueColor = subquestion.clue.clueType.color %}
+                            {% set dataTitle = '<span class="'~cssClueColor~'">'~clue~'</span>' %}
+                        {% endif %}
+                        
+                        {# SYLLABE #}
+                        {% if subquestion.mediaSyllable is not null %}
+                            {% set syllable = subquestion.mediaSyllable.description %}
+                        {% endif %}
+
                         {% for j, proposition in subquestion.propositions %}
-                            {% if proposition.rightAnswer %}
-                                {% set textRightAnswer = proposition.media.description %}
+                            {% if proposition.rightAnswer and proposition.media.mediaPurpose == "proposition" %}
+                                {% set html = "" %}
+
                                 {# Recherche/Calcul de la taille d'affichage de la zone Input #}
                                 {% for inputSize in tabInputSize %}
                                     {% if inputSize > proposition.media.description|length and maxValueSize == 0 %}
                                         {%  set maxValueSize = inputSize %}
                                     {% endif %}
                                 {% endfor %}
-                                {# Test si la taille de la solution est plus grande que 12 #}
+
                                 {# Dans ce cas, la taille de la zone Input est la taille de la solution + 5 caractères #}
                                 {% if ( maxValueSize == 0 ) %}
                                     {% set maxValueSize = proposition.media.description|length + 5 %}
                                 {% else %}
                                     {% set maxValueSize = maxValueSize + 1 %}
                                 {% endif %}
-                                {# Ouverture de la saisie #}
-                                {% set html = "" %}
-                                {% set displayAnswer = "" %}
-                                {% set placeH =  "" %}
-                                {% if subquestion.displayAnswer %}
-                                    {% set displayAnswer = " readonly " %}
-                                    {% set placeH = proposition.media.description %}
-                                {% endif %}
-                                {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input '~displayAnswer~' data-html="true" class="form-control proposition-input '~cssClueColor~'" data-original-title="'~ dataTitle|escape ~'" name="'~ subquestion.id ~'[]"
-                                placeholder="'~placeH~'" id="input-proposition'~ proposition.id ~'"
-                                value="'~placeH~'"
-                                size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" required />' %}
-                                {% set selector = "#"~i~"#"~proposition.media.description~"#" %}
-                                {% set texte = texte|replace({(selector): html}) %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-
-                    {# #}
-                    {# TL/QROC avec la longueur du mot ou des groupes de mots #}
-                    {# #}
-                    {% if typoQuestion == "TLQROCLEN"  %}
-                        {% set textRightAnswer = "" %}
-                        {% set maxValueSize = 0 %}
-                        {# Recherche du texte correct #}
-                        {% for j, proposition in subquestion.propositions %}
-                            {% if proposition.rightAnswer %}
-                                {% set textRightAnswer = proposition.media.description %}
-                                {# Recherche/Calcul de la taille d'affichage de la zone Input #}
-                                {% for inputSize in tabInputSize %}
-                                    {% if inputSize > proposition.media.description|length and maxValueSize == 0 %}
-                                        {%  set maxValueSize = inputSize %}
-                                    {% endif %}
-                                {% endfor %}
-                                {# Test si la taille de la solution est plus grande que 12 #}
-                                {# Dans ce cas, la taille de la zone Input est la taille de la solution + 5 caractères #}
-                                {% if ( maxValueSize == 0 ) %}
-                                    {% set maxValueSize = proposition.media.description|length + 2 %}
-                                {% endif %}
-                                {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
-                                {% set initTextRightAnswer = "" %}
-                                {% for i in 1..textRightAnswer|length %}
-                                    {% set initTextRightAnswer = initTextRightAnswer~charSeparate %}
-                                {% endfor %}
-                                {# Ouverture de la saisie #}
-                                {% set html = "" %}
-                                {% set displayAnswer = "" %}
-                                {% set placeH =  "" %}
+                                
+                                {# AFFICHAGE DE LA REPONSE #}
                                 {% if subquestion.displayAnswer %}
                                     {% set displayAnswer = " readonly " %}
                                     {% set placeH = proposition.media.description %}
                                 {% endif %}
 
-                                {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input '~displayAnswer~' data-html="true" class="form-control proposition-input '~cssClueColor~'"
-                                data-original-title="'~ dataTitle|escape ~'" rel="tooltip"
-                                placeholder="'~placeH~'"
-                                name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
-                                size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'" data-right-answer-length="'~maxValueSize~'" value="'~initTextRightAnswer~'"
-                                 required />' %}
-                                {% set selector = "#"~i~"#"~proposition.media.description~"#" %}
-
-                                {% set texte = texte|replace({(selector): html}) %}
-                            {% endif %}
-                        {% endfor %}
-                        {# {{ macros.situation(subquestion, i, texte, typoQuestion) }} #}
-                    {% endif %}
-
-                    {# #}
-                    {# TL/QROC avec la longueur du mot ou des groupes de mots #}
-                    {# #}
-                    {% if typoQuestion == "TLQROCSYL" %}
-                        {% set textRightAnswer = "" %}
-                        {% set maxValueSize = 0 %}
-                        {# Recherche du texte correct #}
-                        {% for j, proposition in subquestion.propositions %}
-                            {% if proposition.rightAnswer %}
-                                {% set textRightAnswer = proposition.media.description %}
-                                {# Recherche/Calcul de la taille d'affichage de la zone Input #}
-                                {% for inputSize in tabInputSize %}
-                                    {% if inputSize > proposition.media.description|length and maxValueSize == 0 %}
-                                        {%  set maxValueSize = inputSize %}
-                                    {% endif %}
-                                {% endfor %}
-                                {% set syllable = subquestion.mediaSyllable.description %}
-                                {% set html = "" %}
-                                {% set displayAnswer = "" %}
-                                {% set placeH =  "" %}
+                                {% set html = html~'<input '~displayAnswer~' 
+                                                                        data-html="true" 
+                                                                        class="form-control proposition-input '~cssClueColor~'" 
+                                                                        data-original-title="'~ dataTitle|escape ~'" 
+                                                                        name="'~ subquestion.id ~'[]"
+                                                                        placeholder="'~placeH~'" 
+                                                                        id="input-proposition'~ proposition.id ~'"
+                                                                        value="'~placeH~'" 
+                                                                        rel="tooltip"
+                                                                        size="'~ maxValueSize ~'" 
+                                                                        maxlength="'~ maxValueSize ~'" 
+                                                                        required 
+                                                                    />' 
+                                %}
+                                    
                                 {% if subquestion.displayAnswer %}
-                                    {% set syllable = "" %}
-                                    {% set displayAnswer = " readonly " %}
-                                    {% set placeH = proposition.media.description %}
+                                    {% set html = '<span class="clear-lacune">'~html~'</span>' %}
                                 {% endif %}
-                                {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
-                                {% set initTextRightAnswer = textRightAnswer %}
-                                {% set html = html~'<span class="form-group">' %}
-                                {% if not subquestion.displayAnswer %}
-                                    {% set html = html~'
-                                    <span class="input-group lacune">
-                                    <span class="input-group-addon">'~syllable~'</span>' %}
-                                {% else %}
-                                    {% set html = html~' <span class="clear-lacune">' %}
+
+                                {% if syllable != "" and not subquestion.displayAnswer %}
+                                    {% set html = '<span class="form-group"><span class="input-group lacune">
+                                    <span class="input-group-addon">'~syllable~'</span>'~html~'</span></span>' %}
                                 {% endif %}
-                                {% set html = html~'<input '~displayAnswer~' type="text" class="form-control '~cssClueColor~'"
-                                    placeholder="'~placeH~'" value="'~placeH~'"
-                                    data-html="true" size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
-                                    name="'~ subquestion.id ~'[]" data-right-answer-length="'~maxValueSize~'"
-                                    data-original-title="'~ dataTitle|escape ~'">
-                                </span></span>' %}
+
                                 {% set selector = "#"~i~"#"~proposition.media.description~"#" %}
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
                         {% endfor %}
-                        {# {{ macros.situation(subquestion, i, texte, typoQuestion) }} #}
-                    {% endif %}
 
-                    {# #}
-                    {# TL/QROC avec première lettre, SANS longueur #}
-                    {# #}
-                    {% if typoQuestion == "TLQROCFIRST" %}
-                        {% set textRightAnswer = "" %}
-                        {% set maxValueSize = 0 %}
-                        {# Recherche du texte correct #}
-                        {% for j, proposition in subquestion.propositions %}
-                            {% if proposition.rightAnswer %}
-                                {% set textRightAnswer = proposition.media.description %}
-                                {# Recherche/Calcul de la taille d'affichage de la zone Input #}
-                                {% for inputSize in tabInputSize %}
-                                    {% if inputSize > proposition.media.description|length and maxValueSize == 0 %}
-                                        {%  set maxValueSize = inputSize %}
-                                    {% endif %}
-                                {% endfor %}
-                                {# Test si la taille de la solution est plus grande que 12 #}
-                                {# Dans ce cas, la taille de la zone Input est la taille de la solution + 5 caractères #}
-                                {% if ( maxValueSize == 0 ) %}
-                                    {% set maxValueSize = proposition.media.description|length + 2 %}
-                                {% endif %}
-                                {# Initialisation du champ de saisie en fonction de la taille du texte correct #}
-                                {% set initTextRightAnswer = "" %}
-                                {# Extrait du premier caractère #}
-                                {% set initTextRightAnswer = proposition.media.description|slice(0, 1) %}
-                                {% set html = "" %}
-                                {% set displayAnswer = "" %}
-                                {% set placeH =  "" %}
-                                {% if subquestion.displayAnswer %}
-                                    {% set syllable = "" %}
-                                    {% set displayAnswer = " readonly " %}
-                                    {% set placeH = proposition.media.description %}
-                                    {% set initTextRightAnswer = "" %}
-                                {% endif %}
-                                {% set html = html~'<span class="form-group">' %}
-                                {% if not subquestion.displayAnswer %}
-                                    {% set html = html~'
-                                    <span class="input-group lacune">
-                                    <span class="input-group-addon">'~initTextRightAnswer~'</span>' %}
-                                {% else %}
-                                    {% set html = html~' <span class="clear-lacune">' %}
-                                {% endif %}
-                                {% set html = html~'<input '~displayAnswer~' type="text" class="form-control '~cssClueColor~'"
-                                    size="'~ maxValueSize ~'" maxlength="'~ maxValueSize ~'"
-                                    name="'~ subquestion.id ~'[]" placeholder="'~placeH~'"
-                                    data-html="true" data-original-title="'~ dataTitle|escape ~'">
-                                </span></span>' %}
-                                {% set selector = "#"~i~"#"~proposition.media.description ~"#" %}
-                                {% set texte = texte|replace({(selector): html}) %}
-                            {% endif %}
-                        {% endfor %}
-                        {# {{ macros.situation(subquestion, i, texte, typoQuestion) }} #}
-                    {% endif %}
-
-                    {# #}
-                    {# TL/QROC sans indice #}
-                    {# #}
-                    {% if typoQuestion == "TLQROCNOCLU" %}
-                        {% set textRightAnswer = "" %}
-                        {% set maxValueSize = 0 %}
-                        {# Recherche du texte correct #}
-                        {% for j, proposition in subquestion.propositions %}
-                            {% if proposition.rightAnswer %}
-                                {% set textRightAnswer = proposition.media.description %}
-                                {# Recherche/Calcul de la taille d'affichage de la zone Input #}
-                                {% for inputSize in tabInputSize %}
-                                    {% if inputSize > proposition.media.description|length and maxValueSize == 0 %}
-                                        {%  set maxValueSize = inputSize %}
-                                    {% endif %}
-                                {% endfor %}
-                                {# Test si la taille de la solution est plus grande que 12 #}
-                                {# Dans ce cas, la taille de la zone Input est la taille de la solution + 5 caractères #}
-                                {% if ( maxValueSize == 0 ) %}
-                                    {% set maxValueSize = proposition.media.description|length + 5 %}
-                                {% else %}
-                                    {% set maxValueSize = maxValueSize + 1 %}
-                                {% endif %}
-                                {# Ouverture de la saisie #}
-                                {% set html = "" %}
-                                {% set displayAnswer = "" %}
-                                {% set placeH =  "" %}
-                                {% if subquestion.displayAnswer %}
-                                    {% set displayAnswer = " disabled " %}
-                                    {% set placeH = proposition.media.description %}
-                                {% endif %}
-                                {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                                {% set html = html~'<input class="proposition-input form-control" data-original-title="'~clue~'"
-                                rel="tooltip" name="'~ subquestion.id ~'[]" id="input-proposition'~ proposition.id ~'"
-                                size="'~ maxValueSize ~'" placeholder="'~placeH~'"
-                                ~maxlength="'~ maxValueSize ~'" required ' ~displayAnswer~ '/>' %}
-                                {% set selector = "#"~i~"#"~proposition.media.description~"#" %}
-                                {% set texte = texte|replace({(selector): html}) %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-
-                    {# #}
-                    {# TL type "Liste de mots" LDM #}
-                    {# #}
-                    {% if typoQuestion == "TLCMLDM" %}
-                        {# Ouverture de la liste de choix #}
-                        {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
+                    {% elseif typoQuestion == "TLCMLDM" %}
                         {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
                         {% set html = html~"<option value=''>"~"</option>" %}
                         {% set rightAnswer = '' %}
@@ -306,18 +116,11 @@
                         {# Remplacement des données de la base par les listes de choix #}
                         {% set selector = "#"~i~"#"~rightAnswer~"#" %}
                         {% set texte = texte|replace({(selector): html}) %}
-                    {% endif %}
 
-                    {# #}
-                    {# TL/DCT #}
-                    {# #}
-                    {% if typoQuestion == "TLCMLMULT" %}
-                        {# Ouverture de la liste de choix #}
-                        {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
+                    {% elseif typoQuestion == "TLCMLMULT" %}
                         {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
                         {% set html = html~"<option value=''>"~"</option>" %}
                         {% set rightAnswer = '' %}
-                        {# fix #438 : Affichage aléatoires des valeurs dans les listes de choix #}
                         {% if questionnaire.fixedOrder %}
                             {% set propositions = subquestion.propositions %}
                         {% else %}
@@ -334,30 +137,13 @@
                         {# Remplacement des données de la base par les listes de choix #}
                         {% set selector = "#"~i~"#"~rightAnswer~"#" %}
                         {% set texte = texte|replace({(selector): html}) %}
-                    {% endif %}
-
-                    {# #}
-                    {# TL tout type #}
-                    {# #}
-                    {% if typoQuestion == "TLCMTQRU"  or typoQuestion == "TLCMQRU" %}
-                        {# Ouverture de la liste de choix #}
-                        {# Ajout des ID afin de ne pas changer le traitement du fichier TraceController.php #}
-                        {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
-                        {% set html = html~"<option value=''>"~"</option>" %}
-                        {% for j, proposition in subquestion.propositions %}
-                            {% set html = html~"<option id='input-proposition"~ proposition.id ~"' value='"~ proposition.id ~"'>"~proposition.media.description~"</option>" %}
-                            {# Remplacement des données de la base par les listes de choix #}
-                            {% set selector =  "#"~i~"#"~proposition.media.description~"#" %}
-                            {% set texte = texte|replace({(selector): html}) %}
-                        {% endfor %}
-                        {# Fermeture de la liste de choix #}
-                        {% set html = html~"</select>" %}
                     {% endif %}
 
                 {% endfor %}
-                {# Pour l'affichage des émoticones. #}
+                {# Pour l'affichage des émoticones. (à affiner vu qu'ils veulent ajouter des images autres que des émoticones.) #}
                 {% set texte =  texte|replace({"<img": "<img class='emoticones'"}) %}
-                {# Affichage de questionnaire.mediaText #}
+
+
                 {{ texte | raw }}
 
             {% endautoescape %}
