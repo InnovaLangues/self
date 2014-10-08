@@ -1,4 +1,3 @@
-{# Variante : LISTE des MOTS (attention, dans ce cas, l’objet de la question est composé d’une image et d’un texte en même temps)#}
 {% if questionnaire.mediaInstruction is not null %}
     {% if questionnaire.mediaInstruction.mediaType.name == "image" %}
         <div id="image-EEC" class="image-EEC">
@@ -14,10 +13,9 @@
             {% autoescape 'html' %}
                 {% set typoQuestion = questionnaire.questions[0].typology.name %}
                 {% set texte = questionnaire.mediaBlankText.description|disambiguate %}
-                {% set typoQROC = ['TLQROCDERIV', 'TLQROCDERIV', 'TLQROCNOCLU', 'TLQROCLEN', 'TLQROCSYL'] %}
 
                 {% for i, subquestion in questionnaire.questions[0].subquestions %}
-                    {% if typoQuestion in typoQROC %}
+                    {% if typoQuestion == "TLQROC" %}
                         {# VAR INIT. #}
                         {% set charSeparate = "-" %}
                         {% set tabInputSize = [5, 10, 15, 20, 25, 30] %}

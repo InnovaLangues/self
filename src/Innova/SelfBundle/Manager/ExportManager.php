@@ -343,10 +343,7 @@ class ExportManager
             $typology = $answers[0]->getProposition()->getSubQuestion()->getTypology()->getName();
 
             switch ($typology) {
-                case "APPAT";
-                case "APPAA";
-                case "APPAI";
-                case "APPTT";
+                case "APP";
                     foreach ($answers as $answer) {
                         if ($answer->getProposition()->getRightAnswer()) {
                             $score++;

@@ -52,7 +52,7 @@ class PropositionController
 
         $proposition = $this->propositionManager->toggleRightAnswer($proposition);
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:proposition.html.twig',array('questionnaire' => $questionnaire, 'proposition' => $proposition));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:proposition.html.twig', array('questionnaire' => $questionnaire, 'proposition' => $proposition));
 
         return new Response($template);
     }
