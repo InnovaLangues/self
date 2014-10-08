@@ -80,14 +80,9 @@ class FixtureCommand extends ContainerAwareCommand
             $typologies = array(
                 array("TVF", "Tableau de Vrai-Faux"), array("QRU", "Question à Réponse Unique"), array("VF", "Vrai-Faux"),
                 array("QRM", "Question à Réponse Multiple"), array("TQRU", "Tableau de QRU"), array("TQRM", "Tableau de QRM"),
-                array("APPAT","Appariemment Audio-Texte"), array("APPIT","Appariemment Image-Texte"),
-                array("APPAA", "Appariemment Audio-Audio"), array("APPAI", "Appariemment Audio-Image"),
-                array("APPTT", "Appariemment Texte-Texte"), array("TVFNM", "Tableau de Vrai-Faux-Non Mentionné"),
+                array("APP", "Appariemment"), array("TVFNM", "Tableau de Vrai-Faux-Non Mentionné"),
                 array("VFNM", "Vrai-Faux-Non Mentionné"), array("TLCMLDM", "Liste de mots"),
-                array("TLQROCNOCLU", "Aucune indice"), array("TLQROCLEN","Longueur"),
-                array("TLQROCFIRST","Premier caractère"), array("TLQROCSYL","Syllabe"),
-                array("TLCMLMULT", "Listes de choix multiple"), array("TLQROCDERIV", "Dérivation"),
-                array("TLQROCTRANS", "Transformation")
+                array("TLCMLMULT", "Listes de choix multiple"), array("TLQROC", "QROC")
             );
             foreach ($typologies as $typology) {
                 if (!$typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[0])) {
@@ -105,10 +100,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            /*
-                Demande de suppression de la typologie TLQROCFIRSTLEN
-            */
-            $typologiesToDelete = array("TLCMQRU", "TLCMTQRU", "TLQROCDCTU", "TLQROCDCTM", "TLQROCFIRSTLEN");
+            $typologiesToDelete = array("TLCMQRU", "TLCMTQRU", "TLQROCDCTU", "TLQROCDCTM");
             foreach ($typologiesToDelete as $typology) {
                 if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)) {
 
@@ -122,9 +114,34 @@ class FixtureCommand extends ContainerAwareCommand
                             }
                         }
                     }
-
                     $em->remove($typo);
-                    /* Database queries should use parameter binding fix #397 */
+                    $typoName = $typo->getName();
+                    $output->writeln(" Typo ".$typoName." removed");
+                }
+            }
+
+            $typologiesToReplace = array(
+                array("TLQROCFIRSTLEN", "TLQROC"), array("TLQROCNOCLU", "TLQROC"),
+                array("TLQROCLEN", "TLQROC"), array("TLQROCFIRST", "TLQROC"),
+                array("TLQROCSYL", "TLQROC"), array("TLQROCTRANS", "TLQROC"),
+                array("TLQROCDERIV", "TLQROC"), array("APPAT", "APP"),
+                array("APPIT", "APP"), array("APPAA", "APP"), array("APPAI", "APP"),
+                array("APPTT", "APP"),
+            );
+            foreach ($typologiesToReplace as $typology) {
+                if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[0])) {
+                    $newTypo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[1]);
+                    if($questions = $em->getRepository('InnovaSelfBundle:Question')->findByTypology($typo)){
+                        foreach ($questions as $question) {
+                            $question->setTypology($newTypo);
+                            $em->persist($question);
+                            foreach ($question->getSubquestions() as $subquestion) {
+                                $subquestion->setTypology($newTypo);
+                                $em->persist($subquestion);
+                            }
+                        }
+                    }
+                    $em->remove($typo);
                     $typoName = $typo->getName();
                     $output->writeln(" Typo ".$typoName." removed");
                 }

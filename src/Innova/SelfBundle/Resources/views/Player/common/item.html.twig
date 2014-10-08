@@ -1,5 +1,5 @@
 <div id="item-container" class="row">
-    {% if questionnaire.questions[0].typology.name | slice(0,3) == "APP" %}
+    {% if questionnaire.questions[0].typology.name == "APP" %}
         {% include "InnovaSelfBundle:Player/APP:index.html.twig" %}
     {% elseif questionnaire.skill.name == "CO" %}
         {% include "InnovaSelfBundle:Player/CO:index.html.twig" %}
