@@ -489,8 +489,20 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 #pick-a-questionaire {
 	margin: 15px;
 	background-color:#FCF6BC;
-	padding:20px;
-	border-radius: 10px;
+	padding:15px;
+	border-radius: 5px;
+	border:1px solid #faebcc;
+}
+
+/**************************
+ 		CHAR PICKER
+***************************/
+#special-char-picker {
+	margin: 15px;
+	background-color:#d9edf7;
+	padding:15px;
+	border-radius: 5px;
+	border: 1px solid #bce8f1;
 }
 
 /*

@@ -365,3 +365,18 @@ function constructMask(count, char){
 
     return mask;
 }
+
+/**************
+    SPECIAL CHAR PICKER
+**************/
+
+var lastInputId;
+$("input").focus(function(){
+       lastInputId = $(this).attr("id");
+});
+
+$(".special-char").click(function(){
+        var input = $("#"+lastInputId);
+        var specialChar = $(this).text();
+       input.val(input.val() + specialChar);
+});

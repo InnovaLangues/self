@@ -1,0 +1,9 @@
+{% set specialCharsLanguage = ["Italian"] %}
+{% if questionnaire.skill.name == "EEC" and test.language.name in specialCharsLanguage %}
+    <div id="special-char-picker" class="row text-center">
+            {% set specialChars = ["À", "É", "È", "Ì", "Î", "Ó", "Ò", "Ù", "à", "é", "è", "ì", "î", "ó", "ò", "ù"] %}
+            {% for char in specialChars %}
+                <span class="btn btn-default btn-sm special-char">{{ char }}</span>
+            {% endfor %}
+    </div>
+{% endif %}
