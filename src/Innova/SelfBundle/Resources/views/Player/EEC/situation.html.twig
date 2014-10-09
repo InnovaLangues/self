@@ -12,6 +12,7 @@
         {% if questionnaire.mediaBlankText.mediaType.name == "texte" %}
             {% autoescape 'html' %}
                 {% set typoQuestion = questionnaire.questions[0].typology.name %}
+
                 {% set texte = questionnaire.mediaBlankText.description|disambiguate %}
 
                 {% for i, subquestion in questionnaire.questions[0].subquestions %}
@@ -41,8 +42,7 @@
                         {% endif %}
 
                         {% for j, proposition in subquestion.propositions %}
-                            {% if proposition.rightAnswer and proposition.media.mediaPurpose == "proposition" %}
-                                {% set html = "" %}
+                            {% if proposition.rightAnswer and proposition.media.mediaPurpose.name == "proposition" %}
 
                                 {# Recherche/Calcul de la taille d'affichage de la zone Input #}
                                 {% for inputSize in tabInputSize %}
@@ -64,19 +64,19 @@
                                     {% set placeH = proposition.media.description %}
                                 {% endif %}
 
-                                {% set html = html~'<input '~displayAnswer~' 
-                                                                        data-html="true" 
-                                                                        class="form-control proposition-input '~cssClueColor~'" 
-                                                                        data-original-title="'~ dataTitle|escape ~'" 
-                                                                        name="'~ subquestion.id ~'[]"
-                                                                        placeholder="'~placeH~'" 
-                                                                        id="input-proposition'~ proposition.id ~'"
-                                                                        value="'~placeH~'" 
-                                                                        rel="tooltip"
-                                                                        size="'~ maxValueSize ~'" 
-                                                                        maxlength="'~ maxValueSize ~'" 
-                                                                        required 
-                                                                    />' 
+                                {% set html = '<input '~displayAnswer~' 
+                                                            data-html="true" 
+                                                            class="form-control proposition-input '~cssClueColor~'" 
+                                                            data-original-title="'~ dataTitle|escape ~'" 
+                                                            name="'~ subquestion.id ~'[]"
+                                                            placeholder="'~placeH~'" 
+                                                            id="input-proposition'~ proposition.id ~'"
+                                                            value="'~placeH~'" 
+                                                            rel="tooltip"
+                                                            size="'~ maxValueSize ~'" 
+                                                            maxlength="'~ maxValueSize ~'" 
+                                                            required 
+                                                        />' 
                                 %}
                                     
                                 {% if subquestion.displayAnswer %}
@@ -89,6 +89,7 @@
                                 {% endif %}
 
                                 {% set selector = "#"~i~"#"~proposition.media.description~"#" %}
+
                                 {% set texte = texte|replace({(selector): html}) %}
                             {% endif %}
                         {% endfor %}
