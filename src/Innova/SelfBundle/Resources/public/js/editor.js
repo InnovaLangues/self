@@ -1028,6 +1028,7 @@ $('.file').on('change', function(event){
         data : data
     })
     .done(function(data) {
+        if (data["msg"] != "") { alert(data["msg"])};
         $("#"+fileType+"-url").val(data["url"]);
         $("#create-"+fileType+"-btn").prop("disabled", false);
         afterAjax();

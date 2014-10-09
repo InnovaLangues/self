@@ -42,7 +42,9 @@ class UploadController extends Controller
     {
         $request = $this->request;
 
-        $authorizedExtensions = array('png', 'mp3', 'jpg', 'jpeg', 'webm');
+        $authorizedExtensions = array('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif');
+        $msg = "";
+        $newName = "";
 
         foreach ($request->files as $uploadedFile) {
             $originalName = $uploadedFile->getClientOriginalName();
@@ -53,11 +55,15 @@ class UploadController extends Controller
                 $directory = $this->kernelRoot.'/../web/upload/media/';
                 $uploadedFile->move($directory, $newName);
             }
+            else {
+                $msg = "Wrong file type ('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif')";
+            }
         }
 
         return new JsonResponse(
             array(
                 'url' => $newName,
+                'msg' => $msg
             )
         );
     }
