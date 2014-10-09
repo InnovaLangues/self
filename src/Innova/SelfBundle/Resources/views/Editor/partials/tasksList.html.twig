@@ -21,6 +21,9 @@
             {% endif %}
 
             <span class="buttons" style="position:absolute;right:5px;top:5px">
+                <a class="btn btn-default btn-sm" href="{{ path('questionnaire_pick', { testId: order.test.id, questionnaireId: order.questionnaire.id }) }}">
+                    <span class="glyphicon glyphicon-play"></span> {{ 'generic.player' | trans }}
+                </a>
                 <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id, 'testId': order.test.id }) }}">
                     <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
                 </a>

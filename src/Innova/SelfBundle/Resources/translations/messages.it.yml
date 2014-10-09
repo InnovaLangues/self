@@ -78,6 +78,7 @@ generic:
     yes: Si
     no: No
     filter: Filtro
+    player: Player
 
 editor:
     test:
