@@ -264,8 +264,9 @@ class EecController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
         $syllable = $request->get('syllable');
-
-        if (!$syllableMedia = $subquestion->getMediaSyllable()) {
+        if ($syllable == "") {
+            $syllableMedia = null;
+        } elseif (!$syllableMedia = $subquestion->getMediaSyllable()) {
             $syllableMedia = $this->mediaManager->createMedia($questionnaire, "texte", $syllable, $syllable, null, 0, "syllable");
             $this->editorLogManager->createEditorLog("editor_create", "syllable", $questionnaire);
         } else {
@@ -278,9 +279,7 @@ class EecController
         $em->persist($subquestion);
         $em->flush();
 
-        return new JsonResponse(
-            array()
-        );
+        return new JsonResponse(array());
     }
 
     /**
