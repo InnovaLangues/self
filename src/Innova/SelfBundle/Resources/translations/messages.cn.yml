@@ -74,6 +74,8 @@ generic:
     save: Sauvegarder
     yes: Oui
     no: Non
+    filter: Filtre
+    player: Player
 
 editor:
     test:

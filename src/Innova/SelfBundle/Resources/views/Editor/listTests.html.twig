@@ -39,6 +39,9 @@
                 {% endif %}
             </td>
             <td class="text-right">
+                <a id="play-test" class="btn btn-default btn-sm " href="{{ path('test_start', { 'id': test.id,  'displayHelp': 0} )}}">
+                    <span class="glyphicon glyphicon-play"></span> {{ 'generic.player' | trans }}
+                </a>
                 <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_form', { 'testId': test.id }) }}">
                     <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
                 </a>

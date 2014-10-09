@@ -1,7 +1,11 @@
 {% if is_granted('ROLE_ADMIN') %}
     <div id="pick-a-questionaire" class="row text-center">
         {% for i, questionnaire in questionnaires %}
-            <a class="btn btn-default" data-toggle="tooltip" data-original-title="{{ questionnaire.theme}}" href="{{ path('questionnaire_pick', { testId: test.id, questionnaireId: questionnaire.id }) }}">{{ i+1 }}</a>
+            {% set typo = "" %}
+            {% if questionnaire.questions[0].typology %}
+                {% set typo = questionnaire.questions[0].typology.name %}
+            {% endif %}
+            <a class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ typo }}" href="{{ path('questionnaire_pick', { testId: test.id, questionnaireId: questionnaire.id }) }}">{{ questionnaire.theme}}</a>
         {% endfor %}
     </div>
 {% endif %}
