@@ -1,0 +1,7 @@
+{# fix #594 #}
+{% if (questionnaire.mediaFunctionalInstruction is not null) and
+(questionnaire.mediaFunctionalInstruction.description|length > 0) %}
+    <div class="info-right-answer">
+        {{ questionnaire.mediaFunctionalInstruction.description|raw }}
+    </div>
+{% endif %}
