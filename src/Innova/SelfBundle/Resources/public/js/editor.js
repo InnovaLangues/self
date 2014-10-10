@@ -937,7 +937,7 @@ function getAnswers(subquestionId){
         }
     })
     .complete(function(data) {
-        $("#answers-modal .modal-body").replaceWith(data.responseText);
+        $("#answers-modal .modal-body").html(data.responseText);
         $('#answers-modal').modal('show');
         afterAjax();
     });
