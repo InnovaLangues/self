@@ -181,8 +181,10 @@ class TraceController
             $propositionFound = null;
 
             // Il faut concaténer la syllabe avec la saisie.
-            $syllableAnswer = $subquestion->getMediaSyllable()->getDescription();
-            $saisie = $syllableAnswer . $saisie;
+            if($subquestion->getMediaSyllable()){
+                $syllableAnswer = $subquestion->getMediaSyllable()->getDescription();
+                $saisie = $syllableAnswer . $saisie;
+            }
 
             foreach ($propositions as $proposition) {
                 $text = $proposition->getMedia()->getName();
