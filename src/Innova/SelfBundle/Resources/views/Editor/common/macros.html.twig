@@ -83,6 +83,7 @@
     {% for proposition in subquestion.propositions %}
         {% if proposition.rightAnswer == true %}
             {% set HasAnAnswer = true %}
+            {{ macros.editMedia(proposition.media, "subquestion") }}
             {{ macros.displayMedia(questionnaire, proposition.media) }}
         {% endif %}
     {% endfor %}
