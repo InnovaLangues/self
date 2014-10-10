@@ -175,31 +175,17 @@ class TraceController
         $typo = $subquestion->getTypology()->getName();
         $displayAnswer = $subquestion->getDisplayAnswer();
 
-        $typosSaisie = array("TLQROCDERIV", "TLQROCTRANS", "TLQROCFIRST", "TLQROCSYL", "TLQROCNOCLU", "TLQROCLEN", "TLQROCFIRSTLEN" );
-        if (in_array($typo, $typosSaisie)) {
+        if ($typo == "TLQROC") {
             $propositions = $subquestion->getPropositions();
             $rightAnswer = false;
             $propositionFound = null;
 
             // Il faut concaténer la syllabe avec la saisie.
-            $syllableAnswer = "";
-            if ($typo == "TLQROCSYL" ) {
-                $syllableAnswer = $subquestion->getMediaSyllable()->getDescription();
-                $saisie = $syllableAnswer . $saisie;
-            }
-
-            // Il faut concaténer le premier caractère de la réponse avec la saisie.
-            $firstAnswer = "";
-            if ($typo == "TLQROCFIRST" ) {
-                $firstAnswer = $propositions[0]->getMedia()->getDescription();
-                $firstAnswer = $firstAnswer[0];
-                $saisie = $firstAnswer . $saisie;
-            }
+            $syllableAnswer = $subquestion->getMediaSyllable()->getDescription();
+            $saisie = $syllableAnswer . $saisie;
 
             foreach ($propositions as $proposition) {
-
                 $text = $proposition->getMedia()->getName();
-
                 if (strtolower($text) == htmlentities(strtolower($saisie))) {
                     $propositionFound = $proposition;
                     if ($proposition->getRightAnswer() === true) {
