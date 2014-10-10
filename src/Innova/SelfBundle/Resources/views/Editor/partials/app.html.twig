@@ -12,6 +12,7 @@
         <tr>
         {% if subquestion.media is not null %}
                 <td class="col-md-6">
+                    {{ macros.editMedia(subquestion.media, "subquestion") }}
                     {{ macros.displayMedia(questionnaire, subquestion.media) }}
                 </td>
                 <td>

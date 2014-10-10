@@ -151,7 +151,7 @@ class FixtureCommand extends ContainerAwareCommand
                 New table for version 1.2 or version 2 (2014)
                 fixtures for originStudent table
             */
-            $originStudents = array("LANSAD", "LLCE", "LEA", "UJF", "Autres");
+            $originStudents = array("LANSAD", "LLCE", "LEA", "UJF", "Formation continue", "Autres");
             foreach ($originStudents as $originStudent) {
                 if (!$em->getRepository('InnovaSelfBundle:OriginStudent')->findOneByName($originStudent)) {
                     $student = new originStudent();
