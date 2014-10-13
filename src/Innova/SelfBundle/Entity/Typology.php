@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Typology
  *
  * @ORM\Table("typology")
-* @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\TypologyRepository")
+ * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\TypologyRepository")
  */
 class Typology
 {
@@ -161,14 +161,14 @@ class Typology
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
