@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\Subquestion;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ExportManager
@@ -194,7 +195,6 @@ class ExportManager
 
                         $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
-                            $typo = $subquestion->getTypology()->getName();
                             $propositions = $subquestion->getPropositions();
                             $rightProps = array();
                             $nbPropositionRightAnswser = 0;
@@ -211,45 +211,17 @@ class ExportManager
                                 $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                             }
 
-                            $nbAnswers = count($answersArray[$subquestion->getId()]);
-                            $subquestionOk = true;
-                            if ($nbAnswers == $nbPropositionRightAnswser) {
-                                foreach ($rightProps as $rightProp) {
-                                    $found = false;
-                                    foreach ($answersArray[$subquestion->getId()] as $answerProp) {
-                                       if ($rightProp == $answerProp->getId()) {
-                                            $found = true;
-                                       }
-                                    }
-                                    if ($found === false) {
-                                        $subquestionOk = false;
-                                    }
-                                }
-                            } else {
-                                $subquestionOk = false;
-                            }
-
+                            // Récupération bonne réponse ou non 
+                            $subquestionOk = $this->checkRightAnswer($answersArray, $subquestion, $nbPropositionRightAnswser, $rightProps);
                             if ($subquestionOk) {
                                 $csv .= "1" . ";";
                             } else {
                                 $csv .= "0" . ";";
                             }
 
-                            if ($typo == "TLCMLDM") {
-                                $csv .= ""; // ajouter ici
-                            }
-                            else
-                            {
-                                $letters = array();
-                                foreach ($answersArray[$subquestion->getId()] as $answer) {
-                                    $idAnswer = $answer->getId();
-                                    $letters[$propLetters[$idAnswer]] = 1;
-                                }
-                                ksort($letters);
-                                foreach ($letters as $key => $value) {
-                                    $csv .= $key;
-                                }
-                            }
+                            // Récupération de la saisie ou des lettres associées aux réponses 
+                            $textToDisplay = $this->textToDisplay($subquestion, $answersArray, $propLetters);
+                            $csv .= $textToDisplay;
                             $csv .= ";";
                         }
                     }
@@ -434,4 +406,89 @@ class ExportManager
         return $arr[$int];
     }
 
+    private function checkRightAnswer($answersArray, Subquestion $subquestion, $nbPropositionRightAnswser, $rightProps)
+    {
+        $typo = $subquestion->getTypology()->getName();
+        $subquestionId = $subquestion->getId();
+
+        switch ($typo) {
+            case 'TVF':
+            case 'VF':
+            case 'TVFNM':
+            case 'VFNM':
+            case 'QRU':
+            case 'QRM':
+            case 'TQRU':
+            case 'TQRM':
+            case 'APP':
+                $nbAnswers = count($answersArray[$subquestionId]);
+                $subquestionOk = true;
+                if ($nbAnswers == $nbPropositionRightAnswser) {
+                    foreach ($rightProps as $rightProp) {
+                        $found = false;
+                        foreach ($answersArray[$subquestionId] as $answerProp) {
+                            if ($rightProp == $answerProp->getId()) {
+                                $found = true;
+                            }
+                        }
+                        if ($found === false) {
+                            $subquestionOk = false;
+                        }
+                    }
+                } else {
+                    $subquestionOk = false;
+                }
+            break;
+            
+            case 'TLCMLDM':
+            case 'TLCMLMULT':
+            case 'TLQROC':
+                $subquestionOk = true;
+                $proposition = $answersArray[$subquestionId][0];
+
+                $subquestionOk = $proposition->getRightAnswer();
+                break;
+        }
+
+       
+        return  $subquestionOk;
+    }
+
+
+    private function textToDisplay(Subquestion $subquestion, $answersArray, $propLetters ){
+        $typo = $subquestion->getTypology()->getName();
+        $subquestionId = $subquestion->getId();
+        $textToDisplay = "";
+
+        switch ($typo) {
+            case 'TVF':
+            case 'VF':
+            case 'TVFNM':
+            case 'VFNM':
+            case 'QRU':
+            case 'QRM':
+            case 'TQRU':
+            case 'TQRM':
+            case 'APP':
+                $letters = array();
+                foreach ($answersArray[$subquestion->getId()] as $answer) {
+                    $idAnswer = $answer->getId();
+                    $letters[$propLetters[$idAnswer]] = 1;
+                }
+                ksort($letters);
+                foreach ($letters as $key => $value) {
+                    $textToDisplay .= $key;
+                }
+            break;
+            
+            case 'TLCMLDM':
+            case 'TLCMLMULT':
+            case 'TLQROC':
+                $proposition = $answersArray[$subquestionId][0];
+                $textToDisplay = $proposition->getMedia()->getDescription();
+            break;
+        }
+
+        return $textToDisplay;
+    }
 }
