@@ -58,8 +58,9 @@ class AppManager
 
         $subquestions = $question->getSubquestions();
         foreach ($subquestions as $subquestion) {
-            $propositionToDelete = $em->getRepository('InnovaSelfBundle:Proposition')->findOneBy(array("subquestion" => $subquestion, "media" => $media));
-            $em->remove($propositionToDelete);
+            if($propositionToDelete = $em->getRepository('InnovaSelfBundle:Proposition')->findOneBy(array("subquestion" => $subquestion, "media" => $media))){
+                $em->remove($propositionToDelete);
+            }
         }
         $em->flush();
 

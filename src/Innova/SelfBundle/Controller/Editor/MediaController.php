@@ -298,6 +298,7 @@ class MediaController
 
                     $em->remove($entity);
                     $em->flush();
+                    $em->refresh($questionnaire->getQuestions()[0]);
 
                     $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
                 }
