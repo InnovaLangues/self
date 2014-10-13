@@ -194,6 +194,7 @@ class ExportManager
 
                         $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
+                            $typo = $subquestion->getTypology()->getName();
                             $propositions = $subquestion->getPropositions();
                             $rightProps = array();
                             $nbPropositionRightAnswser = 0;
@@ -234,14 +235,20 @@ class ExportManager
                                 $csv .= "0" . ";";
                             }
 
-                            $letters = array();
-                            foreach ($answersArray[$subquestion->getId()] as $answer) {
-                                $idAnswer = $answer->getId();
-                                $letters[$propLetters[$idAnswer]] = 1;
+                            if ($typo == "TLCMLDM") {
+                                $csv .= ""; // ajouter ici
                             }
-                            ksort($letters);
-                            foreach ($letters as $key => $value) {
-                                $csv .= $key;
+                            else
+                            {
+                                $letters = array();
+                                foreach ($answersArray[$subquestion->getId()] as $answer) {
+                                    $idAnswer = $answer->getId();
+                                    $letters[$propLetters[$idAnswer]] = 1;
+                                }
+                                ksort($letters);
+                                foreach ($letters as $key => $value) {
+                                    $csv .= $key;
+                                }
                             }
                             $csv .= ";";
                         }
@@ -278,7 +285,11 @@ class ExportManager
 
                 $answersArray = array();
                 foreach ($questionnaires as $questionnaire) {
-                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),'questionnaire' => $questionnaire->getId()));
+                    $traces = $em->getRepository('InnovaSelfBundle:Trace')
+                                 ->findBy(array('user' => $user->getId(),
+                                                'questionnaire' => $questionnaire->getId()
+                                                )
+                                        );
                     $questions = $questionnaire->getQuestions();
 
                     foreach ($traces as $trace) {
@@ -410,6 +421,7 @@ class ExportManager
 
     private function countQuestionnaireDone(Test $test, User $user){
         $em = $this->entityManager;
+
         $count = $em->getRepository('InnovaSelfBundle:Questionnaire')
                 ->countDoneYetByUserByTest($test->getId(), $user->getId());
 
