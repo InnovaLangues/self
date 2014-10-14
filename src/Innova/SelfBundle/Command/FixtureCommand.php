@@ -78,9 +78,9 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             $typologies = array(
-                array("TVF", "Tableau de Vrai-Faux"), array("TQRU", "Tableau de QRU"), 
-                array("TQRM", "Tableau de QRM"), array("TLCMLDM", "Liste de mots"),
-                array("APP", "Appariemment"), array("TVFNM", "Tableau de Vrai-Faux-Non Mentionné"),
+                array("TVF", "Vrai-Faux"), array("TQRU", "Question à Réponse Unique"), 
+                array("TQRM", "Question à Réponses Multiples"), array("TLCMLDM", "Liste de mots"),
+                array("APP", "Appariemment"), array("TVFNM", "Vrai-Faux-Non Mentionné"),
                 array("TLCMLMULT", "Listes de choix multiple"), array("TLQROC", "Question Réponse Ouverte Courte")
             );
             foreach ($typologies as $typology) {
