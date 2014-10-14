@@ -34,6 +34,11 @@ class Skill
     protected $questionnaires;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Typology", inversedBy="skills")
+    */
+    protected $typologys;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -147,5 +152,40 @@ class Skill
     public function getUsers()
     {
         return $this->users;
+    }
+
+
+
+    /**
+     * Add typologys
+     *
+     * @param \Innova\SelfBundle\Entity\Typology $typologys
+     * @return Skill
+     */
+    public function addTypology(\Innova\SelfBundle\Entity\Typology $typologys)
+    {
+        $this->typologys[] = $typologys;
+    
+        return $this;
+    }
+
+    /**
+     * Remove typologys
+     *
+     * @param \Innova\SelfBundle\Entity\Typology $typologys
+     */
+    public function removeTypology(\Innova\SelfBundle\Entity\Typology $typologys)
+    {
+        $this->typologys->removeElement($typologys);
+    }
+
+    /**
+     * Get typologys
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTypologys()
+    {
+        return $this->typologys;
     }
 }

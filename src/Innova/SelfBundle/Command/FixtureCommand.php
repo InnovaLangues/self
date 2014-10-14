@@ -295,6 +295,28 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
+            /* Gestion de la relation skill / typo */
+            $skills2typos = array(
+                array("CO", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
+                array("CE", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
+                array("EEC", array("TLCMLMULT", "TLQROC", "TLCMLDM"))
+            );
+            foreach ($skills2typos as $skills2typo) {
+                $skillName = $skills2typo[0];
+                $typoNames = $skills2typo[1];
+                if ($skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skillName)) {
+                   foreach ($typoNames as $typoName) {
+                        $skillTypos = $skill->getTypologys();
+                        if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typoName)) {
+                            if (!$skillTypos->contains($typo)){
+                                $skill->addTypology($typo);
+                                $em->persist($skill);
+                            }
+                        }
+                   }
+                }
+            }
+
             $em->flush();
 
             $now = time();
