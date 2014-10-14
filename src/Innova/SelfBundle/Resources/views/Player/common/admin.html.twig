@@ -1,5 +1,6 @@
 {% if is_granted('ROLE_ADMIN') %}
     <div id="pick-a-questionaire" class="row text-center">
+        <div>En tant qu'administrateur, vous avez la possibilité d'accéder à toutes les tâches de ce test</div>
         {% for i, questionnaire in questionnaires %}
             {% set typo = "" %}
             {% if questionnaire.questions[0].typology %}
