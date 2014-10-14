@@ -38,7 +38,6 @@ class QuestionnaireManager
     public function setTypology(Questionnaire $questionnaire, $typologyName)
     {
         $em = $this->entityManager;
-        $arrayLikeTypos = array("TQRU", "TQRM", "TVFNM", "TVF");
 
         if (!$typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typologyName)) {
             $typology = null;
@@ -47,17 +46,9 @@ class QuestionnaireManager
                 $em->persist($subquestion);
             }
         } else {
-            if (!in_array($typology->getName(), $arrayLikeTypos)) {
-                foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
-                    $subquestion->setTypology($typology);
-                    $em->persist($subquestion);
-                }
-            } else {
-                $typologySubquestion = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($typologyName, 1));
-                foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
-                    $subquestion->setTypology($typologySubquestion);
-                    $em->persist($subquestion);
-                }
+            foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
+                $subquestion->setTypology($typology);
+                $em->persist($subquestion);
             }
         }
 
