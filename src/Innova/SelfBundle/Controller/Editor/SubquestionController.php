@@ -60,13 +60,9 @@ class SubquestionController
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $question = $questionnaire->getQuestions()[0];
-        $arrayLikeTypos = array("TQRU", "TQRM", "TVFNM", "TVF");
 
-        if (!in_array($questionnaireTypology, $arrayLikeTypos)) {
-            $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
-        } else {
-            $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName(mb_substr($questionnaireTypology, 1));
-        }
+        $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
+
         $subquestion = $this->subquestionManager->createSubquestion($typology, $question);
 
         $this->propositionManager->createVfPropositions($questionnaire, $subquestion, $questionnaireTypology);

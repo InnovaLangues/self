@@ -78,11 +78,10 @@ class FixtureCommand extends ContainerAwareCommand
             }
 
             $typologies = array(
-                array("TVF", "Tableau de Vrai-Faux"), array("QRU", "Question à Réponse Unique"), array("VF", "Vrai-Faux"),
-                array("QRM", "Question à Réponse Multiple"), array("TQRU", "Tableau de QRU"), array("TQRM", "Tableau de QRM"),
+                array("TVF", "Tableau de Vrai-Faux"), array("TQRU", "Tableau de QRU"), 
+                array("TQRM", "Tableau de QRM"), array("TLCMLDM", "Liste de mots"),
                 array("APP", "Appariemment"), array("TVFNM", "Tableau de Vrai-Faux-Non Mentionné"),
-                array("VFNM", "Vrai-Faux-Non Mentionné"), array("TLCMLDM", "Liste de mots"),
-                array("TLCMLMULT", "Listes de choix multiple"), array("TLQROC", "QROC")
+                array("TLCMLMULT", "Listes de choix multiple"), array("TLQROC", "Question Réponse Ouverte Courte")
             );
             foreach ($typologies as $typology) {
                 if (!$typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[0])) {
@@ -126,24 +125,30 @@ class FixtureCommand extends ContainerAwareCommand
                 array("TLQROCSYL", "TLQROC"), array("TLQROCTRANS", "TLQROC"),
                 array("TLQROCDERIV", "TLQROC"), array("APPAT", "APP"),
                 array("APPIT", "APP"), array("APPAA", "APP"), array("APPAI", "APP"),
-                array("APPTT", "APP"),
+                array("APPTT", "APP"), array("QRU", "TQRU"), array("QRM", "TQRM"),
+                array("VF", "TVF"), array("VFNM", "TVFNM")
             );
             foreach ($typologiesToReplace as $typology) {
                 if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[0])) {
                     $newTypo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[1]);
+
                     if($questions = $em->getRepository('InnovaSelfBundle:Question')->findByTypology($typo)){
                         foreach ($questions as $question) {
                             $question->setTypology($newTypo);
                             $em->persist($question);
-                            foreach ($question->getSubquestions() as $subquestion) {
-                                $subquestion->setTypology($newTypo);
-                                $em->persist($subquestion);
-                            }
                         }
                     }
+
+                    if($subquestions = $em->getRepository('InnovaSelfBundle:Subquestion')->findByTypology($typo)){
+                        foreach ($subquestions as $subquestion) {
+                            $subquestion->setTypology($newTypo);
+                            $em->persist($subquestion);
+                        }
+                    }
+                           
+                    $em->flush();
                     $em->remove($typo);
-                    $typoName = $typo->getName();
-                    $output->writeln(" Typo ".$typoName." removed");
+                    $output->writeln(" Typo ".$typology[0]." replaced by ".$typology[1]);
                 }
             }
 

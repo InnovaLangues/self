@@ -1,5 +1,5 @@
 {% macro inputs(subquestion, proposition) %}
-    {% if subquestion.typology.name == "QRU" or subquestion.typology.name == "TQRU" or subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVFNM" or subquestion.typology.name == "TVF" %}
+    {% if subquestion.typology.name == "TQRU" or subquestion.typology.name == "TVFNM" or subquestion.typology.name == "TVF" %}
         {% set type = "radio" %}
     {% else %}
         {% set type = "checkbox" %}

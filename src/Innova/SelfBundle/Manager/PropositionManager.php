@@ -34,13 +34,13 @@ class PropositionManager
 
     public function createVfPropositions(Questionnaire $questionnaire, Subquestion $subquestion, $questionnaireTypology)
     {
-        if($questionnaireTypology == "VF" || $questionnaireTypology == "TVF" || $questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {
+        if($questionnaireTypology == "TVF" || $questionnaireTypology == "TVFNM") {
             $true = $this->mediaManager->createMedia($questionnaire, "texte", "VRAI", "VRAI", null, 0, "proposition");
             $this->createProposition($subquestion, $true, false);
             $false = $this->mediaManager->createMedia($questionnaire, "texte", "FAUX", "FAUX", null, 0, "proposition");
             $this->createProposition($subquestion, $false, false);
         }
-        if($questionnaireTypology == "TVFNM" || $questionnaireTypology == "VFNM") {
+        if($questionnaireTypology == "TVFNM") {
             $nd = $this->mediaManager->createMedia($questionnaire, "texte", "ND", "ND", null, 0, "proposition");
             $this->createProposition($subquestion, $nd, false);
         }
