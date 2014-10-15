@@ -26,6 +26,7 @@ class ExportManager
     {
         $fs = new Filesystem();
         $testId = $test->getId();
+        $csvContent = "";
 
         if ($tia == 0) {
             $tia = "";
@@ -40,6 +41,7 @@ class ExportManager
 
         $fs->mkdir($csvPathExport, 0777);
         $csvh = fopen($csvPathExport . "/" . $csvName, 'w+');
+        $csvContent ="temps;";
         fwrite($csvh, $csvContent);
         fclose($csvh);
 
@@ -87,6 +89,7 @@ class ExportManager
                 $result[$userId]["date"]  = $testDate;
             }
         }
+        /* Partie enlevée pour le pilote 3.
         $csv .= "\n";
 
         $csv .= "Difficulté" . ";" ;
@@ -110,6 +113,7 @@ class ExportManager
 
         $csv .= "\n";
         $csv .= "\n";
+        Fin partie enlevée pour le pilote 3. */
 
         // CSV HEADER
         $csv .= "Nom;" ; // A
@@ -184,7 +188,6 @@ class ExportManager
                         $csv .= $trace->getDifficulty() . ";" ;
                         $csv .= $trace->getTotalTime() . ";" ;
 
-
                         // création tableau de correspondance subquestion -> réponses
                         foreach ($answers as $answer) {
                             if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
@@ -206,12 +209,11 @@ class ExportManager
                                 if ($proposition->getRightAnswer()) {
                                     $nbPropositionRightAnswser++;
                                     $rightProps[] = $proposition->getId();
-
                                 }
                                 $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                             }
 
-                            // Récupération bonne réponse ou non 
+                            // Récupération bonne réponse ou non
                             $subquestionOk = $this->checkRightAnswer($answersArray, $subquestion, $nbPropositionRightAnswser, $rightProps);
                             if ($subquestionOk) {
                                 $csv .= "1" . ";";
@@ -219,7 +221,7 @@ class ExportManager
                                 $csv .= "0" . ";";
                             }
 
-                            // Récupération de la saisie ou des lettres associées aux réponses 
+                            // Récupération de la saisie ou des lettres associées aux réponses
                             $textToDisplay = $this->textToDisplay($subquestion, $answersArray, $propLetters);
                             $csv .= $textToDisplay;
                             $csv .= ";";
@@ -252,7 +254,7 @@ class ExportManager
         //  BODY
         $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
         foreach ($users as $user) {
-            if ($this ->countQuestionnaireDone($test, $user) > 0) {
+            if ($this->countQuestionnaireDone($test, $user) > 0) {
                 $csv .= $user->getUserName() . " " . $user->getFirstName() . ";" ;
 
                 $answersArray = array();
@@ -278,6 +280,7 @@ class ExportManager
                         $subquestions = $questions[0]->getSubQuestions();
                         foreach ($subquestions as $subquestion) {
                             $propositions = $subquestion->getPropositions();
+                            $rightProps = array();
                             $nbPropositionRightAnswser = 0;
                             $cptProposition = 0;
                             $propLetters = array();
@@ -286,27 +289,37 @@ class ExportManager
                                 $cptProposition++;
                                 if ($proposition->getRightAnswer()) {
                                     $nbPropositionRightAnswser++;
+                                    $rightProps[] = $proposition->getId();
                                 }
                                 $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                             }
 
-                            $letters = array();
-                            foreach ($answersArray[$subquestion->getId()] as $answer) {
-                                $idAnswer = $answer->getId();
-                                $letters[$propLetters[$idAnswer]] = 1;
+                            // Récupération bonne réponse ou non
+                            $subquestionOk = $this->checkRightAnswer($answersArray, $subquestion, $nbPropositionRightAnswser, $rightProps);
+                            if ($subquestionOk) {
+                                $csv .= "1" . ";";
+                            } else {
+                                $csv .= "0" . ";";
                             }
-                            ksort($letters);
-                            foreach ($letters as $key => $value) {
-                                $csv .= $key;
-                            }
+
+                            // Récupération de la saisie ou des lettres associées aux réponses
+                            $textToDisplay = $this->textToDisplay($subquestion, $answersArray, $propLetters);
+                            $csv .= $textToDisplay;
                             $csv .= ";";
                         }
                     }
                 }
                 $csv .= "\n";
-            }
-
+              }
         }
+
+        $csv .= "\n";
+        $csv .= "Légende :" . ";" ;
+        $csv .= "\n";
+        $csv .= "1 = réponse qui correspond à la réponse correcte établie dans l'éditeur" . ";" ;
+        $csv .= "\n";
+        $csv .= "xyz = la réponse tapée par l'étudiant, qui peut être fausse OU BIEN inserée parmi les réponses correctes" . ";" ;
+
         return $csv;
     }
 
@@ -439,7 +452,7 @@ class ExportManager
                     $subquestionOk = false;
                 }
             break;
-            
+
             case 'TLCMLDM':
             case 'TLCMLMULT':
             case 'TLQROC':
@@ -450,7 +463,7 @@ class ExportManager
                 break;
         }
 
-       
+
         return  $subquestionOk;
     }
 
@@ -480,7 +493,7 @@ class ExportManager
                     $textToDisplay .= $key;
                 }
             break;
-            
+
             case 'TLCMLDM':
             case 'TLCMLMULT':
             case 'TLQROC':
