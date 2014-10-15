@@ -9,10 +9,9 @@
         <div class="panel-body">
             <div class="row">
 
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label for="status">Status</label>
-
                             <select id="status" class="form-control">
                                 {% for s in status %}
                                 <option {% if questionnaire.status is not null and questionnaire.status == s %}selected{% endif %} value="{{ s.id }}">
@@ -22,7 +21,8 @@
                              </select>
                     </div>
                 </div>
-                <div class="col-md-4">
+
+                <div class="col-md-2">
                     <div class="form-group">
                         <label for="language">Langue</label>
                             <select id="language" class="form-control">
@@ -33,7 +33,23 @@
                              </select>
                     </div>
                 </div>
-             </div>
+            
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="skill">Niveau</label>
+                        {% set levels = ["-", "A1", "A2", "B1", "B2", "C1"] %}
+                        <select id="level" class="form-control">
+                            {% for level in levels %}
+                                <option {% if questionnaire.level is not null and questionnaire.level.name == level %}selected{% endif %} value="{{ level }}">
+                                    {{ level }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>

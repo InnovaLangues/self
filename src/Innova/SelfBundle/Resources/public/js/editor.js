@@ -2,6 +2,7 @@ $(document).ready(function() {
     var questionnaireId = $("#questionnaire-id").val();
     fillMediaName($("#theme").val());
     afterAjax();
+    hideElements();
 
     /* GENERAL INFOS EVENTS */
     $('#theme').on('blur',function(e){
@@ -14,14 +15,16 @@ $(document).ready(function() {
 
     $('#skill').on('change',function(e){
         setSkill(questionnaireId);
+        $("#typology-container").show();
     });
 
     $('#level').on('change',function(e){
         setLevel(questionnaireId);
     });
 
-    $('#typology').on('change',function(e){
+    $('body').on('change', '#typology', function(e){
         setTypology(questionnaireId);
+        $(".task-content").show();
     });
 
     $('#status').on('change',function(e){
@@ -519,6 +522,7 @@ function setSkill(questionnaireId) {
         }
     })
     .done(function(data) {
+        $("#general-infos").html(data.template);
         afterAjax();
     });
 }
@@ -536,7 +540,7 @@ function setTypology(questionnaireId) {
     })
     .done(function(data) {
         $("#typology").val(data.typology);
-        $("#typology").attr('disabled', 'disabled')
+        $("#typology").attr('disabled', 'disabled');
         $("#subquestion-container").replaceWith(data.subquestions);
         afterAjax();
     });
@@ -996,6 +1000,15 @@ function afterAjax(){
     $("#loader-img").hide();
     $(".btn, input").removeAttr("disabled");
     $('*').tooltip({placement:'top'});
+}
+
+function hideElements(){
+    var typologyContainer = $("#typology-container");
+    var taskContent = $(".task-content");
+
+    if(!typologyContainer.is(":visible") ){
+        taskContent.hide();
+    }
 }
 
 /************************************************
