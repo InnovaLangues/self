@@ -37,6 +37,64 @@ class FixtureCommand extends ContainerAwareCommand
             $start = time();
             $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
+            /* TYPOLOGY */
+            $typologies = array(
+                array("TVF", "Vrai-Faux"), array("TQRU", "Question à Réponse Unique"), 
+                array("TQRM", "Question à Réponses Multiples"), array("TLCMLDM", "Liste de mots"),
+                array("APP", "Appariemment"), array("TVFNM", "Vrai-Faux-Non Mentionné"),
+                array("TLCMLMULT", "Listes de choix multiple"), array("TLQROC", "Question Réponse Ouverte Courte")
+            );
+            foreach ($typologies as $typology) {
+                if (!$typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[0])) {
+                    $typo = new Typology();
+                    $typo->setName($typology[0]);
+                    $typo->setDescription($typology[1]);
+                    $em->persist($typo);
+                    $output->writeln("Add new Typology (".$typology[0]." : ".$typology[1].").");
+                } else {
+                    if ($typo->getDescription() != $typology[1]) {
+                        $typo->setDescription($typology[1]);
+                        $em->persist($typo);
+                        $output->writeln("Edit ".$typology[0]." description (".$typology[1].").");
+                    }
+                }
+            }
+            $em->flush();
+
+            /* SKILLS */
+            $questionnaireSkills = array("CO", "CE", "EEC");
+            foreach ($questionnaireSkills as $questionnaireSkill) {
+                if (!$em->getRepository('InnovaSelfBundle:Skill')->findOneByName($questionnaireSkill)) {
+                    $skill = new Skill();
+                    $skill->setName($questionnaireSkill);
+                    $em->persist($skill);
+                    $output->writeln("Add new Skill (".$questionnaireSkill.").");
+                }
+            }
+            $em->flush();
+
+            /* SKILL / TYPO */
+            $skills2typos = array(
+                array("CO", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
+                array("CE", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
+                array("EEC", array("TLCMLMULT", "TLQROC", "TLCMLDM"))
+            );
+            foreach ($skills2typos as $skills2typo) {
+                $skillName = $skills2typo[0];
+                $typoNames = $skills2typo[1];
+                if ($skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skillName)) {
+                   foreach ($typoNames as $typoName) {
+                        $skillTypos = $skill->getTypologys();
+                        if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typoName)) {
+                            if (!$skillTypos->contains($typo)){
+                                $skill->addTypology($typo);
+                                $em->persist($skill);
+                            }
+                        }
+                   }
+                }
+            }
+
             $mediaTypes = array("audio", "video", "texte", "image");
             foreach ($mediaTypes as $mediaType) {
                 if (!$em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($mediaType)) {
@@ -67,39 +125,6 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $questionnaireSkills = array("CO", "CE", "EEC");
-            foreach ($questionnaireSkills as $questionnaireSkill) {
-                if (!$em->getRepository('InnovaSelfBundle:Skill')->findOneByName($questionnaireSkill)) {
-                    $skill = new Skill();
-                    $skill->setName($questionnaireSkill);
-                    $em->persist($skill);
-                    $output->writeln("Add new Skill (".$questionnaireSkill.").");
-                }
-            }
-
-            $typologies = array(
-                array("TVF", "Vrai-Faux"), array("TQRU", "Question à Réponse Unique"), 
-                array("TQRM", "Question à Réponses Multiples"), array("TLCMLDM", "Liste de mots"),
-                array("APP", "Appariemment"), array("TVFNM", "Vrai-Faux-Non Mentionné"),
-                array("TLCMLMULT", "Listes de choix multiple"), array("TLQROC", "Question Réponse Ouverte Courte")
-            );
-            foreach ($typologies as $typology) {
-                if (!$typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology[0])) {
-                    $typo = new Typology();
-                    $typo->setName($typology[0]);
-                    $typo->setDescription($typology[1]);
-                    $em->persist($typo);
-                    $output->writeln("Add new Typology (".$typology[0]." : ".$typology[1].").");
-                } else {
-                    if ($typo->getDescription() != $typology[1]) {
-                        $typo->setDescription($typology[1]);
-                        $em->persist($typo);
-                        $output->writeln("Edit ".$typology[0]." description (".$typology[1].").");
-                    }
-                }
-            }
-            $em->flush();
-
             $typologiesToDelete = array("TLCMQRU", "TLCMTQRU", "TLQROCDCTU", "TLQROCDCTM");
             foreach ($typologiesToDelete as $typology) {
                 if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typology)) {
@@ -119,7 +144,6 @@ class FixtureCommand extends ContainerAwareCommand
                     $output->writeln(" Typo ".$typoName." removed");
                 }
             }
-            $em->flush();
 
             $typologiesToReplace = array(
                 array("TLQROCFIRSTLEN", "TLQROC"), array("TLQROCNOCLU", "TLQROC"),
@@ -148,7 +172,6 @@ class FixtureCommand extends ContainerAwareCommand
                         }
                     }
                            
-                    $em->flush();
                     $em->remove($typo);
                     $output->writeln(" Typo ".$typology[0]." replaced by ".$typology[1]);
                 }
@@ -230,8 +253,6 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-
-
             /* Gestion du statut des tâches */
             $status = array("Ecriture", "Révision", "Validation", "Modification post-pilotage");
             foreach ($status as $s) {
@@ -294,28 +315,6 @@ class FixtureCommand extends ContainerAwareCommand
                     $e->setName($editorLogObject);
                     $em->persist($e);
                     $output->writeln("Add new editorLogObject (".$editorLogObject.")");
-                }
-            }
-
-            /* Gestion de la relation skill / typo */
-            $skills2typos = array(
-                array("CO", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
-                array("CE", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
-                array("EEC", array("TLCMLMULT", "TLQROC", "TLCMLDM"))
-            );
-            foreach ($skills2typos as $skills2typo) {
-                $skillName = $skills2typo[0];
-                $typoNames = $skills2typo[1];
-                if ($skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skillName)) {
-                   foreach ($typoNames as $typoName) {
-                        $skillTypos = $skill->getTypologys();
-                        if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typoName)) {
-                            if (!$skillTypos->contains($typo)){
-                                $skill->addTypology($typo);
-                                $em->persist($skill);
-                            }
-                        }
-                   }
                 }
             }
 
