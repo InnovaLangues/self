@@ -41,7 +41,7 @@ class ExportManager
 
         $fs->mkdir($csvPathExport, 0777);
         $csvh = fopen($csvPathExport . "/" . $csvName, 'w+');
-        $csvContent ="temps;";
+
         fwrite($csvh, $csvContent);
         fclose($csvh);
 
@@ -197,6 +197,7 @@ class ExportManager
                         }
 
                         $subquestions = $questions[0]->getSubquestions();
+
                         foreach ($subquestions as $subquestion) {
                             $propositions = $subquestion->getPropositions();
                             $rightProps = array();
@@ -247,6 +248,7 @@ class ExportManager
             foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestions) {
                 $i++;
                 $csv .= $questionnaire->getTheme() . " " . $questionnaire->getQuestions()[0]->getTypology()->getName() . " " . $i . ";" ;
+                $csv .= $questionnaire->getTheme() . " " . $questionnaire->getQuestions()[0]->getTypology()->getName() . " " . $i . ";" ;
             }
         }
         $csv .= "\n";
@@ -284,24 +286,28 @@ class ExportManager
                             $nbPropositionRightAnswser = 0;
                             $cptProposition = 0;
                             $propLetters = array();
+                            $libRightAnswer = "";
                             // on compte les bonnes propositions
                             foreach ($propositions as $proposition) {
                                 $cptProposition++;
                                 if ($proposition->getRightAnswer()) {
                                     $nbPropositionRightAnswser++;
                                     $rightProps[] = $proposition->getId();
+                                    $libRightAnswer = $libRightAnswer . $proposition->getMedia()->getDescription() . " ";
                                 }
                                 $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                             }
 
                             // Récupération bonne réponse ou non
+                            $csv .= $libRightAnswer . ";";
+/*
                             $subquestionOk = $this->checkRightAnswer($answersArray, $subquestion, $nbPropositionRightAnswser, $rightProps);
                             if ($subquestionOk) {
-                                $csv .= "1" . ";";
+                                $csv .= $libRightAnswer . ";";
                             } else {
                                 $csv .= "0" . ";";
                             }
-
+*/
                             // Récupération de la saisie ou des lettres associées aux réponses
                             $textToDisplay = $this->textToDisplay($subquestion, $answersArray, $propLetters);
                             $csv .= $textToDisplay;
@@ -316,11 +322,109 @@ class ExportManager
         $csv .= "\n";
         $csv .= "Légende :" . ";" ;
         $csv .= "\n";
-        $csv .= "1 = réponse qui correspond à la réponse correcte établie dans l'éditeur" . ";" ;
+        $csv .= "première colonne = réponse qui correspond à la réponse correcte établie dans l'éditeur" . ";" ;
         $csv .= "\n";
-        $csv .= "xyz = la réponse tapée par l'étudiant, qui peut être fausse OU BIEN inserée parmi les réponses correctes" . ";" ;
+        $csv .= "seconde colonne = la réponse tapée par l'étudiant, qui peut être fausse OU BIEN inserée parmi les réponses correctes" . ";" ;
 
         return $csv;
+    }
+
+    private function countQuestionnaireDone(Test $test, User $user){
+        $em = $this->entityManager;
+
+        $count = $em->getRepository('InnovaSelfBundle:Questionnaire')
+                ->countDoneYetByUserByTest($test->getId(), $user->getId());
+
+        return  $count;
+    }
+
+    private function intToLetter($int){
+        $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
+
+        return $arr[$int];
+    }
+
+    private function checkRightAnswer($answersArray, Subquestion $subquestion, $nbPropositionRightAnswser, $rightProps)
+    {
+        $typo = $subquestion->getTypology()->getName();
+        $subquestionId = $subquestion->getId();
+
+        switch ($typo) {
+            case 'TVF':
+            case 'VF':
+            case 'TVFNM':
+            case 'VFNM':
+            case 'QRU':
+            case 'QRM':
+            case 'TQRU':
+            case 'TQRM':
+            case 'APP':
+                $nbAnswers = count($answersArray[$subquestionId]);
+                $subquestionOk = true;
+                if ($nbAnswers == $nbPropositionRightAnswser) {
+                    foreach ($rightProps as $rightProp) {
+                        $found = false;
+                        foreach ($answersArray[$subquestionId] as $answerProp) {
+                            if ($rightProp == $answerProp->getId()) {
+                                $found = true;
+                            }
+                        }
+                        if ($found === false) {
+                            $subquestionOk = false;
+                        }
+                    }
+                } else {
+                    $subquestionOk = false;
+                }
+                break;
+
+            case 'TLCMLDM':
+            case 'TLCMLMULT':
+            case 'TLQROC':
+                $subquestionOk = true;
+                $proposition = $answersArray[$subquestionId][0];
+                $subquestionOk = $proposition->getRightAnswer();
+                break;
+        }
+
+        return  $subquestionOk;
+    }
+
+    private function textToDisplay(Subquestion $subquestion, $answersArray, $propLetters ){
+        $typo = $subquestion->getTypology()->getName();
+        $subquestionId = $subquestion->getId();
+        $textToDisplay = "";
+
+        switch ($typo) {
+            case 'TVF':
+            case 'VF':
+            case 'TVFNM':
+            case 'VFNM':
+            case 'QRU':
+            case 'QRM':
+            case 'TQRU':
+            case 'TQRM':
+            case 'APP':
+                $letters = array();
+                foreach ($answersArray[$subquestion->getId()] as $answer) {
+                    $idAnswer = $answer->getId();
+                    $letters[$propLetters[$idAnswer]] = 1;
+                }
+                ksort($letters);
+                foreach ($letters as $key => $value) {
+                    $textToDisplay .= $key;
+                }
+                break;
+
+            case 'TLCMLDM':
+            case 'TLCMLMULT':
+            case 'TLQROC':
+                $proposition = $answersArray[$subquestionId][0];
+                $textToDisplay = $proposition->getMedia()->getDescription();
+                break;
+        }
+
+        return $textToDisplay;
     }
 
     /**
@@ -404,104 +508,4 @@ class ExportManager
         return $score;
     }
 
-    private function countQuestionnaireDone(Test $test, User $user){
-        $em = $this->entityManager;
-
-        $count = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                ->countDoneYetByUserByTest($test->getId(), $user->getId());
-
-        return  $count;
-    }
-
-    private function intToLetter($int){
-        $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
-
-        return $arr[$int];
-    }
-
-    private function checkRightAnswer($answersArray, Subquestion $subquestion, $nbPropositionRightAnswser, $rightProps)
-    {
-        $typo = $subquestion->getTypology()->getName();
-        $subquestionId = $subquestion->getId();
-
-        switch ($typo) {
-            case 'TVF':
-            case 'VF':
-            case 'TVFNM':
-            case 'VFNM':
-            case 'QRU':
-            case 'QRM':
-            case 'TQRU':
-            case 'TQRM':
-            case 'APP':
-                $nbAnswers = count($answersArray[$subquestionId]);
-                $subquestionOk = true;
-                if ($nbAnswers == $nbPropositionRightAnswser) {
-                    foreach ($rightProps as $rightProp) {
-                        $found = false;
-                        foreach ($answersArray[$subquestionId] as $answerProp) {
-                            if ($rightProp == $answerProp->getId()) {
-                                $found = true;
-                            }
-                        }
-                        if ($found === false) {
-                            $subquestionOk = false;
-                        }
-                    }
-                } else {
-                    $subquestionOk = false;
-                }
-            break;
-
-            case 'TLCMLDM':
-            case 'TLCMLMULT':
-            case 'TLQROC':
-                $subquestionOk = true;
-                $proposition = $answersArray[$subquestionId][0];
-
-                $subquestionOk = $proposition->getRightAnswer();
-                break;
-        }
-
-
-        return  $subquestionOk;
-    }
-
-
-    private function textToDisplay(Subquestion $subquestion, $answersArray, $propLetters ){
-        $typo = $subquestion->getTypology()->getName();
-        $subquestionId = $subquestion->getId();
-        $textToDisplay = "";
-
-        switch ($typo) {
-            case 'TVF':
-            case 'VF':
-            case 'TVFNM':
-            case 'VFNM':
-            case 'QRU':
-            case 'QRM':
-            case 'TQRU':
-            case 'TQRM':
-            case 'APP':
-                $letters = array();
-                foreach ($answersArray[$subquestion->getId()] as $answer) {
-                    $idAnswer = $answer->getId();
-                    $letters[$propLetters[$idAnswer]] = 1;
-                }
-                ksort($letters);
-                foreach ($letters as $key => $value) {
-                    $textToDisplay .= $key;
-                }
-            break;
-
-            case 'TLCMLDM':
-            case 'TLCMLMULT':
-            case 'TLQROC':
-                $proposition = $answersArray[$subquestionId][0];
-                $textToDisplay = $proposition->getMedia()->getDescription();
-            break;
-        }
-
-        return $textToDisplay;
-    }
 }

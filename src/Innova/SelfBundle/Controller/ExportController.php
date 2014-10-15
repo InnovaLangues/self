@@ -72,7 +72,7 @@ class ExportController
         $response->headers->set('Content-length', filesize($file));
         $response->sendHeaders();
 
-        $response->setContent(readfile($file));
+        $response->setContent(file_get_contents($file));
 
         return $response;
     }
