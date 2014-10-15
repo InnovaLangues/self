@@ -443,6 +443,61 @@ class ExportManager
             $typology = $answers[0]->getProposition()->getSubQuestion()->getTypology()->getName();
 
             switch ($typology) {
+                case 'TLCMLDM':
+                case 'TLCMLMULT':
+                case 'TLQROC':
+                    //
+                    // TODO : c'est le même code que pour les typologies QRU, QRM etc ...
+                    // En attente de remarques des autres langues
+                    // pour confirmation de ce fonctionnement.
+                    // Si OK, alors ajouter les 3 nouvelles typos dans la grande liste ci-dessous.
+                    // Si KO, alors modifier dans ce bloc.
+                    //
+                    foreach ($answers as $answer) {
+                        if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
+                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                        }
+                        $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
+                    }
+
+                    foreach ($answersArray as $subquestionId => $answers) {
+                        // Initialisation des variables.
+                        $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
+                        // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
+                        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
+                        $propositions = $subquestion->getPropositions();
+
+                        // Calcul du nombre de réponses.
+                        $nbAnswers = count($answers);
+                        $rightProps = array();
+                        // Accès à la proposition.
+                        // Calcul du nombre de proposition et
+                        // calcul du nombre de bonnes réponses.
+                        foreach ($propositions as $proposition) {
+                                $nbProposition++;
+                                if ($proposition->getRightAnswer()) {
+                                    $nbPropositionRightAnswser++;
+                                    $rightProps[] = $proposition;
+                                }
+                        }
+
+                        // Je calcule le score que si le testeur a répondu à autant de réponses
+                        // qu'il y a de propositions.
+                        // Si ce n'est pas le cas, il aura forcément ZERO point.
+                        if ($nbAnswers == $nbPropositionRightAnswser) {
+                            foreach ($rightProps as $rightProp) {
+                                if (in_array($rightProp->getId(),$answersArray[$subquestionId])) {
+                                        $nbRightAnswer++;
+                                }
+                            }
+                        }
+
+                        if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
+                            $score++;
+                        }
+                    }
+                    break;
+
                 case "APP";
                     foreach ($answers as $answer) {
                         if ($answer->getProposition()->getRightAnswer()) {
