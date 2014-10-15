@@ -16,6 +16,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    twig.extension.get_typologies:
+        class: Innova\SelfBundle\Twig\TypologyExtension
+        arguments:
+            entityManager: @doctrine.orm.entity_manager
+        tags:
+            - { name: twig.extension }
+
     twig.extension.disambiguate:
         class: Innova\SelfBundle\Twig\DisambiguateExtension
         tags:

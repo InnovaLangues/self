@@ -8,16 +8,16 @@
     <input type="hidden" id="entity-to-be-reloaded" value=""/>
 
     <div id="" class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" id="general-infos">
             {% include "InnovaSelfBundle:Editor/partials:general-infos.html.twig" %}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 task-content">
             {% include "InnovaSelfBundle:Editor/partials:contexte.html.twig" %}
             {% include "InnovaSelfBundle:Editor/partials:texte.html.twig" %}
             {% include "InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig" %}
             {% include "InnovaSelfBundle:Editor/partials:feedback.html.twig" %}
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 task-content">
             {% include "InnovaSelfBundle:Editor/partials:subquestions.html.twig" %}
         </div>
     </div>
