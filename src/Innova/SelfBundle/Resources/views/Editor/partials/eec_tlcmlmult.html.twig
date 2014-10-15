@@ -1,23 +1,28 @@
 <form class="form-inline">
 {% if subquestions|length > 0 %}
-    {% for subquestion in subquestions %}
-        {% for proposition in subquestion.propositions if proposition.rightAnswer == true %}
-            <p>{{ proposition.media.description }}</p>
-        {% endfor %} 
-
-      
-
-        {% for proposition in subquestion.propositions if proposition.media.mediaPurpose.name == "distractor" %}
-            <div class="input-group input-group-sm col-md-6">
-                <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor form-control"/>
-                <span class="input-group-btn">
-                    <button class="btn btn-default eec-distractor-delete" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-proposition-id="{{ proposition.id }}"><span class=" glyphicon glyphicon-remove"></span></button>
-                </span>
+    {% for i, subquestion in subquestions %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Liste de mots {{ i + 1 }}
+                <span  data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs eec-add-distractor-mult pull-right">{{ 'editor.app.add_distractor' | trans }}</span>
             </div>
-            <br/>
-        {% endfor %}
-        <span  data-subquestion-id="{{ subquestion.id }}" class="btn btn-default btn-xs eec-add-distractor-mult">{{ 'editor.app.add_distractor' | trans }}</span><br/>
-        <hr/>
+            <div class="panel-body list-group" style="padding:0">
+                {% for proposition in subquestion.propositions if proposition.rightAnswer == true %}
+                    <li class="list-group-item">{{ proposition.media.description }}</li>
+                {% endfor %} 
+
+                {% for proposition in subquestion.propositions if proposition.media.mediaPurpose.name == "distractor" %}
+                    <li class="list-group-item">
+                    <span class="input-group input-group-sm col-md-6">
+                        <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor form-control"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default eec-distractor-delete" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-proposition-id="{{ proposition.id }}"><span class=" glyphicon glyphicon-remove"></span></button>
+                        </span>
+                    </span>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
     {% endfor %}
 {% endif %}
 </form>

@@ -1,19 +1,33 @@
-<form class="form-inline">
 {% if subquestions|length > 0 %}
-    {% for subquestion in subquestions %}
-        {% for proposition in subquestion.propositions if proposition.rightAnswer == true %}
-            <p>{{ proposition.media.description }}</p>
-        {% endfor %}
-    {% endfor %}
-    {% for proposition in questionnaire.questions[0].subquestions[0].propositions if proposition.media.mediaPurpose.name == "distractor" %}
-        <div class="input-group input-group-sm col-md-6">
-            <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor form-control"/>
-            <span class="input-group-btn">
-                <button class="btn btn-default eec-distractor-delete" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-proposition-id="{{ proposition.id }}"><span class=" glyphicon glyphicon-remove"></span></button>
-            </span>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Liste de mots</div>
+        <div class="panel-body list-group" style="padding:0">
+                {% for subquestion in subquestions %}
+                    {% for proposition in subquestion.propositions if proposition.rightAnswer == true %}
+                        <li class="list-group-item">{{ proposition.media.description }}</li>
+                    {% endfor %}
+                {% endfor %}
         </div>
-        <br/>
-    {% endfor %}
-    <span class="btn btn-default btn-xs eec-add-distractor">{{ 'editor.app.add_distractor' | trans }}</span> <br/>
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Distracteurs
+            <span class="btn btn-default btn-xs eec-add-distractor pull-right">{{ 'editor.app.add_distractor' | trans }}</span>
+        </div>
+        <div class="panel-body list-group" style="padding:0">
+                {% for proposition in questionnaire.questions[0].subquestions[0].propositions if proposition.media.mediaPurpose.name == "distractor" %}
+                    <li class="list-group-item">
+                        <span class="input-group input-group-sm col-md-6">
+                            <input type="text" data-media-id="{{ proposition.media.id }}" value="{{ proposition.media.description }}" class="eec-distractor form-control"/>
+                            <span class="input-group-btn">
+                            <button class="btn btn-default eec-distractor-delete" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-proposition-id="{{ proposition.id }}"><span class=" glyphicon glyphicon-remove"></span></button>
+                            </span>
+                        </span>
+                    </li>
+                {% endfor %}
+        </div>
+    </div>
+
 {% endif %}
-</form>

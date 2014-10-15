@@ -1,9 +1,23 @@
 <div id="blank-text-container" class="panel panel-default">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     <div class="panel-heading">
+        {{ macros.help("Texte qui servira de base à la création des lacunes. Pour créer les lacunes, entourez les mots désirés avec des #. Vous pourrez ensuite générer la/les listes de mots et y ajouter des distracteurs.") }}
         Texte lacunaires
         {% if questionnaire.mediaBlankText is not null %}
             <div class="pull-right">
+                {% if typoPrefix == "TLQ" %}
+                    {% if questionnaire.questions[0].subquestions|length == 0  %}
+                        <span id="create-lacunes" class="btn btn-default btn-xs">Générer lacunes</span>
+                    {% else %}
+                        <span id="create-lacunes" class="btn btn-default btn-xs"> {{ macros.help("Attention !") }} Regénérer lacunes</span>
+                    {% endif %}
+                {% elseif typoPrefix == "TLC"  %}
+                    {% if questionnaire.questions[0].subquestions|length == 0  %}
+                        <span id="create-liste" class="btn btn-default btn-xs">Générer liste(s)</span>
+                    {% else %}
+                        <span id="create-liste" class="btn btn-default btn-xs">{{ macros.help("Attention !") }} Regénérer liste(s)</span>
+                    {% endif %}
+                {% endif %}
                 {{ macros.editMedia(questionnaire.mediaBlankText, "subquestion") }}
                 <span id="delete-blank-text" class="glyphicon glyphicon-remove btn btn-default btn-sm" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}"></span>
             </div>
