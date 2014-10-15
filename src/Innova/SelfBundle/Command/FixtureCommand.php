@@ -98,6 +98,7 @@ class FixtureCommand extends ContainerAwareCommand
                     }
                 }
             }
+            $em->flush();
 
             $typologiesToDelete = array("TLCMQRU", "TLCMTQRU", "TLQROCDCTU", "TLQROCDCTM");
             foreach ($typologiesToDelete as $typology) {
@@ -118,6 +119,7 @@ class FixtureCommand extends ContainerAwareCommand
                     $output->writeln(" Typo ".$typoName." removed");
                 }
             }
+            $em->flush();
 
             $typologiesToReplace = array(
                 array("TLQROCFIRSTLEN", "TLQROC"), array("TLQROCNOCLU", "TLQROC"),
