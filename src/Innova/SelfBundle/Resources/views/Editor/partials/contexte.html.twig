@@ -1,6 +1,7 @@
 <div id="contexte-container" class="panel panel-info">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     <div class="panel-heading">
+        {{ macros.help("Court texte ou son présentant le contexte de la situation") }}
         {{ 'editor.questionnaire.context' | trans }}
         {% if questionnaire.mediaContext is not null %}
             <div class="pull-right">
