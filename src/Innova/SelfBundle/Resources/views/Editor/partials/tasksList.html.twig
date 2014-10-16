@@ -4,7 +4,7 @@
 {% else %}
     {% for order in orders %}
         <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
-
+            
             {% if order.questionnaire.status is not null %}
                 {% set statusId = order.questionnaire.status.id %}
                 {% set statusName = order.questionnaire.status.name %}
@@ -12,7 +12,9 @@
                 {% set statusId = 1 %}
                 {% set statusName = "Ecriture" %}
             {% endif %}
-            <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
+            <span class="status-container">
+                <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
+            </span>
 
             {% if order.questionnaire.theme != "" %}
                 {{ order.questionnaire.theme }}
@@ -20,7 +22,7 @@
                 {{ 'editor.task.unnamed' | trans }}
             {% endif %}
 
-            <span class="buttons" style="position:absolute;right:5px;top:5px">
+            <span class="buttons">
                 <a toggle="tooltip" data-original-title="{{ 'generic.player' | trans }}" class="btn btn-default btn-sm" href="{{ path('questionnaire_pick', { testId: order.test.id, questionnaireId: order.questionnaire.id }) }}">
                     <span class="glyphicon glyphicon-play"></span>
                 </a>

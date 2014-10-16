@@ -22,3 +22,22 @@
     cursor:pointer;
 }
 
+.buttons {
+    position:absolute;
+    right:5px;
+    top:5px;
+}
+
+.status-container{
+    display:inline-block; 
+    min-width:120px;
+    margin-left:10px;
+}
+
+#tasks-list{
+    padding:0;
+}
+
+#tasks-list .list-group{
+    margin:0;
+}
