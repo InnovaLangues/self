@@ -8,7 +8,7 @@ anonymous:
 
 menu:
     users: Utilisateurs
-    csv_export: Export CSV
+    csv_export: Export CSV/PDF
     tests: Accès aux tests
     editor: Editeur
     help: Aide
@@ -19,6 +19,7 @@ menu:
 export:
     file_generated: Le fichier a été généré
     file_download: Télécharger le fichier au format CSV
+    file_download_pdf: Télécharger le fichier au format PDF
     files_list: Liste des fichiers générés
     files_count: %nbFile% fichier(s) dans le dossier
     tests_list: Tests exportés

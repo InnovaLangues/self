@@ -8,7 +8,7 @@ anonymous:
 
 menu:
     users: Utenti
-    csv_export: Risultati pilotaggio
+    csv_export: Risultati pilotaggio/PDF
     tests: Accedi al test
     editor: Tool autore
     help: Aiuto
@@ -19,6 +19,7 @@ menu:
 export:
     file_generated: Il file è stato generato
     file_download: Scarica il file in formato CSV
+    file_download_pdf: Scarica il file in formato PDF
     files_list: Lista dei file (generati)
     files_count: %nbFile% file(s) nella cartella
     tests_list: Test esportati
