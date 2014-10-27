@@ -7,22 +7,12 @@
 
         {% if typoPrefix == "TLQ" %}
             Lacunes/indices
-            {% if questionnaire.questions[0].subquestions|length == 0  %}
-                <span id="create-lacunes" class="btn btn-default btn-xs pull-right">Générer lacunes</span>
-            {% else %}
-                <span id="create-lacunes" class="btn btn-default btn-xs pull-right">Regénérer lacunes</span>
-            {% endif %}
             </div>
             <div class="panel-body tab-pane">
                 {% include "InnovaSelfBundle:Editor/partials:eec.html.twig" %}
             </div>
         {% elseif typoPrefix == "TLC"  %}
             Liste de mots
-            {% if questionnaire.questions[0].subquestions|length == 0  %}
-                <span id="create-liste" class="btn btn-default btn-xs pull-right">Générer liste(s)</span>
-            {% else %}
-                <span id="create-liste" class="btn btn-default btn-xs pull-right">Regénérer liste(s)</span>
-            {% endif %}
             </div>
             <div class="panel-body tab-pane">
                 {% include "InnovaSelfBundle:Editor/partials:eec.html.twig" %}

@@ -77,7 +77,7 @@ generic:
     yes: Yes
     no: No
     filter: Filter
-    player: Player
+    player: See in player
 
 editor:
     test:
