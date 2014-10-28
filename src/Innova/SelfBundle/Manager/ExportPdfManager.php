@@ -28,17 +28,16 @@ class ExportPdfManager
         $testId = $test->getId();
         $pdfContent = "";
 
-//        $pdfContent = $this->getPdfContent($test);
-        $pdfContent = "titi";
         $pdfName = "self_export-pdf-test_" . $testId . "-" . date("d-m-Y_H:i:s") . '.pdf';
 
-        $pdfPathExport = $this->kernelRoot ."/data/export/".$testId."/";
+        $pdfPathExport = $this->kernelRoot ."/data/exportPdf/".$testId."/";
 
-        $fs->mkdir($pdfPathExport, 0777);
-        $pdfh = fopen($pdfPathExport . "/" . $pdfName, 'w+');
+//        $fs->mkdir($pdfPathExport, 0777);
+//        $pdfh = fopen($pdfPathExport . $pdfName, 'w+');
 
-        fwrite($pdfh, $pdfContent);
-        fclose($pdfh);
+//        fwrite($pdfh, $pdfContent);
+//        fclose($pdfh);
+
         return $pdfName;
     }
 

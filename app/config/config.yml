@@ -109,3 +109,9 @@ avalanche_imagine:
         app3:
             type:    thumbnail
             options: { size: [174, 118], mode: outbound }
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf
+        options:    []

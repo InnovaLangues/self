@@ -1,0 +1,11 @@
+
+Difficulté;Libellé;
+1;Très facile;
+2;Facile;
+3;Normal;
+4;Difficile;
+5;Très Difficile;
+
+
+Nom;Prénom;Date;Temps en secondes (pour le test entier);Niveau Dialang CO;Niveau Dialang CE;Niveau Dialang EEC;Niveau Lansad acquis;Score total obtenu dans le test (formule du total);T1 - NOM de ma TACHE;T1 - Protocole d'interaction;T1 - difficulté;T1 - TEMPS;T1_1 - CORR-FAUX : 1 pour correct / 0 pour faux;T1_1 - PROPOSITION CHOISIE;T2 - NOM de ma TACHE;T2 - Protocole d'interaction;T2 - difficulté;T2 - TEMPS;T2_1 - CORR-FAUX : 1 pour correct / 0 pour faux;T2_1 - PROPOSITION CHOISIE;T2_2 - CORR-FAUX : 1 pour correct / 0 pour faux;T2_2 - PROPOSITION CHOISIE;T3 - NOM de ma TACHE;T3 - Protocole d'interaction;T3 - difficulté;T3 - TEMPS;T3_1 - CORR-FAUX : 1 pour correct / 0 pour faux;T3_1 - PROPOSITION CHOISIE;T3_2 - CORR-FAUX : 1 pour correct / 0 pour faux;T3_2 - PROPOSITION CHOISIE;T3_3 - CORR-FAUX : 1 pour correct / 0 pour faux;T3_3 - PROPOSITION CHOISIE;T4 - NOM de ma TACHE;T4 - Protocole d'interaction;T4 - difficulté;T4 - TEMPS;T4_1 - CORR-FAUX : 1 pour correct / 0 pour faux;T4_1 - PROPOSITION CHOISIE;T4_2 - CORR-FAUX : 1 pour correct / 0 pour faux;T4_2 - PROPOSITION CHOISIE;T4_3 - CORR-FAUX : 1 pour correct / 0 pour faux;T4_3 - PROPOSITION CHOISIE;T4_4 - CORR-FAUX : 1 pour correct / 0 pour faux;T4_4 - PROPOSITION CHOISIE;T4_5 - CORR-FAUX : 1 pour correct / 0 pour faux;T4_5 - PROPOSITION CHOISIE;T4_6 - CORR-FAUX : 1 pour correct / 0 pour faux;T4_6 - PROPOSITION CHOISIE;T5 - NOM de ma TACHE;T5 - Protocole d'interaction;T5 - difficulté;T5 - TEMPS;T5_1 - CORR-FAUX : 1 pour correct / 0 pour faux;T5_1 - PROPOSITION CHOISIE;T5_2 - CORR-FAUX : 1 pour correct / 0 pour faux;T5_2 - PROPOSITION CHOISIE;
+admin;;2509;12;;;;;0;QRM EEC;QRM;5;12;0;B;

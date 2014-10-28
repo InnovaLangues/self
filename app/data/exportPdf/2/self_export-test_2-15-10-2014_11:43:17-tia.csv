@@ -1,0 +1,6 @@
+Etudiant;EEC/MULT TLCMLMULT 1;EEC/MULT TLCMLMULT 1;EEC/MULT TLCMLMULT 2;EEC/MULT TLCMLMULT 2;
+admin ;texte ;d1;texte ;texte;
+
+Légende :;
+première colonne = réponse qui correspond à la réponse correcte établie dans l'éditeur;
+seconde colonne = la réponse tapée par l'étudiant, qui peut être fausse OU BIEN inserée parmi les réponses correctes;

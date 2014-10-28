@@ -22,7 +22,8 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Innova\SelfBundle\InnovaSelfBundle(),
-            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle()
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,0 +1,6 @@
+Etudiant;A1_EEC_rdv_place TLQROC 1;A1_EEC_rdv_place TLQROC 2;
+admin ;0;bv;0;rer;
+
+LÃ©gende :;
+1 = réponse qui correspond à la réponse correcte établie dans l'éditeur;
+xyz = la réponse tapée par l'étudiant, qui peut être fausse OU BIEN inserée parmi les réponses correctes;
