@@ -62,3 +62,8 @@ rm *.flv
 git pull
 php app/console cache:clear --env=prod --no-debug
 ```
+
+### Execute this command to add wkhtmltox tool to PDF export :
+``` bash
+sudo dpkg -i wkhtmltox-0.12.1_linux-wheezy-amd64.deb
+```
