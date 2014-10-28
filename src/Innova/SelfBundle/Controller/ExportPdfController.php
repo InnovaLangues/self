@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use Innova\SelfBundle\Entity\Test;
 
 /**
  * Class ExportPdfController
@@ -85,22 +86,16 @@ class ExportPdfController
     /**
      * exportPdf function
      * @Route(
-     *     "/admin/pdf-export/test/{testId}",
+     *     "/admin/pdf-export/test/{id}",
      *     name = "pdf-export"
      * )
      *
      * @Method("PUT")
      * @Template()
      */
-    public function exportPdfAction($testId)
+    public function exportPdfAction(Test $test)
     {
 
-        // Récupération des données du test exporté
-        $test = $this->entityPdfManager->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $orderQuestionnaireTest = $this->entityPdfManager->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')
-                                ->findByTest(array('test' => $test));
-
-//var_dump($orderQuestionnaireTest);die();
         // Génération du nom du fichier exporté
         $pdfName = $this->exportPdfManager->exportPdfAction($test);
 
@@ -109,13 +104,11 @@ class ExportPdfController
             $this->templating->render(
                 'InnovaSelfBundle:ExportPdf:export.html.twig',
                 array(
-                    'test' => $test,
-                    'orderQuestionnaires' => $orderQuestionnaireTest
+                    'test' => $test
                 )
             ),
-            $this->kernelRoot ."/data/exportPdf/".$testId."/". $pdfName
+            $this->kernelRoot ."/data/exportPdf/". $test->getId() ."/". $pdfName
         );
-
 
         // Appel de la vue et de la génération du PDF
         $fileList = $this->exportPdfManager->getFileList($test);
