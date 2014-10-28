@@ -5,40 +5,65 @@
     <title>Export PDF : du {{ "now"|date("m/d/Y") }} </title>
 </head>
 <body>
-Test : {{ test.name }}
-Langue : {{ test.language.name }}
-Date : {{ "now"|date("m/d/Y") }}
-
+Test : {{ test.name }}<br />
+Langue : {{ test.language.name }}<br />
+Date de l'export : {{ "now"|date("d/m/Y") }}<br />
+<p></p>
+<p></p>
 {% for orderQuestionnaireTest in test.orderQuestionnaireTests %}
     <table>
         <tr>
             <td>Thème : {{ orderQuestionnaireTest.questionnaire.theme }}</td>
             <td>Niveau : {{ orderQuestionnaireTest.questionnaire.level.name }}</td>
+        </tr>
+        <tr>
             <td>
                 {% if orderQuestionnaireTest.questionnaire.mediaContext is not null %}
-                    Contexte : {{ orderQuestionnaireTest.questionnaire.mediaContext.description }}</td>
+                    Contexte : {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}</td>
                 {% endif %}
+            </td>
+        </tr>
+        <tr>
             <td>
                 {% if orderQuestionnaireTest.questionnaire.mediaText is not null %}
-                    Objet de la question : {{ orderQuestionnaireTest.questionnaire.mediaText.description }}
+                    Objet de la question : {{ orderQuestionnaireTest.questionnaire.mediaText.description|raw }}
                 {% endif %}
+            </td>
+        </tr>
+        <tr>
             <td>
                 {% if orderQuestionnaireTest.questionnaire.mediaBlankText is not null %}
-                    Question :{{ orderQuestionnaireTest.questionnaire.mediaBlankText.description }}
+                    Question :{{ orderQuestionnaireTest.questionnaire.mediaBlankText.description|raw }}
                 {% endif %}
+            </td>
         </tr>
-    </table>
 
-    {% for question in orderQuestionnaireTest.questionnaire.questions %}
-        <table>
-            <tr>
-                <td>Question : {{ question.typology.name }}</td>
-            </tr>
-            {% for subquestion in question.subquestions %}
-                    subQuestion :{{ subquestion.id }}
+        {% for question in orderQuestionnaireTest.questionnaire.questions %}
+        {# Vérifié en prod : instruction_id et media_id sont toujours "null", donc pas de tests sur ces colonnes. #}
+                <tr>
+                    <td>Typologie : {{ question.typology.name }}</td>
+                </tr>
+                {% for subquestion in question.subquestions %}
+                    <tr>
+                        <td>
+                            subQuestion :{{ subquestion.id }}
+                        </td>
+                        {% if subquestion.mediaAmorce is not null %}
+                            <td>
+                                Amorce :{{ subquestion.mediaAmorce.description|raw }}
+                            </td>
+                        {% endif %}
+                        {% if subquestion.mediaSyllable is not null %}
+                            <td>
+                                Syllabe :{{ subquestion.mediaSyllable.description|raw }}
+                            </td>
+                        {% endif %}
+                    </tr>
             {% endfor %}
-        </table>
-    {% endfor %}
+        {% endfor %}
+    </table>
+<p></p>
+<p></p>
 
 {% endfor %}
 
