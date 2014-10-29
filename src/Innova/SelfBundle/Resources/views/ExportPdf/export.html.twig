@@ -14,29 +14,31 @@ Date de l'export : {{ "now"|date("d/m/Y") }}<br />
     <table>
         <tr>
             <td>Thème : {{ orderQuestionnaireTest.questionnaire.theme }}</td>
+        </tr>
+        <tr>
             <td>Niveau : {{ orderQuestionnaireTest.questionnaire.level.name }}</td>
         </tr>
+        {% if orderQuestionnaireTest.questionnaire.mediaContext is not null %}
         <tr>
             <td>
-                {% if orderQuestionnaireTest.questionnaire.mediaContext is not null %}
-                    Contexte : {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}</td>
-                {% endif %}
+                Contexte : {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}</td>
             </td>
         </tr>
+        {% endif %}
+        {% if orderQuestionnaireTest.questionnaire.mediaText is not null %}
         <tr>
             <td>
-                {% if orderQuestionnaireTest.questionnaire.mediaText is not null %}
-                    Objet de la question : {{ orderQuestionnaireTest.questionnaire.mediaText.description|raw }}
-                {% endif %}
+                Objet de la question : {{ orderQuestionnaireTest.questionnaire.mediaText.description|raw }}
             </td>
         </tr>
+        {% endif %}
+        {% if orderQuestionnaireTest.questionnaire.mediaBlankText is not null %}
         <tr>
             <td>
-                {% if orderQuestionnaireTest.questionnaire.mediaBlankText is not null %}
-                    Question :{{ orderQuestionnaireTest.questionnaire.mediaBlankText.description|raw }}
-                {% endif %}
+                Question :{{ orderQuestionnaireTest.questionnaire.mediaBlankText.description|raw }}
             </td>
         </tr>
+        {% endif %}
 
         {% for question in orderQuestionnaireTest.questionnaire.questions %}
         {# Vérifié en prod : instruction_id et media_id sont toujours "null", donc pas de tests sur ces colonnes. #}
@@ -45,9 +47,11 @@ Date de l'export : {{ "now"|date("d/m/Y") }}<br />
                 </tr>
                 {% for subquestion in question.subquestions %}
                     <tr>
+{#
                         <td>
                             subQuestion :{{ subquestion.id }}
                         </td>
+ #}
                         {% if subquestion.mediaAmorce is not null %}
                             <td>
                                 Amorce :{{ subquestion.mediaAmorce.description|raw }}
@@ -58,6 +62,11 @@ Date de l'export : {{ "now"|date("d/m/Y") }}<br />
                                 Syllabe :{{ subquestion.mediaSyllable.description|raw }}
                             </td>
                         {% endif %}
+                        <td>
+                        {% for proposition in subquestion.propositions  %}
+                            {{ proposition.media.description|raw }}
+                        {% endfor %}
+                        </td>
                     </tr>
             {% endfor %}
         {% endfor %}
