@@ -4,7 +4,7 @@
     {% set propositions = subquestion.propositions %}
 {% endif %}
 
-{% if subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" %}
+{% if subquestion.typology.name == "VF" or subquestion.typology.name == "VFNM" or subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" %}
     {% set vf = true %}
 {% else %}
     {% set vf = false %}

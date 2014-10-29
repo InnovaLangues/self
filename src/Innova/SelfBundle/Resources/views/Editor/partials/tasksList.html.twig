@@ -4,7 +4,7 @@
 {% else %}
     {% for order in orders %}
         <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
-            
+
             {% if order.questionnaire.status is not null %}
                 {% set statusId = order.questionnaire.status.id %}
                 {% set statusName = order.questionnaire.status.name %}
@@ -12,9 +12,7 @@
                 {% set statusId = 1 %}
                 {% set statusName = "Ecriture" %}
             {% endif %}
-            <span class="status-container">
-                <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
-            </span>
+            <span class="label label-default label-{{ statusId }}">{{ statusName }}</span>
 
             {% if order.questionnaire.theme != "" %}
                 {{ order.questionnaire.theme }}
@@ -22,15 +20,15 @@
                 {{ 'editor.task.unnamed' | trans }}
             {% endif %}
 
-            <span class="buttons">
-                <a toggle="tooltip" data-original-title="{{ 'generic.player' | trans }}" class="btn btn-default btn-sm" href="{{ path('questionnaire_pick', { testId: order.test.id, questionnaireId: order.questionnaire.id }) }}">
-                    <span class="glyphicon glyphicon-play"></span>
+            <span class="buttons" style="position:absolute;right:5px;top:5px">
+                <a class="btn btn-default btn-sm" href="{{ path('questionnaire_pick', { testId: order.test.id, questionnaireId: order.questionnaire.id }) }}">
+                    <span class="glyphicon glyphicon-play"></span> {{ 'generic.player' | trans }}
                 </a>
-                <a toggle="tooltip" data-original-title="{{ 'generic.edit' | trans }}" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id, 'testId': order.test.id }) }}">
-                    <span class="glyphicon glyphicon-edit"></span>
+                <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id, 'testId': order.test.id }) }}">
+                    <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
                 </a>
-                <a toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}" class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
-                    <span class="glyphicon glyphicon-trash"></span> 
+                <a class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
+                    <span class="glyphicon glyphicon-trash"></span> {{ 'generic.remove' | trans }}
                 </a>
             </span>
         </li>

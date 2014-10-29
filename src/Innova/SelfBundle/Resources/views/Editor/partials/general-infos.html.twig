@@ -1,22 +1,19 @@
-{% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
 <div class="panel panel-info">
     <div class="panel-heading"><h3 class="panel-title">{{ 'editor.questionnaire.general_infos' | trans }}</h3></div>
     <div class="panel-body">
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    {{ macros.help("Titre de la tâche. Ne sera pas visible lors de la passation.") }}
                     <label for="theme">{{ 'editor.questionnaire.title' | trans }}</label>
                     <input type="text" class="form-control" id="theme" value="{{ questionnaire.theme }}"/>
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
-                    {{ macros.help("Compétence visée : compréhension orale, écrite, ou expression écrite courte.") }}
                     <label for="skill">{{ 'editor.questionnaire.skill' | trans }}</label>
                     {% set skills = ["-", "CO", "CE", "EEC"] %}
-                    <select id="skill" class="form-control" {% if questionnaire.skill is not null %} disabled{% endif %}>
+                    <select id="skill" class="form-control">
                         {% for skill in skills %}
                             <option {% if questionnaire.skill is not null and questionnaire.skill.name == skill %}selected{% endif %} value="{{ skill }}">
                                 {{ skill }}
@@ -26,36 +23,47 @@
                 </div>
             </div>
 
-            {% if questionnaire.skill is not null %}
-            <div class="col-md-4" id="typology-container">
+            <div class="col-md-2">
                 <div class="form-group">
-                    {{ macros.help("Typologies disponibles dépendament de la compétence choisie.") }}
-                    <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
-                    <select id="typology" class="form-control" {% if questionnaire.questions[0].typology is not null %} disabled{% endif %}>
-                        <option value="-">-</option>
-                        {% for typology in get_typologies_for_skill(questionnaire.skill) %}
-                            <option {% if questionnaire.questions[0].typology is not null and questionnaire.questions[0].typology == typology %}selected{% endif %} value="{{ typology.name }}">
-                               {{ typology.name ~ " - " ~ typology.description }}
+                    <label for="skill">Niveau</label>
+                    {% set levels = ["-", "A1", "A2", "B1", "B2", "C1"] %}
+                    <select id="level" class="form-control">
+                        {% for level in levels %}
+                            <option {% if questionnaire.level is not null and questionnaire.level.name == level %}selected{% endif %} value="{{ level }}">
+                                {{ level }}
                             </option>
                         {% endfor %}
                     </select>
                 </div>
             </div>
-            {% endif %}
 
-            {% if questionnaire.questions[0].typology is not null %}
-            <div class="col-md-2 task-content">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
+                    {% set excludedTypo = ["VFPM", "RE", "TVFPM"] %}
+
+                    <select id="typology" class="form-control" {% if questionnaire.questions[0].typology is not null %} disabled{% endif %}>
+                        <option value="-">-</option>
+                        {% for typology in typologies %}
+                            {% if typology.name not in excludedTypo %}
+                            <option {% if questionnaire.questions[0].typology is not null and questionnaire.questions[0].typology == typology %}selected{% endif %} value="{{ typology.name }}">
+                               {{ typology.name ~ " - " ~ typology.description }}
+                            </option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-2">
                 <div class="form-group">
                     <div class="checkbox-inline">
-                        {{ macros.help("Par défaut les propositions sont mélangées lors de la passation. Permet de garder l'ordre tel qu'il apparait dans l'éditeur.") }}
                         <label for="orderfix">
-                            {{ 'editor.questionnaire.fixed_order' | trans }}
-                            <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
+                            {{ 'editor.questionnaire.fixed_order' | trans }} ? <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
                         </label>
                     </div>
                 </div>
             </div>
-            {% endif %}
 
         </div><!-- row -->
     </div>

@@ -79,7 +79,7 @@ generic:
     yes: Oui
     no: Non
     filter: Filtre
-    player: Voir dans le player
+    player: Player
 
 editor:
     test:

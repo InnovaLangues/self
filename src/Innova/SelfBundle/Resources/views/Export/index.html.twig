@@ -23,3 +23,8 @@
                 </tbody>
             </table>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/export.js") }}"></script>
+{% endblock %}

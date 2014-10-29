@@ -57,3 +57,12 @@
 {% endif %}
 
 {% endblock %}
+
+{% block javascripts %}
+    <!-- Jquery first then Bootstrap call -->
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script src="{{ asset('bundles/innovaself/js/main.js') }}"></script>
+{% endblock %}

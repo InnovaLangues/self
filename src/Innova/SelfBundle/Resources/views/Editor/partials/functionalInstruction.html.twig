@@ -1,7 +1,6 @@
 <div id="functional-instruction-container" class="panel panel-info">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     <div class="panel-heading">
-        {{ macros.help("Court texte présentant des indications purement fonctionnelles. 'Cochez la bonne réponse' par exemple. Texte uniquement pour le moment !") }}
         {{ 'editor.questionnaire.functional_instruction' | trans }}
         {% if questionnaire.mediaFunctionalInstruction is not null %}
             <div class="pull-right">

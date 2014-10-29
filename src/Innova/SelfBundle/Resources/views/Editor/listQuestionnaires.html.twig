@@ -81,16 +81,14 @@
                 {% for orderedQuestionnaireTest in questionnaire.orderQuestionnaireTests %}
                     {% set tooltip = tooltip ~ orderedQuestionnaireTest.test.name ~"<br />" %}
                 {% endfor %}
-                {% if countTests != 0 %}
-                    <span data-html="true" class="glyphicon glyphicon-eye-open" rel="tooltip" data-original-title="{{ tooltip }}"></span>
-                {% endif %}
+                {% if countTests != 0 %}<span data-html="true" class="glyphicon glyphicon-eye-open" rel="tooltip" data-original-title="{{ tooltip }}"></span>{% endif %}
                 </td>
                 <td class="text-right">
-                    <a toggle="tooltip" data-original-title="{{ 'generic.edit' | trans }}" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
-                        <span class="glyphicon glyphicon-edit"></span> 
+                    <a class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
+                        <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
                     </a>
-                    <a toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}" class="btn btn-default btn-danger btn-sm delete-task" {% if countTests != 0 %}disabled{% endif %} data-questionnaire-id="{{ questionnaire.id}}">
-                        <span class="glyphicon glyphicon-trash"></span> 
+                    <a class="btn btn-default btn-danger btn-sm delete-task" {% if countTests != 0 %}disabled{% endif %} data-questionnaire-id="{{ questionnaire.id}}">
+                        <span class="glyphicon glyphicon-trash"></span> {{ 'generic.remove' | trans }}
                     </a>
                 </td>
             </tr>
@@ -122,6 +120,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/jquery.quicksearch.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-task-list.js") }}"></script>
 {% endblock %}

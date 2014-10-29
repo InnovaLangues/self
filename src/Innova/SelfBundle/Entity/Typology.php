@@ -46,11 +46,6 @@ class Typology
     protected $subquestions;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Skill", mappedBy="typologys")
-    */
-    protected $skills;
-
-    /**
      * Get id
      *
      * @return integer
@@ -178,39 +173,5 @@ class Typology
     public function getDescription()
     {
         return $this->description;
-    }
-
-
-    /**
-     * Add skills
-     *
-     * @param \Innova\SelfBundle\Entity\Skill $skills
-     * @return Typology
-     */
-    public function addSkill(\Innova\SelfBundle\Entity\Skill $skills)
-    {
-        $this->skills[] = $skills;
-
-        return $this;
-    }
-
-    /**
-     * Remove skills
-     *
-     * @param \Innova\SelfBundle\Entity\Skill $skills
-     */
-    public function removeSkill(\Innova\SelfBundle\Entity\Skill $skills)
-    {
-        $this->skills->removeElement($skills);
-    }
-
-    /**
-     * Get skills
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSkills()
-    {
-        return $this->skills;
     }
 }

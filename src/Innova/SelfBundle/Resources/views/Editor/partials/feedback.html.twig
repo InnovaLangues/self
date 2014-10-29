@@ -1,7 +1,6 @@
 <div id="feedback-container" class="panel panel-info">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     <div class="panel-heading">
-        {{ macros.help("N'est pas encore utilisé, mais pourra être affiché après la passation de la tâche.") }}
         {{ 'editor.questionnaire.feedback' | trans }}
         {% if questionnaire.mediaFeedback is not null %}
             <div class="pull-right">

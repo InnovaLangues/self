@@ -1,21 +1,11 @@
 {% if is_granted('ROLE_ADMIN') %}
     <div id="pick-a-questionaire" class="row text-center">
-        <div>En tant qu'administrateur, vous avez la possibilité d'accéder à toutes les tâches de ce test</div>
         {% for i, questionnaire in questionnaires %}
             {% set typo = "" %}
             {% if questionnaire.questions[0].typology %}
                 {% set typo = questionnaire.questions[0].typology.name %}
             {% endif %}
-
-            {% if questionnaire.theme != "" %}
-                {% set theme = questionnaire.theme %}
-            {% else %}
-                {% set theme = 'editor.task.unnamed' | trans %}
-            {% endif %}
-
-            <a class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ typo }}" href="{{ path('questionnaire_pick', { testId: test.id, questionnaireId: questionnaire.id }) }}">
-                {{ theme }}
-            </a>
+            <a class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ typo }}" href="{{ path('questionnaire_pick', { testId: test.id, questionnaireId: questionnaire.id }) }}">{{ questionnaire.theme}}</a>
         {% endfor %}
     </div>
 {% endif %}

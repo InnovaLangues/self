@@ -24,19 +24,15 @@
     
 <hr/>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        {% autoescape 'html' %}
-        {{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}
-        {% endautoescape %}
-    </div>
-    <div id="tasks-list" class="panel-body">
-    {% if orders|length > 0 %}
-        {% include "InnovaSelfBundle:Editor/partials:tasksList.html.twig" %}
-    {% endif %}
-    </div>
-</div>
+{% if orders|length > 0 %}
+<h3>
+    {% autoescape 'html' %}
+    {{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}
+    {% endautoescape %}
+</h3>
+{% endif %}
 
+{% include "InnovaSelfBundle:Editor/partials:tasksList.html.twig" %}
 
 <div id="add-task-modal" class="modal fade">
     <div class="modal-dialog">
@@ -70,7 +66,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'editor.task.delete_confirm_no' | trans }}</button>
-                <button type="button" id="delete-task-confirmation" class="btn btn-danger">{{ 'editor.task.delete_confirm_yes' | trans }}</button>
+                <button type="button" id="delete-task-confirmation" class="btn btn-primary">{{ 'editor.task.delete_confirm_yes' | trans }}</button>
             </div>
         </div>
     </div>
@@ -81,6 +77,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/jquery.quicksearch.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-task-list.js") }}"></script>
 {% endblock %}

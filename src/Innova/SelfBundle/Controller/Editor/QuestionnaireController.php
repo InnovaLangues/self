@@ -161,13 +161,11 @@ class QuestionnaireController
         $em->persist($questionnaire);
         $em->flush();
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:general-infos.html.twig',array('questionnaire' => $questionnaire));
-
         $this->editorLogManager->createEditorLog("editor_edit", "skill", $questionnaire);
 
         return new JsonResponse(
             array(
-                'template' => $template,
+                'skill' => $skill,
             )
         );
     }
