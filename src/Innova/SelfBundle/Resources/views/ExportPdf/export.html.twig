@@ -2,40 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Export PDF : du {{ "now"|date("m/d/Y") }} </title>
+    <title>Export PDF : du {{ "now"|date("d/m/Y") }} </title>
+<!-- Pour ajouter une pagination/saut de page -->
+<!-- 1/2 : ajouter ce style CSS -->
+    <style type="text/css">
+    .page-breaker {
+        display: block;
+        page-break-after: always;
+        clear:both;
+    }
+    }
+    </style>
 </head>
 <body>
-Test : {{ test.name }}<br />
-Langue : {{ test.language.name }}<br />
-Date de l'export : {{ "now"|date("d/m/Y") }}<br />
+<b>Test</b> : {{ test.name }}<br />
+<b>Langue</b> : {{ test.language.name }}<br />
+<b>Date de l'export</b> : {{ "now"|date("d/m/Y") }}<br />
 <p></p>
 <p></p>
 {% for orderQuestionnaireTest in test.orderQuestionnaireTests %}
     <table>
         <tr>
-            <td>Thème : {{ orderQuestionnaireTest.questionnaire.theme }}</td>
+            <td><b>Thème</b> : {{ orderQuestionnaireTest.questionnaire.theme }}</td>
         </tr>
         <tr>
-            <td>Niveau : {{ orderQuestionnaireTest.questionnaire.level.name }}</td>
+            <td><b>Niveau</b> : {{ orderQuestionnaireTest.questionnaire.level.name }}</td>
         </tr>
         {% if orderQuestionnaireTest.questionnaire.mediaContext is not null %}
         <tr>
             <td>
-                Contexte : {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}</td>
+                <b>Contexte</b> : {{ orderQuestionnaireTest.questionnaire.mediaContext.name|raw }}</td>
             </td>
         </tr>
         {% endif %}
         {% if orderQuestionnaireTest.questionnaire.mediaText is not null %}
         <tr>
             <td>
-                Objet de la question : {{ orderQuestionnaireTest.questionnaire.mediaText.description|raw }}
+                <b>Objet de la question</b> : {{ orderQuestionnaireTest.questionnaire.mediaText.name|raw }}
             </td>
         </tr>
         {% endif %}
         {% if orderQuestionnaireTest.questionnaire.mediaBlankText is not null %}
         <tr>
             <td>
-                Question :{{ orderQuestionnaireTest.questionnaire.mediaBlankText.description|raw }}
+                <b>Question</b> :{{ orderQuestionnaireTest.questionnaire.mediaBlankText.name|raw }}
             </td>
         </tr>
         {% endif %}
@@ -43,7 +53,7 @@ Date de l'export : {{ "now"|date("d/m/Y") }}<br />
         {% for question in orderQuestionnaireTest.questionnaire.questions %}
         {# Vérifié en prod : instruction_id et media_id sont toujours "null", donc pas de tests sur ces colonnes. #}
                 <tr>
-                    <td>Typologie : {{ question.typology.name }}</td>
+                    <td><b>Typologie</b> : {{ question.typology.name }}</td>
                 </tr>
                 {% for subquestion in question.subquestions %}
                     <tr>
@@ -54,26 +64,26 @@ Date de l'export : {{ "now"|date("d/m/Y") }}<br />
  #}
                         {% if subquestion.mediaAmorce is not null %}
                             <td>
-                                Amorce :{{ subquestion.mediaAmorce.description|raw }}
+                                <b>Amorce</b> :{{ subquestion.mediaAmorce.name|raw }}
                             </td>
                         {% endif %}
                         {% if subquestion.mediaSyllable is not null %}
                             <td>
-                                Syllabe :{{ subquestion.mediaSyllable.description|raw }}
+                                <b>Syllabe</b> :{{ subquestion.mediaSyllable.name|raw }}
                             </td>
                         {% endif %}
                         <td>
+                            <b>Propositions</b> :
                         {% for proposition in subquestion.propositions  %}
-                            {{ proposition.media.description|raw }}
+                            {{ proposition.media.name|raw }}
                         {% endfor %}
                         </td>
                     </tr>
             {% endfor %}
         {% endfor %}
     </table>
-<p></p>
-<p></p>
-
+    <!-- 2/2 : ajouter cette ligne pour faire un saut de page entre chaque questionnaire -->
+    <div class="page-breaker"></div>
 {% endfor %}
 
 </body>
