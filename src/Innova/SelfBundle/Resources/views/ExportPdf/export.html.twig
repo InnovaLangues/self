@@ -11,27 +11,28 @@
         page-break-after: always;
         clear:both;
     }
-    }
     </style>
 </head>
 <body>
 <b>Test</b> : {{ test.name }}<br />
 <b>Langue</b> : {{ test.language.name }}<br />
 <b>Date de l'export</b> : {{ "now"|date("d/m/Y") }}<br />
-<p></p>
-<p></p>
+
+<div class="page-breaker"></div>
+
 {% for orderQuestionnaireTest in test.orderQuestionnaireTests %}
     <table>
         <tr>
-            <td><b>Thème</b> : {{ orderQuestionnaireTest.questionnaire.theme }}</td>
+            <td><b>Titre de la tache</b> : {{ orderQuestionnaireTest.questionnaire.theme }}</td>
         </tr>
-        <tr>
-            <td><b>Niveau</b> : {{ orderQuestionnaireTest.questionnaire.id }} {{ orderQuestionnaireTest.questionnaire.level.name }}</td>
+{#        <tr>
+            <td><b>Niveau</b> : {{ orderQuestionnaireTest.questionnaire.level.name }}</td>
         </tr>
+#}
         {% if orderQuestionnaireTest.questionnaire.mediaContext is not null %}
             <tr>
                 <td>
-                <b>Contexte</b> : {{ orderQuestionnaireTest.questionnaire.mediaContext.id }}
+                <b>Contexte</b> :
                 {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "texte" %}
                         {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}
                 {% endif %}
@@ -39,10 +40,10 @@
                         <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaContext.url|raw }}">
                 {% endif %}
                 {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "audio" %}
-                        un son
+                        {{ orderQuestionnaireTest.questionnaire.mediaContext.description}}
                 {% endif %}
                 {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "video" %}
-                        une vidéo
+                        {{ orderQuestionnaireTest.questionnaire.mediaContext.description}}
                 {% endif %}
                 </td>
             </tr>
@@ -58,10 +59,10 @@
                         <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaText.url|raw }}">
                 {% endif %}
                 {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "audio" %}
-                        un son
+                        {{ orderQuestionnaireTest.questionnaire.mediaText.description}}
                 {% endif %}
                 {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "video" %}
-                        une vidéo
+                        {{ orderQuestionnaireTest.questionnaire.mediaText.description}}
                 {% endif %}
                 </td>
             </tr>
@@ -77,13 +78,20 @@
                         <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaBlankText.url|raw }}">
                 {% endif %}
                 {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "audio" %}
-                        un son
+                        {{ orderQuestionnaireTest.questionnaire.mediaBlankText.description}}
                 {% endif %}
                 {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "video" %}
-                        une vidéo
+                        {{ orderQuestionnaireTest.questionnaire.mediaBlankText.description}}
                 {% endif %}
                 </td>
             </tr>
+        {% endif %}
+
+        {% if orderQuestionnaireTest.questionnaire.mediaFunctionalInstruction is not null %}
+            <td>
+                <b>Consigne fonctionnelle</b> :
+                {{ orderQuestionnaireTest.questionnaire.mediaFunctionalInstruction.description|raw }}
+            </td>
         {% endif %}
 
         {% for question in orderQuestionnaireTest.questionnaire.questions %}
@@ -91,6 +99,11 @@
                 <tr>
                     <td><b>Typologie</b> : {{ question.typology.name }}</td>
                 </tr>
+                <tr>
+                    <td><br ></td>
+                </tr>
+
+
                 {% for subquestion in question.subquestions %}
                     <tr>
 {#
@@ -101,35 +114,74 @@
 #}
                         {% if subquestion.mediaAmorce is not null %}
                             <td>
-                                <b>Amorce</b> :{{ subquestion.mediaAmorce.name|raw }}
+                                <b>Amorce</b> : {{ subquestion.id }} {{ subquestion.mediaAmorce.description|raw }}
                             </td>
                         {% endif %}
                         {% if subquestion.mediaSyllable is not null %}
                             <td>
-                                <b>Syllabe</b> :{{ subquestion.mediaSyllable.name|raw }}
+                                <b>Syllabe</b> : {{ subquestion.mediaSyllable.description|raw }}
                             </td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td>
-                            <b>Propositions</b> :
-                            {% for proposition in subquestion.propositions %}
-
-{#
-                                ///
-                                {{ dump(proposition.media.mediaPurpose.id ) }}
-                                ***
-                                {{ dump(proposition.media.mediaPurpose.name ) }}
-                                ---
-#}
-                                {% if proposition.media.mediaPurpose is not null %}
-                                    {% if proposition.rightAnswer and proposition.media.mediaPurpose.name == "proposition" %}
-                                        <b>{{ proposition.media.name|raw }}</b> /
-                                    {% else %}
-                                        {{ proposition.media.name|raw }} /
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
+                            {% if subquestion.clue is not null %}
+                                <b>Info-bulle {{ subquestion.clue.clueType.name }}</b> :
+                                {{ subquestion.clue.media.description }}<br />
+                            {% endif %}
+                            {% if subquestion.displayAnswer and subquestion.typology.name == "TLQROC" %}
+                                <b>Propositions en clair </b> :
+                                    {% for proposition in subquestion.propositions %}
+                                        {% if proposition.media.mediaPurpose is not null %}
+                                            {% if proposition.rightAnswer and proposition.media.mediaPurpose.name == "proposition" %}
+                                                <b>{{ proposition.media.description|raw }}</b> /
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                            {% else %}
+                                <b>Propositions </b> :
+                                    {% for proposition in subquestion.propositions %}
+        {#
+                                        ///
+                                        {{ dump(proposition.media.mediaPurpose.id ) }}
+                                        ***
+                                        {{ dump(proposition.media.mediaPurpose.name ) }}
+                                        ---
+        #}
+                                        {% if subquestion.media is not null %}
+        <b>{{ subquestion.media.description|raw }}</b>
+                                        {% endif %}
+                                        {% if proposition.media.mediaPurpose is not null %}
+                                            {% if proposition.rightAnswer and proposition.media.mediaPurpose.name == "proposition" %}
+                                                {% if proposition.media.mediaType.name == "texte" %}
+                                                        <b>{{ proposition.media.description|raw }}</b>
+                                                {% endif %}
+                                                {% if proposition.media.mediaType.name == "image" %}
+                                                        <img src="http://self.innovalangues.net/upload/media/{{ proposition.media.url|raw }}">
+                                                {% endif %}
+                                                {% if proposition.media.mediaType.name == "audio" %}
+                                                        <b>{{ proposition.media.description|raw }}</b>
+                                                {% endif %}
+                                                {% if proposition.media.mediaType.name == "video" %}
+                                                        <b>{{ proposition.media.description|raw }}</b>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if proposition.media.mediaType.name == "texte" %}
+                                                        {{ proposition.media.description|raw }}
+                                                {% endif %}
+                                                {% if proposition.media.mediaType.name == "image" %}
+                                                        <img src="http://self.innovalangues.net/upload/media/{{ proposition.media.url|raw }}">
+                                                {% endif %}
+                                                {% if proposition.media.mediaType.name == "audio" %}
+                                                        {{ proposition.media.description|raw }}
+                                                {% endif %}
+                                                {% if proposition.media.mediaType.name == "video" %}
+                                                        {{ proposition.media.description|raw }}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                            {% endif %}
                         </td>
                     </tr>
             {% endfor %}

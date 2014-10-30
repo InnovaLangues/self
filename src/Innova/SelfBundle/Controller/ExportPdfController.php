@@ -96,6 +96,17 @@ class ExportPdfController
     public function exportPdfAction(Test $test)
     {
 
+
+    /**
+        $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array(
+                                                                                            'media' => $test->getMediaContext(),
+                                                                                            'questionnaire' => $questionnaire
+                                                                                        ));
+     */
+
+        $test->listenigLimitContext = 11;
+        $test->listenigLimitObjet = 11;
+
         // Génération du nom du fichier exporté
         $pdfName = $this->exportPdfManager->exportPdfAction($test);
 
