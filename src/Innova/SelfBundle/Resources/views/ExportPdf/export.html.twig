@@ -26,28 +26,64 @@
             <td><b>Thème</b> : {{ orderQuestionnaireTest.questionnaire.theme }}</td>
         </tr>
         <tr>
-            <td><b>Niveau</b> : {{ orderQuestionnaireTest.questionnaire.level.name }}</td>
+            <td><b>Niveau</b> : {{ orderQuestionnaireTest.questionnaire.id }} {{ orderQuestionnaireTest.questionnaire.level.name }}</td>
         </tr>
         {% if orderQuestionnaireTest.questionnaire.mediaContext is not null %}
-        <tr>
-            <td>
-                <b>Contexte</b> : {{ orderQuestionnaireTest.questionnaire.mediaContext.name|raw }}</td>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                <b>Contexte</b> : {{ orderQuestionnaireTest.questionnaire.mediaContext.id }}
+                {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "texte" %}
+                        {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}
+                {% endif %}
+                {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "image" %}
+                        <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaContext.url|raw }}">
+                {% endif %}
+                {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "audio" %}
+                        un son
+                {% endif %}
+                {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "video" %}
+                        une vidéo
+                {% endif %}
+                </td>
+            </tr>
         {% endif %}
+
         {% if orderQuestionnaireTest.questionnaire.mediaText is not null %}
-        <tr>
-            <td>
-                <b>Objet de la question</b> : {{ orderQuestionnaireTest.questionnaire.mediaText.name|raw }}
-            </td>
-        </tr>
+            <tr>
+                <td><b>Objet de la question</b> :
+                {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "texte" %}
+                        {{ orderQuestionnaireTest.questionnaire.mediaText.description|raw }}
+                {% endif %}
+                {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "image" %}
+                        <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaText.url|raw }}">
+                {% endif %}
+                {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "audio" %}
+                        un son
+                {% endif %}
+                {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "video" %}
+                        une vidéo
+                {% endif %}
+                </td>
+            </tr>
         {% endif %}
+
         {% if orderQuestionnaireTest.questionnaire.mediaBlankText is not null %}
-        <tr>
-            <td>
-                <b>Question</b> :{{ orderQuestionnaireTest.questionnaire.mediaBlankText.name|raw }}
-            </td>
-        </tr>
+            <tr>
+                <td><b>Question</b> :
+                {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "texte" %}
+                        {{ orderQuestionnaireTest.questionnaire.mediaBlankText.description|raw }}
+                {% endif %}
+                {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "image" %}
+                        <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaBlankText.url|raw }}">
+                {% endif %}
+                {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "audio" %}
+                        un son
+                {% endif %}
+                {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "video" %}
+                        une vidéo
+                {% endif %}
+                </td>
+            </tr>
         {% endif %}
 
         {% for question in orderQuestionnaireTest.questionnaire.questions %}
@@ -59,9 +95,10 @@
                     <tr>
 {#
                         <td>
+                            if proposition.media.mediaPurpose.name == "proposition"
                             subQuestion :{{ subquestion.id }}
                         </td>
- #}
+#}
                         {% if subquestion.mediaAmorce is not null %}
                             <td>
                                 <b>Amorce</b> :{{ subquestion.mediaAmorce.name|raw }}
@@ -72,11 +109,27 @@
                                 <b>Syllabe</b> :{{ subquestion.mediaSyllable.name|raw }}
                             </td>
                         {% endif %}
+                    </tr>
+                    <tr>
                         <td>
                             <b>Propositions</b> :
-                        {% for proposition in subquestion.propositions  %}
-                            {{ proposition.media.name|raw }}
-                        {% endfor %}
+                            {% for proposition in subquestion.propositions %}
+
+{#
+                                ///
+                                {{ dump(proposition.media.mediaPurpose.id ) }}
+                                ***
+                                {{ dump(proposition.media.mediaPurpose.name ) }}
+                                ---
+#}
+                                {% if proposition.media.mediaPurpose is not null %}
+                                    {% if proposition.rightAnswer and proposition.media.mediaPurpose.name == "proposition" %}
+                                        <b>{{ proposition.media.name|raw }}</b> /
+                                    {% else %}
+                                        {{ proposition.media.name|raw }} /
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
                         </td>
                     </tr>
             {% endfor %}
