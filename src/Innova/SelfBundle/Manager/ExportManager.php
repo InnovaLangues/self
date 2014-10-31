@@ -199,6 +199,7 @@ class ExportManager
                         $subquestions = $questions[0]->getSubquestions();
 
                         foreach ($subquestions as $subquestion) {
+                            var_dump("SQ0 : " . $subquestion->getId());
                             $propositions = $subquestion->getPropositions();
                             $rightProps = array();
                             $nbPropositionRightAnswser = 0;
@@ -206,16 +207,26 @@ class ExportManager
                             $propLetters = array();
                             // on compte les bonnes propositions
                             foreach ($propositions as $proposition) {
-                                $cptProposition++;
-                                if ($proposition->getRightAnswer()) {
-                                    $nbPropositionRightAnswser++;
-                                    $rightProps[] = $proposition->getId();
+                                if ($proposition->getMedia()->getMediaPurpose() != null) {
+                                    if ($proposition->getMedia()->getMediaPurpose()->getName() == "proposition") {
+                                        $cptProposition++;
+                                        if ($proposition->getRightAnswer()) {
+                                            var_dump("suis dans RightAnswer" . $proposition->getId());
+                                            $nbPropositionRightAnswser++;
+                                            $rightProps[] = $proposition->getId();
+                                            var_dump("RP/0 " . $rightProps[0]);
+                                        }
+                                        $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
+                                    }
                                 }
-                                $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                             }
 
+                            var_dump("NB0 " . $nbPropositionRightAnswser);
+
                             // Récupération bonne réponse ou non
-                            $subquestionOk = $this->checkRightAnswer($answersArray, $subquestion, $nbPropositionRightAnswser, $rightProps);
+                            $subquestionOk =
+                            $this->checkRightAnswer($answersArray, $subquestion, $nbPropositionRightAnswser, $rightProps);
+
                             if ($subquestionOk) {
                                 $csv .= "1" . ";";
                             } else {
@@ -339,7 +350,10 @@ class ExportManager
     }
 
     private function intToLetter($int){
-        $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E");
+
+        var_dump("intToLetter :" . $int);
+        $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F",
+        7 => "G", 8 => "H", 9 => "I", 10 => "J", 11 => "K", 12 => "L");
 
         return $arr[$int];
     }
@@ -382,6 +396,9 @@ class ExportManager
             case 'TLCMLMULT':
             case 'TLQROC':
                 $subquestionOk = true;
+                var_dump("SQ " . $subquestionId);
+                var_dump("NB " . $nbPropositionRightAnswser);
+
                 $proposition = $answersArray[$subquestionId][0];
                 $subquestionOk = $proposition->getRightAnswer();
                 break;

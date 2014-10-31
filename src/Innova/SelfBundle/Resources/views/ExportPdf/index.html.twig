@@ -14,8 +14,8 @@
                         <tr>
                         <td>{{ test.name }}</td>
                         <td class="text-right">
-                            <a href="{{ path('csv-export', {'testId': test.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">Export</a>
-                            <a href="{{ path('csv-export', {'testId': test.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">Export Tia</a>
+                            <a href="{{ path('csv-export', {'testId': test.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">Export CSV</a>
+                            <a href="{{ path('csv-export', {'testId': test.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">Export TiaPlus</a>
                             <a href="{{ path('pdf-export', {'testId': test.id } )}}" data-method="PUT" class="rest btn btn-default btn-sm">Export PDF</a>
                         </td>
                     {% endfor %}
