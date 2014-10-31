@@ -178,10 +178,18 @@ class ExportManager
 
                 $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
                 foreach ($questionnaires as $questionnaire) {
-                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),'questionnaire' => $questionnaire->getId()));
+
+                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
+                                    array('user' => $user->getId(),
+                                          'questionnaire' => $questionnaire->getId()
+                                         ));
                     $questions = $questionnaire->getQuestions();
 
                     foreach ($traces as $trace) {
+                        var_dump("==");
+                        var_dump("Trace : " . $trace->getId());
+                        var_dump("==");
+
                         $answers = $trace->getAnswers();
                         $csv .= $questionnaire->getTheme() . ";" ;
                         $csv .= $questions[0]->getTypology()->getName() .  ";" ;
@@ -191,15 +199,19 @@ class ExportManager
                         // création tableau de correspondance subquestion -> réponses
                         foreach ($answers as $answer) {
                             if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
+                                var_dump("Answer/1");
                                 $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
                             }
                             $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
+                            var_dump("Answer/2");
                         }
 
                         $subquestions = $questions[0]->getSubquestions();
 
                         foreach ($subquestions as $subquestion) {
-                            var_dump("SQ0 : " . $subquestion->getId());
+                            var_dump("==");
+                            var_dump("SQ = " . $subquestion->getId() .  " Q : " . $questionnaire->getId() . " T :" . $test);
+                            var_dump("User : " .$user->getId());
                             $propositions = $subquestion->getPropositions();
                             $rightProps = array();
                             $nbPropositionRightAnswser = 0;
@@ -211,17 +223,17 @@ class ExportManager
                                     if ($proposition->getMedia()->getMediaPurpose()->getName() == "proposition") {
                                         $cptProposition++;
                                         if ($proposition->getRightAnswer()) {
-                                            var_dump("suis dans RightAnswer" . $proposition->getId());
+                                            var_dump("suis dans RightAnswer :" . $proposition->getId());
                                             $nbPropositionRightAnswser++;
                                             $rightProps[] = $proposition->getId();
-                                            var_dump("RP/0 " . $rightProps[0]);
                                         }
                                         $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
+                                        var_dump("propLetters !!!" . $proposition->getId(). "/" . $this->intToLetter($cptProposition));
                                     }
                                 }
                             }
 
-                            var_dump("NB0 " . $nbPropositionRightAnswser);
+                            var_dump("NB0 : " . $nbPropositionRightAnswser . "/SQ : " . $subquestion->getId());
 
                             // Récupération bonne réponse ou non
                             $subquestionOk =
@@ -245,6 +257,44 @@ class ExportManager
         }
 
         return $csv;
+    }
+
+    private function textToDisplay(Subquestion $subquestion, $answersArray, $propLetters ){
+        $typo = $subquestion->getTypology()->getName();
+        $subquestionId = $subquestion->getId();
+        $textToDisplay = "";
+
+        switch ($typo) {
+            case 'TVF':
+            case 'VF':
+            case 'TVFNM':
+            case 'VFNM':
+            case 'QRU':
+            case 'QRM':
+            case 'TQRU':
+            case 'TQRM':
+            case 'APP':
+                $letters = array();
+                foreach ($answersArray[$subquestion->getId()] as $answer) {
+                    $idAnswer = $answer->getId();
+                    var_dump("SQ textToDisplay : " . $subquestion->getId() . "/ AnswerId : " . $idAnswer);
+                    $letters[$propLetters[$idAnswer]] = 1;
+                }
+                ksort($letters);
+                foreach ($letters as $key => $value) {
+                    $textToDisplay .= $key;
+                }
+                break;
+
+            case 'TLCMLDM':
+            case 'TLCMLMULT':
+            case 'TLQROC':
+                $proposition = $answersArray[$subquestionId][0];
+                $textToDisplay = $proposition->getMedia()->getDescription();
+                break;
+        }
+
+        return $textToDisplay;
     }
 
     private function getCvsTiaContent(Test $test){
@@ -405,43 +455,6 @@ class ExportManager
         }
 
         return  $subquestionOk;
-    }
-
-    private function textToDisplay(Subquestion $subquestion, $answersArray, $propLetters ){
-        $typo = $subquestion->getTypology()->getName();
-        $subquestionId = $subquestion->getId();
-        $textToDisplay = "";
-
-        switch ($typo) {
-            case 'TVF':
-            case 'VF':
-            case 'TVFNM':
-            case 'VFNM':
-            case 'QRU':
-            case 'QRM':
-            case 'TQRU':
-            case 'TQRM':
-            case 'APP':
-                $letters = array();
-                foreach ($answersArray[$subquestion->getId()] as $answer) {
-                    $idAnswer = $answer->getId();
-                    $letters[$propLetters[$idAnswer]] = 1;
-                }
-                ksort($letters);
-                foreach ($letters as $key => $value) {
-                    $textToDisplay .= $key;
-                }
-                break;
-
-            case 'TLCMLDM':
-            case 'TLCMLMULT':
-            case 'TLQROC':
-                $proposition = $answersArray[$subquestionId][0];
-                $textToDisplay = $proposition->getMedia()->getDescription();
-                break;
-        }
-
-        return $textToDisplay;
     }
 
     /**
