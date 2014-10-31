@@ -33,17 +33,10 @@
             <tr>
                 <td>
                 <b>Contexte</b> :
-                {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "texte" %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}
-                {% endif %}
                 {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "image" %}
                         <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaContext.url|raw }}">
-                {% endif %}
-                {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "audio" %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaContext.description}}
-                {% endif %}
-                {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "video" %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaContext.description}}
+                {% else %}
+                        {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}
                 {% endif %}
                 </td>
             </tr>
@@ -52,17 +45,10 @@
         {% if orderQuestionnaireTest.questionnaire.mediaText is not null %}
             <tr>
                 <td><b>Objet de la question</b> :
-                {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "texte" %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaText.description|raw }}
-                {% endif %}
                 {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "image" %}
                         <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaText.url|raw }}">
-                {% endif %}
-                {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "audio" %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaText.description}}
-                {% endif %}
-                {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "video" %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaText.description}}
+                {% else %}
+                        {{ orderQuestionnaireTest.questionnaire.mediaText.description|raw }}
                 {% endif %}
                 </td>
             </tr>
@@ -71,16 +57,9 @@
         {% if orderQuestionnaireTest.questionnaire.mediaBlankText is not null %}
             <tr>
                 <td><b>Question</b> :
-                {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "texte" %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaBlankText.description|raw }}
-                {% endif %}
                 {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "image" %}
                         <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaBlankText.url|raw }}">
-                {% endif %}
-                {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "audio" %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaBlankText.description}}
-                {% endif %}
-                {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "video" %}
+                {% else %}
                         {{ orderQuestionnaireTest.questionnaire.mediaBlankText.description}}
                 {% endif %}
                 </td>
@@ -149,33 +128,19 @@
                                         ---
         #}
                                         {% if subquestion.media is not null %}
-        <b>{{ subquestion.media.description|raw }}</b>
+                                            <b>{{ subquestion.media.description|raw }}</b>
                                         {% endif %}
                                         {% if proposition.media.mediaPurpose is not null %}
                                             {% if proposition.rightAnswer and proposition.media.mediaPurpose.name == "proposition" %}
-                                                {% if proposition.media.mediaType.name == "texte" %}
-                                                        <b>{{ proposition.media.description|raw }}</b>
-                                                {% endif %}
                                                 {% if proposition.media.mediaType.name == "image" %}
                                                         <img src="http://self.innovalangues.net/upload/media/{{ proposition.media.url|raw }}">
-                                                {% endif %}
-                                                {% if proposition.media.mediaType.name == "audio" %}
-                                                        <b>{{ proposition.media.description|raw }}</b>
-                                                {% endif %}
-                                                {% if proposition.media.mediaType.name == "video" %}
+                                                {% else %}
                                                         <b>{{ proposition.media.description|raw }}</b>
                                                 {% endif %}
                                             {% else %}
-                                                {% if proposition.media.mediaType.name == "texte" %}
-                                                        {{ proposition.media.description|raw }}
-                                                {% endif %}
                                                 {% if proposition.media.mediaType.name == "image" %}
                                                         <img src="http://self.innovalangues.net/upload/media/{{ proposition.media.url|raw }}">
-                                                {% endif %}
-                                                {% if proposition.media.mediaType.name == "audio" %}
-                                                        {{ proposition.media.description|raw }}
-                                                {% endif %}
-                                                {% if proposition.media.mediaType.name == "video" %}
+                                                {% else %}
                                                         {{ proposition.media.description|raw }}
                                                 {% endif %}
                                             {% endif %}
