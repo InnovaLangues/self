@@ -68,6 +68,14 @@ class ExportManager
         return $fileList;
     }
 
+    /**
+     *
+     *
+     * getCvsContent function
+     * Fonction principale pour l'export CSV "classique"
+     *
+     *
+     */
     private function getCvsContent(Test $test){
         $em = $this->entityManager;
         $csv = "";
@@ -89,31 +97,6 @@ class ExportManager
                 $result[$userId]["date"]  = $testDate;
             }
         }
-        /* Partie enlevée pour le pilote 3.
-        $csv .= "\n";
-
-        $csv .= "Difficulté" . ";" ;
-        $csv .= "Libellé" . ";" ;
-        $csv .= "\n";
-        $csv .= "1" . ";" ;
-        $csv .= "Très facile" . ";" ;
-        $csv .= "\n";
-        $csv .= "2" . ";" ;
-        $csv .= "Facile" . ";" ;
-        $csv .= "\n";
-        $csv .= "3" . ";" ;
-        $csv .= "Normal" . ";" ;
-        $csv .= "\n";
-        $csv .= "4" . ";" ;
-        $csv .= "Difficile" . ";" ;
-        $csv .= "\n";
-        $csv .= "5" . ";" ;
-        $csv .= "Très Difficile" . ";" ;
-        $csv .= "\n";
-
-        $csv .= "\n";
-        $csv .= "\n";
-        Fin partie enlevée pour le pilote 3. */
 
         // CSV HEADER
         $csv .= "Nom;" ; // A
@@ -164,7 +147,7 @@ class ExportManager
         // CSV BODY
         $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
         foreach ($users as $user) {
-           if ($this ->countQuestionnaireDone($test, $user) > 0 && isset($result[$user->getId()])) {
+           if ($this ->countQuestionnaireDone($test, $user) > 0 && isset($result[$user->getId()]) and $user->getId() > 150) {
                 $csv .= $user->getUserName() . ";" ;
                 $csv .= $user->getFirstName() . ";" ;
                 $csv .= $result[$user->getId()]["date"] . ";" . $result[$user->getId()]["time"] . ";";
@@ -185,32 +168,33 @@ class ExportManager
                                          ));
                     $questions = $questionnaire->getQuestions();
 
+                    var_dump("== Boucle sur TRACE ==");
                     foreach ($traces as $trace) {
-                        var_dump("==");
-                        var_dump("Trace : " . $trace->getId());
-                        var_dump("==");
 
+                        var_dump("Trace : " . $trace->getId());
                         $answers = $trace->getAnswers();
                         $csv .= $questionnaire->getTheme() . ";" ;
                         $csv .= $questions[0]->getTypology()->getName() .  ";" ;
                         $csv .= $trace->getDifficulty() . ";" ;
                         $csv .= $trace->getTotalTime() . ";" ;
 
-                        // création tableau de correspondance subquestion -> réponses
+                        // création tableau de correspondance Answer --> Subquestion
                         foreach ($answers as $answer) {
                             if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                                var_dump("Answer/1");
                                 $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                                var_dump("Answer cas 1 SQ : " . $answer->getProposition()->getSubQuestion()->getId());
                             }
                             $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
-                            var_dump("Answer/2");
+                            var_dump("Answer cas 2 SQ : " . $answer->getProposition()->getSubQuestion()->getId() . " P2 : " . $answer->getProposition()->getId());
                         }
 
                         $subquestions = $questions[0]->getSubquestions();
 
+                        var_dump("== Boucle sur SUBQUESTION ==");
                         foreach ($subquestions as $subquestion) {
-                            var_dump("==");
-                            var_dump("SQ = " . $subquestion->getId() .  " Q : " . $questionnaire->getId() . " T :" . $test);
+
+                            var_dump("SQ : " . $subquestion->getId() .  " Qn : " . $questionnaire->getId()
+                                   . " T : " . $test->getId() . " Q : " . $questions[0]->getId());
                             var_dump("User : " .$user->getId());
                             $propositions = $subquestion->getPropositions();
                             $rightProps = array();
@@ -218,7 +202,9 @@ class ExportManager
                             $cptProposition = 0;
                             $propLetters = array();
                             // on compte les bonnes propositions
+                            var_dump("== Boucle sur PROPOSITION ==");
                             foreach ($propositions as $proposition) {
+                                var_dump("Proposition : " .$proposition->getId());
                                 if ($proposition->getMedia()->getMediaPurpose() != null) {
                                     if ($proposition->getMedia()->getMediaPurpose()->getName() == "proposition") {
                                         $cptProposition++;
@@ -233,7 +219,7 @@ class ExportManager
                                 }
                             }
 
-                            var_dump("NB0 : " . $nbPropositionRightAnswser . "/SQ : " . $subquestion->getId());
+//                            var_dump("NB0 : " . $nbPropositionRightAnswser . " / SQ : " . $subquestion->getId());
 
                             // Récupération bonne réponse ou non
                             $subquestionOk =
@@ -259,6 +245,55 @@ class ExportManager
         return $csv;
     }
 
+    private function checkRightAnswer($answersArray, Subquestion $subquestion, $nbPropositionRightAnswser, $rightProps)
+    {
+        $typo = $subquestion->getTypology()->getName();
+        $subquestionId = $subquestion->getId();
+
+        switch ($typo) {
+            case 'TVF':
+            case 'VF':
+            case 'TVFNM':
+            case 'VFNM':
+            case 'QRU':
+            case 'QRM':
+            case 'TQRU':
+            case 'TQRM':
+            case 'APP':
+                $nbAnswers = count($answersArray[$subquestionId]);
+                $subquestionOk = true;
+                if ($nbAnswers == $nbPropositionRightAnswser) {
+                    foreach ($rightProps as $rightProp) {
+                        $found = false;
+                        foreach ($answersArray[$subquestionId] as $answerProp) {
+                            if ($rightProp == $answerProp->getId()) {
+                                $found = true;
+                            }
+                        }
+                        if ($found === false) {
+                            $subquestionOk = false;
+                        }
+                    }
+                } else {
+                    $subquestionOk = false;
+                }
+                break;
+
+            case 'TLCMLDM':
+            case 'TLCMLMULT':
+            case 'TLQROC':
+                $subquestionOk = true;
+                var_dump("SQ checkRightAnswer : " . $subquestionId);
+//                var_dump("NB : " . $nbPropositionRightAnswser);
+
+                $proposition = $answersArray[$subquestionId][0];
+                $subquestionOk = $proposition->getRightAnswer();
+                break;
+        }
+
+        return  $subquestionOk;
+    }
+
     private function textToDisplay(Subquestion $subquestion, $answersArray, $propLetters ){
         $typo = $subquestion->getTypology()->getName();
         $subquestionId = $subquestion->getId();
@@ -277,7 +312,7 @@ class ExportManager
                 $letters = array();
                 foreach ($answersArray[$subquestion->getId()] as $answer) {
                     $idAnswer = $answer->getId();
-                    var_dump("SQ textToDisplay : " . $subquestion->getId() . "/ AnswerId : " . $idAnswer);
+//                    var_dump("SQ textToDisplay : " . $subquestion->getId() . "/ AnswerId : " . $idAnswer);
                     $letters[$propLetters[$idAnswer]] = 1;
                 }
                 ksort($letters);
@@ -401,62 +436,12 @@ class ExportManager
 
     private function intToLetter($int){
 
-        var_dump("intToLetter :" . $int);
+//        var_dump("intToLetter :" . $int);
         $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F",
         7 => "G", 8 => "H", 9 => "I", 10 => "J", 11 => "K", 12 => "L");
 
         return $arr[$int];
     }
-
-    private function checkRightAnswer($answersArray, Subquestion $subquestion, $nbPropositionRightAnswser, $rightProps)
-    {
-        $typo = $subquestion->getTypology()->getName();
-        $subquestionId = $subquestion->getId();
-
-        switch ($typo) {
-            case 'TVF':
-            case 'VF':
-            case 'TVFNM':
-            case 'VFNM':
-            case 'QRU':
-            case 'QRM':
-            case 'TQRU':
-            case 'TQRM':
-            case 'APP':
-                $nbAnswers = count($answersArray[$subquestionId]);
-                $subquestionOk = true;
-                if ($nbAnswers == $nbPropositionRightAnswser) {
-                    foreach ($rightProps as $rightProp) {
-                        $found = false;
-                        foreach ($answersArray[$subquestionId] as $answerProp) {
-                            if ($rightProp == $answerProp->getId()) {
-                                $found = true;
-                            }
-                        }
-                        if ($found === false) {
-                            $subquestionOk = false;
-                        }
-                    }
-                } else {
-                    $subquestionOk = false;
-                }
-                break;
-
-            case 'TLCMLDM':
-            case 'TLCMLMULT':
-            case 'TLQROC':
-                $subquestionOk = true;
-                var_dump("SQ " . $subquestionId);
-                var_dump("NB " . $nbPropositionRightAnswser);
-
-                $proposition = $answersArray[$subquestionId][0];
-                $subquestionOk = $proposition->getRightAnswer();
-                break;
-        }
-
-        return  $subquestionOk;
-    }
-
     /**
      * calculateScore function
      *
@@ -469,124 +454,129 @@ class ExportManager
 
         foreach ($traces as $trace) {
             $answers = $trace->getAnswers();
-            $answersArray = array();
-            $typology = $answers[0]->getProposition()->getSubQuestion()->getTypology()->getName();
 
-            switch ($typology) {
-                case 'TLCMLDM':
-                case 'TLCMLMULT':
-                case 'TLQROC':
-                    //
-                    // TODO : c'est le même code que pour les typologies QRU, QRM etc ...
-                    // En attente de remarques des autres langues
-                    // pour confirmation de ce fonctionnement.
-                    // Si OK, alors ajouter les 3 nouvelles typos dans la grande liste ci-dessous.
-                    // Si KO, alors modifier dans ce bloc.
-                    //
-                    foreach ($answers as $answer) {
-                        if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                        }
-                        $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
-                    }
+            if (!empty($answers[0])) {
+                //var_dump("TABLEAU NON VIDE");
+                $answersArray = array();
+                //var_dump("User : " . $user->getId() . " Test : " . $test->getId() . " Trace : " . $trace->getId());
+                $typology = $answers[0]->getProposition()->getSubQuestion()->getTypology()->getName();
 
-                    foreach ($answersArray as $subquestionId => $answers) {
-                        // Initialisation des variables.
-                        $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
-                        // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
-                        $propositions = $subquestion->getPropositions();
-
-                        // Calcul du nombre de réponses.
-                        $nbAnswers = count($answers);
-                        $rightProps = array();
-                        // Accès à la proposition.
-                        // Calcul du nombre de proposition et
-                        // calcul du nombre de bonnes réponses.
-                        foreach ($propositions as $proposition) {
-                                $nbProposition++;
-                                if ($proposition->getRightAnswer()) {
-                                    $nbPropositionRightAnswser++;
-                                    $rightProps[] = $proposition;
-                                }
+                switch ($typology) {
+                    case 'TLCMLDM':
+                    case 'TLCMLMULT':
+                    case 'TLQROC':
+                        //
+                        // TODO : c'est le même code que pour les typologies QRU, QRM etc ...
+                        // En attente de remarques des autres langues
+                        // pour confirmation de ce fonctionnement.
+                        // Si OK, alors ajouter les 3 nouvelles typos dans la grande liste ci-dessous.
+                        // Si KO, alors modifier dans ce bloc.
+                        //
+                        foreach ($answers as $answer) {
+                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
+                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                            }
+                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
                         }
 
-                        // Je calcule le score que si le testeur a répondu à autant de réponses
-                        // qu'il y a de propositions.
-                        // Si ce n'est pas le cas, il aura forcément ZERO point.
-                        if ($nbAnswers == $nbPropositionRightAnswser) {
-                            foreach ($rightProps as $rightProp) {
-                                if (in_array($rightProp->getId(),$answersArray[$subquestionId])) {
-                                        $nbRightAnswer++;
+                        foreach ($answersArray as $subquestionId => $answers) {
+                            // Initialisation des variables.
+                            $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
+                            // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
+                            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
+                            $propositions = $subquestion->getPropositions();
+
+                            // Calcul du nombre de réponses.
+                            $nbAnswers = count($answers);
+                            $rightProps = array();
+                            // Accès à la proposition.
+                            // Calcul du nombre de proposition et
+                            // calcul du nombre de bonnes réponses.
+                            foreach ($propositions as $proposition) {
+                                    $nbProposition++;
+                                    if ($proposition->getRightAnswer()) {
+                                        $nbPropositionRightAnswser++;
+                                        $rightProps[] = $proposition;
+                                    }
+                            }
+
+                            // Je calcule le score que si le testeur a répondu à autant de réponses
+                            // qu'il y a de propositions.
+                            // Si ce n'est pas le cas, il aura forcément ZERO point.
+                            if ($nbAnswers == $nbPropositionRightAnswser) {
+                                foreach ($rightProps as $rightProp) {
+                                    if (in_array($rightProp->getId(),$answersArray[$subquestionId])) {
+                                            $nbRightAnswer++;
+                                    }
                                 }
                             }
-                        }
 
-                        if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                            $score++;
-                        }
-                    }
-                    break;
-
-                case "APP";
-                    foreach ($answers as $answer) {
-                        if ($answer->getProposition()->getRightAnswer()) {
-                            $score++;
-                        }
-                    }
-                    break;
-                case "QRM";
-                case "TQRM";
-                case "QRU";
-                case "TQRU";
-                case "VF";
-                case "TVF";
-                case "VFNM";
-                case "TVFNM";
-                    foreach ($answers as $answer) {
-                        if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                        }
-                        $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
-                    }
-
-                    foreach ($answersArray as $subquestionId => $answers) {
-                        // Initialisation des variables.
-                        $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
-                        // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
-                        $propositions = $subquestion->getPropositions();
-
-                        // Calcul du nombre de réponses.
-                        $nbAnswers = count($answers);
-                        $rightProps = array();
-                        // Accès à la proposition.
-                        // Calcul du nombre de proposition et
-                        // calcul du nombre de bonnes réponses.
-                        foreach ($propositions as $proposition) {
-                                $nbProposition++;
-                                if ($proposition->getRightAnswer()) {
-                                    $nbPropositionRightAnswser++;
-                                    $rightProps[] = $proposition;
-                                }
-                        }
-
-                        // Je calcule le score que si le testeur a répondu à autant de réponses
-                        // qu'il y a de propositions.
-                        // Si ce n'est pas le cas, il aura forcément ZERO point.
-                        if ($nbAnswers == $nbPropositionRightAnswser) {
-                            foreach ($rightProps as $rightProp) {
-                                if (in_array($rightProp->getId(),$answersArray[$subquestionId])) {
-                                        $nbRightAnswer++;
-                                }
+                            if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
+                                $score++;
                             }
                         }
+                        break;
 
-                        if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                            $score++;
+                    case "APP";
+                        foreach ($answers as $answer) {
+                            if ($answer->getProposition()->getRightAnswer()) {
+                                $score++;
+                            }
                         }
-                    }
-                    break;
+                        break;
+                    case "QRM";
+                    case "TQRM";
+                    case "QRU";
+                    case "TQRU";
+                    case "VF";
+                    case "TVF";
+                    case "VFNM";
+                    case "TVFNM";
+                        foreach ($answers as $answer) {
+                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
+                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                            }
+                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
+                        }
+
+                        foreach ($answersArray as $subquestionId => $answers) {
+                            // Initialisation des variables.
+                            $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
+                            // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
+                            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
+                            $propositions = $subquestion->getPropositions();
+
+                            // Calcul du nombre de réponses.
+                            $nbAnswers = count($answers);
+                            $rightProps = array();
+                            // Accès à la proposition.
+                            // Calcul du nombre de proposition et
+                            // calcul du nombre de bonnes réponses.
+                            foreach ($propositions as $proposition) {
+                                    $nbProposition++;
+                                    if ($proposition->getRightAnswer()) {
+                                        $nbPropositionRightAnswser++;
+                                        $rightProps[] = $proposition;
+                                    }
+                            }
+
+                            // Je calcule le score que si le testeur a répondu à autant de réponses
+                            // qu'il y a de propositions.
+                            // Si ce n'est pas le cas, il aura forcément ZERO point.
+                            if ($nbAnswers == $nbPropositionRightAnswser) {
+                                foreach ($rightProps as $rightProp) {
+                                    if (in_array($rightProp->getId(),$answersArray[$subquestionId])) {
+                                            $nbRightAnswer++;
+                                    }
+                                }
+                            }
+
+                            if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
+                                $score++;
+                            }
+                        }
+                        break;
+                }
             }
         }
 
