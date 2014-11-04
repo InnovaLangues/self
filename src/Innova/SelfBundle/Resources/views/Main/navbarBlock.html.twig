@@ -7,7 +7,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         {% if app.user is not null and is_granted('ROLE_ADMIN') %}
-                            {# <li><a href="{{ path('admin_user') }}">{{ 'menu.users' | trans }}</a></li> #}
+                            <li><a href="{{ path('admin_user') }}">{{ 'menu.users' | trans }}</a></li>
                             <li><a href="{{ path('csv_export') }}">{{ 'menu.csv_export' | trans }}</a></li>
                             <li><a href="{{ path('show_tests') }}">{{ 'menu.tests' | trans }}</a></li>
                             <li class="dropdown">

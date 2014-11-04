@@ -13,7 +13,7 @@ use Innova\SelfBundle\Entity\Test;
 /**
  * Test controller.
  *
- * @Route("/admin/user")
+ * @Route("/admin/users")
  */
 class AdminUserController extends Controller
 {
@@ -37,114 +37,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * Deletes a Test entity.
-     *
-     * @Route("/{id}", name="admin_user_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('InnovaSelfBundle:User')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('admin_user'));
-    }
-
-    /**
-     * Creates a form to delete a Admin User entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_user_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
-    }
-
-    /**
-     * Creates a new Test entity.
-     *
-     * @Route("/", name="admin_user_create")
-     * @Method("POST")
-     * @Template("InnovaSelfBundle:User:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new User();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to create a Admin User entity.
-    *
-    * @param User $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(User $entity)
-    {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('admin_user_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Admin User entity.
-     *
-     * @Route("/new", name="admin_user_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new User();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
      * Finds and displays a Admin User entity.
      *
      * @Route("/{id}", name="admin_user_show")
@@ -155,132 +47,65 @@ class AdminUserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('InnovaSelfBundle:User')->find($id);
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-        $userTests = $entity->getTests();
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'userTests' => $userTests,
-            'tests'       => $tests,
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing Test entity.
-     *
-     * @Route("/{id}/edit", name="admin_user_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('InnovaSelfBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Test entity.
-    *
-    * @param Test $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(User $entity)
-    {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('admin_user_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-
-    /**
-     * Edits an existing Test entity.
-     *
-     * @Route("/{id}", name="admin_user_update")
-     * @Method("PUT")
-     * @Template("InnovaSelfBundle:User:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('InnovaSelfBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('admin_user_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing Test entity.
-     *
-     * @Route("/affect/tests/{id}", name="admin_user_affect_tests")
-     * @Method("PUT")
-     */
-    public function affectTestsAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
-        foreach ($user->getTests() as $test) {
-            $user->removeTest($test);
+        $testsWithTraces = array();
+
+        foreach ($tests as $test) {
+            $count = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
+            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getQuestionnairesDoneYetByUserByTest($test->getId(), $user->getId());
+             if ($count > 0) {
+                 $testsWithTraces[] = array($test, $count, $questionnaires);
+             }
         }
 
-        foreach ($request->request as $key => $value) {
-            if ($key == 'test') {
-                foreach ($value as $testId => $testValue) {
-                    $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-                    $user->addTest($test);
-                }
-            }
-        }
-        
-        $em->persist($user);
-        $em->flush();
+        return array(
+            'tests'  => $testsWithTraces,
+            'user'   => $user
+        );
+    }
 
-        return $this->redirect($this->generateUrl('admin_user'));
+
+    /**
+     * Delete trace for a given user and a given test
+     *
+     * @Route("/delete-test-trace/user/{userId}/test/{testId}", name="delete-test-trace")
+     * @Method("DELETE")
+     */
+    public function deleteTestTraceAction($userId, $testId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+
+        if($this->get("self.trace.manager")->deleteTestTrace($user, $test)){
+            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour le test '.$test->getName().' ont été supprimées');
+        }
+
+        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
+    }
+
+    /**
+     * Delete trace for a given user and a given test
+     *
+     * @Route("/delete-task-trace/user/{userId}/test/{testId}/questionnaire/{questionnaireId}", name="delete-task-trace")
+     * @Method("DELETE")
+     */
+    public function deleteTaskTraceAction($userId, $testId, $questionnaireId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+
+        if($this->get("self.trace.manager")->deleteTaskTrace($user, $test, $questionnaire)){
+            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la tâche '.$questionnaire->getTheme().' ont été supprimées');
+        }
+
+        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
     }
 
 }
