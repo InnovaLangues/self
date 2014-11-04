@@ -56,6 +56,28 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
+     * countDoneYetByUserByTest count traces for test and for user
+     * @param id $testId
+     * @param id $userId
+     *
+     * @return int number of traces for the test and the user
+     */
+    public function getQuestionnairesDoneYetByUserByTest($testId, $userId)
+    {
+        $dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        LEFT JOIN q.traces t
+        WHERE t.user = :userId
+        AND t.test = :testId";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('testId', $testId)
+                ->setParameter('userId', $userId);
+
+        return $query->getResult();
+    }
+
+
+    /**
      * countTraceByUserByTestByQuestionnaire Count Trace By user/test/questionnaire
      * @param id $testId
      * @param id $questionnaireId

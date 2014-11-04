@@ -14,12 +14,9 @@
             <tr>
                 <td><a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
                 <td class="text-right">
-                    <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('admin_user_new') }}" class="btn btn-primary">{{ 'user.create' | trans }}</a>
 {% endblock %}
