@@ -150,7 +150,7 @@ editor:
         text: Texte
         listening_limit: Définir le nombre d'écoutes (0 = illimité)
         name: Nom
-        description: Transcription
+        description: Description/Transcription
         file: Fichier
     app:
         add_pair: Ajouter une paire
