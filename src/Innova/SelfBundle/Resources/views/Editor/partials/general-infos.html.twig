@@ -43,19 +43,17 @@
             </div>
             {% endif %}
 
-            {% if questionnaire.questions[0].typology is not null %}
+            
             <div class="col-md-2 task-content">
                 <div class="form-group">
                     <div class="checkbox-inline">
                         {{ macros.help("Par défaut les propositions sont mélangées lors de la passation. Permet de garder l'ordre tel qu'il apparait dans l'éditeur.") }}
-                        <label for="orderfix">
-                            {{ 'editor.questionnaire.fixed_order' | trans }}
-                            <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
-                        </label>
+                        <label for="orderfix">{{ 'editor.questionnaire.fixed_order' | trans }}</label>
+                         <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
                     </div>
                 </div>
             </div>
-            {% endif %}
+      
 
         </div><!-- row -->
     </div>
