@@ -34,7 +34,7 @@ class EditorLog
     private $date;
 
     /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+    * @ORM\ManyToOne(targetEntity="User", inversedBy="editorLogs")
     */
     protected $user;
     
