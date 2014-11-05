@@ -151,7 +151,7 @@ editor:
         text: Testo
         listening_limit: Definisci il numero di ascolti
         name: Nome
-        description: Descrizione
+        description: Trascrizione
         file: File
     app:
         add_pair: Aggiungi una coppia
