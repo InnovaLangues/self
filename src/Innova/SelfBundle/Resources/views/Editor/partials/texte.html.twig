@@ -1,7 +1,8 @@
 <div id="texte-container" class="panel panel-info">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     <div class="panel-heading">
-        {{ 'editor.questionnaire.question_object' | trans }}
+        {{ macros.help("Media sur lequel porte la question.") }}
+        {{ 'editor.questionnaire.question_object' | trans }} 
         {% if questionnaire.mediaText is not null %}
             <div class="pull-right">
                 {{ macros.editMedia(questionnaire.mediaText, "texte") }}
