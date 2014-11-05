@@ -408,12 +408,11 @@ class EecController
 
         foreach ($propositions as $proposition) {
             if ($proposition->getMedia()->getMediaPurpose()->getName() == "reponse") {
-                $description = $proposition->getMedia()->getDescription();
-                $answers[$description] = $proposition;
+                $answers[$proposition->getMedia()->getDescription()] = $proposition;
             }
         }
 
-        ksort($answers, SORT_NATURAL);
+        ksort($answers);
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers));
 
