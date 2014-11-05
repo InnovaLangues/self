@@ -108,4 +108,21 @@ class AdminUserController extends Controller
         return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
     }
 
+    /**
+     * Delete trace for a given user and a given test
+     *
+     * @Route("/delete-user/{userId}", name="delete-user")
+     * @Method("DELETE")
+     */
+    public function deleteUserAction($userId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
+        if($this->get("self.user.manager")->deleteUser($user)){
+            $this->get('session')->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
+        }
+
+        return $this->redirect($this->generateUrl('admin_user'));
+    }
 }

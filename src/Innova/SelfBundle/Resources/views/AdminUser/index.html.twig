@@ -1,6 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ flashMessage }}</div>
+    {% endfor %}
+    
     <h1>{{ 'user.list' | trans }}</h1>
     <table class="records_list table">
         <thead>

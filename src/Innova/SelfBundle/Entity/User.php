@@ -25,7 +25,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-    * @ORM\OneToMany(targetEntity="Trace", mappedBy="user")
+    * @ORM\OneToMany(targetEntity="Trace", mappedBy="user", cascade={"remove"})
     */
     protected $traces;
 
