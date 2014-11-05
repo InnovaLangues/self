@@ -4,9 +4,9 @@
     {% for flashMessage in app.session.flashbag.get('success') %}
         <div class="alert alert-success">{{ flashMessage }}</div>
     {% endfor %}
-    
+
     <h1>{{ 'user.list' | trans }}</h1>
-    <table class="records_list table">
+    <table class="records_list table table-striped">
         <thead>
             <tr>
                 <th>{{ 'user.name' | trans }}</th>

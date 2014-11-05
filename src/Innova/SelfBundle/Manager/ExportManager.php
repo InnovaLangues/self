@@ -185,9 +185,7 @@ class ExportManager
             if ($this ->countQuestionnaireDone($test, $user) > 0
             && isset($result[$user->getId()])
             && $user->getId() > 33
-//            && $user->getUserName() == "raynaud"
             ) {
-                //var_dump($user->getUserName());
                 $csv .= "\"" . $user->getUserName() . "\"" . ";" ;
                 $csv .= "\"" . $user->getFirstName() . "\"" . ";" ;
                 $csv .= "\"" . $result[$user->getId()]["date"] . "\"" . ";" . "\"" . $result[$user->getId()]["time"] . "\"" . ";";
@@ -202,7 +200,7 @@ class ExportManager
                 $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
                 foreach ($questionnaires as $questionnaire) {
                     $questions = $questionnaire->getQuestions();
-                    var_dump("Q : " . $questions[0]->getId());
+
                     $typologyName = $questions[0]->getTypology()->getName();
                     $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
                                     array('user' => $user->getId(),
@@ -235,18 +233,14 @@ class ExportManager
                             $propLetters = array();
                             // on compte les bonnes propositions
                             foreach ($propositions as $proposition) {
-        //                        if ($proposition->getMedia()->getMediaPurpose() != null) {
-                                    $cptProposition++;
-                                    if ($proposition->getRightAnswer()) {
-                                        var_dump("Suis dans getRightAnswer : " . $proposition->getId() . " M : " . $proposition->getMedia()->getId());
-                                        $nbPropositionRightAnswser++;
-                                        $rightProps[] = $proposition->getId();
-                                    }
-                                    if ($typologyName != "TLQROC") {
-                                        var_dump("Typo : " . $typologyName);
-                                        $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
-                                    }
-        //                        }
+                                $cptProposition++;
+                                if ($proposition->getRightAnswer()) {
+                                    $nbPropositionRightAnswser++;
+                                    $rightProps[] = $proposition->getId();
+                                }
+                                if ($typologyName != "TLQROC") {
+                                    $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
+                                }
                             }
 
                             // Récupération bonne réponse ou non
@@ -262,20 +256,11 @@ class ExportManager
                             // Récupération de la saisie ou des lettres associées aux réponses
                             $textToDisplay = $this->textToDisplay($subquestion, $answersArray, $propLetters);
                             $csv .= ($textToDisplay);
-/*
-                            if (strpos($textToDisplay, ";") !== false) {
-                                var_dump("contient le point virgule " . $textToDisplay);
-                            }
-                            else {
-                                $csv .= ";";
-                            }
-*/
                             $csv .= ";";
                         }
                     }
                 }
                 $csv .= "\n"; // Saut de ligne
-                //var_dump("Saut de ligne");
             } // Fin du test sur le "User"
         }
 
@@ -336,7 +321,6 @@ class ExportManager
         $subquestionId = $subquestion->getId();
         $textToDisplay = "";
 
-        var_dump("typo : " . $typo . " SQ : " . $subquestion->getId());
         switch ($typo) {
             case 'TVF':
             case 'VF':
@@ -351,11 +335,6 @@ class ExportManager
                     $letters = array();
                     foreach ($answersArray[$subquestion->getId()] as $answer) {
                         $idAnswer = $answer->getId();
-                        var_dump("idAnswer : ". $idAnswer);
-                        if ($idAnswer == 610) {
-                            var_dump($propLetters);
-//                            var_dump("prop : ". $propLetters[$idAnswer]);
-                        }
                         $letters[$propLetters[$idAnswer]] = 1;
                     }
                     ksort($letters);
@@ -371,10 +350,7 @@ class ExportManager
                 if (isset($answersArray[$subquestionId])) {
                     $proposition = $answersArray[$subquestionId][0];
 
-                    //$textToDisplay = str_replace(";", "\;", $proposition->getMedia()->getDescription());
-                    //var_dump("TTD1 : " . $textToDisplay);
                     $textToDisplay = "\"" . addslashes(html_entity_decode($proposition->getMedia()->getDescription())) . "\"";
-                    //var_dump("TTD : " . $textToDisplay);
                 }
                 break;
         }

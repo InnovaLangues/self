@@ -143,7 +143,7 @@ editor:
         text: Text
         listening_limit: Define number of listenings (0=unlimited)
         name: Name
-        description: Transcription
+        description: Description/Transcription
         file: File
     app:
         add_pair: Add a pair
