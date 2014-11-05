@@ -1,2 +1,0 @@
-Nom;Prénom;Date;Temps en secondes (pour le test entier);Niveau Dialang CO;Niveau Dialang CE;Niveau Dialang EEC;Niveau Lansad acquis;Score total obtenu dans le test (formule du total);T1 - NOM de ma TACHE;T1 - Protocole d'interaction;T1 - difficulté;T1 - TEMPS;T1_1 - CORR-FAUX : 1 pour correct / 0 pour faux;T1_1 - PROPOSITION CHOISIE;T1_2 - CORR-FAUX : 1 pour correct / 0 pour faux;T1_2 - PROPOSITION CHOISIE;
-admin;;1510;3;A1;A2;B1;B1.2;1;test eec ldm;TLCMLDM;1;3;1;aaa;0;distracteur2;
