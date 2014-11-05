@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use Innova\SelfBundle\Entity\Test;
 
 /**
  * Class ExportController
@@ -22,19 +23,21 @@ class ExportController
     protected $entityManager;
     protected $exportManager;
 
+
     public function __construct($kernelRoot, $entityManager, $exportManager)
     {
         $this->kernelRoot = $kernelRoot;
         $this->entityManager = $entityManager;
         $this->exportManager = $exportManager;
+        
     }
 
     /**
      * Lists all Test entities.
      *
      * @Route(
-     *     "/admin/csv",
-     *     name = "csv_export",
+     *     "/admin/export",
+     *     name = "export",
      *     options = {"expose"=true}
      * )
      * @Method("GET")
@@ -55,15 +58,22 @@ class ExportController
 
     /**
      * @Route(
-     *     "/admin/test/{testId}/file/{filename}",
+     *     "/admin/test/{testId}/file/{filename}/{mode}",
      *     name = "get-file"
      * )
      *
      * @Method("GET")
      */
-    public function getFileAction($testId, $filename)
+    public function getFileAction($testId, $filename, $mode)
     {
-        $file = $this->kernelRoot ."/data/export/".$testId."/".$filename;
+
+        if ($mode = "pdf") {
+            $dir = "exportPdf";
+        } else {
+            $dir = "export";
+        }
+
+        $file = $this->kernelRoot ."/data/".$dir."/".$testId."/".$filename;
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'private');
@@ -92,11 +102,40 @@ class ExportController
         $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
 
         $csvName = $this->exportManager->exportCsvAction($test, $tia);
-        $fileList = $this->exportManager->getFileList($test);
+        $fileList = $this->exportManager->getFileList($test, "csv");
 
         return array(
             "csvName" => $csvName,
             'test' => $test,
+            "fileList"=> $fileList,
+        );
+    }
+
+     /**
+     * exportPdf function
+     * @Route(
+     *     "/admin/pdf-export/test/{id}",
+     *     name = "pdf-export"
+     * )
+     *
+     * @Method("PUT")
+     * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
+     */
+    public function exportPdfAction(Test $test)
+    {
+
+        $test->listenigLimitContext = 11;
+        $test->listenigLimitObjet = 11;
+
+        // Génération du nom du fichier exporté
+        $pdfName = $this->exportManager->exportPdfAction($test);     
+
+        // Appel de la vue et de la génération du PDF
+        $fileList = $this->exportManager->getFileList($test, "pdf");
+
+        return array(
+            "pdfName" => $pdfName,
+            "test" => $test,
             "fileList"=> $fileList,
         );
     }

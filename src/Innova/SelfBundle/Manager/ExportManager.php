@@ -12,15 +12,43 @@ class ExportManager
     protected $entityManager;
     protected $securityContext;
     protected $kernelRoot;
+    protected $knpSnappyPdf;
+    protected $templating;
     protected $user;
 
-    public function __construct($entityManager, $securityContext, $kernelRoot)
+    public function __construct($entityManager, $securityContext, $kernelRoot, $knpSnappyPdf, $templating)
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
         $this->kernelRoot = $kernelRoot;
+        $this->knpSnappyPdf = $knpSnappyPdf;
+        $this->templating = $templating;
         $this->user = $this->securityContext->getToken()->getUser();
     }
+
+    public function exportPdfAction(Test $test)
+    {
+        $fs = new Filesystem();
+        $testId = $test->getId();
+        $pdfContent = "";
+
+        $pdfName = "self_export-pdf-test_" . $testId . "-" . date("d-m-Y_H:i:s") . '.pdf';
+        $pdfPathExport = $this->kernelRoot ."/data/exportPdf/".$testId."/";
+
+        // Appel de la vue et de la génération du PDF
+        $this->knpSnappyPdf->generateFromHtml(
+            $this->templating->render(
+                'InnovaSelfBundle:Export:templatePdf.html.twig',
+                array(
+                    'test' => $test
+                )
+            ),
+            $this->kernelRoot ."/data/exportPdf/". $test->getId() ."/". $pdfName
+        );
+
+        return $pdfName;
+    }
+
 
     public function exportCsvAction(Test $test, $tia)
     {
@@ -48,10 +76,16 @@ class ExportManager
         return $csvName;
     }
 
-    public function getFileList(Test $test)
+    public function getFileList(Test $test, $mode)
     {
+        if ($mode = "pdf") {
+            $dir = "exportPdf";
+        } else {
+            $dir = "export";
+        }
+
         $testId = $test->getId();
-        $csvPathExport = $this->kernelRoot ."/data/export/".$testId."/";
+        $csvPathExport = $this->kernelRoot ."/data/".$dir."/".$testId."/";
         $fileList = array();
 
         if ($dossier = opendir($csvPathExport)) {
