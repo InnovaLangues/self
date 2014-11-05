@@ -190,7 +190,7 @@ class Typology
     public function addSkill(\Innova\SelfBundle\Entity\Skill $skills)
     {
         $this->skills[] = $skills;
-    
+
         return $this;
     }
 
@@ -207,7 +207,7 @@ class Typology
     /**
      * Get skills
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSkills()
     {

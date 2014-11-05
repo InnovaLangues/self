@@ -27,7 +27,7 @@ class MediaPurpose
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-    
+
     /**
     * @ORM\OneToMany(targetEntity="Media", mappedBy="mediaPurpose")
     */
@@ -40,11 +40,11 @@ class MediaPurpose
     {
         $this->medias = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -60,14 +60,14 @@ class MediaPurpose
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -83,7 +83,7 @@ class MediaPurpose
     public function addMedia(\Innova\SelfBundle\Entity\Media $medias)
     {
         $this->medias[] = $medias;
-    
+
         return $this;
     }
 
@@ -100,7 +100,7 @@ class MediaPurpose
     /**
      * Get medias
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMedias()
     {

@@ -91,6 +91,13 @@ services:
             securityContext:    @security.context
             kernelRoot: %kernel.root_dir%
 
+    self.export_pdf.manager:
+        class: Innova\SelfBundle\Manager\ExportPdfManager
+        arguments:
+            entityPdfManager:   @doctrine.orm.entity_manager
+            securityContext:    @security.context
+            kernelRoot: %kernel.root_dir%
+
     self.test.manager:
         class: Innova\SelfBundle\Manager\TestManager
         arguments:

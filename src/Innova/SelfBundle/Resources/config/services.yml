@@ -43,6 +43,15 @@ services:
             entityManager: @doctrine.orm.entity_manager
             exportManager: @self.export.manager
 
+    innova_pdf_export:
+        class: Innova\SelfBundle\Controller\ExportPdfController
+        arguments:
+            kernelRoot: %kernel.root_dir%
+            entityPdfManager: @doctrine.orm.entity_manager
+            exportPdfManager: @self.export_pdf.manager
+            knpSnappyPdf: @knp_snappy.pdf
+            templating: @templating
+
     innova_player:
         class: Innova\SelfBundle\Controller\Player\PlayerController
         arguments:
