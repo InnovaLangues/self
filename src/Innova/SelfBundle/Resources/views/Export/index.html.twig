@@ -2,7 +2,7 @@
 
 {% block body -%}
             <h3>{{ 'editor.test.list' | trans }}</h3>
-            <table class="table table-hover">
+            <table class="table table-hover table-striped">
                 <thead>
                     <tr>
                         <th>{{ 'editor.test.name' | trans }}</th>
@@ -14,9 +14,9 @@
                         <tr>
                         <td>{{ test.name }}</td>
                         <td class="text-right">
-                            <a href="{{ path('csv-export', {'testId': test.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">Export CSV</a>
-                            <a href="{{ path('csv-export', {'testId': test.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">Export TiaPlus</a>
-                            <a href="{{ path('pdf-export', {'id': test.id } )}}" data-method="PUT" class="rest btn btn-default btn-sm">Export PDF</a>
+                            <a href="{{ path('csv-export', {'testId': test.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-sm"><img rel="tooltip" data-original-title="Export CSV" src="{{ asset('bundles/innovaself/images/csv-export.gif') }}" /></a>
+                            <a href="{{ path('csv-export', {'testId': test.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-sm"><img rel="tooltip" data-original-title="Export Tia+" src="{{ asset('bundles/innovaself/images/tia-export.png') }}" /></a>
+                            <a href="{{ path('pdf-export', {'id': test.id } )}}" data-method="PUT" class="rest btn btn-default btn-sm"><img rel="tooltip" data-original-title="Export PDF" src="{{ asset('bundles/innovaself/images/pdf-export.gif') }}" /></a>
                         </td>
                     {% endfor %}
                     </tr>

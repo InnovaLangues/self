@@ -177,6 +177,7 @@ class TraceController
 
         if ($typo == "TLQROC") {
             $propositions = $subquestion->getPropositions();
+//            $propositions = $em->getRepository('InnovaSelfBundle:Proposition')->findAll();
             $rightAnswer = false;
             $propositionFound = null;
 
@@ -200,10 +201,12 @@ class TraceController
             }
 
             if ($propositionFound === null) {
+                var_dump("Create Media propositionFound === null");
                 $media = $this->mediaManager->createMedia(null, "texte", $saisie, $saisie, null, 0, "reponse");
                 $proposition = $this->propositionManager->createProposition($subquestion, $media, $rightAnswer);
             } else {
                 if ($displayAnswer) {
+                    var_dump("Create Media displayAnswer");
                     $media = $this->mediaManager->createMedia(null, "texte", $saisie, $saisie, null, 0, "reponse");
                     $proposition = $this->propositionManager->createProposition($subquestion, $media, $rightAnswer);
                 }

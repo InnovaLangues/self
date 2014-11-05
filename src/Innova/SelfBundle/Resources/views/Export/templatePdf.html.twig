@@ -33,6 +33,13 @@
                         <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaContext.url|raw }}">
                 {% else %}
                         {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}
+                        {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaLimits[0] is defined %}
+                            {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaLimits[0].listeningLimit > 0 %}
+                                <br />
+                                <b>Nombre d'écoute limite</b> :
+                                {{ orderQuestionnaireTest.questionnaire.mediaContext.mediaLimits[0].listeningLimit }}
+                            {% endif %}
+                        {% endif %}
                 {% endif %}
                 </td>
             </tr>
@@ -45,6 +52,13 @@
                         <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaText.url|raw }}">
                 {% else %}
                         {{ orderQuestionnaireTest.questionnaire.mediaText.description|raw }}
+                        {% if orderQuestionnaireTest.questionnaire.mediaText.mediaLimits[0] is defined %}
+                            {% if orderQuestionnaireTest.questionnaire.mediaText.mediaLimits[0].listeningLimit > 0 %}
+                                <br />
+                                <b>Nombre d'écoute limite</b> :
+                                {{ orderQuestionnaireTest.questionnaire.mediaText.mediaLimits[0].listeningLimit }}
+                            {% endif %}
+                        {% endif %}
                 {% endif %}
                 </td>
             </tr>
@@ -57,6 +71,13 @@
                         <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaBlankText.url|raw }}">
                 {% else %}
                         {{ orderQuestionnaireTest.questionnaire.mediaBlankText.description}}
+                        {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaLimits[0] is defined %}
+                            {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaLimits[0].listeningLimit > 0 %}
+                                <br />
+                                <b>Nombre d'écoute limite</b> :
+                                {{ orderQuestionnaireTest.questionnaire.mediaBlankText.mediaLimits[0].listeningLimit }}
+                            {% endif %}
+                        {% endif %}
                 {% endif %}
                 </td>
             </tr>
