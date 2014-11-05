@@ -25,10 +25,6 @@
         <tr>
             <td><b>Titre de la tache</b> : {{ orderQuestionnaireTest.questionnaire.theme }}</td>
         </tr>
-{#        <tr>
-            <td><b>Niveau</b> : {{ orderQuestionnaireTest.questionnaire.level.name }}</td>
-        </tr>
-#}
         {% if orderQuestionnaireTest.questionnaire.mediaContext is not null %}
             <tr>
                 <td>
@@ -93,7 +89,7 @@
 #}
                         {% if subquestion.mediaAmorce is not null %}
                             <td>
-                                <b>Amorce</b> : {{ subquestion.id }} {{ subquestion.mediaAmorce.description|raw }}
+                                <b>Amorce</b> : {{ subquestion.mediaAmorce.description|raw }}
                             </td>
                         {% endif %}
                         {% if subquestion.mediaSyllable is not null %}

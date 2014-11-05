@@ -7,7 +7,7 @@
         <hr/>
 
         <h3> Export PDF pour le test <strong>{{ test.name }}</strong></h3>
-        <div class="alert alert-success" role="alert">{{ 'export.file_generated' | trans }} - <a href="{{ path('get-file', {'testId': test.id, 'filename': pdfName } )}}">{{ 'export.file_download_pdf' | trans }}</a></div>
+        <div class="alert alert-success" role="alert">{{ 'export.file_generated' | trans }} - <a href="{{ path('get-file-pdf', {'testId': test.id, 'filename': pdfName } )}}">{{ 'export.file_download_pdf' | trans }}</a></div>
 
         <h4>{{ 'export.files_list' | trans }}</h4>
         {% for file in fileList %}

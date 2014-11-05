@@ -99,6 +99,7 @@ class ExportManager
         }
 
         // CSV HEADER
+
         $csv .= "Nom;" ; // A
         $csv .= "Prénom;" ; // B
         $csv .= "Date;" ; // C
@@ -108,7 +109,6 @@ class ExportManager
         $csv .= "Niveau Dialang EEC;" ; // G
         $csv .= "Niveau Lansad acquis;" ; // H
         $csv .= "Score total obtenu dans le test (formule du total);" ; // I
-
         $cpt_questionnaire = 0;
         if ($cpt_questionnaire == 0) {
             foreach ($questionnaires as $questionnaire) {
@@ -142,104 +142,107 @@ class ExportManager
                 }
             }
         }
+
         $csv .= "\n";
 
         // CSV BODY
         $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
         foreach ($users as $user) {
-           if ($this ->countQuestionnaireDone($test, $user) > 0 && isset($result[$user->getId()]) and $user->getId() > 150) {
-                $csv .= $user->getUserName() . ";" ;
-                $csv .= $user->getFirstName() . ";" ;
-                $csv .= $result[$user->getId()]["date"] . ";" . $result[$user->getId()]["time"] . ";";
-                $csv .= $user->getCoLevel() . ";";
-                $csv .= $user->getCeLevel() . ";";
-                $csv .= $user->getEeLevel() . ";";
-                $csv .= $user->getlevelLansad() . ";";
-                $csv .= $this->calculateScore($user, $test) . ";";
+            if ($this ->countQuestionnaireDone($test, $user) > 0
+            && isset($result[$user->getId()])
+            && $user->getId() > 33
+//            && $user->getUserName() == "raynaud"
+            ) {
+                //var_dump($user->getUserName());
+                $csv .= "\"" . $user->getUserName() . "\"" . ";" ;
+                $csv .= "\"" . $user->getFirstName() . "\"" . ";" ;
+                $csv .= "\"" . $result[$user->getId()]["date"] . "\"" . ";" . "\"" . $result[$user->getId()]["time"] . "\"" . ";";
+                $csv .= "\"" . $user->getCoLevel() . "\"" . ";";
+                $csv .= "\"" . $user->getCeLevel() . "\"" . ";";
+                $csv .= "\"" . $user->getEeLevel() . "\"" . ";";
+                $csv .= "\"" . $user->getlevelLansad() . "\"" . ";";
+                $csv .= "\"" . $this->calculateScore($user, $test) . "\"" . ";";
 
                 $answersArray = array();
 
                 $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
                 foreach ($questionnaires as $questionnaire) {
-
+                    $questions = $questionnaire->getQuestions();
+                    var_dump("Q : " . $questions[0]->getId());
+                    $typologyName = $questions[0]->getTypology()->getName();
                     $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
                                     array('user' => $user->getId(),
                                           'questionnaire' => $questionnaire->getId()
                                          ));
-                    $questions = $questionnaire->getQuestions();
 
-                    var_dump("== Boucle sur TRACE ==");
                     foreach ($traces as $trace) {
 
-                        var_dump("Trace : " . $trace->getId());
                         $answers = $trace->getAnswers();
-                        $csv .= $questionnaire->getTheme() . ";" ;
-                        $csv .= $questions[0]->getTypology()->getName() .  ";" ;
-                        $csv .= $trace->getDifficulty() . ";" ;
-                        $csv .= $trace->getTotalTime() . ";" ;
+                        $csv .= "\"" . $questionnaire->getTheme() . "\"" . ";" ;
+                        $csv .= "\"" . $typologyName . "\"" .  ";" ;
+                        $csv .= "\"" . $trace->getDifficulty() . "\"" . ";" ;
+                        $csv .= "\"" . $trace->getTotalTime() . "\"" . ";" ;
 
                         // création tableau de correspondance Answer --> Subquestion
                         foreach ($answers as $answer) {
                             if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
                                 $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                                var_dump("Answer cas 1 SQ : " . $answer->getProposition()->getSubQuestion()->getId());
                             }
                             $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
-                            var_dump("Answer cas 2 SQ : " . $answer->getProposition()->getSubQuestion()->getId() . " P2 : " . $answer->getProposition()->getId());
                         }
 
                         $subquestions = $questions[0]->getSubquestions();
 
-                        var_dump("== Boucle sur SUBQUESTION ==");
                         foreach ($subquestions as $subquestion) {
-
-                            var_dump("SQ : " . $subquestion->getId() .  " Qn : " . $questionnaire->getId()
-                                   . " T : " . $test->getId() . " Q : " . $questions[0]->getId());
-                            var_dump("User : " .$user->getId());
                             $propositions = $subquestion->getPropositions();
                             $rightProps = array();
                             $nbPropositionRightAnswser = 0;
                             $cptProposition = 0;
                             $propLetters = array();
                             // on compte les bonnes propositions
-                            var_dump("== Boucle sur PROPOSITION ==");
                             foreach ($propositions as $proposition) {
-                                var_dump("Proposition : " .$proposition->getId());
-                                if ($proposition->getMedia()->getMediaPurpose() != null) {
-                                    if ($proposition->getMedia()->getMediaPurpose()->getName() == "proposition") {
-                                        $cptProposition++;
-                                        if ($proposition->getRightAnswer()) {
-                                            var_dump("suis dans RightAnswer :" . $proposition->getId());
-                                            $nbPropositionRightAnswser++;
-                                            $rightProps[] = $proposition->getId();
-                                        }
-                                        $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
-                                        var_dump("propLetters !!!" . $proposition->getId(). "/" . $this->intToLetter($cptProposition));
+        //                        if ($proposition->getMedia()->getMediaPurpose() != null) {
+                                    $cptProposition++;
+                                    if ($proposition->getRightAnswer()) {
+                                        var_dump("Suis dans getRightAnswer : " . $proposition->getId() . " M : " . $proposition->getMedia()->getId());
+                                        $nbPropositionRightAnswser++;
+                                        $rightProps[] = $proposition->getId();
                                     }
-                                }
+                                    if ($typologyName != "TLQROC") {
+                                        var_dump("Typo : " . $typologyName);
+                                        $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
+                                    }
+        //                        }
                             }
-
-//                            var_dump("NB0 : " . $nbPropositionRightAnswser . " / SQ : " . $subquestion->getId());
 
                             // Récupération bonne réponse ou non
                             $subquestionOk =
                             $this->checkRightAnswer($answersArray, $subquestion, $nbPropositionRightAnswser, $rightProps);
 
                             if ($subquestionOk) {
-                                $csv .= "1" . ";";
+                                $csv .= "\"" . "1" . "\"" . ";";
                             } else {
-                                $csv .= "0" . ";";
+                                $csv .= "\"" . "0" . "\"" . ";";
                             }
 
                             // Récupération de la saisie ou des lettres associées aux réponses
                             $textToDisplay = $this->textToDisplay($subquestion, $answersArray, $propLetters);
-                            $csv .= $textToDisplay;
+                            $csv .= ($textToDisplay);
+/*
+                            if (strpos($textToDisplay, ";") !== false) {
+                                var_dump("contient le point virgule " . $textToDisplay);
+                            }
+                            else {
+                                $csv .= ";";
+                            }
+*/
                             $csv .= ";";
                         }
                     }
                 }
-                $csv .= "\n";
-            }
+                $csv .= "\n"; // Saut de ligne
+                //var_dump("Saut de ligne");
+            } // Fin du test sur le "User"
         }
 
         return $csv;
@@ -282,16 +285,16 @@ class ExportManager
             case 'TLCMLDM':
             case 'TLCMLMULT':
             case 'TLQROC':
-                $subquestionOk = true;
-                var_dump("SQ checkRightAnswer : " . $subquestionId);
-//                var_dump("NB : " . $nbPropositionRightAnswser);
+                $subquestionOk = false;
+                if (isset($answersArray[$subquestionId])) {
+                    $proposition = $answersArray[$subquestionId][0];
+                    $subquestionOk = $proposition->getRightAnswer();
+                }
 
-                $proposition = $answersArray[$subquestionId][0];
-                $subquestionOk = $proposition->getRightAnswer();
                 break;
         }
 
-        return  $subquestionOk;
+        return $subquestionOk;
     }
 
     private function textToDisplay(Subquestion $subquestion, $answersArray, $propLetters ){
@@ -299,6 +302,7 @@ class ExportManager
         $subquestionId = $subquestion->getId();
         $textToDisplay = "";
 
+        var_dump("typo : " . $typo . " SQ : " . $subquestion->getId());
         switch ($typo) {
             case 'TVF':
             case 'VF':
@@ -309,23 +313,35 @@ class ExportManager
             case 'TQRU':
             case 'TQRM':
             case 'APP':
-                $letters = array();
-                foreach ($answersArray[$subquestion->getId()] as $answer) {
-                    $idAnswer = $answer->getId();
-//                    var_dump("SQ textToDisplay : " . $subquestion->getId() . "/ AnswerId : " . $idAnswer);
-                    $letters[$propLetters[$idAnswer]] = 1;
-                }
-                ksort($letters);
-                foreach ($letters as $key => $value) {
-                    $textToDisplay .= $key;
+                if (isset($answersArray[$subquestionId])) {
+                    $letters = array();
+                    foreach ($answersArray[$subquestion->getId()] as $answer) {
+                        $idAnswer = $answer->getId();
+                        var_dump("idAnswer : ". $idAnswer);
+                        if ($idAnswer == 610) {
+                            var_dump($propLetters);
+//                            var_dump("prop : ". $propLetters[$idAnswer]);
+                        }
+                        $letters[$propLetters[$idAnswer]] = 1;
+                    }
+                    ksort($letters);
+                    foreach ($letters as $key => $value) {
+                        $textToDisplay .= $key;
+                    }
                 }
                 break;
 
             case 'TLCMLDM':
             case 'TLCMLMULT':
             case 'TLQROC':
-                $proposition = $answersArray[$subquestionId][0];
-                $textToDisplay = $proposition->getMedia()->getDescription();
+                if (isset($answersArray[$subquestionId])) {
+                    $proposition = $answersArray[$subquestionId][0];
+
+                    //$textToDisplay = str_replace(";", "\;", $proposition->getMedia()->getDescription());
+                    //var_dump("TTD1 : " . $textToDisplay);
+                    $textToDisplay = "\"" . addslashes(html_entity_decode($proposition->getMedia()->getDescription())) . "\"";
+                    //var_dump("TTD : " . $textToDisplay);
+                }
                 break;
         }
 
@@ -436,7 +452,6 @@ class ExportManager
 
     private function intToLetter($int){
 
-//        var_dump("intToLetter :" . $int);
         $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F",
         7 => "G", 8 => "H", 9 => "I", 10 => "J", 11 => "K", 12 => "L");
 
@@ -453,12 +468,9 @@ class ExportManager
         $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),'test' => $test->getId()));
 
         foreach ($traces as $trace) {
-            $answers = $trace->getAnswers();
-
-            if (!empty($answers[0])) {
-                //var_dump("TABLEAU NON VIDE");
+            if ($answers = $trace->getAnswers()) {
+                if(isset($answers[0])){
                 $answersArray = array();
-                //var_dump("User : " . $user->getId() . " Test : " . $test->getId() . " Trace : " . $trace->getId());
                 $typology = $answers[0]->getProposition()->getSubQuestion()->getTypology()->getName();
 
                 switch ($typology) {
@@ -493,11 +505,11 @@ class ExportManager
                             // Calcul du nombre de proposition et
                             // calcul du nombre de bonnes réponses.
                             foreach ($propositions as $proposition) {
-                                    $nbProposition++;
-                                    if ($proposition->getRightAnswer()) {
-                                        $nbPropositionRightAnswser++;
-                                        $rightProps[] = $proposition;
-                                    }
+                                $nbProposition++;
+                                if ($proposition->getRightAnswer()) {
+                                    $nbPropositionRightAnswser++;
+                                    $rightProps[] = $proposition;
+                                }
                             }
 
                             // Je calcule le score que si le testeur a répondu à autant de réponses
@@ -506,7 +518,7 @@ class ExportManager
                             if ($nbAnswers == $nbPropositionRightAnswser) {
                                 foreach ($rightProps as $rightProp) {
                                     if (in_array($rightProp->getId(),$answersArray[$subquestionId])) {
-                                            $nbRightAnswer++;
+                                        $nbRightAnswer++;
                                     }
                                 }
                             }
@@ -576,6 +588,7 @@ class ExportManager
                             }
                         }
                         break;
+                }
                 }
             }
         }

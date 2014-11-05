@@ -61,7 +61,7 @@ class ExportPdfController
     /**
      * @Route(
      *     "/admin/test/{testId}/file/{filename}",
-     *     name = "get-file"
+     *     name = "get-file-pdf"
      * )
      *
      * @Method("GET")
@@ -95,14 +95,6 @@ class ExportPdfController
      */
     public function exportPdfAction(Test $test)
     {
-
-
-    /**
-        $mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array(
-                                                                                            'media' => $test->getMediaContext(),
-                                                                                            'questionnaire' => $questionnaire
-                                                                                        ));
-     */
 
         $test->listenigLimitContext = 11;
         $test->listenigLimitObjet = 11;
