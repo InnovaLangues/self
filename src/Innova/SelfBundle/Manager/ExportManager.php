@@ -78,7 +78,7 @@ class ExportManager
 
     public function getFileList(Test $test, $mode)
     {
-        if ($mode = "pdf") {
+        if ($mode == "pdf") {
             $dir = "exportPdf";
         } else {
             $dir = "export";

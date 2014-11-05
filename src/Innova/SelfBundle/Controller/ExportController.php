@@ -67,7 +67,7 @@ class ExportController
     public function getFileAction($testId, $filename, $mode)
     {
 
-        if ($mode = "pdf") {
+        if ($mode == "pdf") {
             $dir = "exportPdf";
         } else {
             $dir = "export";
