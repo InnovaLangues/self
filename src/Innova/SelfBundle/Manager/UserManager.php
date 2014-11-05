@@ -23,4 +23,14 @@ class UserManager
 
         return $user;
     }
+
+    public function deleteUser(User $user)
+    {
+        $em = $this->entityManager;
+        
+        $em->remove($user);
+        $em->flush();
+
+        return $this;
+    }
 }
