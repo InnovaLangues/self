@@ -85,14 +85,19 @@ class User extends BaseUser
     protected $levelLansad;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="user")
+    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="user", cascade={"remove"})
     */
     protected $mediaClicks;
 
     /**
-    * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+    * @ORM\OneToMany(targetEntity="Comment", mappedBy="user", cascade={"remove"})
     */
     private $comments;
+
+     /**
+    * @ORM\OneToMany(targetEntity="EditorLog", mappedBy="user", cascade={"remove"})
+    */
+    private $editorLogs;
 
     /**
      * Constructor
