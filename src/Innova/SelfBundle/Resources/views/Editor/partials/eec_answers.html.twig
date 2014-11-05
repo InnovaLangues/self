@@ -1,7 +1,7 @@
 <ul class="list-group">
-        {% for answer in answers %}
-            <li id="answer-{{ answer.id }}" class="list-group-item" data-proposition-id="{{ answer.id }}">
-                {% include "InnovaSelfBundle:Editor/partials:eec_answer.html.twig" %}
-            </li>
-        {% endfor %}
+    {% for answer in answers %}
+        <li id="answer-{{ answer.id }}" class="list-group-item" data-proposition-id="{{ answer.id }}">
+            {% include "InnovaSelfBundle:Editor/partials:eec_answer.html.twig" %}
+        </li>
+    {% endfor %}
 </ul>

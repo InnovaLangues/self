@@ -408,9 +408,11 @@ class EecController
 
         foreach ($propositions as $proposition) {
             if ($proposition->getMedia()->getMediaPurpose()->getName() == "reponse") {
-                $answers[] = $proposition;
+                $answers[$proposition->getMedia()->getDescription()] = $proposition;
             }
         }
+
+        ksort($answers);
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers));
 
