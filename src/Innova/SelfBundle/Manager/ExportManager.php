@@ -76,6 +76,9 @@ class ExportManager
         return $csvName;
     }
 
+    /**
+     * Retourne la liste des fichiers d'export pour un test et un mode donné (csv | pdf)
+     */
     public function getFileList(Test $test, $mode)
     {
         if ($mode == "pdf") {
@@ -103,175 +106,83 @@ class ExportManager
     }
 
     /**
-     *
-     *
      * getCvsContent function
      * Fonction principale pour l'export CSV "classique"
-     *
-     *
      */
     private function getCvsContent(Test $test){
         $em = $this->entityManager;
-        $csv = "";
-        $result = array();
+        $testId = $test->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-        foreach ($questionnaires as $questionnaire) {
-            $traces = $questionnaire->getTraces();
-            foreach ($traces as $trace) {
-                $userId  = $trace->getUser()->getId();
-                $userName  = (string) $trace->getUser();
-                $emailName = (string) $trace->getUser()->getEmail();
-                $testDate  = date_format($trace->getDate(), 'dm');
-                if (!isset($result[$userId]["time"])) {
-                    $result[$userId]["time"]=0;
-                }
-                $result[$userId]["time"] = $result[$userId]["time"] + $trace->getTotalTime();
-                $result[$userId]["name"]  = $userName;
-                $result[$userId]["email"] = $emailName;
-                $result[$userId]["date"]  = $testDate;
-            }
-        }
 
-        // CSV HEADER
+        $preprocess  = $this->preprocessTest($testId, $questionnaires);
+        $propLetters = $preprocess[0];
+        $rightProps   = $preprocess[1];
+        $result          = $preprocess[2];
+        $csv              = $preprocess[3];
+        $typology      = $preprocess[4];
+        $theme         = $preprocess[5];
+        $subquestionsId = $preprocess[6];
 
-        $csv .= "Nom;" ; // A
-        $csv .= "Prénom;" ; // B
-        $csv .= "Date;" ; // C
-        $csv .= "Temps en secondes (pour le test entier);" ; // D
-        $csv .= "Niveau Dialang CO;" ; // E
-        $csv .= "Niveau Dialang CE;" ; // F
-        $csv .= "Niveau Dialang EEC;" ; // G
-        $csv .= "Niveau Lansad acquis;" ; // H
-        $csv .= "Score total obtenu dans le test (formule du total);" ; // I
-        $cpt_questionnaire = 0;
-        if ($cpt_questionnaire == 0) {
-            foreach ($questionnaires as $questionnaire) {
-                $cpt_questionnaire++;
-                // Suite réception nouvelle version du fichier le 29/11/2013 :
-                // je prends le dernier ou les 2 derniers caractères du thême
-                $themeCode = substr($questionnaire->getTheme(), -2);
-                // Si l'extrait est numérique, alors OK
-                // sinon, je ne prends que le dernier caractère.
-                // Exemple : A1COT2, je prends le dernier
-                // A1COT13, je prends les 2 derniers.
-                //
-                if (!is_numeric($themeCode)) {
-                    $themeCode = substr($questionnaire->getTheme(), -1);
-                }
-                $csv .= "T" . $cpt_questionnaire . " - NOM de ma TACHE;";
-                $csv .= "T" . $cpt_questionnaire . " - Protocole d'interaction;";
-                $csv .= "T" . $cpt_questionnaire . " - difficulté;";
-                $csv .= "T" . $cpt_questionnaire . " - TEMPS;";
-
-                $questions = $questionnaire->getQuestions();
-
-                if(count($questions) > 0){
-                    $subquestions = $questions[0]->getSubquestions();
-                    $cpt=0;
-                    foreach ($subquestions as $subquestion) {
-                        $cpt++;
-                        $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - CORR-FAUX : 1 pour correct / 0 pour faux;";
-                        $csv .= "T" . $cpt_questionnaire . "_" . $cpt . " - PROPOSITION CHOISIE;";
-                    }
-                }
-            }
-        }
-
-        $csv .= "\n";
-
-        // CSV BODY
-        $users = $em->getRepository('InnovaSelfBundle:User')->findAll();
+        $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnTest($testId);
         foreach ($users as $user) {
-            if ($this ->countQuestionnaireDone($test, $user) > 0
-            && isset($result[$user->getId()])
-            && $user->getId() > 33
-            ) {
-                $csv .= "\"" . $user->getUserName() . "\"" . ";" ;
-                $csv .= "\"" . $user->getFirstName() . "\"" . ";" ;
-                $csv .= "\"" . $result[$user->getId()]["date"] . "\"" . ";" . "\"" . $result[$user->getId()]["time"] . "\"" . ";";
-                $csv .= "\"" . $user->getCoLevel() . "\"" . ";";
-                $csv .= "\"" . $user->getCeLevel() . "\"" . ";";
-                $csv .= "\"" . $user->getEeLevel() . "\"" . ";";
-                $csv .= "\"" . $user->getlevelLansad() . "\"" . ";";
-                $csv .= "\"" . $this->calculateScore($user, $test) . "\"" . ";";
+            $userId = $user->getId();
+            $score = $this->calculateScore($user, $test, $rightProps, $subquestionsId);
 
-                $answersArray = array();
+            $csv .= $this->addColumn($user->getUserName());
+            $csv .= $this->addColumn($user->getFirstName());
+            $csv .= $this->addColumn($result[$userId]["date"]);
+            $csv .= $this->addColumn($result[$userId]["time"]);
+            $csv .= $this->addColumn($user->getCoLevel());
+            $csv .= $this->addColumn($user->getCeLevel());
+            $csv .= $this->addColumn($user->getEeLevel());
+            $csv .= $this->addColumn($user->getlevelLansad());
+            $csv .= $this->addColumn($score);
 
-                $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-                foreach ($questionnaires as $questionnaire) {
-                    $questions = $questionnaire->getQuestions();
+            foreach ($questionnaires as $questionnaire) {
+                $questionnaireId = $questionnaire->getId();
+                $questions = $questionnaire->getQuestions();
+                $typologyName = $typology[$questionnaireId];
+                $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndTestAndQuestionnaire($userId, $testId, $questionnaireId);
 
-                    $typologyName = $questions[0]->getTypology()->getName();
-                    $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(
-                                    array('user' => $user->getId(),
-                                          'questionnaire' => $questionnaire->getId()
-                                         ));
+                foreach ($traces as $trace) {
+                    $csv .= $this->addColumn($theme[$questionnaireId]);
+                    $csv .= $this->addColumn($typologyName);
+                    $csv .= $this->addColumn($trace->getDifficulty());
+                    $csv .= $this->addColumn($trace->getTotalTime());
 
-                    foreach ($traces as $trace) {
+                    // création tableau de correspondance subquestion -> propositions choisies
+                    $answersArray = array();
+                    $answers = $trace->getAnswers();
+                    foreach ($answers as $answer) {
+                        $subquestionId = $answer->getSubquestion()->getId();
+                        $answersArray[$subquestionId][] = $answer->getProposition();
+                    }
 
-                        $answers = $trace->getAnswers();
-                        $csv .= "\"" . $questionnaire->getTheme() . "\"" . ";" ;
-                        $csv .= "\"" . $typologyName . "\"" .  ";" ;
-                        $csv .= "\"" . $trace->getDifficulty() . "\"" . ";" ;
-                        $csv .= "\"" . $trace->getTotalTime() . "\"" . ";" ;
-
-                        // création tableau de correspondance Answer --> Subquestion
-                        foreach ($answers as $answer) {
-                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                            }
-                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
-                        }
-
-                        $subquestions = $questions[0]->getSubquestions();
-
-                        foreach ($subquestions as $subquestion) {
-                            $propositions = $subquestion->getPropositions();
-                            $rightProps = array();
-                            $nbPropositionRightAnswser = 0;
-                            $cptProposition = 0;
-                            $propLetters = array();
-                            // on compte les bonnes propositions
-                            foreach ($propositions as $proposition) {
-                                $cptProposition++;
-                                if ($proposition->getRightAnswer()) {
-                                    $nbPropositionRightAnswser++;
-                                    $rightProps[] = $proposition->getId();
-                                }
-                                if ($typologyName != "TLQROC") {
-                                    $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
-                                }
-                            }
-
-                            // Récupération bonne réponse ou non
-                            $subquestionOk =
-                            $this->checkRightAnswer($answersArray, $subquestion, $nbPropositionRightAnswser, $rightProps);
-
-                            if ($subquestionOk) {
-                                $csv .= "\"" . "1" . "\"" . ";";
-                            } else {
-                                $csv .= "\"" . "0" . "\"" . ";";
-                            }
-
-                            // Récupération de la saisie ou des lettres associées aux réponses
-                            $textToDisplay = $this->textToDisplay($subquestion, $answersArray, $propLetters);
-                            $csv .= ($textToDisplay);
-                            $csv .= ";";
-                        }
+                    // comparaison du tableau créé plus tôt avec le tableau de bonnes propositions
+                    $subquestions = $questions[0]->getSubquestions();
+                    foreach ($subquestions as $subquestion) {
+                        $subquestionId = $subquestion->getId();
+                        $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps["sub".$subquestionId], $typologyName);
+                        $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
                     }
                 }
-                $csv .= "\n"; // Saut de ligne
-            } // Fin du test sur le "User"
+            }
+            $csv .= "\n";
         }
 
         return $csv;
     }
 
-    private function checkRightAnswer($answersArray, Subquestion $subquestion, $nbPropositionRightAnswser, $rightProps)
+    private function addColumn($text)
     {
-        $typo = $subquestion->getTypology()->getName();
-        $subquestionId = $subquestion->getId();
+        $column = "\"" . $text . "\"" . ";" ;
 
+        return $column;
+    }
+
+
+    private function checkRightAnswer($answersArray, $subquestionId, $rightProps, $typo)
+    {
         switch ($typo) {
             case 'TVF':
             case 'VF':
@@ -282,9 +193,14 @@ class ExportManager
             case 'TQRU':
             case 'TQRM':
             case 'APP':
-                $nbAnswers = count($answersArray[$subquestionId]);
+                if (isset($answersArray[$subquestionId])){
+                    $nbAnswers = count($answersArray[$subquestionId]);
+                } else {
+                    $nbAnswers = 0;
+                }
+
                 $subquestionOk = true;
-                if ($nbAnswers == $nbPropositionRightAnswser) {
+                if ($nbAnswers ==  count($rightProps)) {
                     foreach ($rightProps as $rightProp) {
                         $found = false;
                         foreach ($answersArray[$subquestionId] as $answerProp) {
@@ -313,12 +229,16 @@ class ExportManager
                 break;
         }
 
-        return $subquestionOk;
+        if ($subquestionOk) {
+            $output = $this->addColumn(1);
+        } else {
+            $output = $this->addColumn(0);
+        }
+
+        return $output;
     }
 
-    private function textToDisplay(Subquestion $subquestion, $answersArray, $propLetters ){
-        $typo = $subquestion->getTypology()->getName();
-        $subquestionId = $subquestion->getId();
+    private function textToDisplay($subquestionId, $answersArray, $propLetters, $typo){
         $textToDisplay = "";
 
         switch ($typo) {
@@ -333,7 +253,7 @@ class ExportManager
             case 'APP':
                 if (isset($answersArray[$subquestionId])) {
                     $letters = array();
-                    foreach ($answersArray[$subquestion->getId()] as $answer) {
+                    foreach ($answersArray[$subquestionId] as $answer) {
                         $idAnswer = $answer->getId();
                         $letters[$propLetters[$idAnswer]] = 1;
                     }
@@ -354,6 +274,8 @@ class ExportManager
                 }
                 break;
         }
+
+        $textToDisplay .= ";";
 
         return $textToDisplay;
     }
@@ -431,7 +353,7 @@ class ExportManager
                             }
 */
                             // Récupération de la saisie ou des lettres associées aux réponses
-                            $textToDisplay = $this->textToDisplay($subquestion, $answersArray, $propLetters);
+                            $textToDisplay = $this->textToDisplay($subquestion->getId(), $answersArray, $propLetters, $typologyName);
                             $csv .= $textToDisplay;
                             $csv .= ";";
                         }
@@ -451,89 +373,61 @@ class ExportManager
         return $csv;
     }
 
-    private function countQuestionnaireDone(Test $test, User $user){
-        $em = $this->entityManager;
-
-        $count = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                ->countDoneYetByUserByTest($test->getId(), $user->getId());
-
-        return  $count;
-    }
-
     private function intToLetter($int){
-
         $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F",
         7 => "G", 8 => "H", 9 => "I", 10 => "J", 11 => "K", 12 => "L");
 
         return $arr[$int];
     }
+
     /**
      * calculateScore function
-     *
      */
-    private function calculateScore(User $user, Test $test)
+    private function calculateScore(User $user, Test $test, $rightProps, $subquestionsId)
     {
         $em = $this->entityManager;
         $score = 0;
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user->getId(),'test' => $test->getId()));
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndTest($user->getId(), $test->getId());
 
         foreach ($traces as $trace) {
             if ($answers = $trace->getAnswers()) {
                 if(isset($answers[0])){
                 $answersArray = array();
-                $typology = $answers[0]->getProposition()->getSubQuestion()->getTypology()->getName();
+                $typology = $answers[0]->getSubquestion()->getTypology()->getName();
 
                 switch ($typology) {
                     case 'TLCMLDM':
                     case 'TLCMLMULT':
                     case 'TLQROC':
-                        //
-                        // TODO : c'est le même code que pour les typologies QRU, QRM etc ...
-                        // En attente de remarques des autres langues
-                        // pour confirmation de ce fonctionnement.
-                        // Si OK, alors ajouter les 3 nouvelles typos dans la grande liste ci-dessous.
-                        // Si KO, alors modifier dans ce bloc.
-                        //
                         foreach ($answers as $answer) {
-                            if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                            $subquestionId = $answer->getSubquestion()->getId();
+                            if (!isset ($answersArray[$subquestionId])) {
+                                $answersArray[$subquestionId] = array();
                             }
-                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
+                            $answersArray[$subquestionId][] = $answer->getProposition()->getId();
                         }
 
                         foreach ($answersArray as $subquestionId => $answers) {
-                            // Initialisation des variables.
-                            $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
-                            // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
-                            $propositions = $subquestion->getPropositions();
-
-                            // Calcul du nombre de réponses.
-                            $nbAnswers = count($answers);
-                            $rightProps = array();
-                            // Accès à la proposition.
-                            // Calcul du nombre de proposition et
-                            // calcul du nombre de bonnes réponses.
-                            foreach ($propositions as $proposition) {
-                                $nbProposition++;
-                                if ($proposition->getRightAnswer()) {
-                                    $nbPropositionRightAnswser++;
-                                    $rightProps[] = $proposition;
-                                }
+                            $rightPropositions = array();
+                            if (isset($rightProps["sub".$subquestionId])) {
+                                $rightPropositions = $rightProps["sub".$subquestionId];
                             }
+
+                            $nbPropositionRightAnswer = $nbRightAnswer = 0;
+                            $nbAnswers = count($answers);
 
                             // Je calcule le score que si le testeur a répondu à autant de réponses
                             // qu'il y a de propositions.
                             // Si ce n'est pas le cas, il aura forcément ZERO point.
-                            if ($nbAnswers == $nbPropositionRightAnswser) {
-                                foreach ($rightProps as $rightProp) {
-                                    if (in_array($rightProp->getId(),$answersArray[$subquestionId])) {
+                            if ($nbAnswers == count($rightPropositions)) {
+                                foreach ($rightPropositions as $rightProp) {
+                                    if (in_array($rightProp, $answersArray[$subquestionId])) {
                                         $nbRightAnswer++;
                                     }
                                 }
                             }
 
-                            if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
+                            if (($nbPropositionRightAnswer == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
                                 $score++;
                             }
                         }
@@ -565,8 +459,7 @@ class ExportManager
                             // Initialisation des variables.
                             $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
                             // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
-                            $propositions = $subquestion->getPropositions();
+                            $propositions = $subquestionsId[$subquestionId]->getPropositions();
 
                             // Calcul du nombre de réponses.
                             $nbAnswers = count($answers);
@@ -606,4 +499,96 @@ class ExportManager
         return $score;
     }
 
+     /**
+     * Précalcule pas mal de choses pour éviter les requêtes redondantes plus tard
+     */
+    private function preprocessTest($testId, $questionnaires){
+        $em = $this->entityManager;
+        $propLetters = array();
+        $rightProps = array();
+        $result = array();  
+        $cpt_questionnaire = 0;
+        $csv = "";
+        $typology = array();
+        $theme = array();
+        $subquestionsId = array();
+
+        $csv .= $this->addColumn("Nom");
+        $csv .= $this->addColumn("Prénom");
+        $csv .= $this->addColumn("Date");
+        $csv .= $this->addColumn("Temps en secondes (pour le test entier)");
+        $csv .= $this->addColumn("Niveau Dialang CO");
+        $csv .= $this->addColumn("Niveau Dialang CE");
+        $csv .= $this->addColumn("Niveau Dialang EEC");
+        $csv .= $this->addColumn("Niveau Lansad acquis");
+        $csv .= $this->addColumn("Score total obtenu dans le test (formule du total)");
+
+        foreach ($questionnaires as $questionnaire) {
+            $cpt_questionnaire++;
+            $questionnaireId = $questionnaire->getId();
+
+            $theme[$questionnaireId] = $questionnaire->getTheme();
+            $themeCode = substr($theme[$questionnaireId], -2);
+            if (!is_numeric($themeCode)) {
+                $themeCode = substr($theme[$questionnaireId], -1);
+            }
+
+            $csv .= $this->addColumn("T" . $cpt_questionnaire . " - NOM de ma TACHE");
+            $csv .= $this->addColumn("T" . $cpt_questionnaire . " - Protocole d'interaction");
+            $csv .= $this->addColumn("T" . $cpt_questionnaire . " - difficulté");
+            $csv .= $this->addColumn("T" . $cpt_questionnaire . " - TEMPS");
+
+            $questions = $questionnaire->getQuestions();
+            $typology[$questionnaireId] = $questions[0]->getTypology()->getName();
+
+            if(count($questions) > 0){
+                $subquestions = $questions[0]->getSubquestions();
+                $cpt=0;
+                foreach ($subquestions as $subquestion) {
+                    $cpt++;
+                    $csv .= $this->addColumn("T" . $cpt_questionnaire . "_" . $cpt . " - CORR-FAUX : 1 pour correct / 0 pour faux");
+                    $csv .= $this->addColumn("T" . $cpt_questionnaire . "_" . $cpt . " - PROPOSITION CHOISIE");
+                }
+            }
+
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByTestAndQuestionnaire($testId, $questionnaireId);
+            foreach ($traces as $trace) {
+                $userId  = $trace->getUser()->getId();
+                $userName  = (string) $trace->getUser();
+                $emailName = (string) $trace->getUser()->getEmail();
+                $testDate  = date_format($trace->getDate(), 'dm');
+                if (!isset($result[$userId]["time"])) {
+                    $result[$userId]["time"]=0;
+                }
+                $result[$userId]["time"] = $result[$userId]["time"] + $trace->getTotalTime();
+                $result[$userId]["name"]  = $userName;
+                $result[$userId]["email"] = $emailName;
+                $result[$userId]["date"]  = $testDate;
+            }
+
+            foreach ($questions as $question) {
+                $typologyName = $question->getTypology()->getName();
+                $subquestions = $question->getSubquestions();
+                foreach ($subquestions as $subquestion) {
+                    $subquestionsId[$subquestion->getId()] = $subquestion;
+                    $rightProps["sub".$subquestion->getId()] = array();
+                    $cptProposition = 0;
+                    $propositions = $subquestion->getPropositions();
+                    foreach ($propositions as $proposition) {
+                        $cptProposition++;
+                        if ($typologyName != "TLQROC") {
+                            $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
+                        }
+                        if ($proposition->getRightAnswer()) {
+                              $rightProps["sub".$subquestion->getId()][] = $proposition->getId();
+                         }
+                    }
+                }
+            }
+        }
+
+        $csv .= "\n";
+
+        return array($propLetters, $rightProps, $result, $csv, $typology, $theme, $subquestionsId);
+    }
 }

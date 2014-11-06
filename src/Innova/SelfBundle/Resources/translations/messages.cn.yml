@@ -8,7 +8,7 @@ anonymous:
 
 menu:
     users: Utilisateurs
-    csv_export: Export CSV/PDF
+    csv_export: Export
     tests: Accès aux tests
     editor: Editeur
     help: Aide

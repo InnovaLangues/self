@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table("trace")
  * @ORM\Entity
+* @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\TraceRepository")
  */
 class Trace
 {

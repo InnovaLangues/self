@@ -12,6 +12,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * 28/11/2013 : Add "studentType" and "*Skill" colums. Delete "global", "co", "lansad" columns. EV.
  * @ORM\Table(name="self_user")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\UserRepository")
  */
 class User extends BaseUser
 {
