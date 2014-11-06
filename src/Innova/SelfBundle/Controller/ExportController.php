@@ -29,7 +29,7 @@ class ExportController
         $this->kernelRoot = $kernelRoot;
         $this->entityManager = $entityManager;
         $this->exportManager = $exportManager;
-        
+
     }
 
     /**
@@ -67,7 +67,7 @@ class ExportController
     public function getFileAction($testId, $filename, $mode)
     {
 
-        if ($mode = "pdf") {
+        if ($mode == "pdf") {
             $dir = "exportPdf";
         } else {
             $dir = "export";
@@ -108,6 +108,7 @@ class ExportController
             "csvName" => $csvName,
             'test' => $test,
             "fileList"=> $fileList,
+            "tia"=> $tia
         );
     }
 
@@ -124,11 +125,8 @@ class ExportController
     public function exportPdfAction(Test $test)
     {
 
-        $test->listenigLimitContext = 11;
-        $test->listenigLimitObjet = 11;
-
         // Génération du nom du fichier exporté
-        $pdfName = $this->exportManager->exportPdfAction($test);     
+        $pdfName = $this->exportManager->exportPdfAction($test);
 
         // Appel de la vue et de la génération du PDF
         $fileList = $this->exportManager->getFileList($test, "pdf");

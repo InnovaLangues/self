@@ -414,7 +414,8 @@ class EecController
 
         ksort($answers);
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers));
+        $template = $this->templating
+            ->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers));
 
         return new Response($template);
     }

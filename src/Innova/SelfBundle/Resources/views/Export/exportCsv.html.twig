@@ -6,7 +6,8 @@
         </a>
         <hr/>
 
-        <h3> Export CSV pour le test <strong>{{ test.name }}</strong></h3>
+        <h3> Export {% if tia == 1 %} TIA {% else %} CSV {% endif %} pour le test <strong>{{ test.name }}</strong></h3>
+
         <div class="alert alert-success" role="alert">{{ 'export.file_generated' | trans }} - <a href="{{ path('get-file', {'testId': test.id, 'filename': csvName, 'mode':"csv" } )}}">{{ 'export.file_download' | trans }}</a></div>
 
         <h4>{{ 'export.files_list' | trans }}</h4>
