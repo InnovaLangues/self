@@ -67,7 +67,7 @@ class ExportController
     public function getFileAction($testId, $filename, $mode)
     {
 
-        if ($mode = "pdf") {
+        if ($mode == "pdf") {
             $dir = "exportPdf";
         } else {
             $dir = "export";
@@ -108,6 +108,7 @@ class ExportController
             "csvName" => $csvName,
             'test' => $test,
             "fileList"=> $fileList,
+            "tia"=> $tia
         );
     }
 

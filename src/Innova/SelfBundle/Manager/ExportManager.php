@@ -78,7 +78,8 @@ class ExportManager
 
     public function getFileList(Test $test, $mode)
     {
-        if ($mode = "pdf") {
+
+        if ($mode == "pdf") {
             $dir = "exportPdf";
         } else {
             $dir = "export";
@@ -358,6 +359,14 @@ class ExportManager
         return $textToDisplay;
     }
 
+    /**
+     *
+     *
+     * getCvsTiaContent function
+     * Fonction principale pour l'export CSV "Tia+"
+     *
+     *
+     */
     private function getCvsTiaContent(Test $test){
         $em = $this->entityManager;
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
@@ -383,17 +392,19 @@ class ExportManager
 
                 $answersArray = array();
                 foreach ($questionnaires as $questionnaire) {
+
                     $traces = $em->getRepository('InnovaSelfBundle:Trace')
                                  ->findBy(array('user' => $user->getId(),
                                                 'questionnaire' => $questionnaire->getId()
                                                 )
                                         );
                     $questions = $questionnaire->getQuestions();
+                    $typologyName = $questions[0]->getTypology()->getName();
 
                     foreach ($traces as $trace) {
                         $answers = $trace->getAnswers();
 
-                        // création tableau de correspondance subquestion -> réponses
+                        // création tableau de correspondance Answer --> Subquestion
                         foreach ($answers as $answer) {
                             if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
                                 $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
@@ -415,9 +426,10 @@ class ExportManager
                                 if ($proposition->getRightAnswer()) {
                                     $nbPropositionRightAnswser++;
                                     $rightProps[] = $proposition->getId();
-                                    $libRightAnswer = $libRightAnswer . $proposition->getMedia()->getDescription() . " ";
                                 }
-                                $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
+                                if ($typologyName != "TLQROC") {
+                                    $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
+                                }
                             }
 
                             // Récupération bonne réponse ou non
