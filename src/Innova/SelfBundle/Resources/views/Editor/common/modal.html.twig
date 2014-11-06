@@ -94,8 +94,11 @@
 				<form id="" enctype="multipart/form-data" >
 					<label for="video-name">{{ 'editor.media.name' | trans }}</label>
     				<input type="text" class="form-control media-name" id="video-name" value=""/>
+
     				<label for="video-description">{{ 'editor.media.description' | trans }}</label>
-    				<input type="text" class="form-control media-description" id="video-description" value=""/>
+{#    				<input type="text" class="form-control media-description" id="video-description" value=""/> #}
+					<textarea id="video-description" class="tinymce media-description"></textarea>
+					<input class="media-id" type="hidden" id="texte-id"/>
 
     				<label for="video-file">{{ 'editor.media.file' | trans }}</label>
 					<input class="file media-file" data-file-type="video" id="video-file" name="userfile" type="file"/>
@@ -124,8 +127,11 @@
 				<form id="" enctype="multipart/form-data" >
 					<label for="audio-name">{{ 'editor.media.name' | trans }}</label>
     				<input type="text" class="form-control media-name" id="audio-name" value=""/>
+
     				<label for="audio-description">{{ 'editor.media.description' | trans }}</label>
-    				<input type="text" class="form-control media-description" id="audio-description" value=""/>
+					<textarea id="audio-description" class="tinymce media-description"></textarea>
+					<input class="media-id" type="hidden" id="texte-id"/>
+{#}    				<input type="text" class="form-control media-description" id="audio-description" value=""/> #}
 
     				<label for="audio-file">{{ 'editor.media.file' | trans }}</label>
 					<input class="file media-file" data-file-type="audio" id="audio-file" name="userfile" type="file"/>
