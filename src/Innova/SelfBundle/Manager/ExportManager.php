@@ -429,7 +429,8 @@ class ExportManager
                             // Initialisation des variables.
                             $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
                             // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                            $propositions = $subquestionsId[$subquestionId]->getPropositions();
+                            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);;
+                            $propositions = $subquestion->getPropositions();
 
                             // Calcul du nombre de réponses.
                             $nbAnswers = count($answers);
