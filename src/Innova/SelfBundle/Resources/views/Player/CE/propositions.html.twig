@@ -16,7 +16,11 @@
         <div class="proposition-CE">
             {{ macros.inputs(subquestion, proposition) }}
             <label for="input-proposition{{ proposition.id }}" class="proposition-CE-text {% if vf == true %}proposition-text-vraifaux{% endif %}">
-                {{ macros.translateVF(proposition.media.description) }}
+                {% if proposition.media.mediaType.name == "texte" %}
+                    {{ macros.translateVF(proposition.media.description) }}
+                {% elseif proposition.media.mediaType.name == "image" %}
+                    <img width="100%"  src="{{ asset('upload/media/') ~ proposition.media.url }}" />
+                {% endif %}
             </label>
         </div>
     {% endfor %}
