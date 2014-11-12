@@ -335,9 +335,9 @@ class ExportManager
         $csv .= "\n";
         $csv .= "Légende :" . ";" ;
         $csv .= "\n";
-        $csv .= "première colonne = réponse qui correspond à la réponse correcte établie dans l'éditeur" . ";" ;
+        $csv .= "première colonne = 1 -> Il s'agit d'une bonne réponse. 0 -> Il s'agit d'une mauvaise réponse" . ";" ;
         $csv .= "\n";
-        $csv .= "seconde colonne = la réponse tapée par l'étudiant, qui peut être fausse OU BIEN inserée parmi les réponses correctes" . ";" ;
+        $csv .= "seconde colonne = la réponse tapée/choisie par l'étudiant" . ";" ;
 
         return $csv;
     }
@@ -515,20 +515,20 @@ class ExportManager
                 $csv .= $this->addColumn("T" . $cpt_questionnaire . " - Protocole d'interaction");
                 $csv .= $this->addColumn("T" . $cpt_questionnaire . " - difficulté");
                 $csv .= $this->addColumn("T" . $cpt_questionnaire . " - TEMPS");
-                if(count($questions) > 0){
-                    $subquestions = $questions[0]->getSubquestions();
-                    $cpt=0;
-                    foreach ($subquestions as $subquestion) {
-                        $cpt++;
-                        $csv .= $this->addColumn("T" . $cpt_questionnaire . "_" . $cpt . " - CORR-FAUX : 1 pour correct / 0 pour faux");
-                        $csv .= $this->addColumn("T" . $cpt_questionnaire . "_" . $cpt . " - PROPOSITION CHOISIE");
-                    }
-                }
             } else {
-                $csv .= $this->addColumn($theme[$questionnaireId] . " " . $typology[$questionnaireId] . " " . $cpt_questionnaire);
-                $csv .= $this->addColumn($theme[$questionnaireId] . " " . $typology[$questionnaireId] . " " . $cpt_questionnaire);
+                //$csv .= $this->addColumn($theme[$questionnaireId] . " " . $typology[$questionnaireId] . " " . $cpt_questionnaire);
+                //$csv .= $this->addColumn($theme[$questionnaireId] . " " . $typology[$questionnaireId] . " " . $cpt_questionnaire);
             }
 
+            if(count($questions) > 0){
+                $subquestions = $questions[0]->getSubquestions();
+                $cpt=0;
+                foreach ($subquestions as $subquestion) {
+                    $cpt++;
+                    $csv .= $this->addColumn($theme[$questionnaireId]  . " (item " . $cpt . ") SCORE (0/1)");
+                    $csv .= $this->addColumn($theme[$questionnaireId]  . " (item " . $cpt . ") PROPOSITION");
+                }
+            }
 
 
             $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByTestAndQuestionnaire($testId, $questionnaireId);
