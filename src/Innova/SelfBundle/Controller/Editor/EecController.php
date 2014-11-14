@@ -377,7 +377,7 @@ class EecController
         $request = $this->request->request;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
+        $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($request->get('mediaId'));
         $text = $request->get('text');
 
         $media->setDescription($text);

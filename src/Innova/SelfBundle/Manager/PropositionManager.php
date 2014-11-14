@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Manager;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\Subquestion;
-use Innova\SelfBundle\Entity\Media;
+use Innova\SelfBundle\Entity\Media\Media;
 
 class PropositionManager
 {

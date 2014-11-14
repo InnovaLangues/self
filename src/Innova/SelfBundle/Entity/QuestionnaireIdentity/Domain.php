@@ -1,16 +1,16 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\QuestionnaireIdentity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Instruction
+ * Domain
  *
- * @ORM\Table("questionnaireInstruction")
+ * @ORM\Table("questionnaireDomain")
  * @ORM\Entity
  */
-class Instruction
+class Domain
 {
     /**
      * @var integer
@@ -29,23 +29,16 @@ class Instruction
     private $name;
 
     /**
-    * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="instruction")
+     * @var text
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Questionnaire", mappedBy="domain")
     */
     protected $questionnaires;
-
-    /**
-    * @ORM\OneToMany(targetEntity="Question", mappedBy="instruction")
-    */
-    protected $questions;
-
-    /**
-     * To String
-     */
-
-    public function __toString()
-    {
-        return $this->getName();
-    }
 
     /**
      * Get id
@@ -60,8 +53,8 @@ class Instruction
     /**
      * Set name
      *
-     * @param  string      $name
-     * @return Instruction
+     * @param  string $name
+     * @return Domain
      */
     public function setName($name)
     {
@@ -91,7 +84,7 @@ class Instruction
      * Add questionnaires
      *
      * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     * @return Instruction
+     * @return Domain
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
@@ -121,35 +114,25 @@ class Instruction
     }
 
     /**
-     * Add questions
+     * Set description
      *
-     * @param  \Innova\SelfBundle\Entity\Question $questions
-     * @return Instruction
+     * @param string $description
+     * @return Domain
      */
-    public function addQuestion(\Innova\SelfBundle\Entity\Question $questions)
+    public function setDescription($description)
     {
-        $this->questions[] = $questions;
-
+        $this->description = $description;
+    
         return $this;
     }
 
     /**
-     * Remove questions
+     * Get description
      *
-     * @param \Innova\SelfBundle\Entity\Question $questions
+     * @return string 
      */
-    public function removeQuestion(\Innova\SelfBundle\Entity\Question $questions)
+    public function getDescription()
     {
-        $this->questions->removeElement($questions);
-    }
-
-    /**
-     * Get questions
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getQuestions()
-    {
-        return $this->questions;
+        return $this->description;
     }
 }

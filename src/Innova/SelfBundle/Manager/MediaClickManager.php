@@ -2,7 +2,7 @@
 
 namespace Innova\SelfBundle\Manager;
 
-use Innova\SelfBundle\Entity\MediaClick;
+use Innova\SelfBundle\Entity\Media\MediaClick;
 
 class MediaClickManager
 {
@@ -20,12 +20,12 @@ class MediaClickManager
     public function getRemainingListening($mediaId, $questionnaireId, $testId)
     {
 
-        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media')->find($mediaId);
+        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
         $questionnaire = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
 
         $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
-        $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array(
+        $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array(
                                                                                     'media' => $media,
                                                                                     'questionnaire' => $questionnaire
                                                                                 ));
@@ -41,7 +41,7 @@ class MediaClickManager
 
     public function createMediaClick($mediaId, $questionnaireId, $testId)
     {
-        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media')->find($mediaId);
+        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
         $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
         $questionnaire = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
@@ -61,12 +61,12 @@ class MediaClickManager
 
     public function isMediaPlayable($mediaId, $testId, $questionnaireId)
     {
-        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media')->find($mediaId);
+        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
         $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
         $questionnaire = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
         $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
-        $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array('media' => $media, 'questionnaire' => $questionnaire));
+        $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array('media' => $media, 'questionnaire' => $questionnaire));
 
         if(is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 || $this->securityContext->isGranted('ROLE_ADMIN')){
             return true;
@@ -78,7 +78,7 @@ class MediaClickManager
     public function getMediaClickCount($media, $test, $questionnaire)
     {
 
-        $mediaClicks = $this->entityManager->getRepository('InnovaSelfBundle:MediaClick')
+        $mediaClicks = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaClick')
                         ->findBy(array(
                                         'media' => $media,
                                         'test' => $test,

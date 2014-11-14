@@ -6,8 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Subquestion
- * 13/11/2013 : Add mediaAmorce column. AB/EV.
- * 24/06/2014 : Add mediaClue and mediaSyllable for pilote 3. EV.
  *
  * @ORM\Table("subquestion")
  * @ORM\Entity
@@ -36,12 +34,12 @@ class Subquestion
     private $title;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $media;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $mediaAmorce;
 
@@ -61,7 +59,7 @@ class Subquestion
     protected $clue;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $mediaSyllable;
 
@@ -143,10 +141,10 @@ class Subquestion
     /**
      * Set media
      *
-     * @param  \Innova\SelfBundle\Entity\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media\Media $media
      * @return Subquestion
      */
-    public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
+    public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
     {
         $this->media = $media;
 
@@ -156,7 +154,7 @@ class Subquestion
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMedia()
     {
@@ -222,10 +220,10 @@ class Subquestion
     /**
      * Set mediaText
      *
-     * @param  \Innova\SelfBundle\Entity\Media $mediaText
+     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaText
      * @return Subquestion
      */
-    public function setMediaText(\Innova\SelfBundle\Entity\Media $mediaText = null)
+    public function setMediaText(\Innova\SelfBundle\Entity\Media\Media $mediaText = null)
     {
         $this->mediaText = $mediaText;
 
@@ -235,7 +233,7 @@ class Subquestion
     /**
      * Get mediaText
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaText()
     {
@@ -245,10 +243,10 @@ class Subquestion
     /**
      * Set mediaAmorce
      *
-     * @param  \Innova\SelfBundle\Entity\Media $mediaAmorce
+     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaAmorce
      * @return Subquestion
      */
-    public function setMediaAmorce(\Innova\SelfBundle\Entity\Media $mediaAmorce = null)
+    public function setMediaAmorce(\Innova\SelfBundle\Entity\Media\Media $mediaAmorce = null)
     {
         $this->mediaAmorce = $mediaAmorce;
 
@@ -258,7 +256,7 @@ class Subquestion
     /**
      * Get mediaAmorce
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaAmorce()
     {
@@ -301,10 +299,10 @@ class Subquestion
     /**
      * Set mediaSyllable
      *
-     * @param \Innova\SelfBundle\Entity\Media $mediaSyllable
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaSyllable
      * @return Subquestion
      */
-    public function setMediaSyllable(\Innova\SelfBundle\Entity\Media $mediaSyllable = null)
+    public function setMediaSyllable(\Innova\SelfBundle\Entity\Media\Media $mediaSyllable = null)
     {
         $this->mediaSyllable = $mediaSyllable;
 
@@ -314,7 +312,7 @@ class Subquestion
     /**
      * Get mediaSyllable
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaSyllable()
     {

@@ -1,16 +1,16 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\QuestionnaireIdentity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SourceType
+ * Status
  *
- * @ORM\Table("questionnaireSourceType")
+ * @ORM\Table("questionnaireStatus")
  * @ORM\Entity
  */
-class SourceType
+class Status
 {
     /**
      * @var integer
@@ -29,14 +29,29 @@ class SourceType
     private $name;
 
     /**
-    * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="sourceType")
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Questionnaire", mappedBy="status")
     */
     protected $questionnaires;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -46,43 +61,59 @@ class SourceType
     /**
      * Set name
      *
-     * @param  string     $name
-     * @return SourceType
+     * @param string $name
+     * @return Status
      */
     public function setName($name)
     {
         $this->name = $name;
-
+    
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
         return $this->name;
     }
+
     /**
-     * Constructor
+     * Set description
+     *
+     * @param string $description
+     * @return Status
      */
-    public function __construct()
+    public function setDescription($description)
     {
-        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
      * Add questionnaires
      *
-     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     * @return SourceType
+     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @return Status
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-
+    
         return $this;
     }
 
@@ -99,7 +130,7 @@ class SourceType
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getQuestionnaires()
     {

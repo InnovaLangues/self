@@ -1,16 +1,16 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\QuestionnaireIdentity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Status
+ * Flow
  *
- * @ORM\Table("questionnaireStatus")
+ * @ORM\Table("questionnaireFlow")
  * @ORM\Entity
  */
-class Status
+class Flow
 {
     /**
      * @var integer
@@ -29,29 +29,21 @@ class Status
     private $name;
 
     /**
-     * @var string
+     * @var text
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
     /**
-    * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="status")
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Questionnaire", mappedBy="flow")
     */
     protected $questionnaires;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -61,59 +53,43 @@ class Status
     /**
      * Set name
      *
-     * @param string $name
-     * @return Status
+     * @param  string $name
+     * @return Flow
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-
     /**
-     * Set description
-     *
-     * @param string $description
-     * @return Status
+     * Constructor
      */
-    public function setDescription($description)
+    public function __construct()
     {
-        $this->description = $description;
-    
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
+        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     * @return Status
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @return Flow
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-    
+
         return $this;
     }
 
@@ -130,10 +106,33 @@ class Status
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestionnaires()
     {
         return $this->questionnaires;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Flow
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

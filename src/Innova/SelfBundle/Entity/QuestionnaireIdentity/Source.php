@@ -1,16 +1,16 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\QuestionnaireIdentity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Support
+ * Source
  *
- * @ORM\Table("questionnaireSupport")
+ * @ORM\Table("questionnaireSource")
  * @ORM\Entity
  */
-class Support
+class Source
 {
     /**
      * @var integer
@@ -29,7 +29,14 @@ class Support
     private $name;
 
     /**
-    * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="support")
+     * @var text
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Questionnaire", mappedBy="source")
     */
     protected $questionnaires;
 
@@ -55,8 +62,8 @@ class Support
     /**
      * Set name
      *
-     * @param  string  $name
-     * @return Support
+     * @param  string $name
+     * @return Source
      */
     public function setName($name)
     {
@@ -86,7 +93,7 @@ class Support
      * Add questionnaires
      *
      * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     * @return Support
+     * @return Source
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
@@ -113,5 +120,28 @@ class Support
     public function getQuestionnaires()
     {
         return $this->questionnaires;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Source
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

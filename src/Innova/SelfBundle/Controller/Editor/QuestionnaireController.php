@@ -246,7 +246,7 @@ class QuestionnaireController
         $statusId = $request->request->get('status');
 
         $em = $this->entityManager;
-        $status = $em->getRepository('InnovaSelfBundle:Status')->find($statusId);
+        $status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->find($statusId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
         $questionnaire->setStatus($status);

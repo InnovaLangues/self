@@ -45,7 +45,7 @@ class DeleteTraceCommand extends ContainerAwareCommand
             }
 
             $output->writeln("Suppression ECOUTES MEDIA ...");
-            $clicks = $em->getRepository('InnovaSelfBundle:MediaClick')->findAll();
+            $clicks = $em->getRepository('InnovaSelfBundle:Media\MediaClick')->findAll();
             foreach ($clicks as $click) {
                 $em->remove($click);
             }

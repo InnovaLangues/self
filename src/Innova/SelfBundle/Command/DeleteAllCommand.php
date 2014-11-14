@@ -76,7 +76,7 @@ class DeleteAllCommand extends ContainerAwareCommand
             }
 
             $output->writeln("Suppression EditorLOG ...");
-            $logs = $em->getRepository('InnovaSelfBundle:EditorLog')->findAll();
+            $logs = $em->getRepository('InnovaSelfBundle:EditorLog\EditorLog')->findAll();
             foreach ($logs as $log) {
                 $em->remove($log);
             }
@@ -88,19 +88,19 @@ class DeleteAllCommand extends ContainerAwareCommand
             }
 
             $output->writeln("Suppression MediaLimit ...");
-            $limits = $em->getRepository('InnovaSelfBundle:MediaLimit')->findAll();
+            $limits = $em->getRepository('InnovaSelfBundle:Media\MediaLimit')->findAll();
             foreach ($limits as $limit) {
                 $em->remove($limit);
             }
 
             $output->writeln("Suppression ECOUTES MEDIA ...");
-            $clicks = $em->getRepository('InnovaSelfBundle:MediaClick')->findAll();
+            $clicks = $em->getRepository('InnovaSelfBundle:Media\MediaClick')->findAll();
             foreach ($clicks as $click) {
                 $em->remove($click);
             }
 
             $output->writeln("Suppression MEDIA ...");
-            $medias = $em->getRepository('InnovaSelfBundle:Media')->findAll();
+            $medias = $em->getRepository('InnovaSelfBundle:Media\Media')->findAll();
             foreach ($medias as $media) {
                 $em->remove($media);
             }

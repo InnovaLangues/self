@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\Media;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -107,10 +107,10 @@ class Media
     /**
      * Set mediaType
      *
-     * @param  \Innova\SelfBundle\Entity\MediaType $mediaType
+     * @param  \Innova\SelfBundle\Entity\Media\MediaType $mediaType
      * @return Media
      */
-    public function setMediaType(\Innova\SelfBundle\Entity\MediaType $mediaType = null)
+    public function setMediaType(\Innova\SelfBundle\Entity\Media\MediaType $mediaType = null)
     {
         $this->mediaType = $mediaType;
 
@@ -120,7 +120,7 @@ class Media
     /**
      * Get mediaType
      *
-     * @return \Innova\SelfBundle\Entity\MediaType
+     * @return \Innova\SelfBundle\Entity\Media\MediaType
      */
     public function getMediaType()
     {
@@ -184,10 +184,10 @@ class Media
     /**
      * Add mediaLimits
      *
-     * @param  \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     * @param  \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
      * @return Media
      */
-    public function addMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    public function addMediaLimit(\Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits)
     {
         $this->mediaLimits[] = $mediaLimits;
 
@@ -197,9 +197,9 @@ class Media
     /**
      * Remove mediaLimits
      *
-     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     * @param \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
      */
-    public function removeMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    public function removeMediaLimit(\Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits)
     {
         $this->mediaLimits->removeElement($mediaLimits);
     }
@@ -217,10 +217,10 @@ class Media
     /**
      * Add mediaClicks
      *
-     * @param  \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param  \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      * @return Media
      */
-    public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    public function addMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
     {
         $this->mediaClicks[] = $mediaClicks;
 
@@ -230,9 +230,9 @@ class Media
     /**
      * Remove mediaClicks
      *
-     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      */
-    public function removeMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    public function removeMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
     {
         $this->mediaClicks->removeElement($mediaClicks);
     }
@@ -296,10 +296,10 @@ class Media
     /**
      * Set mediaPurpose
      *
-     * @param \Innova\SelfBundle\Entity\MediaPurpose $mediaPurpose
+     * @param \Innova\SelfBundle\Entity\Media\MediaPurpose $mediaPurpose
      * @return Media
      */
-    public function setMediaPurpose(\Innova\SelfBundle\Entity\MediaPurpose $mediaPurpose = null)
+    public function setMediaPurpose(\Innova\SelfBundle\Entity\Media\MediaPurpose $mediaPurpose = null)
     {
         $this->mediaPurpose = $mediaPurpose;
     
@@ -309,7 +309,7 @@ class Media
     /**
      * Get mediaPurpose
      *
-     * @return \Innova\SelfBundle\Entity\MediaPurpose 
+     * @return \Innova\SelfBundle\Entity\Media\MediaPurpose 
      */
     public function getMediaPurpose()
     {

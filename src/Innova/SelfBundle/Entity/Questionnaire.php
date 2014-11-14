@@ -6,16 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Questionnaire
- * 15/10/2013 : Add "originText" and "exerciceText" columns. EV.
- * 04/11/2013 : Add "skill" columns and Skill.php (for Entity). EV.
- * 04/04/2014 : Modify "dialogue" type from "boolean" to "integer". EV.
- * 04/04/2014 : Add "fixedOrder" column (for Entity). EV.
  *
  * @ORM\Table("questionnaire")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\QuestionnaireRepository")
  */
 class Questionnaire
 {
+
     /**
      * @var integer
      *
@@ -30,65 +27,15 @@ class Questionnaire
     */
     protected $level;
 
-    /**
-    * @ORM\ManyToOne(targetEntity="SourceType", inversedBy="questionnaires")
-    */
-    protected $sourceType;
-
-    /**
+     /**
     * @ORM\ManyToOne(targetEntity="User", inversedBy="questionnaires")
     */
     protected $author;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Instruction", inversedBy="questionnaires")
+    * @ORM\ManyToMany(targetEntity="User", inversedBy="revisedQuestionnaires")
     */
-    protected $instruction;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="ReceptionType", inversedBy="questionnaires")
-    */
-    protected $receptionType;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Source", inversedBy="questionnaires")
-    */
-    protected $source;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Duration", inversedBy="questionnaires")
-    */
-    protected $duration;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Domain", inversedBy="questionnaires")
-    */
-    protected $domain;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="FunctionType", inversedBy="questionnaires")
-    */
-    protected $functionType;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="CognitiveOperation", inversedBy="questionnaires")
-    */
-    protected $cognitiveOperation;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Support", inversedBy="questionnaires")
-    */
-    protected $support;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Flow", inversedBy="questionnaires")
-    */
-    protected $flow;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Focus", inversedBy="questionnaires")
-    */
-    protected $focus;
+    protected $revisors;
 
     /**
     * @ORM\ManyToOne(targetEntity="LanguageLevel", inversedBy="questionnaires")
@@ -96,17 +43,17 @@ class Questionnaire
     protected $languageLevel;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Status", inversedBy="questionnaires")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Status", inversedBy="questionnaires")
     */
     protected $status;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="questionnaire", cascade={"persist", "remove"})
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaLimit", mappedBy="questionnaire", cascade={"persist", "remove"})
     */
     private $mediaLimits;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="questionnaire", cascade={"persist", "remove"})
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="questionnaire", cascade={"persist", "remove"})
     */
     private $mediaClicks;
 
@@ -116,11 +63,10 @@ class Questionnaire
     private $comments;
 
     /**
-    * @ORM\OneToMany(targetEntity="EditorLog", mappedBy="questionnaire", cascade={"persist", "remove"})
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\EditorLog\EditorLog", mappedBy="questionnaire", cascade={"persist", "remove"})
     * @ORM\OrderBy({"date" = "DESC"})
     */
     private $editorLogs;
-
 
     /**
      * @var string
@@ -159,40 +105,34 @@ class Questionnaire
     private $fixedOrder;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $mediaInstruction;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $mediaContext;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $mediaText;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $mediaBlankText;
 
-
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $mediaFunctionalInstruction;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $mediaFeedback;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires")
-    */
-    protected $skill;
 
     /**
     * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"persist", "remove"})
@@ -213,6 +153,75 @@ class Questionnaire
     * @ORM\ManyToOne(targetEntity="Language", inversedBy="questionnaires")
     */
     protected $language;
+
+    // FICHE D'IDENTITE 
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires")
+    */
+    protected $skill;
+
+     /**
+     * @var text
+     *
+     * @ORM\Column(name="levelProof", type="text", nullable=true)
+     */
+    private $levelProof;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="authorRightMore", type="text", nullable=true)
+     */
+    private $authorRightMore;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight", inversedBy="questionnaires")
+    */
+    protected $authorRight;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Source", inversedBy="questionnaires")
+    */
+    protected $source;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation", inversedBy="questionnaires")
+    */
+    protected $sourceOperation;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="sourceMore", type="text", nullable=true)
+     */
+    private $sourceMore;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
+    */
+    protected $domain;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Register", inversedBy="questionnaires")
+    */
+    protected $register;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception", inversedBy="questionnaires")
+    */
+    protected $reception;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Length", inversedBy="questionnaires")
+    */
+    protected $length;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
+    */
+    protected $flow;
+
 
     public function __construct()
     {
@@ -346,143 +355,6 @@ class Questionnaire
         return $this->traces;
     }
 
-    /**
-     * Set duration
-     *
-     * @param  \Innova\SelfBundle\Entity\Duration $duration
-     * @return Questionnaire
-     */
-    public function setDuration(\Innova\SelfBundle\Entity\Duration $duration = null)
-    {
-        $this->duration = $duration;
-
-        return $this;
-    }
-
-    /**
-     * Get duration
-     *
-     * @return \Innova\SelfBundle\Entity\Duration
-     */
-    public function getDuration()
-    {
-        return $this->duration;
-    }
-
-    /**
-     * Set focus
-     *
-     * @param  \Innova\SelfBundle\Entity\Focus $focus
-     * @return Questionnaire
-     */
-    public function setFocus(\Innova\SelfBundle\Entity\Focus $focus = null)
-    {
-        $this->focus = $focus;
-
-        return $this;
-    }
-
-    /**
-     * Get focus
-     *
-     * @return \Innova\SelfBundle\Entity\Focus
-     */
-    public function getFocus()
-    {
-        return $this->focus;
-    }
-
-    /**
-     * Set support
-     *
-     * @param  \Innova\SelfBundle\Entity\Support $support
-     * @return Questionnaire
-     */
-    public function setSupport(\Innova\SelfBundle\Entity\Support $support = null)
-    {
-        $this->support = $support;
-
-        return $this;
-    }
-
-    /**
-     * Get support
-     *
-     * @return \Innova\SelfBundle\Entity\Support
-     */
-    public function getSupport()
-    {
-        return $this->support;
-    }
-
-    /**
-     * Set functionType
-     *
-     * @param  \Innova\SelfBundle\Entity\FunctionType $functionType
-     * @return Questionnaire
-     */
-    public function setFunctionType(\Innova\SelfBundle\Entity\FunctionType $functionType = null)
-    {
-        $this->functionType = $functionType;
-
-        return $this;
-    }
-
-    /**
-     * Get functionType
-     *
-     * @return \Innova\SelfBundle\Entity\FunctionType
-     */
-    public function getFunctionType()
-    {
-        return $this->functionType;
-    }
-
-    /**
-     * Set source
-     *
-     * @param  \Innova\SelfBundle\Entity\Source $source
-     * @return Questionnaire
-     */
-    public function setSource(\Innova\SelfBundle\Entity\Source $source = null)
-    {
-        $this->source = $source;
-
-        return $this;
-    }
-
-    /**
-     * Get source
-     *
-     * @return \Innova\SelfBundle\Entity\Source
-     */
-    public function getSource()
-    {
-        return $this->source;
-    }
-
-    /**
-     * Set cognitiveOperation
-     *
-     * @param  \Innova\SelfBundle\Entity\CognitiveOperation $cognitiveOperation
-     * @return Questionnaire
-     */
-    public function setCognitiveOperation(\Innova\SelfBundle\Entity\CognitiveOperation $cognitiveOperation = null)
-    {
-        $this->cognitiveOperation = $cognitiveOperation;
-
-        return $this;
-    }
-
-    /**
-     * Get cognitiveOperation
-     *
-     * @return \Innova\SelfBundle\Entity\CognitiveOperation
-     */
-    public function getCognitiveOperation()
-    {
-        return $this->cognitiveOperation;
-    }
 
     /**
      * Set languageLevel
@@ -507,51 +379,6 @@ class Questionnaire
         return $this->languageLevel;
     }
 
-    /**
-     * Set sourceType
-     *
-     * @param  \Innova\SelfBundle\Entity\SourceType $sourceType
-     * @return Questionnaire
-     */
-    public function setSourceType(\Innova\SelfBundle\Entity\SourceType $sourceType = null)
-    {
-        $this->sourceType = $sourceType;
-
-        return $this;
-    }
-
-    /**
-     * Get sourceType
-     *
-     * @return \Innova\SelfBundle\Entity\SourceType
-     */
-    public function getSourceType()
-    {
-        return $this->sourceType;
-    }
-
-    /**
-     * Set flow
-     *
-     * @param  \Innova\SelfBundle\Entity\Flow $flow
-     * @return Questionnaire
-     */
-    public function setFlow(\Innova\SelfBundle\Entity\Flow $flow = null)
-    {
-        $this->flow = $flow;
-
-        return $this;
-    }
-
-    /**
-     * Get flow
-     *
-     * @return \Innova\SelfBundle\Entity\Flow
-     */
-    public function getFlow()
-    {
-        return $this->flow;
-    }
 
     /**
      * Set skill
@@ -576,51 +403,6 @@ class Questionnaire
         return $this->skill;
     }
 
-    /**
-     * Set domain
-     *
-     * @param  \Innova\SelfBundle\Entity\Domain $domain
-     * @return Questionnaire
-     */
-    public function setDomain(\Innova\SelfBundle\Entity\Domain $domain = null)
-    {
-        $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * Get domain
-     *
-     * @return \Innova\SelfBundle\Entity\Domain
-     */
-    public function getDomain()
-    {
-        return $this->domain;
-    }
-
-    /**
-     * Set receptionType
-     *
-     * @param  \Innova\SelfBundle\Entity\ReceptionType $receptionType
-     * @return Questionnaire
-     */
-    public function setReceptionType(\Innova\SelfBundle\Entity\ReceptionType $receptionType = null)
-    {
-        $this->receptionType = $receptionType;
-
-        return $this;
-    }
-
-    /**
-     * Get receptionType
-     *
-     * @return \Innova\SelfBundle\Entity\ReceptionType
-     */
-    public function getReceptionType()
-    {
-        return $this->receptionType;
-    }
 
     /**
      * Set author
@@ -643,29 +425,6 @@ class Questionnaire
     public function getAuthor()
     {
         return $this->author;
-    }
-
-    /**
-     * Set instruction
-     *
-     * @param  \Innova\SelfBundle\Entity\Instruction $instruction
-     * @return Questionnaire
-     */
-    public function setInstruction(\Innova\SelfBundle\Entity\Instruction $instruction = null)
-    {
-        $this->instruction = $instruction;
-
-        return $this;
-    }
-
-    /**
-     * Get instruction
-     *
-     * @return \Innova\SelfBundle\Entity\Instruction
-     */
-    public function getInstruction()
-    {
-        return $this->instruction;
     }
 
     /**
@@ -717,10 +476,10 @@ class Questionnaire
     /**
      * Set mediaInstruction
      *
-     * @param  \Innova\SelfBundle\Entity\Media $mediaInstruction
+     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaInstruction
      * @return Questionnaire
      */
-    public function setMediaInstruction(\Innova\SelfBundle\Entity\Media $mediaInstruction = null)
+    public function setMediaInstruction(\Innova\SelfBundle\Entity\Media\Media $mediaInstruction = null)
     {
         $this->mediaInstruction = $mediaInstruction;
 
@@ -730,7 +489,7 @@ class Questionnaire
     /**
      * Get mediaInstruction
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaInstruction()
     {
@@ -740,10 +499,10 @@ class Questionnaire
     /**
      * Set mediaContext
      *
-     * @param  \Innova\SelfBundle\Entity\Media $mediaContext
+     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaContext
      * @return Questionnaire
      */
-    public function setMediaContext(\Innova\SelfBundle\Entity\Media $mediaContext = null)
+    public function setMediaContext(\Innova\SelfBundle\Entity\Media\Media $mediaContext = null)
     {
         $this->mediaContext = $mediaContext;
 
@@ -753,7 +512,7 @@ class Questionnaire
     /**
      * Get mediaContext
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaContext()
     {
@@ -763,10 +522,10 @@ class Questionnaire
     /**
      * Set mediaText
      *
-     * @param  \Innova\SelfBundle\Entity\Media $mediaText
+     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaText
      * @return Questionnaire
      */
-    public function setMediaText(\Innova\SelfBundle\Entity\Media $mediaText = null)
+    public function setMediaText(\Innova\SelfBundle\Entity\Media\Media $mediaText = null)
     {
         $this->mediaText = $mediaText;
 
@@ -776,7 +535,7 @@ class Questionnaire
     /**
      * Get mediaText
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaText()
     {
@@ -809,10 +568,10 @@ class Questionnaire
     /**
      * Add mediaLimits
      *
-     * @param  \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     * @param  \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
      * @return Questionnaire
      */
-    public function addMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    public function addMediaLimit(\Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits)
     {
         $this->mediaLimits[] = $mediaLimits;
 
@@ -822,9 +581,9 @@ class Questionnaire
     /**
      * Remove mediaLimits
      *
-     * @param \Innova\SelfBundle\Entity\MediaLimit $mediaLimits
+     * @param \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
      */
-    public function removeMediaLimit(\Innova\SelfBundle\Entity\MediaLimit $mediaLimits)
+    public function removeMediaLimit(\Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits)
     {
         $this->mediaLimits->removeElement($mediaLimits);
     }
@@ -842,10 +601,10 @@ class Questionnaire
     /**
      * Add mediaClicks
      *
-     * @param  \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param  \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      * @return Questionnaire
      */
-    public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    public function addMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
     {
         $this->mediaClicks[] = $mediaClicks;
 
@@ -855,9 +614,9 @@ class Questionnaire
     /**
      * Remove mediaClicks
      *
-     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      */
-    public function removeMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    public function removeMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
     {
         $this->mediaClicks->removeElement($mediaClicks);
     }
@@ -905,36 +664,14 @@ class Questionnaire
         return $this->orderQuestionnaireTests;
     }
 
-    /**
-     * Set status
-     *
-     * @param \Innova\SelfBundle\Entity\Status $status
-     * @return Questionnaire
-     */
-    public function setStatus(\Innova\SelfBundle\Entity\Status $status = null)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return \Innova\SelfBundle\Entity\Status
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
 
     /**
      * Set mediaFunctionalInstruction
      *
-     * @param \Innova\SelfBundle\Entity\Media $mediaFunctionalInstruction
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaFunctionalInstruction
      * @return Questionnaire
      */
-    public function setMediaFunctionalInstruction(\Innova\SelfBundle\Entity\Media $mediaFunctionalInstruction = null)
+    public function setMediaFunctionalInstruction(\Innova\SelfBundle\Entity\Media\Media $mediaFunctionalInstruction = null)
     {
         $this->mediaFunctionalInstruction = $mediaFunctionalInstruction;
 
@@ -944,7 +681,7 @@ class Questionnaire
     /**
      * Get mediaFunctionalInstruction
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaFunctionalInstruction()
     {
@@ -987,10 +724,10 @@ class Questionnaire
     /**
      * Set mediaFeedback
      *
-     * @param \Innova\SelfBundle\Entity\Media $mediaFeedback
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaFeedback
      * @return Questionnaire
      */
-    public function setMediaFeedback(\Innova\SelfBundle\Entity\Media $mediaFeedback = null)
+    public function setMediaFeedback(\Innova\SelfBundle\Entity\Media\Media $mediaFeedback = null)
     {
         $this->mediaFeedback = $mediaFeedback;
 
@@ -1000,7 +737,7 @@ class Questionnaire
     /**
      * Get mediaFeedback
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaFeedback()
     {
@@ -1010,10 +747,10 @@ class Questionnaire
     /**
      * Add editorLogs
      *
-     * @param \Innova\SelfBundle\Entity\EditorLog $editorLogs
+     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
      * @return Questionnaire
      */
-    public function addEditorLog(\Innova\SelfBundle\Entity\EditorLog $editorLogs)
+    public function addEditorLog(\Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs)
     {
         $this->editorLogs[] = $editorLogs;
 
@@ -1023,9 +760,9 @@ class Questionnaire
     /**
      * Remove editorLogs
      *
-     * @param \Innova\SelfBundle\Entity\EditorLog $editorLogs
+     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
      */
-    public function removeEditorLog(\Innova\SelfBundle\Entity\EditorLog $editorLogs)
+    public function removeEditorLog(\Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs)
     {
         $this->editorLogs->removeElement($editorLogs);
     }
@@ -1043,10 +780,10 @@ class Questionnaire
     /**
      * Set mediaBlankText
      *
-     * @param \Innova\SelfBundle\Entity\Media $mediaBlankText
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaBlankText
      * @return Questionnaire
      */
-    public function setMediaBlankText(\Innova\SelfBundle\Entity\Media $mediaBlankText = null)
+    public function setMediaBlankText(\Innova\SelfBundle\Entity\Media\Media $mediaBlankText = null)
     {
         $this->mediaBlankText = $mediaBlankText;
 
@@ -1056,7 +793,7 @@ class Questionnaire
     /**
      * Get mediaBlankText
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaBlankText()
     {
@@ -1107,5 +844,314 @@ class Questionnaire
     public function getTextTitle()
     {
         return $this->textTitle;
+    }
+
+    /**
+     * Set levelProof
+     *
+     * @param string $levelProof
+     * @return Questionnaire
+     */
+    public function setLevelProof($levelProof)
+    {
+        $this->levelProof = $levelProof;
+    
+        return $this;
+    }
+
+    /**
+     * Get levelProof
+     *
+     * @return string 
+     */
+    public function getLevelProof()
+    {
+        return $this->levelProof;
+    }
+
+    /**
+     * Set authorRightMore
+     *
+     * @param string $authorRightMore
+     * @return Questionnaire
+     */
+    public function setAuthorRightMore($authorRightMore)
+    {
+        $this->authorRightMore = $authorRightMore;
+    
+        return $this;
+    }
+
+    /**
+     * Get authorRightMore
+     *
+     * @return string 
+     */
+    public function getAuthorRightMore()
+    {
+        return $this->authorRightMore;
+    }
+
+    /**
+     * Set sourceMore
+     *
+     * @param string $sourceMore
+     * @return Questionnaire
+     */
+    public function setSourceMore($sourceMore)
+    {
+        $this->sourceMore = $sourceMore;
+    
+        return $this;
+    }
+
+    /**
+     * Get sourceMore
+     *
+     * @return string 
+     */
+    public function getSourceMore()
+    {
+        return $this->sourceMore;
+    }
+
+    /**
+     * Add revisors
+     *
+     * @param \Innova\SelfBundle\Entity\User $revisors
+     * @return Questionnaire
+     */
+    public function addRevisor(\Innova\SelfBundle\Entity\User $revisors)
+    {
+        $this->revisors[] = $revisors;
+    
+        return $this;
+    }
+
+    /**
+     * Remove revisors
+     *
+     * @param \Innova\SelfBundle\Entity\User $revisors
+     */
+    public function removeRevisor(\Innova\SelfBundle\Entity\User $revisors)
+    {
+        $this->revisors->removeElement($revisors);
+    }
+
+    /**
+     * Get revisors
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRevisors()
+    {
+        return $this->revisors;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Status $status
+     * @return Questionnaire
+     */
+    public function setStatus(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Status $status = null)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Status 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set authorRight
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight $authorRight
+     * @return Questionnaire
+     */
+    public function setAuthorRight(\Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight $authorRight = null)
+    {
+        $this->authorRight = $authorRight;
+    
+        return $this;
+    }
+
+    /**
+     * Get authorRight
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight 
+     */
+    public function getAuthorRight()
+    {
+        return $this->authorRight;
+    }
+
+    /**
+     * Set source
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Source $source
+     * @return Questionnaire
+     */
+    public function setSource(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Source $source = null)
+    {
+        $this->source = $source;
+    
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Source 
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * Set sourceOperation
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation $sourceOperation
+     * @return Questionnaire
+     */
+    public function setSourceOperation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation $sourceOperation = null)
+    {
+        $this->sourceOperation = $sourceOperation;
+    
+        return $this;
+    }
+
+    /**
+     * Get sourceOperation
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation 
+     */
+    public function getSourceOperation()
+    {
+        return $this->sourceOperation;
+    }
+
+    /**
+     * Set domain
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain $domain
+     * @return Questionnaire
+     */
+    public function setDomain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain $domain = null)
+    {
+        $this->domain = $domain;
+    
+        return $this;
+    }
+
+    /**
+     * Get domain
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain 
+     */
+    public function getDomain()
+    {
+        return $this->domain;
+    }
+
+    /**
+     * Set register
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Register $register
+     * @return Questionnaire
+     */
+    public function setRegister(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Register $register = null)
+    {
+        $this->register = $register;
+    
+        return $this;
+    }
+
+    /**
+     * Get register
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Register 
+     */
+    public function getRegister()
+    {
+        return $this->register;
+    }
+
+    /**
+     * Set reception
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception $reception
+     * @return Questionnaire
+     */
+    public function setReception(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception $reception = null)
+    {
+        $this->reception = $reception;
+    
+        return $this;
+    }
+
+    /**
+     * Get reception
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception 
+     */
+    public function getReception()
+    {
+        return $this->reception;
+    }
+
+    /**
+     * Set length
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Length $length
+     * @return Questionnaire
+     */
+    public function setLength(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Length $length = null)
+    {
+        $this->length = $length;
+    
+        return $this;
+    }
+
+    /**
+     * Get length
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Length 
+     */
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    /**
+     * Set flow
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow $flow
+     * @return Questionnaire
+     */
+    public function setFlow(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow $flow = null)
+    {
+        $this->flow = $flow;
+    
+        return $this;
+    }
+
+    /**
+     * Get flow
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow 
+     */
+    public function getFlow()
+    {
+        return $this->flow;
     }
 }

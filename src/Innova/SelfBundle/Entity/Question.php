@@ -37,12 +37,7 @@ class Question
     protected $subquestions;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Instruction", inversedBy="questions")
-    */
-    protected $instruction;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $media;
 
@@ -144,35 +139,12 @@ class Question
     }
 
     /**
-     * Set instruction
-     *
-     * @param  \Innova\SelfBundle\Entity\Instruction $instruction
-     * @return Question
-     */
-    public function setInstruction(\Innova\SelfBundle\Entity\Instruction $instruction = null)
-    {
-        $this->instruction = $instruction;
-
-        return $this;
-    }
-
-    /**
-     * Get instruction
-     *
-     * @return \Innova\SelfBundle\Entity\Instruction
-     */
-    public function getInstruction()
-    {
-        return $this->instruction;
-    }
-
-    /**
      * Set media
      *
-     * @param  \Innova\SelfBundle\Entity\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media\Media $media
      * @return Question
      */
-    public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
+    public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
     {
         $this->media = $media;
 
@@ -182,7 +154,7 @@ class Question
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMedia()
     {

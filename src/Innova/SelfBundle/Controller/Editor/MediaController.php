@@ -63,7 +63,7 @@ class MediaController
         $request = $this->request->request;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
+        $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($request->get('mediaId'));
         $limit = $request->get('listeningLimit');
 
         $this->mediaManager->updateMediaLimit($questionnaire, $media, $limit);
@@ -83,7 +83,7 @@ class MediaController
         $em = $this->entityManager;
         $request = $this->request->query;
 
-        $media = $em->getRepository('InnovaSelfBundle:Media')->find($request->get('mediaId'));
+        $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($request->get('mediaId'));
 
         return new JsonResponse(
             array(

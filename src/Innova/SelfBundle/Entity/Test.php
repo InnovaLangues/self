@@ -51,7 +51,7 @@ class Test
     protected $language;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="test")
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="test")
     */
     private $mediaClicks;
 
@@ -223,10 +223,10 @@ class Test
     /**
      * Add mediaClicks
      *
-     * @param  \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param  \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      * @return Test
      */
-    public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    public function addMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
     {
         $this->mediaClicks[] = $mediaClicks;
 
@@ -236,9 +236,9 @@ class Test
     /**
      * Remove mediaClicks
      *
-     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      */
-    public function removeMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    public function removeMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
     {
         $this->mediaClicks->removeElement($mediaClicks);
     }

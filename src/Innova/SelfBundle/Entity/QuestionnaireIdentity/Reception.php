@@ -1,16 +1,16 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\QuestionnaireIdentity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * FunctionType
+ * Reception
  *
- * @ORM\Table("questionnaireFunctionType")
+ * @ORM\Table("questionnaireReception")
  * @ORM\Entity
  */
-class FunctionType
+class Reception
 {
     /**
      * @var integer
@@ -29,7 +29,14 @@ class FunctionType
     private $name;
 
     /**
-    * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="functionType")
+     * @var text
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Questionnaire", mappedBy="reception")
     */
     protected $questionnaires;
 
@@ -46,8 +53,8 @@ class FunctionType
     /**
      * Set name
      *
-     * @param  string       $name
-     * @return FunctionType
+     * @param  string $name
+     * @return Reception
      */
     public function setName($name)
     {
@@ -77,7 +84,7 @@ class FunctionType
      * Add questionnaires
      *
      * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     * @return FunctionType
+     * @return Reception
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
@@ -104,5 +111,28 @@ class FunctionType
     public function getQuestionnaires()
     {
         return $this->questionnaires;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Reception
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

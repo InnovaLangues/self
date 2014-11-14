@@ -1,16 +1,16 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\QuestionnaireIdentity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CognitiveOperation
+ * SourceOperation
  *
- * @ORM\Table("questionnaireCognitiveOperation")
+ * @ORM\Table("questionnaireSourceOperation")
  * @ORM\Entity
  */
-class CognitiveOperation
+class SourceOperation
 {
     /**
      * @var integer
@@ -29,9 +29,25 @@ class CognitiveOperation
     private $name;
 
     /**
-    * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="cognitiveOperation")
+     * @var text
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Questionnaire", mappedBy="sourceOperation")
     */
     protected $questionnaires;
+
+    /**
+     * To String
+     */
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Get id
@@ -46,8 +62,8 @@ class CognitiveOperation
     /**
      * Set name
      *
-     * @param  string             $name
-     * @return CognitiveOperation
+     * @param  string $name
+     * @return SourceOperation
      */
     public function setName($name)
     {
@@ -77,7 +93,7 @@ class CognitiveOperation
      * Add questionnaires
      *
      * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     * @return CognitiveOperation
+     * @return SourceOperation
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
@@ -104,5 +120,28 @@ class CognitiveOperation
     public function getQuestionnaires()
     {
         return $this->questionnaires;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return SourceOperation
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
