@@ -21,6 +21,14 @@ use Innova\SelfBundle\Entity\EditorLog\EditorLogObject;
 
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Status;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Length;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Source;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Register;
+
 
 
 class FixtureCommand extends ContainerAwareCommand
@@ -107,7 +115,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $questionnaireLengths = array("brève", "moyenne", "longue");
+            $questionnaireLengths = array("short", "medium", "long");
             foreach ($questionnaireLengths as $questionnaireLength) {
                 if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Length')->findOneByName($questionnaireLength)) {
                     $Length = new Length();
@@ -317,6 +325,76 @@ class FixtureCommand extends ContainerAwareCommand
                     $e->setName($editorLogObject);
                     $em->persist($e);
                     $output->writeln("Add new editorLogObject (".$editorLogObject.")");
+                }
+            }
+
+            $sources = array("certification", "textbook", "intern", "other");
+            foreach ($sources as $source) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Source')->findOneByName($source)) {
+                    $s = new Source();
+                    $s->setName($source);
+                    $em->persist($s);
+                    $output->writeln("Add new Source (".$source.")");
+                }
+            }
+
+            $sourceOperations = array("original", "original_modified", "constructed", "constructed_modified");
+            foreach ($sourceOperations as $sourceOperation) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\SourceOperation')->findOneByName($sourceOperation)) {
+                    $s = new SourceOperation();
+                    $s->setName($sourceOperation);
+                    $em->persist($s);
+                    $output->writeln("Add new Source Operation (".$sourceOperation.")");
+                }
+            }
+
+            $authorRightStates = array("authorized", "not_needed", "pending", "to_ask");
+            foreach ($authorRightStates as $authorRightState) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\AuthorRight')->findOneByName($authorRightState)) {
+                    $a = new AuthorRight();
+                    $a->setName($authorRightState);
+                    $em->persist($a);
+                    $output->writeln("Add new Author Right State (".$authorRightState.")");
+                }
+            }
+
+            $domains = array("personal", "public", "profesional", "educational");
+            foreach ($domains as $domain) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Domain')->findOneByName($domain)) {
+                    $d = new Domain();
+                    $d->setName($domain);
+                    $em->persist($d);
+                    $output->writeln("Add new Domain (".$domain.")");
+                }
+            }
+
+            $flows = array("slow", "medium", "fast");
+            foreach ($flows as $flow) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Flow')->findOneByName($flow)) {
+                    $f = new Flow();
+                    $f->setName($flow);
+                    $em->persist($f);
+                    $output->writeln("Add new Flow (".$flow.")");
+                }
+            }
+
+            $receptions = array("listener_monodirectional", "listener_pluridirectional", "performer");
+            foreach ($receptions as $reception) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Reception')->findOneByName($reception)) {
+                    $r = new Reception();
+                    $r->setName($reception);
+                    $em->persist($r);
+                    $output->writeln("Add new Reception (".$reception.")");
+                }
+            }
+
+            $registers = array("formal_elevated", "formal_neutral", "informal");
+            foreach ($registers as $register) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Register')->findOneByName($register)) {
+                    $r = new Register();
+                    $r->setName($register);
+                    $em->persist($r);
+                    $output->writeln("Add new Register (".$register.")");
                 }
             }
 
