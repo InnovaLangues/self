@@ -26,7 +26,7 @@ class CheckMediaCommand extends ContainerAwareCommand
 
         $table->setHeaders(array('ID', 'TACHE', 'MEDIA', 'CAUSE'));
 
-        $medias = $em->getRepository('InnovaSelfBundle:Media')->findAll();
+        $medias = $em->getRepository('InnovaSelfBundle:Media\Media')->findAll();
 
         $patterns = array(
                         "<div",

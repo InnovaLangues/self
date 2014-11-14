@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\Media;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,17 +27,17 @@ class MediaClick
     protected $media;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Test", inversedBy="mediaClicks")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test", inversedBy="mediaClicks")
     */
     protected $test;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="mediaClicks")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire", inversedBy="mediaClicks")
     */
     protected $questionnaire;
 
     /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="mediaClicks")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User", inversedBy="mediaClicks")
     */
     protected $user;
 
@@ -54,10 +54,10 @@ class MediaClick
     /**
      * Set media
      *
-     * @param  \Innova\SelfBundle\Entity\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media\Media $media
      * @return MediaClick
      */
-    public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
+    public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
     {
         $this->media = $media;
 
@@ -67,7 +67,7 @@ class MediaClick
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMedia()
     {

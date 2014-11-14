@@ -8,8 +8,6 @@ use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
- * 27/11/2013 : Add "global", "co", "lansad" columns. EV.
- * 28/11/2013 : Add "studentType" and "*Skill" colums. Delete "global", "co", "lansad" columns. EV.
  * @ORM\Table(name="self_user")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\UserRepository")
@@ -34,6 +32,11 @@ class User extends BaseUser
     * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="author")
     */
     protected $questionnaires;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="Questionnaire", mappedBy="revisors")
+    */
+    protected $revisedQuestionnaires;
 
     /**
      * @var string
@@ -86,7 +89,7 @@ class User extends BaseUser
     protected $levelLansad;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="user", cascade={"remove"})
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="user", cascade={"remove"})
     */
     protected $mediaClicks;
 
@@ -96,7 +99,7 @@ class User extends BaseUser
     private $comments;
 
      /**
-    * @ORM\OneToMany(targetEntity="EditorLog", mappedBy="user", cascade={"remove"})
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\EditorLog\EditorLog", mappedBy="user", cascade={"remove"})
     */
     private $editorLogs;
 
@@ -454,10 +457,10 @@ class User extends BaseUser
     /**
      * Add mediaClicks
      *
-     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      * @return User
      */
-    public function addMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    public function addMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
     {
         $this->mediaClicks[] = $mediaClicks;
     
@@ -467,9 +470,9 @@ class User extends BaseUser
     /**
      * Remove mediaClicks
      *
-     * @param \Innova\SelfBundle\Entity\MediaClick $mediaClicks
+     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      */
-    public function removeMediaClick(\Innova\SelfBundle\Entity\MediaClick $mediaClicks)
+    public function removeMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
     {
         $this->mediaClicks->removeElement($mediaClicks);
     }
@@ -515,5 +518,71 @@ class User extends BaseUser
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Add revisedQuestionnaires
+     *
+     * @param \Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires
+     * @return User
+     */
+    public function addRevisedQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires)
+    {
+        $this->revisedQuestionnaires[] = $revisedQuestionnaires;
+    
+        return $this;
+    }
+
+    /**
+     * Remove revisedQuestionnaires
+     *
+     * @param \Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires
+     */
+    public function removeRevisedQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires)
+    {
+        $this->revisedQuestionnaires->removeElement($revisedQuestionnaires);
+    }
+
+    /**
+     * Get revisedQuestionnaires
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRevisedQuestionnaires()
+    {
+        return $this->revisedQuestionnaires;
+    }
+
+    /**
+     * Add editorLogs
+     *
+     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
+     * @return User
+     */
+    public function addEditorLog(\Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs)
+    {
+        $this->editorLogs[] = $editorLogs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove editorLogs
+     *
+     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
+     */
+    public function removeEditorLog(\Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs)
+    {
+        $this->editorLogs->removeElement($editorLogs);
+    }
+
+    /**
+     * Get editorLogs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEditorLogs()
+    {
+        return $this->editorLogs;
     }
 }

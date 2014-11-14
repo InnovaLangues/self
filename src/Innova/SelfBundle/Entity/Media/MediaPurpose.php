@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\Media;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -77,10 +77,10 @@ class MediaPurpose
     /**
      * Add medias
      *
-     * @param \Innova\SelfBundle\Entity\Media $medias
+     * @param \Innova\SelfBundle\Entity\Media\Media $medias
      * @return MediaPurpose
      */
-    public function addMedia(\Innova\SelfBundle\Entity\Media $medias)
+    public function addMedia(\Innova\SelfBundle\Entity\Media\Media $medias)
     {
         $this->medias[] = $medias;
 
@@ -90,9 +90,9 @@ class MediaPurpose
     /**
      * Remove medias
      *
-     * @param \Innova\SelfBundle\Entity\Media $medias
+     * @param \Innova\SelfBundle\Entity\Media\Media $medias
      */
-    public function removeMedia(\Innova\SelfBundle\Entity\Media $medias)
+    public function removeMedia(\Innova\SelfBundle\Entity\Media\Media $medias)
     {
         $this->medias->removeElement($medias);
     }

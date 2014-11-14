@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\EditorLog;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +22,7 @@ class EditorLog
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="editorLogs")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire", inversedBy="editorLogs")
     */
     protected $questionnaire;
 
@@ -34,7 +34,7 @@ class EditorLog
     private $date;
 
     /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="editorLogs")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User", inversedBy="editorLogs")
     */
     protected $user;
     
@@ -106,52 +106,6 @@ class EditorLog
     }
 
     /**
-     * Set action
-     *
-     * @param \Innova\SelfBundle\Entity\EditorLogAction $action
-     * @return EditorLog
-     */
-    public function setAction(\Innova\SelfBundle\Entity\EditorLogAction $action = null)
-    {
-        $this->action = $action;
-    
-        return $this;
-    }
-
-    /**
-     * Get action
-     *
-     * @return \Innova\SelfBundle\Entity\EditorLogAction 
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * Set object
-     *
-     * @param \Innova\SelfBundle\Entity\EditorLogObject $object
-     * @return EditorLog
-     */
-    public function setObject(\Innova\SelfBundle\Entity\EditorLogObject $object = null)
-    {
-        $this->object = $object;
-    
-        return $this;
-    }
-
-    /**
-     * Get object
-     *
-     * @return \Innova\SelfBundle\Entity\EditorLogObject 
-     */
-    public function getObject()
-    {
-        return $this->object;
-    }
-
-    /**
      * Set user
      *
      * @param \Innova\SelfBundle\Entity\User $user
@@ -172,5 +126,51 @@ class EditorLog
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set action
+     *
+     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLogAction $action
+     * @return EditorLog
+     */
+    public function setAction(\Innova\SelfBundle\Entity\EditorLog\EditorLogAction $action = null)
+    {
+        $this->action = $action;
+    
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return \Innova\SelfBundle\Entity\EditorLog\EditorLogAction 
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * Set object
+     *
+     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLogObject $object
+     * @return EditorLog
+     */
+    public function setObject(\Innova\SelfBundle\Entity\EditorLog\EditorLogObject $object = null)
+    {
+        $this->object = $object;
+    
+        return $this;
+    }
+
+    /**
+     * Get object
+     *
+     * @return \Innova\SelfBundle\Entity\EditorLog\EditorLogObject 
+     */
+    public function getObject()
+    {
+        return $this->object;
     }
 }

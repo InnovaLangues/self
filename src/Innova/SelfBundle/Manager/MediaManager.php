@@ -3,8 +3,8 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Entity\Media;
-use Innova\SelfBundle\Entity\MediaLimit;
+use Innova\SelfBundle\Entity\Media\Media;
+use Innova\SelfBundle\Entity\Media\MediaLimit;
 
 class MediaManager
 {
@@ -40,8 +40,8 @@ class MediaManager
         );
 
         $em = $this->entityManager;
-        $type = $em->getRepository('InnovaSelfBundle:MediaType')->findOneByName($mediaTypeName);
-        $purpose = $em->getRepository('InnovaSelfBundle:MediaPurpose')->findOneByName($entityField2Purpose[$entityField]);
+        $type = $em->getRepository('InnovaSelfBundle:Media\MediaType')->findOneByName($mediaTypeName);
+        $purpose = $em->getRepository('InnovaSelfBundle:Media\MediaPurpose')->findOneByName($entityField2Purpose[$entityField]);
 
         $media = new Media();
         $media->setMediaType($type);
@@ -64,7 +64,7 @@ class MediaManager
     {
         $em = $this->entityManager;
 
-        $media = $em->getRepository('InnovaSelfBundle:Media')->find($mediaId);
+        $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
         $media->setUrl($url);
         $media->setName($name);
         $media->setDescription($description);
@@ -84,7 +84,7 @@ class MediaManager
     {
         $em = $this->entityManager;
 
-        if (!$mediaLimit = $em->getRepository('InnovaSelfBundle:MediaLimit')->findOneBy(array('questionnaire' => $questionnaire, 'media' => $media))) {
+        if (!$mediaLimit = $em->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array('questionnaire' => $questionnaire, 'media' => $media))) {
             $mediaLimit = new MediaLimit();
             $mediaLimit->setQuestionnaire($questionnaire);
             $mediaLimit->setMedia($media);

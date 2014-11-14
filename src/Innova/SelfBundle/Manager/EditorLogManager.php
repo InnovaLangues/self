@@ -2,7 +2,7 @@
 
 namespace Innova\SelfBundle\Manager;
 
-use Innova\SelfBundle\Entity\EditorLog;
+use Innova\SelfBundle\Entity\EditorLog\EditorLog;
 use Innova\SelfBundle\Entity\Questionnaire;
 
 class EditorLogManager
@@ -25,8 +25,8 @@ class EditorLogManager
         $log->setDate(new \Datetime());
         $log->setUser($user);
         $log->setQuestionnaire($questionnaire);
-        $log->setAction($em->getRepository('InnovaSelfBundle:EditorLogAction')->findOneByName($action));
-        $log->setObject($em->getRepository('InnovaSelfBundle:EditorLogObject')->findOneByName($object));
+        $log->setAction($em->getRepository('InnovaSelfBundle:EditorLog\EditorLogAction')->findOneByName($action));
+        $log->setObject($em->getRepository('InnovaSelfBundle:EditorLog\EditorLogObject')->findOneByName($object));
 
         $em->persist($log);
         $em->flush();

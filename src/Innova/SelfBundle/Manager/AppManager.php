@@ -3,7 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Proposition;
-use Innova\SelfBundle\Entity\Media;
+use Innova\SelfBundle\Entity\Media\Media;
 use Innova\SelfBundle\Entity\Question;
 
 class AppManager

@@ -25,7 +25,7 @@ class QuestionnaireManager
         $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);
         $questionnaire->setFixedOrder(0);
-        $questionnaire->setStatus($em->getRepository('InnovaSelfBundle:Status')->find(1));
+        $questionnaire->setStatus($em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->find(1));
         $em->persist($questionnaire);
 
         $em->flush();

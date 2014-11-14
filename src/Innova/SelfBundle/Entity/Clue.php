@@ -27,7 +27,7 @@ class Clue
     protected $clueType;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $media;
 
@@ -67,10 +67,10 @@ class Clue
     /**
      * Set media
      *
-     * @param \Innova\SelfBundle\Entity\Media $media
+     * @param \Innova\SelfBundle\Entity\Media\Media $media
      * @return Clue
      */
-    public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
+    public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
     {
         $this->media = $media;
     
@@ -80,7 +80,7 @@ class Clue
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media\Media 
      */
     public function getMedia()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\EditorLog;
 
 use Doctrine\ORM\Mapping as ORM;
 

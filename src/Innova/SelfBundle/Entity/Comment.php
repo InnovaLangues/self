@@ -32,7 +32,7 @@ class Comment
     protected $user;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $description;
 
@@ -125,10 +125,10 @@ class Comment
     /**
      * Set mediaInstruction
      *
-     * @param \Innova\SelfBundle\Entity\Media $mediaInstruction
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaInstruction
      * @return Comment
      */
-    public function setMediaInstruction(\Innova\SelfBundle\Entity\Media $mediaInstruction = null)
+    public function setMediaInstruction(\Innova\SelfBundle\Entity\Media\Media $mediaInstruction = null)
     {
         $this->mediaInstruction = $mediaInstruction;
     
@@ -138,7 +138,7 @@ class Comment
     /**
      * Get mediaInstruction
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media\Media 
      */
     public function getMediaInstruction()
     {
@@ -148,10 +148,10 @@ class Comment
     /**
      * Set description
      *
-     * @param \Innova\SelfBundle\Entity\Media $description
+     * @param \Innova\SelfBundle\Entity\Media\Media $description
      * @return Comment
      */
-    public function setDescription(\Innova\SelfBundle\Entity\Media $description = null)
+    public function setDescription(\Innova\SelfBundle\Entity\Media\Media $description = null)
     {
         $this->description = $description;
     
@@ -161,7 +161,7 @@ class Comment
     /**
      * Get description
      *
-     * @return \Innova\SelfBundle\Entity\Media 
+     * @return \Innova\SelfBundle\Entity\Media\Media 
      */
     public function getDescription()
     {

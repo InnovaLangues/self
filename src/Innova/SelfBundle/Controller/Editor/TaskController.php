@@ -139,7 +139,7 @@ class TaskController
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
-        $status = $em->getRepository('InnovaSelfBundle:Status')->findAll();
+        $status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->findAll();
 
         if (!$questionnaire) {
             throw $this->createNotFoundException('Unable to find Questionnaire entity ! ');

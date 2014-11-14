@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\Media;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,7 +27,7 @@ class MediaLimit
     protected $media;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="mediaLimits")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire", inversedBy="mediaLimits")
     */
     protected $questionnaire;
 
@@ -74,10 +74,10 @@ class MediaLimit
     /**
      * Set media
      *
-     * @param  \Innova\SelfBundle\Entity\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media\Media $media
      * @return MediaLimit
      */
-    public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
+    public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
     {
         $this->media = $media;
 
@@ -87,7 +87,7 @@ class MediaLimit
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMedia()
     {

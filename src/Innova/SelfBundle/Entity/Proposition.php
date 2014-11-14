@@ -32,7 +32,7 @@ class Proposition
     protected $answers;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Media")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
     */
     protected $media;
 
@@ -173,10 +173,10 @@ class Proposition
     /**
      * Set media
      *
-     * @param  \Innova\SelfBundle\Entity\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media\Media $media
      * @return Proposition
      */
-    public function setMedia(\Innova\SelfBundle\Entity\Media $media = null)
+    public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
     {
         $this->media = $media;
 
@@ -186,7 +186,7 @@ class Proposition
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMedia()
     {

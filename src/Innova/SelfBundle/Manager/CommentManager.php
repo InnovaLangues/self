@@ -4,7 +4,7 @@ namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Comment;
 use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Entity\Media;
+use Innova\SelfBundle\Entity\Media\Media;
 
 class CommentManager
 {
