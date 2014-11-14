@@ -8,13 +8,13 @@
         <br/>
         <span class="btn btn-default btn-xs crop-open-modale" data-url="{{ asset('upload/media/') ~ media.url }}">crop</span>
     {% elseif mediaType == "video" %}
-        <video id="video" controls class="vertical-middle" height="180px">
+        <video id="video" controls class="vertical-middle" height="180px" preload="none">
             <source src="{{ asset('upload/media/') ~ media.url }}" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
             Your browser does not support the video tag.
         </video>
         {{ macros.listeningLimit(questionnaire, media) }}
     {% elseif mediaType == "audio" %}
-        <audio controls preload="auto" class="vertical-middle">
+        <audio controls preload="none" class="vertical-middle">
             <source src="{{ asset('upload/media/') ~ media.url }}" type="audio/mp3">
             Votre navigateur est trop ancien.
         </audio>
