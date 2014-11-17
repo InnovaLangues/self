@@ -155,6 +155,21 @@ editor:
         proposition: Option
         associated_answer: Related answer
         add_answer: Add an answer
+    identity:
+        level.proof: Justificatif du niveau
+        author.right: Status du droit d'auteur
+        author.right.more: Informations complémentaires sur le droit d'auteur
+        source: Source
+        source.operation: Opération sur la source
+        source.more: Informations complémentaires sur la source
+        domain: Domaine
+        register: Registre
+        reception: Réception
+        length: Longueur
+        flow: Débit
+        status: Statut
+        language: Langue
+        level: Niveau
     log:
         editor_create: Create
         editor_edit: Edit
