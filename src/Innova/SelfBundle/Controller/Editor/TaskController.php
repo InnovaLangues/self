@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Innova\SelfBundle\Form\Type\QuestionnaireType;
 
 /**
  * Class TaskController
@@ -27,13 +29,15 @@ class TaskController
     protected $entityManager;
     protected $request;
     protected $templating;
+    protected $formFactory;
 
     public function __construct(
             $questionnaireManager,
             $questionManager,
             $orderQuestionnaireTestManager,
             $entityManager,
-            $templating
+            $templating,
+            $formFactory
     )
     {
         $this->questionnaireManager = $questionnaireManager;
@@ -41,6 +45,7 @@ class TaskController
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
+        $this->formFactory = $formFactory;
     }
 
     public function setRequest(Request $request = null)
@@ -141,15 +146,19 @@ class TaskController
         $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
         $status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->findAll();
 
+
         if (!$questionnaire) {
             throw $this->createNotFoundException('Unable to find Questionnaire entity ! ');
         }
+
+        $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
 
         return array(
             'questionnaire' => $questionnaire,
             'typologies' => $typologies,
             'status' => $status,
-            'testId' => $testId
+            'testId' => $testId,
+            'form' => $form->createView()
         );
     }
 

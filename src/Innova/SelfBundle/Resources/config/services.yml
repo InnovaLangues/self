@@ -80,6 +80,7 @@ services:
             orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
+            formFactory: @form.factory
         calls:
             - [setRequest, [@request]]
         scope: request
