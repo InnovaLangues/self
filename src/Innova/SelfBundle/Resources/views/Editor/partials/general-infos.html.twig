@@ -16,7 +16,7 @@
                     {{ macros.help("Compétence visée : compréhension orale, écrite, ou expression écrite courte.") }}
                     <label for="skill">{{ 'editor.questionnaire.skill' | trans }}</label>
                     {% set skills = ["-", "CO", "CE", "EEC"] %}
-                    <select id="skill" class="form-control" {% if questionnaire.skill is not null %} disabled{% endif %}>
+                    <select id="skill" class="form-control blocked" {% if questionnaire.skill is not null %}disabled{% endif %}>
                         {% for skill in skills %}
                             <option {% if questionnaire.skill is not null and questionnaire.skill.name == skill %}selected{% endif %} value="{{ skill }}">
                                 {{ skill }}
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     {{ macros.help("Typologies disponibles dépendament de la compétence choisie.") }}
                     <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
-                    <select id="typology" class="form-control" {% if questionnaire.questions[0].typology is not null %} disabled{% endif %}>
+                    <select id="typology" class="form-control blocked" {% if questionnaire.questions[0].typology is not null %}disabled{% endif %}>
                         <option value="-">-</option>
                         {% for typology in get_typologies_for_skill(questionnaire.skill) %}
                             <option {% if questionnaire.questions[0].typology is not null and questionnaire.questions[0].typology == typology %}selected{% endif %} value="{{ typology.name }}">

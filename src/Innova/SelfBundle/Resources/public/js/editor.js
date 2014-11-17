@@ -4,6 +4,18 @@ $(document).ready(function() {
     afterAjax();
     hideElements();
 
+    $('select.identity-select').on('change',function(e){
+        var field = $(this).data("field");
+        var value = $(this).val();
+        setIdentityField(questionnaireId, field, value);
+    });
+
+    $('textarea.identity-select').on('blur',function(e){
+        var field = $(this).data("field");
+        var value = $(this).val();
+        setIdentityField(questionnaireId, field, value);
+    });
+
     /* GENERAL INFOS EVENTS */
     $('#theme').on('blur',function(e){
         setTheme(questionnaireId);
@@ -18,21 +30,9 @@ $(document).ready(function() {
         $("#typology-container").show();
     });
 
-    $('#level').on('change',function(e){
-        setLevel(questionnaireId);
-    });
-
     $('body').on('change', '#typology', function(e){
         setTypology(questionnaireId);
         $(".task-content").show();
-    });
-
-    $('#status').on('change',function(e){
-        setStatus(questionnaireId);
-    });
-
-    $('#language').on('change',function(e){
-        setLanguage(questionnaireId);
     });
 
     $('#fixed-order').on('change',function(e){
@@ -546,41 +546,6 @@ function setTypology(questionnaireId) {
     });
 }
 
-function setStatus(questionnaireId) {
-    beforeAjax();
-    $.ajax({
-        url: Routing.generate('editor_questionnaire_set-status'),
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-            status: $("#status").val()
-        }
-    })
-    .done(function(data) {
-        $("#status").val(data.status);
-        afterAjax();
-    });
-}
-
-function setLanguage(questionnaireId) {
-    beforeAjax();
-    $.ajax({
-        url: Routing.generate('editor_questionnaire_set-language'),
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-            language: $("#language").val()
-        }
-    })
-    .done(function(data) {
-        $("#language").val(data.language);
-        afterAjax();
-    });
-}
-
-
 function setFixedOrder(isChecked){
     beforeAjax();
     var questionnaireId = $("#questionnaire-id").val();
@@ -600,22 +565,6 @@ function setFixedOrder(isChecked){
 
 }
 
-function setLevel(questionnaireId) {
-    beforeAjax();
-
-    $.ajax({
-        url: Routing.generate('editor_questionnaire_set-level'),
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-            level: $("#level").val()
-        }
-    })
-    .done(function(data) {
-        afterAjax();
-    });
-}
 
 function unlinkMedia(){
     beforeAjax();
@@ -993,12 +942,12 @@ function fillMediaName(theme){
 
 function beforeAjax(){
     $("#loader-img").show();
-    $(".btn, input").attr("disabled", "disabled");
+    $(".btn, input, textarea, select:not(.blocked)").attr("disabled", "disabled");
 }
 
 function afterAjax(){
     $("#loader-img").hide();
-    $(".btn, input").removeAttr("disabled");
+    $(".btn, input, textarea, select:not(.blocked)").removeAttr("disabled");
     $('*').tooltip({placement:'top'});
 }
 
@@ -1068,3 +1017,28 @@ $(document).on('focusin', function(e) {
     e.stopImmediatePropagation();
     }
 });
+
+/************************************************
+*************************************************
+
+                  Identity
+
+*************************************************
+**************************************************/
+function setIdentityField(questionnaireId, field, value){
+    beforeAjax();
+
+    $.ajax({
+        url: Routing.generate('set-identity-field'),
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            questionnaireId: questionnaireId,
+            field: field,
+            value: value
+        }
+    })
+    .done(function(data) {
+        afterAjax();
+    });
+}

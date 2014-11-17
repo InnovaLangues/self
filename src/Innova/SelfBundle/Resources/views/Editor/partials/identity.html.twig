@@ -8,48 +8,120 @@
         </div>
         <div class="panel-body">
             <div class="row">
+                
 
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                            <select id="status" class="form-control">
-                                {% for s in status %}
-                                <option {% if questionnaire.status is not null and questionnaire.status == s %}selected{% endif %} value="{{ s.id }}">
-                                {{ s.name }}
-                                </option>
-                                {% endfor %}
-                             </select>
+                <div class="col-md-12">
+                    <div class="panel panel-default ">
+                        <div class="panel-body">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_label(form.status) }}
+                                        {{ form_widget(form.status) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                   <div class="form-group">
+                                        {{ form_label(form.language) }}
+                                        {{ form_widget(form.language) }}
+                                    </div>
+                                </div>
+                        </div>
                     </div>
                 </div>
+      
+                <div class="col-md-12">
+                    <!-- gauche -->
+                    <div class="col-md-6">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading">Niveau</div>
+                            <div class="panel-body">
+                                    <div class="form-group">
+                                    {{ form_label(form.level) }}
+                                    {{ form_widget(form.level) }}
+                                    </div>
 
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="language">Langue</label>
-                            <select id="language" class="form-control">
-                                {% for language in get_languages() %}
-                                    {% set languageTransl =   'language.'~language.name %}
-                                    <option {% if questionnaire.language is not null and questionnaire.language == language %}selected{% endif %} value="{{ language.id }}"> {{languageTransl | trans }}
-                                {% endfor %}
-                             </select>
+                                    <div class="form-group">
+                                    {{ form_label(form.levelProof) }}
+                                    {{ form_widget(form.levelProof) }}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- droite -->
+                    <div class="col-md-6">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading">Droits d'auteur</div>
+                            <div class="panel-body">
+                                    <div class="form-group">
+                                    {{ form_label(form.authorRight) }}
+                                    {{ form_widget(form.authorRight) }}
+                                    </div>
+                                    <div class="form-group">
+                                    {{ form_label(form.authorRightMore) }}
+                                    {{ form_widget(form.authorRightMore) }}
+                                    </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="skill">Niveau</label>
-                        {% set levels = ["-", "A1", "A2", "B1", "B2", "C1"] %}
-                        <select id="level" class="form-control">
-                            {% for level in levels %}
-                                <option {% if questionnaire.level is not null and questionnaire.level.name == level %}selected{% endif %} value="{{ level }}">
-                                    {{ level }}
-                                </option>
-                            {% endfor %}
-                        </select>
+                
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading">Misc</div>
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                {{ form_label(form.domain) }}
+                                {{ form_widget(form.domain) }}
+                                </div>
+
+                                <div class="form-group">
+                                {{ form_label(form.register) }}
+                                {{ form_widget(form.register) }}
+                                </div>
+
+                                <div class="form-group">
+                                {{ form_label(form.reception) }}
+                                {{ form_widget(form.reception) }}
+                                </div>
+
+                                <div class="form-group">
+                                {{ form_label(form.length) }}
+                                {{ form_widget(form.length) }}
+                                </div>
+
+                                <div class="form-group">
+                                {{ form_label(form.flow) }}
+                                {{ form_widget(form.flow) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading">Source</div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                {{ form_label(form.source) }}
+                                {{ form_widget(form.source) }}
+                                </div>
+                                <div class="form-group">
+                                {{ form_label(form.sourceOperation) }}
+                                {{ form_widget(form.sourceOperation) }}
+                                </div>
+
+                                <div class="form-group">
+                                {{ form_label(form.sourceMore) }}
+                                {{ form_widget(form.sourceMore) }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
             </div>
-
         </div>
     </div>
 </div>

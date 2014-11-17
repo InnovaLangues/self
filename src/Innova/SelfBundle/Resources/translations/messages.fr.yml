@@ -228,3 +228,18 @@ language:
     Italian: Italien
     Chinese: Chinois
 
+
+level.proof: Justificatif du niveau
+author.right: Status du droit d'auteur
+author.right.more: Informations complémentaires sur le droit d'auteur
+source: Source
+source.operation: Opération sur la source
+source.more: Informations complémentaires sur la source
+domain: Domaine
+register: Registre
+reception: Réception
+length: Longueur
+flow: Débit
+status: Statut
+language: Langue
+level: Niveau

@@ -174,35 +174,6 @@ class QuestionnaireController
 
     /**
      *
-     * @Route("/questionnaires/set-level", name="editor_questionnaire_set-level", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function setLevelAction()
-    {
-        $request = $this->request;
-        $em = $this->entityManager;
-        $questionnaireId = $request->request->get('questionnaireId');
-        $levelName = $request->request->get('level');
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        if (!$level = $em->getRepository('InnovaSelfBundle:Level')->findOneByName($levelName)) {
-            $level = null;
-        }
-        $questionnaire->setLevel($level);
-        $em->persist($questionnaire);
-        $em->flush();
-
-        $this->editorLogManager->createEditorLog("editor_edit", "level", $questionnaire);
-
-        return new JsonResponse(
-            array(
-                'level' => $level,
-            )
-        );
-    }
-
-    /**
-     *
      * @Route("/questionnaires/set-typology", name="editor_questionnaire_set-typology", options={"expose"=true})
      * @Method("POST")
      */
@@ -236,61 +207,6 @@ class QuestionnaireController
 
     /**
      *
-     * @Route("/questionnaires/set-status", name="editor_questionnaire_set-status", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function setStatusAction()
-    {
-        $request = $this->request;
-        $questionnaireId = $request->request->get('questionnaireId');
-        $statusId = $request->request->get('status');
-
-        $em = $this->entityManager;
-        $status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->find($statusId);
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-
-        $questionnaire->setStatus($status);
-        $em->persist($questionnaire);
-        $em->flush();
-
-        $this->editorLogManager->createEditorLog("editor_edit", "status", $questionnaire);
-
-        return new JsonResponse(
-            array(
-                'status'=> $statusId,
-            )
-        );
-    }
-
-    /**
-     *
-     * @Route("/questionnaires/set-language", name="editor_questionnaire_set-language", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function setLanguageAction()
-    {
-        $request = $this->request;
-        $questionnaireId = $request->request->get('questionnaireId');
-        $languageId = $request->request->get('language');
-
-        $em = $this->entityManager;
-        $language = $em->getRepository('InnovaSelfBundle:Language')->find($languageId);
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-
-        $questionnaire->setLanguage($language);
-        $em->persist($questionnaire);
-        $em->flush();
-
-        return new JsonResponse(
-            array(
-                'language'=> $languageId,
-            )
-        );
-    }
-
-
-    /**
-     *
      * @Route("/questionnaires/set-text-type", name="set-text-type", options={"expose"=true})
      * @Method("PUT")
      */
@@ -312,6 +228,25 @@ class QuestionnaireController
         $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/set-identity-field", name="set-identity-field", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setIdentityFieldAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request;
+
+        $field = $request->request->get('field');
+        $value = $request->request->get('value');
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
+
+        $this->questionnaireManager->setIdentityField($questionnaire, $field, $value);
+
+        return new JsonResponse(array());
     }
 
 }
