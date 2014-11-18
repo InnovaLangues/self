@@ -64,7 +64,7 @@ class SubquestionController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $question = $questionnaire->getQuestions()[0];
 
-        $typology = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($questionnaireTypology);
+        $typology = $em->getRepository('InnovaSelfBundle:Typology')->find($questionnaireTypology);
 
         $subquestion = $this->subquestionManager->createSubquestion($typology, $question);
 

@@ -179,6 +179,9 @@ editor:
         level: Niveau
         createdby: Tâche créée par
         revisedby: et révisée par
+        skill: Compétence
+        theme: Titre
+        fixedOrder: Ordre fixe
 
     log:
         editor_create: Création de

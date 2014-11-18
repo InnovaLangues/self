@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Form\Type\QuestionnaireType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class QuestionnaireManager
 {
@@ -10,13 +12,17 @@ class QuestionnaireManager
     protected $securityContext;
     protected $user;
     protected $questionnaireRevisorsManager;
+    protected $templating;
+    protected $formFactory;
 
-    public function __construct($entityManager, $securityContext, $questionnaireRevisorsManager)
+    public function __construct($entityManager, $securityContext, $questionnaireRevisorsManager, $templating, $formFactory)
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
+        $this->templating = $templating;
+        $this->formFactory = $formFactory;
     }
 
     public function createQuestionnaire()
@@ -83,6 +89,12 @@ class QuestionnaireManager
             case 'authorRightMore':
                 $questionnaire->setAuthorRightMore($value);
                 break;
+            case 'fixedOrder':
+                $questionnaire->setFixedOrder($value);
+                break;
+            case 'theme':
+                $questionnaire->setTheme($value);
+                break;
             case 'sourceMore':
                 $questionnaire->setSourceMore($value);
                 break;
@@ -144,6 +156,30 @@ class QuestionnaireManager
                     $questionnaire->setLanguage($status);
                 } else { $questionnaire->setLanguage(null); }
                 break;
+             case 'skill':
+                if ($skill = $em->getRepository('InnovaSelfBundle:Skill')->find($value)) {
+                    $questionnaire->setSkill($skill);
+                    $em->persist($questionnaire);
+                    $em->flush();
+                    $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
+                    $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
+                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:general-infos.html.twig',
+                        array(
+                                'questionnaire' => $questionnaire,
+                                'form' => $form->createView()
+                        ));
+                    return new JsonResponse(array('template' => $template, 'test'=>"test"));
+                }
+                break;
+            case 'typology':
+                if ($typology = $em->getRepository('InnovaSelfBundle:Typology')->find($value)) {
+                    $this->setTypology($questionnaire, $typology->getName());
+                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+                    $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+                    return new JsonResponse(array('subquestions' => $template));
+                }
+                break;
         }
 
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
@@ -151,6 +187,6 @@ class QuestionnaireManager
         $em->persist($questionnaire);
         $em->flush();
 
-        return $this;
+        return new JsonResponse(array());
     }
 }

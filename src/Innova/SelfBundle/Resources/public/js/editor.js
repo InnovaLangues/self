@@ -2,44 +2,33 @@ $(document).ready(function() {
     var questionnaireId = $("#questionnaire-id").val();
     fillMediaName($("#theme").val());
     afterAjax();
-    hideElements();
+    disableAndHideElements();
 
-    $('select.identity-select').on('change',function(e){
+    $( "body" ).on( "change", 'select.identity-select, :checkbox.identity-select', function() {
         var field = $(this).data("field");
         var value = $(this).val();
         setIdentityField(questionnaireId, field, value);
     });
 
-    $('textarea.identity-select').on('blur',function(e){
+    $( "body" ).on( "blur", 'textarea.identity-select, :text.identity-select', function() {
         var field = $(this).data("field");
         var value = $(this).val();
         setIdentityField(questionnaireId, field, value);
     });
 
-    /* GENERAL INFOS EVENTS */
-    $('#theme').on('blur',function(e){
-        setTheme(questionnaireId);
+    $( "body" ).on( "change", 'select.identity-select.to-check', function() {
+        $(this).addClass('blocked');
+        $(this).attr('disabled', true);
     });
+
+    /**********************
+        GENERAL INFOS EVENTS 
+    ************************/
 
     $('#text-title').on('blur',function(e){
         setTextTitle(questionnaireId);
     });
 
-    $('#skill').on('change',function(e){
-        setSkill(questionnaireId);
-        $("#typology-container").show();
-    });
-
-    $('body').on('change', '#typology', function(e){
-        setTypology(questionnaireId);
-        $(".task-content").show();
-    });
-
-    $('#fixed-order').on('change',function(e){
-        isChecked = $('#fixed-order').prop('checked');
-        setFixedOrder(isChecked);
-    });
-    
     /**********************
         COMMENT RELATED EVENTS
     ************************/
@@ -360,9 +349,6 @@ function switchEditMode(){
     $(".edit-media-btn").show();
 }
 
-
-
-
 /************************************************
 *************************************************
 
@@ -486,7 +472,7 @@ function setTheme(questionnaireId) {
         if(data.msg != ""){
             alert(data.msg);
         }
-        fillMediaName(data.theme);
+        
         afterAjax();
     });
 }
@@ -508,63 +494,6 @@ function setTextTitle(questionnaireId) {
         afterAjax();
     });
 }
-
-
-function setSkill(questionnaireId) {
-    beforeAjax();
-    $.ajax({
-        url: Routing.generate('editor_questionnaire_set-skill'),
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-            skill: $("#skill").val()
-        }
-    })
-    .done(function(data) {
-        $("#general-infos").html(data.template);
-        afterAjax();
-    });
-}
-
-function setTypology(questionnaireId) {
-    beforeAjax();
-    $.ajax({
-        url: Routing.generate('editor_questionnaire_set-typology'),
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-            typology: $("#typology").val()
-        }
-    })
-    .done(function(data) {
-        $("#typology").val(data.typology);
-        $("#typology").attr('disabled', 'disabled');
-        $("#subquestion-container").replaceWith(data.subquestions);
-        afterAjax();
-    });
-}
-
-function setFixedOrder(isChecked){
-    beforeAjax();
-    var questionnaireId = $("#questionnaire-id").val();
-
-    $.ajax({
-        url: Routing.generate('editor_questionnaire_set-fixed-order'),
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-            isChecked: isChecked
-        }
-    })
-    .done(function(data) {
-        afterAjax();
-    });
-
-}
-
 
 function unlinkMedia(){
     beforeAjax();
@@ -597,8 +526,6 @@ function unlinkMedia(){
 
 function createSubquestion(questionnaireId) {
     beforeAjax();
-
-
     $.ajax({
         url: Routing.generate('editor_questionnaire_create-subquestion'),
         type: 'PUT',
@@ -616,7 +543,6 @@ function createSubquestion(questionnaireId) {
 
 function deleteSubquestion(questionnaireId, subquestionId){
     beforeAjax();
-
 
     $.ajax({
         url: Routing.generate('editor_questionnaire_delete_subquestion'),
@@ -942,18 +868,24 @@ function fillMediaName(theme){
 
 function beforeAjax(){
     $("#loader-img").show();
-    $(".btn, input, textarea, select:not(.blocked)").attr("disabled", "disabled");
+    $(".btn, input, textarea, select:not(.to-check)").attr("disabled", "disabled");
 }
 
 function afterAjax(){
     $("#loader-img").hide();
-    $(".btn, input, textarea, select:not(.blocked)").removeAttr("disabled");
+    $(".btn, input, textarea, select:not(.to-check)").removeAttr("disabled");
     $('*').tooltip({placement:'top'});
 }
 
-function hideElements(){
+function disableAndHideElements(){
     var typologyContainer = $("#typology-container");
     var taskContent = $(".task-content");
+
+    $( ".to-check" ).each(function() {
+        if ($(this).val() != "-" && $( this ).val() != "" ) {
+            $(this).attr("disabled", true);
+        };
+    });
 
     if(!typologyContainer.is(":visible") ){
         taskContent.hide();
@@ -1039,6 +971,15 @@ function setIdentityField(questionnaireId, field, value){
         }
     })
     .done(function(data) {
+        if (field == "skill") {
+            $("#general-infos").html(data.template);
+            $("#questionnaire_skill").attr("disabled", true);
+        } else if(field == "typology") {
+            $("#subquestion-container").replaceWith(data.subquestions);
+            $(".task-content").show();
+        } else if(field == "theme"){
+            fillMediaName(value);
+        }
         afterAjax();
     });
 }
