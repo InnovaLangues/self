@@ -122,10 +122,13 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class="alert alert-info" role="alert">{{ 'editor.identity.createdby' | trans }} <strong>{{ questionnaire.author.username }}</strong> {{ 'editor.identity.revisedby' | trans }} 
-                    {% for i, revisor in questionnaire.revisors %}
-                        <strong>{{ revisor.username }}</strong>{% if i < questionnaire.revisors|length -1 %}, {% endif %}
-                    {% endfor %}
+                    <div class="alert alert-info" role="alert">{{ 'editor.identity.createdby' | trans }} <strong>{{ questionnaire.author.username }}</strong> 
+                    {% if questionnaire.revisors|length > 0 %}
+                        {{ 'editor.identity.revisedby' | trans }} 
+                        {% for i, revisor in questionnaire.revisors %}
+                            <strong>{{ revisor.username }}</strong>{% if i < questionnaire.revisors|length -1 %}, {% endif %}
+                        {% endfor %}
+                    {% endif %}
                     </div>
                 </div>
 
