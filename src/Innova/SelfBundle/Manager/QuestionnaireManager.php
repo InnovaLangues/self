@@ -7,15 +7,13 @@ use Innova\SelfBundle\Entity\Questionnaire;
 class QuestionnaireManager
 {
     protected $entityManager;
-    protected $editorLogManager;
     protected $securityContext;
     protected $user;
     protected $questionnaireRevisorsManager;
 
-    public function __construct($entityManager, $editorLogManager, $securityContext, $questionnaireRevisorsManager)
+    public function __construct($entityManager, $securityContext, $questionnaireRevisorsManager)
     {
         $this->entityManager = $entityManager;
-        $this->editorLogManager = $editorLogManager;
         $this->securityContext = $securityContext;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
@@ -33,11 +31,9 @@ class QuestionnaireManager
         $questionnaire->setFixedOrder(0);
         $questionnaire->setStatus($em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->find(1));
         $questionnaire->setAuthor($this->user);
+
         $em->persist($questionnaire);
-
         $em->flush();
-
-        $this->editorLogManager->createEditorLog("editor_create", "task", $questionnaire);
 
         return $questionnaire;
     }
@@ -151,7 +147,6 @@ class QuestionnaireManager
         }
 
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-        $this->editorLogManager->createEditorLog("editor_edit", "identity", $questionnaire);
 
         $em->persist($questionnaire);
         $em->flush();
