@@ -22,24 +22,24 @@ class QuestionnaireController
 
     protected $questionnaireManager;
     protected $orderQuestionnaireTestManager;
-    protected $editorLogManager;
     protected $entityManager;
     protected $request;
     protected $templating;
+    protected $questionnaireRevisorsManager;
 
     public function __construct(
             $questionnaireManager,
             $orderQuestionnaireTestManager,
-            $editorLogManager,
             $entityManager,
-            $templating
+            $templating,
+            $questionnaireRevisorsManager
     )
     {
         $this->questionnaireManager = $questionnaireManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
-        $this->editorLogManager = $editorLogManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
+        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
     }
 
     public function setRequest(Request $request = null)
@@ -73,7 +73,7 @@ class QuestionnaireController
                 $msg = "Une tâche avec le même nom existe déja";
             }
 
-            $this->editorLogManager->createEditorLog("editor_edit", "theme", $questionnaire);
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
         }
 
         return new JsonResponse(
@@ -101,6 +101,8 @@ class QuestionnaireController
         $em->persist($questionnaire);
         $em->flush();
 
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
         return new JsonResponse(
             array(
                'title' => $questionnaire->getTextTitle(),
@@ -127,10 +129,12 @@ class QuestionnaireController
         }
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $questionnaire->setFixedOrder($isChecked);
+
         $em->persist($questionnaire);
         $em->flush();
 
-        $this->editorLogManager->createEditorLog("editor_edit", "fixed-order", $questionnaire);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
 
         return new JsonResponse(
             array(
@@ -158,12 +162,11 @@ class QuestionnaireController
         }
 
         $questionnaire->setSkill($skill);
-        $em->persist($questionnaire);
         $em->flush();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:general-infos.html.twig',array('questionnaire' => $questionnaire));
 
-        $this->editorLogManager->createEditorLog("editor_edit", "skill", $questionnaire);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new JsonResponse(
             array(
@@ -195,7 +198,7 @@ class QuestionnaireController
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
-        $this->editorLogManager->createEditorLog("editor_edit", "typology", $questionnaire);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new JsonResponse(
             array(
@@ -222,8 +225,6 @@ class QuestionnaireController
         $questionnaire->setDialogue($textType);
         $em->persist($questionnaire);
         $em->flush();
-
-        $this->editorLogManager->createEditorLog("editor_edit", "text-type", $questionnaire);
 
         $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $questionnaire));
 

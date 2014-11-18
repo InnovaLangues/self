@@ -25,18 +25,13 @@
             </a>
         </li>
         <li>
-            <a href="#comments" role="tab" data-toggle="tab">
-                <span class="glyphicon glyphicon-comment"></span> {{ 'editor.task.comments' | trans }}
-            </a>
-        </li>
-        <li>
             <a href="#identity" role="tab" data-toggle="tab">
                 <span class="glyphicon glyphicon-list-alt"></span> {{ 'editor.task.identity' | trans }}
             </a>
         </li>
         <li>
-            <a href="#history" role="tab" data-toggle="tab">
-                <span class="glyphicon glyphicon-time"></span> {{ 'editor.task.history' | trans }}
+            <a href="#comments" role="tab" data-toggle="tab">
+                <span class="glyphicon glyphicon-comment"></span> {{ 'editor.task.comments' | trans }}
             </a>
         </li>
         <li class='pull-right'>
@@ -50,14 +45,11 @@
         <div class="tab-pane active" id="task">
             {% include "InnovaSelfBundle:Editor/partials:questionnaire.html.twig" %}
         </div>
-        <div class="tab-pane" id="comments">
-            {% include "InnovaSelfBundle:Editor/partials:comments.html.twig" %}
-        </div>
         <div class="tab-pane" id="identity">
             {% include "InnovaSelfBundle:Editor/partials:identity.html.twig" %}
         </div>
-        <div class="tab-pane" id="history">
-            {% include "InnovaSelfBundle:Editor/partials:history.html.twig" %}
+        <div class="tab-pane" id="comments">
+            {% include "InnovaSelfBundle:Editor/partials:comments.html.twig" %}
         </div>
     </div>
 

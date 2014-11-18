@@ -198,8 +198,8 @@ editor:
         status: statut
         test: Test(s)
         text-type: type d'objet de la question
-
-
+        identity: fiche d'identité
+        
 player:
     listen_context: Il vous faut d'abord écouter le contexte.
     fullscreen: Plein écran

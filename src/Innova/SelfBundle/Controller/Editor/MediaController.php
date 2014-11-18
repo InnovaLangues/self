@@ -22,27 +22,27 @@ class MediaController
     protected $propositionManager;
     protected $appManager;
     protected $commentManager;
-    protected $editorLogManager;
     protected $entityManager;
     protected $request;
     protected $templating;
+    protected $questionnaireRevisorsManager;
 
     public function __construct(
             $mediaManager,
             $propositionManager,
             $appManager,
             $commentManager,
-            $editorLogManager,
             $entityManager,
-            $templating
+            $templating,
+            $questionnaireRevisorsManager
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
         $this->appManager = $appManager;
         $this->commentManager = $commentManager;
-        $this->editorLogManager = $editorLogManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
+        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
 
     }
 
@@ -67,7 +67,7 @@ class MediaController
         $limit = $request->get('listeningLimit');
 
         $this->mediaManager->updateMediaLimit($questionnaire, $media, $limit);
-        $this->editorLogManager->createEditorLog("editor_edit", "listening-limit", $questionnaire);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new JsonResponse(
             array()
@@ -125,6 +125,8 @@ class MediaController
                 $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
                 break;
         }
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new Response($template);
     }
@@ -232,7 +234,8 @@ class MediaController
                 }
                 break;
         }
-        $this->editorLogManager->createEditorLog("editor_create", $entityField, $questionnaire);
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new Response($template);
     }
@@ -335,7 +338,7 @@ class MediaController
                 break;
         }
 
-        $this->editorLogManager->createEditorLog("editor_delete", $entityField, $questionnaire);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new Response($template);
     }

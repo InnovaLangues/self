@@ -9,12 +9,12 @@ use Innova\SelfBundle\Entity\Media\MediaLimit;
 class MediaManager
 {
     protected $entityManager;
-    protected $editorLogManager;
+    protected $questionnaireRevisorsManager;
 
-    public function __construct($entityManager, $editorLogManager)
+    public function __construct($entityManager, $questionnaireRevisorsManager)
     {
         $this->entityManager = $entityManager;
-        $this->editorLogManager = $editorLogManager;
+        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
     }
 
     public function createMedia(Questionnaire $questionnaire = null, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
@@ -71,8 +71,6 @@ class MediaManager
 
         $em->persist($media);
         $em->flush();
-
-        $this->editorLogManager->createEditorLog("editor_edit", $media->getMediaPurpose()->getName(), $questionnaire);
 
         return $media;
     }

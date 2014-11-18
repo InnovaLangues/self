@@ -121,6 +121,16 @@
                     </div>
                 </div>
 
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">Tâche créé par {{ questionnaire.author.username }} et révisée par 
+                    {% for i, revisor in questionnaire.revisors %}
+                        {{ revisor.username }}{% if i < questionnaire.revisors|length -1 %}, {% endif %}
+                    {% endfor %}
+
+                    </div>
+                </div>
+
+                
             </div>
         </div>
     </div>

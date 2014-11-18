@@ -317,7 +317,7 @@ class FixtureCommand extends ContainerAwareCommand
                 "reponse", "syllable", "clue", "instruction", "functional-instruction",
                 "comment", "feedback", "distractor", "app-paire", "app-media", "app-answer",
                 "app-distractor", "listening-limit", "clue-type", "task", "words-list", "blanks", "blank-text",
-                "theme", "fixed-order", "skill", "level", "typology", "status", "text-type"
+                "theme", "fixed-order", "skill", "level", "typology", "status", "text-type", "identity"
             );
             foreach ($editorLogObjects as $editorLogObject) {
                 if (!$em->getRepository('InnovaSelfBundle:EditorLog\EditorLogObject')->findOneByName($editorLogObject)) {
@@ -395,6 +395,30 @@ class FixtureCommand extends ContainerAwareCommand
                     $r->setName($register);
                     $em->persist($r);
                     $output->writeln("Add new Register (".$register.")");
+                }
+            }
+
+
+            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByAuthor(null);
+            foreach ($questionnaires as $questionnaire) {
+                if ($em->getRepository('InnovaSelfBundle:EditorLog\EditorLog')->findBy(array('questionnaire' =>$questionnaire))){
+                    $questionnaire->setAuthor($questionnaire->getEditorLogs()[0]->getUser());
+                    $em->persist($questionnaire);
+                }
+            }
+            $em->flush();
+
+            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+            foreach ($questionnaires as $questionnaire) {
+                if (count($questionnaire->getRevisors()) == 0 && count($editorLogs = $questionnaire->getEditorLogs()) > 0){
+                    $revisors = array();
+                    foreach ($editorLogs as $editorLog) {
+                        if(!in_array($editorLog->getUser(), $revisors)){
+                            $revisors[] = $editorLog->getUser();
+                            $questionnaire->addRevisor($editorLog->getUser());
+                        }
+                    }
+                    $em->persist($questionnaire);
                 }
             }
 

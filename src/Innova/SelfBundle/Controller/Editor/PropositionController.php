@@ -21,12 +21,14 @@ class PropositionController
     protected $entityManager;
     protected $templating;
     protected $request;
+    protected $questionnaireRevisorsManager;
 
-    public function __construct($propositionManager, $entityManager, $templating) 
+    public function __construct($propositionManager, $entityManager, $templating, $questionnaireRevisorsManager) 
     {
         $this->propositionManager = $propositionManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
+        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
     }
 
     public function setRequest(Request $request = null)
@@ -53,6 +55,8 @@ class PropositionController
         $proposition = $this->propositionManager->toggleRightAnswer($proposition);
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:proposition.html.twig', array('questionnaire' => $questionnaire, 'proposition' => $proposition));
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new Response($template);
     }

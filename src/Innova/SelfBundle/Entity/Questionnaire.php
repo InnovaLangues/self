@@ -34,6 +34,7 @@ class Questionnaire
 
     /**
     * @ORM\ManyToMany(targetEntity="User", inversedBy="revisedQuestionnaires")
+    * @ORM\JoinTable(name="questionnaires_revisors")
     */
     protected $revisors;
 
