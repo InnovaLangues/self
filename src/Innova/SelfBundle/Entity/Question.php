@@ -22,7 +22,7 @@ class Question
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="questions",  cascade={"remove"})
+    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="questions")
     */
     protected $questionnaire;
 
