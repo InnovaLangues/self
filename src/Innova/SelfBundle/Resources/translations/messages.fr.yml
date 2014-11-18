@@ -179,6 +179,7 @@ editor:
         level: Niveau
         createdby: Tâche créée par
         revisedby: et révisée par
+
     log:
         editor_create: Création de
         editor_edit: Edition de
@@ -246,5 +247,47 @@ language:
     Italian: Italien
     Chinese: Chinois
 
+author_right:
+    not_needed: Pas besoin
+    authorized: Autorisé
+    pending: En attente
+    to_ask: A demander
 
+domain:
+    personal: Personnel
+    public: Public
+    profesional: Profesionnel
+    educational: Educationnel
+
+register:
+    formal_elevated: Formel soutenu
+    formal_neutral: Formel neutre
+    informal: Informel
+
+reception:
+    listener_monodirectional:
+    listener_pluridirectional:
+    performer:
+
+length:
+    short: Court
+    medium: Moyen
+    long: Long
+
+flow:
+    slow: Lent
+    medium: Moyen
+    fast: Rapide
+
+source:
+    certification: Certification
+    textbook: Manuel
+    intern: Interne
+    other: Autre
+
+source_operation:
+    original: Source originale
+    original_modified: Source modifiée
+    constructed: Source construite
+    constructed_modified: Source construite et modifiée
 
