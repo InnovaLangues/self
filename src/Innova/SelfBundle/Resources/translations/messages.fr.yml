@@ -177,6 +177,8 @@ editor:
         status: Statut
         language: Langue
         level: Niveau
+        createdby: Tâche créée par
+        revisedby: et révisée par
     log:
         editor_create: Création de
         editor_edit: Edition de

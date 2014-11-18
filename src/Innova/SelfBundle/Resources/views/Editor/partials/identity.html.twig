@@ -3,7 +3,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">
-            Fiche d'identité
+            {{ 'editor.task.identity' | trans }}
             </h3>
         </div>
         <div class="panel-body">
@@ -122,15 +122,13 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class="alert alert-info" role="alert">Tâche créé par {{ questionnaire.author.username }} et révisée par 
+                    <div class="alert alert-info" role="alert">{{ 'editor.identity.createdby' | trans }} <strong>{{ questionnaire.author.username }}</strong> {{ 'editor.identity.revisedby' | trans }} 
                     {% for i, revisor in questionnaire.revisors %}
-                        {{ revisor.username }}{% if i < questionnaire.revisors|length -1 %}, {% endif %}
+                        <strong>{{ revisor.username }}</strong>{% if i < questionnaire.revisors|length -1 %}, {% endif %}
                     {% endfor %}
-
                     </div>
                 </div>
 
-                
             </div>
         </div>
     </div>

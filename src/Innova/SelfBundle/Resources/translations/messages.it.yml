@@ -176,8 +176,10 @@ editor:
         length: Longueur
         flow: Débit
         status: Statut
-        language: Langue
-        level: Niveau
+        language: Lingua
+        level: Livello
+        createdby: Tâche créée par
+        revisedby: et révisée par
     log:
         editor_create: Creazione di
         editor_edit: Modifica di
