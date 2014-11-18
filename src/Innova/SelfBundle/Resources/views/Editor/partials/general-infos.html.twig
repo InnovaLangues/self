@@ -3,57 +3,47 @@
     <div class="panel-heading"><h3 class="panel-title">{{ 'editor.questionnaire.general_infos' | trans }}</h3></div>
     <div class="panel-body">
         <div class="row">
+
             <div class="col-md-3">
                 <div class="form-group">
-                    {{ macros.help("Titre de la tâche. Ne sera pas visible lors de la passation.") }}
-                    <label for="theme">{{ 'editor.questionnaire.title' | trans }}</label>
-                    <input type="text" class="form-control" id="theme" value="{{ questionnaire.theme }}"/>
+                    {{ macros.help("Titre de la tâche. Ne sera pas visible lors de la passation.") }} {{ form_label(form.theme) }}
+                    {{ form_widget(form.theme) }}
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-group">
-                    {{ macros.help("Compétence visée : compréhension orale, écrite, ou expression écrite courte.") }}
-                    <label for="skill">{{ 'editor.questionnaire.skill' | trans }}</label>
-                    {% set skills = ["-", "CO", "CE", "EEC"] %}
-                    <select id="skill" class="form-control blocked" {% if questionnaire.skill is not null %}disabled{% endif %}>
-                        {% for skill in skills %}
-                            <option {% if questionnaire.skill is not null and questionnaire.skill.name == skill %}selected{% endif %} value="{{ skill }}">
-                                {{ skill }}
-                            </option>
-                        {% endfor %}
-                    </select>
+                    {{ macros.help("Compétence visée : compréhension orale, écrite, ou expression écrite courte.") }} {{ form_label(form.skill) }}
+                    {{ form_widget(form.skill) }}
                 </div>
             </div>
 
-            {% if questionnaire.skill is not null %}
+            {% if questionnaire.skill %}
             <div class="col-md-4" id="typology-container">
                 <div class="form-group">
                     {{ macros.help("Typologies disponibles dépendament de la compétence choisie.") }}
                     <label for="typology">{{ 'editor.questionnaire.typology' | trans }}</label>
-                    <select id="typology" class="form-control blocked" {% if questionnaire.questions[0].typology is not null %}disabled{% endif %}>
+                    <select data-field="typology" id="typology" class="form-control identity-select to-check" {% if questionnaire.questions[0].typology is not null %}disabled{% endif %}>
                         <option value="-">-</option>
                         {% for typology in get_typologies_for_skill(questionnaire.skill) %}
-                            <option {% if questionnaire.questions[0].typology is not null and questionnaire.questions[0].typology == typology %}selected{% endif %} value="{{ typology.name }}">
+                            <option {% if questionnaire.questions[0].typology is not null and questionnaire.questions[0].typology == typology %}selected{% endif %} value="{{ typology.id }}">
                                {{ typology.name ~ " - " ~ typology.description }}
                             </option>
                         {% endfor %}
                     </select>
                 </div>
             </div>
-            {% endif %}
 
-            
-            <div class="col-md-2 task-content">
+            <div class="col-md-2">
                 <div class="form-group">
                     <div class="checkbox-inline">
-                        {{ macros.help("Par défaut les propositions sont mélangées lors de la passation. Permet de garder l'ordre tel qu'il apparait dans l'éditeur.") }}
-                        <label for="orderfix">{{ 'editor.questionnaire.fixed_order' | trans }}</label>
-                         <input id="fixed-order" class="form-control" type="checkbox" {% if questionnaire.fixedOrder == 1 %}checked {% endif %}/>
+                    {{ macros.help("Par défaut les propositions sont mélangées lors de la passation. Permet de garder l'ordre tel qu'il apparait dans l'éditeur.") }}
+                    {{ form_label(form.fixedOrder) }}
+                    {{ form_widget(form.fixedOrder) }}
                     </div>
                 </div>
             </div>
-      
+            {% endif %}
 
         </div><!-- row -->
     </div>

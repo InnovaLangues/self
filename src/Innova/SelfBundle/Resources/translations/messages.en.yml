@@ -172,6 +172,10 @@ editor:
         level: Level
         createdby: Task created by
         revisedby: and revised by
+        skill: Skill
+        theme: Title
+        fixedOrder: Fixed order
+
     log:
         editor_create: Create
         editor_edit: Edit

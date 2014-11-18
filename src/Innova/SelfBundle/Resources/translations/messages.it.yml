@@ -180,6 +180,9 @@ editor:
         level: Livello
         createdby: Tâche créée par
         revisedby: et révisée par
+        skill: Competenza
+        theme: Titolo
+        fixedOrder: Ordine fisso
     log:
         editor_create: Creazione di
         editor_edit: Modifica di

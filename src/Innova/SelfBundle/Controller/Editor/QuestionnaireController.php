@@ -49,40 +49,6 @@ class QuestionnaireController
         return $this;
     }
 
-    /**
-     *
-     * @Route("/questionnaires/set-theme", name="editor_questionnaire_set-theme", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function setThemeAction()
-    {
-        $request = $this->request;
-        $em = $this->entityManager;
-
-        $questionnaireId = $request->request->get('questionnaireId');
-        $theme = $request->request->get('theme');
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        $msg = "";
-
-        if ($questionnaire->getTheme() != $theme) {
-            if ($this->questionnaireManager->isUnique($theme, $questionnaire->getLanguage())) {
-                $questionnaire->setTheme($theme);
-                $em->persist($questionnaire);
-                $em->flush();
-            } else {
-                $msg = "Une tâche avec le même nom existe déja";
-            }
-
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-        }
-
-        return new JsonResponse(
-            array(
-               'theme' => $questionnaire->getTheme(),
-               'msg' => $msg
-           )
-        );
-    }
 
     /**
      *
@@ -107,104 +73,6 @@ class QuestionnaireController
             array(
                'title' => $questionnaire->getTextTitle(),
            )
-        );
-    }
-
-    /**
-     *
-     * @Route("/questionnaires/set-fixed-order", name="editor_questionnaire_set-fixed-order", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function setFixedOrderAction()
-    {
-        $request = $this->request;
-        $em = $this->entityManager;
-        $questionnaireId = $request->request->get('questionnaireId');
-        $isChecked = $request->request->get('isChecked');
-
-        if ($isChecked == "true") {
-            $isChecked = 1;
-        } else {
-            $isChecked = 0;
-        }
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        $questionnaire->setFixedOrder($isChecked);
-
-        $em->persist($questionnaire);
-        $em->flush();
-
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
-
-        return new JsonResponse(
-            array(
-                'id' => $questionnaire->getId(),
-                'fixed' => $questionnaire->getFixedOrder()
-            )
-        );
-    }
-
-    /**
-     *
-     * @Route("/questionnaires/set-skill", name="editor_questionnaire_set-skill", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function setSkillAction()
-    {
-        $request = $this->request;
-        $em = $this->entityManager;
-        $questionnaireId = $request->request->get('questionnaireId');
-        $skillName = $request->request->get('skill');
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        if (!$skill = $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($skillName)) {
-            $skill = null;
-        }
-
-        $questionnaire->setSkill($skill);
-        $em->flush();
-
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:general-infos.html.twig',array('questionnaire' => $questionnaire));
-
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
-        return new JsonResponse(
-            array(
-                'template' => $template,
-            )
-        );
-    }
-
-    /**
-     *
-     * @Route("/questionnaires/set-typology", name="editor_questionnaire_set-typology", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function setTypologyAction()
-    {
-        $request = $this->request;
-        $questionnaireId = $request->request->get('questionnaireId');
-        $typologyName = $request->request->get('typology');
-
-        $em = $this->entityManager;
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-
-        $this->questionnaireManager->setTypology($questionnaire, $typologyName);
-
-        $typologyName = "-";
-        if ($typology = $questionnaire->getQuestions()[0]->getTypology()) {
-            $typologyName = $typology->getName();
-        }
-
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
-
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
-        return new JsonResponse(
-            array(
-                'typology'=> $typologyName,
-                'subquestions' => $template
-            )
         );
     }
 
@@ -245,9 +113,9 @@ class QuestionnaireController
         $value = $request->request->get('value');
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
 
-        $this->questionnaireManager->setIdentityField($questionnaire, $field, $value);
+        $response = $this->questionnaireManager->setIdentityField($questionnaire, $field, $value);
 
-        return new JsonResponse(array());
+        return $response;
     }
 
 }
