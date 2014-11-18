@@ -4,6 +4,8 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             editorLogManager:   @self.editor_log.manager
+            securityContext:    @security.context
+            questionnaireRevisorsManager: @self.questionnaire_revisors.manager
 
     self.question.manager:
         class: Innova\SelfBundle\Manager\QuestionManager
@@ -31,6 +33,7 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             editorLogManager: @self.editor_log.manager
+            questionnaireRevisorsManager: @self.questionnaire_revisors.manager
 
     self.app.manager:
         class: Innova\SelfBundle\Manager\AppManager
@@ -62,6 +65,12 @@ services:
 
     self.editor_log.manager:
         class: Innova\SelfBundle\Manager\EditorLogManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context
+
+    self.questionnaire_revisors.manager:
+        class: Innova\SelfBundle\Manager\QuestionnaireRevisorsManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context

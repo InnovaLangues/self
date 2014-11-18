@@ -212,7 +212,7 @@ editor:
         status: Status
         test: Test(s)
         text-type: Tipo di testo
-
+        identity: fiche d'identité
 
 player:
     listen_context: Devi ascoltare prima il contesto.

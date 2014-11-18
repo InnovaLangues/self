@@ -204,7 +204,7 @@ editor:
         status: Status
         test: Test
         text-type: Question type
-
+        identity: fiche d'identité
 
 player:
     listen_context: First listen to the context

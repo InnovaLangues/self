@@ -27,6 +27,7 @@ class EecController
     protected $editorLogManager;
     protected $request;
     protected $templating;
+    protected $questionnaireRevisorsManager;
 
     public function __construct(
             $mediaManager,
@@ -35,7 +36,8 @@ class EecController
             $subquestionManager,
             $editorLogManager,
             $entityManager,
-            $templating
+            $templating,
+            $questionnaireRevisorsManager
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
@@ -44,6 +46,7 @@ class EecController
         $this->editorLogManager = $editorLogManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
+        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
     }
 
     public function setRequest(Request $request = null)
@@ -112,10 +115,10 @@ class EecController
                 $em->persist($lacuneMedia);
                 $em->refresh($subquestion);
             }
-
             $em->flush();
         }
 
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
@@ -173,6 +176,7 @@ class EecController
             $em->flush();
         }
 
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
         return new Response($template);
@@ -216,9 +220,9 @@ class EecController
                 $em->persist($media);
             }
         }
-
         $em->flush();
 
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
@@ -244,6 +248,8 @@ class EecController
 
         $em->persist($clue);
         $em->flush();
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new JsonResponse(
             array()
@@ -278,6 +284,8 @@ class EecController
         $subquestion->setMediaSyllable($syllableMedia);
         $em->persist($subquestion);
         $em->flush();
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new JsonResponse(array());
     }
@@ -331,9 +339,9 @@ class EecController
             $em->persist($subquestion);
             $em->refresh($subquestion);
         }
-
         $em->flush();
 
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
@@ -360,7 +368,8 @@ class EecController
         $em->persist($subquestion);
         $em->refresh($subquestion);
         $em->flush();
-
+        
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
@@ -385,6 +394,7 @@ class EecController
         $em->persist($media);
         $em->flush();
 
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
         $this->editorLogManager->createEditorLog("editor_edit", "distractor", $questionnaire);
 
         return new JsonResponse(

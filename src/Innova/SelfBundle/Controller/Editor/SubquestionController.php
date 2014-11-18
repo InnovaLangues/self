@@ -23,19 +23,22 @@ class SubquestionController
     protected $entityManager;
     protected $request;
     protected $templating;
+    protected $questionnaireRevisorsManager;
 
     public function __construct(
             $mediaManager,
             $propositionManager,
             $subquestionManager,
             $entityManager,
-            $templating
+            $templating,
+            $questionnaireRevisorsManager
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
         $this->subquestionManager = $subquestionManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
+        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
     }
 
     public function setRequest(Request $request = null)
@@ -68,6 +71,9 @@ class SubquestionController
         $this->propositionManager->createVfPropositions($questionnaire, $subquestion, $questionnaireTypology);
 
         $em->persist($subquestion);
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
         $em->flush();
         $em->refresh($subquestion);
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
@@ -90,6 +96,8 @@ class SubquestionController
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         $em->remove($subquestion);
         $em->flush();

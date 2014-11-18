@@ -34,11 +34,6 @@
                 <span class="glyphicon glyphicon-list-alt"></span> {{ 'editor.task.identity' | trans }}
             </a>
         </li>
-        <li>
-            <a href="#history" role="tab" data-toggle="tab">
-                <span class="glyphicon glyphicon-time"></span> {{ 'editor.task.history' | trans }}
-            </a>
-        </li>
         <li class='pull-right'>
             <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
         </li>
@@ -55,9 +50,6 @@
         </div>
         <div class="tab-pane" id="identity">
             {% include "InnovaSelfBundle:Editor/partials:identity.html.twig" %}
-        </div>
-        <div class="tab-pane" id="history">
-            {% include "InnovaSelfBundle:Editor/partials:history.html.twig" %}
         </div>
     </div>
 

@@ -8,11 +8,17 @@ class QuestionnaireManager
 {
     protected $entityManager;
     protected $editorLogManager;
+    protected $securityContext;
+    protected $user;
+    protected $questionnaireRevisorsManager;
 
-    public function __construct($entityManager, $editorLogManager)
+    public function __construct($entityManager, $editorLogManager, $securityContext, $questionnaireRevisorsManager)
     {
         $this->entityManager = $entityManager;
         $this->editorLogManager = $editorLogManager;
+        $this->securityContext = $securityContext;
+        $this->user = $this->securityContext->getToken()->getUser();
+        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
     }
 
     public function createQuestionnaire()
@@ -26,6 +32,7 @@ class QuestionnaireManager
         $questionnaire->setDialogue(0);
         $questionnaire->setFixedOrder(0);
         $questionnaire->setStatus($em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->find(1));
+        $questionnaire->setAuthor($this->user);
         $em->persist($questionnaire);
 
         $em->flush();
@@ -142,6 +149,9 @@ class QuestionnaireManager
                 } else { $questionnaire->setLanguage(null); }
                 break;
         }
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        $this->editorLogManager->createEditorLog("editor_edit", "identity", $questionnaire);
 
         $em->persist($questionnaire);
         $em->flush();
