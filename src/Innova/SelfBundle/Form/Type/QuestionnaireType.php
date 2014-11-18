@@ -14,7 +14,7 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'level'),
-                'label'  => 'level',
+                'label'  => 'editor.identity.level',
                 'translation_domain' => 'messages',
             ));
 
@@ -22,7 +22,7 @@ class QuestionnaireType extends AbstractType
                 'class' => 'InnovaSelfBundle:Language', 
                 'property' => 'name',
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'language'),
-                'label'  => 'language',
+                'label'  => 'editor.identity.language',
                 'translation_domain' => 'messages',
             ));
 
@@ -30,13 +30,13 @@ class QuestionnaireType extends AbstractType
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Status', 
                 'property' => 'name',
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'status'),
-                'label'  => 'status',
+                'label'  => 'editor.identity.status',
                 'translation_domain' => 'messages',
             ));
 
             $builder ->add('levelProof', 'textarea', array(
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'levelProof'),
-                'label'  => 'level.proof',
+                'label'  => 'editor.identity.level.proof',
                 'translation_domain' => 'messages'
             ));
 
@@ -45,13 +45,13 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'authorRight'),
-                'label'  => 'author.right',
+                'label'  => 'editor.identity.author.right',
                 'translation_domain' => 'messages',
             ));
 
            $builder ->add('authorRightMore', 'textarea', array(
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'authorRightMore'),
-                'label'  => 'author.right.more',
+                'label'  => 'editor.identity.author.right.more',
                 'translation_domain' => 'messages'
             ));
 
@@ -60,13 +60,13 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'source'),
-                'label'  => 'source',
+                'label'  => 'editor.identity.source',
                 'translation_domain' => 'messages'
             ));
 
            $builder ->add('sourceMore', 'textarea', array(
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'sourceMore'),
-                'label'  => 'source.more',
+                'label'  => 'editor.identity.source.more',
                 'translation_domain' => 'messages'
             ));
 
@@ -75,7 +75,7 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'sourceOperation'),
-                'label'  => 'source.operation',
+                'label'  => 'editor.identity.source.operation',
                 'translation_domain' => 'messages'
             ));
 
@@ -84,7 +84,7 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'domain'),
-                'label'  => 'domain',
+                'label'  => 'editor.identity.domain',
                 'translation_domain' => 'messages'
             ));
 
@@ -93,7 +93,7 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'register'),
-                'label'  => 'register',
+                'label'  => 'editor.identity.register',
                 'translation_domain' => 'messages'
             ));
 
@@ -102,7 +102,7 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'reception'),
-                'label'  => 'reception',
+                'label'  => 'editor.identity.reception',
                 'translation_domain' => 'messages'
             ));
 
@@ -111,7 +111,7 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'length'),
-                'label'  => 'length',
+                'label'  => 'editor.identity.length',
                 'translation_domain' => 'messages'
             ));
 
@@ -120,7 +120,7 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'flow'),
-                'label'  => 'flow',
+                'label'  => 'editor.identity.flow',
                 'translation_domain' => 'messages'
             ));
     }

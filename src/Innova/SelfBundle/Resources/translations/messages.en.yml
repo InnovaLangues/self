@@ -156,20 +156,22 @@ editor:
         associated_answer: Related answer
         add_answer: Add an answer
     identity:
-        level.proof: Justificatif du niveau
-        author.right: Status du droit d'auteur
-        author.right.more: Informations complémentaires sur le droit d'auteur
+        level.proof: Level proof
+        author.right: Copyright status
+        author.right.more: More infos about copyright status
         source: Source
-        source.operation: Opération sur la source
-        source.more: Informations complémentaires sur la source
-        domain: Domaine
-        register: Registre
-        reception: Réception
-        length: Longueur
-        flow: Débit
-        status: Statut
-        language: Langue
-        level: Niveau
+        source.operation: Source operation
+        source.more: More infos about the source
+        domain: Domain
+        register: Register
+        reception: Reception
+        length: Length
+        flow: Flow
+        status: Status
+        language: Language
+        level: Level
+        createdby: Task created by
+        revisedby: and revised by
     log:
         editor_create: Create
         editor_edit: Edit
@@ -235,3 +237,47 @@ language:
     English: English
     Italian: Italian
     Chinese: Chinese
+
+author_right:
+    not_needed: Pas besoin
+    authorized: Autorisé
+    pending: En attente
+    to_ask: A demander
+
+domain:
+    personal: Personnel
+    public: Public
+    profesional: Profesionnel
+    educational: Educationnel
+
+register:
+    formal_elevated: Formel soutenu
+    formal_neutral: Formel neutre
+    informal: Informel
+
+reception:
+    listener_monodirectional:
+    listener_pluridirectional:
+    performer:
+
+length:
+    short: Court
+    medium: Moyen
+    long: Long
+
+flow:
+    slow: Lent
+    medium: Moyen
+    fast: Rapide
+
+source:
+    certification: Certification
+    textbook: Manuel
+    intern: Interne
+    other: Autre
+
+source_operation:
+    original: Source originale
+    original_modified: Source modifiée
+    constructed: Source construite
+    constructed_modified: Source construite et modifiée

@@ -328,7 +328,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $sources = array("certification", "textbook", "intern", "other");
+            $sources = array("source.certification", "source.textbook", "source.intern", "source.other");
             foreach ($sources as $source) {
                 if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Source')->findOneByName($source)) {
                     $s = new Source();
@@ -338,7 +338,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $sourceOperations = array("original", "original_modified", "constructed", "constructed_modified");
+            $sourceOperations = array("source_operation.original", "source_operation.original_modified", "source_operation.constructed", "source_operation.constructed_modified");
             foreach ($sourceOperations as $sourceOperation) {
                 if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\SourceOperation')->findOneByName($sourceOperation)) {
                     $s = new SourceOperation();
@@ -348,7 +348,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $authorRightStates = array("authorized", "not_needed", "pending", "to_ask");
+            $authorRightStates = array("author_right.authorized", "author_right.not_needed", "author_right.pending", "author_right.to_ask");
             foreach ($authorRightStates as $authorRightState) {
                 if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\AuthorRight')->findOneByName($authorRightState)) {
                     $a = new AuthorRight();
@@ -358,7 +358,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $domains = array("personal", "public", "profesional", "educational");
+            $domains = array("domain.personal", "domain.public", "domain.profesional", "domain.educational");
             foreach ($domains as $domain) {
                 if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Domain')->findOneByName($domain)) {
                     $d = new Domain();
@@ -368,7 +368,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $flows = array("slow", "medium", "fast");
+            $flows = array("flow.slow", "flow.medium", "flow.fast");
             foreach ($flows as $flow) {
                 if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Flow')->findOneByName($flow)) {
                     $f = new Flow();
@@ -378,7 +378,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $receptions = array("listener_monodirectional", "listener_pluridirectional", "performer");
+            $receptions = array("reception.listener_monodirectional", "reception.listener_pluridirectional", "reception.performer");
             foreach ($receptions as $reception) {
                 if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Reception')->findOneByName($reception)) {
                     $r = new Reception();
@@ -388,7 +388,7 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
-            $registers = array("formal_elevated", "formal_neutral", "informal");
+            $registers = array("register.formal_elevated", "register.formal_neutral", "register.informal");
             foreach ($registers as $register) {
                 if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Register')->findOneByName($register)) {
                     $r = new Register();
