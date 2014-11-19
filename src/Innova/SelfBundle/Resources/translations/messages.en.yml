@@ -70,7 +70,6 @@ generic:
     boolTrue: "True"
     boolFalse: "False"
     chooseCorrectAnswer: Chosse correct answer
-    edit: Edit
     remove: Remove
     add: Add
     close: Close
