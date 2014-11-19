@@ -1,9 +1,3 @@
-{% if questionnaire.mediaText.mediaLimits[0].listeningLimit <= 1 %}
-    {% set limit_listening_text = 'player.listening_single' | trans %}
-{% else %}
-    {% set limit_listening_text = 'player.listening_plural' | trans %}
-{% endif %}
-
 {% if questionnaire.dialogue == 0 %}
     {% set icon = "situation_monologue.png" %}
 {% elseif questionnaire.dialogue == 1 %}
@@ -23,9 +17,9 @@
 
         {% if questionnaire.mediaText.mediaLimits[0].listeningLimit > 0 %}
         <div class="hidden" id="listens-counter">
-            Reste <span data-limit={{ questionnaire.mediaText.mediaLimits[0].listeningLimit }} id="listening_number">{{ questionnaire.mediaText.mediaLimits[0].listeningLimit }}</span>
-            <span id="limit_listening_text">{{ limit_listening_text }}</span>
-            <span class="hidden">sur <span id="limit_listening">{{ questionnaire.mediaText.mediaLimits[0].listeningLimit }}</span></span>
+            <span id="listenings-remaining">
+                {{ "player.listening_remaining"|trans({'%count%': questionnaire.mediaText.mediaLimits[0].listeningLimit}, "messages") }}
+                </span>
         </div>
         {% endif %}
     {% endif %}

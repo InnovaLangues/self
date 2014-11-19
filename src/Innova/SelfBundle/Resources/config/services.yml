@@ -137,6 +137,7 @@ services:
             session:            @session
             router:             @router
             securityContext:    @security.context
+            translator: @translator
         calls:
             - [setRequest, [@request]]
         scope: request

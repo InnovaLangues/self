@@ -95,6 +95,7 @@ editor:
         new: New test
         all_tests: All tests
     task:
+        task: Task
         tasks: Tasks
         all_tasks: All tasks
         back_to_list: Return to the list of tests
@@ -109,6 +110,8 @@ editor:
         delete_confirm_no: No, do not delete the task.
         unnamed: Unnamed task
         comments: Comments
+        add_comment: Add a comment
+        no_comment: No comment
         identity: Identity card
         history: History
         no_potential: No potential task to add
@@ -213,11 +216,10 @@ editor:
         identity: fiche d'identité
 
 player:
+    listening_remaining: "{0} No remaining listening |{1} Only 1 listening remaining|]1,Inf] %count% listenings remaining"
     listen_context: First listen to the context
     fullscreen: Fullscreen
     count_task: on
-    listening_single: listening
-    listening_plural: listenings
     tooltip:
         question_object: text
         proposition: option
@@ -226,6 +228,7 @@ player:
         question: Question
         intruction: Instruction
 trace:
+    answer_saved: Your answer has been saved.
     test_continue: Continue the test
     action:
         evaluate: Rate the difficulty of the task you just completed.  Tick the corresponding box.

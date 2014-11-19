@@ -69,7 +69,7 @@ generic:
     validate: Conferma
     boolTrue: Vero
     boolFalse: Falso
-    boolND: On ne peut pas dire
+    boolND: Non detto
     chooseCorrectAnswer: Seleziona la risposta corretta
     edit: Modifica
     remove: Elimina
@@ -96,6 +96,7 @@ editor:
         new: Nuovo test
         all_tests: Tutti i test
     task:
+        task: Task
         tasks: Task
         all_tasks: Tutte le task
         back_to_list: Ritorna alla lista dei task di valutazione
@@ -112,7 +113,9 @@ editor:
         delete_confirm_yes: Si, elimina la task
         delete_confirm_no: No
         unnamed: Task senza nome
-        comments: Commentaires
+        comments: Commenti
+        add_comment: Aggiungi un commento
+        no_comment: Non ci sono commenti
         identity: Carta d’identità
         history: Registro delle modifiche
         no_potential: Non ci sono task da associare
@@ -220,20 +223,20 @@ editor:
         identity: fiche d'identité
 
 player:
+    listening_remaining: "{0} No ascolto possibilo |{1} 1 solo ascolto|]1,Inf] %count% ascolti possibili"
     listen_context: Devi ascoltare prima il contesto.
     fullscreen: Schermo intero
     count_task: su
-    listening_single: ascolto
-    listening_plural: ascolti
     tooltip:
         question_object: Testo fonte
-        proposition: Opzione (guardare balboni)
+        proposition: Opzione di risposta
         enlarge: Clicca qui per ingrandire
         context: Contesto
         question: Domanda
         intruction: Consegna
 
 trace:
+    answer_saved: La tua risposta è stata registrata.
     test_continue: Continua il test
     action:
         evaluate: Valuta la difficoltà dei task che hai appena effettuato. Seleziona l'opzione più adatta / adeguata

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}SELF{% endblock %}</title>
@@ -47,6 +47,8 @@
             <script src="{{ asset('bundles/innovaself/js/lib/jquery-ui-1.10.3.js') }}"></script>
             <script src="{{ asset('bundles/innovaself/js/lib/bootstrap-3.1.1.min.js') }}"></script>
             <script src="{{ asset("bundles/innovaself/js/lib/jquery.restfulizer.js") }}"></script>
+            <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+            <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'messages' }) }}"></script>
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             <script src="{{ asset('bundles/innovaself/js/main.js') }}"></script>

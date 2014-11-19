@@ -30,6 +30,7 @@ class TraceController
     protected $securityContext;
     protected $request;
     protected $user;
+    protected $translator;
 
     /**
      * Class constructor
@@ -42,7 +43,8 @@ class TraceController
         $entityManager,
         $session,
         $router,
-        $securityContext
+        $securityContext,
+        $translator
     )
     {
         $this->mediaManager = $mediaManager;
@@ -54,6 +56,8 @@ class TraceController
         $this->router = $router;
         $this->securityContext = $securityContext;
         $this->user = $this->securityContext->getToken()->getUser();
+        $this->translator = $translator;
+
     }
 
     public function setRequest(Request $request = null)
@@ -121,7 +125,8 @@ class TraceController
     */
     private function parsePost($post, $trace)
     {
-        $this->session->getFlashBag()->set('success', 'Votre réponse a bien été enregistrée.');
+
+        $this->session->getFlashBag()->set('success', $this->translator->trans("trace.answer_saved", array(), "messages"));
 
         foreach ($post as $subquestionId => $postVar)
         {

@@ -90,6 +90,7 @@ editor:
         back_to_list: Revenir à la liste des tests
         new: Nouveau test
     task:
+        task: Tâche
         tasks: Tâches
         back_to_list: Retour à la liste des tâches
         list: Liste des tâches pour le test <strong>%testName%</strong>
@@ -103,6 +104,8 @@ editor:
         delete_confirm_no: Non
         unnamed: Tâche sans nom
         comments: Commentaires
+        add_comment: Ajouter un commentaire
+        no_comment: Aucun commentaire
         identity: Fiche d'identité
         history: Historique
         no_potential: Aucune tâche à associer
@@ -207,11 +210,10 @@ editor:
         identity: fiche d'identité
         
 player:
+    listening_remaining: "{0} Plus d'écoute possible |{1} 1 seule écoute restante|]1,Inf] %count% écoutes restantes"
     listen_context: Il vous faut d'abord écouter le contexte.
     fullscreen: Plein écran
     count_task: sur
-    listening_single: écoute
-    listening_plural: écoutes
     tooltip:
         question_object: Objet de la question
         proposition: Proposition de réponse
@@ -221,6 +223,7 @@ player:
         intruction: Consigne
 
 trace:
+    answer_saved: Votre réponse a bien été enregistrée.
     test_continue: Continuer le test
     action:
         evaluate: Evaluez la difficulté de la tâche que vous venez d’effectuer. Cochez la case qui vous convient :
