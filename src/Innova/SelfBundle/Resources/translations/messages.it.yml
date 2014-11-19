@@ -185,6 +185,8 @@ editor:
         skill: Competenza
         theme: Titolo
         fixedOrder: Ordine fisso
+        authorMore: Auteur(s) de la tâche
+        
     log:
         editor_create: Creazione di
         editor_edit: Modifica di

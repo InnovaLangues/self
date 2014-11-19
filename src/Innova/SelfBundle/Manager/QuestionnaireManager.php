@@ -86,6 +86,9 @@ class QuestionnaireManager
         $em = $this->entityManager;
         
         switch ($field) {
+            case 'authorMore':
+                $questionnaire->setAuthorMore($value);
+                break;
             case 'authorRightMore':
                 $questionnaire->setAuthorRightMore($value);
                 break;
