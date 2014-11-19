@@ -33,6 +33,13 @@ class Questionnaire
     protected $author;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="authorMore", type="text", nullable=true)
+     */
+    private $authorMore;
+
+    /**
     * @ORM\ManyToMany(targetEntity="User", inversedBy="revisedQuestionnaires")
     * @ORM\JoinTable(name="questionnaires_revisors")
     */
@@ -1154,5 +1161,28 @@ class Questionnaire
     public function getFlow()
     {
         return $this->flow;
+    }
+
+    /**
+     * Set authorMore
+     *
+     * @param string $authorMore
+     * @return Questionnaire
+     */
+    public function setAuthorMore($authorMore)
+    {
+        $this->authorMore = $authorMore;
+    
+        return $this;
+    }
+
+    /**
+     * Get authorMore
+     *
+     * @return string 
+     */
+    public function getAuthorMore()
+    {
+        return $this->authorMore;
     }
 }

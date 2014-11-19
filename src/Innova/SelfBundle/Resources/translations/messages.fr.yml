@@ -184,6 +184,7 @@ editor:
         skill: Compétence
         theme: Titre
         fixedOrder: Ordre fixe
+        authorMore: Auteur(s) de la tâche
 
     log:
         editor_create: Création de

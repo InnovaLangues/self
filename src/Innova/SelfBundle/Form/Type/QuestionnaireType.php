@@ -9,6 +9,12 @@ class QuestionnaireType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+            $builder ->add('authorMore', 'textarea', array(
+                'attr' => array('class'=>'form-control identity-select','data-field'=>'authorMore'),
+                'label'  => 'editor.identity.authorMore',
+                'translation_domain' => 'messages'
+            ));
+
             $builder ->add('theme', 'text', array(
                 'attr' => array('class'=>'form-control identity-select','data-field'=>'theme'),
                 'label'  => 'editor.identity.theme',

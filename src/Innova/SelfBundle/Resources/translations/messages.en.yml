@@ -177,6 +177,7 @@ editor:
         skill: Skill
         theme: Title
         fixedOrder: Fixed order
+        authorMore: Task author
 
     log:
         editor_create: Create
