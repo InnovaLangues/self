@@ -62,7 +62,7 @@ generic:
     create: Créer
     show: Afficher
     ok: OK
-    edit: Mettre à jour
+    edit: Editer
     delete: Supprimer
     register: Inscription
     login: Connexion
@@ -71,7 +71,6 @@ generic:
     boolFalse: Faux
     boolND: On ne peut pas dire
     chooseCorrectAnswer: Sélectionner la réponse correcte
-    edit: Editer
     remove: Supprimer
     add: Ajouter
     close: Fermer

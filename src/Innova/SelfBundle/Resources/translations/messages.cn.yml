@@ -60,7 +60,7 @@ generic:
     create: Ajouter
     show: Afficher
     ok: OK
-    edit: Mettre à jour
+    edit: Editer
     delete: Supprimer
     register: Inscription
     login: Connexion
@@ -68,7 +68,6 @@ generic:
     boolTrue: Vrai
     boolFalse: Faux
     chooseCorrectAnswer: Sélectionner la réponse correcte
-    edit: Editer
     remove: Supprimer
     add: Ajouter
     close: Fermer
