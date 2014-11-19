@@ -5,6 +5,7 @@ namespace Innova\SelfBundle\Manager;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Typology;
 use Innova\SelfBundle\Entity\Media\Media;
 
 class PropositionManager
@@ -32,15 +33,17 @@ class PropositionManager
         return $proposition;
     }
 
-    public function createVfPropositions(Questionnaire $questionnaire, Subquestion $subquestion, $questionnaireTypology)
+    public function createVfPropositions(Questionnaire $questionnaire, Subquestion $subquestion, Typology $typology)
     {
-        if($questionnaireTypology == "TVF" || $questionnaireTypology == "TVFNM") {
+        $typologyName = $typology->getName();
+
+        if($typologyName == "TVF" || $typologyName == "TVFNM") {
             $true = $this->mediaManager->createMedia($questionnaire, "texte", "VRAI", "VRAI", null, 0, "proposition");
             $this->createProposition($subquestion, $true, false);
             $false = $this->mediaManager->createMedia($questionnaire, "texte", "FAUX", "FAUX", null, 0, "proposition");
             $this->createProposition($subquestion, $false, false);
         }
-        if($questionnaireTypology == "TVFNM") {
+        if($typologyName == "TVFNM") {
             $nd = $this->mediaManager->createMedia($questionnaire, "texte", "ND", "ND", null, 0, "proposition");
             $this->createProposition($subquestion, $nd, false);
         }

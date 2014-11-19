@@ -63,12 +63,11 @@ class SubquestionController
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $question = $questionnaire->getQuestions()[0];
-
         $typology = $em->getRepository('InnovaSelfBundle:Typology')->find($questionnaireTypology);
 
         $subquestion = $this->subquestionManager->createSubquestion($typology, $question);
 
-        $this->propositionManager->createVfPropositions($questionnaire, $subquestion, $questionnaireTypology);
+        $this->propositionManager->createVfPropositions($questionnaire, $subquestion, $typology);
 
         $em->persist($subquestion);
 
