@@ -166,7 +166,7 @@ editor:
         source.more: More infos about the source
         domain: Domain
         register: Register
-        reception: Reception
+        reception: Reception type
         length: Length
         flow: Flow
         status: Status

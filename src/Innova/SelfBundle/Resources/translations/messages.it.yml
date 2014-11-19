@@ -174,7 +174,7 @@ editor:
         source.more: Informations complémentaires sur la source
         domain: Domaine
         register: Registre
-        reception: Réception
+        reception: Type de réception
         length: Longueur
         flow: Débit
         status: Statut
