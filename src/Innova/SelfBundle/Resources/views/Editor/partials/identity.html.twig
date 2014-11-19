@@ -12,57 +12,65 @@
                 
                 <div class="col-md-12">
                     <div class="col-md-6">
-                        <div class="panel">
-                            <div class="panel-body">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-status">{{ 'editor.identity.status' | trans }}</div>
+                            <div id="identity-status" class="panel-collapse collapse">
+                                <div class="panel-body">
                                     <div class="form-group">
-                                        {{ form_label(form.status) }}
-                                        {{ form_widget(form.status) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                        <div class="panel">
-                            <div class="panel-body">
-                                    <div class="form-group">
-                                        {{ form_label(form.language) }}
-                                        {{ form_widget(form.language) }}
+                                    {{ form_widget(form.status) }}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-language">{{ 'editor.identity.language' | trans }}</div>
+                            <div id="identity-language" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                    {{ form_widget(form.language) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
       
                 <div class="col-md-12">
                     <!-- gauche -->
                     <div class="col-md-6">
                         <div class="panel panel-default ">
-                            <div class="panel-heading">Niveau</div>
-                            <div class="panel-body">
-                                    <div class="form-group">
-                                    {{ form_label(form.level) }}
-                                    {{ form_widget(form.level) }}
-                                    </div>
-                                    <div class="form-group">
-                                    {{ form_label(form.levelProof) }}
-                                    {{ form_widget(form.levelProof) }}
-                                    </div>
+                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-level">Niveau</div>
+                            <div id="identity-level" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                        <div class="form-group">
+                                        {{ form_label(form.level) }}
+                                        {{ form_widget(form.level) }}
+                                        </div>
+                                        <div class="form-group">
+                                        {{ form_label(form.levelProof) }}
+                                        {{ form_widget(form.levelProof) }}
+                                        </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- droite -->
                     <div class="col-md-6">
                         <div class="panel panel-default ">
-                            <div class="panel-heading">Droits d'auteur</div>
-                            <div class="panel-body">
-                                    <div class="form-group">
-                                    {{ form_label(form.authorRight) }}
-                                    {{ form_widget(form.authorRight) }}
-                                    </div>
-                                    <div class="form-group">
-                                    {{ form_label(form.authorRightMore) }}
-                                    {{ form_widget(form.authorRightMore) }}
-                                    </div>
+                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-right">Droits d'auteur</div>
+                            <div id="identity-right" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                        <div class="form-group">
+                                        {{ form_label(form.authorRight) }}
+                                        {{ form_widget(form.authorRight) }}
+                                        </div>
+                                        <div class="form-group">
+                                        {{ form_label(form.authorRightMore) }}
+                                        {{ form_widget(form.authorRightMore) }}
+                                        </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -71,32 +79,34 @@
                 <div class="col-md-12">
                     <div class="col-md-6">
                         <div class="panel panel-default ">
-                            <div class="panel-heading">Misc</div>
-                            <div class="panel-body">
+                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-misc">Divers</div>
+                            <div id="identity-misc" class="panel-collapse collapse">
+                                <div class="panel-body">
 
-                                <div class="form-group">
-                                {{ form_label(form.domain) }}
-                                {{ form_widget(form.domain) }}
-                                </div>
+                                    <div class="form-group">
+                                    {{ form_label(form.domain) }}
+                                    {{ form_widget(form.domain) }}
+                                    </div>
 
-                                <div class="form-group">
-                                {{ form_label(form.register) }}
-                                {{ form_widget(form.register) }}
-                                </div>
+                                    <div class="form-group">
+                                    {{ form_label(form.register) }}
+                                    {{ form_widget(form.register) }}
+                                    </div>
 
-                                <div class="form-group">
-                                {{ form_label(form.reception) }}
-                                {{ form_widget(form.reception) }}
-                                </div>
+                                    <div class="form-group">
+                                    {{ form_label(form.reception) }}
+                                    {{ form_widget(form.reception) }}
+                                    </div>
 
-                                <div class="form-group">
-                                {{ form_label(form.length) }}
-                                {{ form_widget(form.length) }}
-                                </div>
+                                    <div class="form-group">
+                                    {{ form_label(form.length) }}
+                                    {{ form_widget(form.length) }}
+                                    </div>
 
-                                <div class="form-group">
-                                {{ form_label(form.flow) }}
-                                {{ form_widget(form.flow) }}
+                                    <div class="form-group">
+                                    {{ form_label(form.flow) }}
+                                    {{ form_widget(form.flow) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -104,19 +114,21 @@
 
                     <div class="col-md-6">
                         <div class="panel panel-default ">
-                            <div class="panel-heading">Source</div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                {{ form_label(form.source) }}
-                                {{ form_widget(form.source) }}
-                                </div>
-                                <div class="form-group">
-                                {{ form_label(form.sourceOperation) }}
-                                {{ form_widget(form.sourceOperation) }}
-                                </div>
-                                <div class="form-group">
-                                {{ form_label(form.sourceMore) }}
-                                {{ form_widget(form.sourceMore) }}
+                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-source">Source</div>
+                            <div id="identity-source" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                    {{ form_label(form.source) }}
+                                    {{ form_widget(form.source) }}
+                                    </div>
+                                    <div class="form-group">
+                                    {{ form_label(form.sourceOperation) }}
+                                    {{ form_widget(form.sourceOperation) }}
+                                    </div>
+                                    <div class="form-group">
+                                    {{ form_label(form.sourceMore) }}
+                                    {{ form_widget(form.sourceMore) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -126,10 +138,12 @@
                 <div class="col-md-12">
                     <div class="col-md-6">
                         <div class="panel panel-default ">
-                            <div class="panel-heading">{{ 'editor.identity.authorMore' | trans }}</div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                {{ form_widget(form.authorMore) }}
+                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-author">{{ 'editor.identity.authorMore' | trans }}</div>
+                            <div id="identity-author" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                    {{ form_widget(form.authorMore) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
