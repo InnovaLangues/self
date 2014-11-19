@@ -233,17 +233,6 @@ function checkSelect(){
 }
 
 /**************
-    WORD "ECOUTE" DISPLAY WITH OR WITHOUT "s"
-**************/
-function pluralizeListen(remainingListening) {
-    if(remainingListening < 2){
-        return 'écoute';
-    };
-    return 'écoutes';
-}
-
-
-/**************
    AJAX REQUEST TO HANDLE MEDIA LIMITS
 **************/
 function checkMediaClicks(mediaId, callBack){
@@ -284,9 +273,8 @@ function getRemainingListening(){
             }
         })
         .done(function(data) {
-            $("#listening_number").html(data.remainingListening);
-            $("#limit_listening_text").html(pluralizeListen(data.remainingListening));
             $('#listens-counter').removeClass('hidden');
+            $('#listenings-remaining').html(Translator.transChoice('player.listening_remaining', data.remainingListening, {"count" : data.remainingListening}));
         });
     }
 }
@@ -308,9 +296,8 @@ function updateMediaClicks(mediaId){
     })
     .done(function(data) {
         if ($('[sound="situation"]').data("media-id") == mediaId){
-            $("#listening_number").html(data.remainingListening);
-            $("#limit_listening_text").html(pluralizeListen(data.remainingListening));
             $('#listens-counter').removeClass('hidden');
+            $('#listenings-remaining').html(Translator.transChoice('player.listening_remaining', data.remainingListening, {"count" : data.remainingListening}));
         }
     });
 }

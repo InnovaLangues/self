@@ -3,7 +3,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">
-            {{ 'editor.task.comments' | trans }} <button id="add-comment" class="btn btn-default btn-xs pull-right">Ajouter un commentaire</button>
+            {{ 'editor.task.comments' | trans }} <button id="add-comment" class="btn btn-default btn-xs pull-right">{{ 'editor.task.add_comment' | trans }}</button>
             </h3>
         </div>
         <div class="panel-body">
@@ -22,7 +22,7 @@
         {% else %}
         <div class="panel panel-default">
             <div class="panel-body">
-                Aucun commentaire
+                {{ 'editor.task.no_comment' | trans }}
             </div>
         </div>
     {% endif %}
