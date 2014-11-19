@@ -124,7 +124,15 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class="alert alert-info" role="alert">{{ 'editor.identity.createdby' | trans }} <strong>{{ questionnaire.author.username }}</strong> 
+                    <div class="alert alert-info" role="alert">
+                    {{ 'editor.identity.createdby' | trans }} 
+                     <strong>
+                        {% if questionnaire.author %}
+                           {{ questionnaire.author.username }} 
+                        {% else %}
+                            -
+                        {% endif %}
+                    </strong>
                     {% if questionnaire.revisors|length > 0 %}
                         {{ 'editor.identity.revisedby' | trans }} 
                         {% for i, revisor in questionnaire.revisors %}
