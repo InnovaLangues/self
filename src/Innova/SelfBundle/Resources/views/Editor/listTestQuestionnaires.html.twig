@@ -31,12 +31,13 @@
         {% endautoescape %}
     </div>
     <div id="tasks-list" class="panel-body">
-    {% if orders|length > 0 %}
-        {% include "InnovaSelfBundle:Editor/partials:tasksList.html.twig" %}
-    {% endif %}
+        <ul class="list-group" id="sortable">
+            {% if orders|length > 0 %}
+                {% include "InnovaSelfBundle:Editor/partials:tasksList.html.twig" %}
+            {% endif %}
+        </ul>
     </div>
 </div>
-
 
 <div id="add-task-modal" class="modal fade">
     <div class="modal-dialog">

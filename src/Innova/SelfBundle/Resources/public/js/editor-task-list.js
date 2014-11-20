@@ -75,7 +75,7 @@ function addTaskToTest(questionnaireId, testId){
         }
     })
     .done(function(data) {
-        $("#sortable").replaceWith(data);
+        $("#sortable").html(data);
         sortableInit();
         $("#loader-img").hide();
     });
