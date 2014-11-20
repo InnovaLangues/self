@@ -90,7 +90,7 @@ class ExportController
     /**
      * exportCsvSQL function
      * @Route(
-     *     "/admin/csv-export/test/{testId}/{tia}",
+     *     "/admin/csv-export/export/test/{testId}/{tia}",
      *     name = "csv-export"
      * )
      *
@@ -106,6 +106,29 @@ class ExportController
 
         return array(
             "csvName" => $csvName,
+            'test' => $test,
+            "fileList"=> $fileList,
+            "tia"=> $tia
+        );
+    }
+
+     /**
+     * exportCsvSQL function
+     * @Route(
+     *     "/admin/csv-export/show/test/{testId}/{tia}",
+     *     name = "csv-export-show"
+     * )
+     *
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
+     */
+    public function showCsvAction($testId, $tia)
+    {
+        $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
+
+        $fileList = $this->exportManager->getFileList($test, "csv");
+
+        return array(
             'test' => $test,
             "fileList"=> $fileList,
             "tia"=> $tia
@@ -137,5 +160,28 @@ class ExportController
             "fileList"=> $fileList,
         );
     }
+
+    /**
+     * exportPdf function
+     * @Route(
+     *     "/admin/pdf-export/show/test/{id}",
+     *     name = "pdf-export-show"
+     * )
+     *
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
+     */
+    public function showPdfAction(Test $test)
+    {
+        // Appel de la vue et de la génération du PDF
+        $fileList = $this->exportManager->getFileList($test, "pdf");
+
+        return array(
+            "test" => $test,
+            "fileList"=> $fileList,
+        );
+    }
+
+
 
 }

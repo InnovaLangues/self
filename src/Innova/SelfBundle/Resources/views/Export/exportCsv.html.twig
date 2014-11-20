@@ -4,11 +4,20 @@
         <a class="btn btn-default btn-sm" href="{{ path('export') }}">
         <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
         </a>
+        <a href="{{ path('csv-export', {'testId': test.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">
+            {{ 'export.file_generate' | trans }} CSV
+        </a>
+        <a href="{{ path('csv-export', {'testId': test.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">
+            {{ 'export.file_generate' | trans }} TIA+
+        </a>
+       
         <hr/>
 
-        <h3> Export {% if tia == 1 %} TIA {% else %} CSV {% endif %} pour le test <strong>{{ test.name }}</strong></h3>
+        <h3> Export  CSV  pour le test <strong>{{ test.name }}</strong></h3>
 
+        {% if csvName is defined %}
         <div class="alert alert-success" role="alert">{{ 'export.file_generated' | trans }} - <a href="{{ path('get-file', {'testId': test.id, 'filename': csvName, 'mode':"csv" } )}}">{{ 'export.file_download' | trans }}</a></div>
+        {% endif %}
 
         <h4>{{ 'export.files_list' | trans }}</h4>
         {% for file in fileList %}

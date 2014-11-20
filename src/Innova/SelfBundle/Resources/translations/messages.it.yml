@@ -18,6 +18,7 @@ menu:
 
 export:
     file_generated: Il file è stato generato
+    file_generate: Generare un nuovo file
     file_download: Scarica il file in formato CSV
     file_download_pdf: Scarica il file in formato PDF
     files_list: Lista dei file (generati)
