@@ -36,6 +36,7 @@ user:
     firstname: Nome
     name: Cognome
     email: Indirizzo mail
+    admin_users: Amministratore
 
 registration:
     test_dialang: Hai già effettuato il test Dialang?

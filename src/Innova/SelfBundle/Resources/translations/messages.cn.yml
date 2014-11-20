@@ -36,6 +36,7 @@ user:
     firstname: Prénom
     name: Nom
     email: Adresse mail
+    admin_users: Administrateurs
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires

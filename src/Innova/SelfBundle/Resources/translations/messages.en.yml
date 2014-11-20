@@ -36,6 +36,7 @@ user:
     firstname: firstname
     name: Name
     email: Email address
+    admin_users: Administrators
 
 registration:
     warning_required: Zones with red asterisk are required
