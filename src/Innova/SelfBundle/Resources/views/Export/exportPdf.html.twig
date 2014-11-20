@@ -2,12 +2,19 @@
 
 {% block body -%}
         <a class="btn btn-default btn-sm" href="{{ path('export') }}">
-        <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
+            <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
         </a>
+
+        <a href="{{ path('pdf-export', {'id': test.id } )}}" data-method="PUT" class="rest btn btn-default btn-sm">
+            {{ 'export.file_generate' | trans }} PDF
+        </a>
+
         <hr/>
 
         <h3> Export PDF pour le test <strong>{{ test.name }}</strong></h3>
+        {% if pdfName is defined %}
         <div class="alert alert-success" role="alert">{{ 'export.file_generated' | trans }} - <a href="{{ path('get-file', {'testId': test.id, 'filename': pdfName, 'mode':"pdf" } )}}">{{ 'export.file_download_pdf' | trans }}</a></div>
+        {% endif %}
 
         <h4>{{ 'export.files_list' | trans }}</h4>
         {% for file in fileList %}
