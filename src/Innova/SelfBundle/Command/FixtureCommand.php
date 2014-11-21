@@ -45,7 +45,7 @@ class FixtureCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
             $start = time();
-            $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+            $em = $this->getContainer()->get('doctrine')->getManager();
 
             /* TYPOLOGY */
             $typologies = array(
