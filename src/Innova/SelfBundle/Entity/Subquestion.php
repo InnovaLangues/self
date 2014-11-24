@@ -69,6 +69,12 @@ class Subquestion
     protected $answers;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus", inversedBy="subquestions")
+    * @ORM\JoinTable(name="subquestion_focuses")
+    */
+    protected $focuses;
+
+    /**
      *
      * @ORM\Column(name="displayAnswer", type="boolean")
      */
@@ -364,5 +370,38 @@ class Subquestion
     public function getDisplayAnswer()
     {
         return $this->displayAnswer;
+    }
+
+    /**
+     * Add focuses
+     *
+     * @param \Innova\SelfBundle\QuestionnaireIdentity\Focus $focuses
+     * @return Subquestion
+     */
+    public function addFocuse(\Innova\SelfBundle\QuestionnaireIdentity\Focus $focuses)
+    {
+        $this->focuses[] = $focuses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove focuses
+     *
+     * @param \Innova\SelfBundle\QuestionnaireIdentity\Focus $focuses
+     */
+    public function removeFocuse(\Innova\SelfBundle\QuestionnaireIdentity\Focus $focuses)
+    {
+        $this->focuses->removeElement($focuses);
+    }
+
+    /**
+     * Get focuses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFocuses()
+    {
+        return $this->focuses;
     }
 }
