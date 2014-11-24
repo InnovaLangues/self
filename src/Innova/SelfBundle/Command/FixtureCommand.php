@@ -28,6 +28,7 @@ use Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Register;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus;
 
 
 
@@ -398,6 +399,15 @@ class FixtureCommand extends ContainerAwareCommand
                 }
             }
 
+            $focuses = array("focus.lexical", "focus.communicative", "focus.morphosyntaxic");
+            foreach ($focuses as $focus) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Focus')->findOneByName($focus)) {
+                    $f = new Focus();
+                    $f->setName($focus);
+                    $em->persist($f);
+                    $output->writeln("Add new focus (".$focus.")");
+                }
+            }
 
             $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByAuthor(null);
             foreach ($questionnaires as $questionnaire) {
