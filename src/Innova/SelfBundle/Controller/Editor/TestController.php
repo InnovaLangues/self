@@ -155,18 +155,7 @@ class TestController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        foreach ($test->getOrderQuestionnaireTests() as $order) {
-            $em->remove($order);
-        }
-
-        foreach ($test->getMediaClicks() as $mediaClick) {
-            $em->remove($mediaClick);
-        }
-
-         foreach ($test->getTraces() as $trace) {
-            $em->remove($trace);
-        }
-
+  
         $em->remove($test);
         $em->flush();
 

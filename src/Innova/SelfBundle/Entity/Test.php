@@ -36,7 +36,7 @@ class Test
     private $actif;
 
     /**
-    * @ORM\OneToMany(targetEntity="Trace", mappedBy="test")
+    * @ORM\OneToMany(targetEntity="Trace", mappedBy="test", cascade={"remove"})
     */
     private $traces;
 
@@ -51,12 +51,12 @@ class Test
     protected $language;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="test")
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="test", cascade={"remove"})
     */
     private $mediaClicks;
 
     /**
-    * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="test")
+    * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="test", cascade={"persist", "remove"})
     * @ORM\OrderBy({"displayOrder" = "ASC"})
     */
     private $orderQuestionnaireTests;
