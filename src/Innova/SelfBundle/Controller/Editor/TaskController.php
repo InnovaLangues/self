@@ -189,6 +189,27 @@ class TaskController
                 'testId' => $testId
             )
         );
+    }
 
+     /**
+     * @Route("/delete-task-list", name="delete-task-list", options={"expose"=true})
+     * @Method("DELETE")
+     * @Template("")
+     */
+    public function deleteTaskListAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $questionnaireId = $request->get('questionnaireId');
+
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+
+        $em->remove($questionnaire);
+        $em->flush();
+
+        return new JsonResponse(
+            array()
+        );
     }
 }
