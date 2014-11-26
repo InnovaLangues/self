@@ -126,6 +126,7 @@ editor:
         question_object: Text
         skill: Skill
     subquestion:
+        identity: Identity card
         subquestions: Items
         add: Add an item
         remove: Delete an item
@@ -180,6 +181,9 @@ editor:
         theme: Title
         fixedOrder: Fixed order
         authorMore: Task author
+        focuses: Focus
+        cognitive_main: Main cognitive operations
+        cognitive_secondary: Secondary cognitive operations
 
     log:
         editor_create: Create
@@ -215,7 +219,7 @@ editor:
         status: Status
         test: Test
         text-type: Question type
-        identity: fiche d'identité
+        identity: Identity card
 
 player:
     listening_remaining: "{0} No remaining listening |{1} Only 1 listening remaining|]1,Inf] %count% listenings remaining"
@@ -290,3 +294,18 @@ source_operation:
     original_modified: Source modifiée
     constructed: Source construite
     constructed_modified: Source construite et modifiée
+
+focus:
+    lexical: Lexical
+    communicative: Communicative
+    morphosyntaxic: Morphosyntaxic
+
+cognitive:
+    global_comprehension: Compréhension globale
+    detailed_comprehension: Compréhension détaillée
+    infer_context: Reconnaitre le contexte
+    infer_intention: Reonnaitre l'intention communicative
+    infer_state: Reconnaitre l'état d'âme
+    infer_register: Reconnaitre les registres
+    interaction: Interaction
+

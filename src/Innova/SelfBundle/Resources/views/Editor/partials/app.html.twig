@@ -7,6 +7,7 @@
         <tr>
             <th>{{ 'editor.app.proposition' | trans }}</th>
             <th>{{ 'editor.app.associated_answer' | trans }}</th>
+            <th></th>
         </tr>
     {% for subquestion in subquestions %}
         <tr>
@@ -25,6 +26,11 @@
         {% endif %}
             <td>
                 <span class="app-delete-subquestion glyphicon glyphicon-remove btn btn-default btn-sm" data-subquestion-id="{{ subquestion.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.app.remove_pair' | trans }}"></span>
+            </td>
+            <td>
+                <span class="btn btn-default btn-xs identity-subquestion" data-subquestion-id="{{ subquestion.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.subquestion.identity' | trans }}">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                </span>
             </td>
         </tr>
     {% endfor %}

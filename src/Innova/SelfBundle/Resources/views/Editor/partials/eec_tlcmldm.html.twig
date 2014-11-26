@@ -5,7 +5,13 @@
         <div class="panel-body list-group" style="padding:0">
                 {% for subquestion in subquestions %}
                     {% for proposition in subquestion.propositions if proposition.rightAnswer == true %}
-                        <li class="list-group-item">{{ proposition.media.description }}</li>
+                        <li class="list-group-item">
+                            {{ proposition.media.description }}
+                            <span class="btn btn-default btn-xs identity-subquestion pull-right" data-subquestion-id="{{ subquestion.id }}">
+                                <span class="glyphicon glyphicon-list-alt"></span>
+                                {{ 'editor.subquestion.identity' | trans }}
+                            </span>
+                            </li>
                     {% endfor %}
                 {% endfor %}
         </div>

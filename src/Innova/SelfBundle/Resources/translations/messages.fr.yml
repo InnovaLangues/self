@@ -133,6 +133,7 @@ editor:
         functional_instruction: Consigne fonctionnelle
         feedback: Feedback
     subquestion:
+        identity: Fiche d'identité
         subquestions: Items
         add: Ajouter un item
         remove: Supprimer l'item
@@ -187,6 +188,9 @@ editor:
         theme: Titre
         fixedOrder: Ordre fixe
         authorMore: Auteur(s) de la tâche
+        focuses: Focus
+        cognitive_main: Opérations cognitives principales
+        cognitive_secondary: Opérations cognitives secondaires
 
     log:
         editor_create: Création de
@@ -299,3 +303,16 @@ source_operation:
     constructed: Source construite
     constructed_modified: Source construite et modifiée
 
+focus:
+    lexical: Lexical
+    communicative: Communicatif
+    morphosyntaxic: Morphosyntaxique
+
+cognitive:
+    global_comprehension: Compréhension globale
+    detailed_comprehension: Compréhension détaillée
+    infer_context: Reconnaitre le contexte
+    infer_intention: Reconnaitre l'intention communicative
+    infer_state: Reconnaitre l'état d'âme
+    infer_register: Reconnaitre les registres
+    interaction: Interaction

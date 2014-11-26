@@ -28,6 +28,8 @@ use Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Register;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation;
 
 
 
@@ -395,6 +397,28 @@ class FixtureCommand extends ContainerAwareCommand
                     $r->setName($register);
                     $em->persist($r);
                     $output->writeln("Add new Register (".$register.")");
+                }
+            }
+
+            $focuses = array("focus.lexical", "focus.communicative", "focus.morphosyntaxic");
+            foreach ($focuses as $focus) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Focus')->findOneByName($focus)) {
+                    $f = new Focus();
+                    $f->setName($focus);
+                    $em->persist($f);
+                    $output->writeln("Add new focus (".$focus.")");
+                }
+            }
+
+            $cognitiveOps = array("cognitive.global_comprehension", "cognitive.detailed_comprehension",
+                                                "cognitive.infer_context", "cognitive.infer_intention", "cognitive.infer_state",
+                                                "cognitive.infer_register", "cognitive.interaction");
+            foreach ($cognitiveOps as $cognitiveOp) {
+                if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\CognitiveOperation')->findOneByName($cognitiveOp)) {
+                    $c = new CognitiveOperation();
+                    $c->setName($cognitiveOp);
+                    $em->persist($c);
+                    $output->writeln("Add new CognitiveOperation (".$cognitiveOp.")");
                 }
             }
 

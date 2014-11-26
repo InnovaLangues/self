@@ -6,6 +6,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Innova\SelfBundle\Form\Type\SubquestionType;
+use Innova\SelfBundle\Entity\Subquestion;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 /**
  * Class MediaController
@@ -24,6 +28,7 @@ class SubquestionController
     protected $request;
     protected $templating;
     protected $questionnaireRevisorsManager;
+    protected $formFactory;
 
     public function __construct(
             $mediaManager,
@@ -31,7 +36,8 @@ class SubquestionController
             $subquestionManager,
             $entityManager,
             $templating,
-            $questionnaireRevisorsManager
+            $questionnaireRevisorsManager,
+            $formFactory
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
@@ -39,6 +45,7 @@ class SubquestionController
         $this->entityManager = $entityManager;
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
+        $this->formFactory = $formFactory;
     }
 
     public function setRequest(Request $request = null)
@@ -104,5 +111,53 @@ class SubquestionController
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
 
         return new Response($template);
+    }
+
+    /**
+     *
+     * @Route("/subquestion/display-identity-form", name="editor_subquestion-identity-form", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function displayIdentityFormAction()
+    {
+       $em = $this->entityManager;
+
+       $request = $this->request->request;
+       $subquestionId = $request->get('subquestionId');
+
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
+        $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion-identity.html.twig', 
+                                                                        array(
+                                                                                'form' => $form->createView(),
+                                                                                'subquestionId' => $subquestionId
+                                                                            )
+                                                                );
+
+        return new Response($template);
+    }
+
+    /**
+     *
+     * @Route("/subquestion/set-identity-field", name="set-subquestion-identity-field", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function setIdentityFieldAction()
+    {   
+            $em = $this->entityManager;
+
+            $requestForm = $this->request->request->get("subquestion");
+            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($requestForm["id"]);
+
+            $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
+            $form->bind($this->request);
+            
+            if ($form->isValid()) {
+                $em->persist($subquestion);
+                $em->flush();
+            }
+            
+            return new JsonResponse();
     }
 }

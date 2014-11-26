@@ -2,8 +2,9 @@
      <tr>
         <th></th>
         <th>Info-bulle</th>
-        <th>Indice : syllabe</th> <!-- Changement, demande Cristiana -->
-        <th>En clair</th> <!-- Nouvelle zone, demande Cristiana -->
+        <th>Indice : syllabe</th>
+        <th>En clair</th>
+        <th></th>
         <th></th>
     </tr>
     <!-- Initialisation de la variable qui va me dire si on n'est sur
@@ -39,6 +40,11 @@
             </td>
              <td>
                 <button data-original-title="{{ 'editor.subquestion.answers' | trans }}" data-toggle="tooltip" class="btn btn-default btn-xs btn-display-answers" data-subquestion-id="{{ subquestion.id }}">?</button>
+            </td>
+            <td>
+                <span class="btn btn-default btn-xs identity-subquestion" data-subquestion-id="{{ subquestion.id }}" data-toggle="tooltip" data-original-title="{{ 'editor.subquestion.identity' | trans }}">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                </span>
             </td>
         </tr>
     {% endfor %}

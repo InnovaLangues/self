@@ -19,7 +19,7 @@ class SubquestionManager
     {
         $em = $this->entityManager;
 
-        $subquestion = new SubQuestion();
+        $subquestion = new Subquestion();
         $subquestion->setTypology($typology);
         $subquestion->setQuestion($question);
         // Initialisation de cette zone à FALSE et non pas à TRUE fix #519
@@ -30,4 +30,11 @@ class SubquestionManager
 
         return $subquestion;
     }
+
+    public function setIdentityField($subquestion, $field, $value)
+    {
+        
+        return $this;
+    }
+
 }
