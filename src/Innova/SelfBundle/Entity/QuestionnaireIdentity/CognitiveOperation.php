@@ -36,18 +36,28 @@ class CognitiveOperation
     private $description;
 
     /**
-     * To String
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\Subquestion", mappedBy="cognitiveOpsMain")
+    */
+    protected $subquestionsMain;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\Subquestion", mappedBy="cognitiveOpsSecondary")
+    */
+    protected $subquestionsSecondary;
+
+    /**
+     * Constructor
      */
-
-    public function __toString()
+    public function __construct()
     {
-        return $this->getName();
+        $this->subquestionsMain = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subquestionsSecondary = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -57,38 +67,31 @@ class CognitiveOperation
     /**
      * Set name
      *
-     * @param  string $name
-     * @return AuthorRight
+     * @param string $name
+     * @return CognitiveOperation
      */
     public function setName($name)
     {
         $this->name = $name;
-
+    
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
         return $this->name;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Set description
      *
      * @param string $description
-     * @return AuthorRight
+     * @return CognitiveOperation
      */
     public function setDescription($description)
     {
@@ -105,5 +108,71 @@ class CognitiveOperation
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Add subquestionsMain
+     *
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestionsMain
+     * @return CognitiveOperation
+     */
+    public function addSubquestionsMain(\Innova\SelfBundle\Entity\Subquestion $subquestionsMain)
+    {
+        $this->subquestionsMain[] = $subquestionsMain;
+    
+        return $this;
+    }
+
+    /**
+     * Remove subquestionsMain
+     *
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestionsMain
+     */
+    public function removeSubquestionsMain(\Innova\SelfBundle\Entity\Subquestion $subquestionsMain)
+    {
+        $this->subquestionsMain->removeElement($subquestionsMain);
+    }
+
+    /**
+     * Get subquestionsMain
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSubquestionsMain()
+    {
+        return $this->subquestionsMain;
+    }
+
+    /**
+     * Add subquestionsSecondary
+     *
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestionsSecondary
+     * @return CognitiveOperation
+     */
+    public function addSubquestionsSecondary(\Innova\SelfBundle\Entity\Subquestion $subquestionsSecondary)
+    {
+        $this->subquestionsSecondary[] = $subquestionsSecondary;
+    
+        return $this;
+    }
+
+    /**
+     * Remove subquestionsSecondary
+     *
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestionsSecondary
+     */
+    public function removeSubquestionsSecondary(\Innova\SelfBundle\Entity\Subquestion $subquestionsSecondary)
+    {
+        $this->subquestionsSecondary->removeElement($subquestionsSecondary);
+    }
+
+    /**
+     * Get subquestionsSecondary
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSubquestionsSecondary()
+    {
+        return $this->subquestionsSecondary;
     }
 }

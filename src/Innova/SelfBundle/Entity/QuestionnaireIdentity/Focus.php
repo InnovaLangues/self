@@ -72,12 +72,13 @@ class Focus
     {
         return $this->name;
     }
+    
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subquestions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

@@ -75,13 +75,13 @@ class Subquestion
     protected $focuses;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation")
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation", inversedBy="subquestionsMain")
     * @ORM\JoinTable(name="subquestion_cognitiveOpsMain")
     */
     protected $cognitiveOpsMain;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation")
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation", inversedBy="subquestionsSecondary")
     * @ORM\JoinTable(name="subquestion_cognitiveOpsSecondary")
     */
     protected $cognitiveOpsSecondary;
