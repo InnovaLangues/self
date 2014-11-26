@@ -27,9 +27,15 @@
             </tr>
         </table>
 
-        <span class="btn btn-default btn-xs delete-subquestion pull-right" data-subquestion-id="{{ subquestion.id }}">
-            <span class="glyphicon glyphicon-remove"></span>
-            {{ 'editor.subquestion.remove' | trans }}
+        <span class="btns pull-right">
+            <span class="btn btn-default btn-danger btn-xs delete-subquestion" data-subquestion-id="{{ subquestion.id }}">
+                <span class="glyphicon glyphicon-remove"></span>
+                {{ 'editor.subquestion.remove' | trans }}
+            </span>
+            <span class="btn btn-default btn-xs identity-subquestion" data-subquestion-id="{{ subquestion.id }}">
+                <span class="glyphicon glyphicon-list-alt"></span>
+                {{ 'editor.subquestion.identity' | trans }}
+            </span>
         </span>
     </div>
 </div>

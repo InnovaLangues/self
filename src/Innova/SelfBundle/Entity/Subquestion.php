@@ -75,6 +75,18 @@ class Subquestion
     protected $focuses;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation")
+    * @ORM\JoinTable(name="subquestion_cognitiveOpsMain")
+    */
+    protected $cognitiveOpsMain;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation")
+    * @ORM\JoinTable(name="subquestion_cognitiveOpsSecondary")
+    */
+    protected $cognitiveOpsSecondary;
+
+    /**
      *
      * @ORM\Column(name="displayAnswer", type="boolean")
      */
@@ -375,10 +387,10 @@ class Subquestion
     /**
      * Add focuses
      *
-     * @param \Innova\SelfBundle\QuestionnaireIdentity\Focus $focuses
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
      * @return Subquestion
      */
-    public function addFocuse(\Innova\SelfBundle\QuestionnaireIdentity\Focus $focuses)
+    public function addFocuse(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses)
     {
         $this->focuses[] = $focuses;
     
@@ -388,9 +400,9 @@ class Subquestion
     /**
      * Remove focuses
      *
-     * @param \Innova\SelfBundle\QuestionnaireIdentity\Focus $focuses
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
      */
-    public function removeFocuse(\Innova\SelfBundle\QuestionnaireIdentity\Focus $focuses)
+    public function removeFocuse(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses)
     {
         $this->focuses->removeElement($focuses);
     }
@@ -403,5 +415,71 @@ class Subquestion
     public function getFocuses()
     {
         return $this->focuses;
+    }
+
+    /**
+     * Add cognitiveOpsMain
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
+     * @return Subquestion
+     */
+    public function addCognitiveOpsMain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain)
+    {
+        $this->cognitiveOpsMain[] = $cognitiveOpsMain;
+    
+        return $this;
+    }
+
+    /**
+     * Remove cognitiveOpsMain
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
+     */
+    public function removeCognitiveOpsMain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain)
+    {
+        $this->cognitiveOpsMain->removeElement($cognitiveOpsMain);
+    }
+
+    /**
+     * Get cognitiveOpsMain
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCognitiveOpsMain()
+    {
+        return $this->cognitiveOpsMain;
+    }
+
+    /**
+     * Add cognitiveOpsSecondary
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary
+     * @return Subquestion
+     */
+    public function addCognitiveOpsSecondary(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary)
+    {
+        $this->cognitiveOpsSecondary[] = $cognitiveOpsSecondary;
+    
+        return $this;
+    }
+
+    /**
+     * Remove cognitiveOpsSecondary
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary
+     */
+    public function removeCognitiveOpsSecondary(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary)
+    {
+        $this->cognitiveOpsSecondary->removeElement($cognitiveOpsSecondary);
+    }
+
+    /**
+     * Get cognitiveOpsSecondary
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCognitiveOpsSecondary()
+    {
+        return $this->cognitiveOpsSecondary;
     }
 }

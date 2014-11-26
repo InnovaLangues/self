@@ -5,12 +5,12 @@ namespace Innova\SelfBundle\Entity\QuestionnaireIdentity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Focus
+ * AuthorRight
  *
- * @ORM\Table("questionnaireFocus")
+ * @ORM\Table("questionnaireCognitiveOperation")
  * @ORM\Entity
  */
-class Focus
+class CognitiveOperation
 {
     /**
      * @var integer
@@ -36,9 +36,13 @@ class Focus
     private $description;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\Subquestion", mappedBy="focuses")
-    */
-    protected $subquestions;
+     * To String
+     */
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Get id
@@ -54,7 +58,7 @@ class Focus
      * Set name
      *
      * @param  string $name
-     * @return Focus
+     * @return AuthorRight
      */
     public function setName($name)
     {
@@ -84,7 +88,7 @@ class Focus
      * Set description
      *
      * @param string $description
-     * @return Focus
+     * @return AuthorRight
      */
     public function setDescription($description)
     {
@@ -101,38 +105,5 @@ class Focus
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Add subquestions
-     *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestions
-     * @return Focus
-     */
-    public function addSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestions)
-    {
-        $this->subquestions[] = $subquestions;
-    
-        return $this;
-    }
-
-    /**
-     * Remove subquestions
-     *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestions
-     */
-    public function removeSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestions)
-    {
-        $this->subquestions->removeElement($subquestions);
-    }
-
-    /**
-     * Get subquestions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSubquestions()
-    {
-        return $this->subquestions;
     }
 }

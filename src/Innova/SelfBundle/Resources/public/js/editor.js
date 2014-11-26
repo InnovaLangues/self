@@ -21,6 +21,20 @@ $(document).ready(function() {
         $(this).attr('disabled', true);
     });
 
+    $( "body" ).on( "click", '.identity-subquestion', function() {
+        var subquestionId = $(this).data("subquestion-id");
+        subquestionIdentityModal(subquestionId);
+    });
+
+
+    $("body").on("submit", '#subquestion-identity', function(e) { 
+        e.preventDefault();
+        postForm( $(this), function( response ){
+        });
+        return false;
+    });
+
+
     /**********************
         GENERAL INFOS EVENTS 
     ************************/
@@ -983,3 +997,41 @@ function setIdentityField(questionnaireId, field, value){
         afterAjax();
     });
 }
+
+function subquestionIdentityModal(subquestionId){
+    beforeAjax();
+
+    $.ajax({
+        url: Routing.generate('editor_subquestion-identity-form'),
+        type: 'POST',
+        data: {
+            subquestionId: subquestionId,
+        }
+    })
+    .done(function(data) {
+        $('#modal-subquestion-identity').find(".modal-body").html(data);
+        $("#subquestion_id").val(subquestionId);
+        $('#modal-subquestion-identity').modal('show');
+        afterAjax();
+    });
+}
+
+function postForm(form){
+    var values = {};
+    var data = form.serializeArray();
+    beforeAjax();
+
+    $.ajax({
+        type: 'POST',
+        url: Routing.generate('set-subquestion-identity-field'),
+        data: data,
+        complete: function(data) {
+            $('#modal-subquestion-identity').modal('hide');
+            afterAjax();
+        },
+
+    });
+}
+
+
+
