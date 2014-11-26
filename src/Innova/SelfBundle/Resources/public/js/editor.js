@@ -121,6 +121,12 @@ $(document).ready(function() {
 
     $( "body" ).on( "click", '.delete-subquestion', function() {
         var subquestionId = $(this).data("subquestion-id");
+        $("#delete-subquestion-id").val(subquestionId);
+        $('#modal-subquestion-delete').modal('show');
+    });
+
+     $( "body" ).on( "click", '#delete-subquestion', function() {
+        var subquestionId = $("#delete-subquestion-id").val();
         deleteSubquestion(questionnaireId, subquestionId);
     });
 
@@ -570,6 +576,7 @@ function deleteSubquestion(questionnaireId, subquestionId){
     .complete(function(data) {
         afterAjax();
         $("#subquestion-container").replaceWith(data.responseText);
+        $('#modal-subquestion-delete').modal('hide');
     });
 }
 
