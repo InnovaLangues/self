@@ -183,3 +183,59 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="modal-subquestion-delete" tabindex="-1" role="dialog" aria-labelledby="modal-subquestion-identityLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Suppression d'un item</h4>
+            </div>
+            <div class="modal-body">
+            		<p>Êtes-vous sûr de vouloir supprimer cet item. Cela supprimera aussi les réponses associées, les traces des étudiants, etc.</p>
+            		<input type="hidden" id="delete-subquestion-id" value=""/>
+            	</div>
+            <div class="modal-footer">
+		<button id="delete-subquestion" type="button" class="btn btn-danger">{{ 'generic.yes' | trans }}</button>
+		<button type="button" class="btn btn-default close-modal" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
+	</div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-lacunes-generate" tabindex="-1" role="dialog" aria-labelledby="modal-subquestion-identityLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Génération lacunes</h4>
+            </div>
+            <div class="modal-body">
+            		<p>Êtes-vous sûr de vouloir regénérer les lacunes. Si des réponses et des traces en rapport avec ces lacunes existent, celles-ci seront supprimées.</p>
+            	</div>
+            <div class="modal-footer">
+		<button id="create-lacunes-confirmation" type="button" class="btn btn-primary">{{ 'generic.yes' | trans }}</button>
+		<button type="button" class="btn btn-default close-modal" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
+	</div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-listes-generate" tabindex="-1" role="dialog" aria-labelledby="modal-subquestion-identityLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Génération listes de mots</h4>
+            </div>
+            <div class="modal-body">
+            		<p>Êtes-vous sûr de vouloir regénérer les listes de mots. Si des réponses et des traces en rapport avec ces listes existent, celles-ci seront supprimées.</p>
+            	</div>
+            <div class="modal-footer">
+		<button id="create-listes-confirmation" type="button" class="btn btn-primary">{{ 'generic.yes' | trans }}</button>
+		<button type="button" class="btn btn-default close-modal" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
+	</div>
+        </div>
+    </div>
+</div>

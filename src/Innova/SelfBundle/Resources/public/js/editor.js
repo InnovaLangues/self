@@ -121,6 +121,12 @@ $(document).ready(function() {
 
     $( "body" ).on( "click", '.delete-subquestion', function() {
         var subquestionId = $(this).data("subquestion-id");
+        $("#delete-subquestion-id").val(subquestionId);
+        $('#modal-subquestion-delete').modal('show');
+    });
+
+     $( "body" ).on( "click", '#delete-subquestion', function() {
+        var subquestionId = $("#delete-subquestion-id").val();
         deleteSubquestion(questionnaireId, subquestionId);
     });
 
@@ -141,12 +147,20 @@ $(document).ready(function() {
         EEC RELATED EVENTS
     ************************/
 
-    $( "body" ).on( "click", '#create-lacunes', function() {
+    $( "body" ).on( "click", '#create-lacunes-need-confirm', function() {
+        $("#modal-lacunes-generate").modal('show');
+    });
+
+    $( "body" ).on( "click", '#create-listes-need-confirm', function() {
+        $("#modal-listes-generate").modal('show');
+    });
+
+    $( "body" ).on( "click", '#create-lacunes-confirmation, #create-lacunes', function() {
         createLacunes();
     });
 
-    $( "body" ).on( "click", '#create-liste', function() {
-        createListe();
+    $( "body" ).on( "click", '#create-listes-confirmation, #create-listes', function() {
+        createListes();
     });
 
     $('body').on('blur', '.clue',function(e){
@@ -570,6 +584,7 @@ function deleteSubquestion(questionnaireId, subquestionId){
     .complete(function(data) {
         afterAjax();
         $("#subquestion-container").replaceWith(data.responseText);
+        $('#modal-subquestion-delete').modal('hide');
     });
 }
 
@@ -668,11 +683,12 @@ function createLacunes(){
     })
     .complete(function(data) {
         $("#subquestion-container").replaceWith(data.responseText);
+        $("#modal-lacunes-generate").modal('hide');
         afterAjax();
     });
 }
 
-function createListe(){
+function createListes(){
     beforeAjax();
     var questionnaireId = $("#questionnaire-id").val();
 
@@ -686,6 +702,7 @@ function createListe(){
     })
     .complete(function(data) {
         $("#subquestion-container").replaceWith(data.responseText);
+        $("#modal-listes-generate").modal('hide');
         afterAjax();
     });
 }

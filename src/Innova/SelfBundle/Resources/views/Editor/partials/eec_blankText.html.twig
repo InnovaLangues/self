@@ -7,15 +7,23 @@
             <div class="pull-right">
                 {% if typoPrefix == "TLQ" %}
                     {% if questionnaire.questions[0].subquestions|length == 0  %}
-                        <span id="create-lacunes" class="btn btn-default btn-xs">Générer lacunes</span>
+                        <span id="create-lacunes" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Générer lacunes">
+                            <span class="glyphicon glyphicon-flash"></span>
+                        </span>
                     {% else %}
-                        <span id="create-lacunes" class="btn btn-default btn-xs"> {{ macros.help("Attention !") }} Regénérer lacunes</span>
+                        <span id="create-lacunes-need-confirm" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Regénérer lacunes">
+                            <span class="glyphicon glyphicon-refresh"></span>
+                        </span>
                     {% endif %}
                 {% elseif typoPrefix == "TLC"  %}
                     {% if questionnaire.questions[0].subquestions|length == 0  %}
-                        <span id="create-liste" class="btn btn-default btn-xs">Générer liste(s)</span>
+                        <span id="create-listes" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Générer listes">
+                            <span class="glyphicon glyphicon-flash"></span>
+                        </span>
                     {% else %}
-                        <span id="create-liste" class="btn btn-default btn-xs">{{ macros.help("Attention !") }} Regénérer liste(s)</span>
+                        <span id="create-listes-need-confirm" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Regénérer listes">
+                             <span class="glyphicon glyphicon-refresh"></span>
+                        </span>
                     {% endif %}
                 {% endif %}
                 {{ macros.editMedia(questionnaire.mediaBlankText, "subquestion") }}
