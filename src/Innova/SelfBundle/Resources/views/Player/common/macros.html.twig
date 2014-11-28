@@ -97,3 +97,11 @@
             {{ description|raw }}
     {% endif %}
 {% endmacro %}
+
+{% macro getEquivalence(media, subquestion) %}
+    {% for proposition in subquestion.propositions %}
+        {% if proposition.media == media %}
+            {{ proposition.id }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
