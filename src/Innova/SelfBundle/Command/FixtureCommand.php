@@ -89,7 +89,7 @@ class FixtureCommand extends ContainerAwareCommand
             $skills2typos = array(
                 array("CO", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
                 array("CE", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
-                array("EEC", array("TLCMLMULT", "TLQROC", "TLCMLDM"))
+                array("EEC", array("TLCMLMULT", "TLQROC", "TLCMLDM", "TQRU"))
             );
             foreach ($skills2typos as $skills2typo) {
                 $skillName = $skills2typo[0];
