@@ -92,7 +92,8 @@ class TraceController
 
             return array("traceId" => 0, "testId" => $test->getId());
         } else {
-            $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"]);
+            $agent = $this->request->headers->get('User-Agent');
+            $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"], $agent);
             $this->parsePost($post, $trace);
 
             $session = $this->session;
