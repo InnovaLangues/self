@@ -16,7 +16,7 @@ class TraceManager
         $this->entityManager = $entityManager;
     }
 
-    public function createTrace(Questionnaire $questionnaire, Test $test, User $user, $totalTime)
+    public function createTrace(Questionnaire $questionnaire, Test $test, User $user, $totalTime, $agent)
     {
         $em = $this->entityManager;
 
@@ -30,7 +30,7 @@ class TraceManager
         $trace->setListeningAfterAnswer("");
         $trace->setClickCorrectif("");
         $trace->setIp("");
-        $trace->setuserAgent("");
+        $trace->setuserAgent($agent);
         $trace->setDifficulty("");
 
         $em->persist($trace);
