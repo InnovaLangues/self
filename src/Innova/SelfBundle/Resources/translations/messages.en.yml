@@ -117,6 +117,7 @@ editor:
         history: History
         no_potential: No potential task to add
         no_task:  No task created
+        no_task_yet: No task for this test. You can create, or select an existing on through the corresponding buttons.
     questionnaire:
         general_infos: General information
         title: Title
