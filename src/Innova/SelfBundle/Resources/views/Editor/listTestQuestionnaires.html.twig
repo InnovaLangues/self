@@ -34,6 +34,8 @@
         <ul class="list-group" id="sortable">
             {% if orders|length > 0 %}
                 {% include "InnovaSelfBundle:Editor/partials:tasksList.html.twig" %}
+            {% else %}
+                <div class="alert alert-info" role="alert">{{ 'editor.task.no_task_yet' | trans }}</div>
             {% endif %}
         </ul>
     </div>
