@@ -40,6 +40,10 @@
                                                 {% set languageTransl =   'language.'~language.name %}
                                                 <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{languageTransl | trans }}</a></li>
                                             {% endfor %}
+                                            <li class="divider"></li>
+                                            <li><a href="{{ path('editor_test_create_form') }}">
+                                                <span class="glyphicon glyphicon-plus"></span> {{ 'editor.test.create' | trans }}
+                                            </a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
