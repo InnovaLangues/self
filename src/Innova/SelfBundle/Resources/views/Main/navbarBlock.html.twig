@@ -44,6 +44,16 @@
                                             <li><a href="{{ path('editor_test_create_form') }}">
                                                 <span class="glyphicon glyphicon-plus"></span> {{ 'editor.test.create' | trans }}
                                             </a></li>
+                                            <li class="dropdown-submenu">
+                                                <a tabindex="-1" href="#"><span class="glyphicon glyphicon-star"></span> Favoris</a>
+                                                {% if app.user.favoritesTests|length > 0 %}
+                                                <ul class="dropdown-menu" id="user-favorites">
+                                                    {% for favorite in app.user.favoritesTests %}
+                                                        <li data-favorite-id="{{ favorite.id }}"><a  href="{{ path('editor_test_questionnaires_show', { 'testId': favorite.id }) }}">{{ favorite.name }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                                {% endif %}
+                                            </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">

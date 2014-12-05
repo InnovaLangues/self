@@ -171,6 +171,9 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             testManager:    @self.test.manager
+        calls:
+            - [setRequest, [@request]]
+        scope: request
 
     innova_editor_proposition:
         class: Innova\SelfBundle\Controller\Editor\PropositionController

@@ -104,6 +104,12 @@ class User extends BaseUser
     private $editorLogs;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Test")
+    * @ORM\JoinTable(name="user_test_favorites")
+    */
+    protected $favoritesTests;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -584,5 +590,38 @@ class User extends BaseUser
     public function getEditorLogs()
     {
         return $this->editorLogs;
+    }
+
+    /**
+     * Add favoritesTests
+     *
+     * @param \Innova\SelfBundle\Entity\Test $favoritesTests
+     * @return User
+     */
+    public function addFavoritesTest(\Innova\SelfBundle\Entity\Test $favoritesTests)
+    {
+        $this->favoritesTests[] = $favoritesTests;
+    
+        return $this;
+    }
+
+    /**
+     * Remove favoritesTests
+     *
+     * @param \Innova\SelfBundle\Entity\Test $favoritesTests
+     */
+    public function removeFavoritesTest(\Innova\SelfBundle\Entity\Test $favoritesTests)
+    {
+        $this->favoritesTests->removeElement($favoritesTests);
+    }
+
+    /**
+     * Get favoritesTests
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFavoritesTests()
+    {
+        return $this->favoritesTests;
     }
 }

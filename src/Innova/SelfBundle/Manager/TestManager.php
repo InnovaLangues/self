@@ -29,4 +29,22 @@ class TestManager
 
         return $testsProgress;
     }
+
+    public function toggleFavorite($test)
+    {
+        $user = $this->securityContext->getToken()->getUser();
+        $favorites = $user->getFavoritesTests();
+        if($favorites->contains($test)){
+            $user->removeFavoritesTest($test);
+            $isFavorite = false;
+        } else {
+            $user->addFavoritesTest($test);
+            $isFavorite = true;
+        }
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $isFavorite;
+    }
 }
