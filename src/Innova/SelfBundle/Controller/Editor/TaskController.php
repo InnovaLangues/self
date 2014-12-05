@@ -95,7 +95,7 @@ class TaskController
     /**
      * Lists all Questionnaire entities for a test (ordered)
      *
-     * @Route("/test/{testId}/questionnaires", name="editor_test_questionnaires_show")
+     * @Route("/test/{testId}/questionnaires", name="editor_test_questionnaires_show", options={"expose"=true})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:listTestQuestionnaires.html.twig")
      */
