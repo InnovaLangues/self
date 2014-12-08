@@ -96,6 +96,8 @@ editor:
         back_to_list: Ritorna alla lista dei test
         new: Nuovo test
         all_tests: Tutti i test
+        remove_from_favorites: Rimuovi dai preferiti
+        add_to_favorites: Aggiungi ai preferiti
     task:
         task: Task
         tasks: Task

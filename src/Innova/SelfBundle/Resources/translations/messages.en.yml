@@ -95,6 +95,8 @@ editor:
         back_to_list: Return to the list of tests
         new: New test
         all_tests: All tests
+        remove_from_favorites: Remove from favorites
+        add_to_favorites: Add to favorites
     task:
         task: Task
         tasks: Tasks

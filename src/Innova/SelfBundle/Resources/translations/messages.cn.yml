@@ -90,6 +90,8 @@ editor:
         edit: Editer
         back_to_list: Revenir à la liste des tests
         new: Nouveau test
+        remove_from_favorites: Retirer des favoris
+        add_to_favorites: Ajouter aux favoris
     task:
         task: Tâche
         tasks: Tâches
