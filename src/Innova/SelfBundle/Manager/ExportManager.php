@@ -91,15 +91,14 @@ class ExportManager
         $csvPathExport = $this->kernelRoot ."/data/".$dir."/".$testId."/";
         $fileList = array();
 
-        if ($dossier = opendir($csvPathExport)) {
+        if (is_dir($csvPathExport) && $dossier = opendir($csvPathExport)) {
             while (false !== ($fichier = readdir($dossier))) {
                 if ($fichier != '.' && $fichier != '..') {
                     $fileList[] = $fichier;
                 }
             }
+            closedir($dossier);
         }
-
-        closedir($dossier);
         arsort($fileList);
 
         return $fileList;

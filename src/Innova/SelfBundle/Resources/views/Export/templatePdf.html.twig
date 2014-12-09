@@ -1,177 +1,168 @@
+{% import _self as macros %}
+
+{% macro displayMedia(media) %}
+    {% import _self as macros %}
+    {% set type = media.mediaType.name %}
+
+    {% if type == "image" %}
+        <!-- <span class="glyphicon glyphicon-picture"></span> -->
+        <br/> <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('upload/media/') ~ media.url }}" width="100px"/>
+
+    {% elseif type == "texte" %}
+        <span class="glyphicon glyphicon-align-center"></span>
+        <br/> {{ media.description|raw }}
+
+    {% elseif type == "audio" %}
+        <span class="glyphicon glyphicon-headphones"></span>
+            {{ macros.displayLimit(media) }} <br/> {{ media.description|raw }}
+
+    {% elseif type == "video" %}
+        <span class="glyphicon glyphicon-facetime-video"></span>
+        {{ macros.displayLimit(media) }} <br/> {{ media.description|raw }}
+    {% endif %}
+
+{% endmacro %}
+
+{% macro displayLimit(media) %}
+    {% if media.mediaLimits[0].listeningLimit > 0 %}
+        ({{ media.mediaLimits[0].listeningLimit }})
+    {% else %}
+        (∞)
+    {% endif %}
+{% endmacro %}
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Export PDF : du {{ "now"|date("d/m/Y") }} </title>
-<!-- Pour ajouter une pagination/saut de page -->
-<!-- 1/2 : ajouter ce style CSS -->
-    <style type="text/css">
-    .page-breaker {
-        display: block;
-        page-break-after: always;
-        clear:both;
-    }
-    </style>
-</head>
-<body>
-<b>Test</b> : {{ test.name }}<br />
-<b>Langue</b> : {{ test.language.name }}<br />
-<b>Date de l'export</b> : {{ "now"|date("d/m/Y") }}<br />
+    <head>
+        <meta charset="UTF-8">
+        <title>Export PDF : du {{ "now"|date("d/m/Y") }} </title>
+        <style type="text/css">
+        .page-breaker {
+            display: block;
+            page-break-after: always;
+            clear:both;
+        }
+        </style>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <h1>SELF Export PDF</h1>
+        <hr/>
+        <p><strong>Test : </strong>{{ test.name }}</p>
+        <p><strong>Langue : </strong>{{ test.language.name }}</p>
+        <p><strong>Date de l'export : </strong>{{ "now"|date("d/m/Y") }}</p>
 
-<div class="page-breaker"></div>
+        <div class="page-breaker"></div>
 
-{% for orderQuestionnaireTest in test.orderQuestionnaireTests %}
-    <table>
-        <tr>
-            <td><b>Titre de la tache</b> : {{ orderQuestionnaireTest.questionnaire.theme }}</td>
-        </tr>
-        {% if orderQuestionnaireTest.questionnaire.mediaContext is not null %}
-            <tr>
-                <td>
-                <b>Contexte</b> :
-                {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaType.name == "image" %}
-                        <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaContext.url|raw }}">
-                {% else %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaContext.description|raw }}
-                        {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaLimits[0] is defined %}
-                            {% if orderQuestionnaireTest.questionnaire.mediaContext.mediaLimits[0].listeningLimit > 0 %}
-                                <br />
-                                <b>Nombre d'écoute limite</b> :
-                                {{ orderQuestionnaireTest.questionnaire.mediaContext.mediaLimits[0].listeningLimit }}
-                            {% endif %}
+        {% for i, orderQuestionnaireTest in test.orderQuestionnaireTests %}
+            {% set q = orderQuestionnaireTest.questionnaire %}
+            {% set question = q.questions[0] %}
+            {% set items = question.subquestions %}
+
+            <h2>Tâche #{{ i+1 }} : {{ q.theme }}</h2> 
+            <h3>{% if question.typology %} {{ question.typology.name }} - {% endif %} {% if q.skill %} {{ q.skill.name }} {% endif %}</h3>
+            <hr/>
+            
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% if q.mediaContext is not null %}
+                        <div>
+                            <strong>Contexte</strong> 
+                            {{ macros.displayMedia(q.mediaContext) }}
+                        </div>
+                    {% endif %}
+                    
+                    {% if q.mediaText is not null %}
+                        <div>
+                            <strong>Objet de la question</strong> 
+                            {{ macros.displayMedia(q.mediaText) }}
+                        </div>
+                    {% endif %}
+
+                    {% if q.mediaFunctionalInstruction is not null %}
+                        <div>
+                            <strong>Consigne Fonctionnelle</strong> :
+                            {{ macros.displayMedia(q.mediaFunctionalInstruction) }}
+                        </div>
+                    {% endif %}
+
+                    {% if q.mediaBlankText is not null %}
+                        <div>
+                            <strong>Texte lacunaire</strong> 
+                            {{ macros.displayMedia(q.mediaBlankText) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% for j, item in items %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Item #{{ j+1}}</h3>
+                    </div>
+                    <div class="panel-body">
+                    
+                    <!--
+
+                        {% if item.focuses is not empty %}
+                            <div>
+                                <strong>Focus:</strong> 
+                                {% for focus in item.focuses %}
+                                    {{ focus.name  | trans }} -  
+                                {% endfor %}
+                            </div>
                         {% endif %}
-                {% endif %}
-                </td>
-            </tr>
-        {% endif %}
 
-        {% if orderQuestionnaireTest.questionnaire.mediaText is not null %}
-            <tr>
-                <td><b>Objet de la question</b> :
-                {% if orderQuestionnaireTest.questionnaire.mediaText.mediaType.name == "image" %}
-                        <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaText.url|raw }}">
-                {% else %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaText.description|raw }}
-                        {% if orderQuestionnaireTest.questionnaire.mediaText.mediaLimits[0] is defined %}
-                            {% if orderQuestionnaireTest.questionnaire.mediaText.mediaLimits[0].listeningLimit > 0 %}
-                                <br />
-                                <b>Nombre d'écoute limite</b> :
-                                {{ orderQuestionnaireTest.questionnaire.mediaText.mediaLimits[0].listeningLimit }}
-                            {% endif %}
+                        {% if item.cognitiveOpsMain is not empty %}
+                            <div>
+                                <strong>Opérations cognitives principales:</strong> 
+                                {% for cognitiveOpMain in item.cognitiveOpsMain %}
+                                    {{ cognitiveOpMain.name  | trans  }} -  
+                                {% endfor %}
+                            </div>
                         {% endif %}
-                {% endif %}
-                </td>
-            </tr>
-        {% endif %}
 
-        {% if orderQuestionnaireTest.questionnaire.mediaBlankText is not null %}
-            <tr>
-                <td><b>Question</b> :
-                {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaType.name == "image" %}
-                        <img src="http://self.innovalangues.net/upload/media/{{ orderQuestionnaireTest.questionnaire.mediaBlankText.url|raw }}">
-                {% else %}
-                        {{ orderQuestionnaireTest.questionnaire.mediaBlankText.description}}
-                        {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaLimits[0] is defined %}
-                            {% if orderQuestionnaireTest.questionnaire.mediaBlankText.mediaLimits[0].listeningLimit > 0 %}
-                                <br />
-                                <b>Nombre d'écoute limite</b> :
-                                {{ orderQuestionnaireTest.questionnaire.mediaBlankText.mediaLimits[0].listeningLimit }}
-                            {% endif %}
+                        {% if item.cognitiveOpsSecondary is not empty %}
+                            <div>
+                                <strong>Opérations cognitives secondaires:</strong> 
+                                {% for cognitiveOpSecondary in item.cognitiveOpsSecondary %}
+                                    {{ cognitiveOpSecondary.name | trans }} -  
+                                {% endfor %}
+                            </div>
                         {% endif %}
-                {% endif %}
-                </td>
-            </tr>
-        {% endif %}
+                        
+                    -->
 
-        {% if orderQuestionnaireTest.questionnaire.mediaFunctionalInstruction is not null %}
-            <td>
-                <b>Consigne fonctionnelle</b> :
-                {{ orderQuestionnaireTest.questionnaire.mediaFunctionalInstruction.description|raw }}
-            </td>
-        {% endif %}
-
-        {% for question in orderQuestionnaireTest.questionnaire.questions %}
-        {# Vérifié en prod : instruction_id et media_id sont toujours "null", donc pas de tests sur ces colonnes. #}
-                <tr>
-                    <td><b>Typologie</b> : {{ question.typology.name }}</td>
-                </tr>
-                <tr>
-                    <td><br ></td>
-                </tr>
-
-
-                {% for subquestion in question.subquestions %}
-                    <tr>
-{#
-                        <td>
-                            if proposition.media.mediaPurpose.name == "proposition"
-                            subQuestion :{{ subquestion.id }}
-                        </td>
-#}
-                        {% if subquestion.mediaAmorce is not null %}
-                            <td>
-                                <b>Amorce</b> : {{ subquestion.mediaAmorce.description|raw }}
-                            </td>
+                        {% if item.mediaAmorce is not null %}
+                            <div>
+                                <strong>Amorce</strong> 
+                                {{ macros.displayMedia(item.mediaAmorce) }}
+                            </div>
                         {% endif %}
-                        {% if subquestion.mediaSyllable is not null %}
-                            <td>
-                                <b>Syllabe</b> : {{ subquestion.mediaSyllable.description|raw }}
-                            </td>
-                        {% endif %}
-                    </tr>
-                    <tr>
-                        <td>
-                            {% if subquestion.clue is not null %}
-                                <b>Info-bulle {{ subquestion.clue.clueType.name }}</b> :
-                                {{ subquestion.clue.media.description }}<br />
+                        
+                        {% set k = 0 %}
+                        {% for proposition in item.propositions %}
+                            {% if k == 0 %}
+                                <strong>Proposition(s)</strong> :<br/>
                             {% endif %}
-                            {% if subquestion.displayAnswer and subquestion.typology.name == "TLQROC" %}
-                                <b>Propositions en clair </b> :
-                                    {% for proposition in subquestion.propositions %}
-                                        {% if proposition.media.mediaPurpose is not null %}
-                                            {% if proposition.rightAnswer and proposition.media.mediaPurpose.name == "proposition" %}
-                                                <b>{{ proposition.media.description|raw }}</b> /
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endfor %}
-                            {% else %}
-                                <b>Propositions </b> :
-                                    {% for proposition in subquestion.propositions %}
-        {#
-                                        ///
-                                        {{ dump(proposition.media.mediaPurpose.id ) }}
-                                        ***
-                                        {{ dump(proposition.media.mediaPurpose.name ) }}
-                                        ---
-        #}
-                                        {% if subquestion.media is not null %}
-                                            <b>{{ subquestion.media.description|raw }}</b>
-                                        {% endif %}
-                                        {% if proposition.media.mediaPurpose is not null %}
-                                            {% if proposition.rightAnswer and proposition.media.mediaPurpose.name == "proposition" %}
-                                                {% if proposition.media.mediaType.name == "image" %}
-                                                        <img src="http://self.innovalangues.net/upload/media/{{ proposition.media.url|raw }}">
-                                                {% else %}
-                                                        <b>{{ proposition.media.description|raw }}</b>
-                                                {% endif %}
-                                            {% else %}
-                                                {% if proposition.media.mediaType.name == "image" %}
-                                                        <img src="http://self.innovalangues.net/upload/media/{{ proposition.media.url|raw }}">
-                                                {% else %}
-                                                        {{ proposition.media.description|raw }}
-                                                {% endif %}
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endfor %}
-                            {% endif %}
-                        </td>
-                    </tr>
+                                <div class="col-xs-3 panel panel-default">
+                                    <div class="panel-body">
+                                    {{ k+1 }} 
+                                    {% if proposition.rightAnswer == true %}
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    {% else %}
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    {% endif %}
+                                    {{ macros.displayMedia(proposition.media) }}
+                                    </div>
+                                </div>
+                            {% set k = k+1 %}
+                        {% endfor %}
+                    </div>
+                </div>
             {% endfor %}
+            <div class="page-breaker"></div>
         {% endfor %}
-    </table>
-    <!-- 2/2 : ajouter cette ligne pour faire un saut de page entre chaque questionnaire -->
-    <div class="page-breaker"></div>
-{% endfor %}
-
-</body>
+    </body>
 </html>
