@@ -184,42 +184,31 @@ class ExportManager
  private function checkRightAnswer($answersArray, $subquestionId, $rightProps, $typo)
     {
         switch ($typo) {
-            case 'TVF':
-            case 'VF':
-            case 'TVFNM':
-            case 'VFNM':
-            case 'QRU':
-            case 'QRM':
-            case 'TQRU':
             case 'TQRM':
-            case 'APP':
-                if (isset($answersArray[$subquestionId])){
-                    $nbAnswers = count($answersArray[$subquestionId]);
-                } else {
-                    $nbAnswers = 0;
-                }
-
                 $subquestionOk = true;
-                if ($nbAnswers ==  count($rightProps)) {
-                    foreach ($rightProps as $rightProp) {
-                        $found = false;
-                        foreach ($answersArray[$subquestionId] as $answerProp) {
-                            if ($rightProp == $answerProp->getId()) {
-                                $found = true;
-                            }
-                        }
-                        if ($found === false) {
+                foreach ($rightProps as $rightPropId) {
+                    $found = false;
+                    foreach ($answersArray[$subquestionId] as $answerProp) {
+                        if ($answerProp->getRightAnswer() == false ) {
                             $subquestionOk = false;
                         }
+                        if ($rightPropId == $answerProp->getId()) {
+                            $found = true;
+                        }
                     }
-                } else {
-                    $subquestionOk = false;
+                    if ($found == false) {
+                        $subquestionOk = false;
+                    }
                 }
                 break;
 
             case 'TLCMLDM':
             case 'TLCMLMULT':
             case 'TLQROC':
+            case 'APP':
+            case 'TVF':
+            case 'TVFNM':
+            case 'TQRU':
                 $subquestionOk = false;
                 if (isset($answersArray[$subquestionId])) {
                     $proposition = $answersArray[$subquestionId][0];
@@ -243,11 +232,7 @@ class ExportManager
 
         switch ($typo) {
             case 'TVF':
-            case 'VF':
             case 'TVFNM':
-            case 'VFNM':
-            case 'QRU':
-            case 'QRM':
             case 'TQRU':
             case 'TQRM':
             case 'APP':
@@ -308,12 +293,12 @@ class ExportManager
 
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $questions[0]->getTypology()->getName();
-
                 foreach ($traces as $trace) {
                     $answers = $trace->getAnswers();
                     $answersArray = array();
                     // création tableau de correspondance Answer --> Subquestion
                     foreach ($answers as $answer) {
+
                         if (!isset ($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
                             $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
                         }
