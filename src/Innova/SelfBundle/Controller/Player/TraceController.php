@@ -128,30 +128,23 @@ class TraceController
     {
 
         $this->session->getFlashBag()->set('success', $this->translator->trans("trace.answer_saved", array(), "messages"));
-
+        
         foreach ($post as $subquestionId => $postVar)
         {
+            print_r($postVar);
+            
             // Cas classique
             if (is_array($postVar))
             {
-                foreach ($postVar as $key => $propositionId)
-                {
-                    // Cas 1 : si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
-                    if (is_numeric($propositionId))
-                    {
-                        foreach ($postVar as $key => $propositionId) {
-                            $this->createAnswer($trace, $propositionId, $subquestionId);
-                        }
+                foreach ($postVar as $key => $propositionId){
+                    if (is_numeric($propositionId)){
+                        $this->createAnswer($trace, $propositionId, $subquestionId);
+                    } else {
+                        $this->createAnswerProposition($trace, $propositionId, $subquestionId);
                     }
-                    // Cas 2 : si la proposition N'est PAS de type numéric alors on est dans le cas d'une SAISIE
-                    else {
-                        foreach ($postVar as $key => $propositionId) {
-                            $this->createAnswerProposition($trace, $propositionId, $subquestionId);
-                        }
-                    }
-                } // Fin foreach dans if
+                } 
             }
-        } // Fin foreach principal
+        }
     }
 
     /**
