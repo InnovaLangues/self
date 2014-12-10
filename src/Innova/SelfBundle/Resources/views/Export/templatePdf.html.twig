@@ -142,7 +142,7 @@
                         {% endif %}
                         
                         {% set k = 0 %}
-                        {% for proposition in item.propositions %}
+                        {% for proposition in item.propositions if proposition.media.mediaPurpose.name != "reponse" %}
                             {% if k == 0 %}
                                 <strong>Proposition(s)</strong> :<br/>
                             {% endif %}
