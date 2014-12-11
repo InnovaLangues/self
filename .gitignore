@@ -21,6 +21,7 @@ sql/*
 
 # Build
 build/*
+build.xml
 
 *.php~
 *.orig

@@ -1,7 +1,0 @@
-<project>
-    <target name="prepare" description="Prepare for the build." depends="clean">
-        <mkdir dir="${project.build_dir}/logs" />
-        <mkdir dir="${project.build_dir}/code-browser" />
-        <mkdir dir="${project.build_dir}/coverage" />
-    </target>
-</project>

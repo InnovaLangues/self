@@ -1,7 +1,0 @@
-<project>
-    <target name="vendors" description="Install vendors">
-        <exec executable="composer">
-            <arg value="install" />
-        </exec>
-    </target>
-</project>

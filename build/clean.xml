@@ -1,7 +1,0 @@
-<project>
-    <target name="clean" description="Cleans up the build directory.">
-        <delete dir="${project.build_dir}/logs" />
-        <delete dir="${project.build_dir}/code-browser" />
-        <delete dir="${project.build_dir}/coverage" />
-    </target>
-</project>
