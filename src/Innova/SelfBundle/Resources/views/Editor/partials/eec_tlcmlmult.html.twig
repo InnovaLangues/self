@@ -17,7 +17,7 @@
             <div class="panel-body list-group" style="padding:0">
                 {% for proposition in subquestion.propositions if proposition.rightAnswer == true %}
                     <li class="list-group-item">{{ proposition.media.description }}</li>
-                {% endfor %} 
+                {% endfor %}
                 {% for proposition in subquestion.propositions if proposition.media.mediaPurpose.name == "distractor" %}
                     <li class="list-group-item">
                     <span class="input-group input-group-sm col-md-6">

@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Innova\SelfBundle\Form\Type\QuestionnaireType;
 
 /**
@@ -22,7 +21,6 @@ use Innova\SelfBundle\Form\Type\QuestionnaireType;
 
 class TaskController
 {
-
     protected $questionnaireManager;
     protected $questionManager;
     protected $orderQuestionnaireTestManager;
@@ -38,8 +36,7 @@ class TaskController
             $entityManager,
             $templating,
             $formFactory
-    )
-    {
+    ) {
         $this->questionnaireManager = $questionnaireManager;
         $this->questionManager = $questionManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
@@ -88,7 +85,7 @@ class TaskController
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($language);
 
         return array(
-            'questionnaires' => $questionnaires
+            'questionnaires' => $questionnaires,
         );
     }
 
@@ -110,7 +107,7 @@ class TaskController
         return array(
             'test' => $test,
             'orders' => $orders,
-            'potentialQuestionnaires' => $potentialQuestionnaires
+            'potentialQuestionnaires' => $potentialQuestionnaires,
         );
     }
 
@@ -120,13 +117,15 @@ class TaskController
      * @Route("/test/{testId}/potentials", name="editor_test_questionnaires_potentials", options={"expose"=true})
      * @Method("GET")
      */
-    public function getPotentialQuestionnaires($testId){
+    public function getPotentialQuestionnaires($testId)
+    {
         $em = $this->entityManager;
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $potentialQuestionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getPotentialByTest($test);
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig',array('test'=> $test, 'potentialQuestionnaires' => $potentialQuestionnaires));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig', array('test' => $test, 'potentialQuestionnaires' => $potentialQuestionnaires));
+
         return new Response($template);
     }
 
@@ -139,13 +138,11 @@ class TaskController
      */
     public function showAction($questionnaireId, $testId)
     {
-
         $em = $this->entityManager;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
         $status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->findAll();
-
 
         if (!$questionnaire) {
             throw $this->createNotFoundException('Unable to find Questionnaire entity ! ');
@@ -158,7 +155,7 @@ class TaskController
             'typologies' => $typologies,
             'status' => $status,
             'testId' => $testId,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
     }
 
@@ -169,24 +166,23 @@ class TaskController
      */
     public function createQuestionnaireAction()
     {
-
         $em = $this->entityManager;
         $request = $this->request->request;
 
         $questionnaire = $this->questionnaireManager->createQuestionnaire();
         $this->questionManager->createQuestion($questionnaire);
 
-        if($test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'))){
+        if ($test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'))) {
             $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
             $testId = $test->getId();
         } else {
-            $testId = NULL;
+            $testId = null;
         }
 
         return new JsonResponse(
             array(
                 'questionnaireId' =>  $questionnaire->getId(),
-                'testId' => $testId
+                'testId' => $testId,
             )
         );
     }

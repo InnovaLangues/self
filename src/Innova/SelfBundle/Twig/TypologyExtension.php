@@ -15,8 +15,7 @@ class TypologyExtension extends \Twig_Extension
 
     public function __construct(
             $entityManager
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
     }
 
@@ -38,7 +37,7 @@ class TypologyExtension extends \Twig_Extension
         } else {
             $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
         }
-       
+
         return $typologies;
     }
 

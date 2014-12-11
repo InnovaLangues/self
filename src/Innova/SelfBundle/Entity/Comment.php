@@ -46,7 +46,7 @@ class Comment
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -56,20 +56,20 @@ class Comment
     /**
      * Set date
      *
-     * @param \DateTime $date
+     * @param  \DateTime $date
      * @return Comment
      */
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -79,20 +79,20 @@ class Comment
     /**
      * Set questionnaire
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
      * @return Comment
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
     {
         $this->questionnaire = $questionnaire;
-    
+
         return $this;
     }
 
     /**
      * Get questionnaire
      *
-     * @return \Innova\SelfBundle\Entity\Questionnaire 
+     * @return \Innova\SelfBundle\Entity\Questionnaire
      */
     public function getQuestionnaire()
     {
@@ -102,20 +102,20 @@ class Comment
     /**
      * Set user
      *
-     * @param \Innova\SelfBundle\Entity\User $user
+     * @param  \Innova\SelfBundle\Entity\User $user
      * @return Comment
      */
     public function setUser(\Innova\SelfBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Innova\SelfBundle\Entity\User 
+     * @return \Innova\SelfBundle\Entity\User
      */
     public function getUser()
     {
@@ -125,20 +125,20 @@ class Comment
     /**
      * Set mediaInstruction
      *
-     * @param \Innova\SelfBundle\Entity\Media\Media $mediaInstruction
+     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaInstruction
      * @return Comment
      */
     public function setMediaInstruction(\Innova\SelfBundle\Entity\Media\Media $mediaInstruction = null)
     {
         $this->mediaInstruction = $mediaInstruction;
-    
+
         return $this;
     }
 
     /**
      * Get mediaInstruction
      *
-     * @return \Innova\SelfBundle\Entity\Media\Media 
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMediaInstruction()
     {
@@ -148,20 +148,20 @@ class Comment
     /**
      * Set description
      *
-     * @param \Innova\SelfBundle\Entity\Media\Media $description
+     * @param  \Innova\SelfBundle\Entity\Media\Media $description
      * @return Comment
      */
     public function setDescription(\Innova\SelfBundle\Entity\Media\Media $description = null)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return \Innova\SelfBundle\Entity\Media\Media 
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getDescription()
     {

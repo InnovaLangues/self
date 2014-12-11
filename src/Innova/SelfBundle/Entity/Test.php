@@ -219,7 +219,6 @@ class Test
         return $this->actif;
     }
 
-
     /**
      * Add mediaClicks
      *

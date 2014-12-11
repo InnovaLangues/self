@@ -33,8 +33,6 @@ class SubquestionManager
 
     public function setIdentityField($subquestion, $field, $value)
     {
-        
         return $this;
     }
-
 }

@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
-
     public function getByTraceOnTest($testId)
     {
         $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
@@ -18,5 +17,4 @@ class UserRepository extends EntityRepository
 
         return $query->getResult();
     }
-   
 }

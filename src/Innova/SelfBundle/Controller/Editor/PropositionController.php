@@ -23,7 +23,7 @@ class PropositionController
     protected $request;
     protected $questionnaireRevisorsManager;
 
-    public function __construct($propositionManager, $entityManager, $templating, $questionnaireRevisorsManager) 
+    public function __construct($propositionManager, $entityManager, $templating, $questionnaireRevisorsManager)
     {
         $this->propositionManager = $propositionManager;
         $this->entityManager = $entityManager;

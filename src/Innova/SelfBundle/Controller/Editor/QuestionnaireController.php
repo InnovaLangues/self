@@ -19,7 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class QuestionnaireController
 {
-
     protected $questionnaireManager;
     protected $orderQuestionnaireTestManager;
     protected $entityManager;
@@ -33,8 +32,7 @@ class QuestionnaireController
             $entityManager,
             $templating,
             $questionnaireRevisorsManager
-    )
-    {
+    ) {
         $this->questionnaireManager = $questionnaireManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
         $this->entityManager = $entityManager;
@@ -48,7 +46,6 @@ class QuestionnaireController
 
         return $this;
     }
-
 
     /**
      *
@@ -94,7 +91,7 @@ class QuestionnaireController
         $em->persist($questionnaire);
         $em->flush();
 
-        $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $questionnaire));
+        $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }
@@ -117,5 +114,4 @@ class QuestionnaireController
 
         return $response;
     }
-
 }

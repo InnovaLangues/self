@@ -35,7 +35,7 @@
                             {% set cssClueColor = subquestion.clue.clueType.color %}
                             {% set dataTitle = '<span class="'~cssClueColor~'">'~clue~'</span>' %}
                         {% endif %}
-                        
+
                         {# SYLLABE #}
                         {% if subquestion.mediaSyllable is not null %}
                             {% set syllable = subquestion.mediaSyllable.description %}
@@ -57,28 +57,28 @@
                                 {% else %}
                                     {% set maxValueSize = maxValueSize + 1 %}
                                 {% endif %}
-                                
+
                                 {# AFFICHAGE DE LA REPONSE #}
                                 {% if subquestion.displayAnswer %}
                                     {% set displayAnswer = " readonly " %}
                                     {% set placeH = proposition.media.description %}
                                 {% endif %}
 
-                                {% set html = '<input '~displayAnswer~' 
-                                                            data-html="true" 
-                                                            class="form-control proposition-input '~cssClueColor~'" 
-                                                            data-original-title="'~ dataTitle|escape ~'" 
+                                {% set html = '<input '~displayAnswer~'
+                                                            data-html="true"
+                                                            class="form-control proposition-input '~cssClueColor~'"
+                                                            data-original-title="'~ dataTitle|escape ~'"
                                                             name="'~ subquestion.id ~'[]"
-                                                            placeholder="'~placeH~'" 
+                                                            placeholder="'~placeH~'"
                                                             id="input-proposition'~ proposition.id ~'"
-                                                            value="'~placeH~'" 
+                                                            value="'~placeH~'"
                                                             rel="tooltip"
-                                                            size="'~ maxValueSize ~'" 
-                                                            maxlength="'~ maxValueSize ~'" 
-                                                            required 
-                                                        />' 
+                                                            size="'~ maxValueSize ~'"
+                                                            maxlength="'~ maxValueSize ~'"
+                                                            required
+                                                        />'
                                 %}
-                                    
+
                                 {% if subquestion.displayAnswer %}
                                     {% set html = '<span class="clear-lacune">'~html~'</span>' %}
                                 {% endif %}

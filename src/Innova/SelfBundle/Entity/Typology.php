@@ -160,7 +160,7 @@ class Typology
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string   $description
      * @return Typology
      */
     public function setDescription($description)
@@ -180,11 +180,10 @@ class Typology
         return $this->description;
     }
 
-
     /**
      * Add skills
      *
-     * @param \Innova\SelfBundle\Entity\Skill $skills
+     * @param  \Innova\SelfBundle\Entity\Skill $skills
      * @return Typology
      */
     public function addSkill(\Innova\SelfBundle\Entity\Skill $skills)

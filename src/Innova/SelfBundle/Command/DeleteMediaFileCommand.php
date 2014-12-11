@@ -9,7 +9,6 @@ use Symfony\Component\Finder\Finder;
 
 class DeleteMediaFileCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -32,14 +31,14 @@ class DeleteMediaFileCommand extends ContainerAwareCommand
         foreach ($finder as $file) {
             $fileName =  $file->getRelativePathname();
 
-            if(!$em->getRepository('InnovaSelfBundle:Media\Media')->findOneByUrl($fileName)){
+            if (!$em->getRepository('InnovaSelfBundle:Media\Media')->findOneByUrl($fileName)) {
                 $orphanFiles[] = $fileName;
             }
         }
         $output->writeln("\nchecking <info>".$mediaDir."</info>");
         $output->writeln("<info>".count($finder)."</info> file(s) found including <error>".count($orphanFiles)."</error> orphan(s)\n");
 
-        if (!empty($orphanFiles) && !$dialog->askConfirmation($output,'<question>Do you want to definitely delete them ?</question>',false)) {
+        if (!empty($orphanFiles) && !$dialog->askConfirmation($output, '<question>Do you want to definitely delete them ?</question>', false)) {
             return;
         }
 
@@ -47,5 +46,4 @@ class DeleteMediaFileCommand extends ContainerAwareCommand
             unlink($mediaDir.$orphan);
         }
     }
-
 }

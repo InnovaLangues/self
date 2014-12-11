@@ -43,7 +43,6 @@ class MediaController
         $this->entityManager = $entityManager;
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-
     }
 
     public function setRequest(Request $request = null)
@@ -91,7 +90,7 @@ class MediaController
                 'name' => $media->getName(),
                 'description' => $media->getDescription(),
                 'mediaType' => $media->getMediaType()->getName(),
-                'id' => $media->getId()
+                'id' => $media->getId(),
             )
         );
     }
@@ -110,19 +109,19 @@ class MediaController
 
         switch ($request->get('toBeReloaded')) {
             case 'contexte':
-                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('questionnaire' => $questionnaire));
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:contexte.html.twig', array('questionnaire' => $questionnaire));
                 break;
             case 'texte':
-                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $questionnaire));
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('questionnaire' => $questionnaire));
                 break;
             case 'functional-instruction':
-                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig',array('questionnaire' => $questionnaire));
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig', array('questionnaire' => $questionnaire));
                 break;
             case 'feedback':
-                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig',array('questionnaire' => $questionnaire));
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig', array('questionnaire' => $questionnaire));
                 break;
             case 'subquestion':
-                $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+                $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
                 break;
         }
 
@@ -130,7 +129,6 @@ class MediaController
 
         return new Response($template);
     }
-
 
     /**
      * @Route("/questionnaires/create-media", name="editor_questionnaire_create-media", options={"expose"=true})
@@ -156,43 +154,42 @@ class MediaController
                     $entity->setMediaContext($media);
                     $em->persist($entity);
                     $em->flush();
-    
-                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:contexte.html.twig',array('questionnaire' => $entity));
+
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:contexte.html.twig', array('questionnaire' => $entity));
                 } elseif ($entityField == "texte") {
                     $entity->setMediaText($media);
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',array('questionnaire' => $entity));
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('questionnaire' => $entity));
                 } elseif ($entityField == "functional-instruction") {
                     $entity->setMediaFunctionalInstruction($media);
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig',array('questionnaire' => $entity));
-                }  elseif ($entityField == "feedback") {
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig', array('questionnaire' => $entity));
+                } elseif ($entityField == "feedback") {
                     $entity->setMediaFeedback($media);
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig',array('questionnaire' => $entity));
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig', array('questionnaire' => $entity));
                 } elseif ($entityField == "instruction") {
                     $entity->setMediaInstruction($media);
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $entity));
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $entity));
                 } elseif ($entityField == "blank-text") {
                     $entity->setMediaBlankText($media);
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $entity));
-                }
-                elseif ($entityField == "comment") {
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $entity));
+                } elseif ($entityField == "comment") {
                     $this->commentManager->createComment($questionnaire, $media);
                     $em->refresh($questionnaire);
-                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:comments.html.twig',array('questionnaire' => $entity));
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:comments.html.twig', array('questionnaire' => $entity));
                 }
 
                 break;
@@ -203,13 +200,13 @@ class MediaController
                     $em->persist($entity);
                     $em->flush();
 
-                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('questionnaire' => $questionnaire, 'subquestion' => $entity));
+                    $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion.html.twig', array('questionnaire' => $questionnaire, 'subquestion' => $entity));
                 } elseif ($entityField == "app-media") {
                     $entity->setMedia($media);
                     $em->persist($entity);
                     $em->flush();
 
-                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
                 }
                 break;
             case "proposition":
@@ -218,19 +215,19 @@ class MediaController
                     $proposition = $this->propositionManager->createProposition($subquestion, $media, true);
                     $this->appManager->createAppFakeAnswer($proposition);
 
-                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
                 } elseif ($entityField == "app-distractor") {
                     $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->findOneById($entityId);
                     $subquestions = $questionnaire->getQuestions()[0]->getSubquestions();
                     foreach ($subquestions as $subquestion) {
                         $this->propositionManager->createProposition($subquestion, $media, false);
                     }
-                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
                 } else {
                     $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($entityId);
                     $this->propositionManager->createProposition($subquestion, $media, false);
 
-                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion.html.twig',array('questionnaire' => $questionnaire, 'subquestion' => $subquestion));
+                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion.html.twig', array('questionnaire' => $questionnaire, 'subquestion' => $subquestion));
                 }
                 break;
         }
@@ -273,7 +270,7 @@ class MediaController
                 } elseif ($entityField == "blank-text") {
                     $entity->setMediaBlankText(null);
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $entity));
-                }  elseif ($entityField == "functional-instruction") {
+                } elseif ($entityField == "functional-instruction") {
                     $entity->setMediaFunctionalInstruction(null);
                     $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig', array('questionnaire' => $entity));
                 } elseif ($entityField == "instruction") {
@@ -310,13 +307,12 @@ class MediaController
                 $proposition =  $em->getRepository('InnovaSelfBundle:Proposition')->findOneById($entityId);
 
                 if ($entityField == "app-distractor") {
-                    
                     $mediaToSearch = $proposition->getMedia();
                     $question = $proposition->getSubquestion()->getQuestion();
                     $this->appManager->appDeletePropositions($mediaToSearch, $question);
 
                     $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
-                }  elseif ($entityField == "distractor") {
+                } elseif ($entityField == "distractor") {
                     $question = $proposition->getSubquestion()->getQuestion();
                     $media = $proposition->getMedia();
                     foreach ($question->getSubquestions() as $subquestion) {

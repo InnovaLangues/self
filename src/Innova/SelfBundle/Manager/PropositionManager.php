@@ -37,13 +37,13 @@ class PropositionManager
     {
         $typologyName = $typology->getName();
 
-        if($typologyName == "TVF" || $typologyName == "TVFNM") {
+        if ($typologyName == "TVF" || $typologyName == "TVFNM") {
             $true = $this->mediaManager->createMedia($questionnaire, "texte", "VRAI", "VRAI", null, 0, "proposition");
             $this->createProposition($subquestion, $true, false);
             $false = $this->mediaManager->createMedia($questionnaire, "texte", "FAUX", "FAUX", null, 0, "proposition");
             $this->createProposition($subquestion, $false, false);
         }
-        if($typologyName == "TVFNM") {
+        if ($typologyName == "TVFNM") {
             $nd = $this->mediaManager->createMedia($questionnaire, "texte", "ND", "ND", null, 0, "proposition");
             $this->createProposition($subquestion, $nd, false);
         }
@@ -54,7 +54,7 @@ class PropositionManager
     public function toggleRightAnswer(Proposition $proposition)
     {
         $em = $this->entityManager;
-        
+
         if ($proposition->getRightAnswer() === true) {
             $proposition->setRightAnswer(false);
         } else {

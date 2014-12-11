@@ -19,7 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class OrderQuestionnaireTestController
 {
-
     protected $entityManager;
     protected $orderQuestionnaireTestManager;
     protected $templating;
@@ -29,12 +28,10 @@ class OrderQuestionnaireTestController
             $entityManager,
             $orderQuestionnaireTestManager,
             $templating
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
         $this->templating = $templating;
-
     }
 
     public function setRequest(Request $request = null)
@@ -87,7 +84,7 @@ class OrderQuestionnaireTestController
         $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
         $orders = $test->getOrderQuestionnaireTests();
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig',array('orders' => $orders));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig', array('orders' => $orders));
 
         return new Response($template);
     }
@@ -110,7 +107,7 @@ class OrderQuestionnaireTestController
 
         $taskToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array(
                                                                                             'test' => $test,
-                                                                                            'questionnaire' => $questionnaire
+                                                                                            'questionnaire' => $questionnaire,
                                                                                         ));
         $em->remove($taskToRemove);
         $em->flush();

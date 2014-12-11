@@ -62,7 +62,7 @@ class SourceOperation
     /**
      * Set name
      *
-     * @param  string $name
+     * @param  string          $name
      * @return SourceOperation
      */
     public function setName($name)
@@ -125,20 +125,20 @@ class SourceOperation
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string          $description
      * @return SourceOperation
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

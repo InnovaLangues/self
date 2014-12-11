@@ -23,7 +23,7 @@ class OrderQuestionnaireTestManager
         $orderQuestionnaireTest->setTest($test);
         $orderQuestionnaireTest->setQuestionnaire($questionnaire);
 
-        if($orderQuestionnaireTests = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test)){
+        if ($orderQuestionnaireTests = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test)) {
             $orderMax = count($orderQuestionnaireTests);
         } else {
             $orderMax = 0;
@@ -31,7 +31,7 @@ class OrderQuestionnaireTestManager
 
         $questionnaire->setLanguage($test->getLanguage());
         $em->persist($questionnaire);
-           
+
         $orderQuestionnaireTest->setDisplayOrder($orderMax + 1);
         $em->persist($orderQuestionnaireTest);
 

@@ -24,7 +24,7 @@ class AnswerManager
         $answer->setTrace($trace);
         $answer->setSubquestion($subquestion);
         $answer->setProposition($proposition);
-       
+
         $em->persist($answer);
         $em->flush();
 

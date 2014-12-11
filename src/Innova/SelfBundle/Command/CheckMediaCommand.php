@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CheckMediaCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -19,7 +18,6 @@ class CheckMediaCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 
         $table = $this->getHelperSet()->get('table');
@@ -40,8 +38,12 @@ class CheckMediaCommand extends ContainerAwareCommand
         $numberOfErros = 0;
         foreach ($medias as $media) {
             foreach ($patterns as $pattern) {
-                if (strstr($media->getDescription(),$pattern)){
-                    if ($purpose = $media->getMediaPurpose()) {$purpose = "(".$purpose->getName().")";} else {$purpose = "";}
+                if (strstr($media->getDescription(), $pattern)) {
+                    if ($purpose = $media->getMediaPurpose()) {
+                        $purpose = "(".$purpose->getName().")";
+                    } else {
+                        $purpose = "";
+                    }
                     $table->addRow(array($media->getId(), $media->getName(), $purpose, $pattern));
                     $numberOfErros++;
                     break;
@@ -52,7 +54,5 @@ class CheckMediaCommand extends ContainerAwareCommand
         $table->addRow(array("Nombre d'erreurs", $numberOfErros, "", ""));
 
         $table->render($output);
-
-
     }
 }

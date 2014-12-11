@@ -72,7 +72,7 @@ class Focus
     {
         return $this->name;
     }
-    
+
     /**
      * Constructor
      */
@@ -84,20 +84,20 @@ class Focus
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string $description
      * @return Focus
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -107,13 +107,13 @@ class Focus
     /**
      * Add subquestions
      *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestions
+     * @param  \Innova\SelfBundle\Entity\Subquestion $subquestions
      * @return Focus
      */
     public function addSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestions)
     {
         $this->subquestions[] = $subquestions;
-    
+
         return $this;
     }
 
@@ -130,7 +130,7 @@ class Focus
     /**
      * Get subquestions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubquestions()
     {

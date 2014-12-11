@@ -9,7 +9,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class UserType extends BaseType
 {
-
     /**
      * @param string $class The User class name
      *                      Go to "RegsitrationFormType" in FriendOfSymfony
@@ -27,7 +26,6 @@ class UserType extends BaseType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         parent::buildForm($builder, $options);
 
         $builder
@@ -42,7 +40,7 @@ class UserType extends BaseType
                 array(
                     'label'   => 'Category',
                     'class'   => 'InnovaSelfBundle:LevelLansad',
-                    'choices' => $this->getArrayOfLevelLansad()
+                    'choices' => $this->getArrayOfLevelLansad(),
                 )
             )
             ->add('testDialang', 'choice',
@@ -64,7 +62,7 @@ class UserType extends BaseType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Innova\SelfBundle\Entity\User'
+            'data_class' => 'Innova\SelfBundle\Entity\User',
         ));
     }
 

@@ -60,22 +60,22 @@
             {% set question = q.questions[0] %}
             {% set items = question.subquestions %}
 
-            <h2>Tâche #{{ i+1 }} : {{ q.theme }}</h2> 
+            <h2>Tâche #{{ i+1 }} : {{ q.theme }}</h2>
             <h3>{% if question.typology %} {{ question.typology.name }} - {% endif %} {% if q.skill %} {{ q.skill.name }} {% endif %}</h3>
             <hr/>
-            
+
             <div class="panel panel-default">
                 <div class="panel-body">
                     {% if q.mediaContext is not null %}
                         <div>
-                            <strong>Contexte</strong> 
+                            <strong>Contexte</strong>
                             {{ macros.displayMedia(q.mediaContext) }}
                         </div>
                     {% endif %}
-                    
+
                     {% if q.mediaText is not null %}
                         <div>
-                            <strong>Objet de la question</strong> 
+                            <strong>Objet de la question</strong>
                             {{ macros.displayMedia(q.mediaText) }}
                         </div>
                     {% endif %}
@@ -89,7 +89,7 @@
 
                     {% if q.mediaBlankText is not null %}
                         <div>
-                            <strong>Texte lacunaire</strong> 
+                            <strong>Texte lacunaire</strong>
                             {{ macros.displayMedia(q.mediaBlankText) }}
                         </div>
                     {% endif %}
@@ -102,45 +102,45 @@
                         <h3 class="panel-title">Item #{{ j+1}}</h3>
                     </div>
                     <div class="panel-body">
-                    
+
                     <!--
 
                         {% if item.focuses is not empty %}
                             <div>
-                                <strong>Focus:</strong> 
+                                <strong>Focus:</strong>
                                 {% for focus in item.focuses %}
-                                    {{ focus.name  | trans }} -  
+                                    {{ focus.name  | trans }} -
                                 {% endfor %}
                             </div>
                         {% endif %}
 
                         {% if item.cognitiveOpsMain is not empty %}
                             <div>
-                                <strong>Opérations cognitives principales:</strong> 
+                                <strong>Opérations cognitives principales:</strong>
                                 {% for cognitiveOpMain in item.cognitiveOpsMain %}
-                                    {{ cognitiveOpMain.name  | trans  }} -  
+                                    {{ cognitiveOpMain.name  | trans  }} -
                                 {% endfor %}
                             </div>
                         {% endif %}
 
                         {% if item.cognitiveOpsSecondary is not empty %}
                             <div>
-                                <strong>Opérations cognitives secondaires:</strong> 
+                                <strong>Opérations cognitives secondaires:</strong>
                                 {% for cognitiveOpSecondary in item.cognitiveOpsSecondary %}
-                                    {{ cognitiveOpSecondary.name | trans }} -  
+                                    {{ cognitiveOpSecondary.name | trans }} -
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        
+
                     -->
 
                         {% if item.mediaAmorce is not null %}
                             <div>
-                                <strong>Amorce</strong> 
+                                <strong>Amorce</strong>
                                 {{ macros.displayMedia(item.mediaAmorce) }}
                             </div>
                         {% endif %}
-                        
+
                         {% set k = 0 %}
                         {% for proposition in item.propositions if proposition.media.mediaPurpose.name != "reponse" %}
                             {% if k == 0 %}
@@ -148,7 +148,7 @@
                             {% endif %}
                                 <div class="col-xs-3 panel panel-default">
                                     <div class="panel-body">
-                                    {{ k+1 }} 
+                                    {{ k+1 }}
                                     {% if proposition.rightAnswer == true %}
                                         <span class="glyphicon glyphicon-ok"></span>
                                     {% else %}

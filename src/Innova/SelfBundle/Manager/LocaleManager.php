@@ -13,7 +13,6 @@ class LocaleManager
     {
         $this->securityContext = $securityContext;
         $this->userManager = $userManager;
-
     }
 
     /**
@@ -23,7 +22,7 @@ class LocaleManager
      */
     public function setUserLocale($locale)
     {
-        if($this->getCurrentUser()){
+        if ($this->getCurrentUser()) {
             $this->userManager->setLocale($this->getCurrentUser(), $locale);
         }
     }

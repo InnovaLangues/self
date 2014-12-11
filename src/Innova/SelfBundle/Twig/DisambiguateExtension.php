@@ -21,11 +21,12 @@ class DisambiguateExtension extends \Twig_Extension
     public function disambiguateFilter($texte)
     {
         $count = 0;
-        $texte = preg_replace_callback( '/#([^#]+)#/',  function($match) use (&$count) {
+        $texte = preg_replace_callback('/#([^#]+)#/',  function ($match) use (&$count) {
             $str = "#$count#{$match[1]}#";
             $count++;
+
             return $str;
-        },   
+        },
         $texte
         );
 

@@ -154,18 +154,16 @@ class Skill
         return $this->users;
     }
 
-
-
     /**
      * Add typologys
      *
-     * @param \Innova\SelfBundle\Entity\Typology $typologys
+     * @param  \Innova\SelfBundle\Entity\Typology $typologys
      * @return Skill
      */
     public function addTypology(\Innova\SelfBundle\Entity\Typology $typologys)
     {
         $this->typologys[] = $typologys;
-    
+
         return $this;
     }
 
@@ -182,7 +180,7 @@ class Skill
     /**
      * Get typologys
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTypologys()
     {

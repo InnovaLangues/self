@@ -317,7 +317,7 @@ class Subquestion
     /**
      * Set mediaSyllable
      *
-     * @param \Innova\SelfBundle\Entity\Media\Media $mediaSyllable
+     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaSyllable
      * @return Subquestion
      */
     public function setMediaSyllable(\Innova\SelfBundle\Entity\Media\Media $mediaSyllable = null)
@@ -340,7 +340,7 @@ class Subquestion
     /**
      * Set clue
      *
-     * @param \Innova\SelfBundle\Entity\Clue $clue
+     * @param  \Innova\SelfBundle\Entity\Clue $clue
      * @return Subquestion
      */
     public function setClue(\Innova\SelfBundle\Entity\Clue $clue = null)
@@ -360,11 +360,10 @@ class Subquestion
         return $this->clue;
     }
 
-
     /**
      * Set displayAnswer
      *
-     * @param boolean $displayAnswer
+     * @param  boolean     $displayAnswer
      * @return Subquestion
      */
     public function setDisplayAnswer($displayAnswer)
@@ -387,13 +386,13 @@ class Subquestion
     /**
      * Add focuses
      *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
      * @return Subquestion
      */
     public function addFocuse(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses)
     {
         $this->focuses[] = $focuses;
-    
+
         return $this;
     }
 
@@ -410,7 +409,7 @@ class Subquestion
     /**
      * Get focuses
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFocuses()
     {
@@ -420,13 +419,13 @@ class Subquestion
     /**
      * Add cognitiveOpsMain
      *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
      * @return Subquestion
      */
     public function addCognitiveOpsMain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain)
     {
         $this->cognitiveOpsMain[] = $cognitiveOpsMain;
-    
+
         return $this;
     }
 
@@ -443,7 +442,7 @@ class Subquestion
     /**
      * Get cognitiveOpsMain
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCognitiveOpsMain()
     {
@@ -453,13 +452,13 @@ class Subquestion
     /**
      * Add cognitiveOpsSecondary
      *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary
      * @return Subquestion
      */
     public function addCognitiveOpsSecondary(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary)
     {
         $this->cognitiveOpsSecondary[] = $cognitiveOpsSecondary;
-    
+
         return $this;
     }
 
@@ -476,7 +475,7 @@ class Subquestion
     /**
      * Get cognitiveOpsSecondary
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCognitiveOpsSecondary()
     {

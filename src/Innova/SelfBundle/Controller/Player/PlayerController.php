@@ -26,7 +26,6 @@ use Innova\SelfBundle\Manager\PlayerManager;
  */
 class PlayerController
 {
-
     protected $securityContext;
     protected $entityManager;
     protected $session;
@@ -40,8 +39,7 @@ class PlayerController
         SessionInterface $session,
         RouterInterface $router,
         PlayerManager $playerManager
-    )
-    {
+    ) {
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
         $this->session = $session;
@@ -64,7 +62,7 @@ class PlayerController
 
         $questionnaire = $this->playerManager->findAQuestionnaireWithoutTrace($test);
         if (is_null($questionnaire)) {
-            return new RedirectResponse($this->router->generate('test_end',array("id"=>$test->getId())));
+            return new RedirectResponse($this->router->generate('test_end', array("id" => $test->getId())));
         } else {
             /* en attendant que les videos soient prêtes
             if ($displayHelp){
@@ -82,11 +80,11 @@ class PlayerController
                 'questionnaires' => $questionnaires,
                 'countQuestionnaireDone' => $countQuestionnaireDone,
                 'countQuestionnaireTotal' => $countQuestionnaireTotal,
-                'displayHelp' => $displayHelp
+                'displayHelp' => $displayHelp,
             );
         }
     }
-    
+
      /**
      * Gère la vue de fin de test
      *
@@ -139,8 +137,7 @@ class PlayerController
             'questionnaires' => $questionnaires,
             'questionnaire' => $questionnairePicked,
             'countQuestionnaireDone' => $countQuestionnaireDone,
-            'displayHelp' => false
+            'displayHelp' => false,
         );
     }
-
 }

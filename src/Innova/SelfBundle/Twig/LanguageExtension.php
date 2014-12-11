@@ -15,8 +15,7 @@ class LanguageExtension extends \Twig_Extension
 
     public function __construct(
             $entityManager
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
     }
 
@@ -32,7 +31,7 @@ class LanguageExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'get_languages' => new \Twig_Function_Method($this, 'getLanguages'));
+            'get_languages' => new \Twig_Function_Method($this, 'getLanguages'), );
     }
 
     public function getName()

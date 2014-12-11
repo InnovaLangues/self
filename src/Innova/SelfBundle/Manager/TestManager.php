@@ -21,7 +21,9 @@ class TestManager
         foreach ($tests as $test) {
             $countDone = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $userId);
             $countTotal = count($test->getOrderQuestionnaireTests());
-            if ($countTotal < 1) $countTotal=1;
+            if ($countTotal < 1) {
+                $countTotal = 1;
+            }
             $number = $countDone/$countTotal*100;
 
             $testsProgress[] = number_format($number, 2, '.', ' ');
@@ -34,7 +36,7 @@ class TestManager
     {
         $user = $this->securityContext->getToken()->getUser();
         $favorites = $user->getFavoritesTests();
-        if($favorites->contains($test)){
+        if ($favorites->contains($test)) {
             $user->removeFavoritesTest($test);
             $isFavorite = false;
         } else {
