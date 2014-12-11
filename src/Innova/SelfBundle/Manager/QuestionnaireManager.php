@@ -74,7 +74,7 @@ class QuestionnaireManager
 
         $isUnique = true;
 
-        if ($em->getRepository('InnovaSelfBundle:Questionnaire')->findBy(array('theme' =>$theme, 'language'=>$language))) {
+        if ($em->getRepository('InnovaSelfBundle:Questionnaire')->findBy(array('theme' => $theme, 'language' => $language))) {
             $isUnique = false;
         }
 
@@ -84,7 +84,7 @@ class QuestionnaireManager
     public function setIdentityField($questionnaire, $field, $value)
     {
         $em = $this->entityManager;
-        
+
         switch ($field) {
             case 'authorMore':
                 $questionnaire->setAuthorMore($value);
@@ -107,57 +107,79 @@ class QuestionnaireManager
             case 'authorRight':
                 if ($authorRight = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\AuthorRight')->find($value)) {
                     $questionnaire->setAuthorRight($authorRight);
-                } else { $questionnaire->setAuthorRight(null); }
+                } else {
+                    $questionnaire->setAuthorRight(null);
+                }
                 break;
             case 'source':
                 if ($source = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Source')->find($value)) {
                     $questionnaire->setSource($source);
-                } else { $questionnaire->setSource(null); }
+                } else {
+                    $questionnaire->setSource(null);
+                }
                 break;
             case 'sourceOperation':
                 if ($sourceOperation = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\SourceOperation')->find($value)) {
                     $questionnaire->setSourceOperation($sourceOperation);
-                } else { $questionnaire->setSourceOperation(null); }
+                } else {
+                    $questionnaire->setSourceOperation(null);
+                }
                 break;
             case 'domain':
                 if ($domain = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Domain')->find($value)) {
                     $questionnaire->setDomain($domain);
-                } else { $questionnaire->setDomain(null); }
+                } else {
+                    $questionnaire->setDomain(null);
+                }
                 break;
             case 'register':
                 if ($register = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Register')->find($value)) {
                     $questionnaire->setRegister($register);
-                } else { $questionnaire->setRegister(null); }
+                } else {
+                    $questionnaire->setRegister(null);
+                }
                 break;
             case 'reception':
                 if ($reception = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Reception')->find($value)) {
                     $questionnaire->setReception($reception);
-                } else { $questionnaire->setReception(null); }
+                } else {
+                    $questionnaire->setReception(null);
+                }
                 break;
             case 'length':
                 if ($length = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Length')->find($value)) {
                     $questionnaire->setLength($length);
-                } else { $questionnaire->setlength(null); }
+                } else {
+                    $questionnaire->setlength(null);
+                }
                 break;
             case 'flow':
                 if ($flow = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Flow')->find($value)) {
                     $questionnaire->setFlow($flow);
-                } else { $questionnaire->setFlow(null); }
+                } else {
+                    $questionnaire->setFlow(null);
+                }
                 break;
              case 'level':
                 if ($level = $em->getRepository('InnovaSelfBundle:Level')->find($value)) {
                     $questionnaire->setLevel($level);
-                } else { $questionnaire->setLevel(null); }
+                } else {
+                    $questionnaire->setLevel(null);
+                }
                 break;
             case 'status':
                 if ($status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->find($value)) {
                     $questionnaire->setStatus($status);
-                } else { $questionnaire->setStatus(null); }
+                } else {
+                    $questionnaire->setStatus(null);
+                }
                 break;
             case 'language':
                 if ($status = $em->getRepository('InnovaSelfBundle:Language')->find($value)) {
                     $questionnaire->setLanguage($status);
-                } else { $questionnaire->setLanguage(null); }
+                } else {
+                    $questionnaire->setLanguage(null);
+                }
                 break;
              case 'skill':
                 if ($skill = $em->getRepository('InnovaSelfBundle:Skill')->find($value)) {
@@ -170,16 +192,18 @@ class QuestionnaireManager
                     $template = $this->templating->render('InnovaSelfBundle:Editor/partials:general-infos.html.twig',
                         array(
                                 'questionnaire' => $questionnaire,
-                                'form' => $form->createView()
+                                'form' => $form->createView(),
                         ));
-                    return new JsonResponse(array('template' => $template, 'test'=>"test"));
+
+                    return new JsonResponse(array('template' => $template, 'test' => "test"));
                 }
                 break;
             case 'typology':
                 if ($typology = $em->getRepository('InnovaSelfBundle:Typology')->find($value)) {
                     $this->setTypology($questionnaire, $typology->getName());
-                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+                    $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
                     $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
                     return new JsonResponse(array('subquestions' => $template));
                 }
                 break;

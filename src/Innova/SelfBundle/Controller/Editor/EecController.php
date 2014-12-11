@@ -86,14 +86,14 @@ class EecController
             preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
             $countLacunes = count($lacunes[1]);
-            for ($i=0; $i < $countLacunes; $i++) {
+            for ($i = 0; $i < $countLacunes; $i++) {
                 $lacune = $lacunes[1][$i];
                 $subquestion = $this->subquestionManager->createSubquestion($question->getTypology(), $question);
                 $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
                 $this->propositionManager->createProposition($subquestion, $lacuneMedia, true);
 
                 if ($question->getTypology()->getName() == "TLCMLDM") {
-                    for ($j=0; $j < $countLacunes; $j++) {
+                    for ($j = 0; $j < $countLacunes; $j++) {
                         if ($j != $i) {
                             $lacune = $lacunes[1][$j];
                             $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
@@ -102,7 +102,7 @@ class EecController
                     }
                 }
                 // réinjection des distracteurs.
-                if(!empty($distractors[$i])){
+                if (!empty($distractors[$i])) {
                     foreach ($distractors[$i] as $media) {
                         $this->propositionManager->createProposition($subquestion, $media, false);
                     }
@@ -115,7 +115,7 @@ class EecController
         }
 
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }
@@ -149,7 +149,7 @@ class EecController
             preg_match_all("/#(.*?)#/", $texte, $lacunes);
 
             $countLacunes = count($lacunes[1]);
-            for ($i=0; $i < $countLacunes; $i++) {
+            for ($i = 0; $i < $countLacunes; $i++) {
                 $lacune = $lacunes[1][$i];
                 $subquestion = $this->subquestionManager->createSubquestion($question->getTypology(), $question);
                 $lacuneMedia = $this->mediaManager->createMedia($questionnaire, "texte", $lacune, $lacune, null, 0, "proposition");
@@ -158,12 +158,12 @@ class EecController
                 $em->refresh($subquestion);
 
                 // réinjection des indices et syllabes
-                if(!empty($clues[$i])){
+                if (!empty($clues[$i])) {
                     $subquestion->setClue($clues[$i]);
                     $em->persist($subquestion);
                 }
 
-                 if(!empty($syllables[$i])){
+                if (!empty($syllables[$i])) {
                     $subquestion->setMediaSyllable($syllables[$i]);
                     $em->persist($subquestion);
                 }
@@ -191,8 +191,8 @@ class EecController
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
         $clueName = $request->get('clue');
 
-        if ($clueName == "" && $clue = $subquestion->getClue())  {
-             $subquestion->setClue(null);
+        if ($clueName == "" && $clue = $subquestion->getClue()) {
+            $subquestion->setClue(null);
         } else {
             if (!$clue = $subquestion->getClue()) {
                 $clue = new Clue();
@@ -207,7 +207,7 @@ class EecController
                 $media = $this->mediaManager->createMedia($questionnaire, "texte", $clueName, $clueName, null, 0, "clue");
                 $clue->setMedia($media);
                 $em->persist($clue);
-            } elseif($media->getDescription() != $clueName) {
+            } elseif ($media->getDescription() != $clueName) {
                 $media->setDescription($clueName);
                 $media->setName($clueName);
                 $em->persist($media);
@@ -216,7 +216,7 @@ class EecController
         $em->flush();
 
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }
@@ -247,7 +247,6 @@ class EecController
             array()
         );
     }
-
 
     /**
      *
@@ -297,7 +296,7 @@ class EecController
         }
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
-        $subquestion->setDisplayAnswer($display) ;
+        $subquestion->setDisplayAnswer($display);
 
         $em->persist($subquestion);
         $em->flush();
@@ -321,8 +320,7 @@ class EecController
 
         $media = $this->mediaManager->createMedia($questionnaire, "texte", "", "", null, 0, "distractor");
 
-        foreach($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion){
-
+        foreach ($questionnaire->getQuestions()[0]->getSubquestions() as $subquestion) {
             $this->propositionManager->createProposition($subquestion, $media, false);
 
             $em->persist($subquestion);
@@ -331,7 +329,7 @@ class EecController
         $em->flush();
 
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }
@@ -358,7 +356,7 @@ class EecController
         $em->flush();
 
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }

@@ -2,7 +2,6 @@
 
 namespace Innova\SelfBundle\Manager;
 
-use Innova\SelfBundle\Entity\EditorLog\EditorLog;
 use Innova\SelfBundle\Entity\Questionnaire;
 
 class QuestionnaireRevisorsManager
@@ -20,7 +19,7 @@ class QuestionnaireRevisorsManager
 
     public function addRevisor(Questionnaire $questionnaire)
     {
-         if(!$questionnaire->getRevisors()->contains($this->user)){
+        if (!$questionnaire->getRevisors()->contains($this->user)) {
             $questionnaire->addRevisor($this->user);
             $this->entityManager->persist($questionnaire);
             $this->entityManager->flush();

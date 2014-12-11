@@ -195,7 +195,7 @@ editor:
         focuses: Focus
         cognitive_main: Opérations cognitives principales
         cognitive_secondary: Opérations cognitives secondaires
-        
+
     log:
         editor_create: Creazione di
         editor_edit: Modifica di

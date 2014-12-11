@@ -10,7 +10,6 @@ use Innova\SelfBundle\Form\Type\SubquestionType;
 use Innova\SelfBundle\Entity\Subquestion;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
 /**
  * Class MediaController
  * @Route(
@@ -108,7 +107,7 @@ class SubquestionController
         $em->remove($subquestion);
         $em->flush();
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',array('questionnaire' => $questionnaire));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
         return new Response($template);
     }
@@ -120,18 +119,18 @@ class SubquestionController
      */
     public function displayIdentityFormAction()
     {
-       $em = $this->entityManager;
+        $em = $this->entityManager;
 
-       $request = $this->request->request;
-       $subquestionId = $request->get('subquestionId');
+        $request = $this->request->request;
+        $subquestionId = $request->get('subquestionId');
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
         $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion-identity.html.twig', 
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion-identity.html.twig',
                                                                         array(
                                                                                 'form' => $form->createView(),
-                                                                                'subquestionId' => $subquestionId
+                                                                                'subquestionId' => $subquestionId,
                                                                             )
                                                                 );
 
@@ -144,20 +143,20 @@ class SubquestionController
      * @Method("POST")
      */
     public function setIdentityFieldAction()
-    {   
-            $em = $this->entityManager;
+    {
+        $em = $this->entityManager;
 
-            $requestForm = $this->request->request->get("subquestion");
-            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($requestForm["id"]);
+        $requestForm = $this->request->request->get("subquestion");
+        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($requestForm["id"]);
 
-            $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
-            $form->bind($this->request);
-            
-            if ($form->isValid()) {
-                $em->persist($subquestion);
-                $em->flush();
-            }
-            
-            return new JsonResponse();
+        $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
+        $form->bind($this->request);
+
+        if ($form->isValid()) {
+            $em->persist($subquestion);
+            $em->flush();
+        }
+
+        return new JsonResponse();
     }
 }

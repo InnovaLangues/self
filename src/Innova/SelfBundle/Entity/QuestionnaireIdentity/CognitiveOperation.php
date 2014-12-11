@@ -53,11 +53,11 @@ class CognitiveOperation
         $this->subquestionsMain = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subquestionsSecondary = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -67,20 +67,20 @@ class CognitiveOperation
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string             $name
      * @return CognitiveOperation
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -90,20 +90,20 @@ class CognitiveOperation
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string             $description
      * @return CognitiveOperation
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -113,13 +113,13 @@ class CognitiveOperation
     /**
      * Add subquestionsMain
      *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestionsMain
+     * @param  \Innova\SelfBundle\Entity\Subquestion $subquestionsMain
      * @return CognitiveOperation
      */
     public function addSubquestionsMain(\Innova\SelfBundle\Entity\Subquestion $subquestionsMain)
     {
         $this->subquestionsMain[] = $subquestionsMain;
-    
+
         return $this;
     }
 
@@ -136,7 +136,7 @@ class CognitiveOperation
     /**
      * Get subquestionsMain
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubquestionsMain()
     {
@@ -146,13 +146,13 @@ class CognitiveOperation
     /**
      * Add subquestionsSecondary
      *
-     * @param \Innova\SelfBundle\Entity\Subquestion $subquestionsSecondary
+     * @param  \Innova\SelfBundle\Entity\Subquestion $subquestionsSecondary
      * @return CognitiveOperation
      */
     public function addSubquestionsSecondary(\Innova\SelfBundle\Entity\Subquestion $subquestionsSecondary)
     {
         $this->subquestionsSecondary[] = $subquestionsSecondary;
-    
+
         return $this;
     }
 
@@ -169,7 +169,7 @@ class CognitiveOperation
     /**
      * Get subquestionsSecondary
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubquestionsSecondary()
     {

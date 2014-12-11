@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DeleteTraceCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -24,8 +23,6 @@ class DeleteTraceCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-
         $name = $input->getArgument('name');
         if ($name != 'sql') {
             $output->writeln("Absence de paramètres. Impossible d'exécuter les requêtes.");
@@ -53,5 +50,4 @@ class DeleteTraceCommand extends ContainerAwareCommand
             $em->flush();
         }
     }
-
 }

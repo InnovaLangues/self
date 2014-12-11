@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block body -%}
-    
-    <a class="btn btn-default btn-sm" href="{% if testId is null %}{{ path('editor_questionnaires_show') }}{% else %}{{ path('editor_test_questionnaires_show', { 'testId': testId }) }}{% endif %}  
+
+    <a class="btn btn-default btn-sm" href="{% if testId is null %}{{ path('editor_questionnaires_show') }}{% else %}{{ path('editor_test_questionnaires_show', { 'testId': testId }) }}{% endif %}
         ">
-        <span class="glyphicon glyphicon-chevron-left"></span>{{ 'editor.task.back_to_list' | trans }} 
+        <span class="glyphicon glyphicon-chevron-left"></span>{{ 'editor.task.back_to_list' | trans }}
     </a>
-    
+
     {% if testId %}
     <a class="btn btn-default btn-sm" href="{{ path('questionnaire_pick', { testId: testId, questionnaireId: questionnaire.id }) }}">
             <span class="glyphicon glyphicon-play"></span> {{ 'generic.player' | trans }}

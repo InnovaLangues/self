@@ -24,7 +24,6 @@ class LocaleController
         $this->localeManager = $localeManager;
     }
 
-
     /**
      * Change locale
      *

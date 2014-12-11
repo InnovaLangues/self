@@ -53,7 +53,7 @@ class Reception
     /**
      * Set name
      *
-     * @param  string $name
+     * @param  string    $name
      * @return Reception
      */
     public function setName($name)
@@ -116,20 +116,20 @@ class Reception
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string    $description
      * @return Reception
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

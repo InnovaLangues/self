@@ -250,7 +250,7 @@ class Media
     /**
      * Set syllable
      *
-     * @param string $syllable
+     * @param  string $syllable
      * @return Media
      */
     public function setSyllable($syllable)
@@ -273,7 +273,7 @@ class Media
     /**
      * Set clue
      *
-     * @param string $clue
+     * @param  string $clue
      * @return Media
      */
     public function setClue($clue)
@@ -296,20 +296,20 @@ class Media
     /**
      * Set mediaPurpose
      *
-     * @param \Innova\SelfBundle\Entity\Media\MediaPurpose $mediaPurpose
+     * @param  \Innova\SelfBundle\Entity\Media\MediaPurpose $mediaPurpose
      * @return Media
      */
     public function setMediaPurpose(\Innova\SelfBundle\Entity\Media\MediaPurpose $mediaPurpose = null)
     {
         $this->mediaPurpose = $mediaPurpose;
-    
+
         return $this;
     }
 
     /**
      * Get mediaPurpose
      *
-     * @return \Innova\SelfBundle\Entity\Media\MediaPurpose 
+     * @return \Innova\SelfBundle\Entity\Media\MediaPurpose
      */
     public function getMediaPurpose()
     {

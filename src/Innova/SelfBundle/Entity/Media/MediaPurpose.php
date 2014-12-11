@@ -54,7 +54,7 @@ class MediaPurpose
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string       $name
      * @return MediaPurpose
      */
     public function setName($name)
@@ -77,7 +77,7 @@ class MediaPurpose
     /**
      * Add medias
      *
-     * @param \Innova\SelfBundle\Entity\Media\Media $medias
+     * @param  \Innova\SelfBundle\Entity\Media\Media $medias
      * @return MediaPurpose
      */
     public function addMedia(\Innova\SelfBundle\Entity\Media\Media $medias)

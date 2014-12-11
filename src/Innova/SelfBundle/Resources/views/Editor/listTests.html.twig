@@ -48,7 +48,7 @@
                 <a class="btn btn-default btn-sm" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
                     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.manage' | trans }}
                 </a>
-               
+
                 {% if test in app.user.favoritesTests %}
                      <a class="btn btn-default btn-sm toggle-favorite" href="#" data-toggle="tooltip" data-original-title="{{ 'editor.test.remove_from_favorites' | trans }}" data-test-id="{{ test.id }}">
                         <span class="glyphicon glyphicon-star"></span>
@@ -58,7 +58,7 @@
                         <span class="glyphicon glyphicon-star-empty" ></span>
                     </a>
                 {% endif %}
-                
+
             </td>
         </tr>
     {% endfor %}

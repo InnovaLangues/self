@@ -166,7 +166,6 @@ class User extends BaseUser
         return $this;
     }
 
-  
     /**
      * Set password
      *
@@ -440,20 +439,20 @@ class User extends BaseUser
     /**
      * Set locale
      *
-     * @param string $locale
+     * @param  string $locale
      * @return User
      */
     public function setLocale($locale)
     {
         $this->locale = $locale;
-    
+
         return $this;
     }
 
     /**
      * Get locale
      *
-     * @return string 
+     * @return string
      */
     public function getLocale()
     {
@@ -463,13 +462,13 @@ class User extends BaseUser
     /**
      * Add mediaClicks
      *
-     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
+     * @param  \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      * @return User
      */
     public function addMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
     {
         $this->mediaClicks[] = $mediaClicks;
-    
+
         return $this;
     }
 
@@ -486,7 +485,7 @@ class User extends BaseUser
     /**
      * Get mediaClicks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMediaClicks()
     {
@@ -496,13 +495,13 @@ class User extends BaseUser
     /**
      * Add comments
      *
-     * @param \Innova\SelfBundle\Entity\Comment $comments
+     * @param  \Innova\SelfBundle\Entity\Comment $comments
      * @return User
      */
     public function addComment(\Innova\SelfBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -519,7 +518,7 @@ class User extends BaseUser
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
@@ -529,13 +528,13 @@ class User extends BaseUser
     /**
      * Add revisedQuestionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires
      * @return User
      */
     public function addRevisedQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires)
     {
         $this->revisedQuestionnaires[] = $revisedQuestionnaires;
-    
+
         return $this;
     }
 
@@ -552,7 +551,7 @@ class User extends BaseUser
     /**
      * Get revisedQuestionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRevisedQuestionnaires()
     {
@@ -562,13 +561,13 @@ class User extends BaseUser
     /**
      * Add editorLogs
      *
-     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
+     * @param  \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
      * @return User
      */
     public function addEditorLog(\Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs)
     {
         $this->editorLogs[] = $editorLogs;
-    
+
         return $this;
     }
 
@@ -585,7 +584,7 @@ class User extends BaseUser
     /**
      * Get editorLogs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEditorLogs()
     {
@@ -595,13 +594,13 @@ class User extends BaseUser
     /**
      * Add favoritesTests
      *
-     * @param \Innova\SelfBundle\Entity\Test $favoritesTests
+     * @param  \Innova\SelfBundle\Entity\Test $favoritesTests
      * @return User
      */
     public function addFavoritesTest(\Innova\SelfBundle\Entity\Test $favoritesTests)
     {
         $this->favoritesTests[] = $favoritesTests;
-    
+
         return $this;
     }
 
@@ -618,7 +617,7 @@ class User extends BaseUser
     /**
      * Get favoritesTests
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFavoritesTests()
     {

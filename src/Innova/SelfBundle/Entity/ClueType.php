@@ -33,12 +33,12 @@ class ClueType
      *
      * @ORM\Column(name="color", type="string", length=255)
      */
-    private $color; 
+    private $color;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -48,20 +48,20 @@ class ClueType
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string   $name
      * @return ClueType
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -71,20 +71,20 @@ class ClueType
     /**
      * Set color
      *
-     * @param string $color
+     * @param  string   $color
      * @return ClueType
      */
     public function setColor($color)
     {
         $this->color = $color;
-    
+
         return $this;
     }
 
     /**
      * Get color
      *
-     * @return string 
+     * @return string
      */
     public function getColor()
     {

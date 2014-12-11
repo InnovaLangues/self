@@ -15,7 +15,6 @@ use Innova\SelfBundle\Entity\Test;
  */
 class TestController extends Controller
 {
-
     /**
      * Lists all Test entities.
      *
@@ -29,7 +28,7 @@ class TestController extends Controller
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
         return array(
-            'tests' => $tests
+            'tests' => $tests,
         );
     }
 
@@ -48,11 +47,9 @@ class TestController extends Controller
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findByLanguage($language);
 
         return array(
-            'tests' => $tests
+            'tests' => $tests,
         );
     }
-    
-
 
     /**
      * Display form to create a new Questionnaire entity.
@@ -63,7 +60,6 @@ class TestController extends Controller
      */
     public function createTestFormAction()
     {
-
         return array();
     }
 
@@ -76,7 +72,6 @@ class TestController extends Controller
      */
     public function createTestAction()
     {
-
         $em = $this->getDoctrine()->getManager();
         $request = $this->get('request');
 
@@ -155,11 +150,10 @@ class TestController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-  
+
         $em->remove($test);
         $em->flush();
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
-
 }

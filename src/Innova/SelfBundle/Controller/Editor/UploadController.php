@@ -50,12 +50,11 @@ class UploadController extends Controller
             $originalName = $uploadedFile->getClientOriginalName();
             $ext = pathinfo($originalName, PATHINFO_EXTENSION);
 
-            if (in_array(strtolower($ext), $authorizedExtensions )) {
-                $newName = uniqid(). "." . $ext;
+            if (in_array(strtolower($ext), $authorizedExtensions)) {
+                $newName = uniqid().".".$ext;
                 $directory = $this->kernelRoot.'/../web/upload/media/';
                 $uploadedFile->move($directory, $newName);
-            }
-            else {
+            } else {
                 $msg = "Wrong file type ('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif')";
             }
         }
@@ -63,7 +62,7 @@ class UploadController extends Controller
         return new JsonResponse(
             array(
                 'url' => $newName,
-                'msg' => $msg
+                'msg' => $msg,
             )
         );
     }
@@ -84,9 +83,11 @@ class UploadController extends Controller
 
         $src = $this->kernelRoot.'/../web/upload/media/'.basename($url);
 
-        $type = strtolower(substr(strrchr($src,"."),1));
-        if($type == 'jpeg') $type = 'jpg';
-            switch($type){
+        $type = strtolower(substr(strrchr($src, "."), 1));
+        if ($type == 'jpeg') {
+            $type = 'jpg';
+        }
+        switch ($type) {
             case 'bmp': $img_r = imagecreatefromwbmp($src); break;
             case 'gif': $img_r = imagecreatefromgif($src); break;
             case 'jpg': $img_r = imagecreatefromjpeg($src); break;
@@ -94,21 +95,18 @@ class UploadController extends Controller
             default : return "Unsupported picture type!";
         }
 
+        $dst_r = ImageCreateTrueColor($w, $h);
+        imagecopyresampled($dst_r, $img_r, 0, 0, $x, $y, $w, $h, $w, $h);
 
-        $dst_r = ImageCreateTrueColor( $w, $h );
-        imagecopyresampled($dst_r,$img_r,0,0,$x,$y,$w,$h,$w,$h);
-
-        switch($type){
+        switch ($type) {
             case 'bmp': imagewbmp($dst_r, $src); break;
             case 'gif': imagegif($dst_r, $src); break;
             case 'jpg': imagejpeg($dst_r, $src); break;
             case 'png': imagepng($dst_r, $src); break;
         }
 
-
         return new JsonResponse(
             array()
         );
     }
-
 }

@@ -1,13 +1,11 @@
 <?php
 namespace Innova\SelfBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\User;
-use Innova\SelfBundle\Form\UserType;
 use Innova\SelfBundle\Entity\Test;
 
 /**
@@ -17,7 +15,6 @@ use Innova\SelfBundle\Entity\Test;
  */
 class AdminUserController extends Controller
 {
-
     /**
      * Lists all Test entities.
      *
@@ -55,17 +52,16 @@ class AdminUserController extends Controller
         foreach ($tests as $test) {
             $count = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
             $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getQuestionnairesDoneYetByUserByTest($test->getId(), $user->getId());
-             if ($count > 0) {
-                 $testsWithTraces[] = array($test, $count, $questionnaires);
-             }
+            if ($count > 0) {
+                $testsWithTraces[] = array($test, $count, $questionnaires);
+            }
         }
 
         return array(
             'tests'  => $testsWithTraces,
-            'user'   => $user
+            'user'   => $user,
         );
     }
-
 
     /**
      * Delete trace for a given user and a given test
@@ -80,7 +76,7 @@ class AdminUserController extends Controller
         $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
-        if($this->get("self.trace.manager")->deleteTestTrace($user, $test)){
+        if ($this->get("self.trace.manager")->deleteTestTrace($user, $test)) {
             $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour le test '.$test->getName().' ont été supprimées');
         }
 
@@ -101,7 +97,7 @@ class AdminUserController extends Controller
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
-        if($this->get("self.trace.manager")->deleteTaskTrace($user, $test, $questionnaire)){
+        if ($this->get("self.trace.manager")->deleteTaskTrace($user, $test, $questionnaire)) {
             $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la tâche '.$questionnaire->getTheme().' ont été supprimées');
         }
 
@@ -119,7 +115,7 @@ class AdminUserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-        if($this->get("self.user.manager")->deleteUser($user)){
+        if ($this->get("self.user.manager")->deleteUser($user)) {
             $this->get('session')->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
         }
 

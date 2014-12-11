@@ -42,7 +42,7 @@ class TraceManager
     public function deleteTestTrace(User $user, Test $test)
     {
         $em = $this->entityManager;
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user'=>$user, 'test'=>$test));
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $test));
 
         foreach ($traces as $trace) {
             $em->remove($trace);
@@ -55,7 +55,7 @@ class TraceManager
     public function deleteTaskTrace(User $user, Test $test, Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user'=>$user, 'test'=>$test, 'questionnaire' =>$questionnaire));
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $test, 'questionnaire' => $questionnaire));
 
         foreach ($traces as $trace) {
             $em->remove($trace);

@@ -19,7 +19,6 @@ class MediaClickManager
 
     public function getRemainingListening($mediaId, $questionnaireId, $testId)
     {
-
         $media = $this->entityManager->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
         $questionnaire = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
@@ -27,10 +26,10 @@ class MediaClickManager
         $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
         $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array(
                                                                                     'media' => $media,
-                                                                                    'questionnaire' => $questionnaire
+                                                                                    'questionnaire' => $questionnaire,
                                                                                 ));
 
-        if(is_null($mediaLimit) || $mediaLimit->getListeningLimit() == 0){
+        if (is_null($mediaLimit) || $mediaLimit->getListeningLimit() == 0) {
             $remainingListening = "X";
         } else {
             $remainingListening = $mediaLimit->getListeningLimit() - $nbClick;
@@ -45,7 +44,7 @@ class MediaClickManager
         $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
         $questionnaire = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
-        if (!$this->securityContext->isGranted('ROLE_ADMIN')){
+        if (!$this->securityContext->isGranted('ROLE_ADMIN')) {
             $mediaClick = new MediaClick();
             $mediaClick->setMedia($media);
             $mediaClick->setUser($this->user);
@@ -68,7 +67,7 @@ class MediaClickManager
         $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
         $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array('media' => $media, 'questionnaire' => $questionnaire));
 
-        if(is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 || $this->securityContext->isGranted('ROLE_ADMIN')){
+        if (is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 || $this->securityContext->isGranted('ROLE_ADMIN')) {
             return true;
         } else {
             return false;
@@ -77,17 +76,15 @@ class MediaClickManager
 
     public function getMediaClickCount($media, $test, $questionnaire)
     {
-
         $mediaClicks = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaClick')
                         ->findBy(array(
                                         'media' => $media,
                                         'test' => $test,
                                         'questionnaire' => $questionnaire,
-                                        'user' => $this->user
+                                        'user' => $this->user,
                                       )
                                 );
 
         return count($mediaClicks);
     }
-
 }

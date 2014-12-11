@@ -23,13 +23,11 @@ class ExportController
     protected $entityManager;
     protected $exportManager;
 
-
     public function __construct($kernelRoot, $entityManager, $exportManager)
     {
         $this->kernelRoot = $kernelRoot;
         $this->entityManager = $entityManager;
         $this->exportManager = $exportManager;
-
     }
 
     /**
@@ -45,7 +43,6 @@ class ExportController
      */
     public function indexAction()
     {
-
         $em = $this->entityManager;
 
         $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
@@ -54,7 +51,6 @@ class ExportController
             'tests' => $tests,
         );
     }
-
 
     /**
      * @Route(
@@ -66,19 +62,18 @@ class ExportController
      */
     public function getFileAction($testId, $filename, $mode)
     {
-
         if ($mode == "pdf") {
             $dir = "exportPdf";
         } else {
             $dir = "export";
         }
 
-        $file = $this->kernelRoot ."/data/".$dir."/".$testId."/".$filename;
+        $file = $this->kernelRoot."/data/".$dir."/".$testId."/".$filename;
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'private');
         $response->headers->set('Content-type', mime_content_type($file));
-        $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($file) . '";');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
         $response->headers->set('Content-length', filesize($file));
         $response->sendHeaders();
 
@@ -107,8 +102,8 @@ class ExportController
         return array(
             "csvName" => $csvName,
             'test' => $test,
-            "fileList"=> $fileList,
-            "tia"=> $tia
+            "fileList" => $fileList,
+            "tia" => $tia,
         );
     }
 
@@ -130,8 +125,8 @@ class ExportController
 
         return array(
             'test' => $test,
-            "fileList"=> $fileList,
-            "tia"=> $tia
+            "fileList" => $fileList,
+            "tia" => $tia,
         );
     }
 
@@ -147,7 +142,6 @@ class ExportController
      */
     public function exportPdfAction(Test $test)
     {
-
         // Génération du nom du fichier exporté
         $pdfName = $this->exportManager->exportPdfAction($test);
 
@@ -157,7 +151,7 @@ class ExportController
         return array(
             "pdfName" => $pdfName,
             "test" => $test,
-            "fileList"=> $fileList,
+            "fileList" => $fileList,
         );
     }
 
@@ -178,10 +172,7 @@ class ExportController
 
         return array(
             "test" => $test,
-            "fileList"=> $fileList,
+            "fileList" => $fileList,
         );
     }
-
-
-
 }

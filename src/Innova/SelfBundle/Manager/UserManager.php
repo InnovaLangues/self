@@ -1,6 +1,7 @@
 <?php
 
 namespace Innova\SelfBundle\Manager;
+
 use Innova\SelfBundle\Entity\User;
 
 class UserManager
@@ -27,7 +28,7 @@ class UserManager
     public function deleteUser(User $user)
     {
         $em = $this->entityManager;
-        
+
         $em->remove($user);
         $em->flush();
 

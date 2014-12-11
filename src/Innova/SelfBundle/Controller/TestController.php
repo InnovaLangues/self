@@ -27,7 +27,6 @@ class TestController
     {
         $this->entityManager = $entityManager;
         $this->testManager = $testManager;
-
     }
 
     public function setRequest(Request $request = null)
@@ -46,13 +45,12 @@ class TestController
     {
         $tests = $this->entityManager->getRepository('InnovaSelfBundle:Test')->findAll();
         $testsProgress = $this->testManager->getTestsProgress($tests);
-        
+
         return array(
             'tests' => $tests,
-            'testsProgress' => $testsProgress
+            'testsProgress' => $testsProgress,
         );
     }
-
 
     /**
      * @Route("/favorite/toggle", name="test_favorite_toggle" , options={"expose"=true}))
@@ -62,7 +60,7 @@ class TestController
     {
         $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($this->request->get('testId'));
         $isFavorite = $this->testManager->toggleFavorite($test);
-        
+
         return new JsonResponse(
             array(
                 'isFavorite' => $isFavorite,

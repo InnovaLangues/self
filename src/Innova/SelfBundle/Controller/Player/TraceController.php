@@ -4,7 +4,6 @@ namespace Innova\SelfBundle\Controller\Player;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -45,8 +44,7 @@ class TraceController
         $router,
         $securityContext,
         $translator
-    )
-    {
+    ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
         $this->traceManager = $traceManager;
@@ -57,7 +55,6 @@ class TraceController
         $this->securityContext = $securityContext;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->translator = $translator;
-
     }
 
     public function setRequest(Request $request = null)
@@ -113,7 +110,6 @@ class TraceController
      */
     public function displayDifficultyFormAction()
     {
-
         $session = $this->session;
         $traceId = $session->get('traceId');
         $testId = $session->get('testId');
@@ -126,23 +122,20 @@ class TraceController
     */
     private function parsePost($post, $trace)
     {
-
         $this->session->getFlashBag()->set('success', $this->translator->trans("trace.answer_saved", array(), "messages"));
-        
-        foreach ($post as $subquestionId => $postVar)
-        {
+
+        foreach ($post as $subquestionId => $postVar) {
             print_r($postVar);
-            
+
             // Cas classique
-            if (is_array($postVar))
-            {
-                foreach ($postVar as $key => $propositionId){
-                    if (is_numeric($propositionId)){
+            if (is_array($postVar)) {
+                foreach ($postVar as $key => $propositionId) {
+                    if (is_numeric($propositionId)) {
                         $this->createAnswer($trace, $propositionId, $subquestionId);
                     } else {
                         $this->createAnswerProposition($trace, $propositionId, $subquestionId);
                     }
-                } 
+                }
             }
         }
     }
@@ -166,7 +159,6 @@ class TraceController
      */
     private function createAnswerProposition($trace, $saisie, $subquestionId)
     {
-
         $em = $this->entityManager;
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
@@ -180,9 +172,9 @@ class TraceController
             $propositionFound = null;
 
             // Il faut concaténer la syllabe avec la saisie.
-            if($subquestion->getMediaSyllable()){
+            if ($subquestion->getMediaSyllable()) {
                 $syllableAnswer = $subquestion->getMediaSyllable()->getDescription();
-                $saisie = $syllableAnswer . $saisie;
+                $saisie = $syllableAnswer.$saisie;
             }
 
             foreach ($propositions as $proposition) {
@@ -223,7 +215,6 @@ class TraceController
      */
     public function traceSetDifficultyAction()
     {
-
         $em = $this->entityManager;
         $post = $this->request->request->all();
 

@@ -116,20 +116,20 @@ class Length
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string $description
      * @return Length
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

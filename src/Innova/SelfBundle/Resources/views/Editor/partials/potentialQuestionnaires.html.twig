@@ -9,7 +9,7 @@
     <ul id="tasks" class="list-group">
     {% for potentialQuestionnaire in potentialQuestionnaires %}
         <li class="list-group-item">
-            <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}"><span class="glyphicon glyphicon-plus"></span> {{ 'generic.add' | trans }}</span> 
+            <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}"><span class="glyphicon glyphicon-plus"></span> {{ 'generic.add' | trans }}</span>
             {% if potentialQuestionnaire.theme != "" %}
                 {{ potentialQuestionnaire.theme }}
             {% else %}

@@ -14,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  */
 class AjaxController extends Controller
 {
-
     /**
     * Vérify if the session variable is OK and initialize if not.
     *
@@ -44,7 +43,6 @@ class AjaxController extends Controller
     */
     public function incrementeSessionContextListenNumberAction()
     {
-
         $session = $this->container->get('request')->getSession();
 
         $contextListenNumber = $session->get('contextListenNumber');
@@ -69,7 +67,6 @@ class AjaxController extends Controller
     */
     public function resetSessionContextListenNumberAction()
     {
-
         $session = $this->container->get('request')->getSession();
 
         $contextListenNumber = $session->set('contextListenNumber', null);
@@ -78,5 +75,4 @@ class AjaxController extends Controller
             array('contextListenNumber' => $contextListenNumber)
         );
     }
-
 }

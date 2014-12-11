@@ -62,7 +62,7 @@ class AuthorRight
     /**
      * Set name
      *
-     * @param  string $name
+     * @param  string      $name
      * @return AuthorRight
      */
     public function setName($name)
@@ -125,20 +125,20 @@ class AuthorRight
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string      $description
      * @return AuthorRight
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

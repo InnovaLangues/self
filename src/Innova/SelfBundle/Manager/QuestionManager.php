@@ -36,6 +36,7 @@ class QuestionManager
         }
         $em->flush();
         $em->refresh($question);
+
         return $question;
     }
 }

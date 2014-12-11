@@ -37,7 +37,7 @@ class EditorLog
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User", inversedBy="editorLogs")
     */
     protected $user;
-    
+
     /**
     * @ORM\ManyToOne(targetEntity="EditorLogAction")
     */
@@ -48,11 +48,10 @@ class EditorLog
     */
     protected $object;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,20 +61,20 @@ class EditorLog
     /**
      * Set date
      *
-     * @param \DateTime $date
+     * @param  \DateTime $date
      * @return EditorLog
      */
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -85,20 +84,20 @@ class EditorLog
     /**
      * Set questionnaire
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
      * @return EditorLog
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
     {
         $this->questionnaire = $questionnaire;
-    
+
         return $this;
     }
 
     /**
      * Get questionnaire
      *
-     * @return \Innova\SelfBundle\Entity\Questionnaire 
+     * @return \Innova\SelfBundle\Entity\Questionnaire
      */
     public function getQuestionnaire()
     {
@@ -108,20 +107,20 @@ class EditorLog
     /**
      * Set user
      *
-     * @param \Innova\SelfBundle\Entity\User $user
+     * @param  \Innova\SelfBundle\Entity\User $user
      * @return EditorLog
      */
     public function setUser(\Innova\SelfBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Innova\SelfBundle\Entity\User 
+     * @return \Innova\SelfBundle\Entity\User
      */
     public function getUser()
     {
@@ -131,20 +130,20 @@ class EditorLog
     /**
      * Set action
      *
-     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLogAction $action
+     * @param  \Innova\SelfBundle\Entity\EditorLog\EditorLogAction $action
      * @return EditorLog
      */
     public function setAction(\Innova\SelfBundle\Entity\EditorLog\EditorLogAction $action = null)
     {
         $this->action = $action;
-    
+
         return $this;
     }
 
     /**
      * Get action
      *
-     * @return \Innova\SelfBundle\Entity\EditorLog\EditorLogAction 
+     * @return \Innova\SelfBundle\Entity\EditorLog\EditorLogAction
      */
     public function getAction()
     {
@@ -154,20 +153,20 @@ class EditorLog
     /**
      * Set object
      *
-     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLogObject $object
+     * @param  \Innova\SelfBundle\Entity\EditorLog\EditorLogObject $object
      * @return EditorLog
      */
     public function setObject(\Innova\SelfBundle\Entity\EditorLog\EditorLogObject $object = null)
     {
         $this->object = $object;
-    
+
         return $this;
     }
 
     /**
      * Get object
      *
-     * @return \Innova\SelfBundle\Entity\EditorLog\EditorLogObject 
+     * @return \Innova\SelfBundle\Entity\EditorLog\EditorLogObject
      */
     public function getObject()
     {

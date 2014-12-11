@@ -19,7 +19,6 @@ class MediaManager
 
     public function createMedia(Questionnaire $questionnaire = null, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
     {
-
         $entityField2Purpose = array(
             "texte" => "objet de la question",
             "contexte" => "contexte",
@@ -36,7 +35,7 @@ class MediaManager
             "comment" => "comment",
             "feedback" => "feedback",
             "distractor" => "distractor",
-            "blank-text" => "blank-text"
+            "blank-text" => "blank-text",
         );
 
         $em = $this->entityManager;

@@ -53,7 +53,7 @@ class Register
     /**
      * Set name
      *
-     * @param  string $name
+     * @param  string   $name
      * @return Register
      */
     public function setName($name)
@@ -116,20 +116,20 @@ class Register
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string   $description
      * @return Register
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

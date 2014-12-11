@@ -34,7 +34,7 @@ class Clue
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -44,20 +44,20 @@ class Clue
     /**
      * Set clueType
      *
-     * @param \Innova\SelfBundle\Entity\ClueType $clueType
+     * @param  \Innova\SelfBundle\Entity\ClueType $clueType
      * @return Clue
      */
     public function setClueType(\Innova\SelfBundle\Entity\ClueType $clueType = null)
     {
         $this->clueType = $clueType;
-    
+
         return $this;
     }
 
     /**
      * Get clueType
      *
-     * @return \Innova\SelfBundle\Entity\ClueType 
+     * @return \Innova\SelfBundle\Entity\ClueType
      */
     public function getClueType()
     {
@@ -67,20 +67,20 @@ class Clue
     /**
      * Set media
      *
-     * @param \Innova\SelfBundle\Entity\Media\Media $media
+     * @param  \Innova\SelfBundle\Entity\Media\Media $media
      * @return Clue
      */
     public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
     {
         $this->media = $media;
-    
+
         return $this;
     }
 
     /**
      * Get media
      *
-     * @return \Innova\SelfBundle\Entity\Media\Media 
+     * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMedia()
     {
