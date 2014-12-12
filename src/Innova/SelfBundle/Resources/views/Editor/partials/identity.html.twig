@@ -10,6 +10,8 @@
         <div class="panel-body">
             <div class="row">
 
+            <form id="questionnaire-identity">
+    
                 <div class="col-md-12">
                     <div class="col-md-6">
                         <div class="panel panel-default ">
@@ -168,6 +170,9 @@
                     {% endif %}
                     </div>
                 </div>
+
+                <input type="hidden" name="id" value="{{ questionnaire.id }}"/>
+            </form>
 
             </div>
         </div>

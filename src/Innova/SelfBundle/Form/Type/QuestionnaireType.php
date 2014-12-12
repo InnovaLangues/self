@@ -151,6 +151,11 @@ class QuestionnaireType extends AbstractType
                 'label'  => 'editor.identity.flow',
                 'translation_domain' => 'messages',
             ));
+
+         $builder->add('save', 'submit', array(
+                'label' => 'generic.save',
+                'attr' => array('class' => 'btn btn-default btn-primary'),
+            ));
     }
 
     public function getName()

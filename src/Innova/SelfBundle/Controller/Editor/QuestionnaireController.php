@@ -104,12 +104,36 @@ class QuestionnaireController
     public function setIdentityFieldAction()
     {
         $em = $this->entityManager;
-        $request = $this->request;
 
+        $requestForm = $this->request->request->get("subquestion");
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($requestForm["id"]);
+
+        $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
+        $form->bind($this->request);
+
+        if ($form->isValid()) {
+            $em->persist($questionnaire);
+            $em->flush();
+
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        }
+
+        return new JsonResponse();
+    }
+
+     /**
+    *
+    * @Route("/questionnaires/set-general-info-field", name="set-general-info-field", options={"expose"=true})
+    * @Method("POST")
+    */
+    public function setGeneralInfoFieldAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request;
         $field = $request->request->get('field');
         $value = $request->request->get('value');
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
 
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
         $response = $this->questionnaireManager->setIdentityField($questionnaire, $field, $value);
 
         return $response;
