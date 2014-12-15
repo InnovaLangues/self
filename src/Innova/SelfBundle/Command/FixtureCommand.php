@@ -451,7 +451,7 @@ class FixtureCommand extends ContainerAwareCommand
         }
 
         $channels = array("channel.phone", "channel.videoconf", "channel.speaker", "channel.radio",
-                                         "channel.tv", "channel.web", "channel.tutorial", "channel.localRecord", "channel.GPS", "channel.other" );
+                                         "channel.tv", "channel.web", "channel.tutorial", "channel.localRecord", "channel.GPS", "channel.other", );
         foreach ($channels as $channel) {
             if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Channel')->findOneByName($channel)) {
                 $c = new Channel();

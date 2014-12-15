@@ -158,7 +158,7 @@ class TaskController
             'status' => $status,
             'testId' => $testId,
             'form' => $form->createView(),
-            'taskInfosForm' => $taskInfosForm->createView()
+            'taskInfosForm' => $taskInfosForm->createView(),
         );
     }
 

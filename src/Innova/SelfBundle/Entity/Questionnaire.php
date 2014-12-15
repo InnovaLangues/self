@@ -241,7 +241,6 @@ class Questionnaire
     */
     protected $flow;
 
-
     public function __construct()
     {
         $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1196,13 +1195,13 @@ class Questionnaire
     /**
      * Add sourceTypes
      *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
      * @return Questionnaire
      */
     public function addSourceType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes)
     {
         $this->sourceTypes[] = $sourceTypes;
-    
+
         return $this;
     }
 
@@ -1219,7 +1218,7 @@ class Questionnaire
     /**
      * Get sourceTypes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSourceTypes()
     {
@@ -1229,13 +1228,13 @@ class Questionnaire
     /**
      * Add channels
      *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
      * @return Questionnaire
      */
     public function addChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
     {
         $this->channels[] = $channels;
-    
+
         return $this;
     }
 
@@ -1252,7 +1251,7 @@ class Questionnaire
     /**
      * Get channels
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChannels()
     {

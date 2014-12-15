@@ -79,7 +79,7 @@ class QuestionnaireType extends AbstractType
                 'label'  => 'editor.identity.sourceType',
                 'translation_domain' => 'messages',
                 'multiple' => true,
-                'required' => false
+                'required' => false,
             ));
 
         $builder->add('channels', 'entity', array(
@@ -89,7 +89,7 @@ class QuestionnaireType extends AbstractType
                 'label'  => 'editor.identity.channel',
                 'translation_domain' => 'messages',
                 'multiple' => true,
-                'required' => false
+                'required' => false,
             ));
 
         $builder->add('sourceMore', 'textarea', array(
