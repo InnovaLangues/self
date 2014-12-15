@@ -92,6 +92,16 @@ class QuestionnaireType extends AbstractType
                 'translation_domain' => 'messages',
             ));
 
+        $builder->add('sourceTypes', 'entity', array(
+                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SourceType',
+                'property' => 'name',
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'source',  'size' => 4),
+                'label'  => 'editor.identity.sourceType',
+                'translation_domain' => 'messages',
+                'multiple' => true,
+                'required' => false
+            ));
+
         $builder->add('sourceMore', 'textarea', array(
                 'attr' => array('class' => 'form-control identity-select', 'data-field' => 'sourceMore'),
                 'label'  => 'editor.identity.source.more',

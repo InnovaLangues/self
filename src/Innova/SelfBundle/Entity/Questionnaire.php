@@ -205,6 +205,12 @@ class Questionnaire
     private $sourceMore;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType", inversedBy="questionnaires")
+    * @ORM\JoinTable(name="questionnaires_sourceType")
+    */
+    protected $sourceTypes;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
     */
     protected $domain;
@@ -228,6 +234,7 @@ class Questionnaire
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
     */
     protected $flow;
+
 
     public function __construct()
     {
@@ -1178,5 +1185,38 @@ class Questionnaire
     public function getAuthorMore()
     {
         return $this->authorMore;
+    }
+
+    /**
+     * Add sourceTypes
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
+     * @return Questionnaire
+     */
+    public function addSourceType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes)
+    {
+        $this->sourceTypes[] = $sourceTypes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove sourceTypes
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
+     */
+    public function removeSourceType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes)
+    {
+        $this->sourceTypes->removeElement($sourceTypes);
+    }
+
+    /**
+     * Get sourceTypes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSourceTypes()
+    {
+        return $this->sourceTypes;
     }
 }
