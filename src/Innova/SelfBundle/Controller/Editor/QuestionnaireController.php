@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Innova\SelfBundle\Form\Type\QuestionnaireType;
 
 /**
  * Class QuestionnaireController
@@ -25,19 +26,22 @@ class QuestionnaireController
     protected $request;
     protected $templating;
     protected $questionnaireRevisorsManager;
+    protected $formFactory;
 
     public function __construct(
             $questionnaireManager,
             $orderQuestionnaireTestManager,
             $entityManager,
             $templating,
-            $questionnaireRevisorsManager
+            $questionnaireRevisorsManager,
+            $formFactory
     ) {
         $this->questionnaireManager = $questionnaireManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
+        $this->formFactory = $formFactory;
     }
 
     public function setRequest(Request $request = null)
@@ -105,7 +109,7 @@ class QuestionnaireController
     {
         $em = $this->entityManager;
 
-        $requestForm = $this->request->request->get("subquestion");
+        $requestForm = $this->request->request->get("questionnaire");
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($requestForm["id"]);
 
         $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();

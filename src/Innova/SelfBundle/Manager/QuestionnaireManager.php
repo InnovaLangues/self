@@ -3,7 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Form\Type\QuestionnaireType;
+use Innova\SelfBundle\Form\Type\TaskInfosType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class QuestionnaireManager
@@ -97,13 +97,13 @@ class QuestionnaireManager
                     $questionnaire->setSkill($skill);
                     $em->persist($questionnaire);
                     $em->flush();
-                    $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
+                    $form = $this->formFactory->createBuilder(new TaskInfosType(), $questionnaire)->getForm();
                     $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
                     $template = $this->templating->render('InnovaSelfBundle:Editor/partials:general-infos.html.twig',
                         array(
                                 'questionnaire' => $questionnaire,
-                                'form' => $form->createView(),
+                                'taskInfosForm' => $form->createView(),
                         ));
 
                     return new JsonResponse(array('template' => $template, 'test' => "test"));

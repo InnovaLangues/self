@@ -28,6 +28,7 @@ use Innova\SelfBundle\Entity\QuestionnaireIdentity\Register;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel;
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -446,6 +447,17 @@ class FixtureCommand extends ContainerAwareCommand
                 $s->setName($sourceType);
                 $em->persist($s);
                 $output->writeln("Add new SourceType (".$sourceType.")");
+            }
+        }
+
+        $channels = array("channel.phone", "channel.videoconf", "channel.speaker", "channel.radio",
+                                         "channel.tv", "channel.web", "channel.tutorial", "channel.localRecord", "channel.GPS", "channel.other" );
+        foreach ($channels as $channel) {
+            if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Channel')->findOneByName($channel)) {
+                $c = new Channel();
+                $c->setName($channel);
+                $em->persist($c);
+                $output->writeln("Add new Channel (".$channel.")");
             }
         }
 

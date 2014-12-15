@@ -211,6 +211,12 @@ class Questionnaire
     protected $sourceTypes;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel", inversedBy="questionnaires")
+    * @ORM\JoinTable(name="questionnaires_channel")
+    */
+    protected $channels;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
     */
     protected $domain;
@@ -1218,5 +1224,38 @@ class Questionnaire
     public function getSourceTypes()
     {
         return $this->sourceTypes;
+    }
+
+    /**
+     * Add channels
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
+     * @return Questionnaire
+     */
+    public function addChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
+    {
+        $this->channels[] = $channels;
+    
+        return $this;
+    }
+
+    /**
+     * Remove channels
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
+     */
+    public function removeChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
+    {
+        $this->channels->removeElement($channels);
+    }
+
+    /**
+     * Get channels
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChannels()
+    {
+        return $this->channels;
     }
 }

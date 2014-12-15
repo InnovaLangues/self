@@ -997,9 +997,6 @@ $(document).on('focusin', function(e) {
 *************************************************
 **************************************************/
 function setIdentityField(form){
-    beforeAjax();
-
-    var values = {};
     var data = form.serializeArray();
     beforeAjax();
 
@@ -1061,7 +1058,6 @@ function subquestionIdentityModal(subquestionId){
 }
 
 function postForm(form){
-    var values = {};
     var data = form.serializeArray();
     beforeAjax();
 

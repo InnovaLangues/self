@@ -109,6 +109,11 @@
                                     {{ form_label(form.flow) }}
                                     {{ form_widget(form.flow) }}
                                     </div>
+
+                                    <div class="form-group">
+                                    {{ form_label(form.channels) }}
+                                    {{ form_widget(form.channels) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +180,8 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="id" value="{{ questionnaire.id }}"/>
+                <input type="hidden" name="questionnaire[id]" value="{{ questionnaire.id }}"/>
+                {{ form_widget(form._token) }}
             </form>
 
             </div>

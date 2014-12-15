@@ -6,15 +6,15 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    {{ macros.help("Titre de la tâche. Ne sera pas visible lors de la passation.") }} {{ form_label(form.theme) }}
-                    {{ form_widget(form.theme) }}
+                    {{ macros.help("Titre de la tâche. Ne sera pas visible lors de la passation.") }} {{ form_label(taskInfosForm.theme) }}
+                    {{ form_widget(taskInfosForm.theme) }}
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-group">
-                    {{ macros.help("Compétence visée : compréhension orale, écrite, ou expression écrite courte.") }} {{ form_label(form.skill) }}
-                    {{ form_widget(form.skill) }}
+                    {{ macros.help("Compétence visée : compréhension orale, écrite, ou expression écrite courte.") }} {{ form_label(taskInfosForm.skill) }}
+                    {{ form_widget(taskInfosForm.skill) }}
                 </div>
             </div>
 
@@ -38,8 +38,8 @@
                 <div class="form-group">
                     <div class="checkbox-inline">
                     {{ macros.help("Par défaut les propositions sont mélangées lors de la passation. Permet de garder l'ordre tel qu'il apparait dans l'éditeur.") }}
-                    {{ form_label(form.fixedOrder) }}
-                    {{ form_widget(form.fixedOrder) }}
+                    {{ form_label(taskInfosForm.fixedOrder) }}
+                    {{ form_widget(taskInfosForm.fixedOrder) }}
                     </div>
                 </div>
             </div>

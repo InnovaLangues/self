@@ -9,31 +9,11 @@ class QuestionnaireType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('id', 'hidden', array('mapped' => false));
+
         $builder->add('authorMore', 'textarea', array(
                 'attr' => array('class' => 'form-control identity-select', 'data-field' => 'authorMore'),
                 'label'  => 'editor.identity.authorMore',
-                'translation_domain' => 'messages',
-            ));
-
-        $builder->add('theme', 'text', array(
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'theme'),
-                'label'  => 'editor.identity.theme',
-                'translation_domain' => 'messages',
-            ));
-
-        $builder->add('fixedOrder', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'fixedOrder'),
-                'label'  => 'editor.identity.fixedOrder',
-                'translation_domain' => 'messages',
-            ));
-
-        $builder->add('skill', 'entity', array(
-                'class' => 'InnovaSelfBundle:Skill',
-                'property' => 'name',
-                'empty_value' => "-",
-                'attr' => array('class' => 'form-control identity-select to-check', 'data-field' => 'skill'),
-                'label'  => 'editor.identity.skill',
                 'translation_domain' => 'messages',
             ));
 
@@ -97,6 +77,16 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'attr' => array('class' => 'form-control identity-select', 'data-field' => 'source',  'size' => 4),
                 'label'  => 'editor.identity.sourceType',
+                'translation_domain' => 'messages',
+                'multiple' => true,
+                'required' => false
+            ));
+
+        $builder->add('channels', 'entity', array(
+                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Channel',
+                'property' => 'name',
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'source',  'size' => 4),
+                'label'  => 'editor.identity.channel',
                 'translation_domain' => 'messages',
                 'multiple' => true,
                 'required' => false
