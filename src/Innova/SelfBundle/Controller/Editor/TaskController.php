@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Form\Type\QuestionnaireType;
+use Innova\SelfBundle\Form\Type\TaskInfosType;
 
 /**
  * Class TaskController
@@ -149,6 +150,7 @@ class TaskController
         }
 
         $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
+        $taskInfosForm = $this->formFactory->createBuilder(new TaskInfosType(), $questionnaire)->getForm();
 
         return array(
             'questionnaire' => $questionnaire,
@@ -156,6 +158,7 @@ class TaskController
             'status' => $status,
             'testId' => $testId,
             'form' => $form->createView(),
+            'taskInfosForm' => $taskInfosForm->createView(),
         );
     }
 

@@ -187,6 +187,8 @@ editor:
         focuses: Focus
         cognitive_main: Main cognitive operations
         cognitive_secondary: Secondary cognitive operations
+        channel: Canal
+        sourceType: Nature de l'objet de la question
 
     log:
         editor_create: Create
@@ -311,3 +313,21 @@ cognitive:
     infer_state: Reconnaitre l'état d'âme
     infer_register: Reconnaitre les registres
     interaction: Interaction
+
+channel:
+    phone: Téléphone
+    videoconf: Vidéo-conférence
+    speaker: Moyen de sonorisation (haut-parleur)
+    radio: Radio
+    tv: Télévision
+    web: Web
+    tutorial: Didacticiel interactif
+    localRecord: Enregistrement local
+    GPS: GPS
+    other: Autre
+
+sourceType:
+    audio: Audio
+    video: Vidéo
+    text: Texte
+    image: Image

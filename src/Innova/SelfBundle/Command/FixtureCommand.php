@@ -27,6 +27,8 @@ use Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Register;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel;
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -435,6 +437,27 @@ class FixtureCommand extends ContainerAwareCommand
                     }
                 }
                 $em->persist($questionnaire);
+            }
+        }
+
+        $sourceTypes = array("sourceType.audio", "sourceType.video", "sourceType.text", "sourceType.image");
+        foreach ($sourceTypes as $sourceType) {
+            if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\SourceType')->findOneByName($sourceType)) {
+                $s = new sourceType();
+                $s->setName($sourceType);
+                $em->persist($s);
+                $output->writeln("Add new SourceType (".$sourceType.")");
+            }
+        }
+
+        $channels = array("channel.phone", "channel.videoconf", "channel.speaker", "channel.radio",
+                                         "channel.tv", "channel.web", "channel.tutorial", "channel.localRecord", "channel.GPS", "channel.other", );
+        foreach ($channels as $channel) {
+            if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Channel')->findOneByName($channel)) {
+                $c = new Channel();
+                $c->setName($channel);
+                $em->persist($c);
+                $output->writeln("Add new Channel (".$channel.")");
             }
         }
 

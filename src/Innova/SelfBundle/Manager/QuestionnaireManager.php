@@ -3,7 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Questionnaire;
-use Innova\SelfBundle\Form\Type\QuestionnaireType;
+use Innova\SelfBundle\Form\Type\TaskInfosType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class QuestionnaireManager
@@ -86,113 +86,24 @@ class QuestionnaireManager
         $em = $this->entityManager;
 
         switch ($field) {
-            case 'authorMore':
-                $questionnaire->setAuthorMore($value);
-                break;
-            case 'authorRightMore':
-                $questionnaire->setAuthorRightMore($value);
-                break;
             case 'fixedOrder':
                 $questionnaire->setFixedOrder($value);
                 break;
             case 'theme':
                 $questionnaire->setTheme($value);
                 break;
-            case 'sourceMore':
-                $questionnaire->setSourceMore($value);
-                break;
-            case 'levelProof':
-                $questionnaire->setLevelProof($value);
-                break;
-            case 'authorRight':
-                if ($authorRight = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\AuthorRight')->find($value)) {
-                    $questionnaire->setAuthorRight($authorRight);
-                } else {
-                    $questionnaire->setAuthorRight(null);
-                }
-                break;
-            case 'source':
-                if ($source = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Source')->find($value)) {
-                    $questionnaire->setSource($source);
-                } else {
-                    $questionnaire->setSource(null);
-                }
-                break;
-            case 'sourceOperation':
-                if ($sourceOperation = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\SourceOperation')->find($value)) {
-                    $questionnaire->setSourceOperation($sourceOperation);
-                } else {
-                    $questionnaire->setSourceOperation(null);
-                }
-                break;
-            case 'domain':
-                if ($domain = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Domain')->find($value)) {
-                    $questionnaire->setDomain($domain);
-                } else {
-                    $questionnaire->setDomain(null);
-                }
-                break;
-            case 'register':
-                if ($register = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Register')->find($value)) {
-                    $questionnaire->setRegister($register);
-                } else {
-                    $questionnaire->setRegister(null);
-                }
-                break;
-            case 'reception':
-                if ($reception = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Reception')->find($value)) {
-                    $questionnaire->setReception($reception);
-                } else {
-                    $questionnaire->setReception(null);
-                }
-                break;
-            case 'length':
-                if ($length = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Length')->find($value)) {
-                    $questionnaire->setLength($length);
-                } else {
-                    $questionnaire->setlength(null);
-                }
-                break;
-            case 'flow':
-                if ($flow = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Flow')->find($value)) {
-                    $questionnaire->setFlow($flow);
-                } else {
-                    $questionnaire->setFlow(null);
-                }
-                break;
-             case 'level':
-                if ($level = $em->getRepository('InnovaSelfBundle:Level')->find($value)) {
-                    $questionnaire->setLevel($level);
-                } else {
-                    $questionnaire->setLevel(null);
-                }
-                break;
-            case 'status':
-                if ($status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->find($value)) {
-                    $questionnaire->setStatus($status);
-                } else {
-                    $questionnaire->setStatus(null);
-                }
-                break;
-            case 'language':
-                if ($status = $em->getRepository('InnovaSelfBundle:Language')->find($value)) {
-                    $questionnaire->setLanguage($status);
-                } else {
-                    $questionnaire->setLanguage(null);
-                }
-                break;
              case 'skill':
                 if ($skill = $em->getRepository('InnovaSelfBundle:Skill')->find($value)) {
                     $questionnaire->setSkill($skill);
                     $em->persist($questionnaire);
                     $em->flush();
-                    $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
+                    $form = $this->formFactory->createBuilder(new TaskInfosType(), $questionnaire)->getForm();
                     $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
                     $template = $this->templating->render('InnovaSelfBundle:Editor/partials:general-infos.html.twig',
                         array(
                                 'questionnaire' => $questionnaire,
-                                'form' => $form->createView(),
+                                'taskInfosForm' => $form->createView(),
                         ));
 
                     return new JsonResponse(array('template' => $template, 'test' => "test"));

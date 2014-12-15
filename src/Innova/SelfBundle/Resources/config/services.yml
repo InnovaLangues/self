@@ -68,6 +68,7 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
+            formFactory: @form.factory
         calls:
             - [setRequest, [@request]]
         scope: request

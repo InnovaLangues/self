@@ -4,16 +4,25 @@ $(document).ready(function() {
     afterAjax();
     disableAndHideElements();
 
-    $( "body" ).on( "change", 'select.identity-select, :checkbox.identity-select', function() {
-        var field = $(this).data("field");
-        var value = $(this).val();
-        setIdentityField(questionnaireId, field, value);
+
+    $( "#questionnaire-identity" ).on( "change", 'select.identity-select, :checkbox.identity-select', function() {
+        setIdentityField( $("#questionnaire-identity"), function( response ){});
     });
 
-    $( "body" ).on( "blur", 'textarea.identity-select, :text.identity-select', function() {
+    $( "#questionnaire-identity" ).on( "blur", 'textarea.identity-select, :text.identity-select', function() {
+        setIdentityField( $("#questionnaire-identity"), function( response ){});
+    });
+
+    $( "#general-infos" ).on( "change", 'select.identity-select, :checkbox.identity-select', function() {
         var field = $(this).data("field");
         var value = $(this).val();
-        setIdentityField(questionnaireId, field, value);
+        setGeneralInfoFields(questionnaireId, field, value);
+    });
+
+    $( "#general-infos" ).on( "blur", 'textarea.identity-select, :text.identity-select', function() {
+        var field = $(this).data("field");
+        var value = $(this).val();
+        setGeneralInfoFields(questionnaireId, field, value);
     });
 
     $( "body" ).on( "change", 'select.identity-select.to-check', function() {
@@ -25,7 +34,6 @@ $(document).ready(function() {
         var subquestionId = $(this).data("subquestion-id");
         subquestionIdentityModal(subquestionId);
     });
-
 
     $("body").on("submit", '#subquestion-identity', function(e) { 
         e.preventDefault();
@@ -988,31 +996,47 @@ $(document).on('focusin', function(e) {
 
 *************************************************
 **************************************************/
-function setIdentityField(questionnaireId, field, value){
+function setIdentityField(form){
+    var data = form.serializeArray();
     beforeAjax();
 
     $.ajax({
-        url: Routing.generate('set-identity-field'),
         type: 'POST',
-        dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-            field: field,
-            value: value
-        }
-    })
-    .done(function(data) {
-        if (field == "skill") {
-            $("#general-infos").html(data.template);
-            $("#questionnaire_skill").attr("disabled", true);
-        } else if(field == "typology") {
-            $("#subquestion-container").replaceWith(data.subquestions);
-            $(".task-content").show();
-        } else if(field == "theme"){
-            fillMediaName(value);
-        }
-        afterAjax();
+        url: Routing.generate('set-identity-field'),
+        data: data,
+        complete: function(data) {
+            $('#modal-subquestion-identity').modal('hide');
+            afterAjax();
+        },
+
     });
+}
+
+function setGeneralInfoFields(questionnaireId, field, value){
+    beforeAjax();
+    $.ajax({
+        url: Routing.generate('set-general-info-field'),
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                questionnaireId: questionnaireId,
+                field: field,
+                value: value
+            }
+        })
+        .done(function(data) {
+            if (field == "skill") {
+                $("#general-infos").html(data.template);
+                $("#questionnaire_skill").attr("disabled", true);
+            } else if(field == "typology") {
+                $("#subquestion-container").replaceWith(data.subquestions);
+                $(".task-content").show();
+            } else if(field == "theme"){
+                fillMediaName(value);
+            }
+            afterAjax();
+        }
+    );
 }
 
 function subquestionIdentityModal(subquestionId){
@@ -1034,7 +1058,6 @@ function subquestionIdentityModal(subquestionId){
 }
 
 function postForm(form){
-    var values = {};
     var data = form.serializeArray();
     beforeAjax();
 

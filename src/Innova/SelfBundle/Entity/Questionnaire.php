@@ -205,6 +205,18 @@ class Questionnaire
     private $sourceMore;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType", inversedBy="questionnaires")
+    * @ORM\JoinTable(name="questionnaires_sourceType")
+    */
+    protected $sourceTypes;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel", inversedBy="questionnaires")
+    * @ORM\JoinTable(name="questionnaires_channel")
+    */
+    protected $channels;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
     */
     protected $domain;
@@ -1178,5 +1190,71 @@ class Questionnaire
     public function getAuthorMore()
     {
         return $this->authorMore;
+    }
+
+    /**
+     * Add sourceTypes
+     *
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
+     * @return Questionnaire
+     */
+    public function addSourceType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes)
+    {
+        $this->sourceTypes[] = $sourceTypes;
+
+        return $this;
+    }
+
+    /**
+     * Remove sourceTypes
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
+     */
+    public function removeSourceType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes)
+    {
+        $this->sourceTypes->removeElement($sourceTypes);
+    }
+
+    /**
+     * Get sourceTypes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSourceTypes()
+    {
+        return $this->sourceTypes;
+    }
+
+    /**
+     * Add channels
+     *
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
+     * @return Questionnaire
+     */
+    public function addChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
+    {
+        $this->channels[] = $channels;
+
+        return $this;
+    }
+
+    /**
+     * Remove channels
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
+     */
+    public function removeChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
+    {
+        $this->channels->removeElement($channels);
+    }
+
+    /**
+     * Get channels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChannels()
+    {
+        return $this->channels;
     }
 }
