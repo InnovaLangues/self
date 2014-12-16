@@ -223,6 +223,12 @@ class Questionnaire
     protected $genres;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety", inversedBy="questionnaires")
+    * @ORM\JoinTable(name="questionnaires_variety")
+    */
+    protected $varieties;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
     */
     protected $domain;
@@ -1295,5 +1301,38 @@ class Questionnaire
     public function getGenres()
     {
         return $this->genres;
+    }
+
+    /**
+     * Add varieties
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
+     * @return Questionnaire
+     */
+    public function addVarietie(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
+    {
+        $this->varieties[] = $varieties;
+    
+        return $this;
+    }
+
+    /**
+     * Remove varieties
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
+     */
+    public function removeVarietie(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
+    {
+        $this->varieties->removeElement($varieties);
+    }
+
+    /**
+     * Get varieties
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVarieties()
+    {
+        return $this->varieties;
     }
 }

@@ -189,6 +189,8 @@ editor:
         cognitive_secondary: Secondary cognitive operations
         channel: Canal
         sourceType: Nature de l'objet de la question
+        genre: Genre
+        variety: Variety
 
     log:
         editor_create: Create
@@ -341,3 +343,7 @@ genre:
     conversational: Conversational
     cmd_synchrone: CMD synchrone
     cmd_asynchrone: CMD asynchrone
+
+variety:
+    standard: Standard
+    non_standard: Non standard
