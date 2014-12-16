@@ -30,6 +30,7 @@ use Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety;
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -470,6 +471,16 @@ class FixtureCommand extends ContainerAwareCommand
                 $g->setName($genre);
                 $em->persist($g);
                 $output->writeln("Add new Genre (".$genre.")");
+            }
+        }
+
+        $varieties = array("variety.standard", "variety.non_standard");
+        foreach ($varieties as $variety) {
+            if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Variety')->findOneByName($variety)) {
+                $v = new Variety();
+                $v->setName($variety);
+                $em->persist($v);
+                $output->writeln("Add new Variety (".$variety.")");
             }
         }
 

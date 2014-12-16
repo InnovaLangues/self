@@ -196,6 +196,8 @@ editor:
         cognitive_secondary: Opérations cognitives secondaires
         channel: Canal
         sourceType: Nature de l'objet de la question
+        genre: Genre
+        variety: Variété
 
     log:
         editor_create: Création de
@@ -282,9 +284,9 @@ register:
     informal: Informel
 
 reception:
-    listener_monodirectional:
-    listener_pluridirectional:
-    performer:
+    listener_monodirectional: En tant qu'auditeur - monodirectionnel
+    listener_pluridirectional: En tant qu'auditeur - bi/pluri-directionnel
+    performer: En tant qu'interactant
 
 length:
     short: Court
@@ -349,3 +351,7 @@ genre:
     conversational: Conversationnel
     cmd_synchrone: CMD synchrone
     cmd_asynchrone: CMD asynchrone
+
+variety:
+    standard: Standard
+    non_standard: Non standard

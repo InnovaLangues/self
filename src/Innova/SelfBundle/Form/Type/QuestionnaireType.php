@@ -102,6 +102,16 @@ class QuestionnaireType extends AbstractType
                 'required' => false,
             ));
 
+        $builder->add('varieties', 'entity', array(
+                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Variety',
+                'property' => 'name',
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'varieties',  'size' => 2),
+                'label'  => 'editor.identity.variety',
+                'translation_domain' => 'messages',
+                'multiple' => true,
+                'required' => false,
+            ));
+
         $builder->add('sourceMore', 'textarea', array(
                 'attr' => array('class' => 'form-control identity-select', 'data-field' => 'sourceMore'),
                 'label'  => 'editor.identity.source.more',
