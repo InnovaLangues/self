@@ -1,6 +1,7 @@
 <div id="identity-container">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     <div class="panel panel-info">
+
         <div class="panel-heading">
             <h3 class="panel-title">
             {{ 'editor.task.identity' | trans }}
@@ -9,43 +10,25 @@
 
         <div class="panel-body">
             <div class="row">
+                <form id="questionnaire-identity">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
 
-            <form id="questionnaire-identity">
-
-                <div class="col-md-12">
-                    <div class="col-md-6">
-                        <div class="panel panel-default ">
-                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-status">{{ 'editor.identity.status' | trans }}</div>
-                            <div id="identity-status" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                    {{ form_widget(form.status) }}
+                            <div class="panel panel-default ">
+                                <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-status">{{ 'editor.identity.status' | trans }}</div>
+                                <div id="identity-status" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                        {{ form_widget(form.status) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-default ">
-                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-language">{{ 'editor.identity.language' | trans }}</div>
-                            <div id="identity-language" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                    {{ form_widget(form.language) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-12">
-                    <!-- gauche -->
-                    <div class="col-md-6">
-                        <div class="panel panel-default ">
-                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-level">Niveau</div>
-                            <div id="identity-level" class="panel-collapse collapse">
-                                <div class="panel-body">
+                            <div class="panel panel-default ">
+                                <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-level">Niveau</div>
+                                <div id="identity-level" class="panel-collapse collapse">
+                                    <div class="panel-body">
                                         <div class="form-group">
                                         {{ form_label(form.level) }}
                                         {{ form_widget(form.level) }}
@@ -54,95 +37,112 @@
                                         {{ form_label(form.levelProof) }}
                                         {{ form_widget(form.levelProof) }}
                                         </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-default ">
-                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-source">Source</div>
-                            <div id="identity-source" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                    {{ form_label(form.source) }}
-                                    {{ form_widget(form.source) }}
-                                    </div>
-                                    <div class="form-group">
-                                    {{ form_label(form.sourceOperation) }}
-                                    {{ form_widget(form.sourceOperation) }}
-                                    </div>
-                                    <div class="form-group">
-                                    {{ form_label(form.sourceMore) }}
-                                    {{ form_widget(form.sourceMore) }}
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-12">
-                    <div class="col-md-6">
-                        <div class="panel panel-default ">
-                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-misc">Objet de la question</div>
-                            <div id="identity-misc" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    
-                                    <div class="form-group">
-                                    {{ form_label(form.sourceTypes) }}
-                                    {{ form_widget(form.sourceTypes) }}
+                            <div class="panel panel-default ">
+                                <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-misc">Objet de la question</div>
+                                <div id="identity-misc" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                        {{ form_label(form.sourceTypes) }}
+                                        {{ form_widget(form.sourceTypes) }}
+                                        </div>
+
+                                        <div class="form-group">
+                                        {{ form_label(form.domain) }}
+                                        {{ form_widget(form.domain) }}
+                                        </div>
+
+                                        <div class="form-group">
+                                        {{ form_label(form.register) }}
+                                        {{ form_widget(form.register) }}
+                                        </div>
+
+                                        <div class="form-group">
+                                        {{ form_label(form.reception) }}
+                                        {{ form_widget(form.reception) }}
+                                        </div>
+
+                                        <div class="form-group">
+                                        {{ form_label(form.length) }}
+                                        {{ form_widget(form.length) }}
+                                        </div>
+
+                                        <div class="form-group">
+                                        {{ form_label(form.flow) }}
+                                        {{ form_widget(form.flow) }}
+                                        </div>
+
+                                        <div class="form-group">
+                                        {{ form_label(form.channels) }}
+                                        {{ form_widget(form.channels) }}
+                                        </div>
+
+                                        <div class="form-group">
+                                        {{ form_label(form.genres) }}
+                                        {{ form_widget(form.genres) }}
+                                        </div>
+
+                                        <div class="form-group">
+                                        {{ form_label(form.varieties) }}
+                                        {{ form_widget(form.varieties) }}
+                                        </div>
                                     </div>
-
-                                    <div class="form-group">
-                                    {{ form_label(form.domain) }}
-                                    {{ form_widget(form.domain) }}
-                                    </div>
-
-                                    <div class="form-group">
-                                    {{ form_label(form.register) }}
-                                    {{ form_widget(form.register) }}
-                                    </div>
-
-                                    <div class="form-group">
-                                    {{ form_label(form.reception) }}
-                                    {{ form_widget(form.reception) }}
-                                    </div>
-
-                                    <div class="form-group">
-                                    {{ form_label(form.length) }}
-                                    {{ form_widget(form.length) }}
-                                    </div>
-
-                                    <div class="form-group">
-                                    {{ form_label(form.flow) }}
-                                    {{ form_widget(form.flow) }}
-                                    </div>
-
-                                    <div class="form-group">
-                                    {{ form_label(form.channels) }}
-                                    {{ form_widget(form.channels) }}
-                                    </div>
-
-                                    <div class="form-group">
-                                    {{ form_label(form.genres) }}
-                                    {{ form_widget(form.genres) }}
-                                    </div>
-
-                                    <div class="form-group">
-                                    {{ form_label(form.varieties) }}
-                                    {{ form_widget(form.varieties) }}
-                                    </div>
-
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="panel panel-default ">
-                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-right">Droits d'auteur</div>
-                            <div id="identity-right" class="panel-collapse collapse">
-                                <div class="panel-body">
+                            <div class="panel panel-default ">
+                                <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-author">{{ 'editor.identity.authorMore' | trans }}</div>
+                                <div id="identity-author" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                        {{ form_widget(form.authorMore) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- col-md-6-->
+
+                        <div class="col-md-6">
+
+                            <div class="panel panel-default ">
+                                <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-language">{{ 'editor.identity.language' | trans }}</div>
+                                <div id="identity-language" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                        {{ form_widget(form.language) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default ">
+                                <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-source">Source</div>
+                                <div id="identity-source" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                        {{ form_label(form.source) }}
+                                        {{ form_widget(form.source) }}
+                                        </div>
+                                        <div class="form-group">
+                                        {{ form_label(form.sourceOperation) }}
+                                        {{ form_widget(form.sourceOperation) }}
+                                        </div>
+                                        <div class="form-group">
+                                        {{ form_label(form.sourceMore) }}
+                                        {{ form_widget(form.sourceMore) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default ">
+                                <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-right">Droits d'auteur</div>
+                                <div id="identity-right" class="panel-collapse collapse">
+                                    <div class="panel-body">
                                         <div class="form-group">
                                         {{ form_label(form.authorRight) }}
                                         {{ form_widget(form.authorRight) }}
@@ -151,51 +151,38 @@
                                         {{ form_label(form.authorRightMore) }}
                                         {{ form_widget(form.authorRightMore) }}
                                         </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="col-md-6">
-                        <div class="panel panel-default ">
-                            <div class="panel-heading collapsed" data-toggle="collapse" href="#identity-author">{{ 'editor.identity.authorMore' | trans }}</div>
-                            <div id="identity-author" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                    {{ form_widget(form.authorMore) }}
                                     </div>
                                 </div>
                             </div>
+
+                        </div><!-- col md 6 -->
+                    </div><!-- col md 12 -->
+                        
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                        {{ 'editor.identity.createdby' | trans }}
+                         <strong>
+                            {% if questionnaire.author %}
+                               {{ questionnaire.author.username }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </strong>
+                        {% if questionnaire.revisors|length > 0 %}
+                            {{ 'editor.identity.revisedby' | trans }}
+                            {% for i, revisor in questionnaire.revisors %}
+                                <strong>{{ revisor.username }}</strong>{% if i < questionnaire.revisors|length -1 %}, {% endif %}
+                            {% endfor %}
+                        {% endif %}
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-12">
-                    <div class="alert alert-info" role="alert">
-                    {{ 'editor.identity.createdby' | trans }}
-                     <strong>
-                        {% if questionnaire.author %}
-                           {{ questionnaire.author.username }}
-                        {% else %}
-                            -
-                        {% endif %}
-                    </strong>
-                    {% if questionnaire.revisors|length > 0 %}
-                        {{ 'editor.identity.revisedby' | trans }}
-                        {% for i, revisor in questionnaire.revisors %}
-                            <strong>{{ revisor.username }}</strong>{% if i < questionnaire.revisors|length -1 %}, {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    </div>
-                </div>
+                    <input type="hidden" name="questionnaire[id]" value="{{ questionnaire.id }}"/>
+                    {{ form_widget(form._token) }}
 
-                <input type="hidden" name="questionnaire[id]" value="{{ questionnaire.id }}"/>
-                {{ form_widget(form._token) }}
-            </form>
+                </form>
+            </div> <!-- row -->
 
-            </div>
         </div>
     </div>
 </div>
