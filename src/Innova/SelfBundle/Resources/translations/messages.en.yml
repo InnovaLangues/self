@@ -331,3 +331,13 @@ sourceType:
     video: Vidéo
     text: Texte
     image: Image
+
+genre:
+    informative: Informative
+    argumentative: Argumentative
+    narrative: Narrative
+    descriptive: Descriptive
+    literary: Literary
+    conversational: Conversational
+    cmd_synchrone: CMD synchrone
+    cmd_asynchrone: CMD asynchrone

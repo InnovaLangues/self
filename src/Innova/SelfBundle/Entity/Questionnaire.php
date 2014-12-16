@@ -217,6 +217,12 @@ class Questionnaire
     protected $channels;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre", inversedBy="questionnaires")
+    * @ORM\JoinTable(name="questionnaires_genre")
+    */
+    protected $genres;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
     */
     protected $domain;
@@ -1256,5 +1262,38 @@ class Questionnaire
     public function getChannels()
     {
         return $this->channels;
+    }
+
+    /**
+     * Add genres
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres
+     * @return Questionnaire
+     */
+    public function addGenre(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres)
+    {
+        $this->genres[] = $genres;
+    
+        return $this;
+    }
+
+    /**
+     * Remove genres
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres
+     */
+    public function removeGenre(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres)
+    {
+        $this->genres->removeElement($genres);
+    }
+
+    /**
+     * Get genres
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGenres()
+    {
+        return $this->genres;
     }
 }

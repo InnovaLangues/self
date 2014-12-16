@@ -75,7 +75,7 @@ class QuestionnaireType extends AbstractType
         $builder->add('sourceTypes', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SourceType',
                 'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'source',  'size' => 4),
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'sourceTypes',  'size' => 4),
                 'label'  => 'editor.identity.sourceType',
                 'translation_domain' => 'messages',
                 'multiple' => true,
@@ -85,8 +85,18 @@ class QuestionnaireType extends AbstractType
         $builder->add('channels', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Channel',
                 'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'source',  'size' => 4),
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'channels',  'size' => 4),
                 'label'  => 'editor.identity.channel',
+                'translation_domain' => 'messages',
+                'multiple' => true,
+                'required' => false,
+            ));
+
+        $builder->add('genres', 'entity', array(
+                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Genre',
+                'property' => 'name',
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'genres',  'size' => 4),
+                'label'  => 'editor.identity.genre',
                 'translation_domain' => 'messages',
                 'multiple' => true,
                 'required' => false,

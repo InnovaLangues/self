@@ -29,6 +29,7 @@ use Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre;
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -458,6 +459,17 @@ class FixtureCommand extends ContainerAwareCommand
                 $c->setName($channel);
                 $em->persist($c);
                 $output->writeln("Add new Channel (".$channel.")");
+            }
+        }
+
+        $genres = array("genre.informative", "genre.argumentative", "genre.narrative", "genre.descriptive", "genre.literary", 
+                                    "genre.conversational", "genre.cmd_synchrone", "genre.cmd_asynchrone");
+        foreach ($genres as $genre) {
+            if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Genre')->findOneByName($genre)) {
+                $g = new Genre();
+                $g->setName($genre);
+                $em->persist($g);
+                $output->writeln("Add new Genre (".$genre.")");
             }
         }
 
