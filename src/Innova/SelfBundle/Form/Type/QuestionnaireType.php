@@ -53,7 +53,7 @@ class QuestionnaireType extends AbstractType
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class' => 'form-control identity-select', 'data-field' => 'authorRight'),
-                'label'  => 'editor.identity.author.right',
+                'label'  => 'editor.identity.author.right_status',
                 'translation_domain' => 'messages',
             ));
 

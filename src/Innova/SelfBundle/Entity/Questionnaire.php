@@ -1273,13 +1273,13 @@ class Questionnaire
     /**
      * Add genres
      *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres
      * @return Questionnaire
      */
     public function addGenre(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres)
     {
         $this->genres[] = $genres;
-    
+
         return $this;
     }
 
@@ -1296,7 +1296,7 @@ class Questionnaire
     /**
      * Get genres
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGenres()
     {
@@ -1306,13 +1306,13 @@ class Questionnaire
     /**
      * Add varieties
      *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
      * @return Questionnaire
      */
     public function addVarietie(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
     {
         $this->varieties[] = $varieties;
-    
+
         return $this;
     }
 
@@ -1329,7 +1329,7 @@ class Questionnaire
     /**
      * Get varieties
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getVarieties()
     {

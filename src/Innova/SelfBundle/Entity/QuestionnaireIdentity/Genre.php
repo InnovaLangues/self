@@ -39,7 +39,7 @@ class Genre
     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\Questionnaire", mappedBy="genres")
     */
     protected $questionnaires;
-    
+
     /**
      * Constructor
      */
@@ -47,11 +47,11 @@ class Genre
     {
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -61,20 +61,20 @@ class Genre
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Genre
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -84,20 +84,20 @@ class Genre
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string $description
      * @return Genre
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -107,13 +107,13 @@ class Genre
     /**
      * Add questionnaires
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      * @return Genre
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
         $this->questionnaires[] = $questionnaires;
-    
+
         return $this;
     }
 
@@ -130,7 +130,7 @@ class Genre
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuestionnaires()
     {

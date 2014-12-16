@@ -463,8 +463,8 @@ class FixtureCommand extends ContainerAwareCommand
             }
         }
 
-        $genres = array("genre.informative", "genre.argumentative", "genre.narrative", "genre.descriptive", "genre.literary", 
-                                    "genre.conversational", "genre.cmd_synchrone", "genre.cmd_asynchrone");
+        $genres = array("genre.informative", "genre.argumentative", "genre.narrative", "genre.descriptive", "genre.literary",
+                                    "genre.conversational", "genre.cmd_synchrone", "genre.cmd_asynchrone", );
         foreach ($genres as $genre) {
             if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Genre')->findOneByName($genre)) {
                 $g = new Genre();

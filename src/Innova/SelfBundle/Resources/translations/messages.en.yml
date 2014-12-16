@@ -165,7 +165,8 @@ editor:
         add_answer: Add an answer
     identity:
         level.proof: Level proof
-        author.right: Copyright status
+        author.right_status: Copyright status
+        author.right: Copyright
         author.right.more: More infos about copyright status
         source: Source
         source.operation: Source operation
