@@ -107,3 +107,12 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
+
+    self.eec.manager:
+        class: Innova\SelfBundle\Manager\EecManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            questionManager:        @self.question.manager
+            subquestionManager:     @self.subquestion.manager
+            propositionManager:     @self.proposition.manager
+            mediaManager:           @self.media.manager

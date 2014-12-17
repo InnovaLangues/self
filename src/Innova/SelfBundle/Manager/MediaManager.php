@@ -55,7 +55,7 @@ class MediaManager
         if ($mediaTypeName == "audio" || $mediaTypeName == "video") {
             $this->updateMediaLimit($questionnaire, $media, $mediaLimit);
         }
-
+        
         return $media;
     }
 
