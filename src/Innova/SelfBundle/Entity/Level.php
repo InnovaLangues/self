@@ -133,39 +133,6 @@ class Level
     }
 
     /**
-     * Add users
-     *
-     * @param  \Innova\SelfBundle\Entity\User $users
-     * @return Level
-     */
-    public function addUser(\Innova\SelfBundle\Entity\User $users)
-    {
-        $this->users[] = $users;
-
-        return $this;
-    }
-
-    /**
-     * Remove users
-     *
-     * @param \Innova\SelfBundle\Entity\User $users
-     */
-    public function removeUser(\Innova\SelfBundle\Entity\User $users)
-    {
-        $this->users->removeElement($users);
-    }
-
-    /**
-     * Get users
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
      * Add coLevels
      *
      * @param  \Innova\SelfBundle\Entity\User $coLevels
@@ -262,38 +229,5 @@ class Level
     public function getEeLevels()
     {
         return $this->eeLevels;
-    }
-
-    /**
-     * Add lastLevels
-     *
-     * @param  \Innova\SelfBundle\Entity\User $lastLevels
-     * @return Level
-     */
-    public function addLastLevel(\Innova\SelfBundle\Entity\User $lastLevels)
-    {
-        $this->lastLevels[] = $lastLevels;
-
-        return $this;
-    }
-
-    /**
-     * Remove lastLevels
-     *
-     * @param \Innova\SelfBundle\Entity\User $lastLevels
-     */
-    public function removeLastLevel(\Innova\SelfBundle\Entity\User $lastLevels)
-    {
-        $this->lastLevels->removeElement($lastLevels);
-    }
-
-    /**
-     * Get lastLevels
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLastLevels()
-    {
-        return $this->lastLevels;
     }
 }

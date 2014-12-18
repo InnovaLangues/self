@@ -45,7 +45,6 @@ class ExportManager
     {
         $fs = new Filesystem();
         $testId = $test->getId();
-        $csvContent = "";
 
         if ($tia == 0) {
             $tia = "";
@@ -481,13 +480,9 @@ class ExportManager
             $questionnaireId = $questionnaire->getId();
 
             $theme[$questionnaireId] = $questionnaire->getTheme();
-            $themeCode = substr($theme[$questionnaireId], -2);
             $questions = $questionnaire->getQuestions();
             $typology[$questionnaireId] = $questions[0]->getTypology()->getName();
 
-            if (!is_numeric($themeCode)) {
-                $themeCode = substr($theme[$questionnaireId], -1);
-            }
             if ($mode == "csv") {
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - NOM de ma TACHE");
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - Protocole d'interaction");

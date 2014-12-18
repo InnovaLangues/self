@@ -248,52 +248,6 @@ class Media
     }
 
     /**
-     * Set syllable
-     *
-     * @param  string $syllable
-     * @return Media
-     */
-    public function setSyllable($syllable)
-    {
-        $this->syllable = $syllable;
-
-        return $this;
-    }
-
-    /**
-     * Get syllable
-     *
-     * @return string
-     */
-    public function getSyllable()
-    {
-        return $this->syllable;
-    }
-
-    /**
-     * Set clue
-     *
-     * @param  string $clue
-     * @return Media
-     */
-    public function setClue($clue)
-    {
-        $this->clue = $clue;
-
-        return $this;
-    }
-
-    /**
-     * Get clue
-     *
-     * @return string
-     */
-    public function getClue()
-    {
-        return $this->clue;
-    }
-
-    /**
      * Set mediaPurpose
      *
      * @param  \Innova\SelfBundle\Entity\Media\MediaPurpose $mediaPurpose
