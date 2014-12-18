@@ -22,17 +22,11 @@ class SubquestionManager
         $subquestion = new Subquestion();
         $subquestion->setTypology($typology);
         $subquestion->setQuestion($question);
-        // Initialisation de cette zone à FALSE et non pas à TRUE fix #519
         $subquestion->setDisplayAnswer(false);
 
         $em->persist($subquestion);
         $em->flush();
 
         return $subquestion;
-    }
-
-    public function setIdentityField($subquestion, $field, $value)
-    {
-        return $this;
     }
 }
