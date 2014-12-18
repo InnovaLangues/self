@@ -122,39 +122,6 @@ class Skill
     }
 
     /**
-     * Add users
-     *
-     * @param  \Innova\SelfBundle\Entity\User $users
-     * @return Skill
-     */
-    public function addUser(\Innova\SelfBundle\Entity\User $users)
-    {
-        $this->users[] = $users;
-
-        return $this;
-    }
-
-    /**
-     * Remove users
-     *
-     * @param \Innova\SelfBundle\Entity\User $users
-     */
-    public function removeUser(\Innova\SelfBundle\Entity\User $users)
-    {
-        $this->users->removeElement($users);
-    }
-
-    /**
-     * Get users
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
      * Add typologys
      *
      * @param  \Innova\SelfBundle\Entity\Typology $typologys
