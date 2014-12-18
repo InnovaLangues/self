@@ -28,7 +28,6 @@ class ExportManager
     public function exportPdfAction(Test $test)
     {
         $testId = $test->getId();
-
         $pdfName = "self_export-pdf-test_".$testId."-".date("d-m-Y_H:i:s").'.pdf';
 
         // Appel de la vue et de la génération du PDF
@@ -113,7 +112,6 @@ class ExportManager
         $csv              = $preprocess[3];
         $typology      = $preprocess[4];
         $theme         = $preprocess[5];
-        $subquestionsId = $preprocess[6];
 
         $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnTest($testId);
         foreach ($users as $user) {
@@ -459,7 +457,6 @@ class ExportManager
         $csv = "";
         $typology = array();
         $theme = array();
-        $subquestionsId = array();
 
         if ($mode == "csv") {
             $csv .= $this->addColumn("Nom");
@@ -519,7 +516,6 @@ class ExportManager
                 $typologyName = $question->getTypology()->getName();
                 $subquestions = $question->getSubquestions();
                 foreach ($subquestions as $subquestion) {
-                    $subquestionsId[$subquestion->getId()] = $subquestion;
                     $rightProps["sub".$subquestion->getId()] = array();
                     $cptProposition = 0;
                     $propositions = $subquestion->getPropositions();
@@ -538,6 +534,6 @@ class ExportManager
 
         $csv .= "\n";
 
-        return array($propLetters, $rightProps, $result, $csv, $typology, $theme, $subquestionsId);
+        return array($propLetters, $rightProps, $result, $csv, $typology, $theme);
     }
 }

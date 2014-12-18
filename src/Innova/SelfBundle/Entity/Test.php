@@ -63,7 +63,6 @@ class Test
 
     public function __construct()
     {
-        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->actif = false;
     }

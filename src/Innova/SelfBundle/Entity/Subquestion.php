@@ -236,29 +236,6 @@ class Subquestion
     }
 
     /**
-     * Set mediaText
-     *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaText
-     * @return Subquestion
-     */
-    public function setMediaText(\Innova\SelfBundle\Entity\Media\Media $mediaText = null)
-    {
-        $this->mediaText = $mediaText;
-
-        return $this;
-    }
-
-    /**
-     * Get mediaText
-     *
-     * @return \Innova\SelfBundle\Entity\Media\Media
-     */
-    public function getMediaText()
-    {
-        return $this->mediaText;
-    }
-
-    /**
      * Set mediaAmorce
      *
      * @param  \Innova\SelfBundle\Entity\Media\Media $mediaAmorce
