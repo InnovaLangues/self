@@ -123,29 +123,6 @@ class Comment
     }
 
     /**
-     * Set mediaInstruction
-     *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaInstruction
-     * @return Comment
-     */
-    public function setMediaInstruction(\Innova\SelfBundle\Entity\Media\Media $mediaInstruction = null)
-    {
-        $this->mediaInstruction = $mediaInstruction;
-
-        return $this;
-    }
-
-    /**
-     * Get mediaInstruction
-     *
-     * @return \Innova\SelfBundle\Entity\Media\Media
-     */
-    public function getMediaInstruction()
-    {
-        return $this->mediaInstruction;
-    }
-
-    /**
      * Set description
      *
      * @param  \Innova\SelfBundle\Entity\Media\Media $description

@@ -144,11 +144,6 @@ class TaskController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
         $status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->findAll();
-
-        if (!$questionnaire) {
-            throw $this->createNotFoundException('Unable to find Questionnaire entity ! ');
-        }
-
         $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
         $taskInfosForm = $this->formFactory->createBuilder(new TaskInfosType(), $questionnaire)->getForm();
 

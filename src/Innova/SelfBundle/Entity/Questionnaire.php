@@ -253,11 +253,6 @@ class Questionnaire
     */
     protected $flow;
 
-    public function __construct()
-    {
-        $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
     public function __toString()
     {
         return $this->theme;
