@@ -118,7 +118,7 @@ class ExportManager
         $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnTest($testId);
         foreach ($users as $user) {
             $userId = $user->getId();
-            $score = $this->calculateScore($user, $test, $rightProps, $subquestionsId);
+            $score = $this->calculateScore($user, $test, $rightProps);
 
             $csv .= $this->addColumn($user->getUserName());
             $csv .= $this->addColumn($user->getFirstName());
@@ -329,7 +329,7 @@ class ExportManager
      * calculateScore function
      *
      */
-  private function calculateScore(User $user, Test $test, $rightProps, $subquestionId)
+  private function calculateScore(User $user, Test $test, $rightProps)
   {
       $em = $this->entityManager;
       $score = 0;

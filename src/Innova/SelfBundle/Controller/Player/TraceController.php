@@ -160,9 +160,7 @@ class TraceController
         $em = $this->entityManager;
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
-
         $typo = $subquestion->getTypology()->getName();
-        $displayAnswer = $subquestion->getDisplayAnswer();
 
         if ($typo == "TLQROC") {
             $propositions = $subquestion->getPropositions();
