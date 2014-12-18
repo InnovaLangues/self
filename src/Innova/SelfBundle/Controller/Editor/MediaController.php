@@ -105,7 +105,7 @@ class MediaController
         $request = $this->request->request;
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
-        $this->mediaManager->updateMedia($request->get('mediaId'), $request->get('url'), $request->get('name'), $request->get('description'), $questionnaire);
+        $this->mediaManager->updateMedia($request->get('mediaId'), $request->get('url'), $request->get('name'), $request->get('description'));
 
         switch ($request->get('toBeReloaded')) {
             case 'contexte':

@@ -55,11 +55,11 @@ class MediaManager
         if ($mediaTypeName == "audio" || $mediaTypeName == "video") {
             $this->updateMediaLimit($questionnaire, $media, $mediaLimit);
         }
-        
+
         return $media;
     }
 
-    public function updateMedia($mediaId, $url, $name, $description, Questionnaire $questionnaire)
+    public function updateMedia($mediaId, $url, $name, $description)
     {
         $em = $this->entityManager;
 

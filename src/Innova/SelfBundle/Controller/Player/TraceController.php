@@ -125,8 +125,6 @@ class TraceController
         $this->session->getFlashBag()->set('success', $this->translator->trans("trace.answer_saved", array(), "messages"));
 
         foreach ($post as $subquestionId => $postVar) {
-            print_r($postVar);
-
             // Cas classique
             if (is_array($postVar)) {
                 foreach ($postVar as $key => $propositionId) {
