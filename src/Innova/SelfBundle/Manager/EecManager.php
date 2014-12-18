@@ -3,6 +3,9 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Clue;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Media\Media;
 
 class EecManager
 {
@@ -21,7 +24,8 @@ class EecManager
         $this->mediaManager = $mediaManager;
     }
 
-    public function createListe($questionnaire){
+    public function createListe(Questionnaire $questionnaire)
+    {
         $em = $this->entityManager;
         // récupération des medias des distracteurs
         $i = 0;
@@ -73,10 +77,10 @@ class EecManager
         }
 
         return $questionnaire;
-   }
+    }
 
-   public function createLacune($questionnaire)
-   {
+    public function createLacune(Questionnaire $questionnaire)
+    {
         $em = $this->entityManager;
         // récupération des indices et syllabes
         $i = 0;
@@ -118,9 +122,9 @@ class EecManager
         }
 
         return $questionnaire;
-   }
+    }
 
-    public function createClue($questionnaire, $subquestion, $clueName)
+    public function createClue(Questionnaire $questionnaire, Subquestion $subquestion, $clueName)
     {
         $em = $this->entityManager;
 
@@ -165,7 +169,6 @@ class EecManager
         return $clue;
     }
 
-
     public function createSyllabe($syllable, $questionnaire, $subquestion)
     {
         $em = $this->entityManager;
@@ -186,7 +189,7 @@ class EecManager
         return $questionnaire;
     }
 
-    public function addDistractor($questionnaire)
+    public function addDistractor(Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
         $media = $this->mediaManager->createMedia($questionnaire, "texte", "", "", null, 0, "distractor");
@@ -202,7 +205,7 @@ class EecManager
         return $questionnaire;
     }
 
-    public function addDistractorMult($questionnaire, $subquestion)
+    public function addDistractorMult(Questionnaire $questionnaire, Subquestion $subquestion)
     {
         $em = $this->entityManager;
         $media = $this->mediaManager->createMedia($questionnaire, "texte", "", "", null, 0, "distractor");
@@ -216,8 +219,7 @@ class EecManager
         return $subquestion;
     }
 
-
-    public function editDistractor($media, $text)
+    public function editDistractor(Media $media, $text)
     {
         $em = $this->entityManager;
 
@@ -230,7 +232,7 @@ class EecManager
         return $media;
     }
 
-    public function getAnswers($subquestion)
+    public function getAnswers(Subquestion $subquestion)
     {
         $propositions = $subquestion->getPropositions();
         $answers = array();

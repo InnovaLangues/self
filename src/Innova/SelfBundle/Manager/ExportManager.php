@@ -4,7 +4,6 @@ namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
-use Innova\SelfBundle\Entity\Subquestion;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ExportManager
@@ -28,22 +27,15 @@ class ExportManager
 
     public function exportPdfAction(Test $test)
     {
-        $fs = new Filesystem();
         $testId = $test->getId();
-        $pdfContent = "";
 
         $pdfName = "self_export-pdf-test_".$testId."-".date("d-m-Y_H:i:s").'.pdf';
-        $pdfPathExport = $this->kernelRoot."/data/exportPdf/".$testId."/";
 
         // Appel de la vue et de la génération du PDF
         $this->knpSnappyPdf->generateFromHtml(
             $this->templating->render(
-                'InnovaSelfBundle:Export:templatePdf.html.twig',
-                array(
-                    'test' => $test,
-                )
-            ),
-            $this->kernelRoot."/data/exportPdf/".$test->getId()."/".$pdfName
+                'InnovaSelfBundle:Export:templatePdf.html.twig', array('test' => $test)),
+                $this->kernelRoot."/data/exportPdf/".$test->getId()."/".$pdfName
         );
 
         return $pdfName;
@@ -189,14 +181,14 @@ class ExportManager
                 foreach ($rightProps as $rightPropId) {
                     $found = false;
                     foreach ($answersArray[$subquestionId] as $answerProp) {
-                        if ($answerProp->getRightAnswer() == false) {
+                        if ($answerProp->getRightAnswer() === false) {
                             $subquestionOk = false;
                         }
                         if ($rightPropId == $answerProp->getId()) {
                             $found = true;
                         }
                     }
-                    if ($found == false) {
+                    if ($found === false) {
                         $subquestionOk = false;
                     }
                 }
@@ -338,7 +330,7 @@ class ExportManager
      * calculateScore function
      *
      */
-  private function calculateScore(User $user, Test $test, $rightProps, $subquestionsId)
+  private function calculateScore(User $user, Test $test, $rightProps, $subquestionId)
   {
       $em = $this->entityManager;
       $score = 0;
@@ -501,9 +493,6 @@ class ExportManager
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - Protocole d'interaction");
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - difficulté");
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - TEMPS");
-            } else {
-                //$csv .= $this->addColumn($theme[$questionnaireId] . " " . $typology[$questionnaireId] . " " . $cpt_questionnaire);
-                //$csv .= $this->addColumn($theme[$questionnaireId] . " " . $typology[$questionnaireId] . " " . $cpt_questionnaire);
             }
 
             if (count($questions) > 0) {

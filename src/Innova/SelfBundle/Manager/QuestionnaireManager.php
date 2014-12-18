@@ -81,7 +81,7 @@ class QuestionnaireManager
         return $isUnique;
     }
 
-    public function setIdentityField($questionnaire, $field, $value)
+    public function setIdentityField(Questionnaire $questionnaire, $field, $value)
     {
         $em = $this->entityManager;
 

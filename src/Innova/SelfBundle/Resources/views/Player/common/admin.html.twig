@@ -13,7 +13,7 @@
             {% else %}
                 {% set theme = 'editor.task.unnamed' | trans %}
             {% endif %}
-            
+
                 <div class="btn-group" role="group">
                     <a class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ typo }}" href="{{ path('questionnaire_pick', { testId: test.id, questionnaireId: questionnaire.id }) }}">
                         {{ theme }}
@@ -22,7 +22,7 @@
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                 </div>
-           
+
         {% endfor %}
          </div>
     </div>

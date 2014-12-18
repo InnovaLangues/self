@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Innova\SelfBundle\Form\Type\SubquestionType;
-use Innova\SelfBundle\Entity\Subquestion;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**

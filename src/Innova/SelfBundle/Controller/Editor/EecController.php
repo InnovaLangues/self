@@ -142,8 +142,8 @@ class EecController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
         $syllable = $request->get('syllable');
-        
-        $this->eecManager->createSyllabe($syllable, $questionnaire,$subquestion);
+
+        $this->eecManager->createSyllabe($syllable, $questionnaire, $subquestion);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new JsonResponse(array());
