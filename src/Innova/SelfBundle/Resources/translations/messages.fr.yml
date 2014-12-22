@@ -170,6 +170,9 @@ editor:
         proposition: Proposition
         associated_answer: Réponse associée
         add_answer: Ajouter une réponse
+    eec:
+        distractor_delete: Suppression d'un distracteur
+        distractor_delete_confirm: Êtes-vous sûr de vouloir supprimer le distracteur ?
     identity:
         level.proof: Justificatif du niveau
         author.right_status: Status du droit d'auteur
