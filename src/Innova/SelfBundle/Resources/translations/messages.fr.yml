@@ -173,6 +173,8 @@ editor:
     eec:
         distractor_delete: Suppression d'un distracteur
         distractor_delete_confirm: Êtes-vous sûr de vouloir supprimer le distracteur ?
+        blank_delete: Suppression d'un texte lacunaire
+        blank_delete_confirm: Êtes-vous sûr de vouloir supprimer le texte lacunaire ?
     identity:
         level.proof: Justificatif du niveau
         author.right_status: Status du droit d'auteur

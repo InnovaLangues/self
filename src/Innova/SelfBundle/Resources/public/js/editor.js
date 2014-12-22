@@ -210,8 +210,13 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '#delete-blank-text',function(e){
+        $("#modal-confirm-blank-delete").modal('show');
+    });
+
+    $('body').on('click', '#confirm-blank-delete',function(e){
         setParamForRequest("questionnaire", "blank-text", questionnaireId, "subquestion-container");
         unlinkMedia();
+        $("#modal-confirm-blank-delete").modal('hide');
     });
 
     $('body').on('blur', '.eec-distractor',function(e){
