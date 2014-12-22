@@ -210,8 +210,13 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '#delete-blank-text',function(e){
-            setParamForRequest("questionnaire", "blank-text", questionnaireId, "subquestion-container");
-            unlinkMedia();
+        $("#modal-confirm-blank-delete").modal('show');
+    });
+
+    $('body').on('click', '#confirm-blank-delete',function(e){
+        setParamForRequest("questionnaire", "blank-text", questionnaireId, "subquestion-container");
+        unlinkMedia();
+        $("#modal-confirm-blank-delete").modal('hide');
     });
 
     $('body').on('blur', '.eec-distractor',function(e){
@@ -219,11 +224,17 @@ $(document).ready(function() {
         var text =  $(this).val();
         editDistractor(mediaId, text);
     });
+        
+    $('body').on('click', '.eec-distractor-delete',function(e){
+        $("#confirm-distractor-delete").data("proposition-id", $(this).data("proposition-id"));
+        $("#modal-confirm-distractor-delete").modal('show');
+    });
 
-    $('body').on('click', ' .eec-distractor-delete',function(e){
+    $('body').on('click', '#confirm-distractor-delete',function(e){
         var propositionId = $(this).data("proposition-id");
         setParamForRequest("proposition", "distractor", propositionId, "subquestion-container");
         unlinkMedia();
+        $("#modal-confirm-distractor-delete").modal('hide');
     });
 
     $('body').on('click', ' .btn-display-answers',function(e){

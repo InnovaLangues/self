@@ -163,6 +163,11 @@ editor:
         proposition: Option
         associated_answer: Related answer
         add_answer: Add an answer
+    eec:
+        distractor_delete: Delete a distractor
+        distractor_delete_confirm: Are you sure you want to delete this distractor ?
+        blank_delete: Delete a blank text
+        blank_delete_confirm: Are you sure you want to delete this blank text ?
     identity:
         level.proof: Level proof
         author.right_status: Copyright status
