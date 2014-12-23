@@ -21,6 +21,10 @@
                 {{ 'editor.task.unnamed' | trans }}
             {% endif %}
 
+            {% if order.questionnaire.questions is not empty and order.questionnaire.questions[0].typology is not null %}
+                <span class="text-muted">({{ order.questionnaire.questions[0].typology.name }})</span>
+            {% endif %}
+
             <span class="buttons">
                 <a toggle="tooltip" data-original-title="{{ 'generic.player' | trans }}" class="btn btn-default btn-sm" href="{{ path('questionnaire_pick', { testId: order.test.id, questionnaireId: order.questionnaire.id }) }}">
                     <span class="glyphicon glyphicon-play"></span>
