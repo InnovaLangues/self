@@ -37,13 +37,6 @@ class Proposition
     protected $media;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
-     */
-    private $title;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="rightAnswer", type="boolean")
@@ -66,29 +59,6 @@ class Proposition
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param  string      $title
-     * @return Proposition
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**

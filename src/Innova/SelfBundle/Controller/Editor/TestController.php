@@ -82,6 +82,8 @@ class TestController extends Controller
         $em->persist($test);
         $em->flush();
 
+        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a été créé');
+
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
 
@@ -156,4 +158,24 @@ class TestController extends Controller
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
+
+    /**
+     * duplicate a test entity.
+     *
+     * @Route("/test/{testId}/duplicate", name="editor_test_duplicate")
+     * @Method("GET")
+     * @Template("")
+     */
+    public function duplicateTestAction($testId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $this->get("self.test.manager")->duplicate($test);
+        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a été dupliqué');
+
+        return $this->redirect($this->generateUrl('editor_tests_show'));
+    }
+
+
 }

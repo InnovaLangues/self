@@ -14,8 +14,18 @@ class QuestionnaireManager
     protected $questionnaireRevisorsManager;
     protected $templating;
     protected $formFactory;
+    protected $mediaManager;
+    protected $questionManager;
 
-    public function __construct($entityManager, $securityContext, $questionnaireRevisorsManager, $templating, $formFactory)
+    public function __construct(
+        $entityManager, 
+        $securityContext, 
+        $questionnaireRevisorsManager, 
+        $templating, 
+        $formFactory,
+        $mediaManager,
+        $questionManager
+    )
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
@@ -23,6 +33,8 @@ class QuestionnaireManager
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
         $this->templating = $templating;
         $this->formFactory = $formFactory;
+        $this->mediaManager = $mediaManager;
+        $this->questionManager = $questionManager;
     }
 
     public function createQuestionnaire()
@@ -32,7 +44,6 @@ class QuestionnaireManager
         $questionnaire = new Questionnaire();
         $questionnaire->setTheme("");
         $questionnaire->setTextTitle("");
-        $questionnaire->setListeningLimit(0);
         $questionnaire->setDialogue(0);
         $questionnaire->setFixedOrder(0);
         $questionnaire->setStatus($em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->find(1));
@@ -126,5 +137,54 @@ class QuestionnaireManager
         $em->flush();
 
         return new JsonResponse(array());
+    }
+
+    public function duplicate($task)
+    {
+        $em = $this->entityManager;
+
+        $newTask = new Questionnaire();
+        $newTask->setLevel($task->getLevel());
+        $newTask->setAuthor($task->getAuthor());
+        $newTask->setAuthorMore($task->getAuthorMore());
+        $newTask->setLanguageLevel($task->getLanguageLevel());
+        $newTask->setStatus($task->getStatus());
+        $newTask->setTheme($task->getTheme());
+        $newTask->setTextTitle($task->getTextTitle());
+        $newTask->setDialogue($task->getDialogue());
+        $newTask->setFixedOrder($task->getFixedOrder());
+        $newTask->setLanguage($task->getLanguage());
+        $newTask->setSkill($task->getSkill());
+        $newTask->setLevelProof($task->getLevelProof());
+        $newTask->setAuthorRight($task->getAuthorRight());
+        $newTask->setAuthorRightMore($task->getAuthorRightMore());
+        $newTask->setSource($task->getSource());
+        $newTask->setSourceMore($task->getSourceMore());
+        $newTask->setSourceOperation($task->getSourceOperation());
+        $newTask->setDomain($task->getDomain());
+        $newTask->setRegister($task->getRegister());
+        $newTask->setReception($task->getReception());
+        $newTask->setLength($task->getLength());
+        $newTask->setFlow($task->getFlow());
+        $newTask->setMediaInstruction($this->mediaManager->duplicate($task->getMediaInstruction(), $newTask));
+        $newTask->setMediaContext($this->mediaManager->duplicate($task->getMediaContext(), $newTask));
+        $newTask->setMediaText($this->mediaManager->duplicate($task->getMediaText(), $newTask));
+        $newTask->setMediaFunctionalInstruction($this->mediaManager->duplicate($task->getMediaFunctionalInstruction(), $newTask));
+        $newTask->setMediaFeedback($this->mediaManager->duplicate($task->getMediaFeedback(), $newTask));
+        $newTask->setMediaBlankText($this->mediaManager->duplicate($task->getMediaBlankText(), $newTask));
+        $newTask->addSourceTypes($task->getSourceTypes());
+        $newTask->addChannels($task->getChannels());
+        $newTask->addGenres($task->getGenres());
+        $newTask->addVarieties($task->getVarieties());
+
+        $questions = $task->getQuestions();
+        foreach ($questions as $question) {
+            $this->questionManager->duplicate($question, $newTask);
+        }
+
+        $em->persist($newTask);
+        $em->flush();
+
+        return $newTask;
     }
 }

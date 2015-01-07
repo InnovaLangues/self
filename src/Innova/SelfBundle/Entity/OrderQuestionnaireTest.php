@@ -22,7 +22,7 @@ class OrderQuestionnaireTest
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Test", inversedBy="orderQuestionnaireTests")
+    * @ORM\ManyToOne(targetEntity="Test", inversedBy="orderQuestionnaireTests", cascade={"persist"})
     */
     protected $test;
 

@@ -86,6 +86,7 @@ editor:
         create: Create a test
         create_the: Create the test
         delete: Delete the test
+        duplicate: Duplicate the test
         list: List of tests
         name: Name of test
         language: Language

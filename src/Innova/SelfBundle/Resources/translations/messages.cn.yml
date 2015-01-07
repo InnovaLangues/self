@@ -82,6 +82,7 @@ generic:
 editor:
     test:
         create: Créer un test
+        duplicate: Dupliquer le test
         list: Liste des tests
         name: Nom du test
         language: Langue

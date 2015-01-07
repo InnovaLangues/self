@@ -61,6 +61,16 @@ class Test
     */
     private $orderQuestionnaireTests;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Test", inversedBy="copies")
+    */
+    protected $testOrigin;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Test", mappedBy="testOrigin")
+    */
+    protected $copies;
+
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
@@ -282,5 +292,61 @@ class Test
     public function getOrderQuestionnaireTests()
     {
         return $this->orderQuestionnaireTests;
+    }
+
+    /**
+     * Set testOrigin
+     *
+     * @param \Innova\SelfBundle\Entity\Test $testOrigin
+     * @return Test
+     */
+    public function setTestOrigin(\Innova\SelfBundle\Entity\Test $testOrigin = null)
+    {
+        $this->testOrigin = $testOrigin;
+    
+        return $this;
+    }
+
+    /**
+     * Get testOrigin
+     *
+     * @return \Innova\SelfBundle\Entity\Test 
+     */
+    public function getTestOrigin()
+    {
+        return $this->testOrigin;
+    }
+
+    /**
+     * Add copies
+     *
+     * @param \Innova\SelfBundle\Entity\Test $copies
+     * @return Test
+     */
+    public function addCopie(\Innova\SelfBundle\Entity\Test $copies)
+    {
+        $this->copies[] = $copies;
+    
+        return $this;
+    }
+
+    /**
+     * Remove copies
+     *
+     * @param \Innova\SelfBundle\Entity\Test $copies
+     */
+    public function removeCopie(\Innova\SelfBundle\Entity\Test $copies)
+    {
+        $this->copies->removeElement($copies);
+    }
+
+    /**
+     * Get copies
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCopies()
+    {
+        return $this->copies;
     }
 }

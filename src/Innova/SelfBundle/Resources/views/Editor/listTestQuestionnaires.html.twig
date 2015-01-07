@@ -41,6 +41,21 @@
     </div>
 </div>
 
+{% if test.copies|length > 0 %}
+    <div class="alert alert-info" role="alert">
+        Copies de ce test :
+        {% for copy in test.copies %}
+            <a href="{{ path('editor_test_questionnaires_show', { 'testId': copy.id }) }}"><i>{{ copy.name }}</i></a> -
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if test.testOrigin %}
+    <div class="alert alert-info" role="alert">
+        Ce test est une copie de <a href="{{ path('editor_test_questionnaires_show', { 'testId': test.testOrigin.id }) }}"><i>{{ test.testOrigin.name }}</i></a>.
+    </div>
+{% endif %}
+
 <div id="add-task-modal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">

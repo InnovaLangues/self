@@ -22,7 +22,7 @@ class Question
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="questions")
+    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="questions", cascade={"persist"})
     */
     protected $questionnaire;
 
@@ -35,11 +35,6 @@ class Question
     * @ORM\OneToMany(targetEntity="Subquestion", mappedBy="question", cascade={"persist", "remove"})
     */
     protected $subquestions;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
-    protected $media;
 
     /**
      * Constructor
@@ -136,28 +131,5 @@ class Question
     public function getSubquestions()
     {
         return $this->subquestions;
-    }
-
-    /**
-     * Set media
-     *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $media
-     * @return Question
-     */
-    public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
-    {
-        $this->media = $media;
-
-        return $this;
-    }
-
-    /**
-     * Get media
-     *
-     * @return \Innova\SelfBundle\Entity\Media\Media
-     */
-    public function getMedia()
-    {
-        return $this->media;
     }
 }

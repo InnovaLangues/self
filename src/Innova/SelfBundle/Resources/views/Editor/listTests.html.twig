@@ -12,6 +12,11 @@
     Il n'y a aucun test de créé actuellement.
 {% else %}
 
+{% for flashMessage in app.session.flashbag.get('success') %}
+    <div class="alert alert-success">{{ flashMessage }}</div>
+{% endfor %}
+
+
 <h3>{{ 'editor.test.list' | trans }}</h3>
 <table class="table table-striped">
     <thead>

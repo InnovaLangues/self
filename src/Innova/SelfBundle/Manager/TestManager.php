@@ -2,15 +2,21 @@
 
 namespace Innova\SelfBundle\Manager;
 
+use Innova\SelfBundle\Entity\Test;
+
 class TestManager
 {
     protected $entityManager;
     protected $securityContext;
+    protected $questionnaireManager;
+    protected $orderQuestionnaireTestManager;
 
-    public function __construct($entityManager, $securityContext)
+    public function __construct($entityManager, $securityContext, $questionnaireManager, $orderQuestionnaireTestManager)
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
+        $this->questionnaireManager = $questionnaireManager;
+        $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
     }
 
     public function getTestsProgress($tests)
@@ -48,5 +54,31 @@ class TestManager
         $this->entityManager->flush();
 
         return $isFavorite;
+    }
+
+    public function duplicate($test)
+    {
+        $name = $test->getName();
+        $actif = $test->getActif();
+        $language = $test->getLanguage();
+        $orderedTasks = $test->getOrderQuestionnaireTests();
+
+        $newTest = new Test;
+        $newTest->setName("Copie de ".$name);
+        $newTest->setActif($actif);
+        $newTest->setLanguage($language);
+        $newTest->setTestOrigin($test);
+
+        foreach ($orderedTasks as $orderedTask) {
+            $task = $orderedTask->getQuestionnaire();
+            $newTask = $this->questionnaireManager->duplicate($task);
+            $newOrderedTask = $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($newTest, $newTask);
+            $newTest->addOrderQuestionnaireTest($newOrderedTask);
+        }
+
+        $this->entityManager->persist($newTest);
+        $this->entityManager->flush();
+
+        return $newTest;
     }
 }

@@ -34,7 +34,8 @@
     <div class="form-group ">
         <div class="pull-right">
             <input  value="{{'editor.test.delete' | trans }}" class="btn btn-danger" data-toggle="modal" data-target="#delete-test-modal">
-            <input type="submit" value="{{ 'generic.save' | trans }}" class="btn btn-primary">
+            <a href="{{ path('editor_test_duplicate', { 'testId': test.id }) }}" class="btn btn-default">{{'editor.test.duplicate' | trans }}</a> 
+            <input type="submit" value="{{ 'generic.save' | trans }}" class="btn btn-default">
         </div>
     </div>
 </form>
@@ -43,16 +44,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'generic.close' | trans }}</span></button>
-            <h4 class="modal-title">Suppression de test du test </h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'generic.close' | trans }}</span></button>
+                <h4 class="modal-title">Suppression du test </h4>
             </div>
             <div class="modal-body">
                 <p>Êtes vous sûr de vouloir supprimer le test <strong>{{ test.name }}</strong> ?</p>
                 <p>Ceci supprimera le test, les traces et réponses liées à ce test, ainsi que le nombre d'écoutes des médias pour ce test.</p>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.no' | trans }}</button>
-            <a href="{{ path('editor_test_delete', { 'testId': test.id }) }}" data-method="delete" id="delete-confirm" type="button" class="btn btn-danger rest">Oui, supprimer le test</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.no' | trans }}</button>
+                <a href="{{ path('editor_test_delete', { 'testId': test.id }) }}" data-method="delete" id="delete-confirm" type="button" class="btn btn-danger rest">Oui, supprimer le test</a>
             </div>
         </div>
     </div>

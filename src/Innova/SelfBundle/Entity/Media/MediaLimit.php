@@ -27,7 +27,7 @@ class MediaLimit
     protected $media;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire", inversedBy="mediaLimits")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire", inversedBy="mediaLimits", cascade={"persist"})
     */
     protected $questionnaire;
 
