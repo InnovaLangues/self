@@ -179,7 +179,7 @@ class QuestionnaireManager
 
         $questions = $task->getQuestions();
         foreach ($questions as $question) {
-            $newQuestion = $this->questionManager->duplicate($question, $newTask);
+            $this->questionManager->duplicate($question, $newTask);
         }
 
         $em->persist($newTask);

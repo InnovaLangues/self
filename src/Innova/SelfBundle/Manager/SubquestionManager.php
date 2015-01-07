@@ -24,7 +24,7 @@ class SubquestionManager
         $this->propositionManager = $propositionManager;
     }
 
-    public function createSubquestion(Typology $typology, Question $question)
+    public function createSubquestion(Typology $typology = null, Question $question)
     {
         $em = $this->entityManager;
 
@@ -64,7 +64,7 @@ class SubquestionManager
 
         $propositions = $subquestion->getPropositions();
         foreach ($propositions as $proposition) {
-            $newProposition = $this->propositionManager->duplicate($proposition, $newSubquestion);
+            $this->propositionManager->duplicate($proposition, $newSubquestion);
         }
         $em->persist($newSubquestion);
         $em->flush();

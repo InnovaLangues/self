@@ -54,7 +54,7 @@ class QuestionManager
 
         $subquestions = $question->getSubquestions();
         foreach ($subquestions as $subquestion) {
-            $newSubquestion = $this->subquestionManager->duplicate($subquestion, $newQuestion);
+            $this->subquestionManager->duplicate($subquestion, $newQuestion);
         }
         $em->persist($newQuestion);
         $em->flush();
