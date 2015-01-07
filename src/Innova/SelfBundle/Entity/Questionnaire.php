@@ -92,13 +92,6 @@ class Questionnaire
      /**
      * @var integer
      *
-     * @ORM\Column(name="listeningLimit", type="integer")
-     */
-    private $listeningLimit;
-
-     /**
-     * @var integer
-     *
      * @ORM\Column(name="dialogue", type="integer")
      */
     private $dialogue;
@@ -447,29 +440,6 @@ class Questionnaire
     public function getAuthor()
     {
         return $this->author;
-    }
-
-    /**
-     * Set listeningLimit
-     *
-     * @param  integer       $listeningLimit
-     * @return Questionnaire
-     */
-    public function setListeningLimit($listeningLimit)
-    {
-        $this->listeningLimit = $listeningLimit;
-
-        return $this;
-    }
-
-    /**
-     * Get listeningLimit
-     *
-     * @return integer
-     */
-    public function getListeningLimit()
-    {
-        return $this->listeningLimit;
     }
 
     /**
@@ -1213,6 +1183,19 @@ class Questionnaire
     }
 
     /**
+     * Add sourceTypes collection
+     */
+    public function addSourceTypes($sourceTypes)
+    {
+        foreach ($sourceTypes as $sourceType) {
+            $this->sourceTypes[] = $sourceType;
+        }
+
+        return $this;
+    }
+
+
+    /**
      * Remove sourceTypes
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
@@ -1241,6 +1224,18 @@ class Questionnaire
     public function addChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
     {
         $this->channels[] = $channels;
+
+        return $this;
+    }
+
+    /**
+     * Add channels collection
+     */
+    public function addChannels($channels)
+    {
+        foreach ($channels as $channel) {
+            $this->channels[] = $channel;
+        }
 
         return $this;
     }
@@ -1279,6 +1274,18 @@ class Questionnaire
     }
 
     /**
+     * Add genres collection
+     */
+    public function addGenres($genres)
+    {
+        foreach ($genres as $genre) {
+            $this->genres[] = $genre;
+        }
+
+        return $this;
+    }
+
+    /**
      * Remove genres
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres
@@ -1307,6 +1314,18 @@ class Questionnaire
     public function addVarietie(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
     {
         $this->varieties[] = $varieties;
+
+        return $this;
+    }
+
+    /**
+     * Add varieties collection
+     */
+    public function addVarieties($varieties)
+    {
+        foreach ($varieties as $variety) {
+            $this->varieties[] = $variety;
+        }
 
         return $this;
     }

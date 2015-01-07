@@ -66,4 +66,14 @@ class PropositionManager
 
         return $proposition;
     }
+
+    public function duplicate(Proposition $proposition, Subquestion $subquestion)
+    {
+        $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
+        $newMedia = $this->mediaManager->duplicate($proposition->getMedia(), $questionnaire);
+        
+        $newProposition = $this->createProposition($subquestion, $newMedia, $proposition->getRightAnswer());
+
+        return $newProposition;
+    }
 }

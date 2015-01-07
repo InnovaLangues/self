@@ -6,17 +6,22 @@ services:
             securityContext:    @security.context
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
             templating:         @templating
-            formFactory: @form.factory
+            formFactory:        @form.factory
+            mediaManager:       @self.media.manager
+            questionManager:    @self.question.manager
 
     self.question.manager:
         class: Innova\SelfBundle\Manager\QuestionManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            subquestionManager: @self.subquestion.manager
 
     self.subquestion.manager:
         class: Innova\SelfBundle\Manager\SubquestionManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            mediaManager:       @self.media.manager
+            propositionManager:    @self.proposition.manager
 
     self.order_questionnaire_test.manager:
         class: Innova\SelfBundle\Manager\OrderQuestionnaireTestManager
@@ -27,7 +32,7 @@ services:
         class: Innova\SelfBundle\Manager\PropositionManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            mediaManager:     @self.media.manager
+            mediaManager:       @self.media.manager
 
     self.media.manager:
         class: Innova\SelfBundle\Manager\MediaManager
@@ -107,6 +112,8 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
+            questionnaireManager: @self.questionnaire.manager
+            orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
 
     self.eec.manager:
         class: Innova\SelfBundle\Manager\EecManager

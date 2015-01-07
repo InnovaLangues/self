@@ -374,6 +374,18 @@ class Subquestion
     }
 
     /**
+     * Add focuses collection
+     */
+    public function addFocuses($focuses)
+    {
+        foreach ($focuses as $focus) {
+            $this->focuses[] = $focus;
+        }
+
+        return $this;
+    }
+
+    /**
      * Remove focuses
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
@@ -407,6 +419,18 @@ class Subquestion
     }
 
     /**
+     * Add cognitiveOpsMain collection
+     */
+    public function addCognitiveOpsMains($cognitiveOpsMain)
+    {
+        foreach ($cognitiveOpsMain as $cognitiveOpMain) {
+            $this->cognitiveOpsMain[] = $cognitiveOpMain;
+        }
+
+        return $this;
+    }
+
+    /**
      * Remove cognitiveOpsMain
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
@@ -435,6 +459,18 @@ class Subquestion
     public function addCognitiveOpsSecondary(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary)
     {
         $this->cognitiveOpsSecondary[] = $cognitiveOpsSecondary;
+
+        return $this;
+    }
+
+    /**
+     * Add cognitiveOpsSecondary collection
+     */
+    public function addCognitiveOpsSecondarys($cognitiveOpsSecondary)
+    {
+        foreach ($cognitiveOpsSecondary as $cognitiveOpSecondary) {
+            $this->cognitiveOpsSecondary[] = $cognitiveOpSecondary;
+        }
 
         return $this;
     }

@@ -8,10 +8,15 @@ use Innova\SelfBundle\Entity\Questionnaire;
 class QuestionManager
 {
     protected $entityManager;
+    protected $subquestionManager;
 
-    public function __construct($entityManager)
+    public function __construct(
+        $entityManager, 
+        $subquestionManager
+    )
     {
         $this->entityManager = $entityManager;
+        $this->subquestionManager = $subquestionManager;
     }
 
     public function createQuestion(Questionnaire $questionnaire)
@@ -38,5 +43,22 @@ class QuestionManager
         $em->refresh($question);
 
         return $question;
+    }
+
+    public function duplicate(Question $question, Questionnaire $questionnaire)
+    {
+        $em = $this->entityManager;
+
+        $newQuestion = $this->createQuestion($questionnaire);
+        $newQuestion->setTypology($question->getTypology());
+
+        $subquestions = $question->getSubquestions();
+        foreach ($subquestions as $subquestion) {
+            $newSubquestion = $this->subquestionManager->duplicate($subquestion, $newQuestion);
+        }
+        $em->persist($newQuestion);
+        $em->flush();
+
+        return $newQuestion;
     }
 }

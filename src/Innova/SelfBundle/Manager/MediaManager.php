@@ -93,4 +93,31 @@ class MediaManager
 
         return $mediaLimit;
     }
+
+    public function duplicate($media, $questionnaire)
+    {
+        if ($media) {
+            $em = $this->entityManager;
+
+            $newMedia = new Media();
+            $newMedia->setName($media->getName());
+            $newMedia->setUrl($media->getUrl());
+            $newMedia->setDescription($media->getDescription());
+            $newMedia->setMediaPurpose($media->getMediaPurpose());
+            $newMedia->setMediaType($media->getMediaType());
+            $em->persist($newMedia);
+
+            $limits = $media->getMediaLimits();
+            foreach ($limits as $limit) {
+                $newLimit = new MediaLimit();
+                $newLimit->setQuestionnaire($questionnaire);
+                $newLimit->setMedia($newMedia);
+                $newLimit->setListeningLimit($limit->getListeningLimit());
+                $em->persist($newLimit);
+            }
+            $em->flush();
+
+            return $newMedia;
+        }
+    }
 }
