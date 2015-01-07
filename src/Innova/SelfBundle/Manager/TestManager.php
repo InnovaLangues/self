@@ -67,6 +67,7 @@ class TestManager
         $newTest->setName("Copie de ".$name);
         $newTest->setActif($actif);
         $newTest->setLanguage($language);
+        $newTest->setTestOrigin($test);
 
         foreach ($orderedTasks as $orderedTask) {
             $task = $orderedTask->getQuestionnaire();
