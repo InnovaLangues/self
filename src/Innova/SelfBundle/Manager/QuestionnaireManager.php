@@ -18,15 +18,14 @@ class QuestionnaireManager
     protected $questionManager;
 
     public function __construct(
-        $entityManager, 
-        $securityContext, 
-        $questionnaireRevisorsManager, 
-        $templating, 
+        $entityManager,
+        $securityContext,
+        $questionnaireRevisorsManager,
+        $templating,
         $formFactory,
         $mediaManager,
         $questionManager
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
         $this->user = $this->securityContext->getToken()->getUser();

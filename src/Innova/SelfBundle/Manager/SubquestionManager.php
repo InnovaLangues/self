@@ -17,8 +17,7 @@ class SubquestionManager
         $entityManager,
         $mediaManager,
         $propositionManager
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
@@ -53,8 +52,8 @@ class SubquestionManager
         $newSubquestion->addFocuses($subquestion->getFocuses());
         $newSubquestion->addCognitiveOpsMains($subquestion->getCognitiveOpsMain());
         $newSubquestion->addCognitiveOpsSecondarys($subquestion->getCognitiveOpsSecondary());
-        
-        if($clue = $subquestion->getClue()){
+
+        if ($clue = $subquestion->getClue()) {
             $newClue = new Clue();
             $newClue->setClueType($clue->getClueType());
             $newClue->setMedia($this->mediaManager->duplicate($clue->getMedia(), $questionnaire));

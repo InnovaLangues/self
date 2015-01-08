@@ -11,10 +11,9 @@ class QuestionManager
     protected $subquestionManager;
 
     public function __construct(
-        $entityManager, 
+        $entityManager,
         $subquestionManager
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->subquestionManager = $subquestionManager;
     }

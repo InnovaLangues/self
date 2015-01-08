@@ -71,7 +71,7 @@ class PropositionManager
     {
         $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
         $newMedia = $this->mediaManager->duplicate($proposition->getMedia(), $questionnaire);
-        
+
         $newProposition = $this->createProposition($subquestion, $newMedia, $proposition->getRightAnswer());
 
         return $newProposition;

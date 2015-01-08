@@ -63,7 +63,7 @@ class TestManager
         $language = $test->getLanguage();
         $orderedTasks = $test->getOrderQuestionnaireTests();
 
-        $newTest = new Test;
+        $newTest = new Test();
         $newTest->setName("Copie de ".$name);
         $newTest->setActif($actif);
         $newTest->setLanguage($language);
