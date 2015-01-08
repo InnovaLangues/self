@@ -297,20 +297,20 @@ class Test
     /**
      * Set testOrigin
      *
-     * @param \Innova\SelfBundle\Entity\Test $testOrigin
+     * @param  \Innova\SelfBundle\Entity\Test $testOrigin
      * @return Test
      */
     public function setTestOrigin(\Innova\SelfBundle\Entity\Test $testOrigin = null)
     {
         $this->testOrigin = $testOrigin;
-    
+
         return $this;
     }
 
     /**
      * Get testOrigin
      *
-     * @return \Innova\SelfBundle\Entity\Test 
+     * @return \Innova\SelfBundle\Entity\Test
      */
     public function getTestOrigin()
     {
@@ -320,13 +320,13 @@ class Test
     /**
      * Add copies
      *
-     * @param \Innova\SelfBundle\Entity\Test $copies
+     * @param  \Innova\SelfBundle\Entity\Test $copies
      * @return Test
      */
     public function addCopie(\Innova\SelfBundle\Entity\Test $copies)
     {
         $this->copies[] = $copies;
-    
+
         return $this;
     }
 
@@ -343,7 +343,7 @@ class Test
     /**
      * Get copies
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCopies()
     {

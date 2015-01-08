@@ -1194,7 +1194,6 @@ class Questionnaire
         return $this;
     }
 
-
     /**
      * Remove sourceTypes
      *

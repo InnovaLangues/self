@@ -176,6 +176,4 @@ class TestController extends Controller
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
-
-
 }
