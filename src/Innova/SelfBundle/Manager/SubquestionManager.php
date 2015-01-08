@@ -62,7 +62,7 @@ class SubquestionManager
             $newSubquestion->setClue($newClue);
         }
 
-        $propositions = $subquestion->getPropositions();
+        $propositions = $em->getRepository('InnovaSelfBundle:Proposition')->getBySubquestionExcludingAnswers($subquestion->getId());
         foreach ($propositions as $proposition) {
             $this->propositionManager->duplicate($proposition, $newSubquestion);
         }

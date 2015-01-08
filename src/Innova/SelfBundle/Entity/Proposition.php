@@ -9,7 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table("proposition")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\PropositionRepository")
  */
+
 class Proposition
 {
     /**
