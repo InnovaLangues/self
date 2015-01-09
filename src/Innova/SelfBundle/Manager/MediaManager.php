@@ -94,7 +94,7 @@ class MediaManager
         return $mediaLimit;
     }
 
-    public function duplicate($media, $questionnaire)
+    public function duplicate(Media $media = null, Questionnaire $questionnaire)
     {
         if ($media) {
             $em = $this->entityManager;
