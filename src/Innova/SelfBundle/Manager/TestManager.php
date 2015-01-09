@@ -56,7 +56,7 @@ class TestManager
         return $isFavorite;
     }
 
-    public function duplicate($test)
+    public function duplicate(Test $test)
     {
         $name = $test->getName();
         $actif = $test->getActif();

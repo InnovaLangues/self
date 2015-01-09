@@ -138,7 +138,7 @@ class QuestionnaireManager
         return new JsonResponse(array());
     }
 
-    public function duplicate($task)
+    public function duplicate(Questionnaire $task)
     {
         $em = $this->entityManager;
 
