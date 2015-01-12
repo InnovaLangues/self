@@ -2,8 +2,19 @@
 
 {% block body -%}
 
-<a class="btn btn-default" href="{{ path('editor_tests_show') }}">
+<a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
     <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
+</a>
+<input value="{{'editor.test.delete' | trans }}" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-test-modal">
+<a href="{{ path('editor_test_duplicate', { 'testId': test.id }) }}" class="btn btn-sm btn-default">
+    {{'editor.test.duplicate' | trans }}
+</a>
+<a href="{{ path('editor_test_archive', { 'testId': test.id }) }}" class="btn btn-sm btn-default">
+    {% if test.isArchived %}
+        {{'editor.test.unarchive' | trans }}
+    {% else %}
+        {{'editor.test.archive' | trans }}
+    {% endif %}
 </a>
 
 <hr/>
@@ -33,8 +44,6 @@
 
     <div class="form-group ">
         <div class="pull-right">
-            <input  value="{{'editor.test.delete' | trans }}" class="btn btn-danger" data-toggle="modal" data-target="#delete-test-modal">
-            <a href="{{ path('editor_test_duplicate', { 'testId': test.id }) }}" class="btn btn-default">{{'editor.test.duplicate' | trans }}</a>
             <input type="submit" value="{{ 'generic.save' | trans }}" class="btn btn-default">
         </div>
     </div>

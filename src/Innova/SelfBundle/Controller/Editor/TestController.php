@@ -25,7 +25,7 @@ class TestController extends Controller
     public function listTestsAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
 
         return array(
             'tests' => $tests,
@@ -44,7 +44,24 @@ class TestController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $language = $em->getRepository('InnovaSelfBundle:Language')->find($languageId);
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findByLanguage($language);
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findBy(array("language" => $language, "archived" => false));
+
+        return array(
+            'tests' => $tests,
+        );
+    }
+
+    /**
+     * Lists archived Test entities.
+     *
+     * @Route("/tests/archived", name="editor_tests_archived_show")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
+     */
+    public function listArchivedTestsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findByArchived(true);
 
         return array(
             'tests' => $tests,
@@ -173,6 +190,30 @@ class TestController extends Controller
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $this->get("self.test.manager")->duplicate($test);
         $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a été dupliqué');
+
+        return $this->redirect($this->generateUrl('editor_tests_show'));
+    }
+
+    /**
+     * Archive a test entity.
+     *
+     * @Route("/test/{testId}/archive", name="editor_test_archive")
+     * @Method("GET")
+     * @Template("")
+     */
+    public function archiveTestAction($testId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $test = $this->get("self.test.manager")->toggleArchived($test);
+
+        if ($test->isArchived()) {
+            $msg = 'Le test '.$test->getName().' a été archivé';
+        } else {
+            $msg = 'Le test '.$test->getName().' a été désarchivé';
+        }
+        $this->get('session')->getFlashBag()->set('success', $msg);
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }

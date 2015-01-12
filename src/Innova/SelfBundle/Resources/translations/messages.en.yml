@@ -98,6 +98,9 @@ editor:
         all_tests: All tests
         remove_from_favorites: Remove from favorites
         add_to_favorites: Add to favorites
+        archive: Archive
+        unarchive: Unarchive
+        archived: Archived tests
     task:
         task: Task
         tasks: Tasks

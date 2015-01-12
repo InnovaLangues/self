@@ -34,6 +34,7 @@
                                         <a tabindex="-1" href="#">Tests</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
+                                            <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
                                             <li class="divider"></li>
                                             {% set languages = get_languages() %}
                                             {% for language in languages %}

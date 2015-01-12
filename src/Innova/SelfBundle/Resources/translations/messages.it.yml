@@ -99,6 +99,9 @@ editor:
         all_tests: Tutti i test
         remove_from_favorites: Rimuovi dai preferiti
         add_to_favorites: Aggiungi ai preferiti
+        archive: Archiviare
+        unarchive: Disarchiviare
+        archived: Test archiviati
     task:
         task: Task
         tasks: Task

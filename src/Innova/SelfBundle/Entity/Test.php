@@ -71,6 +71,13 @@ class Test
     */
     protected $copies;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="archived", type="boolean")
+     */
+    private $archived;
+
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
@@ -348,5 +355,28 @@ class Test
     public function getCopies()
     {
         return $this->copies;
+    }
+
+    /**
+     * Set archived
+     *
+     * @param  boolean $archived
+     * @return Test
+     */
+    public function setArchived($archived)
+    {
+        $this->archived = $archived;
+
+        return $this;
+    }
+
+    /**
+     * Get archived
+     *
+     * @return boolean
+     */
+    public function isArchived()
+    {
+        return $this->archived;
     }
 }

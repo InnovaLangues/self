@@ -81,4 +81,18 @@ class TestManager
 
         return $newTest;
     }
+
+    public function toggleArchived(Test $test)
+    {
+        if ($test->isArchived()) {
+            $test->setArchived(false);
+        } else {
+            $test->setArchived(true);
+        }
+
+        $this->entityManager->persist($test);
+        $this->entityManager->flush();
+
+        return $test;
+    }
 }
