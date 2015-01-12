@@ -93,6 +93,9 @@ editor:
         new: Nouveau test
         remove_from_favorites: Retirer des favoris
         add_to_favorites: Ajouter aux favoris
+        archive: Archiver
+        unarchive: Désarchiver
+        archived: Tests archivés
     task:
         task: Tâche
         tasks: Tâches
