@@ -122,13 +122,14 @@ class TraceController
     */
     private function parsePost($post, $trace)
     {
+        $em = $this->entityManager;
         $this->session->getFlashBag()->set('success', $this->translator->trans("trace.answer_saved", array(), "messages"));
 
         foreach ($post as $subquestionId => $postVar) {
-            // Cas classique
+            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
             if (is_array($postVar)) {
                 foreach ($postVar as $key => $propositionId) {
-                    if (is_numeric($propositionId)) {
+                    if ($subquestion->getTypology()->getName() != "TLQROC") {
                         $this->createAnswer($trace, $propositionId, $subquestionId);
                     } else {
                         $this->createAnswerProposition($trace, $propositionId, $subquestionId);
