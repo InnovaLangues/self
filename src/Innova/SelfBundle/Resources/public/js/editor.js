@@ -381,7 +381,6 @@ function editMediaModal(mediaType, mediaId) {
     });
 }
 
-
 $( "body" ).on( "click", '.close-modal', function() {
     switchCreateMode();
 });

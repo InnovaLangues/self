@@ -13,8 +13,15 @@
                     <div class="panel-body">
                         {{ macros.displayMedia(questionnaire, comment.description) }}
                         <div class="pull-right">
+                            {% if app.user == comment.user %}
+                                <btn class="btn btn-default btn-sm glyphicon glyphicon-pencil edit-media" data-original-title="{{ 'generic.edit' | trans }}" data-entity-reloaded="comments" data-media-id="{{ comment.description.id }}" data-media-type="texte"></btn>
+                            {% endif %}
                             Par <strong>{{ comment.user.username }}</strong>
                             <span>le {{ comment.date|date('d-m-Y') }} à {{ comment.date|date('H:i:s') }}</span>
+                            {% if comment.editDate %} 
+                                <br/>
+                                <span class="text-muted">édition le {{ comment.editDate|date('d-m-Y') }} à {{ comment.editDate|date('H:i:s') }}</span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

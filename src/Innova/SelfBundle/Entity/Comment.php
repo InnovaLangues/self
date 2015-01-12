@@ -44,6 +44,13 @@ class Comment
     private $date;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="editDate", type="datetime", nullable=true)
+     */
+    private $editDate;
+
+    /**
      * Get id
      *
      * @return integer
@@ -143,5 +150,28 @@ class Comment
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set editDate
+     *
+     * @param  \DateTime $editDate
+     * @return Comment
+     */
+    public function setEditDate($editDate)
+    {
+        $this->editDate = $editDate;
+
+        return $this;
+    }
+
+    /**
+     * Get editDate
+     *
+     * @return \DateTime
+     */
+    public function getEditDate()
+    {
+        return $this->editDate;
     }
 }

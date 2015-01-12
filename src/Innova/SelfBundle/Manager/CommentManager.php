@@ -25,6 +25,7 @@ class CommentManager
         $comment = new Comment();
         $comment->setDescription($media);
         $comment->setDate(new \Datetime());
+        $comment->setEditDate(null);
         $comment->setUser($user);
         $comment->setQuestionnaire($questionnaire);
         $em->persist($comment);
