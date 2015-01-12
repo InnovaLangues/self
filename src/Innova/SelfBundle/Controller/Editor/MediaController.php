@@ -123,6 +123,14 @@ class MediaController
             case 'subquestion':
                 $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
                 break;
+            case 'comments':
+                $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($request->get('mediaId'));
+                $comment = $em->getRepository('InnovaSelfBundle:Comment')->findOneByDescription($media);
+                $comment->setEditDate(new \Datetime());
+                $em->persist($comment);
+                $em->flush();
+                $template = $this->templating->render('InnovaSelfBundle:Editor/partials:comments.html.twig', array('questionnaire' => $questionnaire));
+                break;
         }
 
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
