@@ -115,3 +115,25 @@ knp_snappy:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltopdf
         options:    []
+
+fos_http_cache:
+    proxy_client:
+        varnish:
+            servers: 176.58.116.236
+            base_url: varnish.innovalangues.net/self
+    user_context:
+        enabled: true
+        role_provider: true
+    #http://foshttpcachebundle.readthedocs.org/en/latest/reference/configuration/flash-message.html
+    flash_message:
+        enabled: true
+        name: flashes
+        path: /
+        host: null
+        secure: false
+    debug:
+        enabled: true
+        header: Please-Send-Debug-Infos
+    # cache_manager:
+    #     enabled: true
+    #     generate_url_type: true

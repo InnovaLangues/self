@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "07fecf893055ba284bc7c69336808bc8",
+    "hash": "541e42d89b2c9842ce6ea2a3fed6c8f4",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -127,12 +127,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "4c765018f16b7ae027e41984180e538d1bb722c6"
+                "reference": "907393ce5a36c1c4b4d0e6e8395fcd71fe6abd6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/4c765018f16b7ae027e41984180e538d1bb722c6",
-                "reference": "4c765018f16b7ae027e41984180e538d1bb722c6",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/907393ce5a36c1c4b4d0e6e8395fcd71fe6abd6c",
+                "reference": "907393ce5a36c1c4b4d0e6e8395fcd71fe6abd6c",
                 "shasum": ""
             },
             "require": {
@@ -189,7 +189,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-01-15 13:03:08"
+            "time": "2015-01-15 15:04:53"
         },
         {
             "name": "doctrine/collections",
@@ -963,6 +963,82 @@
                 "varnish"
             ],
             "time": "2015-01-10 15:01:04"
+        },
+        {
+            "name": "friendsofsymfony/http-cache-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle.git",
+                "reference": "c30e0e65b7f63e607f58376db377c6ada5fbb28a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/c30e0e65b7f63e607f58376db377c6ada5fbb28a",
+                "reference": "c30e0e65b7f63e607f58376db377c6ada5fbb28a",
+                "shasum": ""
+            },
+            "require": {
+                "friendsofsymfony/http-cache": "~1.2",
+                "php": ">=5.3.3",
+                "symfony/framework-bundle": "~2.3"
+            },
+            "require-dev": {
+                "matthiasnoback/symfony-dependency-injection-test": "0.*",
+                "mockery/mockery": "0.9.*",
+                "monolog/monolog": "*",
+                "polishsymfonycommunity/symfony-mocker-container": "~1.0",
+                "sensio/framework-extra-bundle": "~2.3",
+                "symfony/expression-language": "~2.4",
+                "symfony/monolog-bundle": "~2.3",
+                "symfony/symfony": "~2.3"
+            },
+            "suggest": {
+                "sensio/framework-extra-bundle": "For Tagged Cache Invalidation",
+                "symfony/console": "To send invalidation requests from the command line",
+                "symfony/expression-language": "For Tagged Cache Invalidation"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FOS\\HttpCacheBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Liip AG",
+                    "homepage": "http://www.liip.ch/"
+                },
+                {
+                    "name": "Driebit",
+                    "email": "tech@driebit.nl",
+                    "homepage": "http://www.driebit.nl"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/friendsofsymfony/FOSHttpCacheBundle/contributors"
+                }
+            ],
+            "description": "Set path based HTTP cache headers and send invalidation requests to your HTTP cache",
+            "homepage": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle",
+            "keywords": [
+                "caching",
+                "esi",
+                "http",
+                "invalidation",
+                "purge",
+                "varnish"
+            ],
+            "time": "2014-12-28 22:35:35"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -2504,6 +2580,7 @@
         "willdurand/js-translation-bundle": 0
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"
     },
