@@ -26,7 +26,8 @@
         "stfalcon/tinymce-bundle": "dev-master",
         "avalanche123/imagine-bundle": "v2.1",
         "knplabs/knp-snappy-bundle": "dev-master",
-        "willdurand/js-translation-bundle": "@stable"
+        "willdurand/js-translation-bundle": "@stable",
+        "friendsofsymfony/http-cache": "~1.1"
     },
     "scripts": {
         "post-install-cmd": [
