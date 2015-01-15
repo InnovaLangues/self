@@ -7,6 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 /**
  * ClassTestController
@@ -38,6 +40,8 @@ class TestController
 
     /**
      * @Route("/student/", name="show_tests")
+     * @Cache(maxage="10")
+     * @Cache(public=true)
      * @Template()
      * @Method("GET")
      */
@@ -48,7 +52,7 @@ class TestController
 
         return array(
             'tests' => $tests,
-            'testsProgress' => $testsProgress,
+            'testsProgress' => $testsProgress
         );
     }
 
