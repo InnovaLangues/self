@@ -40,8 +40,7 @@ class TestController
 
     /**
      * @Route("/student/", name="show_tests")
-     * @Cache(maxage="10")
-     * @Cache(public=true)
+     * @Cache(smaxage="10")
      * @Template()
      * @Method("GET")
      */
