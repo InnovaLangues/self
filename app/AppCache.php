@@ -3,8 +3,6 @@
 require_once __DIR__.'/AppKernel.php';
 
 use FOS\HttpCacheBundle\SymfonyCache\EventDispatchingHttpCache;
-
-//use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
 use FOS\HttpCache\SymfonyCache\UserContextSubscriber;
 
 class AppCache extends EventDispatchingHttpCache
