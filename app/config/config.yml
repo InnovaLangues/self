@@ -120,7 +120,7 @@ fos_http_cache:
     proxy_client:
         varnish:
             servers: 176.58.116.236
-            base_url: varnish.innovalangues.net/self
+            base_url: varnish.innovalangues.net
     user_context:
         enabled: true
         role_provider: true
@@ -130,10 +130,10 @@ fos_http_cache:
         name: flashes
         path: /
         host: null
-        secure: false
-    debug:
-        enabled: true
-        header: Please-Send-Debug-Infos
+        secure: debug
+    # false:
+    #     enabled: true
+    #     header: Please-Send-Debug-Infos
     # cache_manager:
     #     enabled: true
     #     generate_url_type: true
