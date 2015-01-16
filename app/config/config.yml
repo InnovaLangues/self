@@ -131,8 +131,8 @@ fos_http_cache:
         path: /
         host: null
         secure: debug
-    match:
-        path: ^/
+    #match:
+    #    path: ^/
     # false:
     #     enabled: true
     #     header: Please-Send-Debug-Infos

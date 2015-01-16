@@ -2,18 +2,8 @@
 
 require_once __DIR__.'/AppKernel.php';
 
-use FOS\HttpCacheBundle\SymfonyCache\EventDispatchingHttpCache;
-use FOS\HttpCache\SymfonyCache\UserContextSubscriber;
+use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-class AppCache extends EventDispatchingHttpCache
+class AppCache extends HttpCache
 {
-    /**
-     * Overwrite constructor to register event subscribers for FOSHttpCache.
-     */
-    public function __construct(HttpKernelInterface $kernel, $cacheDir = null)
-    {
-        parent::__construct($kernel, $cacheDir);
-
-        $this->addSubscriber(new UserContextSubscriber());
-    }
 }
