@@ -76,7 +76,7 @@ class Test
      *
      * @ORM\Column(name="archived", type="boolean")
      */
-    private $archived;
+    private $archived = 0;
 
     public function __construct()
     {
