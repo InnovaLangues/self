@@ -26,10 +26,6 @@ class TraceManager
         $trace->setTest($test);
         $trace->setUser($user);
         $trace->setTotalTime($totalTime);
-        $trace->setListeningTime("");
-        $trace->setListeningAfterAnswer("");
-        $trace->setClickCorrectif("");
-        $trace->setIp("");
         $trace->setuserAgent($agent);
         $trace->setDifficulty("");
 

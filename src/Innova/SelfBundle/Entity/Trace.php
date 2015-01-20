@@ -57,34 +57,6 @@ class Trace
     private $totalTime;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="clickCorrectif", type="integer")
-     */
-    private $clickCorrectif;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="listeningTime", type="integer")
-     */
-    private $listeningTime;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="listeningAfterAnswer", type="integer")
-     */
-    private $listeningAfterAnswer;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ip", type="string", length=255)
-     */
-    private $ip;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="userAgent", type="string", length=255)
@@ -152,98 +124,6 @@ class Trace
     public function getTotalTime()
     {
         return $this->totalTime;
-    }
-
-    /**
-     * Set clickCorrectif
-     *
-     * @param  integer $clickCorrectif
-     * @return Trace
-     */
-    public function setClickCorrectif($clickCorrectif)
-    {
-        $this->clickCorrectif = $clickCorrectif;
-
-        return $this;
-    }
-
-    /**
-     * Get clickCorrectif
-     *
-     * @return integer
-     */
-    public function getClickCorrectif()
-    {
-        return $this->clickCorrectif;
-    }
-
-    /**
-     * Set listeningTime
-     *
-     * @param  integer $listeningTime
-     * @return Trace
-     */
-    public function setListeningTime($listeningTime)
-    {
-        $this->listeningTime = $listeningTime;
-
-        return $this;
-    }
-
-    /**
-     * Get listeningTime
-     *
-     * @return integer
-     */
-    public function getListeningTime()
-    {
-        return $this->listeningTime;
-    }
-
-    /**
-     * Set listeningAfterAnswer
-     *
-     * @param  integer $listeningAfterAnswer
-     * @return Trace
-     */
-    public function setListeningAfterAnswer($listeningAfterAnswer)
-    {
-        $this->listeningAfterAnswer = $listeningAfterAnswer;
-
-        return $this;
-    }
-
-    /**
-     * Get listeningAfterAnswer
-     *
-     * @return integer
-     */
-    public function getListeningAfterAnswer()
-    {
-        return $this->listeningAfterAnswer;
-    }
-
-    /**
-     * Set ip
-     *
-     * @param  string $ip
-     * @return Trace
-     */
-    public function setIp($ip)
-    {
-        $this->ip = $ip;
-
-        return $this;
-    }
-
-    /**
-     * Get ip
-     *
-     * @return string
-     */
-    public function getIp()
-    {
-        return $this->ip;
     }
 
     /**
