@@ -41,11 +41,7 @@ class QuestionnaireManager
         $em = $this->entityManager;
 
         $questionnaire = new Questionnaire();
-        $questionnaire->setTheme("");
-        $questionnaire->setTextTitle("");
-        $questionnaire->setDialogue(0);
-        $questionnaire->setFixedOrder(0);
-        $questionnaire->setStatus($em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->find(1));
+        $questionnaire->setStatus($em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->findAll()[0]);
         $questionnaire->setAuthor($this->user);
 
         $em->persist($questionnaire);

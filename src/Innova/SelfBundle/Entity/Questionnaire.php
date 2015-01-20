@@ -80,12 +80,12 @@ class Questionnaire
      *
      * @ORM\Column(name="theme", type="string", length=255)
      */
-    private $theme;
+    private $theme = "Tâche sans nom";
 
     /**
      * @var string
      *
-     * @ORM\Column(name="textTitle", type="string", length=255)
+     * @ORM\Column(name="textTitle", type="string", length=255, nullable=true)
      */
     private $textTitle;
 
@@ -94,7 +94,7 @@ class Questionnaire
      *
      * @ORM\Column(name="dialogue", type="integer")
      */
-    private $dialogue;
+    private $dialogue = 0;
 
      /**
      * @var boolean
@@ -102,7 +102,7 @@ class Questionnaire
      * @ORM\Column(name="fixedOrder", type="boolean")
      *
      */
-    private $fixedOrder;
+    private $fixedOrder = 0;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
