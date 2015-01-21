@@ -144,7 +144,7 @@ class QuestionnaireManager
         $newTask->setAuthorMore($task->getAuthorMore());
         $newTask->setLanguageLevel($task->getLanguageLevel());
         $newTask->setStatus($task->getStatus());
-        $newTask->setTheme($task->getTheme());
+        $newTask->setTheme("Copie de ".$task->getTheme());
         $newTask->setTextTitle($task->getTextTitle());
         $newTask->setDialogue($task->getDialogue());
         $newTask->setFixedOrder($task->getFixedOrder());

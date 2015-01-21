@@ -25,6 +25,13 @@ $( "body" ).on( "click", '.add-task', function() {
     addTaskToTest(questionnaireId, testId);
 });
 
+$( "body" ).on( "click", '.duplicate-task', function() {
+    $(this).attr("disabled", true);
+    var testId = $(this).data("testId");
+    var questionnaireId = $(this).data("questionnaireId");
+    duplicateTaskToTest(questionnaireId, testId);
+});
+
 $( "body" ).on( "click", '#delete-task-confirmation', function() {
     deleteTask();
 });
@@ -67,6 +74,24 @@ function addTaskToTest(questionnaireId, testId){
     $("#loader-img").show();
     $.ajax({
         url: Routing.generate('editor_add_task_to_test'),
+        type: 'PUT',
+        data:
+        {
+            testId: testId,
+            questionnaireId: questionnaireId
+        }
+    })
+    .done(function(data) {
+        $("#sortable").html(data);
+        sortableInit();
+        $("#loader-img").hide();
+    });
+}
+
+function duplicateTaskToTest(questionnaireId, testId){
+    $("#loader-img").show();
+    $.ajax({
+        url: Routing.generate('editor_duplicate_task_to_test'),
         type: 'PUT',
         data:
         {

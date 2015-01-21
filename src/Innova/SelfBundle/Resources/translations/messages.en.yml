@@ -124,6 +124,7 @@ editor:
         no_potential: No potential task to add
         no_task:  No task created
         no_task_yet: No task for this test. You can create, or select an existing on through the corresponding buttons.
+        duplicate_and_add: Duplicate and add
     questionnaire:
         general_infos: General information
         title: Title
