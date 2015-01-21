@@ -21,16 +21,19 @@ class OrderQuestionnaireTestController
 {
     protected $entityManager;
     protected $orderQuestionnaireTestManager;
+    protected $questionnaireManager;
     protected $templating;
     protected $request;
 
     public function __construct(
             $entityManager,
             $orderQuestionnaireTestManager,
+            $questionnaireManager,
             $templating
     ) {
         $this->entityManager = $entityManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
+        $this->questionnaireManager = $questionnaireManager;
         $this->templating = $templating;
     }
 
@@ -82,6 +85,29 @@ class OrderQuestionnaireTestController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
         $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
+        $orders = $test->getOrderQuestionnaireTests();
+
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig', array('orders' => $orders));
+
+        return new Response($template);
+    }
+
+    /**
+     * @Route("/editor_duplicate_task_to_test", name="editor_duplicate_task_to_test", options={"expose"=true})
+     * @Method("PUT")
+     * @Template("")
+     */
+    public function duplicateTaskToTestAction()
+    {
+        $em = $this->entityManager;
+        $request = $this->request->request;
+
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
+
+        $newQuestionnaire = $this->questionnaireManager->duplicate($questionnaire);
+
+        $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $newQuestionnaire);
         $orders = $test->getOrderQuestionnaireTests();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig', array('orders' => $orders));

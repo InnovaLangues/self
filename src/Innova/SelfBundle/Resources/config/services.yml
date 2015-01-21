@@ -147,6 +147,7 @@ services:
         arguments:
             entityManager:          @doctrine.orm.entity_manager
             orderQuestionnaireTest: @self.order_questionnaire_test.manager
+            questionnaireManager:   @self.questionnaire.manager
             templating:             @templating
         calls:
             - [setRequest, [@request]]
