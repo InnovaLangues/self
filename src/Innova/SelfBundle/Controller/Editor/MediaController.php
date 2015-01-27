@@ -26,6 +26,7 @@ class MediaController
     protected $request;
     protected $templating;
     protected $questionnaireRevisorsManager;
+    protected $cacheManager;
 
     public function __construct(
             $mediaManager,
@@ -34,7 +35,8 @@ class MediaController
             $commentManager,
             $entityManager,
             $templating,
-            $questionnaireRevisorsManager
+            $questionnaireRevisorsManager,
+            $cacheManager
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
@@ -43,6 +45,7 @@ class MediaController
         $this->entityManager = $entityManager;
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
+        $this->cacheManager = $cacheManager;
     }
 
     public function setRequest(Request $request = null)
@@ -101,30 +104,89 @@ class MediaController
      */
     public function updateMediaAction()
     {
+        // Function to update database in editor
+        // In Editor, I choose en task and I want to update it
+
         $em = $this->entityManager;
         $request = $this->request->request;
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
-        $this->mediaManager->updateMedia($request->get('mediaId'), $request->get('url'), $request->get('name'), $request->get('description'));
+        $this->mediaManager->updateMedia($request->get('mediaId'),
+                                        $request->get('url'),
+                                        $request->get('name'),
+                                        $request->get('description')
+                                        );
 
+        // var toBeReloaded = $("#entity-to-be-reloaded").val();
         switch ($request->get('toBeReloaded')) {
             case 'contexte':
-                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:contexte.html.twig', array('questionnaire' => $questionnaire));
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:contexte.html.twig',
+                                                array('questionnaire' => $questionnaire));
                 break;
             case 'texte':
-                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('questionnaire' => $questionnaire));
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig',
+                                                array('questionnaire' => $questionnaire));
                 break;
             case 'functional-instruction':
-                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig', array('questionnaire' => $questionnaire));
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:functionalInstruction.html.twig',
+                                                array('questionnaire' => $questionnaire));
                 break;
             case 'feedback':
-                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig', array('questionnaire' => $questionnaire));
+                $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:feedback.html.twig',
+                                                array('questionnaire' => $questionnaire));
                 break;
             case 'subquestion':
-                $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+                $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig',
+                                                array('questionnaire' => $questionnaire));
                 break;
         }
 
+        // I have my mediaIt and ...
+        $mediaId = $request->get('mediaId');
+        // ... I want the mediaType
+        $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
+        // MediaType :
+        // 1 : Audio
+        // 2 : Video
+        // 3 : texte
+        // 4 : image
+        $mediaType = $media->getMediaType()->getId();
+        echo $mediaId . " " . $mediaType;
+
+
+        // List of questionnaires with THIS media
+        $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($mediaId);
+        foreach ($questionnairesForMedia as $questionnaireForMedia) {
+            $questionnaireId = $questionnaireForMedia->getId();
+            //echo "Questionnaire : " . $questionnaireId;
+
+            $testsForQuestionnaire = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->
+                                findBy(array('questionnaire' => $questionnaireId));
+            foreach ($testsForQuestionnaire as $testForQuestionnaire) {
+
+                $testId = $testForQuestionnaire->getTest()->getId();
+
+                // Now, I will invalidate
+
+                // questionnaire_pick : route définie dans le playerController.
+                // admin/test/{testId}/questionnaire/{questionnaireId}",
+
+/*
+                $cacheManager->invalidateRoute('questionnaire_pick',
+                array(
+                    'testId' => $testId,
+                    'questionnaireId' => $questionnaireId
+                    )
+                );
+
+ */
+            }
+        }
+
+        //var_dump($questionnairesForMedia);
+        die(" / updateMediaAction");
+
+        // Add revisor
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new Response($template);
