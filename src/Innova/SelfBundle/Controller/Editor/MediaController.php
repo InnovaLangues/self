@@ -185,7 +185,7 @@ class MediaController
         // Flush manager
         // Internally, the invalidation requests are queued and only sent out to your HTTP proxy when the manager is flushed.
         // https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/blob/master/Resources/doc/reference/cache-manager.rst#id3
-        $cacheManager->flush();
+        $this->cacheManager->flush();
 
         //var_dump($questionnairesForMedia);
 //        die(" / updateMediaAction");
