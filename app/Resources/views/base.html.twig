@@ -15,7 +15,7 @@
         {% endblock %}
 
         <div id="body" class="container">
-            <h1>{{'toto2 ' ~ date().timestamp }}</h1>
+            <h1>{{'toto ' ~ date().timestamp }}</h1>
             {{  app.security.token.user }}
             {% if is_granted('ROLE_ADMIN') %}
                 {{  " ADMIN " }}
