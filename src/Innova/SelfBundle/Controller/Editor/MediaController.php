@@ -171,20 +171,19 @@ class MediaController
                 // questionnaire_pick : route définie dans le playerController.
                 // admin/test/{testId}/questionnaire/{questionnaireId}",
 
-/*
-                $cacheManager->invalidateRoute('questionnaire_pick',
+
+                $this->cacheManager->invalidateRoute('questionnaire_pick',
                 array(
                     'testId' => $testId,
                     'questionnaireId' => $questionnaireId
                     )
                 );
 
- */
             }
         }
 
         //var_dump($questionnairesForMedia);
-        die(" / updateMediaAction");
+//        die(" / updateMediaAction");
 
         // Add revisor
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
