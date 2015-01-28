@@ -178,6 +178,8 @@ class MediaController
                     )
                    );
 
+                $this->cacheManager->invalidatePath($path);
+
                 /*
                 $this->cacheManager->invalidateRoute('questionnaire_pick',
                 array(
