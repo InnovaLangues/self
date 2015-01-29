@@ -191,7 +191,8 @@ class MediaController
 
                 //die(" Test : " . $testId . "- Q "  .  $questionnaireId);
                 // Add router service
-                $pathToInvalidate = $this->router->generate('questionnaire_pick',
+                $pathToInvalidate = "http://varnish.innovalangues.net/" .
+                                    $this->router->generate('questionnaire_pick',
                                         array(
                                                 'testId' => $testId,
                                                 'questionnaireId' => $questionnaireId
@@ -199,8 +200,7 @@ class MediaController
 
                  );
 
-                //echo($pathToInvalidate);
-
+                echo($pathToInvalidate);
 
                 $this->cacheManager->invalidatePath($pathToInvalidate);
 
@@ -219,7 +219,7 @@ class MediaController
         // Flush manager
         // Internally, the invalidation requests are queued and only sent out to your HTTP proxy when the manager is flushed.
         // https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/blob/master/Resources/doc/reference/cache-manager.rst#id3
-        $this->cacheManager->flush();
+        //$this->cacheManager->flush();
 
         //var_dump($questionnairesForMedia);
 
