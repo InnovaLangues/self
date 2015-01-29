@@ -191,16 +191,13 @@ class MediaController
 
                 //die(" Test : " . $testId . "- Q "  .  $questionnaireId);
                 // Add router service
-                $pathToInvalidate = "http://varnish.innovalangues.net" .
-                                    $this->router->generate('questionnaire_pick',
+                $pathToInvalidate = $this->router->generate('questionnaire_pick',
                                         array(
                                                 'testId' => $testId,
                                                 'questionnaireId' => $questionnaireId
                                              )
 
                  );
-
-                echo($pathToInvalidate);
 
                 $this->cacheManager->invalidatePath($pathToInvalidate);
 
