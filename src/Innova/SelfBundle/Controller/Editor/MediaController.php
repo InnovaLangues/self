@@ -110,9 +110,9 @@ class MediaController
      */
     public function updateMediaAction()
     {
+        echo "ici1";
         // Function to update database in editor
         // In Editor, I choose en task and I want to update it
-
         $em = $this->entityManager;
         $request = $this->request->request;
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
@@ -182,7 +182,7 @@ class MediaController
 
                  );
 
-                echo "ici";
+                echo "ici2";
                 $this->cacheManager->invalidatePath($pathToInvalidate);
 
             }
