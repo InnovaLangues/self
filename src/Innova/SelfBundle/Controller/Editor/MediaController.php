@@ -189,6 +189,7 @@ class MediaController
                                         );
                 */
 
+                // Add router service
                 $pathToInvalidate = $this->router->generate('questionnaire_pick',
                                         array(
                                                 'testId' => $testId,
@@ -217,7 +218,6 @@ class MediaController
         $this->cacheManager->flush();
 
         //var_dump($questionnairesForMedia);
-//        die(" / updateMediaAction");
 
         // Add revisor
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
