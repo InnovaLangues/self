@@ -152,7 +152,6 @@ fos_http_cache:
                 routes:
                     villains_index: ~    # e.g., /villains
                     villain_details: ~    # e.g., /villain/{id}
-                        ignore_extra_params: false    # Defaults to true
             -
                 match:
                     path: ^/
