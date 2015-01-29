@@ -189,7 +189,7 @@ class MediaController
                                         );
                 */
 
-                die(" Test : " . $testId . "- Q "  .  $questionnaireId);
+                //die(" Test : " . $testId . "- Q "  .  $questionnaireId);
                 // Add router service
                 $pathToInvalidate = $this->router->generate('questionnaire_pick',
                                         array(

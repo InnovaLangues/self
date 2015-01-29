@@ -142,6 +142,17 @@ fos_http_cache:
                         public: false
                         max_age: 0
                         s_maxage: 0
+            # Now when a request to either route villain_edit or route villain_delete returns a succesful response,
+            # both routes vilains_index and villain_details will be purged.
+            # https://media.readthedocs.org/pdf/foshttpcachebundle/refactor-docs/foshttpcachebundle.pdf page 6
+            -
+                match:
+                    attributes:
+                        _route: "editor_questionnaire_update-media"
+                routes:
+                    villains_index: ~    # e.g., /villains
+                    villain_details: ~    # e.g., /villain/{id}
+                        ignore_extra_params: false    # Defaults to true
             -
                 match:
                     path: ^/
