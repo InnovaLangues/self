@@ -172,11 +172,13 @@ class MediaController
                 // admin/test/{testId}/questionnaire/{questionnaireId}",
 
 
-                $path = $this->generate('questionnaire_pick', array(
+                $path = $this->redirect(
+                    $this->generateUrl('questionnaire_pick', array(
                     'testId' => $testId,
                     'questionnaireId' => $questionnaireId
                     )
-                   );
+                   )
+                );
 
                 $this->cacheManager->invalidatePath($path);
 
