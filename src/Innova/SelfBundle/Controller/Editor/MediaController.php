@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * Class MediaController
  * @Route(
@@ -153,7 +156,6 @@ class MediaController
         $mediaType = $media->getMediaType()->getId();
         echo $mediaId . " " . $mediaType;
 
-
         // List of questionnaires with THIS media
         $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($mediaId);
         foreach ($questionnairesForMedia as $questionnaireForMedia) {
@@ -170,8 +172,6 @@ class MediaController
 
                 // questionnaire_pick : route définie dans le playerController.
                 // admin/test/{testId}/questionnaire/{questionnaireId}",
-
-
 
                 //$this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
 
