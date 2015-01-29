@@ -30,6 +30,7 @@ class MediaController
     protected $templating;
     protected $questionnaireRevisorsManager;
     protected $cacheManager;
+    protected $router;
 
     public function __construct(
             $mediaManager,
@@ -39,7 +40,8 @@ class MediaController
             $entityManager,
             $templating,
             $questionnaireRevisorsManager,
-            $cacheManager
+            $cacheManager,
+            $router
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
@@ -49,6 +51,7 @@ class MediaController
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
         $this->cacheManager = $cacheManager;
+        $this->router = $router;
     }
 
     public function setRequest(Request $request = null)
@@ -173,8 +176,10 @@ class MediaController
                 // questionnaire_pick : route définie dans le playerController.
                 // admin/test/{testId}/questionnaire/{questionnaireId}",
 
+
                 //$this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
 
+                /*
                 $path = $this->redirect(
                                         'questionnaire_pick',
                                         array(
@@ -182,9 +187,17 @@ class MediaController
                                                 'questionnaireId' => $questionnaireId
                                              )
                                         );
+                */
 
+                $pathToInvalidate = $this->router->generate('questionnaire_pick',
+                                        array(
+                                                'testId' => $testId,
+                                                'questionnaireId' => $questionnaireId
+                                             )
 
-                $this->cacheManager->invalidatePath($path);
+                 );
+
+                $this->cacheManager->invalidatePath($pathToInvalidate);
 
                 /*
                 $this->cacheManager->invalidateRoute('questionnaire_pick',

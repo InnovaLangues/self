@@ -97,6 +97,7 @@ services:
             templating:         @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
             cacheManager:       @fos_http_cache.cache_manager
+            router:             @router
         calls:
             - [setRequest, [@request]]
         scope: request
