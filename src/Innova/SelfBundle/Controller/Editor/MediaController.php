@@ -176,12 +176,12 @@ class MediaController
                 //$this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
 
                 $path = $this->redirect(
-                    $this->generateUrl('questionnaire_pick', array(
-                    'testId' => $testId,
-                    'questionnaireId' => $questionnaireId
-                    )
-                   )
-                );
+                                        'questionnaire_pick',
+                                        array(
+                                                'testId' => $testId,
+                                                'questionnaireId' => $questionnaireId
+                                             )
+                                        );
 
 
                 $this->cacheManager->invalidatePath($path);
