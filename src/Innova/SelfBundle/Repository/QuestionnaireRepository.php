@@ -168,4 +168,23 @@ class QuestionnaireRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findAllLight($languageId = null)
+    {
+        $builder = $this->createQueryBuilder('q');
+        $builder->select('q', 'qo', 'qs', 'ql', 'qsk', 'qq', 'qot');
+        $builder->join('q.orderQuestionnaireTests', 'qo');
+        $builder->join('q.status', 'qs');
+        $builder->join('q.level', 'ql');
+        $builder->join('q.skill', 'qsk');
+        $builder->join('q.questions', 'qq');
+        $builder->join('qo.test', 'qot');
+
+        if ($languageId) {
+            $builder->andWhere('q.language = :language');
+            $builder->setParameter('language', $languageId);
+        }
+
+        return $builder->getQuery()->getResult();
+    }
 }
