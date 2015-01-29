@@ -199,7 +199,7 @@ class MediaController
 
                  );
 
-                die($pathToInvalidate);
+                //echo($pathToInvalidate);
 
 
                 $this->cacheManager->invalidatePath($pathToInvalidate);
