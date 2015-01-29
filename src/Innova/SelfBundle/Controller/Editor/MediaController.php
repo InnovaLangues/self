@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * Class MediaController
  * @Route(
@@ -172,6 +172,9 @@ class MediaController
                 // admin/test/{testId}/questionnaire/{questionnaireId}",
 
 
+
+                //$this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
+
                 $path = $this->redirect(
                     $this->generateUrl('questionnaire_pick', array(
                     'testId' => $testId,
@@ -179,6 +182,7 @@ class MediaController
                     )
                    )
                 );
+
 
                 $this->cacheManager->invalidatePath($path);
 
