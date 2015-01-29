@@ -150,8 +150,7 @@ fos_http_cache:
                     attributes:
                         _route: "editor_questionnaire_update-media"
                 routes:
-                    villains_index: ~    # e.g., /villains
-                    villain_details: ~    # e.g., /villain/{id}
+                    questionnaire_pick: ~
             -
                 match:
                     path: ^/
