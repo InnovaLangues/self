@@ -157,7 +157,6 @@ class MediaController
         // 3 : texte
         // 4 : image
         $mediaType = $media->getMediaType()->getId();
-        echo $mediaId . " " . $mediaType;
 
         // List of questionnaires with THIS media
         $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($mediaId);
@@ -172,24 +171,8 @@ class MediaController
                 $testId = $testForQuestionnaire->getTest()->getId();
 
                 // Now, I will invalidate
-
                 // questionnaire_pick : route définie dans le playerController.
                 // admin/test/{testId}/questionnaire/{questionnaireId}",
-
-
-                //$this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
-
-                /*
-                $path = $this->redirect(
-                                        'questionnaire_pick',
-                                        array(
-                                                'testId' => $testId,
-                                                'questionnaireId' => $questionnaireId
-                                             )
-                                        );
-                */
-
-                //die(" Test : " . $testId . "- Q "  .  $questionnaireId);
                 // Add router service
                 $pathToInvalidate = $this->router->generate('questionnaire_pick',
                                         array(
@@ -199,26 +182,11 @@ class MediaController
 
                  );
 
+                echo "ici";
                 $this->cacheManager->invalidatePath($pathToInvalidate);
-
-                /*
-                $this->cacheManager->invalidateRoute('questionnaire_pick',
-                array(
-                    'testId' => $testId,
-                    'questionnaireId' => $questionnaireId
-                    )
-                );
-                */
 
             }
         }
-
-        // Flush manager
-        // Internally, the invalidation requests are queued and only sent out to your HTTP proxy when the manager is flushed.
-        // https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/blob/master/Resources/doc/reference/cache-manager.rst#id3
-        //$this->cacheManager->flush();
-
-        //var_dump($questionnairesForMedia);
 
         // Add revisor
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
