@@ -191,7 +191,7 @@ class MediaController
 
                 //die(" Test : " . $testId . "- Q "  .  $questionnaireId);
                 // Add router service
-                $pathToInvalidate = "http://varnish.innovalangues.net/" .
+                $pathToInvalidate = "http://varnish.innovalangues.net" .
                                     $this->router->generate('questionnaire_pick',
                                         array(
                                                 'testId' => $testId,
