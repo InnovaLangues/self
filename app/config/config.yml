@@ -153,7 +153,7 @@ fos_http_cache:
                     last_modified: "-1 hour"
     invalidation:
         rules:
-            # Now when a request to either route villain_edit or route villain_delete returns a succesful response,
+            #    Now when a request to either route villain_edit or route villain_delete returns a succesful response,
             # both routes vilains_index and villain_details will be purged.
             # https://media.readthedocs.org/pdf/foshttpcachebundle/refactor-docs/foshttpcachebundle.pdf page 6
             -
