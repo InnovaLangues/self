@@ -151,14 +151,3 @@ fos_http_cache:
                         max_age: 3600
                         s_maxage: 3600
                     last_modified: "-1 hour"
-    invalidation:
-        rules:
-            #    Now when a request to either route villain_edit or route villain_delete returns a succesful response,
-            # both routes vilains_index and villain_details will be purged.
-            # https://media.readthedocs.org/pdf/foshttpcachebundle/refactor-docs/foshttpcachebundle.pdf page 6
-            -
-                match:
-                    attributes:
-                        _route: "editor_questionnaire_update-media"
-                routes:
-                    questionnaire_pick: ~
