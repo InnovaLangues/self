@@ -9,8 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
 /**
  * Class MediaController
  * @Route(
@@ -162,6 +160,8 @@ class MediaController
     */
     private function invalidateMediaAction($mediaId)
     {
+
+        $em = $this->entityManager;
 
         // ... I want the mediaType
         $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
