@@ -110,7 +110,6 @@ class MediaController
      */
     public function updateMediaAction()
     {
-        echo "ici1";
         // Function to update database in editor
         // In Editor, I choose en task and I want to update it
         $em = $this->entityManager;
@@ -149,6 +148,21 @@ class MediaController
 
         // I have my mediaIt and ...
         $mediaId = $request->get('mediaId');
+        $this->invalidateMediaAction($mediaId);
+
+        // Add revisor
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
+        return new Response($template);
+    }
+
+
+    /**
+    * Parse post var
+    */
+    private function invalidateMediaAction($mediaId)
+    {
+
         // ... I want the mediaType
         $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
         // MediaType :
@@ -158,7 +172,7 @@ class MediaController
         // 4 : image
         $mediaType = $media->getMediaType()->getId();
 
-        // List of questionnaires with THIS media
+        // List of questionnaires with THIS media : Objet de la question
         $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($mediaId);
         foreach ($questionnairesForMedia as $questionnaireForMedia) {
             $questionnaireId = $questionnaireForMedia->getId();
@@ -182,16 +196,11 @@ class MediaController
 
                  );
 
-                echo "ici2";
                 $this->cacheManager->invalidatePath($pathToInvalidate);
 
             }
         }
 
-        // Add revisor
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
-        return new Response($template);
     }
 
     /**
