@@ -195,10 +195,11 @@ class MediaController
                 // List of questionnaires with THIS media : Feedback
                 $subquestions = $em->getRepository('InnovaSelfBundle:Subquestion')->findBymediaAmorce($mediaId);
                 foreach ($subquestions as $subquestion) {
-                echo " subq1 " . $subquestion->getId();
-                    $questions = $em->getRepository('InnovaSelfBundle:Question')->findById($subquestion->getQuestion());
+                echo " subq1 " . $subquestion->getId() . " - " . $subquestion->getQuestion();
+                    $questions = $em->getRepository('InnovaSelfBundle:Question')->findByQuestionnaire($subquestion->getQuestion());
                     foreach ($questions as $question) {
-                echo " subq2 ";
+                echo " subq2 " . $question->getId() ;
+                        $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFeedback($mediaId);
                     }
                 }
                 break;
