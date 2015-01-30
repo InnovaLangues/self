@@ -201,16 +201,15 @@ class MediaController
                         $questionnaireId = $question->getQuestionnaire()->getId();
                 echo "<br />subq2 " . $questionnaireId;
                         $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findById($questionnaireId);
-                echo " theme " . $questionnairesForMedia->getTheme();
                     }
                 }
                 break;
         }
 
-        die("<br /> M : " . $mediaId);
-
         foreach ($questionnairesForMedia as $questionnaireForMedia) {
             $questionnaireId = $questionnaireForMedia->getId();
+            echo " theme " . $questionnaireForMedia->getTheme();
+            die("<br /> M : " . $mediaId);
             //echo "Questionnaire : " . $questionnaireId;
 
             $testsForQuestionnaire = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->
