@@ -198,14 +198,15 @@ class MediaController
                 echo "<br />subq1 " . $subquestion->getId() . " - " . $subquestion->getMediaAmorce()->getId();
                     $questions = $em->getRepository('InnovaSelfBundle:Question')->findByQuestionnaire($subquestion->getQuestion());
                     foreach ($questions as $question) {
-                echo "<br />subq2 " . $question->getQuestionnaire()->getId() ;
-                        $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findById($question->getQuestionnaire()->getId());
+                        $questionnaireId = $question->getQuestionnaire()->getId();
+                echo "<br />subq2 " . $qquestionnaireId;
+                        $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findById($questionnaireId);
                     }
                 }
                 break;
         }
 
-        die(" M : " . $mediaId);
+        die("<br /> M : " . $mediaId);
 
         foreach ($questionnairesForMedia as $questionnaireForMedia) {
             $questionnaireId = $questionnaireForMedia->getId();
