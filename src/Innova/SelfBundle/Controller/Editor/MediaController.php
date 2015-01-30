@@ -175,7 +175,7 @@ class MediaController
        // var toBeReloaded = $("#entity-to-be-reloaded").val();
         switch ($typeReloaded) {
             case 'contexte':
-                // List of questionnaires with THIS media : Objet de la question
+                // List of questionnaires with THIS media : Contexte
                 $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaContext($mediaId);
                 break;
             case 'texte':
@@ -183,14 +183,24 @@ class MediaController
                 $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($mediaId);
                 break;
             case 'functional-instruction':
-                // List of questionnaires with THIS media : Objet de la question
+                // List of questionnaires with THIS media : Consigne fonctionnelle
                 $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFunctionalInstruction($mediaId);
                 break;
             case 'feedback':
-                // List of questionnaires with THIS media : Objet de la question
+                // List of questionnaires with THIS media : Feedback
                 $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFeedback($mediaId);
                 break;
             case 'subquestion': //TODO
+                echo "subq0";
+                // List of questionnaires with THIS media : Feedback
+                $subquestions = $em->getRepository('InnovaSelfBundle:Subquestion')->findBymediaAmorce($mediaId);
+                foreach ($subquestions as $subquestion) {
+                echo "subq1";
+                    $questions = $em->getRepository('InnovaSelfBundle:Question')->find($subquestion);
+                    foreach ($questions as $question) {
+                echo "subq2";
+                    }
+                }
                 break;
         }
 
