@@ -196,7 +196,7 @@ class MediaController
                 $subquestions = $em->getRepository('InnovaSelfBundle:Subquestion')->findBymediaAmorce($mediaId);
                 foreach ($subquestions as $subquestion) {
                 echo "subq1";
-                    $questions = $em->getRepository('InnovaSelfBundle:Question')->find($subquestion);
+                    $questions = $em->getRepository('InnovaSelfBundle:Question')->find($subquestion->getQuestion());
                     foreach ($questions as $question) {
                 echo "subq2";
                     }
