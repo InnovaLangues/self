@@ -191,15 +191,15 @@ class MediaController
                 $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFeedback($mediaId);
                 break;
             case 'subquestion': //TODO
-                echo " subq0 ";
+                echo "<br />subq0 ";
                 // List of questionnaires with THIS media : Feedback
                 $subquestions = $em->getRepository('InnovaSelfBundle:Subquestion')->findBymediaAmorce($mediaId);
                 foreach ($subquestions as $subquestion) {
-                echo " subq1 " . $subquestion->getId() . " - " . $subquestion->getMediaAmorce()->getId();
+                echo "<br />subq1 " . $subquestion->getId() . " - " . $subquestion->getMediaAmorce()->getId();
                     $questions = $em->getRepository('InnovaSelfBundle:Question')->findByQuestionnaire($subquestion->getQuestion());
                     foreach ($questions as $question) {
-                echo " subq2 " . $question->getQuestionnaire() ;
-                        $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findById($question->getQuestionnaire());
+                echo "<br />subq2 " . $question->getQuestionnaire()->getId() ;
+                        $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findById($question->getQuestionnaire()->getId());
                     }
                 }
                 break;
