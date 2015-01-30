@@ -139,8 +139,6 @@ class TaskController
      */
     public function showAction($questionnaireId, $testId)
     {
-
-        die("editor_questionnaire_show");
         $em = $this->entityManager;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
