@@ -120,10 +120,6 @@ class MediaController
                                         $request->get('description')
                                         );
 
-
-        die($request->get('toBeReloaded'));
-
-
         // var toBeReloaded = $("#entity-to-be-reloaded").val();
         switch ($request->get('toBeReloaded')) {
             case 'contexte':
@@ -179,19 +175,25 @@ class MediaController
        // var toBeReloaded = $("#entity-to-be-reloaded").val();
         switch ($request->get('toBeReloaded')) {
             case 'contexte':
+                // List of questionnaires with THIS media : Objet de la question
+                $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaContext($mediaId);
                 break;
             case 'texte':
+                // List of questionnaires with THIS media : Objet de la question
+                $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($mediaId);
                 break;
             case 'functional-instruction':
+                // List of questionnaires with THIS media : Objet de la question
+                $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFunctionalInstruction($mediaId);
                 break;
             case 'feedback':
+                // List of questionnaires with THIS media : Objet de la question
+                $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFeedback($mediaId);
                 break;
-            case 'subquestion':
+            case 'subquestion': //TODO
                 break;
         }
 
-        // List of questionnaires with THIS media : Objet de la question
-        $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($mediaId);
         foreach ($questionnairesForMedia as $questionnaireForMedia) {
             $questionnaireId = $questionnaireForMedia->getId();
             //echo "Questionnaire : " . $questionnaireId;
