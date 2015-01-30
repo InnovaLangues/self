@@ -120,6 +120,10 @@ class MediaController
                                         $request->get('description')
                                         );
 
+
+        die($request->get('toBeReloaded'));
+
+
         // var toBeReloaded = $("#entity-to-be-reloaded").val();
         switch ($request->get('toBeReloaded')) {
             case 'contexte':
@@ -146,7 +150,7 @@ class MediaController
 
         // I have my mediaIt and ...
         $mediaId = $request->get('mediaId');
-        $this->invalidateMediaAction($mediaId);
+        $this->invalidateMediaAction($mediaId, $request->get('toBeReloaded'));
 
         // Add revisor
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
@@ -158,7 +162,7 @@ class MediaController
     /**
     * Parse post var
     */
-    private function invalidateMediaAction($mediaId)
+    private function invalidateMediaAction($mediaId, $typeReloaded)
     {
 
         $em = $this->entityManager;
@@ -171,6 +175,20 @@ class MediaController
         // 3 : texte
         // 4 : image
         $mediaType = $media->getMediaType()->getId();
+
+       // var toBeReloaded = $("#entity-to-be-reloaded").val();
+        switch ($request->get('toBeReloaded')) {
+            case 'contexte':
+                break;
+            case 'texte':
+                break;
+            case 'functional-instruction':
+                break;
+            case 'feedback':
+                break;
+            case 'subquestion':
+                break;
+        }
 
         // List of questionnaires with THIS media : Objet de la question
         $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($mediaId);
