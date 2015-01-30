@@ -173,7 +173,7 @@ class MediaController
         $mediaType = $media->getMediaType()->getId();
 
        // var toBeReloaded = $("#entity-to-be-reloaded").val();
-        switch ($request->get('toBeReloaded')) {
+        switch ($typeReloaded) {
             case 'contexte':
                 // List of questionnaires with THIS media : Objet de la question
                 $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaContext($mediaId);
