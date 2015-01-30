@@ -194,6 +194,8 @@ class MediaController
                 break;
         }
 
+        die("M : " . $mediaId);
+
         foreach ($questionnairesForMedia as $questionnaireForMedia) {
             $questionnaireId = $questionnaireForMedia->getId();
             //echo "Questionnaire : " . $questionnaireId;
