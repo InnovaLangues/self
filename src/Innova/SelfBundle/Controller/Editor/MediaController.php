@@ -156,23 +156,15 @@ class MediaController
 
 
     /**
-    * Parse post var
+    * Fonction qui invalide le cache de tests et des questionnaires pour un média donné
     */
     private function invalidateMediaAction($mediaId, $typeReloaded)
     {
 
+        // Manager call
         $em = $this->entityManager;
 
-        // ... I want the mediaType
-        $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
-        // MediaType :
-        // 1 : Audio
-        // 2 : Video
-        // 3 : texte
-        // 4 : image
-        $mediaType = $media->getMediaType()->getId();
-
-       // var toBeReloaded = $("#entity-to-be-reloaded").val();
+        // Suivant la zone modifiée, appel du questionnaire
         switch ($typeReloaded) {
             case 'contexte':
                 // List of questionnaires with THIS media : Contexte
@@ -190,28 +182,24 @@ class MediaController
                 // List of questionnaires with THIS media : Feedback
                 $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFeedback($mediaId);
                 break;
-            case 'subquestion': //TODO
-                //echo "<br />subq0 ";
-                // List of questionnaires with THIS media : Feedback
+            case 'subquestion':
+                // List of questionnaires with THIS media : Subquestion
                 $subquestions = $em->getRepository('InnovaSelfBundle:Subquestion')->findBymediaAmorce($mediaId);
                 foreach ($subquestions as $subquestion) {
-                //echo "<br />subq1 " . $subquestion->getId() . " - " . $subquestion->getMediaAmorce()->getId();
                     $questions = $em->getRepository('InnovaSelfBundle:Question')->findByQuestionnaire($subquestion->getQuestion());
                     foreach ($questions as $question) {
                         $questionnaireId = $question->getQuestionnaire()->getId();
-                //echo "<br />subq2 " . $questionnaireId;
                         $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findById($questionnaireId);
                     }
                 }
                 break;
         }
 
+        // A ce niveau, j'ai tous les questionnaires qui ont le média modifié
         foreach ($questionnairesForMedia as $questionnaireForMedia) {
             $questionnaireId = $questionnaireForMedia->getId();
-            //echo " theme " . $questionnaireForMedia->getTheme();
-            //die("<br /> M : " . $mediaId);
-            //echo "Questionnaire : " . $questionnaireId;
 
+            // Appel des tests qui ont ce questionnaire dans leur liste
             $testsForQuestionnaire = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->
                                 findBy(array('questionnaire' => $questionnaireId));
             foreach ($testsForQuestionnaire as $testForQuestionnaire) {
