@@ -109,8 +109,6 @@ class MediaController
     public function updateMediaAction()
     {
 
-        die("editor_questionnaire_update-media");
-
         // Function to update database in editor
         // In Editor, I choose en task and I want to update it
         $em = $this->entityManager;
