@@ -60,13 +60,13 @@ class SubquestionManager
             $em->persist($newClue);
             $newSubquestion->setClue($newClue);
         }
+        $em->persist($newSubquestion);
+        $em->flush();
 
         $propositions = $em->getRepository('InnovaSelfBundle:Proposition')->getBySubquestionExcludingAnswers($subquestion->getId());
         foreach ($propositions as $proposition) {
             $this->propositionManager->duplicate($proposition, $newSubquestion);
         }
-        $em->persist($newSubquestion);
-        $em->flush();
 
         return $newSubquestion;
     }

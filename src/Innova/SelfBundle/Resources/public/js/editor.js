@@ -1079,7 +1079,6 @@ function postForm(form){
             $('#modal-subquestion-identity').modal('hide');
             afterAjax();
         },
-
     });
 }
 
