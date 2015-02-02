@@ -4,6 +4,10 @@ imports:
 
 framework:
     #esi:             ~
+    #fragments:       ~
+    # http://blog.eleven-labs.com/symfony-2-cache-http-esi/
+    esi:             true # Pour utiliser les tags ESI dans les templates Twig
+    fragments:       { path: /_proxy }
     translator:      { fallback: %locale% }
     secret:          %secret%
     router:
@@ -20,7 +24,6 @@ framework:
     session:
         save_path: "%kernel.root_dir%/sessions"
         name: "self"
-    fragments:       ~
     http_method_override: true
 
 # Twig Configuration
