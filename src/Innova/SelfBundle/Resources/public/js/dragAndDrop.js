@@ -25,8 +25,8 @@ function drpbl(selector){
 				lastPositionZone.removeClass("answered");
 				dropzone.addClass("answered");
 			
-				//on gère le cas de la position initiale qui peut
-				//désormais accueillir d'autres draggable
+				// on gère le cas de la position initiale qui peut
+				// désormais accueillir d'autres draggable
 				if ($("#droppable-"+propositionId).length) {
 					$("#droppable-"+propositionId).addClass("droppable");
 					drpbl("#droppable-"+propositionId);

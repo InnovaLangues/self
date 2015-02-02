@@ -70,7 +70,23 @@ class PropositionManager
     public function duplicate(Proposition $proposition, Subquestion $subquestion)
     {
         $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
-        $newMedia = $this->mediaManager->duplicate($proposition->getMedia(), $questionnaire);
+        $question = $subquestion->getQuestion();
+        $this->entityManager->refresh($question);
+        $subquestions = $question->getSubquestions();
+        $media = $proposition->getMedia();
+
+        if ($question->getTypology()->getName() == "APP" && $subquestions->count() >= 2) {
+            $baseSubquestion = $subquestions[0];
+            $this->entityManager->refresh($baseSubquestion);
+            foreach ($baseSubquestion->getPropositions() as $prop) {
+                $propMedia = $prop->getMedia();
+                if ($propMedia->getDescription() == $media->getDescription()) {
+                    $newMedia = $propMedia;
+                }
+            }
+        } else {
+            $newMedia = $this->mediaManager->duplicate($media, $questionnaire);
+        }
 
         $newProposition = $this->createProposition($subquestion, $newMedia, $proposition->getRightAnswer());
 

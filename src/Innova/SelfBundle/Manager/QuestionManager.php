@@ -50,13 +50,13 @@ class QuestionManager
 
         $newQuestion = $this->createQuestion($questionnaire);
         $newQuestion->setTypology($question->getTypology());
+        $em->persist($newQuestion);
+        $em->flush();
 
         $subquestions = $question->getSubquestions();
         foreach ($subquestions as $subquestion) {
             $this->subquestionManager->duplicate($subquestion, $newQuestion);
         }
-        $em->persist($newQuestion);
-        $em->flush();
 
         return $newQuestion;
     }
