@@ -50,3 +50,18 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+<ifmodule mod_expires.c>
+ ExpiresActive On
+ ExpiresByType image/jpg "access plus 44 seconds"
+ ExpiresByType image/jpeg "access plus 44 seconds"
+ ExpiresByType image/png "access plus 44 seconds"
+ ExpiresByType image/gif "access plus 44 seconds"
+ ExpiresByType video/mp3 "access plus 1 month"
+ ExpiresByType video/ogg "access plus 1 month"
+ ExpiresByType video/webm "access plus 1 month"
+ ExpiresByType image/svg+xml "access plus 1 month"
+ ExpiresByType audio/ogg "access plus 1 month"
+ ExpiresByType image/bmp "access plus 1 month"
+ ExpiresByType video/mp4 "access plus 1 month"
+</ifmodule>

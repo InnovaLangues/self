@@ -31,3 +31,6 @@ _imagine:
 
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+
+user_context_hash:
+    path: /user-context-hash

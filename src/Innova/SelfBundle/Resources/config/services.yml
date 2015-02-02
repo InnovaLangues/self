@@ -77,11 +77,11 @@ services:
         class: Innova\SelfBundle\Controller\Editor\TaskController
         arguments:
             questionnaireManager:   @self.questionnaire.manager
-            questionManager:    @self.question.manager
+            questionManager:        @self.question.manager
             orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
-            formFactory: @form.factory
+            formFactory:        @form.factory
         calls:
             - [setRequest, [@request]]
         scope: request
@@ -96,6 +96,8 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
+            cacheManager:       @fos_http_cache.cache_manager
+            router:             @router
         calls:
             - [setRequest, [@request]]
         scope: request
