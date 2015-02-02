@@ -220,15 +220,6 @@ class MediaController
                  );
                 $this->cacheManager->invalidatePath($pathToInvalidate);
 
-                $pathToInvalidate = $this->router->generate('editor_questionnaire_show',
-                                        array(
-                                                'questionnaireId' => $questionnaireId
-                                             )
-
-                 );
-                $this->cacheManager->invalidatePath($pathToInvalidate);
-
-
             }
         }
 
