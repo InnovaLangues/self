@@ -25,7 +25,7 @@ class AppManager
         // on ajoute aux autres subquestions des propositions fausses
         foreach ($subquestions as $subquestion) {
             if ($subquestion != $currentSubquestion) {
-                $proposition = $this->propositionManager->createProposition($subquestion, $currentProposition->getMedia(), false);
+                $this->propositionManager->createProposition($subquestion, $currentProposition->getMedia(), false);
                 $otherPropositions = $subquestion->getPropositions();
             }
         }
