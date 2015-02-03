@@ -20,36 +20,32 @@ class AppManager
     public function createAppFakeAnswer(Proposition $currentProposition)
     {
         $currentSubquestion = $currentProposition->getSubquestion();
-        $question = $currentSubquestion->getQuestion();
-        $subquestions = $question->getSubquestions();
+        $subquestions = $currentSubquestion->getQuestion()->getSubquestions();
 
-        $propositions = array();
-
-        // on ajoute aux autres subquestions des propositions
+        // on ajoute aux autres subquestions des propositions fausses
         foreach ($subquestions as $subquestion) {
             if ($subquestion != $currentSubquestion) {
-                $propositions = $subquestion->getPropositions();
                 $proposition = $this->propositionManager->createProposition($subquestion, $currentProposition->getMedia(), false);
+                $otherPropositions = $subquestion->getPropositions();
             }
         }
 
         // reste à ajouter les propositions des autres à la subquestion courante.
-        foreach ($propositions as $proposition) {
-            $mediaId = $proposition->getMedia()->getId();
-            $media = $proposition->getMedia();
+        foreach ($otherPropositions as $otherProposition) {
+            $media = $otherProposition->getMedia();
             $found = false;
-            foreach ($currentSubquestion->getPropositions() as $currentSubquestionProposition) {
-                $currentMediaId = $currentSubquestionProposition->getMedia()->getId();
-                if ($mediaId == $currentMediaId) {
+            foreach ($currentSubquestion->getPropositions() as $currentSubProposition) {
+                $currentMedia = $currentSubProposition->getMedia();
+                if ($media == $currentMedia) {
                     $found = true;
                 }
             }
             if ($found === false) {
-                $proposition = $this->propositionManager->createProposition($currentSubquestion, $media, false);
+                $this->propositionManager->createProposition($currentSubquestion, $media, false);
             }
         }
 
-        return true;
+        return $this;
     }
 
     public function appDeletePropositions(Media $media, Question $question)
