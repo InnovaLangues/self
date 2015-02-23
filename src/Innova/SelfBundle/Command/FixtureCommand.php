@@ -232,6 +232,15 @@ class FixtureCommand extends ContainerAwareCommand
             $output->writeln("Add new Language (Chinese).");
         }
 
+        if (!$em->getRepository('InnovaSelfBundle:Language')->findOneByName("Spanish")) {
+            $langSp = new Language();
+            $langSp->setName("Spanish");
+            $langSp->setColor("pink");
+            $em->persist($langSp);
+            $em->flush();
+            $output->writeln("Add new Language (Spanish).");
+        }
+
             /*
                 New table for version 1.2 or version 2 (2014)
                 fixtures for levelLansad table
@@ -240,7 +249,7 @@ class FixtureCommand extends ContainerAwareCommand
             /* Level for English language */
             $levelLansadEngs = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
         foreach ($levelLansadEngs as $levelLansadEng) {
-            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneByName($levelLansadEng)) {
+            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadEng, 'language' => $langEng))) {
                 $level = new LevelLansad();
                 $level->setLanguage($langEng);
                 $level->setName($levelLansadEng);
@@ -253,12 +262,25 @@ class FixtureCommand extends ContainerAwareCommand
             /* Level for Ialian language */
             $levelLansadIts = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
         foreach ($levelLansadIts as $levelLansadIt) {
-            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneByName($levelLansadIt)) {
+            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadIt, 'language' => $langIt))) {
                 $level = new LevelLansad();
                 $level->setLanguage($langIt);
                 $level->setName($levelLansadIt);
                 $em->persist($level);
                 $output->writeln("Add new LevelLansad (".$levelLansadIt.").");
+            }
+        }
+
+        $langSp = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Spanish");
+            /* Level for Ialian language */
+            $levelLansadSps = array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2");
+        foreach ($levelLansadSps as $levelLansadSp) {
+            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadSp, 'language' => $langSp))) {
+                $level = new LevelLansad();
+                $level->setLanguage($langSp);
+                $level->setName($levelLansadSp);
+                $em->persist($level);
+                $output->writeln("Add new LevelLansad (".$levelLansadSp.").");
             }
         }
 
