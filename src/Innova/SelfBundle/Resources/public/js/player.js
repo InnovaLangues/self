@@ -35,12 +35,12 @@ $(document).ready(function() {
                     if (sound != "situation"){
                         playMedia(audio, $(this), mediaId);
                     } else {
-                        var context = getSessionContextListenNumber();
-                        if (context > 0 || questionnaireHasContext == false) {
+                        //var context = getSessionContextListenNumber();
+                        //if (context > 0 || questionnaireHasContext == false) {
                             playMedia(audio, $(this), mediaId);
-                        } else {
-                            $('#modal-listen-context').modal('show');
-                        }
+                        //} else {
+                        //    $('#modal-listen-context').modal('show');
+                        //}
                     }
                 }
             });
@@ -121,14 +121,14 @@ $(document).ready(function() {
 
             checkMediaClicks(mediaId, function(isPlayable){
                 if(isPlayable && !play_in_progress) {
-                    var context = getSessionContextListenNumber();
-                    if (context > 0 || questionnaireHasContext == false) {
+                    //var context = getSessionContextListenNumber();
+                    //if (context > 0 || questionnaireHasContext == false) {
                         playButton.attr("disabled", "disabled");
                         playMedia(video, $(this), mediaId);
                         $("#video").css("opacity","1");
-                    } else {
-                        $('#modal-listen-context').modal('show');
-                    }
+                    //} else {
+                    //    $('#modal-listen-context').modal('show');
+                    //}
                 }
             });
         });
@@ -150,13 +150,16 @@ $(document).ready(function() {
         videoContainer.bind('contextmenu',function() { return false; });
     }
 
+    /* 
     $("#contexte-icon").click(function(){
         incrementeSessionContextListenNumber();
     });
+    */
 
 });
 
 
+/*
 function getSessionContextListenNumber() {
     var context = 0;
     $.ajax({
@@ -181,6 +184,7 @@ function incrementeSessionContextListenNumber() {
 
      return true;
 }
+*/
 
 
 function playMedia(media, btn, mediaId){
