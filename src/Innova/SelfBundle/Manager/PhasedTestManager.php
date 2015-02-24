@@ -17,8 +17,10 @@ class PhasedTestManager
 
     public function generateBaseComponents(Test $test)
     {
-        if (!$this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component')->findByTest($test)) {
-            $componentTypes = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\ComponentType')->findAll();
+        $em = $this->entityManager;
+
+        if (!$em->getRepository('InnovaSelfBundle:PhasedTest\Component')->findByTest($test)) {
+            $componentTypes = $em->getRepository('InnovaSelfBundle:PhasedTest\ComponentType')->findAll();
             foreach ($componentTypes as $type) {
                 $this->generateComponent($test, $type);
             }
@@ -29,7 +31,9 @@ class PhasedTestManager
 
     public function generateComponent(Test $test, ComponentType $type)
     {
-        if ($components = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component')->findBy(array("test" => $test, "componentType" => $type))) {
+        $em = $this->entityManager;
+
+        if ($components = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->findBy(array("test" => $test, "componentType" => $type))) {
             $count = count($components);
         } else {
             $count = 0;
@@ -40,8 +44,79 @@ class PhasedTestManager
         $component->setAlternativeNumber($count);
         $component->setTest($test);
 
-        $this->entityManager->persist($component);
-        $this->entityManager->flush();
+        $em->persist($component);
+        $em->flush();
+
+        return $this;
+    }
+
+    public function addQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)
+    {
+        $em = $this->entityManager;
+
+        if ($orderedTasks = $em->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent')->findByComponent($component)) {
+            $count = count($orderedTasks);
+        } else {
+            $count = 0;
+        }
+
+        $orderedTask = new OrderQuestionnaireComponent();
+        $orderedTask->setQuestionnaire($questionnaire);
+        $orderedTask->setComponent($component);
+        $orderedTask->setDisplayOrder($count + 1);
+
+        $em->persist($orderedTask);
+        $em->flush();
+
+        return $this;
+    }
+
+    public function removeQuestionnaireFromComponent(Questionnaire $questionnaire, Component $component)
+    {
+        $em = $this->entityManager;
+
+        $questionnaireToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireComponent')->findOneBy(array(
+                                                                                            'component' => $component,
+                                                                                            'questionnaire' => $questionnaire,
+                                                                                        ));
+        $em->remove($questionnaireToRemove);
+        $em->flush();
+
+        $this->recalculateOrder($component);
+
+        return $this;
+    }
+
+    public function saveOrder($newOrderArray, Component $component)
+    {
+        $em = $this->entityManager;
+
+        $i = 0;
+        foreach ($newOrderArray as $questionnaireId) {
+            $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+            $i++;
+            $orderQuestionnaireComponent = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireComponent')->findOneBy(array("questionnaire" => $questionnaire, "component" => $component));
+            $orderQuestionnaireComponent->setDisplayOrder($i+1);
+            $em->persist($orderQuestionnaireComponent);
+        }
+        $em->flush();
+
+        return $this;
+    }
+
+    public function recalculateOrder(Component $component)
+    {
+        $em = $this->entityManager;
+
+        $orderedQuestionnaires = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByComponent($component);
+
+        $i = 1;
+        foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
+            $orderedQuestionnaire->setDisplayOrder($i);
+            $em->persist($orderedQuestionnaire);
+            $i++;
+        }
+        $em->flush();
 
         return $this;
     }
