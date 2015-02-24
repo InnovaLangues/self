@@ -10,13 +10,20 @@ class TestManager
     protected $securityContext;
     protected $questionnaireManager;
     protected $orderQuestionnaireTestManager;
+    protected $phasedTestManager;
 
-    public function __construct($entityManager, $securityContext, $questionnaireManager, $orderQuestionnaireTestManager)
-    {
+    public function __construct(
+        $entityManager,
+        $securityContext,
+        $questionnaireManager,
+        $orderQuestionnaireTestManager,
+        $phasedTestManager
+    ) {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
         $this->questionnaireManager = $questionnaireManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
+        $this->phasedTestManager = $phasedTestManager;
     }
 
     public function getTestsProgress($tests)
@@ -91,6 +98,19 @@ class TestManager
         }
 
         $this->entityManager->persist($test);
+        $this->entityManager->flush();
+
+        return $test;
+    }
+
+    public function togglePhased(Test $test)
+    {
+        if ($test->getPhased()) {
+            $test->setPhased(false);
+        } else {
+            $test->setPhased(true);
+            $this->phasedTestManager->generateBaseComponents($test);
+        }
         $this->entityManager->flush();
 
         return $test;

@@ -40,7 +40,7 @@ class Test
      *
      * @ORM\Column(name="phased", type="boolean")
      */
-    private $phased;
+    private $phased = 0;
 
     /**
     * @ORM\OneToMany(targetEntity="Trace", mappedBy="test", cascade={"remove"})
@@ -390,20 +390,20 @@ class Test
     /**
      * Set phased
      *
-     * @param boolean $phased
+     * @param  boolean $phased
      * @return Test
      */
     public function setPhased($phased)
     {
         $this->phased = $phased;
-    
+
         return $this;
     }
 
     /**
      * Get phased
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPhased()
     {
@@ -413,7 +413,7 @@ class Test
     /**
      * Get archived
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getArchived()
     {

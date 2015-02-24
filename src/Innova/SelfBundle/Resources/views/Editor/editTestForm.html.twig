@@ -17,6 +17,14 @@
     {% endif %}
 </a>
 
+<a href="{{ path('editor_test_phase', { 'testId': test.id }) }}" class="btn btn-sm btn-default">
+    {% if test.phased %}
+        Unphased
+    {% else %}
+        Phased
+    {% endif %}
+</a>
+
 <hr/>
 
 <h3>{{ 'editor.test.edition' | trans }}</h3>

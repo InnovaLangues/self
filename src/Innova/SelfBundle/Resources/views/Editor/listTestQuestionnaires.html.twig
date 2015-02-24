@@ -24,6 +24,11 @@
 
 <hr/>
 
+{% if test.phased %}
+    {% include "InnovaSelfBundle:Editor/phased:phased.html.twig" %}
+{% endif %}
+
+
 <div class="panel panel-default">
     <div class="panel-heading">
         {% autoescape 'html' %}

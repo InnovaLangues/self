@@ -114,6 +114,7 @@ services:
             securityContext:    @security.context
             questionnaireManager: @self.questionnaire.manager
             orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
+            phasedTestManager: @self.phasedtest.manager
 
     self.eec.manager:
         class: Innova\SelfBundle\Manager\EecManager
@@ -123,3 +124,8 @@ services:
             subquestionManager:     @self.subquestion.manager
             propositionManager:     @self.proposition.manager
             mediaManager:           @self.media.manager
+
+    self.phasedtest.manager:
+        class: Innova\SelfBundle\Manager\PhasedTestManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager

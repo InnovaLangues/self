@@ -27,9 +27,11 @@ class Component
     protected $componentType;
 
     /**
-    * @ORM\ManyToOne(targetEntity="ComponentAlternative")
-    */
-    protected $componentAlternative;
+     * @var integer
+     *
+     * @ORM\Column(name="alternativeNumber", type="integer")
+     */
+    private $alternativeNumber;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test")
@@ -48,11 +50,11 @@ class Component
     {
         $this->orderQuestionnaireComponents = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,20 +64,20 @@ class Component
     /**
      * Set componentType
      *
-     * @param \Innova\SelfBundle\Entity\PhasedTest\ComponentType $componentType
+     * @param  \Innova\SelfBundle\Entity\PhasedTest\ComponentType $componentType
      * @return Component
      */
     public function setComponentType(\Innova\SelfBundle\Entity\PhasedTest\ComponentType $componentType = null)
     {
         $this->componentType = $componentType;
-    
+
         return $this;
     }
 
     /**
      * Get componentType
      *
-     * @return \Innova\SelfBundle\Entity\PhasedTest\ComponentType 
+     * @return \Innova\SelfBundle\Entity\PhasedTest\ComponentType
      */
     public function getComponentType()
     {
@@ -83,45 +85,22 @@ class Component
     }
 
     /**
-     * Set componentAlternative
-     *
-     * @param \Innova\SelfBundle\Entity\PhasedTest\ComponentAlternative $componentAlternative
-     * @return Component
-     */
-    public function setComponentAlternative(\Innova\SelfBundle\Entity\PhasedTest\ComponentAlternative $componentAlternative = null)
-    {
-        $this->componentAlternative = $componentAlternative;
-    
-        return $this;
-    }
-
-    /**
-     * Get componentAlternative
-     *
-     * @return \Innova\SelfBundle\Entity\PhasedTest\ComponentAlternative 
-     */
-    public function getComponentAlternative()
-    {
-        return $this->componentAlternative;
-    }
-
-    /**
      * Set test
      *
-     * @param \Innova\SelfBundle\Entity\Test $test
+     * @param  \Innova\SelfBundle\Entity\Test $test
      * @return Component
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
     {
         $this->test = $test;
-    
+
         return $this;
     }
 
     /**
      * Get test
      *
-     * @return \Innova\SelfBundle\Entity\Test 
+     * @return \Innova\SelfBundle\Entity\Test
      */
     public function getTest()
     {
@@ -131,13 +110,13 @@ class Component
     /**
      * Add orderQuestionnaireComponents
      *
-     * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     * @param  \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
      * @return Component
      */
     public function addOrderQuestionnaireComponent(\Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents)
     {
         $this->orderQuestionnaireComponents[] = $orderQuestionnaireComponents;
-    
+
         return $this;
     }
 
@@ -154,10 +133,33 @@ class Component
     /**
      * Get orderQuestionnaireComponents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrderQuestionnaireComponents()
     {
         return $this->orderQuestionnaireComponents;
+    }
+
+    /**
+     * Set alternativeNumber
+     *
+     * @param integer $alternativeNumber
+     * @return Component
+     */
+    public function setAlternativeNumber($alternativeNumber)
+    {
+        $this->alternativeNumber = $alternativeNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get alternativeNumber
+     *
+     * @return integer 
+     */
+    public function getAlternativeNumber()
+    {
+        return $this->alternativeNumber;
     }
 }

@@ -31,6 +31,7 @@ use Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety;
+use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -503,6 +504,16 @@ class FixtureCommand extends ContainerAwareCommand
                 $v->setName($variety);
                 $em->persist($v);
                 $output->writeln("Add new Variety (".$variety.")");
+            }
+        }
+
+        $componentTypes = array("minitest", "step1", "step2", "step3");
+        foreach ($componentTypes as $type) {
+            if (!$em->getRepository('InnovaSelfBundle:PhasedTest\ComponentType')->findOneByName($type)) {
+                $c = new ComponentType();
+                $c->setName($type);
+                $em->persist($c);
+                $output->writeln("Add new Variety (".$type.")");
             }
         }
 
