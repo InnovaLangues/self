@@ -36,6 +36,13 @@ class Test
     private $actif;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="phased", type="boolean")
+     */
+    private $phased;
+
+    /**
     * @ORM\OneToMany(targetEntity="Trace", mappedBy="test", cascade={"remove"})
     */
     private $traces;
@@ -376,6 +383,39 @@ class Test
      * @return boolean
      */
     public function isArchived()
+    {
+        return $this->archived;
+    }
+
+    /**
+     * Set phased
+     *
+     * @param boolean $phased
+     * @return Test
+     */
+    public function setPhased($phased)
+    {
+        $this->phased = $phased;
+    
+        return $this;
+    }
+
+    /**
+     * Get phased
+     *
+     * @return boolean 
+     */
+    public function getPhased()
+    {
+        return $this->phased;
+    }
+
+    /**
+     * Get archived
+     *
+     * @return boolean 
+     */
+    public function getArchived()
     {
         return $this->archived;
     }

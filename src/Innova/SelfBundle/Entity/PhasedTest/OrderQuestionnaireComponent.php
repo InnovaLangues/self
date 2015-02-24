@@ -1,16 +1,16 @@
 <?php
 
-namespace Innova\SelfBundle\Entity;
+namespace Innova\SelfBundle\Entity\PhasedTest;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Media
+ * OrderQuestionnaireComponent
  *
- * @ORM\Table("orderQuestionnaireTest")
+ * @ORM\Table("orderQuestionnaireComponent")
  * @ORM\Entity
  */
-class OrderQuestionnaireTest
+class OrderQuestionnaireComponent
 {
     /**
      * @var integer
@@ -22,12 +22,12 @@ class OrderQuestionnaireTest
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Test", inversedBy="orderQuestionnaireTests", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="Component", inversedBy="orderQuestionnaireComponents")
     */
-    protected $test;
+    protected $component;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="orderQuestionnaireTests")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire")
     */
     private $questionnaire;
 
@@ -41,7 +41,7 @@ class OrderQuestionnaireTest
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -51,20 +51,20 @@ class OrderQuestionnaireTest
     /**
      * Set displayOrder
      *
-     * @param  integer                $displayOrder
-     * @return OrderQuestionnaireTest
+     * @param integer $displayOrder
+     * @return OrderQuestionnaireComponent
      */
     public function setDisplayOrder($displayOrder)
     {
         $this->displayOrder = $displayOrder;
-
+    
         return $this;
     }
 
     /**
      * Get displayOrder
      *
-     * @return integer
+     * @return integer 
      */
     public function getDisplayOrder()
     {
@@ -72,45 +72,45 @@ class OrderQuestionnaireTest
     }
 
     /**
-     * Set test
+     * Set component
      *
-     * @param  \Innova\SelfBundle\Entity\Test $test
-     * @return OrderQuestionnaireTest
+     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $component
+     * @return OrderQuestionnaireComponent
      */
-    public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
+    public function setComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $component = null)
     {
-        $this->test = $test;
-
+        $this->component = $component;
+    
         return $this;
     }
 
     /**
-     * Get test
+     * Get component
      *
-     * @return \Innova\SelfBundle\Entity\Test
+     * @return \Innova\SelfBundle\Entity\PhasedTest\Component 
      */
-    public function getTest()
+    public function getComponent()
     {
-        return $this->test;
+        return $this->component;
     }
 
     /**
      * Set questionnaire
      *
-     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
-     * @return OrderQuestionnaireTest
+     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @return OrderQuestionnaireComponent
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
     {
         $this->questionnaire = $questionnaire;
-
+    
         return $this;
     }
 
     /**
      * Get questionnaire
      *
-     * @return \Innova\SelfBundle\Entity\Questionnaire
+     * @return \Innova\SelfBundle\Entity\Questionnaire 
      */
     public function getQuestionnaire()
     {

@@ -1348,4 +1348,23 @@ class Questionnaire
     {
         return $this->varieties;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->revisors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mediaLimits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mediaClicks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->editorLogs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orderQuestionnaireTests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sourceTypes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->channels = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->varieties = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
 }

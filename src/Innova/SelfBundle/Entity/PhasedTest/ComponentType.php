@@ -1,16 +1,16 @@
 <?php
 
-namespace Innova\SelfBundle\Entity\EditorLog;
+namespace Innova\SelfBundle\Entity\PhasedTest;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * EditorLogAction
+ * ComponentType
  *
- * @ORM\Table("editorLogAction")
+ * @ORM\Table("componentType")
  * @ORM\Entity
  */
-class EditorLogAction
+class ComponentType
 {
     /**
      * @var integer
@@ -31,7 +31,7 @@ class EditorLogAction
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -41,20 +41,20 @@ class EditorLogAction
     /**
      * Set name
      *
-     * @param  string          $name
-     * @return EditorLogAction
+     * @param string $name
+     * @return ComponentType
      */
     public function setName($name)
     {
         $this->name = $name;
-
+    
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
