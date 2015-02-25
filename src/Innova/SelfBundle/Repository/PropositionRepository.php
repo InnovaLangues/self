@@ -12,7 +12,7 @@ class PropositionRepository extends EntityRepository
         LEFT JOIN p.media pm
         LEFT JOIN pm.mediaPurpose pmp
         WHERE p.subquestion = :subquestionId
-        AND pmp.name != 'reponse'";
+        AND (pmp.name != 'reponse' OR pmp is NULL)";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('subquestionId', $subquestionId);
