@@ -110,11 +110,12 @@ services:
     self.test.manager:
         class: Innova\SelfBundle\Manager\TestManager
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
-            questionnaireManager: @self.questionnaire.manager
-            orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
-            phasedTestManager: @self.phasedtest.manager
+            entityManager:                  @doctrine.orm.entity_manager
+            securityContext:                @security.context
+            questionnaireManager:           @self.questionnaire.manager
+            orderQuestionnaireTestManager:  @self.order_questionnaire_test.manager
+            phasedTestManager:              @self.phasedtest.manager
+            session:                        @session
 
     self.eec.manager:
         class: Innova\SelfBundle\Manager\EecManager

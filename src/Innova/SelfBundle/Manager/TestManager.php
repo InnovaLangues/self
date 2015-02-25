@@ -11,19 +11,22 @@ class TestManager
     protected $questionnaireManager;
     protected $orderQuestionnaireTestManager;
     protected $phasedTestManager;
+    protected $session;
 
     public function __construct(
         $entityManager,
         $securityContext,
         $questionnaireManager,
         $orderQuestionnaireTestManager,
-        $phasedTestManager
+        $phasedTestManager,
+        $session
     ) {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
         $this->questionnaireManager = $questionnaireManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
         $this->phasedTestManager = $phasedTestManager;
+        $this->session = $session;
     }
 
     public function getTestsProgress($tests)
@@ -107,11 +110,15 @@ class TestManager
     {
         if ($test->getPhased()) {
             $test->setPhased(false);
+            $msg = 'Le test '.$test->getName().' n\'est plus un test a étape';
         } else {
             $test->setPhased(true);
+            $msg = 'Le test '.$test->getName().' est maintenant un test a étape';
             $this->phasedTestManager->generateBaseComponents($test);
         }
         $this->entityManager->flush();
+
+        $this->session->getFlashBag()->set('success', $msg);
 
         return $test;
     }

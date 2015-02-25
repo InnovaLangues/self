@@ -117,7 +117,7 @@ class TestController extends Controller
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
         return array(
-                    'test' => $test,
+            'test' => $test,
         );
     }
 
