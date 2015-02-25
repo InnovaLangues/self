@@ -85,6 +85,11 @@ class Test
      */
     private $archived = 0;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\Component", mappedBy="test")
+    */
+    protected $components;
+
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
@@ -418,5 +423,38 @@ class Test
     public function getArchived()
     {
         return $this->archived;
+    }
+
+    /**
+     * Add components
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $components
+     * @return Test
+     */
+    public function addComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $components)
+    {
+        $this->components[] = $components;
+    
+        return $this;
+    }
+
+    /**
+     * Remove components
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $components
+     */
+    public function removeComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $components)
+    {
+        $this->components->removeElement($components);
+    }
+
+    /**
+     * Get components
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComponents()
+    {
+        return $this->components;
     }
 }

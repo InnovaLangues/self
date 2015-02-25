@@ -34,7 +34,7 @@ class Component
     private $alternativeNumber;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test", inversedBy="components")
     */
     protected $test;
 
@@ -143,20 +143,20 @@ class Component
     /**
      * Set alternativeNumber
      *
-     * @param integer $alternativeNumber
+     * @param  integer   $alternativeNumber
      * @return Component
      */
     public function setAlternativeNumber($alternativeNumber)
     {
         $this->alternativeNumber = $alternativeNumber;
-    
+
         return $this;
     }
 
     /**
      * Get alternativeNumber
      *
-     * @return integer 
+     * @return integer
      */
     public function getAlternativeNumber()
     {

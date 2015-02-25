@@ -1,0 +1,36 @@
+{% import _self as macros %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Test à étapes
+    </div>
+    <div id="components" class="panel-body">
+        {# MINITEST #}
+        <div class="row">
+            {{ macros.panelComponentType(test, 1, "minitest") }}
+        </div>
+        <div class="row">
+            {{ macros.panelComponentType(test, 2, "step1") }}
+            {{ macros.panelComponentType(test, 3, "step2") }}
+            {{ macros.panelComponentType(test, 4, "step3") }}
+        </div>
+    </div>
+</div>
+
+{% macro panelComponentType(test, type, typeName) %}
+    <div class="col-md-4" {% if type == 1 %}style="float:none;margin: 0 auto;"{% endif %}>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ typeName }}
+                <div class="pull-right">
+                    <a class="btn btn-default btn-xs" href="{{ path('editor_generate_component', { 'testId': test.id, 'typeId': type  }) }}">+</a>
+                </div>
+            </div>
+            <div class="panel-body">
+                {% for component in test.components if component.componentType.name == typeName %}
+                    {% include "InnovaSelfBundle:Editor/phased:component.html.twig" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}

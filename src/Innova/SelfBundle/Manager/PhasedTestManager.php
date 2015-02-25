@@ -50,6 +50,19 @@ class PhasedTestManager
         return $this;
     }
 
+    public function removeComponent(Test $test, Component $component)
+    {
+        $em = $this->entityManager;
+        $type = $component->getComponentType();
+
+        $em->remove($component);
+        $em->flush();
+
+        $this->reorganizeAlternative($test, $type);
+
+        return $this;
+    }
+
     public function addQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)
     {
         $em = $this->entityManager;
@@ -75,7 +88,7 @@ class PhasedTestManager
     {
         $em = $this->entityManager;
 
-        $questionnaireToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireComponent')->findOneBy(array(
+        $questionnaireToRemove = $em->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent')->findOneBy(array(
                                                                                             'component' => $component,
                                                                                             'questionnaire' => $questionnaire,
                                                                                         ));
@@ -95,7 +108,7 @@ class PhasedTestManager
         foreach ($newOrderArray as $questionnaireId) {
             $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
             $i++;
-            $orderQuestionnaireComponent = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireComponent')->findOneBy(array("questionnaire" => $questionnaire, "component" => $component));
+            $orderQuestionnaireComponent = $em->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent')->findOneBy(array("questionnaire" => $questionnaire, "component" => $component));
             $orderQuestionnaireComponent->setDisplayOrder($i+1);
             $em->persist($orderQuestionnaireComponent);
         }
@@ -108,7 +121,7 @@ class PhasedTestManager
     {
         $em = $this->entityManager;
 
-        $orderedQuestionnaires = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByComponent($component);
+        $orderedQuestionnaires = $em->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireTest')->findByComponent($component);
 
         $i = 1;
         foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
@@ -119,5 +132,19 @@ class PhasedTestManager
         $em->flush();
 
         return $this;
+    }
+
+    public function reorganizeAlternative(Test $test, ComponentType $type)
+    {
+        $em = $this->entityManager;
+
+        $i = 0;
+        $orderedComponents = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->findBy(array("test" => $test, "componentType" => $type));
+        foreach ($orderedComponents as $orderedComponent) {
+            $orderedComponent->setAlternativeNumber($i);
+            $em->persist($orderedComponent);
+            $i++;
+        }
+        $em->flush();
     }
 }

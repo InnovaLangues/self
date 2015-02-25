@@ -15,22 +15,22 @@ use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
  * PhasedTest controller.
  *
  * @Route("admin/editor")
- * @ParamConverter("test", class="InnovaSelfBundle:Test", options={"id" = "testId"})
- * @ParamConverter("questionnaire", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
- * @ParamConverter("component", class="InnovaSelfBundle:PhasedTest\Component", options={"id" = "componentId"})
- * @ParamConverter("type", class="InnovaSelfBundle:PhasedTest\ComponentType", options={"id" = "typeId"})
+ * @ParamConverter("test",          isOptional="true", class="InnovaSelfBundle:Test",                     options={"id" = "testId"})
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",            options={"id" = "questionnaireId"})
+ * @ParamConverter("component",     isOptional="true", class="InnovaSelfBundle:PhasedTest\Component",     options={"id" = "componentId"})
+ * @ParamConverter("type",          isOptional="true", class="InnovaSelfBundle:PhasedTest\ComponentType", options={"id" = "typeId"})
  */
 class PhasedTestController extends Controller
 {
     /**
      * Toggle phased attribute of a test entity.
      *
-     * @Route("/test/{testId}/phase", name="editor_test_phase")
+     * @Route("/phase/test/{testId}", name="editor_test_phase")
      * @Method("GET")
      */
     public function phaseTestAction(Test $test)
     {
-        $test = $this->get("self.test.manager")->togglePhased($test);
+        $this->get("self.test.manager")->togglePhased($test);
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
@@ -38,7 +38,7 @@ class PhasedTestController extends Controller
     /**
      * Generate a component for a test entity
      *
-     * @Route("/test/{testId}/component/{typeId}", name="editor_generate_components")
+     * @Route("/test/{testId}/add/component/{typeId}", name="editor_generate_component")
      * @Method("GET")
      */
     public function generateComponent(Test $test, ComponentType $type)
@@ -49,9 +49,22 @@ class PhasedTestController extends Controller
     }
 
     /**
+     * Remove a component from a test entity
+     *
+     * @Route("/test/{testId}/remove/component/{componentId}", name="editor_remove_component")
+     * @Method("GET")
+     */
+    public function removeComponent(Test $test, Component $component)
+    {
+        $this->get("self.phasedtest.manager")->removeComponent($test, $component);
+
+        return $this->redirect($this->generateUrl('editor_test_questionnaires_show', array('testId' => $test->getId())));
+    }
+
+    /**
      * Save questionnaire order for a component
      *
-     * @Route("/order-component-questionnaire/{componentId}", name="save-order-component-questionnaire", options={"expose"=true})
+     * @Route("/order/{componentId}", name="save-order-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
     public function saveOrder(Component $component)

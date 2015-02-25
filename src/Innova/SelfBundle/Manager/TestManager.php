@@ -96,12 +96,16 @@ class TestManager
     {
         if ($test->isArchived()) {
             $test->setArchived(false);
+            $msg = 'Le test '.$test->getName().' a été désarchivé';
         } else {
             $test->setArchived(true);
+            $msg = 'Le test '.$test->getName().' a été archivé';
         }
 
         $this->entityManager->persist($test);
         $this->entityManager->flush();
+
+        $this->session->getFlashBag()->set('success', $msg);
 
         return $test;
     }
@@ -116,6 +120,8 @@ class TestManager
             $msg = 'Le test '.$test->getName().' est maintenant un test a étape';
             $this->phasedTestManager->generateBaseComponents($test);
         }
+
+        $this->entityManager->persist($test);
         $this->entityManager->flush();
 
         $this->session->getFlashBag()->set('success', $msg);
