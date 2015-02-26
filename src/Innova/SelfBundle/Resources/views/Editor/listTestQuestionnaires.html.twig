@@ -9,7 +9,6 @@
 <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
     <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
 </a>
-{% if not test.phased %}
 <a id="create-task" class="btn btn-default btn-sm" data-test-id = "{{ test.id }}">
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create_test' | trans }}
 </a>
@@ -20,32 +19,27 @@
     <span class="glyphicon glyphicon-floppy-disk"></span>
     {{ 'editor.task.save_order' | trans }}
 </a>
-{% endif %}
 
 <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
 
 <hr/>
 
-{% if test.phased %}
-    {% include "InnovaSelfBundle:Editor/phased:phased.html.twig" %}
-{% else %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            {% autoescape 'html' %}
-            {{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}
-            {% endautoescape %}
-        </div>
-        <div id="tasks-list" class="panel-body">
-            <ul class="list-group" id="sortable">
-                {% if orders|length > 0 %}
-                    {% include "InnovaSelfBundle:Editor/partials:tasksList.html.twig" %}
-                {% else %}
-                    <div class="alert alert-info" role="alert">{{ 'editor.task.no_task_yet' | trans }}</div>
-                {% endif %}
-            </ul>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {% autoescape 'html' %}
+        {{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}
+        {% endautoescape %}
     </div>
-{% endif %}
+    <div id="tasks-list" class="panel-body">
+        <ul class="list-group" id="sortable">
+            {% if orders|length > 0 %}
+                {% include "InnovaSelfBundle:Editor/partials:tasksList.html.twig" %}
+            {% else %}
+                <div class="alert alert-info" role="alert">{{ 'editor.task.no_task_yet' | trans }}</div>
+            {% endif %}
+        </ul>
+    </div>
+</div>
 
 {% if test.copies|length > 0 %}
     <div class="alert alert-info" role="alert">
@@ -62,45 +56,43 @@
     </div>
 {% endif %}
 
-{% if not test.phased %}
-    <div id="add-task-modal" class="modal fade">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{ 'editor.task.add_existing' | trans }}</h4>
-                </div>
-                <div id="potential-questionnaires" class="modal-body">
-                    {% include "InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig" %}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-test-id="{{ test.id }}" id="refresh-potentials" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
-                </div>
+<div id="add-task-modal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ 'editor.task.add_existing' | trans }}</h4>
+            </div>
+            <div id="potential-questionnaires" class="modal-body">
+                {% include "InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig" %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-test-id="{{ test.id }}" id="refresh-potentials" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div id="delete-task-modal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{ 'editor.task.delete' | trans }}</h4>
-                </div>
-                <div class="modal-body">
-                    {{ 'editor.task.delete_confirm' | trans }}
-                    <input id="test-id" type="hidden" value="{{ test.id }}"/>
-                    <input id="questionnaire-id" type="hidden" value=""/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'editor.task.delete_confirm_no' | trans }}</button>
-                    <button type="button" id="delete-task-confirmation" class="btn btn-danger">{{ 'editor.task.delete_confirm_yes' | trans }}</button>
-                </div>
+<div id="delete-task-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ 'editor.task.delete' | trans }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ 'editor.task.delete_confirm' | trans }}
+                <input id="test-id" type="hidden" value="{{ test.id }}"/>
+                <input id="questionnaire-id" type="hidden" value=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'editor.task.delete_confirm_no' | trans }}</button>
+                <button type="button" id="delete-task-confirmation" class="btn btn-danger">{{ 'editor.task.delete_confirm_yes' | trans }}</button>
             </div>
         </div>
     </div>
-{% endif %}
+</div>
 
 
 {% endblock %}
@@ -109,5 +101,4 @@
     {{ parent() }}
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-task-list.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-phased.js") }}"></script>
 {% endblock %}
