@@ -89,7 +89,7 @@ class PhasedTestController extends Controller
     {
         $this->get("self.phasedtest.manager")->removeQuestionnaireFromComponent($orderQuestionnaireComponent);
 
-        return new JsonResponse(null);
+        return new Response(null);
     }
 
      /**
@@ -123,13 +123,14 @@ class PhasedTestController extends Controller
     /**
      * Duplicate a questionnaire and add it to a component
      *
-     * @Route("/add/component/{componentId}/questionnaire/{questionnaireId}", name="duplicate-component-questionnaire", options={"expose"=true})
+     * @Route("/duplicate/component/{componentId}/questionnaire/{questionnaireId}", name="duplicate-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
     public function duplicateQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)
     {
         $newQuestionnaire = $this->get("self.questionnaire.manager")->duplicate($questionnaire);
-        $template = $this->addQuestionnaireToComponent($newQuestionnaire, $component);
+        $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($newQuestionnaire, $component);
+        $template = $this->renderView('InnovaSelfBundle:Editor/phased:tasks.html.twig', array('component' => $component));
 
         return new Response($template);
     }

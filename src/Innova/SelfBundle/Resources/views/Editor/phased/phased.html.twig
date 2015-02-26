@@ -21,9 +21,10 @@
     <div class="col-md-4" {% if type == 1 %}style="float:none;margin: 0 auto;"{% endif %}>
         <div class="panel panel-info">
             <div class="panel-heading">
-                {{ typeName }}
+                {% set nameTrans = "phased."~typeName %}
+                {{ nameTrans | trans }}
                 <div class="pull-right">
-                    <a class="btn btn-default btn-xs" href="{{ path('editor_generate_component', { 'testId': test.id, 'typeId': type  }) }}">
+                    <a class="btn btn-default btn-xs" href="{{ path('editor_generate_component', { 'testId': test.id, 'typeId': type  }) }}" toggle="tooltip" data-original-title="{{'phased.create_alternative' | trans }}">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </div>
@@ -47,7 +48,7 @@
             <div id="potential-tasks" class="modal-body">
             </div>
             <div class="modal-footer">
-                <button type="button" data-test-id="{{ test.id }}" id="refresh-potentials" class="btn btn-default">
+                <button type="button" data-test-id="{{ test.id }}" id="refresh-potentials" class="btn btn-default" >
                     <span class="glyphicon glyphicon-refresh"></span> Refresh
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
