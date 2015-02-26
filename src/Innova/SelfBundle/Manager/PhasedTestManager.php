@@ -3,8 +3,10 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\PhasedTest\Component;
 use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
+use Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent;
 
 class PhasedTestManager
 {
@@ -13,14 +15,18 @@ class PhasedTestManager
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->componentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component');
+        $this->componentTypeRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\ComponentType');
+        $this->orderQuestionnaireComponentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent');
+        $this->questionnaireRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
     }
 
     public function generateBaseComponents(Test $test)
     {
         $em = $this->entityManager;
 
-        if (!$em->getRepository('InnovaSelfBundle:PhasedTest\Component')->findByTest($test)) {
-            $componentTypes = $em->getRepository('InnovaSelfBundle:PhasedTest\ComponentType')->findAll();
+        if (!$this->componentRepo->findByTest($test)) {
+            $componentTypes = $this->componentTypeRepo->findAll();
             foreach ($componentTypes as $type) {
                 $this->generateComponent($test, $type);
             }
@@ -33,7 +39,7 @@ class PhasedTestManager
     {
         $em = $this->entityManager;
 
-        if ($components = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->findBy(array("test" => $test, "componentType" => $type))) {
+        if ($components = $this->componentRepo->findBy(array("test" => $test, "componentType" => $type))) {
             $count = count($components);
         } else {
             $count = 0;
@@ -63,11 +69,18 @@ class PhasedTestManager
         return $this;
     }
 
+    public function getPotentialQuestionnaires(Component $component)
+    {
+        $questionnaires = $this->questionnaireRepo->findPotentialByComponent($component);
+
+        return $questionnaires;
+    }
+
     public function addQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)
     {
         $em = $this->entityManager;
 
-        if ($orderedTasks = $em->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent')->findByComponent($component)) {
+        if ($orderedTasks = $this->orderQuestionnaireComponentRepo->findByComponent($component)) {
             $count = count($orderedTasks);
         } else {
             $count = 0;
@@ -84,15 +97,12 @@ class PhasedTestManager
         return $this;
     }
 
-    public function removeQuestionnaireFromComponent(Questionnaire $questionnaire, Component $component)
+    public function removeQuestionnaireFromComponent(OrderQuestionnaireComponent $orderQuestionnaireComponent)
     {
-        $em = $this->entityManager;
+        $component = $orderQuestionnaireComponent->getComponent();
 
-        $questionnaireToRemove = $em->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent')->findOneBy(array(
-                                                                                            'component' => $component,
-                                                                                            'questionnaire' => $questionnaire,
-                                                                                        ));
-        $em->remove($questionnaireToRemove);
+        $em = $this->entityManager;
+        $em->remove($orderQuestionnaireComponent);
         $em->flush();
 
         $this->recalculateOrder($component);
@@ -106,9 +116,9 @@ class PhasedTestManager
 
         $i = 0;
         foreach ($newOrderArray as $questionnaireId) {
-            $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+            $questionnaire = $this->questionnaireRepo->find($questionnaireId);
             $i++;
-            $orderQuestionnaireComponent = $em->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent')->findOneBy(array("questionnaire" => $questionnaire, "component" => $component));
+            $orderQuestionnaireComponent = $this->orderQuestionnaireComponentRepo->findOneBy(array("questionnaire" => $questionnaire, "component" => $component));
             $orderQuestionnaireComponent->setDisplayOrder($i+1);
             $em->persist($orderQuestionnaireComponent);
         }
@@ -121,7 +131,7 @@ class PhasedTestManager
     {
         $em = $this->entityManager;
 
-        $orderedQuestionnaires = $em->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireTest')->findByComponent($component);
+        $orderedQuestionnaires = $this->orderQuestionnaireComponentRepo->findByComponent($component);
 
         $i = 1;
         foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
@@ -139,7 +149,7 @@ class PhasedTestManager
         $em = $this->entityManager;
 
         $i = 0;
-        $orderedComponents = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->findBy(array("test" => $test, "componentType" => $type));
+        $orderedComponents = $this->componentRepo->findBy(array("test" => $test, "componentType" => $type));
         foreach ($orderedComponents as $orderedComponent) {
             $orderedComponent->setAlternativeNumber($i);
             $em->persist($orderedComponent);

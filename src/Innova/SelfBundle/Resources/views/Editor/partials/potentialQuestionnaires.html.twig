@@ -7,22 +7,22 @@
     </div>
     <hr/>
     <ul id="tasks" class="list-group">
-    {% for potentialQuestionnaire in potentialQuestionnaires %}
-        <li class="list-group-item">
-            <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}">
-                <span class="glyphicon glyphicon-plus"></span> {{ 'generic.add' | trans }}
-            </span>
+        {% for potentialQuestionnaire in potentialQuestionnaires %}
+            <li class="list-group-item">
+                <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}">
+                    <span class="glyphicon glyphicon-plus"></span> {{ 'generic.add' | trans }}
+                </span>
 
-            <span class="btn btn-default duplicate-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}">
-                <span class="glyphicon glyphicon-asterisk"></span> {{ 'editor.task.duplicate_and_add' | trans }}
-            </span>
+                <span class="btn btn-default duplicate-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}">
+                    <span class="glyphicon glyphicon-asterisk"></span> {{ 'editor.task.duplicate_and_add' | trans }}
+                </span>
 
-            {% if potentialQuestionnaire.theme != "" %}
-                {{ potentialQuestionnaire.theme }}
-            {% else %}
-                {{ 'editor.task.unnamed' | trans }}
-            {% endif %}
-        </li>
-    {% endfor %}
+                {% if potentialQuestionnaire.theme != "" %}
+                    {{ potentialQuestionnaire.theme }}
+                {% else %}
+                    {{ 'editor.task.unnamed' | trans }}
+                {% endif %}
+            </li>
+        {% endfor %}
     </ul>
 {% endif %}

@@ -2,10 +2,17 @@
     <div class="panel-heading">
         #{{ component.alternativeNumber+1 }}
         <div class="pull-right">
-            <a class="btn btn-default btn-xs" href="{{ path('editor_remove_component', { 'testId': test.id, 'componentId': component.id  }) }}">-</a>
+            <a class="btn btn-default btn-xs get-potentials" data-test-id="{{ test.id }}" data-component-id="{{ component.id }}" href="#">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+            <a class="btn btn-default btn-xs" href="{{ path('editor_remove_component', { 'testId': test.id, 'componentId': component.id  }) }}">
+                <span class="glyphicon glyphicon-trash"></span>
+            </a>
         </div>
     </div>
-    <div class="panel-body">
-      ...  
+    <div class="panel-body" style="padding:0;margin:0">
+        <ul id="component-{{ component.id }}-tasks" class="list-group" style="padding:0;margin:0">
+        {% include "InnovaSelfBundle:Editor/phased:tasks.html.twig" %}
+        </ul>
     </div>
 </div>

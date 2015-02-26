@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -10,6 +12,7 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\PhasedTest\Component;
 use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
+use Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent;
 
 /**
  * PhasedTest controller.
@@ -19,6 +22,7 @@ use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",            options={"id" = "questionnaireId"})
  * @ParamConverter("component",     isOptional="true", class="InnovaSelfBundle:PhasedTest\Component",     options={"id" = "componentId"})
  * @ParamConverter("type",          isOptional="true", class="InnovaSelfBundle:PhasedTest\ComponentType", options={"id" = "typeId"})
+ * @ParamConverter("orderQuestionnaireComponent", isOptional="true", class="InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent", options={"id" = "orderQuestionnaireComponentId"})
  */
 class PhasedTestController extends Controller
 {
@@ -78,14 +82,28 @@ class PhasedTestController extends Controller
     /**
      * Remove a questionnaire from a component
      *
-     * @Route("/remove/component/{componentId}/questionnaire/{questionnaireId}", name="remove-component-questionnaire", options={"expose"=true})
+     * @Route("/remove/orderQuestionnaireComponent/{orderQuestionnaireComponentId}", name="remove-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
-    public function removeQuestionnaireFromComponent(Questionnaire $questionnaire, Component $component)
+    public function removeQuestionnaireFromComponent(OrderQuestionnaireComponent $orderQuestionnaireComponent)
     {
-        $this->get("self.phasedtest.manager")->removeQuestionnaireFromComponent($questionnaire, $component);
+        $this->get("self.phasedtest.manager")->removeQuestionnaireFromComponent($orderQuestionnaireComponent);
 
         return new JsonResponse(null);
+    }
+
+     /**
+     * Get potential questionnaires to a component
+     *
+     * @Route("/potentials/{componentId}", name="get-component-potentials", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function getPotentialQuestionnaires(Component $component)
+    {
+        $questionnaires = $this->get("self.phasedtest.manager")->getPotentialQuestionnaires($component);
+        $template = $this->renderView('InnovaSelfBundle:Editor/phased:potentials.html.twig', array('questionnaires' => $questionnaires));
+
+        return new Response($template);
     }
 
     /**
@@ -97,7 +115,22 @@ class PhasedTestController extends Controller
     public function addQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)
     {
         $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($questionnaire, $component);
+        $template = $this->renderView('InnovaSelfBundle:Editor/phased:tasks.html.twig', array('component' => $component));
 
-        return new JsonResponse(null);
+        return new Response($template);
+    }
+
+    /**
+     * Duplicate a questionnaire and add it to a component
+     *
+     * @Route("/add/component/{componentId}/questionnaire/{questionnaireId}", name="duplicate-component-questionnaire", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function duplicateQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)
+    {
+        $newQuestionnaire = $this->get("self.questionnaire.manager")->duplicate($questionnaire);
+        $template = $this->addQuestionnaireToComponent($newQuestionnaire, $component);
+
+        return new Response($template);
     }
 }

@@ -169,6 +169,25 @@ class QuestionnaireRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findPotentialByComponent($component)
+    {
+        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        WHERE NOT EXISTS (
+            SELECT otc FROM Innova\SelfBundle\Entity\PhasedTest\orderQuestionnaireComponent otc
+            LEFT JOIN otc.component c
+            WHERE otc.questionnaire = q
+            AND (otc.component = :component
+            OR c.componentType != :type)
+        )
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('component', $component)
+                ->setParameter('type', $component->getComponentType());
+
+        return $query->getResult();
+    }
+
     public function findAllLight($languageId = null)
     {
         $builder = $this->createQueryBuilder('q');
