@@ -115,10 +115,9 @@ class PhasedTestManager
         $em = $this->entityManager;
 
         $i = 0;
-        foreach ($newOrderArray as $questionnaireId) {
-            $questionnaire = $this->questionnaireRepo->find($questionnaireId);
+        foreach ($newOrderArray as $orderId) {
             $i++;
-            $orderQuestionnaireComponent = $this->orderQuestionnaireComponentRepo->findOneBy(array("questionnaire" => $questionnaire, "component" => $component));
+            $orderQuestionnaireComponent = $this->orderQuestionnaireComponentRepo->find($orderId);
             $orderQuestionnaireComponent->setDisplayOrder($i+1);
             $em->persist($orderQuestionnaireComponent);
         }

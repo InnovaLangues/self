@@ -1,3 +1,13 @@
+$(function() {
+    sortableInit();
+});
+
+$( "body" ).on( "click", '.save-order', function() {
+    $(this).attr("disabled", true);
+    var componentId = $(this).attr("data-component-id");
+    saveOrder(componentId);
+});
+
 $( "body" ).on( "click", '.get-potentials', function() {
 	var componentId = $(this).attr("data-component-id");
     $("#potential-tasks").html("");
@@ -5,7 +15,6 @@ $( "body" ).on( "click", '.get-potentials', function() {
     $('#potential-tasks-modal').modal('show');
     getPotentials(componentId);
 });
-
 
 $( "body" ).on( "click", '.add-questionnaire', function() {
 	$(this).attr("disabled", true);
@@ -74,4 +83,27 @@ function removeQuestionnaire(orderQuestionnaireComponentId)
     });
 }
 
+function sortableInit(){
+    $( ".sortable" ).sortable();
+    $( ".sortable" ).disableSelection();
+    $( ".sortable" ).on( "sortupdate", function( event, ui ) {
+        var componentId = $(this).data("component-id");
+        $("#save-order-"+componentId).removeAttr('disabled');
+    });
+}
 
+function saveOrder(componentId){
+    var newOrder = new Array();
+    $('#component-'+componentId+'-tasks .questionnaire').each(function() {
+        newOrder.push($(this).data("order-id"));
+    });
+    newOrder = JSON.stringify(newOrder);
+
+    $.ajax({
+        url: Routing.generate('save-order-component-questionnaire', {'componentId': componentId }),
+        type: 'POST',
+        data:{newOrder: newOrder}
+    })
+    .done(function(data) {
+    });
+}

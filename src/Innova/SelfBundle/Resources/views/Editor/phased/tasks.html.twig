@@ -1,5 +1,5 @@
 {% for orderQuestionnaireComponent in component.orderQuestionnaireComponents %}
-    <li id="order{{ orderQuestionnaireComponent.id }}" class="list-group-item">{{ orderQuestionnaireComponent.questionnaire.theme |truncate(15) }}
+    <li id="order{{ orderQuestionnaireComponent.id }}" class="list-group-item questionnaire" data-order-id="{{ orderQuestionnaireComponent.id }}">{{ orderQuestionnaireComponent.questionnaire.theme |truncate(15) }}
     	<span class="pull-right">
     		<a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': orderQuestionnaireComponent.questionnaire.id, 'testId': orderQuestionnaireComponent.component.test.id }) }}" toggle="tooltip" data-original-title="{{ "generic.edit" | trans }}">
     			<span class="glyphicon glyphicon-pencil"></span>

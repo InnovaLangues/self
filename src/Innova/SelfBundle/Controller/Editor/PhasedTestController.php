@@ -4,7 +4,6 @@ namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -68,15 +67,15 @@ class PhasedTestController extends Controller
     /**
      * Save questionnaire order for a component
      *
-     * @Route("/order/{componentId}", name="save-order-component-questionnaire", options={"expose"=true})
+     * @Route("/order/component/{componentId}", name="save-order-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
     public function saveOrder(Component $component)
     {
         $newOrderArray = json_decode($this->get('request')->request->get('newOrder'));
-        $this->get("self.phasedtest.manager")->saveOrder($newOrder, $component);
+        $this->get("self.phasedtest.manager")->saveOrder($newOrderArray, $component);
 
-        return new JsonResponse(null);
+        return new Response(null);
     }
 
     /**

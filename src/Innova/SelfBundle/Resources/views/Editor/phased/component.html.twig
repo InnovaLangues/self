@@ -8,10 +8,13 @@
             <a class="btn btn-default btn-xs" href="{{ path('editor_remove_component', { 'testId': test.id, 'componentId': component.id  }) }}" toggle="tooltip" data-original-title="{{'phased.delete_alternative' | trans }}">
                 <span class="glyphicon glyphicon-trash"></span>
             </a>
+            <span id="save-order-{{ component.id }}" class="btn btn-default btn-xs save-order" data-component-id="{{ component.id }}" toggle="tooltip" data-original-title="{{'editor.task.save_order' | trans }}" disabled>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </span>
         </div>
     </div>
     <div class="panel-body" style="padding:0;margin:0">
-        <ul id="component-{{ component.id }}-tasks" class="list-group" style="padding:0;margin:0">
+        <ul id="component-{{ component.id }}-tasks" class="list-group sortable" style="padding:0;margin:0" data-component-id="{{ component.id }}">
         {% include "InnovaSelfBundle:Editor/phased:tasks.html.twig" %}
         </ul>
     </div>
