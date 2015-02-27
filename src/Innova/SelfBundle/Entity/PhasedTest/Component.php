@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table("component")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\ComponentRepository")
  */
 class Component
 {

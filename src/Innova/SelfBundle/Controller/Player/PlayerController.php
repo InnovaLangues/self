@@ -60,7 +60,7 @@ class PlayerController
     {
         $em = $this->entityManager;
 
-        $questionnaire = $this->playerManager->findAQuestionnaireWithoutTrace($test);
+        $questionnaire = $this->playerManager->pickQuestionnaire($test);
         if (is_null($questionnaire)) {
             return new RedirectResponse($this->router->generate('test_end', array("id" => $test->getId())));
         } else {
