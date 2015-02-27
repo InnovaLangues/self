@@ -41,49 +41,59 @@ $( "body" ).on( "click", '.remove-questionnaire', function() {
 
 function getPotentials(componentId)
 {
+    $(".loader-img").show();
 	$.ajax({
         url: Routing.generate('get-component-potentials', {'componentId': componentId }),
         type: 'POST'
     })
     .done(function(data) {
         $("#potential-tasks").html(data);
+        $('input#search').quicksearch('#tasks li');
+        $(".loader-img").hide();
     });
 }
 
 function addQuestionnaire(componentId, questionnaireId)
 {
+    $(".loader-img").show();
 	$.ajax({
         url: Routing.generate('add-component-questionnaire', {'componentId': componentId, 'questionnaireId': questionnaireId }),
         type: 'POST'
     })
     .done(function(data) {
         $("#component-"+componentId+"-tasks").html(data);
+        $(".loader-img").hide();
     });
 }
 
 function duplicateQuestionnaire(componentId, questionnaireId)
 {
+    $(".loader-img").show();
     $.ajax({
         url: Routing.generate('duplicate-component-questionnaire', {'componentId': componentId, 'questionnaireId': questionnaireId }),
         type: 'POST'
     })
     .done(function(data) {
         $("#component-"+componentId+"-tasks").html(data);
+        $(".loader-img").hide();
     });
 }
 
 function removeQuestionnaire(orderQuestionnaireComponentId)
 {
+    $(".loader-img").show();
     $.ajax({
         url: Routing.generate('remove-component-questionnaire', {'orderQuestionnaireComponentId': orderQuestionnaireComponentId }),
         type: 'POST'
     })
     .done(function(data) {
         $("#order"+orderQuestionnaireComponentId).remove();
+        $(".loader-img").hide();
     });
 }
 
-function sortableInit(){
+function sortableInit()
+{
     $( ".sortable" ).sortable();
     $( ".sortable" ).disableSelection();
     $( ".sortable" ).on( "sortupdate", function( event, ui ) {
@@ -92,7 +102,9 @@ function sortableInit(){
     });
 }
 
-function saveOrder(componentId){
+function saveOrder(componentId)
+{
+    $(".loader-img").show();
     var newOrder = new Array();
     $('#component-'+componentId+'-tasks .questionnaire').each(function() {
         newOrder.push($(this).data("order-id"));
@@ -105,5 +117,6 @@ function saveOrder(componentId){
         data:{newOrder: newOrder}
     })
     .done(function(data) {
+        $(".loader-img").hide();
     });
 }
