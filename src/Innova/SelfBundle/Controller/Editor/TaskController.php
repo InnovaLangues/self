@@ -64,7 +64,7 @@ class TaskController
     {
         $em = $this->entityManager;
 
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllLight();
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
 
         return array(
             'questionnaires' => $questionnaires,
@@ -81,7 +81,7 @@ class TaskController
     public function listQuestionnairesByLanguageAction($languageId)
     {
         $em = $this->entityManager;
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllLight($languageId);
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($languageId);
 
         return array(
             'questionnaires' => $questionnaires,
