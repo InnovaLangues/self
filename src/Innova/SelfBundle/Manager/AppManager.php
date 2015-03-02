@@ -15,12 +15,14 @@ class AppManager
     {
         $this->entityManager = $entityManager;
         $this->propositionManager = $propositionManager;
+        $this->propositionRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
     }
 
     public function createAppFakeAnswer(Proposition $currentProposition)
     {
         $currentSubquestion = $currentProposition->getSubquestion();
         $subquestions = $currentSubquestion->getQuestion()->getSubquestions();
+        $otherPropositions = array();
 
         // on ajoute aux autres subquestions des propositions fausses
         foreach ($subquestions as $subquestion) {
@@ -33,14 +35,7 @@ class AppManager
         // reste à ajouter les propositions des autres à la subquestion courante.
         foreach ($otherPropositions as $otherProposition) {
             $media = $otherProposition->getMedia();
-            $found = false;
-            foreach ($currentSubquestion->getPropositions() as $currentSubProposition) {
-                $currentMedia = $currentSubProposition->getMedia();
-                if ($media == $currentMedia) {
-                    $found = true;
-                }
-            }
-            if ($found === false) {
+            if (!$this->propositionRepo->findOneBy(array("subquestion" => $currentSubquestion, "media" => $media))) {
                 $this->propositionManager->createProposition($currentSubquestion, $media, false);
             }
         }
@@ -54,7 +49,7 @@ class AppManager
 
         $subquestions = $question->getSubquestions();
         foreach ($subquestions as $subquestion) {
-            if ($propositionToDelete = $em->getRepository('InnovaSelfBundle:Proposition')->findOneBy(array("subquestion" => $subquestion, "media" => $media))) {
+            if ($propositionToDelete = $this->propositionRepo->findOneBy(array("subquestion" => $subquestion, "media" => $media))) {
                 $em->remove($propositionToDelete);
             }
         }

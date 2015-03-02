@@ -80,7 +80,7 @@ class PropositionManager
             $this->entityManager->refresh($baseSubquestion);
             foreach ($baseSubquestion->getPropositions() as $prop) {
                 $propMedia = $prop->getMedia();
-                if ($propMedia->getDescription() == $media->getDescription()) {
+                if ($propMedia->getDescription() == $media->getDescription() && $propMedia->getUrl() == $media->getUrl() && $propMedia->getName() == $media->getName()) {
                     $newMedia = $propMedia;
                 }
             }
