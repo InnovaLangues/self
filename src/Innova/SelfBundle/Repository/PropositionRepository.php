@@ -19,4 +19,23 @@ class PropositionRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function getByUserTraceAndSubquestion($subquestion, $user)
+    {
+        $dql = "SELECT p FROM Innova\SelfBundle\Entity\Proposition p
+        WHERE p.subquestion = :subquestion
+        AND EXISTS (
+            SELECT a FROM Innova\SelfBundle\Entity\Answer a
+            LEFT JOIN a.trace t
+            WHERE a.subquestion = :subquestion
+            AND t.user = :user
+        )
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('subquestion', $subquestion)
+                ->setParameter('user', $user);
+
+        return $query->getResult();
+    }
 }

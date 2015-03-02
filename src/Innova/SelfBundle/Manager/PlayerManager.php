@@ -22,6 +22,7 @@ class PlayerManager
         $this->componentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component');
         $this->componentTypeRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\ComponentType');
         $this->orderQCRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent');
+        $this->propositionRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
     }
 
     /**
@@ -72,6 +73,7 @@ class PlayerManager
             // On teste s'il existe une prochaine question pour le composant courant
             $nextInComponent = $this->nextInComponent($orderQC);
             if ($nextInComponent == null) {
+                // Sinon on pioche le prochain composant
                 $nextComponent = $this->pickNextComponent($component);
             } else {
                 $pickedQuestionnaire = $nextInComponent;
@@ -98,6 +100,7 @@ class PlayerManager
     private function pickNextComponent(Component $component)
     {
         $componentType = $component->getComponentType();
+        $score = $this->calculateScore($component->getTest());
 
         if ($componentType->getName() == "minitest") {
         } else {
@@ -107,10 +110,36 @@ class PlayerManager
         return $nextComponent;
     }
 
-    private function calculateScore()
+    private function calculateScore(Test $test)
     {
+        $score = 0;
         $traces = $this->traceRepo->findBy(array('user' => $this->user, 'test' => $test));
         foreach ($traces as $trace) {
+            $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
+            foreach ($subquestions-> as $subquestion) {
+                $score = ($this->subquestionCorrect($subquestion)) ? $score++;
+            }
         }
+
+        return $score;
+    }
+
+    private function subquestionCorrect(subquestion)
+    {
+        $correct = true;
+        // Bonnes réponses attendues
+        $rightProps = $this->propositionRepo->findBy(array("subquestion" => $subquestion, "rightAnswer" => true));
+        // Choix de l'étudiant
+        $choices = $this->propositionRepo->getByUserTraceAndSubquestion($subquestion, $this->$user);
+
+        // Teste si les choix de l'étudiant sont présent dans les bonnes réponses.
+        foreach ($choices as $choice) {
+           $correct = (!$rightProps->contains($choice)) ? false;
+        }
+
+        // Teste si le nombre de réponses équivaut au nombre de réponses attendues.
+        $correct = ($rightProps->count() !== $choices->count()) ? false;
+
+        return $correct;
     }
 }
