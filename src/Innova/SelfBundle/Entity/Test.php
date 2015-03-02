@@ -62,7 +62,8 @@ class Test
     private $orderQuestionnaireTests;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Test", inversedBy="copies")
+    * @ORM\ManyToOne(targetEntity="Test", inversedBy="copies" )
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $testOrigin;
 
