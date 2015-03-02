@@ -8,7 +8,6 @@
 {% endmacro %}
 
 {% macro audio(id, media, icon, height, limitAudio, tooltip) %}
-
     <img rel="tooltip" data-original-title="{{ tooltip }}" sound="{{ id }}" class="item_audio_button" height="{{ height }}px" data-media-id="{{ media.id }}" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
 
     <audio preload="none" id="{{ id }}" class="item_audio">
@@ -32,7 +31,6 @@
     {# {{ macros.modale(id, media, tooltip) }} #}
     <div style='position: relative;'>
         <img data-toggle="modal" width="{{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
-        <img style='position: absolute; right: 50px; top :50px; height :60px; width :60px' data-target="#modal-situation-image" data-toggle="modal" rel="tooltip" data-original-title="Loupe" src="{{ asset('bundles/innovaself/images/loupe.png') }}" />
     </div>
 {% endmacro %}
 
@@ -67,7 +65,9 @@
             <div class="modal-content">
                 <div class="modal-body">
                 {% if media.mediaType.name == "image" %}
-                    <img src="{{ asset('upload/media/') ~ media.url }}"/>
+                    <div class="text-center">
+                        <img src="{{ asset('upload/media/') ~ media.url }}"/>
+                    </div>
                 {% elseif media.mediaType.name == "texte" %}
                     <div id="{{ id }}"> {{ media.description }} </div>
                 {% elseif media.mediaType.name == "video" %}
