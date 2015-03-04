@@ -44,6 +44,12 @@ class Component
     * @ORM\OrderBy({"displayOrder" = "ASC"})
     */
     private $orderQuestionnaireComponents;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="component")
+    */
+    protected $traces;
+
     /**
      * Constructor
      */
@@ -162,5 +168,38 @@ class Component
     public function getAlternativeNumber()
     {
         return $this->alternativeNumber;
+    }
+
+    /**
+     * Add traces
+     *
+     * @param \Innova\SelfBundle\Entity\Trace $traces
+     * @return Component
+     */
+    public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
+    {
+        $this->traces[] = $traces;
+    
+        return $this;
+    }
+
+    /**
+     * Remove traces
+     *
+     * @param \Innova\SelfBundle\Entity\Trace $traces
+     */
+    public function removeTrace(\Innova\SelfBundle\Entity\Trace $traces)
+    {
+        $this->traces->removeElement($traces);
+    }
+
+    /**
+     * Get traces
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTraces()
+    {
+        return $this->traces;
     }
 }

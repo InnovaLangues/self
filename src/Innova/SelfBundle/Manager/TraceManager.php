@@ -6,6 +6,8 @@ use Innova\SelfBundle\Entity\Trace;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\PhasedTest\Component;
+use Innova\SelfBundle\Entity\Session;
 
 class TraceManager
 {
@@ -16,7 +18,7 @@ class TraceManager
         $this->entityManager = $entityManager;
     }
 
-    public function createTrace(Questionnaire $questionnaire, Test $test, User $user, $totalTime, $agent)
+    public function createTrace(Questionnaire $questionnaire, Test $test, User $user, $totalTime, $agent, Component $component, Session $session)
     {
         $em = $this->entityManager;
 
@@ -27,6 +29,8 @@ class TraceManager
         $trace->setUser($user);
         $trace->setTotalTime($totalTime);
         $trace->setuserAgent($agent);
+        $trace->setComponent($component);
+        $trace->setSession($session);
         $trace->setDifficulty("");
 
         $em->persist($trace);

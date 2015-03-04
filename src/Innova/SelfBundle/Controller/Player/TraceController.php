@@ -80,6 +80,8 @@ class TraceController
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($post["questionnaireId"]);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($post["testId"]);
         $user = $this->user;
+        $component = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->find($post["componentId"]);
+        $session = $em->getRepository('InnovaSelfBundle:Session')->find($post["sessionId"]);
 
         $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')
             ->countTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
@@ -90,7 +92,7 @@ class TraceController
             return array("traceId" => 0, "testId" => $test->getId());
         } else {
             $agent = $this->request->headers->get('User-Agent');
-            $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"], $agent);
+            $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"], $agent, $component, $session);
             $this->parsePost($post, $trace);
 
             $session = $this->session;

@@ -61,8 +61,6 @@ class PlayerManager
 
     private function pickQuestionnairePhased(Test $test)
     {
-        $pickedQuestionnaire = null;
-
         // On teste si l'utilisateur a déjà des traces pour le test courant
         if ($traces = $this->traceRepo->findBy(array('user' => $this->user, 'test' => $test))) {
             $trace = end($traces);
@@ -70,45 +68,53 @@ class PlayerManager
             $component = $this->componentRepo->findByTrace($lastTrace);
             $orderQC = $this->orderQCRepo->findBy(array("questionnaire" => $questionnaire, "component" => $component));
 
-            // On teste s'il existe une prochaine question pour le composant courant
-            $nextInComponent = $this->nextInComponent($orderQC);
-            if ($nextInComponent == null) {
-                // Sinon on pioche le prochain composant
-                $nextComponent = $this->pickNextComponent($component);
-            } else {
-                $pickedQuestionnaire = $nextInComponent;
+            // on prend le suivant pour le composant courant
+            $nextOrderQuestionnaire = ;
+            if (!$nextOrderQuestionnaire = $this->nextInComponent($component, $orderQC)) {
+                // s'il n'existe pas on prend le prochain composant
+                if ($nextComponent = $this->nextComponent($test, $component)) {
+                    // on récupère le 1er élement du composant
+                    $nextOrderQuestionnaire = $this->nextInComponent($nextComponent);
+                } else {
+                    // si pas de composant, c'est la fin
+                    return null;
+                }
             }
         } else {
+            $nextComponent = nextComponent($test);
         }
 
-        return $pickedQuestionnaire;
+        return $nextOrderQuestionnaire->getQuestionnaire();
     }
 
-    private function nextInComponent(OrderQuestionnaireComponent $orderQC)
+    private function nextInComponent(Component $component, OrderQuestionnaireComponent $orderQC = null)
     {
-        $questionnaire = $orderQC->getQuestionnaire();
-        $component = $orderQC->getComponent();
-        $displayOrder = $orderQC->getDisplayOrder() + 1;
+        $displayOrder = ($orderQC != null) ? $orderQC->getDisplayOrder() + 1 : 1;
+        $nextOrderQC = $this->orderQCRepo->findOneBy(array("component" => $component, "displayOrder" => $displayOrder));
 
-        if ($nextOrderQC = $this->orderQCRepo->findOneBy(array("questionnaire" => $questionnaire, "component" => $component, "displayOrder" => $displayOrder))) {
-            return $nextOrderQC;
-        } else {
-            return;
-        }
+        return $nextOrderQC;
     }
 
-    private function pickNextComponent(Component $component)
+    private function nextComponent(Test $test, Component $component = null)
     {
-        $componentType = $component->getComponentType();
-        $score = $this->calculateScore($component->getTest());
-
-        if ($componentType->getName() == "minitest") {
+        // si on a déjà un composant, faut prendre le suivant
+        if($component){
+            $componentType = $component->getComponentType();
+            $score = $this->calculateScore($test);
         } else {
-            $nextComponent = null;
+            // sinon un minitest
+            $componentType = $this->componentTypeRepo->findOneByName("minitest");
+            $minitests = $this->componentRepo->findBy(array("test" => $test, "componentType" => $componentType));
         }
 
         return $nextComponent;
     }
+
+
+    private function chooseAmongAlternatives()
+    {
+
+    } 
 
     private function calculateScore(Test $test)
     {

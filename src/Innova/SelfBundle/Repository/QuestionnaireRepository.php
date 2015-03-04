@@ -83,17 +83,21 @@ class QuestionnaireRepository extends EntityRepository
      *
      * @return int number of traces for the test and the questionnaire and the user
      */
-    public function countTraceByUserByTestByQuestionnaire($testId, $questionnaireId, $userId)
+    public function countTraceByUserByTestByQuestionnaire($testId, $questionnaireId, $userId, $componentId, $sessionId)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
         WHERE t.user = :userId
         AND t.test = :testId
+        AND t.component = :componentId
+        AND t.session = :sessionId
         AND t.questionnaire = :questionnaireId";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('testId', $testId)
                 ->setParameter('questionnaireId', $questionnaireId)
-                ->setParameter('userId', $userId);
+                ->setParameter('userId', $userId)
+                ->setParameter('componentId', $componentId)
+                ->setParameter('sessionId', $sessionId);
 
         return count($query->getResult());
     }

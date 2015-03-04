@@ -90,6 +90,11 @@ class Test
     */
     protected $components;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Session", mappedBy="test")
+    */
+    protected $sessions;
+
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
@@ -428,13 +433,13 @@ class Test
     /**
      * Add components
      *
-     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $components
+     * @param  \Innova\SelfBundle\Entity\PhasedTest\Component $components
      * @return Test
      */
     public function addComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $components)
     {
         $this->components[] = $components;
-    
+
         return $this;
     }
 
@@ -451,10 +456,43 @@ class Test
     /**
      * Get components
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComponents()
     {
         return $this->components;
+    }
+
+    /**
+     * Add sessions
+     *
+     * @param \Innova\SelfBundle\Entity\Session $sessions
+     * @return Test
+     */
+    public function addSession(\Innova\SelfBundle\Entity\Session $sessions)
+    {
+        $this->sessions[] = $sessions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove sessions
+     *
+     * @param \Innova\SelfBundle\Entity\Session $sessions
+     */
+    public function removeSession(\Innova\SelfBundle\Entity\Session $sessions)
+    {
+        $this->sessions->removeElement($sessions);
+    }
+
+    /**
+     * Get sessions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSessions()
+    {
+        return $this->sessions;
     }
 }

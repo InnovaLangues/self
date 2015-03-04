@@ -28,6 +28,16 @@ class Trace
     protected $questionnaire;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\PhasedTest\Component", inversedBy="traces")
+    */
+    protected $component = null;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Session", inversedBy="traces")
+    */
+    protected $session = null;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Test", inversedBy="traces")
     */
     protected $test;
@@ -279,5 +289,51 @@ class Trace
     public function getTest()
     {
         return $this->test;
+    }
+
+    /**
+     * Set component
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $component
+     * @return Trace
+     */
+    public function setComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $component = null)
+    {
+        $this->component = $component;
+    
+        return $this;
+    }
+
+    /**
+     * Get component
+     *
+     * @return \Innova\SelfBundle\Entity\PhasedTest\Component 
+     */
+    public function getComponent()
+    {
+        return $this->component;
+    }
+
+    /**
+     * Set session
+     *
+     * @param \Innova\SelfBundle\Entity\Session $session
+     * @return Trace
+     */
+    public function setSession(\Innova\SelfBundle\Entity\Session $session = null)
+    {
+        $this->session = $session;
+    
+        return $this;
+    }
+
+    /**
+     * Get session
+     *
+     * @return \Innova\SelfBundle\Entity\Session 
+     */
+    public function getSession()
+    {
+        return $this->session;
     }
 }
