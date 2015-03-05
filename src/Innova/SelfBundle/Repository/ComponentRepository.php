@@ -24,4 +24,24 @@ class ComponentRepository extends EntityRepository
 
         return $query->getSingleResult();
     }
+
+    public function findDoneByUserByTestBySession($user, $test, $session)
+    {
+        $dql = "SELECT c FROM Innova\SelfBundle\Entity\PhasedTest\Component c
+        WHERE EXISTS (
+            SELECT t FROM Innova\SelfBundle\Entity\Trace t
+            WHERE t.component = c
+            AND t.user = :user
+            AND t.session = :session
+            AND t.test = :test
+        )
+        GROUP BY c";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test)
+                ->setParameter('session', $session)
+                ->setParameter('user', $user);
+
+        return $query->getResult();
+    }
 }

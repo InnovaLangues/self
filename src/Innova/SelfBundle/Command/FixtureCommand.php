@@ -507,7 +507,7 @@ class FixtureCommand extends ContainerAwareCommand
             }
         }
 
-        $componentTypes = array("minitest", "step1", "step2", "step3");
+        $componentTypes = array("minitest", "step1", "step2", "step3", "step4");
         foreach ($componentTypes as $type) {
             if (!$em->getRepository('InnovaSelfBundle:PhasedTest\ComponentType')->findOneByName($type)) {
                 $c = new ComponentType();

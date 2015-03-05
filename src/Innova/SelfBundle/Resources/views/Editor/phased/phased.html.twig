@@ -14,12 +14,13 @@
             {{ macros.panelComponentType(test, 2, "step1") }}
             {{ macros.panelComponentType(test, 3, "step2") }}
             {{ macros.panelComponentType(test, 4, "step3") }}
+            {{ macros.panelComponentType(test, 5, "step4") }}
         </div>
     </div>
 </div>
 
 {% macro panelComponentType(test, type, typeName) %}
-    <div class="col-md-4" {% if type == 1 %}style="float:none;margin: 0 auto;"{% endif %}>
+    <div class="col-md-3" {% if type == 1 %}style="float:none;margin: 0 auto;"{% endif %}>
         <div class="panel panel-info">
             <div class="panel-heading">
                 {% set nameTrans = "phased."~typeName %}

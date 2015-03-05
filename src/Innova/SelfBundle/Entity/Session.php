@@ -34,7 +34,7 @@ class Session
     protected $test;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Session", mappedBy="session")
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="session")
     */
     protected $traces;
     /**
@@ -44,11 +44,11 @@ class Session
     {
         $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -58,20 +58,20 @@ class Session
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string  $name
      * @return Session
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -81,20 +81,20 @@ class Session
     /**
      * Set test
      *
-     * @param \Innova\SelfBundle\Entity\Test $test
+     * @param  \Innova\SelfBundle\Entity\Test $test
      * @return Session
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
     {
         $this->test = $test;
-    
+
         return $this;
     }
 
     /**
      * Get test
      *
-     * @return \Innova\SelfBundle\Entity\Test 
+     * @return \Innova\SelfBundle\Entity\Test
      */
     public function getTest()
     {
@@ -104,13 +104,13 @@ class Session
     /**
      * Add traces
      *
-     * @param \Innova\SelfBundle\Entity\Session $traces
+     * @param  \Innova\SelfBundle\Entity\Session $traces
      * @return Session
      */
     public function addTrace(\Innova\SelfBundle\Entity\Session $traces)
     {
         $this->traces[] = $traces;
-    
+
         return $this;
     }
 
@@ -127,7 +127,7 @@ class Session
     /**
      * Get traces
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTraces()
     {

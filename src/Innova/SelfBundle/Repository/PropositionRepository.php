@@ -20,7 +20,7 @@ class PropositionRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getByUserTraceAndSubquestion($subquestion, $user)
+    public function getByUserTraceAndSubquestion($subquestion, $user, $component, $session)
     {
         $dql = "SELECT p FROM Innova\SelfBundle\Entity\Proposition p
         WHERE p.subquestion = :subquestion
@@ -29,11 +29,15 @@ class PropositionRepository extends EntityRepository
             LEFT JOIN a.trace t
             WHERE a.subquestion = :subquestion
             AND t.user = :user
+            AND t.session = :session
+            AND t.component = :component
         )
         ";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('subquestion', $subquestion)
+                ->setParameter('session', $session)
+                ->setParameter('component', $component);
                 ->setParameter('user', $user);
 
         return $query->getResult();
