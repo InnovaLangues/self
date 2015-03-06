@@ -95,9 +95,8 @@ class TraceController
             $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"], $agent, $component, $session);
             $this->parsePost($post, $trace);
 
-            $session = $this->session;
-            $session->set('traceId', $trace->getId());
-            $session->set('testId', $post["testId"]);
+            $this->session->set('traceId', $trace->getId());
+            $this->session->set('testId', $post["testId"]);
 
             return new RedirectResponse($this->router->generate('display_difficulty'));
         }

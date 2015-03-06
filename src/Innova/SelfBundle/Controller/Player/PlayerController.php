@@ -52,15 +52,18 @@ class PlayerController
      * Try to pick a questionnaire entity for a given test not done yet by the user
      * and display it if possible.
      *
-     * @Route("student/test/start/{id}/{displayHelp}/", name="test_start")
+     * @Route("student/test/start/{id}/{displayHelp}/{sessionId}", name="test_start")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
+     * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
      */
-    public function startAction(Test $test, $displayHelp)
+    public function startAction(Test $test, Session $session, $displayHelp)
     {
         $em = $this->entityManager;
 
-        $questionnaire = $this->playerManager->pickQuestionnaire($test);
+        $questionnaire = $this->playerManager->pickQuestionnaire($test, $session);
+        // need component too.
+
         if (is_null($questionnaire)) {
             return new RedirectResponse($this->router->generate('test_end', array("id" => $test->getId())));
         } else {
@@ -75,7 +78,9 @@ class PlayerController
             $countQuestionnaireTotal = count($questionnaires);
 
             return array(
-                'test' => $test,
+                'test' => $test
+                'session' => $session,
+                'component' => $component,
                 'questionnaire' => $questionnaire,
                 'questionnaires' => $questionnaires,
                 'countQuestionnaireDone' => $countQuestionnaireDone,

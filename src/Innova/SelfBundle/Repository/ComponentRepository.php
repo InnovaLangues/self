@@ -34,12 +34,31 @@ class ComponentRepository extends EntityRepository
             AND t.user = :user
             AND t.session = :session
             AND t.test = :test
-        )
-        GROUP BY c";
+        )";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('test', $test)
                 ->setParameter('session', $session)
+                ->setParameter('user', $user);
+
+        return $query->getResult();
+    }
+
+    public function findNotDoneByTypeByUserByTest($user, $test, $type)
+    {
+        $dql = "SELECT c FROM Innova\SelfBundle\Entity\PhasedTest\Component c
+        WHERE NOT EXISTS (
+            SELECT t FROM Innova\SelfBundle\Entity\Trace t
+            WHERE t.component = c
+            AND t.user = :user
+            AND t.test = :test
+        )
+        AND c.type = :type
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test)
+                ->setParameter('type', $type)
                 ->setParameter('user', $user);
 
         return $query->getResult();

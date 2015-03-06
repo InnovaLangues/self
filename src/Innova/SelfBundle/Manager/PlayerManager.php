@@ -70,24 +70,26 @@ class PlayerManager
             $orderQC = $this->orderQCRepo->findBy(array("questionnaire" => $questionnaire, "component" => $component));
 
             // on prend la tâche suivante pour le composant courant
-            if (!$nextOrderQuestionnaire = $this->nextInComponent($component, $orderQC)) {
+            if (!$nextOrderQuestionnaire = $this->pickNextQuestionnaire($component, $orderQC)) {
                 // s'il n'existe pas on prend le prochain composant
-                if ($nextComponent = $this->nextComponent($test, $session, $component)) {
+                if ($nextComponent = $this->pickNextComponent($test, $session, $component)) {
                     // on récupère le 1er élement du composant
-                    $nextOrderQuestionnaire = $this->nextInComponent($nextComponent);
+                    $nextOrderQuestionnaire = $this->pickNextQuestionnaire($nextComponent);
                 } else {
                     // si pas de composant, c'est la fin
                     return null;
                 }
             }
         } else {
-            $nextComponent = nextComponent($test, $session);
+            $nextComponent = pickNextComponent($test, $session);
+            $nextOrderQuestionnaire = $this->pickNextQuestionnaire($nextComponent);
+
         }
 
         return $nextOrderQuestionnaire->getQuestionnaire();
     }
 
-    private function nextInComponent(Component $component, OrderQuestionnaireComponent $orderQC = null)
+    private function pickNextQuestionnaire(Component $component, OrderQuestionnaireComponent $orderQC = null)
     {
         $displayOrder = ($orderQC != null) ? $orderQC->getDisplayOrder() + 1 : 1;
         $nextOrderQC = $this->orderQCRepo->findOneBy(array("component" => $component, "displayOrder" => $displayOrder));
@@ -95,18 +97,23 @@ class PlayerManager
         return $nextOrderQC;
     }
 
-    private function nextComponent(Test $test, Session $session, Component $component = null)
+    private function pickNextComponent(Test $test, Session $session, Component $component = null)
     {
         // si on a déjà un composant, faut prendre le suivant dépendament du score et du nombre de composant déjà fait pour la session
         if($component){
-            $componentsDone = $this->componentRepo->findDoneByUserByTestBySession($user, $test, $session)
+            $componentsDone = $this->componentRepo->findDoneByUserByTestBySession($user, $test, $session);
             $componentType = $component->getComponentType();
+            $componentTypeName = $componentType->getName();
+            $componentTypeId = $componentType->getId();
+
+            // si on a déjà fait 3 composants -> stop
             if (count($componentsDone) >= 3) {
                 return null;   
             }
             else {
-               $score = $this->calculateScore($test, $session, $component);
-               if ($componentType->getName("minitest")) {
+                $score = $this->calculateScore($test, $session, $component);
+                // si c'est un mitest on est redirigé vers une des étapes
+                if ($componentTypeName == "minitest") {
                    if ($score < 20) {
                         $nextComponentTypeName = "step1";
                    } elseif ($score < 40){
@@ -116,28 +123,34 @@ class PlayerManager
                    } else {
                         $nextComponentTypeName = "step4";
                    }
-               } else {
-                    if ($score < 20) {
-                        // on choisit un componentType d'un rang inférieur à celui courant si possible (pas possible avec le step1)
-                    } elseif ($score > 80) {
-                        // on choisit un componentType d'un rang supérieur à celui courant si possible (pas possible avec le step4)
+                } else {
+                    // sinon, dépendamment du score on descend ou monte d'un niveau
+                    if ($score < 20 && $componentTypeName != "step1") {
+                        $nextComponentTypeName = $this->componentTypeRepo->findOneById($componentTypeId - 1)->getName();
+                    } elseif ($score > 80 && $componentTypeName != "step4") {
+                        $nextComponentTypeName = $this->componentTypeRepo->findOneById($componentTypeId + 1)->getName();
                     } else {
                         return null;
                     }
-               }
+                }
             }
         } else {
-            // sinon un minitest
+        // sinon c'est qu'on commence le test alors on lui propose un minitest
             $nextComponentTypeName = "minitest";
         }
 
-        $nextComponentType = $this->componentTypeRepo->findByName($nextComponentTypeName);
-        $nextComponent = $this->pickComponentAmongAlternatives($nextComponentType, $test, $session);
+        $nextComponentType = $this->componentTypeRepo->findOneByName($nextComponentTypeName);
+        $nextComponent = $this->pickComponentAmongAlternatives($nextComponentType, $test);
 
         return $nextComponent;
     }
 
-    private function pickComponentAmongAlternatives(ComponentType $componentType, Test $test, Session $session){
+    private function pickComponentAmongAlternatives(ComponentType $componentType, Test $test)
+    {
+        $candidates = $this->componentRepo->findNotDoneByTypeByUserByTest($this->user, $test, $type);
+        $component = array_rand($candidates);
+
+        return $component;
 
     }
 
