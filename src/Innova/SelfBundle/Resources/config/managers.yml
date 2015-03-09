@@ -97,6 +97,7 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
+            scoreManager:       @self.score.manager
 
     self.export.manager:
         class: Innova\SelfBundle\Manager\ExportManager
@@ -120,7 +121,7 @@ services:
     self.eec.manager:
         class: Innova\SelfBundle\Manager\EecManager
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
+            entityManager:          @doctrine.orm.entity_manager
             questionManager:        @self.question.manager
             subquestionManager:     @self.subquestion.manager
             propositionManager:     @self.proposition.manager
@@ -130,3 +131,9 @@ services:
         class: Innova\SelfBundle\Manager\PhasedTestManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+
+    self.score.manager:
+        class: Innova\SelfBundle\Manager\ScoreManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context

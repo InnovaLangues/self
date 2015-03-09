@@ -40,16 +40,43 @@ class QuestionnaireRepository extends EntityRepository
      *
      * @return int number of traces for the test and the user
      */
-    public function countDoneYetByUserByTest($testId, $userId)
+    public function countDoneYetByUserByTest($testId, $userId, $sessionId)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
         LEFT JOIN t.questionnaire tq
         WHERE t.user = :userId
-        AND t.test = :testId";
+        AND t.test = :testId
+        AND t.session = :sessionId";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('testId', $testId)
+                ->setParameter('sessionId', $sessionId)
                 ->setParameter('userId', $userId);
+
+        return count($query->getResult());
+    }
+
+    /**
+     * countDoneYetByUserByTest count traces for test and for user
+     * @param id $testId
+     * @param id $userId
+     *
+     * @return int number of traces for the test and the user
+     */
+    public function countDoneYetByUserByTestByComponent($test, $user, $session, $component)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        LEFT JOIN t.questionnaire tq
+        WHERE t.user = :user
+        AND t.test = :test
+        AND t.component = :component
+        AND t.session = :session";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test)
+                ->setParameter('session', $session)
+                ->setParameter('component', $component)
+                ->setParameter('user', $user);
 
         return count($query->getResult());
     }
@@ -83,21 +110,21 @@ class QuestionnaireRepository extends EntityRepository
      *
      * @return int number of traces for the test and the questionnaire and the user
      */
-    public function countTraceByUserByTestByQuestionnaire($testId, $questionnaireId, $userId, $componentId, $sessionId)
+    public function countTraceByUserByTestByQuestionnaire($test, $questionnaire, $user, $component, $session)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
-        WHERE t.user = :userId
-        AND t.test = :testId
-        AND t.component = :componentId
-        AND t.session = :sessionId
-        AND t.questionnaire = :questionnaireId";
+        WHERE t.user = :user
+        AND t.test = :test
+        AND t.component = :component
+        AND t.session = :session
+        AND t.questionnaire = :questionnaire";
 
         $query = $this->_em->createQuery($dql)
-                ->setParameter('testId', $testId)
-                ->setParameter('questionnaireId', $questionnaireId)
-                ->setParameter('userId', $userId)
-                ->setParameter('componentId', $componentId)
-                ->setParameter('sessionId', $sessionId);
+                ->setParameter('test', $test)
+                ->setParameter('questionnaire', $questionnaire)
+                ->setParameter('user', $user)
+                ->setParameter('component', $component)
+                ->setParameter('session', $session);
 
         return count($query->getResult());
     }

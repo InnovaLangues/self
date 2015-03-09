@@ -3,6 +3,11 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Media\MediaClick;
+use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Entity\Media\Media;
+use Innova\SelfBundle\Entity\PhasedTest\Component;
 
 class MediaClickManager
 {
@@ -17,14 +22,13 @@ class MediaClickManager
         $this->user = $this->securityContext->getToken()->getUser();
     }
 
-    public function getRemainingListening($media, $questionnaire, $test, $session)
+    public function getRemainingListening(Media $media, Questionnaire $questionnaire, Test $test, Session $session, Component $component = null)
     {
-        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire, $session);
+        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire, $session, $component);
         $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array(
                                                                                     'media' => $media,
                                                                                     'questionnaire' => $questionnaire,
                                                                                 ));
-
         if (is_null($mediaLimit) || $mediaLimit->getListeningLimit() == 0) {
             $remainingListening = "X";
         } else {
@@ -34,7 +38,7 @@ class MediaClickManager
         return $remainingListening;
     }
 
-    public function createMediaClick($media, $questionnaire, $test, $session)
+    public function createMediaClick(Media $media, Questionnaire $questionnaire, Test $test, Session $session, Component $component = null)
     {
         if (!$this->securityContext->isGranted('ROLE_ADMIN')) {
             $mediaClick = new MediaClick();
@@ -42,6 +46,7 @@ class MediaClickManager
             $mediaClick->setUser($this->user);
             $mediaClick->setTest($test);
             $mediaClick->setSession($session);
+            $mediaClick->setComponent($component);
             $mediaClick->setQuestionnaire($questionnaire);
 
             $this->entityManager->persist($mediaClick);
@@ -51,9 +56,9 @@ class MediaClickManager
         return $this;
     }
 
-    public function isMediaPlayable($media, $test, $questionnaire, $session)
+    public function isMediaPlayable(Media $media, Test $test, Questionnaire $questionnaire, Session $session, Component $component = null)
     {
-        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire, $session);
+        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire, $session, $component);
         $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array('media' => $media, 'questionnaire' => $questionnaire));
 
         if (is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 || $this->securityContext->isGranted('ROLE_ADMIN')) {
@@ -63,7 +68,7 @@ class MediaClickManager
         }
     }
 
-    public function getMediaClickCount($media, $test, $questionnaire, $session)
+    public function getMediaClickCount(Media $media, Test $test, Questionnaire $questionnaire, Session $session, Component $component = null)
     {
         $mediaClicks = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaClick')
                         ->findBy(array(
@@ -72,6 +77,7 @@ class MediaClickManager
                                         'questionnaire' => $questionnaire,
                                         'user' => $this->user,
                                         'session' => $session,
+                                        'component' => $component,
                                       )
                                 );
 

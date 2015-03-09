@@ -45,6 +45,7 @@ class SessionController extends Controller
 
         $form = $this->createFormBuilder($session)
             ->add('name', 'text')
+            ->add('passwd', 'text')
             ->add('actif', 'choice', array(
                                 'expanded' => true,
                                 'multiple' => false,
@@ -78,6 +79,7 @@ class SessionController extends Controller
     {
         $form = $this->createFormBuilder($session)
             ->add('name', 'text')
+            ->add('passwd', 'text')
             ->add('actif', 'choice', array(
                                 'expanded' => true,
                                 'multiple' => false,

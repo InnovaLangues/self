@@ -15,6 +15,7 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Manager\PlayerManager;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class PlayerController
@@ -35,13 +36,15 @@ class PlayerController
     protected $router;
     protected $user;
     protected $playerManager;
+    protected $scoreManager;
 
     public function __construct(
         SecurityContextInterface $securityContext,
         EntityManager $entityManager,
         SessionInterface $session,
         RouterInterface $router,
-        PlayerManager $playerManager
+        PlayerManager $playerManager,
+        $scoreManager
     ) {
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
@@ -49,6 +52,7 @@ class PlayerController
         $this->router = $router;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->playerManager = $playerManager;
+        $this->scoreManager = $scoreManager;
         $this->questionnaireRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
     }
 
@@ -64,20 +68,33 @@ class PlayerController
     {
         $em = $this->entityManager;
 
+        $sessionLogged = $this->session->get('sessionLogged-'.$session->getId());
+        if ($sessionLogged != 1) {
+            $url = $this->router->generate('session_log_form', array('sessionId' => $session->getId()));
+
+            return new RedirectResponse($url);
+        }
+
         $orderQuestionnaire = $this->playerManager->pickQuestionnaire($test, $session);
 
         if (is_null($orderQuestionnaire)) {
             $url = $this->router->generate('test_end', array("testId" => $test->getId(), 'sessionId' => $session->getId()));
 
             return new RedirectResponse($url);
-        } else {
-            $questionnaire = $orderQuestionnaire->getQuestionnaire();
-            $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
-            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTest($test->getId(), $this->user->getId());
-            $questionnaires = $this->questionnaireRepo->getByTest($test);
-            $countQuestionnaireTotal = count($questionnaires);
+        }
+        $questionnaire = $orderQuestionnaire->getQuestionnaire();
+        $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
 
-            return array(
+        $questionnaires = $this->questionnaireRepo->getByTest($test);
+        if ($component) {
+            $countQuestionnaireTotal = count($component->getOrderQuestionnaireComponents());
+            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTestByComponent($test, $this->user, $session, $component);
+        } else {
+            $countQuestionnaireTotal = count($questionnaires);
+            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTest($test->getId(), $this->user->getId(), $session->getId());
+        }
+
+        return array(
                 'test' => $test,
                 'session' => $session,
                 'component' => $component,
@@ -86,7 +103,6 @@ class PlayerController
                 'countQuestionnaireDone' => $countQuestionnaireDone,
                 'countQuestionnaireTotal' => $countQuestionnaireTotal,
             );
-        }
     }
 
      /**
@@ -98,11 +114,9 @@ class PlayerController
      */
     public function endAction(Test $test, Session $session)
     {
-        $nbRightAnswer = $this->questionnaireRepo->countRightAnswerByUserByTest($test->getId(), $this->user->getId());
-        $nbAnswer = $this->questionnaireRepo->countAnswerByUserByTest($test->getId(), $this->user->getId());
-        $pourcentRightAnswer = number_format(($nbRightAnswer/$nbAnswer)*100, 0);
+        $score = $this->scoreManager->calculateScoreByTest($test, $session);
 
-        return array("pourcentRightAnswer" => $pourcentRightAnswer);
+        return array("score" => $score);
     }
 
     /**
@@ -136,5 +150,36 @@ class PlayerController
             'questionnaire' => $questionnairePicked,
             'countQuestionnaireDone' => $countQuestionnaireDone,
         );
+    }
+
+    /**
+     *
+     * @Route("/form/session/{sessionId}", name="session_log_form")
+     * @Template("InnovaSelfBundle:Player:common/log.html.twig")
+     */
+    public function sessionLogForm(Session $session)
+    {
+        return array(
+            'session' => $session,
+        );
+    }
+
+     /**
+     *
+     * @Route("/log/session/{sessionId}", name="session_log")
+     */
+    public function sessionLog(Session $session, Request $request)
+    {
+        $post = $request->request->all();
+
+        if ($post["passwd"] == $session->getPasswd()) {
+            $this->session->set('sessionLogged-'.$session->getId(), 1);
+            $url = $this->router->generate('test_start', array("testId" => $session->getTest()->getId(), "sessionId" => $session->getId()));
+        } else {
+            $this->session->getFlashBag()->set('warning', 'wrong passwd');
+            $url = $this->router->generate('session_log_form', array("sessionId" => $session->getId()));
+        }
+
+        return new RedirectResponse($url);
     }
 }

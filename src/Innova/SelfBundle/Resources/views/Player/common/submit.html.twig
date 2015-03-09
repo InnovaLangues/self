@@ -2,7 +2,9 @@
 <input type="hidden" id="totalTime" name="totalTime" value=""/>
 <input type="hidden" id="testId" name="testId" value="{{ test.id }}"/>
 <input type="hidden" id="sessionId" name="sessionId" value="{{ session.id }}"/>
-<input type="hidden" id="componentId" name="componentId" value={% if component %}{{ component.id}}{% else %}null{% endif %}/>
+{% if component %}
+	<input type="hidden" id="componentId" name="componentId" value={{ component.id}} />
+{% endif %}
 
 <input type="hidden" name="testName" value="{{ test.name }}"/>
 

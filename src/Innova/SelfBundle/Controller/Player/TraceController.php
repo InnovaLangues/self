@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Entity\Questionnaire;
 
 /**
  * Class TraceController
@@ -16,7 +20,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  *      name = "innova_trace",
  *      service = "innova_player_trace"
  * )
+ * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
+ * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
  */
+
 class TraceController
 {
     protected $mediaManager;
@@ -67,31 +75,29 @@ class TraceController
     /**
      * Save Trace and display a form to set the difficulty
      *
-     * @Route("trace_submit", name="trace_submit")
-     * @Method({"GET", "POST"})
+     * @Route("trace_submit/{testId}/{sessionId}/{questionnaireId}", name="trace_submit")
+     * @Method("POST")
      * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
      */
-    public function saveTraceAction()
+    public function saveTraceAction(Test $test, Session $session, Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
 
         $post = $this->request->request->all();
 
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($post["questionnaireId"]);
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($post["testId"]);
-        $user = $this->user;
-        $component = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->find($post["componentId"]);
-        $session = $em->getRepository('InnovaSelfBundle:Session')->find($post["sessionId"]);
+        if (isset($post["componentId"])) {
+            $component = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->find($post["componentId"]);
+        } else {
+            $component = null;
+        }
 
-        $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')
-            ->countTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId(), $post["componentId"], $session->getId());
-
+        $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')->countTraceByUserByTestByQuestionnaire($test, $questionnaire, $this->user, $component, $session);
         if ($countTrace > 0) {
             $this->session->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
             $trace = null;
         } else {
             $agent = $this->request->headers->get('User-Agent');
-            $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"], $agent, $component, $session);
+            $trace = $this->traceManager->createTrace($questionnaire, $test, $this->user, $post["totalTime"], $agent, $component, $session);
             $this->parsePost($post, $trace);
         }
 

@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<h2>Mot de passe pour la session</h2>
+<hr/>
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div class="alert alert-warning">{{ flashMessage }}</div>
+{% endfor %}
+
+<form action="{{ path('session_log', { 'sessionId': session.id }) }}" method="post">
+    <input type="password" name="passwd"/>
+    <input type="submit"/>
+</form>
+
+{% endblock %}

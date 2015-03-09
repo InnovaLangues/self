@@ -29,6 +29,13 @@ class Session
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="passwd", type="string", length=255)
+     */
+    private $passwd;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Test", inversedBy="sessions")
     */
     protected $test;
@@ -144,23 +151,46 @@ class Session
     /**
      * Set actif
      *
-     * @param boolean $actif
+     * @param  boolean $actif
      * @return Session
      */
     public function setActif($actif)
     {
         $this->actif = $actif;
-    
+
         return $this;
     }
 
     /**
      * Get actif
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActif()
     {
         return $this->actif;
+    }
+
+    /**
+     * Set passwd
+     *
+     * @param string $passwd
+     * @return Session
+     */
+    public function setPasswd($passwd)
+    {
+        $this->passwd = $passwd;
+    
+        return $this;
+    }
+
+    /**
+     * Get passwd
+     *
+     * @return string 
+     */
+    public function getPasswd()
+    {
+        return $this->passwd;
     }
 }

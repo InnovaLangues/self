@@ -243,10 +243,11 @@ function checkMediaClicks(mediaId, callBack){
     var questionnaireId = $("#questionnaireId").val();
     var testId = $("#testId").val();
     var sessionId = $("#sessionId").val();
+    var componentId = $("#componentId").val();
 
     $.ajax({
         url: Routing.generate('is-media-playable', 
-            {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId }),
+            {mediaId:mediaId, testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
         type: 'GET',
         dataType: 'json',
     })
@@ -262,10 +263,11 @@ function getRemainingListening(){
         var testId = $("#testId").val();
         var mediaId = $('[sound="situation"]').data("media-id");
         var sessionId = $("#sessionId").val();
+        var componentId = $("#componentId").val();
 
         $.ajax({
             url: Routing.generate('get-remaining-listening', 
-                {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId }),
+                {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
             type: 'GET',
             dataType: 'json',
         })
@@ -280,10 +282,11 @@ function updateMediaClicks(mediaId){
     var questionnaireId = $("#questionnaireId").val();
     var testId = $("#testId").val();
     var sessionId = $("#sessionId").val();
+    var componentId = $("#componentId").val();
     
     $.ajax({
         url: Routing.generate('increment-media-clicks', 
-                {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId }),
+                {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
         type: 'GET',
         dataType: 'json',
     })

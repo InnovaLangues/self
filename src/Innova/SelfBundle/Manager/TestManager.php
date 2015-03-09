@@ -29,7 +29,7 @@ class TestManager
         $this->session = $session;
     }
 
-    public function getTestsProgress($tests)
+    public function getTestsProgress($tests, $session)
     {
         $userId = $this->securityContext->getToken()->getUser()->getId();
 

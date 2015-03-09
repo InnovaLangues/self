@@ -42,6 +42,11 @@ class MediaClick
     protected $session;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\PhasedTest\Component")
+    */
+    protected $component;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User", inversedBy="mediaClicks")
     */
     protected $user;
@@ -151,23 +156,46 @@ class MediaClick
     /**
      * Set session
      *
-     * @param \Innova\SelfBundle\Entity\Session $session
+     * @param  \Innova\SelfBundle\Entity\Session $session
      * @return MediaClick
      */
     public function setSession(\Innova\SelfBundle\Entity\Session $session = null)
     {
         $this->session = $session;
-    
+
         return $this;
     }
 
     /**
      * Get session
      *
-     * @return \Innova\SelfBundle\Entity\Session 
+     * @return \Innova\SelfBundle\Entity\Session
      */
     public function getSession()
     {
         return $this->session;
+    }
+
+    /**
+     * Set component
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $component
+     * @return MediaClick
+     */
+    public function setComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $component = null)
+    {
+        $this->component = $component;
+    
+        return $this;
+    }
+
+    /**
+     * Get component
+     *
+     * @return \Innova\SelfBundle\Entity\PhasedTest\Component 
+     */
+    public function getComponent()
+    {
+        return $this->component;
     }
 }

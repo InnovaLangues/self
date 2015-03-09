@@ -12,12 +12,14 @@ class PlayerManager
 {
     protected $entityManager;
     protected $securityContext;
+    protected $scoreManager;
     protected $user;
 
-    public function __construct($entityManager, $securityContext)
+    public function __construct($entityManager, $securityContext, $scoreManager)
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
+        $this->scoreManager = $scoreManager;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->traceRepo = $this->entityManager->getRepository('InnovaSelfBundle:Trace');
         $this->componentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component');
@@ -82,7 +84,6 @@ class PlayerManager
                 }
             }
         } else {
-            echo "pas de traces";
             $nextComponent = $this->pickNextComponent($test, $session);
             $nextOrderQuestionnaire = $this->pickNextQuestionnaire($nextComponent);
         }
@@ -111,7 +112,7 @@ class PlayerManager
             if (count($componentsDone) >= 3) {
                 return;
             } else {
-                $score = $this->calculateScore($test, $session, $component);
+                $score = $this->scoreManager->calculateScoreByComponent($test, $session, $component);
                 // si c'est un mitest on est redirigé vers une des étapes
                 if ($componentTypeName == "minitest") {
                     if ($score < 20) {
@@ -152,38 +153,5 @@ class PlayerManager
         $component = $candidates[array_rand($candidates)];
 
         return $component;
-    }
-
-    private function calculateScore(Test $test, Session $session, Component $component)
-    {
-        $score = 0;
-        $traces = $this->traceRepo->findBy(array('user' => $this->user, 'test' => $test, 'session' => $session, 'component' => $component));
-        foreach ($traces as $trace) {
-            $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
-            foreach ($subquestions as $subquestion) {
-                $score = ($this->subquestionCorrect($subquestion, $session, $component)) ? $score++ : $score;
-            }
-        }
-
-        return $score;
-    }
-
-    private function subquestionCorrect($subquestion, $session, $component)
-    {
-        $correct = true;
-        // Bonnes réponses attendues
-        $rightProps = $this->propositionRepo->findBy(array("subquestion" => $subquestion, "rightAnswer" => true));
-        // Choix de l'étudiant
-        $choices = $this->propositionRepo->getByUserTraceAndSubquestion($subquestion, $this->user, $component, $session);
-
-        // Teste si les choix de l'étudiant sont présent dans les bonnes réponses.
-        foreach ($choices as $choice) {
-            $correct = (!in_array($choice, $rightProps)) ? false : $correct;
-        }
-
-        // Teste si le nombre de réponses équivaut au nombre de réponses attendues.
-        $correct = (count($rightProps) !== count($choices)) ? false : $correct;
-
-        return $correct;
     }
 }
