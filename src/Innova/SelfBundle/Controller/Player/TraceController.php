@@ -84,38 +84,18 @@ class TraceController
         $session = $em->getRepository('InnovaSelfBundle:Session')->find($post["sessionId"]);
 
         $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')
-            ->countTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId());
+            ->countTraceByUserByTestByQuestionnaire($test->getId(), $questionnaire->getId(), $user->getId(), $post["componentId"], $session->getId());
 
         if ($countTrace > 0) {
             $this->session->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
-
-            return array("traceId" => 0, "testId" => $test->getId());
+            $trace = null;
         } else {
             $agent = $this->request->headers->get('User-Agent');
             $trace = $this->traceManager->createTrace($questionnaire, $test, $user, $post["totalTime"], $agent, $component, $session);
             $this->parsePost($post, $trace);
-
-            $this->session->set('traceId', $trace->getId());
-            $this->session->set('testId', $post["testId"]);
-
-            return new RedirectResponse($this->router->generate('display_difficulty'));
         }
-    }
 
-    /**
-     * display a form to set the difficulty
-     *
-     * @Route("display_difficulty", name="display_difficulty")
-     * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
-     * @Method("GET")
-     */
-    public function displayDifficultyFormAction()
-    {
-        $session = $this->session;
-        $traceId = $session->get('traceId');
-        $testId = $session->get('testId');
-
-        return array("traceId" => $traceId, "testId" => $testId);
+        return array("trace" => $trace, "test" => $test, "session" => $session);
     }
 
     /**
@@ -217,9 +197,11 @@ class TraceController
         $em->persist($trace);
         $em->flush();
 
-        $displayHelp = 1;
+        $testId = $trace->getTest()->getId();
+        $sessionId = $trace->getSession()->getId();
 
-        return new RedirectResponse($this->router->generate('test_start',
-        array('id' => $post["testId"], 'displayHelp' => $displayHelp)));
+        $url = $this->router->generate('test_start', array('testId' => $testId, 'sessionId' => $sessionId));
+
+        return new RedirectResponse($url);
     }
 }

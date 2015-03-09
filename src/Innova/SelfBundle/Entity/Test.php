@@ -86,12 +86,12 @@ class Test
     private $archived = 0;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\Component", mappedBy="test")
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\Component", mappedBy="test", cascade={"remove"})
     */
     protected $components;
 
     /**
-    * @ORM\OneToMany(targetEntity="Session", mappedBy="test")
+    * @ORM\OneToMany(targetEntity="Session", mappedBy="test", cascade={"remove"})
     */
     protected $sessions;
 
@@ -466,13 +466,13 @@ class Test
     /**
      * Add sessions
      *
-     * @param \Innova\SelfBundle\Entity\Session $sessions
+     * @param  \Innova\SelfBundle\Entity\Session $sessions
      * @return Test
      */
     public function addSession(\Innova\SelfBundle\Entity\Session $sessions)
     {
         $this->sessions[] = $sessions;
-    
+
         return $this;
     }
 
@@ -489,10 +489,26 @@ class Test
     /**
      * Get sessions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSessions()
     {
         return $this->sessions;
+    }
+
+     /**
+     * Get opened sessions
+     */
+    public function getOpenedSessions()
+    {
+        $openedSessions = array();
+        $sessions = $this->sessions;
+        foreach ($sessions as $session) {
+            if ($session->getActif()) {
+                $openedSessions[] = $session;
+            }
+        }
+
+        return $openedSessions;
     }
 }

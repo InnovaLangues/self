@@ -18,7 +18,7 @@ class TraceManager
         $this->entityManager = $entityManager;
     }
 
-    public function createTrace(Questionnaire $questionnaire, Test $test, User $user, $totalTime, $agent, Component $component, Session $session)
+    public function createTrace(Questionnaire $questionnaire, Test $test, User $user, $totalTime, $agent, Component $component = null, Session $session)
     {
         $em = $this->entityManager;
 

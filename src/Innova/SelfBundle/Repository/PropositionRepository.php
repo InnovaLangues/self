@@ -37,7 +37,7 @@ class PropositionRepository extends EntityRepository
         $query = $this->_em->createQuery($dql)
                 ->setParameter('subquestion', $subquestion)
                 ->setParameter('session', $session)
-                ->setParameter('component', $component);
+                ->setParameter('component', $component)
                 ->setParameter('user', $user);
 
         return $query->getResult();

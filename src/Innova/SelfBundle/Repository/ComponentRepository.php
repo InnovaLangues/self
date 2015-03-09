@@ -53,7 +53,8 @@ class ComponentRepository extends EntityRepository
             AND t.user = :user
             AND t.test = :test
         )
-        AND c.type = :type
+        AND c.componentType = :type
+        AND c.test = :test
         ";
 
         $query = $this->_em->createQuery($dql)

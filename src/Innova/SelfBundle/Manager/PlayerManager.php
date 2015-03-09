@@ -32,27 +32,28 @@ class PlayerManager
     public function pickQuestionnaire(Test $test, Session $session)
     {
         if ($test->getPhased()) {
-            $questionnaire = $this->pickQuestionnairePhased($test, $session);
+            $orderQuestionnaire = $this->pickQuestionnairePhased($test, $session);
         } else {
-            $questionnaire = $this->pickQuestionnaireClassic($test);
+            $orderQuestionnaire = $this->pickQuestionnaireClassic($test, $session);
         }
 
-        return $questionnaire;
+        return $orderQuestionnaire;
     }
 
-    private function pickQuestionnaireClassic(Test $test)
+    private function pickQuestionnaireClassic(Test $test, Session $session)
     {
         $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
         $questionnaireWithoutTrace = null;
 
         foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
             $traces = $this->traceRepo->findBy(
-                array(  'user' => $this->user->getId(),
+                array(  'user' => $this->user,
                         'test' => $test->getId(),
-                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire()->getId(),
+                        'session' => $session,
+                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire(),
                 ));
             if (count($traces) == 0) {
-                $questionnaireWithoutTrace = $orderedQuestionnaire->getQuestionnaire();
+                $questionnaireWithoutTrace = $orderedQuestionnaire;
                 break;
             }
         }
@@ -64,10 +65,10 @@ class PlayerManager
     {
         // On teste si l'utilisateur a déjà des traces pour le test et la session courante
         if ($traces = $this->traceRepo->findBy(array('user' => $this->user, 'test' => $test, 'session' => $session))) {
-            $trace = end($traces);
+            $lastTrace = end($traces);
             $questionnaire = $lastTrace->getQuestionnaire();
             $component = $lastTrace->getComponent();
-            $orderQC = $this->orderQCRepo->findBy(array("questionnaire" => $questionnaire, "component" => $component));
+            $orderQC = $this->orderQCRepo->findOneBy(array("questionnaire" => $questionnaire, "component" => $component));
 
             // on prend la tâche suivante pour le composant courant
             if (!$nextOrderQuestionnaire = $this->pickNextQuestionnaire($component, $orderQC)) {
@@ -77,16 +78,16 @@ class PlayerManager
                     $nextOrderQuestionnaire = $this->pickNextQuestionnaire($nextComponent);
                 } else {
                     // si pas de composant, c'est la fin
-                    return null;
+                    return;
                 }
             }
         } else {
-            $nextComponent = pickNextComponent($test, $session);
+            echo "pas de traces";
+            $nextComponent = $this->pickNextComponent($test, $session);
             $nextOrderQuestionnaire = $this->pickNextQuestionnaire($nextComponent);
-
         }
 
-        return $nextOrderQuestionnaire->getQuestionnaire();
+        return $nextOrderQuestionnaire;
     }
 
     private function pickNextQuestionnaire(Component $component, OrderQuestionnaireComponent $orderQC = null)
@@ -100,29 +101,28 @@ class PlayerManager
     private function pickNextComponent(Test $test, Session $session, Component $component = null)
     {
         // si on a déjà un composant, faut prendre le suivant dépendament du score et du nombre de composant déjà fait pour la session
-        if($component){
-            $componentsDone = $this->componentRepo->findDoneByUserByTestBySession($user, $test, $session);
+        if ($component) {
+            $componentsDone = $this->componentRepo->findDoneByUserByTestBySession($this->user, $test, $session);
             $componentType = $component->getComponentType();
             $componentTypeName = $componentType->getName();
             $componentTypeId = $componentType->getId();
 
             // si on a déjà fait 3 composants -> stop
             if (count($componentsDone) >= 3) {
-                return null;   
-            }
-            else {
+                return;
+            } else {
                 $score = $this->calculateScore($test, $session, $component);
                 // si c'est un mitest on est redirigé vers une des étapes
                 if ($componentTypeName == "minitest") {
-                   if ($score < 20) {
+                    if ($score < 20) {
                         $nextComponentTypeName = "step1";
-                   } elseif ($score < 40){
+                    } elseif ($score < 40) {
                         $nextComponentTypeName = "step2";
-                   } elseif ($score < 80){
+                    } elseif ($score < 80) {
                         $nextComponentTypeName = "step3";
-                   } else {
+                    } else {
                         $nextComponentTypeName = "step4";
-                   }
+                    }
                 } else {
                     // sinon, dépendamment du score on descend ou monte d'un niveau
                     if ($score < 20 && $componentTypeName != "step1") {
@@ -130,12 +130,12 @@ class PlayerManager
                     } elseif ($score > 80 && $componentTypeName != "step4") {
                         $nextComponentTypeName = $this->componentTypeRepo->findOneById($componentTypeId + 1)->getName();
                     } else {
-                        return null;
+                        return;
                     }
                 }
             }
         } else {
-        // sinon c'est qu'on commence le test alors on lui propose un minitest
+            // sinon c'est qu'on commence le test alors on lui propose un minitest
             $nextComponentTypeName = "minitest";
         }
 
@@ -147,11 +147,11 @@ class PlayerManager
 
     private function pickComponentAmongAlternatives(ComponentType $componentType, Test $test)
     {
-        $candidates = $this->componentRepo->findNotDoneByTypeByUserByTest($this->user, $test, $type);
-        $component = array_rand($candidates);
+        $candidates = $this->componentRepo->findNotDoneByTypeByUserByTest($this->user, $test, $componentType);
+
+        $component = $candidates[array_rand($candidates)];
 
         return $component;
-
     }
 
     private function calculateScore(Test $test, Session $session, Component $component)
@@ -160,29 +160,29 @@ class PlayerManager
         $traces = $this->traceRepo->findBy(array('user' => $this->user, 'test' => $test, 'session' => $session, 'component' => $component));
         foreach ($traces as $trace) {
             $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
-            foreach ($subquestions-> as $subquestion) {
-                $score = ($this->subquestionCorrect($subquestion)) ? $score++;
+            foreach ($subquestions as $subquestion) {
+                $score = ($this->subquestionCorrect($subquestion, $session, $component)) ? $score++ : $score;
             }
         }
 
         return $score;
     }
 
-    private function subquestionCorrect(subquestion)
+    private function subquestionCorrect($subquestion, $session, $component)
     {
         $correct = true;
         // Bonnes réponses attendues
         $rightProps = $this->propositionRepo->findBy(array("subquestion" => $subquestion, "rightAnswer" => true));
         // Choix de l'étudiant
-        $choices = $this->propositionRepo->getByUserTraceAndSubquestion($subquestion, $this->$user, $component, $session);
+        $choices = $this->propositionRepo->getByUserTraceAndSubquestion($subquestion, $this->user, $component, $session);
 
         // Teste si les choix de l'étudiant sont présent dans les bonnes réponses.
         foreach ($choices as $choice) {
-           $correct = (!$rightProps->contains($choice)) ? false;
+            $correct = (!in_array($choice, $rightProps)) ? false : $correct;
         }
 
         // Teste si le nombre de réponses équivaut au nombre de réponses attendues.
-        $correct = ($rightProps->count() !== $choices->count()) ? false;
+        $correct = (count($rightProps) !== count($choices)) ? false : $correct;
 
         return $correct;
     }

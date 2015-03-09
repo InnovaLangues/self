@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a class="btn btn-default btn-sm" href="{{ path('editor_test_create_session', { 'testId': test.id }) }}">
+    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.session.create' | trans }}
+</a>
+
+<hr/>
+
+<ul class="list-group">
+{% for session in test.sessions %}
+    <li class="list-group-item">
+    	<a href="{{ path('editor_test_edit_session', { 'testId': test.id, 'sessionId': session.id }) }}">
+    		{{ session.name }}
+    	</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

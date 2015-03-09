@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Manager\PlayerManager;
 
@@ -23,6 +24,8 @@ use Innova\SelfBundle\Manager\PlayerManager;
  *      name = "innova_player",
  *      service = "innova_player"
  * )
+ * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
+ * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})
  */
 class PlayerController
 {
@@ -46,46 +49,42 @@ class PlayerController
         $this->router = $router;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->playerManager = $playerManager;
+        $this->questionnaireRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
     }
 
     /**
-     * Try to pick a questionnaire entity for a given test not done yet by the user
+     * Try to pick a questionnaire entity for a given test and a given sessionr
      * and display it if possible.
      *
-     * @Route("student/test/start/{id}/{displayHelp}/{sessionId}", name="test_start")
+     * @Route("student/test/start/{testId}/{sessionId}", name="test_start")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
-     * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
      */
-    public function startAction(Test $test, Session $session, $displayHelp)
+    public function startAction(Test $test, Session $session)
     {
         $em = $this->entityManager;
 
-        $questionnaire = $this->playerManager->pickQuestionnaire($test, $session);
-        // need component too.
+        $orderQuestionnaire = $this->playerManager->pickQuestionnaire($test, $session);
 
-        if (is_null($questionnaire)) {
-            return new RedirectResponse($this->router->generate('test_end', array("id" => $test->getId())));
+        if (is_null($orderQuestionnaire)) {
+            $url = $this->router->generate('test_end', array("testId" => $test->getId(), 'sessionId' => $session->getId()));
+
+            return new RedirectResponse($url);
         } else {
-            /* en attendant que les videos soient prêtes
-            if ($displayHelp){
-                    $displayHelp = $this->playerManager->displayHelp($test, $questionnaire);
-            }
-            */
-            $displayHelp = false;
-            $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $this->user->getId());
-            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
+            $questionnaire = $orderQuestionnaire->getQuestionnaire();
+            $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
+            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTest($test->getId(), $this->user->getId());
+            $questionnaires = $this->questionnaireRepo->getByTest($test);
             $countQuestionnaireTotal = count($questionnaires);
 
             return array(
-                'test' => $test
+                'test' => $test,
                 'session' => $session,
                 'component' => $component,
                 'questionnaire' => $questionnaire,
                 'questionnaires' => $questionnaires,
                 'countQuestionnaireDone' => $countQuestionnaireDone,
                 'countQuestionnaireTotal' => $countQuestionnaireTotal,
-                'displayHelp' => $displayHelp,
             );
         }
     }
@@ -93,20 +92,14 @@ class PlayerController
      /**
      * Gère la vue de fin de test
      *
-     * @Route("/test_end/{id}", name="test_end")
+     * @Route("/test_end/{testId}/session/{sessionId}", name="test_end")
      * @Template("InnovaSelfBundle:Player:common/end.html.twig")
      * @Method("GET")
      */
-    public function endAction(Test $test)
+    public function endAction(Test $test, Session $session)
     {
-        $em = $this->entityManager;
-
-        $nbRightAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countRightAnswerByUserByTest($test->getId(), $this->user->getId());
-
-        $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countAnswerByUserByTest($test->getId(), $this->user->getId());
-
+        $nbRightAnswer = $this->questionnaireRepo->countRightAnswerByUserByTest($test->getId(), $this->user->getId());
+        $nbAnswer = $this->questionnaireRepo->countAnswerByUserByTest($test->getId(), $this->user->getId());
         $pourcentRightAnswer = number_format(($nbRightAnswer/$nbAnswer)*100, 0);
 
         return array("pourcentRightAnswer" => $pourcentRightAnswer);
@@ -126,7 +119,7 @@ class PlayerController
     {
         $em = $this->entityManager;
 
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
+        $questionnaires = $this->questionnaireRepo->getByTest($test);
 
         $i = 0;
         foreach ($questionnaires as $q) {
@@ -142,7 +135,6 @@ class PlayerController
             'questionnaires' => $questionnaires,
             'questionnaire' => $questionnairePicked,
             'countQuestionnaireDone' => $countQuestionnaireDone,
-            'displayHelp' => false,
         );
     }
 }

@@ -34,6 +34,13 @@ class Session
     protected $test;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="actif", type="boolean")
+     */
+    private $actif;
+
+    /**
     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="session")
     */
     protected $traces;
@@ -132,5 +139,28 @@ class Session
     public function getTraces()
     {
         return $this->traces;
+    }
+
+    /**
+     * Set actif
+     *
+     * @param boolean $actif
+     * @return Session
+     */
+    public function setActif($actif)
+    {
+        $this->actif = $actif;
+    
+        return $this;
+    }
+
+    /**
+     * Get actif
+     *
+     * @return boolean 
+     */
+    public function getActif()
+    {
+        return $this->actif;
     }
 }

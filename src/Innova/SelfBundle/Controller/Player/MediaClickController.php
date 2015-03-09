@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Manager\MediaClickManager;
 
 /**
@@ -16,6 +17,10 @@ use Innova\SelfBundle\Manager\MediaClickManager;
  *      name = "innova_mediaclick",
  *      service = "innova_mediaclick"
  * )
+ * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})
+ * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
+ * @ParamConverter("media", isOptional="true", class="InnovaSelfBundle:Media\Media", options={"id" = "mediaId"})
  */
 class MediaClickController
 {
@@ -35,16 +40,12 @@ class MediaClickController
     }
 
     /**
-     * @Route("/get-remaining-listening", name="get-remaining-listening", options={"expose"=true})
+     * @Route("/get-remaining-listening/{mediaId}/{testId}/{sessionId}/{questionnaireId}", name="get-remaining-listening", options={"expose"=true})
      * @Method("GET")
      */
-    public function getRemainingListeningAction()
+    public function getRemainingListeningAction($media, $test, $session, $questionnaire)
     {
-        $mediaId = $this->request->get('mediaId');
-        $questionnaireId = $this->request->get('questionnaireId');
-        $testId = $this->request->get('testId');
-
-        $remainingListening = $this->mediaClickManager->getRemainingListening($mediaId, $questionnaireId, $testId);
+        $remainingListening = $this->mediaClickManager->getRemainingListening($media, $questionnaire, $test, $session);
 
         return new JsonResponse(
             array(
@@ -54,18 +55,13 @@ class MediaClickController
     }
 
     /**
-     * @Route("/increment-media-clicks", name="increment-media-clicks", options={"expose"=true})
+     * @Route("/increment-media-clicks/{mediaId}/{testId}/{sessionId}/{questionnaireId}", name="increment-media-clicks", options={"expose"=true})
      * @Method({"GET", "POST"})
      */
-    public function incrementMediaClicksAction()
+    public function incrementMediaClicksAction($media, $test, $session, $questionnaire)
     {
-        $mediaId = $this->request->get('mediaId');
-        $questionnaireId = $this->request->get('questionnaireId');
-        $testId = $this->request->get('testId');
-
-        $this->mediaClickManager->createMediaClick($mediaId, $questionnaireId, $testId);
-
-        $remainingListening = $this->mediaClickManager->getRemainingListening($mediaId, $questionnaireId, $testId);
+        $this->mediaClickManager->createMediaClick($media, $questionnaire, $test, $session);
+        $remainingListening = $this->mediaClickManager->getRemainingListening($media, $questionnaire, $test, $session);
 
         return new JsonResponse(
             array(
@@ -75,16 +71,12 @@ class MediaClickController
     }
 
     /**
-     * @Route("/is-media-playable", name="is-media-playable", options={"expose"=true})
+     * @Route("/is-media-playable/{mediaId}/{testId}/{sessionId}/{questionnaireId}", name="is-media-playable", options={"expose"=true})
      * @Method("GET")
      */
-    public function isMediaPlayableAction()
+    public function isMediaPlayableAction($media, $test, $session, $questionnaire)
     {
-        $mediaId = $this->request->get('mediaId');
-        $questionnaireId = $this->request->get('questionnaireId');
-        $testId = $this->request->get('testId');
-
-        $isPlayable = $this->mediaClickManager->isMediaPlayable($mediaId, $testId, $questionnaireId);
+        $isPlayable = $this->mediaClickManager->isMediaPlayable($media, $test, $questionnaire, $session);
 
         return new JsonResponse(
             array(

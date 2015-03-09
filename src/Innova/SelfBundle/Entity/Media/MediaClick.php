@@ -37,6 +37,11 @@ class MediaClick
     protected $questionnaire;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Session")
+    */
+    protected $session;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User", inversedBy="mediaClicks")
     */
     protected $user;
@@ -141,5 +146,28 @@ class MediaClick
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set session
+     *
+     * @param \Innova\SelfBundle\Entity\Session $session
+     * @return MediaClick
+     */
+    public function setSession(\Innova\SelfBundle\Entity\Session $session = null)
+    {
+        $this->session = $session;
+    
+        return $this;
+    }
+
+    /**
+     * Get session
+     *
+     * @return \Innova\SelfBundle\Entity\Session 
+     */
+    public function getSession()
+    {
+        return $this->session;
     }
 }
