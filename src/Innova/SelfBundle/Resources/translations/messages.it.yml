@@ -247,6 +247,11 @@ editor:
         text-type: Tipo di testo
         identity: fiche d'identité
 
+    session:
+        name: Nom de la session
+        passwd: Mot de passe
+        active: Actif
+
 player:
     listening_remaining: "{0} No ascolto possibilo |{1} 1 solo ascolto|]1,Inf] %count% ascolti possibili"
     listen_context: Devi ascoltare prima il contesto.

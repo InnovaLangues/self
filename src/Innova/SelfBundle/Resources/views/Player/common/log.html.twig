@@ -2,16 +2,19 @@
 
 {% block body -%}
 
-<h2>Mot de passe pour la session</h2>
+<h3>Authentification session <b>{{ session.name }}</b></h3>
 <hr/>
 
 {% for flashMessage in app.session.flashbag.get('warning') %}
     <div class="alert alert-warning">{{ flashMessage }}</div>
 {% endfor %}
 
-<form action="{{ path('session_log', { 'sessionId': session.id }) }}" method="post">
-    <input type="password" name="passwd"/>
-    <input type="submit"/>
+<form class="col-md-6" action="{{ path('session_log', { 'sessionId': session.id }) }}" method="post" autocomplete="off">
+    <div class="form-group">
+        <label for="passwd">Mot de passe</label>
+        <input id="passwd" class="form-control" type="password" name="passwd"/>
+    </div>
+    <button type="submit" class="btn btn-default">Valider</button>
 </form>
 
 {% endblock %}

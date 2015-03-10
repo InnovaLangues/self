@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Form\Type\SessionType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -43,16 +44,7 @@ class SessionController extends Controller
         $session->setName('Nouvelle session');
         $session->setActif(false);
 
-        $form = $this->createFormBuilder($session)
-            ->add('name', 'text')
-            ->add('passwd', 'text')
-            ->add('actif', 'choice', array(
-                                'expanded' => true,
-                                'multiple' => false,
-                                'choices'   => array(false => 'Non', true => 'Oui'),
-                            ))
-            ->add('save', 'submit')
-            ->getForm();
+        $form = $this->get('form.factory')->createBuilder(new SessionType(), $session)->getForm();
 
         $form->handleRequest($request);
 
@@ -77,16 +69,7 @@ class SessionController extends Controller
      */
     public function editAction(Test $test, Session $session, Request $request)
     {
-        $form = $this->createFormBuilder($session)
-            ->add('name', 'text')
-            ->add('passwd', 'text')
-            ->add('actif', 'choice', array(
-                                'expanded' => true,
-                                'multiple' => false,
-                                'choices'   => array(false => 'Non', true => 'Oui'),
-                            ))
-            ->add('save', 'submit')
-            ->getForm();
+        $form = $this->get('form.factory')->createBuilder(new SessionType(), $session)->getForm();
 
         $form->handleRequest($request);
 

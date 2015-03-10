@@ -247,6 +247,11 @@ editor:
         text-type: type d'objet de la question
         identity: fiche d'identité
 
+    session:
+        name: Nom de la session
+        passwd: Mot de passe
+        active: Actif
+
 player:
     listening_remaining: "{0} Reste 0 écoute |{1} Reste 1 écoute|]1,Inf] Reste %count% écoutes"
     listen_context: Il vous faut d'abord écouter le contexte.

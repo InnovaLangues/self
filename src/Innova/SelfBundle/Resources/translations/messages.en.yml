@@ -239,6 +239,11 @@ editor:
         text-type: Question type
         identity: Identity card
 
+    session:
+        name: Nom de la session
+        passwd: Mot de passe
+        active: Actif
+
 player:
     listening_remaining: "{0} No remaining listening |{1} Only 1 listening remaining|]1,Inf] %count% listenings remaining"
     listen_context: First listen to the context
