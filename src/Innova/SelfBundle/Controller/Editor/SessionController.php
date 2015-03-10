@@ -19,14 +19,14 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("admin/editor")
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
-* @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
+ * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
  */
 class SessionController extends Controller
 {
     /**
      *
      * @Route("/test/{testId}/sessions", name="editor_test_sessions")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Editor:session/list.html.twig")
      */
     public function listAction(Test $test)
@@ -36,7 +36,7 @@ class SessionController extends Controller
 
     /**
      *
-     * @Route("/test/{testId}/session/create/", name="editor_test_create_session")
+     * @Route("/test/{testId}/session/create", name="editor_test_create_session")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Editor:session/new.html.twig")
      */
@@ -48,19 +48,48 @@ class SessionController extends Controller
         $session->setTest($test);
 
         $form = $this->handleForm($session, $request, $test);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "La session a bien été créée");
+
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
+        }
 
         return array('form' => $form->createView(), 'test' => $test);
     }
 
     /**
      *
-     * @Route("/test/{testId}/session/{sessionId}/", name="editor_test_edit_session")
+     * @Route("/session/{sessionId}/remove", name="editor_test_delete_session", options = {"expose"=true})
+     * @Method("DELETE")
+     * @Template("InnovaSelfBundle:Editor:session/list.html.twig")
+     */
+    public function deleteAction(Session $session)
+    {
+        $testId = $session->getTest()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($session);
+        $em->flush();
+
+        $this->get("session")->getFlashBag()->set('info', "La session a bien été supprimée");
+
+        return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $testId)));
+    }
+
+    /**
+     *
+     * @Route("/test/{testId}/session/{sessionId}", name="editor_test_edit_session")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Editor:session/new.html.twig")
      */
     public function editAction(Test $test, Session $session, Request $request)
     {
         $form = $this->handleForm($session, $request, $test);
+
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "La session a bien été modifiée");
+
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
+        }
 
         return array('form' => $form->createView(), 'test' => $test);
     }
@@ -94,17 +123,23 @@ class SessionController extends Controller
         return array("score" => $score, "session" => $session, "user" => $user);
     }
 
+    /**
+     * Handles session form
+     */
     private function handleForm(Session $session, $request, Test $test)
     {
         $form = $this->get('form.factory')->createBuilder(new SessionType(), $session)->getForm();
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($session);
-            $em->flush();
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
 
-            $this->redirect($this->generateUrl('editor_test_edit_session', array('sessionId' => $session->getId(), 'testId' => $test->getId())));
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($session);
+                $em->flush();
+
+                return;
+            }
         }
 
         return $form;

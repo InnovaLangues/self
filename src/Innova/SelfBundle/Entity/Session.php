@@ -48,7 +48,7 @@ class Session
     private $actif;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="session")
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="session", cascade={"remove"})
     */
     protected $traces;
     /**
@@ -174,20 +174,20 @@ class Session
     /**
      * Set passwd
      *
-     * @param string $passwd
+     * @param  string  $passwd
      * @return Session
      */
     public function setPasswd($passwd)
     {
         $this->passwd = $passwd;
-    
+
         return $this;
     }
 
     /**
      * Get passwd
      *
-     * @return string 
+     * @return string
      */
     public function getPasswd()
     {

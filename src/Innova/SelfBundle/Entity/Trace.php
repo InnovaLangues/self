@@ -294,20 +294,20 @@ class Trace
     /**
      * Set component
      *
-     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $component
+     * @param  \Innova\SelfBundle\Entity\PhasedTest\Component $component
      * @return Trace
      */
     public function setComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $component = null)
     {
         $this->component = $component;
-    
+
         return $this;
     }
 
     /**
      * Get component
      *
-     * @return \Innova\SelfBundle\Entity\PhasedTest\Component 
+     * @return \Innova\SelfBundle\Entity\PhasedTest\Component
      */
     public function getComponent()
     {
@@ -317,20 +317,20 @@ class Trace
     /**
      * Set session
      *
-     * @param \Innova\SelfBundle\Entity\Session $session
+     * @param  \Innova\SelfBundle\Entity\Session $session
      * @return Trace
      */
     public function setSession(\Innova\SelfBundle\Entity\Session $session = null)
     {
         $this->session = $session;
-    
+
         return $this;
     }
 
     /**
      * Get session
      *
-     * @return \Innova\SelfBundle\Entity\Session 
+     * @return \Innova\SelfBundle\Entity\Session
      */
     public function getSession()
     {

@@ -9,6 +9,10 @@
 <hr/>
 <h3>{{ 'editor.session.list_test' | trans }} <b>{{ test.name }}</b> </h3>
 
+{% for flashMessage in app.session.flashbag.get('info') %}
+    <div class="alert alert-info">{{ flashMessage }}</div>
+{% endfor %}
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -29,12 +33,39 @@
 					<a class="btn btn-default btn-sm" href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
 						<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
 					</a>
+					<a class="btn btn-sm btn-danger delete-session" data-session-id="{{ session.id }}">
+						<span class="glyphicon glyphicon-trash"></span>
+					</a>
 				</td>
-				
 			</tr>
 		{% endfor %}
     </tbody>
 </table>
 
 
+<div class="modal fade" id="delete-session-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Confirmation de la suppression</h4>
+        </div>
+        <div class="modal-body">
+        Êtes-vous sûr de vouloir supprimer cette session ? Ceci supprimera toutes les traces liés à cette session 
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+            <a id="session-delete-confirmation" data-method="DELETE" class="btn btn-sm btn-danger rest" href="">
+				<span class="glyphicon glyphicon-trash"></span> Oui, supprimer la session
+			</a>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-session.js") }}"></script>
 {% endblock %}
