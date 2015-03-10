@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a class="btn btn-default btn-sm " href="{{ path('editor_test_session_results', { 'sessionId': session.id } )}}">
+    <span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
+</a>
+
+<a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_session', { 'testId': session.test.id, 'sessionId': session.id }) }}">
+	<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
+</a>
+
+<hr/>
+<h3>{{ 'editor.session.results_user' | trans }} <b>{{ user.username }}</b> </h3>
+
+{% include "InnovaSelfBundle:Player/common:score.html.twig" %}
+
+{% endblock %}

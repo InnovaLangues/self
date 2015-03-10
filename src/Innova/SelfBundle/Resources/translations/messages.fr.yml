@@ -251,6 +251,13 @@ editor:
         name: Nom de la session
         passwd: Mot de passe
         active: Actif
+        list: Liste des sessions
+        create: Créer une nouvelle session
+        manage: Gérer les sessions
+        list_test: Liste des session pour le test
+        edit: Editer la session
+        results: Résultats pour la session
+        results_user: Résultats pour l'utilisateur
 
 player:
     listening_remaining: "{0} Reste 0 écoute |{1} Reste 1 écoute|]1,Inf] Reste %count% écoutes"

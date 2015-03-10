@@ -42,6 +42,9 @@ class PlayerManager
         return $orderQuestionnaire;
     }
 
+    /**
+     * Picks orderedQuestionnaire for a classic test
+     */
     private function pickQuestionnaireClassic(Test $test, Session $session)
     {
         $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
@@ -63,6 +66,9 @@ class PlayerManager
         return $questionnaireWithoutTrace;
     }
 
+    /**
+     * Picks orderedQuestionnaire for a phased test
+     */
     private function pickQuestionnairePhased(Test $test, Session $session)
     {
         // On teste si l'utilisateur a déjà des traces pour le test et la session courante
@@ -91,6 +97,9 @@ class PlayerManager
         return $nextOrderQuestionnaire;
     }
 
+    /**
+     * Picks next orderQuestionnaire for a given component
+     */
     private function pickNextQuestionnaire(Component $component, OrderQuestionnaireComponent $orderQC = null)
     {
         $displayOrder = ($orderQC != null) ? $orderQC->getDisplayOrder() + 1 : 1;
@@ -99,6 +108,9 @@ class PlayerManager
         return $nextOrderQC;
     }
 
+    /**
+     * Picks next component for a given test / session, depending of a possible previous one
+     */
     private function pickNextComponent(Test $test, Session $session, Component $component = null)
     {
         // si on a déjà un composant, faut prendre le suivant dépendament du score et du nombre de composant déjà fait pour la session
@@ -146,9 +158,15 @@ class PlayerManager
         return $nextComponent;
     }
 
+    /**
+     * Picks a component of a given componentType for a user.
+     * Favor not done yet component in another session
+     */
     private function pickComponentAmongAlternatives(ComponentType $componentType, Test $test)
     {
-        $candidates = $this->componentRepo->findNotDoneByTypeByUserByTest($this->user, $test, $componentType);
+        if (!$candidates = $this->componentRepo->findNotDoneByTypeByUserByTest($this->user, $test, $componentType)) {
+            $candidates = $this->componentRepo->findBy(array("test" => $test, "componentType" => $componentType));
+        }
 
         $component = $candidates[array_rand($candidates)];
 

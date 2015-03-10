@@ -1,0 +1,39 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a class="btn btn-default btn-sm " href="{{ path('editor_test_sessions', { 'testId': session.test.id } )}}">
+    <span class="glyphicon glyphicon-calendar"></span> {{ 'editor.session.manage' | trans }}
+</a>
+
+<a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_session', { 'testId': session.test.id, 'sessionId': session.id }) }}">
+	<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
+</a>
+
+<hr/>
+<h3>{{ 'editor.session.results' | trans }} <b>{{ session.name }}</b> </h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{{ 'user.name' | trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	{% for user in users %}
+		<tr>
+			<td>
+				{{ user.username }}
+			</td>
+			<td class="text-right">
+				<a class="btn btn-default btn-sm" href="{{ path('editor_session_user_results', {'sessionId': session.id, 'userId': user.id }) }}">
+					<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results_user' | trans }}
+				</a>
+			</td>
+		</tr>
+	{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

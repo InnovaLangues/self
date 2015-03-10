@@ -4,26 +4,6 @@
     <h2>Résultats par compétence</h2>
     <hr/>
 
-    {% for skill, levels in score %}
-    	<div class="panel panel-default">
-    		<div class="panel-heading">
-    			{{ skill }}
-    		</div>
-    		<div class="panel-body">
-	            <table class="table text-center">
-	            	<tr>
-			            {% for levelName, plop in levels %}
-			                <td>{{ levelName }}</td>
-			            {% endfor %}
-					</tr>
-					<tr>
-						{% for levelName, plop in levels %}
-			                <td>{{ plop.correct }} / {{ plop.count }}</td>
-			            {% endfor %}
-					</tr>
-	            </table>
-	        </div>
-        </div>
-    {% endfor %}
+    {% include "InnovaSelfBundle:Player/common:score.html.twig" %}
 
 {% endblock %}

@@ -17,4 +17,19 @@ class UserRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findBySession($session)
+    {
+        $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
+    	WHERE EXISTS (
+            SELECT t FROM Innova\SelfBundle\Entity\Trace t
+            WHERE t.user = u
+            AND t.session = :session
+        )";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('session', $session);
+
+        return $query->getResult();
+    }
 }

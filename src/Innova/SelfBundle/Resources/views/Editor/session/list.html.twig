@@ -7,15 +7,34 @@
 </a>
 
 <hr/>
+<h3>{{ 'editor.session.list_test' | trans }} <b>{{ test.name }}</b> </h3>
 
-<ul class="list-group">
-{% for session in test.sessions %}
-    <li class="list-group-item">
-    	<a href="{{ path('editor_test_edit_session', { 'testId': test.id, 'sessionId': session.id }) }}">
-    		{{ session.name }}
-    	</a>
-    </li>
-{% endfor %}
-</ul>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{{ 'editor.session.name' | trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+		{% for session in test.sessions %}
+			<tr>
+				<td>
+					{{ session.name }}
+				</td>
+				<td class="text-right">
+					<a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_session', { 'testId': test.id, 'sessionId': session.id }) }}">
+						<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
+					</a>
+					<a class="btn btn-default btn-sm" href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
+						<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
+					</a>
+				</td>
+				
+			</tr>
+		{% endfor %}
+    </tbody>
+</table>
+
 
 {% endblock %}

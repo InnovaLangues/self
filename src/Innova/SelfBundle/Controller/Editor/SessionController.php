@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Form\Type\SessionType;
+use Innova\SelfBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("admin/editor")
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
+* @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
  */
 class SessionController extends Controller
 {
@@ -43,34 +45,58 @@ class SessionController extends Controller
         $session = new Session();
         $session->setName('Nouvelle session');
         $session->setActif(false);
+        $session->setTest($test);
 
-        $form = $this->get('form.factory')->createBuilder(new SessionType(), $session)->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $session->setTest($test);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($session);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('editor_test_edit_session', array('sessionId' => $session->getId(), 'testId' => $test->getId())));
-        }
+        $form = $this->handleForm($session, $request, $test);
 
         return array('form' => $form->createView(), 'test' => $test);
     }
 
     /**
      *
-     * @Route("test/{testId}/session/{sessionId}/", name="editor_test_edit_session")
+     * @Route("/test/{testId}/session/{sessionId}/", name="editor_test_edit_session")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Editor:session/new.html.twig")
      */
     public function editAction(Test $test, Session $session, Request $request)
     {
-        $form = $this->get('form.factory')->createBuilder(new SessionType(), $session)->getForm();
+        $form = $this->handleForm($session, $request, $test);
 
+        return array('form' => $form->createView(), 'test' => $test);
+    }
+
+    /**
+     *
+     * @Route("/session/{sessionId}/results", name="editor_test_session_results")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:session/results.html.twig")
+     */
+    public function resultsAction(Session $session)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository("InnovaSelfBundle:User")->findBySession($session);
+
+        return array('session' => $session, 'users' => $users);
+    }
+
+    /**
+     *
+     * @Route("/user/{userId}/session/{sessionId}/results", name="editor_session_user_results")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:session/userResults.html.twig")
+     */
+    public function userResultsAction(User $user, Session $session)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $score = $this->get("self.score.manager")->calculateScoreByTest($session->getTest(), $session);
+
+        return array("score" => $score, "session" => $session, "user" => $user);
+    }
+
+    private function handleForm(Session $session, $request, Test $test)
+    {
+        $form = $this->get('form.factory')->createBuilder(new SessionType(), $session)->getForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -78,9 +104,9 @@ class SessionController extends Controller
             $em->persist($session);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('editor_test_edit_session', array('sessionId' => $session->getId(), 'testId' => $test->getId())));
+            $this->redirect($this->generateUrl('editor_test_edit_session', array('sessionId' => $session->getId(), 'testId' => $test->getId())));
         }
 
-        return array('form' => $form->createView(), 'test' => $test);
+        return $form;
     }
 }
