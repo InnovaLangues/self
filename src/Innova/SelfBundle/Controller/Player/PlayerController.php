@@ -91,7 +91,7 @@ class PlayerController
             $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTestByComponent($test, $this->user, $session, $component);
         } else {
             $countQuestionnaireTotal = count($questionnaires);
-            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTest($test->getId(), $this->user->getId(), $session->getId());
+            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTestBySession($test->getId(), $this->user->getId(), $session->getId());
         }
 
         return array(

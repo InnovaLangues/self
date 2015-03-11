@@ -40,7 +40,28 @@ class QuestionnaireRepository extends EntityRepository
      *
      * @return int number of traces for the test and the user
      */
-    public function countDoneYetByUserByTest($testId, $userId, $sessionId)
+    public function countDoneYetByUserByTest($testId, $userId)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        LEFT JOIN t.questionnaire tq
+        WHERE t.user = :userId
+        AND t.test = :testId";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('testId', $testId)
+                ->setParameter('userId', $userId);
+
+        return count($query->getResult());
+    }
+
+    /**
+     * countDoneYetByUserByTest count traces for test and for user
+     * @param id $testId
+     * @param id $userId
+     *
+     * @return int number of traces for the test and the user
+     */
+    public function countDoneYetByUserByTestBySession($testId, $userId, $sessionId)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
         LEFT JOIN t.questionnaire tq
@@ -57,7 +78,7 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * countDoneYetByUserByTest count traces for test and for user
+     * countDoneYetByUserByTestByComponent count traces for test, session, and component
      * @param id $testId
      * @param id $userId
      *
@@ -82,7 +103,7 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * countDoneYetByUserByTest count traces for test and for user
+     * getQuestionnairesDoneYetByUserByTest questionnairre done for an user and a test
      * @param id $testId
      * @param id $userId
      *
