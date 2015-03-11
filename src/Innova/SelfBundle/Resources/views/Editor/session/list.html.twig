@@ -33,6 +33,9 @@
 					<a class="btn btn-default btn-sm" href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
 						<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
 					</a>
+                    <a class="btn btn-default btn-sm" href="{{ path('editor_session_export_results', {'sessionId': session.id }) }}">
+                        <span class="glyphicon glyphicon-download-alt"></span> {{ 'editor.session.export' | trans }}
+                    </a>
 					<a class="btn btn-sm btn-danger delete-session" data-session-id="{{ session.id }}">
 						<span class="glyphicon glyphicon-trash"></span>
 					</a>

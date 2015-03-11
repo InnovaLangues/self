@@ -12,6 +12,7 @@ use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Form\Type\SessionType;
 use Innova\SelfBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Session controller.
@@ -121,6 +122,28 @@ class SessionController extends Controller
         $score = $this->get("self.score.manager")->calculateScoreByTest($session->getTest(), $session);
 
         return array("score" => $score, "session" => $session, "user" => $user);
+    }
+
+    /**
+     *
+     * @Route("/session/{sessionId}/export", name="editor_session_export_results")
+     * @Method("GET")
+     */
+    public function exportAction(Session $session)
+    {
+        $filename = $this->get("self.export.manager")->exportSession($session);
+        $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
+
+        $response = new Response();
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($file));
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
+        $response->headers->set('Content-length', filesize($file));
+        $response->sendHeaders();
+
+        $response->setContent(file_get_contents($file));
+
+        return $response;
     }
 
     /**

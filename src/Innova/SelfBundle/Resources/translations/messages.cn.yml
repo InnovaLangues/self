@@ -243,6 +243,7 @@ editor:
         edit: Editer la session
         results: Résultats pour la session
         results_user: Résultats pour l'utilisateur
+        export: Exporter les résultats
 
 player:
     listening_remaining: "{0} Plus d'écoute possible |{1} 1 seule écoute restante|]1,Inf] %count% écoutes restantes"

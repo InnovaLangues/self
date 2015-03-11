@@ -32,6 +32,8 @@ app/sessions/*
 !app/sessions/.gitkeep
 
 # Export
+app/data/session/*
+!app/data/session/.gitkeep
 app/data/export/*
 app/data/exportPdf/*
 !app/data/export/.gitkeep

@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\Session;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ExportManager
@@ -63,6 +64,23 @@ class ExportManager
         fclose($csvh);
 
         return $csvName;
+    }
+
+    public function exportSession(Session $session)
+    {
+        $fs = new Filesystem();
+        $sessionId = $session->getId();
+
+        $fileContent = "";
+        $filename = "self_export-session".$sessionId."-".date("d-m-Y_H:i:s").'.csv';
+        $sessionPathExport = $this->kernelRoot."/data/session/".$sessionId."/";
+        $fs->mkdir($sessionPathExport, 0777);
+        $csvh = fopen($sessionPathExport."/".$filename, 'w+');
+
+        fwrite($csvh, $fileContent);
+        fclose($csvh);
+
+        return $filename;
     }
 
     /**
