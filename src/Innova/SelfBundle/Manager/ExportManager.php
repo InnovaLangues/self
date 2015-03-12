@@ -41,20 +41,21 @@ class ExportManager
         return $pdfName;
     }
 
-    public function exportCsvAction(Test $test, $tia)
+    public function exportCsvAction(Test $test, Session $session, $tia)
     {
         $fs = new Filesystem();
         $testId = $test->getId();
+        $sessionId = $session->getId();
 
         if ($tia == 0) {
             $tia = "";
-            $csvContent = $this->getCsvContent($test);
+            $csvContent = $this->getCsvContent($test, $session);
         } else {
             $tia = "-tia";
-            $csvContent = $this->getCsvTiaContent($test);
+            $csvContent = $this->getCsvTiaContent($test, $session);
         }
 
-        $csvName = "self_export-test_".$testId."-".date("d-m-Y_H:i:s").$tia.'.csv';
+        $csvName = "self_export-test_".$testId."-session".$sessionId."-".date("d-m-Y_H:i:s").$tia.'.csv';
         $csvPathExport = $this->kernelRoot."/data/export/".$testId."/";
 
         $fs->mkdir($csvPathExport, 0777);
@@ -117,13 +118,14 @@ class ExportManager
      * getCvsContent function
      * Fonction principale pour l'export CSV "classique"
      */
-    private function getCsvContent(Test $test)
+    private function getCsvContent(Test $test, Session $session)
     {
         $em = $this->entityManager;
         $testId = $test->getId();
+        $sessionId = $session->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
-        $preprocess  = $this->preprocessTest($testId, $questionnaires, "csv");
+        $preprocess  = $this->preprocessTest($testId, $sessionId, $questionnaires, "csv");
         $propLetters = $preprocess[0];
         $rightProps   = $preprocess[1];
         $result          = $preprocess[2];
@@ -131,10 +133,10 @@ class ExportManager
         $typology      = $preprocess[4];
         $theme         = $preprocess[5];
 
-        $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnTest($testId);
+        $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
         foreach ($users as $user) {
             $userId = $user->getId();
-            $score = $this->calculateScore($user, $test, $rightProps);
+            $score = $this->calculateScore($user, $test, $session, $rightProps);
 
             $csv .= $this->addColumn($user->getUserName());
             $csv .= $this->addColumn($user->getFirstName());
@@ -150,7 +152,7 @@ class ExportManager
                 $questionnaireId = $questionnaire->getId();
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $typology[$questionnaireId];
-                $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndTestAndQuestionnaire($userId, $testId, $questionnaireId);
+                $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
 
                 foreach ($traces as $trace) {
                     $csv .= $this->addColumn($theme[$questionnaireId]);
@@ -280,25 +282,26 @@ class ExportManager
      *
      *
      */
-    private function getCsvTiaContent(Test $test)
+    private function getCsvTiaContent(Test $test, Session $session)
     {
         $em = $this->entityManager;
         $testId = $test->getId();
+        $sessionId = $session->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-        $preprocess  = $this->preprocessTest($testId, $questionnaires, "tia");
+        $preprocess  = $this->preprocessTest($testId, $sessionId, $questionnaires, "tia");
         $propLetters = $preprocess[0];
         $rightProps  = $preprocess[1];
         $csv = $preprocess[3];
 
         //  BODY
-        $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnTest($testId);
+        $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
         foreach ($users as $user) {
             $csv .= $user->getUserName()." ".$user->getFirstName().";";
             $userId = $user->getId();
 
             foreach ($questionnaires as $questionnaire) {
                 $questionnaireId = $questionnaire->getId();
-                $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndTestAndQuestionnaire($userId, $testId, $questionnaireId);
+                $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
 
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $questions[0]->getTypology()->getName();
@@ -345,11 +348,11 @@ class ExportManager
      * calculateScore function
      *
      */
-  private function calculateScore(User $user, Test $test, $rightProps)
+  private function calculateScore(User $user, Test $test, Session $session, $rightProps)
   {
       $em = $this->entityManager;
       $score = 0;
-      $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndTest($user->getId(), $test->getId());
+      $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSession($user->getId(), $session->getId());
 
       foreach ($traces as $trace) {
           if ($answers = $trace->getAnswers()) {
@@ -465,7 +468,7 @@ class ExportManager
      /**
      * Précalcule pas mal de choses pour éviter les requêtes redondantes plus tard
      */
-    private function preprocessTest($testId, $questionnaires, $mode)
+    private function preprocessTest($testId, $sessionId, $questionnaires, $mode)
     {
         $em = $this->entityManager;
         $propLetters = array();
@@ -515,7 +518,7 @@ class ExportManager
                 }
             }
 
-            $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByTestAndQuestionnaire($testId, $questionnaireId);
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->getBySessionAndQuestionnaire($sessionId, $questionnaireId);
             foreach ($traces as $trace) {
                 $userId  = $trace->getUser()->getId();
                 $userName  = (string) $trace->getUser();

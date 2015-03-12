@@ -4,19 +4,15 @@
         <a class="btn btn-default btn-sm" href="{{ path('export') }}">
         <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
         </a>
-        <a href="{{ path('csv-export', {'testId': test.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">
-            {{ 'export.file_generate' | trans }} CSV
-        </a>
-        <a href="{{ path('csv-export', {'testId': test.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-sm">
-            {{ 'export.file_generate' | trans }} TIA+
-        </a>
-
+        <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#export-session-modal">Selection d'une session à exporter</a>
         <hr/>
 
         <h3> Export  CSV  pour le test <strong>{{ test.name }}</strong></h3>
 
         {% if csvName is defined %}
-        <div class="alert alert-success" role="alert">{{ 'export.file_generated' | trans }} - <a href="{{ path('get-file', {'testId': test.id, 'filename': csvName, 'mode':"csv" } )}}">{{ 'export.file_download' | trans }}</a></div>
+            <div class="alert alert-success" role="alert">
+                {{ 'export.file_generated' | trans }} - <a href="{{ path('get-file', {'testId': test.id, 'filename': csvName, 'mode':"csv" } )}}">{{ 'export.file_download' | trans }}</a>
+            </div>
         {% endif %}
 
         <h4>{{ 'export.files_list' | trans }}</h4>
@@ -25,4 +21,30 @@
                 <a href="{{ path('get-file', {'testId': test.id, 'filename': file, 'mode':"csv" } )}}">{{ file }}</a>
             </h5>
         {% endfor %}
+
+        <div class="modal fade" id="export-session-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Selection d'une session à exporter</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group">
+                        {% for session in test.sessions %}
+                            <li class="list-group-item">
+                                {{ session.name }} 
+                                <a href="{{ path('csv-export', {'testId': test.id, 'sessionId': session.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-xs">{{ 'export.file_generate' | trans }} CSV</a>
+                                <a href="{{ path('csv-export', {'testId': test.id, 'sessionId': session.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-xs">{{ 'export.file_generate' | trans }} TIA+</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 {% endblock %}

@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
         </a>
 
-        <a href="{{ path('pdf-export', {'id': test.id } )}}" data-method="PUT" class="rest btn btn-default btn-sm">
+        <a href="{{ path('pdf-export', {'testId': test.id } )}}" data-method="PUT" class="rest btn btn-default btn-sm">
             {{ 'export.file_generate' | trans }} PDF
         </a>
 

@@ -18,6 +18,18 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function getByTraceOnSession($sessionId)
+    {
+        $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
+        LEFT JOIN u.traces ut
+        WHERE ut.session = :sessionId";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('sessionId', $sessionId);
+
+        return $query->getResult();
+    }
+
     public function findBySession($session)
     {
         $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u

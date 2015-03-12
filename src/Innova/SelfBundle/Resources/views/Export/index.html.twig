@@ -1,34 +1,34 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-            <h3>{{ 'editor.test.list' | trans }}</h3>
-            <table class="table table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>{{ 'editor.test.name' | trans }}</th>
-                        <th class="text-right">Export CSV</th>
-                        <th class="text-right">Export PDF</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i, test in tests %}
-                        <tr>
-                        <td>{{ test.name }}</td>
-                        <td class="text-right">
-                            <a href="{{ path('csv-export-show', {'testId': test.id, 'tia': 0 } )}}" class="btn btn-default btn-sm"><img rel="tooltip" data-original-title="Export CSV" src="{{ asset('bundles/innovaself/images/csv-export.gif') }}" /></a>
-                        </td>
-                        <td class="text-right">
-                            <a href="{{ path('pdf-export-show', {'id': test.id } )}}" class="btn btn-default btn-sm"><img rel="tooltip" data-original-title="Export PDF" src="{{ asset('bundles/innovaself/images/pdf-export.gif') }}" /></a>
-                        </td>
-                    {% endfor %}
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr>
-                        <th>{{ 'editor.test.name' | trans }}</th>
-                        <th class="text-right">Export CSV</th>
-                        <th class="text-right">Export PDF</th>
-                    </tr>
-                </thead>
-            </table>
+    <h3>{{ 'editor.test.list' | trans }}</h3>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>{{ 'editor.test.name' | trans }}</th>
+                <th class="text-right">Export CSV</th>
+                <th class="text-right">Export PDF</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i, test in tests %}
+                <tr>
+                    <td>{{ test.name }}</td>
+                    <td class="text-right">
+                        <a href="{{ path('csv-export-show', {'testId': test.id, 'tia': 0 } )}}" class="btn btn-default btn-sm"><img rel="tooltip" data-original-title="Export CSV" src="{{ asset('bundles/innovaself/images/csv-export.gif') }}" /></a>
+                    </td>
+                    <td class="text-right">
+                        <a href="{{ path('pdf-export-show', {'testId': test.id } )}}" class="btn btn-default btn-sm"><img rel="tooltip" data-original-title="Export PDF" src="{{ asset('bundles/innovaself/images/pdf-export.gif') }}" /></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <thead>
+            <tr>
+                <th>{{ 'editor.test.name' | trans }}</th>
+                <th class="text-right">Export CSV</th>
+                <th class="text-right">Export PDF</th>
+            </tr>
+        </thead>
+    </table>
 {% endblock %}
