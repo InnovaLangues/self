@@ -27,7 +27,7 @@ class OrderQuestionnaireComponent
     protected $component;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire", inversedBy="orderQuestionnaireComponents")
     */
     private $questionnaire;
 
@@ -41,7 +41,7 @@ class OrderQuestionnaireComponent
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -51,20 +51,20 @@ class OrderQuestionnaireComponent
     /**
      * Set displayOrder
      *
-     * @param integer $displayOrder
+     * @param  integer                     $displayOrder
      * @return OrderQuestionnaireComponent
      */
     public function setDisplayOrder($displayOrder)
     {
         $this->displayOrder = $displayOrder;
-    
+
         return $this;
     }
 
     /**
      * Get displayOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisplayOrder()
     {
@@ -74,20 +74,20 @@ class OrderQuestionnaireComponent
     /**
      * Set component
      *
-     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $component
+     * @param  \Innova\SelfBundle\Entity\PhasedTest\Component $component
      * @return OrderQuestionnaireComponent
      */
     public function setComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $component = null)
     {
         $this->component = $component;
-    
+
         return $this;
     }
 
     /**
      * Get component
      *
-     * @return \Innova\SelfBundle\Entity\PhasedTest\Component 
+     * @return \Innova\SelfBundle\Entity\PhasedTest\Component
      */
     public function getComponent()
     {
@@ -97,20 +97,20 @@ class OrderQuestionnaireComponent
     /**
      * Set questionnaire
      *
-     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
      * @return OrderQuestionnaireComponent
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
     {
         $this->questionnaire = $questionnaire;
-    
+
         return $this;
     }
 
     /**
      * Get questionnaire
      *
-     * @return \Innova\SelfBundle\Entity\Questionnaire 
+     * @return \Innova\SelfBundle\Entity\Questionnaire
      */
     public function getQuestionnaire()
     {

@@ -34,8 +34,10 @@
                         {% for session in test.sessions %}
                             <li class="list-group-item">
                                 {{ session.name }} 
-                                <a href="{{ path('csv-export', {'testId': test.id, 'sessionId': session.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-xs">{{ 'export.file_generate' | trans }} CSV</a>
-                                <a href="{{ path('csv-export', {'testId': test.id, 'sessionId': session.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-xs">{{ 'export.file_generate' | trans }} TIA+</a>
+                                <span class="pull-right">
+                                <a href="{{ path('csv-export', {'testId': test.id, 'sessionId': session.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-xs">CSV</a>
+                                <a href="{{ path('csv-export', {'testId': test.id, 'sessionId': session.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-xs">TIA+</a>
+                                </span>
                             </li>
                         {% endfor %}
                         </ul>

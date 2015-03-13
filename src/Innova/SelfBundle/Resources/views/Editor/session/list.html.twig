@@ -27,6 +27,9 @@
 					{{ session.name }}
 				</td>
 				<td class="text-right">
+                    <a class="btn btn-default btn-sm" href="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id }) }}">
+                        <span class="glyphicon glyphicon-play"></span> {{ 'editor.session.test' | trans }}
+                    </a>
 					<a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_session', { 'testId': test.id, 'sessionId': session.id }) }}">
 						<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
 					</a>
@@ -54,7 +57,7 @@
             <h4 class="modal-title" id="myModalLabel">Confirmation de la suppression</h4>
         </div>
         <div class="modal-body">
-        Êtes-vous sûr de vouloir supprimer cette session ? Ceci supprimera toutes les traces liés à cette session 
+        Êtes-vous sûr de vouloir supprimer cette session ? Ceci supprimera toutes les traces liées à cette session 
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>

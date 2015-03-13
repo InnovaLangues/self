@@ -69,13 +69,11 @@ class TestManager
     public function duplicate(Test $test)
     {
         $name = $test->getName();
-        $actif = $test->getActif();
         $language = $test->getLanguage();
         $orderedTasks = $test->getOrderQuestionnaireTests();
 
         $newTest = new Test();
         $newTest->setName("Copie de ".$name);
-        $newTest->setActif($actif);
         $newTest->setLanguage($language);
         $newTest->setTestOrigin($test);
 

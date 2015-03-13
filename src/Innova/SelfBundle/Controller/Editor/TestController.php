@@ -129,13 +129,6 @@ class TestController extends Controller
             $em->persist($questionnaire);
         }
 
-        $display = $request->request->get('test-display');
-        if ($display == "actif") {
-            $test->setActif(true);
-        } else {
-            $test->setActif(false);
-        }
-
         $em->persist($test);
         $em->flush();
 

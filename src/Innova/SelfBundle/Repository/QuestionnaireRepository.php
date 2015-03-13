@@ -210,10 +210,15 @@ class QuestionnaireRepository extends EntityRepository
     public function getByTest($test)
     {
         $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
-        LEFT JOIN q.orderQuestionnaireTests qo
-        WHERE qo.test = :test
-        ORDER BY qo.displayOrder
+        LEFT JOIN q.orderQuestionnaireTests qot
+        LEFT JOIN q.orderQuestionnaireComponents qoc
+        LEFT JOIN qoc.component c
+        LEFT JOIN c.componentType ct
+        WHERE qot.test = :test OR c.test = :test
+        ORDER BY
         ";
+
+        $dql .= (!$test->getPhased()) ? "qot.displayOrder" : "ct.id, qoc.displayOrder";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('test', $test);

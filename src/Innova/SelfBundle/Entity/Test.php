@@ -31,13 +31,6 @@ class Test
     /**
      * @var string
      *
-     * @ORM\Column(name="actif", type="boolean")
-     */
-    private $actif;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="phased", type="boolean")
      */
     private $phased = 0;
@@ -98,7 +91,6 @@ class Test
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->actif = false;
     }
 
     public function __toString()
@@ -226,30 +218,6 @@ class Test
     public function getLanguage()
     {
         return $this->language;
-    }
-
-    /**
-     * Set actif
-     *
-     * @param  boolean $actif
-     * @return Test
-     */
-    public function setActif($actif)
-    {
-        $this->actif = $actif;
-
-        return $this;
-    }
-
-    /**
-     * Get actif
-     *
-     * @return boolean
-     */
-
-    public function getActif()
-    {
-        return $this->actif;
     }
 
     /**

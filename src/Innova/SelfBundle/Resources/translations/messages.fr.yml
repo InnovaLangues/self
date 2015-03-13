@@ -102,6 +102,7 @@ editor:
         archive: Archiver
         unarchive: Désarchiver
         archived: Tests archivés
+        phased: Test à étapes
 
     task:
         task: Tâche

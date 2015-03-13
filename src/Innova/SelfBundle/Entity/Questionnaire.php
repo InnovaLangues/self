@@ -149,6 +149,11 @@ class Questionnaire
     */
     private $orderQuestionnaireTests;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent", mappedBy="questionnaire")
+    */
+    private $orderQuestionnaireComponents;
+
      /**
     * @ORM\ManyToOne(targetEntity="Language", inversedBy="questionnaires")
     */
@@ -1366,5 +1371,37 @@ class Questionnaire
         $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
         $this->varieties = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    /**
+     * Add orderQuestionnaireComponents
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     * @return Questionnaire
+     */
+    public function addOrderQuestionnaireComponent(\Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents)
+    {
+        $this->orderQuestionnaireComponents[] = $orderQuestionnaireComponents;
     
+        return $this;
+    }
+
+    /**
+     * Remove orderQuestionnaireComponents
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     */
+    public function removeOrderQuestionnaireComponent(\Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents)
+    {
+        $this->orderQuestionnaireComponents->removeElement($orderQuestionnaireComponents);
+    }
+
+    /**
+     * Get orderQuestionnaireComponents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrderQuestionnaireComponents()
+    {
+        return $this->orderQuestionnaireComponents;
+    }
 }

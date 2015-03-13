@@ -121,15 +121,14 @@ class PlayerController
 
     /**
      * @Route(
-     *      "admin/test/{testId}/questionnaire/{questionnaireId}",
+     *      "admin/test/{testId}/session/{sessionId}/questionnaire/{questionnaireId}",
      *      name="questionnaire_pick"
      * )
-     * @ParamConverter("test", class="InnovaSelfBundle:Test", options={"mapping": {"testId": "id" }})
      * @ParamConverter("questionnairePicked", class="InnovaSelfBundle:Questionnaire", options={"mapping": {"questionnaireId": "id"}})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
-    public function pickAQuestionnaireAction(Test $test, Questionnaire $questionnairePicked)
+    public function pickAQuestionnaireAction(Test $test, Session $session, Questionnaire $questionnairePicked)
     {
         $em = $this->entityManager;
 
@@ -146,9 +145,11 @@ class PlayerController
 
         return array(
             'test' => $test,
+            'session' => $session,
             'questionnaires' => $questionnaires,
             'questionnaire' => $questionnairePicked,
             'countQuestionnaireDone' => $countQuestionnaireDone,
+            'component' => null,
         );
     }
 

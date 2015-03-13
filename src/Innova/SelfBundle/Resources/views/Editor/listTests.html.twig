@@ -22,8 +22,8 @@
     <thead>
         <tr>
             <th>{{ 'editor.test.name' | trans }}</th>
-            <th>{{ 'editor.task.count' | trans }}</th>
-            <th>{{ 'editor.test.is_active' | trans }}</th>
+            <th class="text-center">{{ 'editor.task.count' | trans }}</th>
+            <th class="text-center">{{ 'editor.test.phased' | trans }}</th>
             <th></th>
         </tr>
     </thead>
@@ -33,16 +33,22 @@
             <td>
                 {{ test.name }}
             </td>
-            <td>
-                {{ test.orderQuestionnaireTests|length }}
+            <td class="text-center">
+                {% if not test.phased %}
+                    {{ test.orderQuestionnaireTests|length }}
+                {% else %}
+                    -
+                {% endif %}
             </td>
-            <td>
-                {% if test.actif %}
+            
+            <td class="text-center">
+                {% if test.phased %}
                     {{ 'generic.yes' | trans }}
                 {% else %}
                     {{ 'generic.no' | trans }}
                 {% endif %}
             </td>
+
             <td class="text-right">
                 <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_form', { 'testId': test.id }) }}">
                     <span class="glyphicon glyphicon-cog"></span> {{ 'generic.edit' | trans }}
