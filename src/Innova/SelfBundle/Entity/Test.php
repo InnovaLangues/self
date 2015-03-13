@@ -463,20 +463,4 @@ class Test
     {
         return $this->sessions;
     }
-
-     /**
-     * Get opened sessions
-     */
-    public function getOpenedSessions()
-    {
-        $openedSessions = array();
-        $sessions = $this->sessions;
-        foreach ($sessions as $session) {
-            if ($session->getActif()) {
-                $openedSessions[] = $session;
-            }
-        }
-
-        return $openedSessions;
-    }
 }

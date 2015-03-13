@@ -23,13 +23,16 @@
             <h3 class="panel-title">{{ 'test.available' | trans }}</h3>
         </div>
         <div class="panel-body">
-            {% for i, test in tests if test.getOpenedSessions %}
+            {% for i, test in tests %}
             <div class='row pull-left col-md-3 test-available'>
                 <div class="panel panel-default  ">
                     <div class="panel-body">
-                        <div> {{ test.name }}
+                        <div> 
+                            <p>{{ test.name }}</p>
                             {% for session in test.sessions if session.actif == 1 %}
-                                 <a href="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id } )}}">{{ session.name }}</a>
+                                <p>
+                                     <a href="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id } )}}">{{ session.name }}</a>
+                                </p>
                             {% endfor %}
                         {#
                             Affichage de la liste des tests en fonction de l'avancement
