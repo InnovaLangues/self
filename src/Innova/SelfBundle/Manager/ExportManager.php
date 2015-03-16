@@ -121,7 +121,6 @@ class ExportManager
     private function getCsvContent(Test $test, Session $session)
     {
         $em = $this->entityManager;
-        $testId = $test->getId();
         $sessionId = $session->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
@@ -285,7 +284,6 @@ class ExportManager
     private function getCsvTiaContent(Test $test, Session $session)
     {
         $em = $this->entityManager;
-        $testId = $test->getId();
         $sessionId = $session->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
         $preprocess  = $this->preprocessTest($sessionId, $questionnaires, "tia");

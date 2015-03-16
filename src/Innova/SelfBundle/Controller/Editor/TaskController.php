@@ -157,8 +157,6 @@ class TaskController
      */
     public function createQuestionnaireAction(Test $test = null)
     {
-        $em = $this->entityManager;
-
         $questionnaire = $this->questionnaireManager->createQuestionnaire();
         $this->questionManager->createQuestion($questionnaire);
 
