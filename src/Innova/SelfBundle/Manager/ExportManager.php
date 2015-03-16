@@ -125,18 +125,18 @@ class ExportManager
         $sessionId = $session->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
-        $preprocess  = $this->preprocessTest($testId, $sessionId, $questionnaires, "csv");
+        $preprocess  = $this->preprocessTest($sessionId, $questionnaires, "csv");
         $propLetters = $preprocess[0];
-        $rightProps   = $preprocess[1];
-        $result          = $preprocess[2];
-        $csv              = $preprocess[3];
-        $typology      = $preprocess[4];
-        $theme         = $preprocess[5];
+        $rightProps  = $preprocess[1];
+        $result      = $preprocess[2];
+        $csv         = $preprocess[3];
+        $typology    = $preprocess[4];
+        $theme       = $preprocess[5];
 
         $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
         foreach ($users as $user) {
             $userId = $user->getId();
-            $score = $this->calculateScore($user, $test, $session, $rightProps);
+            $score = $this->calculateScore($user, $session, $rightProps);
 
             $csv .= $this->addColumn($user->getUserName());
             $csv .= $this->addColumn($user->getFirstName());
@@ -288,7 +288,7 @@ class ExportManager
         $testId = $test->getId();
         $sessionId = $session->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-        $preprocess  = $this->preprocessTest($testId, $sessionId, $questionnaires, "tia");
+        $preprocess  = $this->preprocessTest($sessionId, $questionnaires, "tia");
         $propLetters = $preprocess[0];
         $rightProps  = $preprocess[1];
         $csv = $preprocess[3];
@@ -348,7 +348,7 @@ class ExportManager
      * calculateScore function
      *
      */
-  private function calculateScore(User $user, Test $test, Session $session, $rightProps)
+  private function calculateScore(User $user, Session $session, $rightProps)
   {
       $em = $this->entityManager;
       $score = 0;
@@ -468,7 +468,7 @@ class ExportManager
      /**
      * Précalcule pas mal de choses pour éviter les requêtes redondantes plus tard
      */
-    private function preprocessTest($testId, $sessionId, $questionnaires, $mode)
+    private function preprocessTest($sessionId, $questionnaires, $mode)
     {
         $em = $this->entityManager;
         $propLetters = array();

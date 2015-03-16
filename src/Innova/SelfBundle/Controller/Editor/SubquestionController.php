@@ -104,7 +104,7 @@ class SubquestionController
     /**
      *
      * @Route("/subquestion/display-identity-form", name="editor_subquestion-identity-form", options={"expose"=true})
-     * @Method("POST")
+     * @Method("GET")
      */
     public function displayIdentityFormAction(Request $request)
     {

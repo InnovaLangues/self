@@ -27,7 +27,7 @@ class SessionController extends Controller
     /**
      *
      * @Route("/test/{testId}/sessions", name="editor_test_sessions")
-     * @Method({"GET", "POST"})
+     * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:session/list.html.twig")
      */
     public function listAction(Test $test)

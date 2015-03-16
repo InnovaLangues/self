@@ -150,7 +150,7 @@ class PlayerController
     }
 
     /**
-     *
+     * @Method("GET")
      * @Route("/form/session/{sessionId}", name="session_log_form")
      * @Template("InnovaSelfBundle:Player:common/log.html.twig")
      */
@@ -162,7 +162,7 @@ class PlayerController
     }
 
      /**
-     *
+     * @Method("GET")
      * @Route("/log/session/{sessionId}", name="session_log")
      */
     public function sessionLog(Session $session, Request $request)

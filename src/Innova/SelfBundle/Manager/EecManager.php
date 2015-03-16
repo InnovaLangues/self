@@ -169,7 +169,7 @@ class EecManager
         return $clue;
     }
 
-    public function createSyllabe($syllable, Questionnaire $questionnaire, $subquestion)
+    public function createSyllabe($syllable, Questionnaire $questionnaire, Subquestion $subquestion)
     {
         $em = $this->entityManager;
 

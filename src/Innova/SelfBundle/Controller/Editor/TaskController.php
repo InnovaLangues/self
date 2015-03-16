@@ -2,14 +2,17 @@
 
 namespace Innova\SelfBundle\Controller\Editor;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Form\Type\QuestionnaireType;
 use Innova\SelfBundle\Form\Type\TaskInfosType;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Language;
 
 /**
  * Class TaskController
@@ -18,6 +21,9 @@ use Innova\SelfBundle\Form\Type\TaskInfosType;
  *      name    = "",
  *      service = "innova_editor_task"
  * )
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
+ * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})
+ * @ParamConverter("language", isOptional="true", class="InnovaSelfBundle:Language", options={"id" = "languageId"})
  */
 
 class TaskController
@@ -70,10 +76,10 @@ class TaskController
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
-    public function listQuestionnairesByLanguageAction($languageId)
+    public function listQuestionnairesByLanguageAction(Language $language)
     {
         $em = $this->entityManager;
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($languageId);
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($language);
 
         return array(
             'questionnaires' => $questionnaires,
@@ -87,11 +93,9 @@ class TaskController
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:listTestQuestionnaires.html.twig")
      */
-    public function listTestQuestionnairesAction($testId)
+    public function listTestQuestionnairesAction(Test $test)
     {
         $em = $this->entityManager;
-
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
         if ($test->getPhased()) {
             $template = $this->templating->render('InnovaSelfBundle:Editor/phased:test.html.twig', array('test' => $test));
@@ -110,13 +114,11 @@ class TaskController
      * @Route("/test/{testId}/potentials", name="editor_test_questionnaires_potentials", options={"expose"=true})
      * @Method("GET")
      */
-    public function getPotentialQuestionnaires($testId)
+    public function getPotentialQuestionnaires(Test $test)
     {
         $em = $this->entityManager;
 
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $potentialQuestionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getPotentialByTest($test);
-
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig', array('test' => $test, 'potentialQuestionnaires' => $potentialQuestionnaires));
 
         return new Response($template);
@@ -129,11 +131,10 @@ class TaskController
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:index.html.twig")
      */
-    public function showAction($questionnaireId, $testId)
+    public function showAction(Questionnaire $questionnaire, $testId)
     {
         $em = $this->entityManager;
 
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
         $status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->findAll();
         $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
@@ -151,17 +152,17 @@ class TaskController
 
     /**
      *
-     * @Route("/questionnaire/create", name="editor_questionnaire_create", options={"expose"=true})
+     * @Route("/questionnaire/create/{testId}", name="editor_questionnaire_create", options={"expose"=true})
      * @Method("POST")
      */
-    public function createQuestionnaireAction(Request $request)
+    public function createQuestionnaireAction(Test $test = null)
     {
         $em = $this->entityManager;
 
         $questionnaire = $this->questionnaireManager->createQuestionnaire();
         $this->questionManager->createQuestion($questionnaire);
 
-        if ($test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'))) {
+        if ($test) {
             $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
             $testId = $test->getId();
         } else {
@@ -177,23 +178,15 @@ class TaskController
     }
 
      /**
-     * @Route("/delete-task-list", name="delete-task-list", options={"expose"=true})
+     * @Route("/delete-task-list/{questionnaireId}", name="delete-task-list", options={"expose"=true})
      * @Method("DELETE")
-     * @Template("")
      */
-    public function deleteTaskListAction(Request $request)
+    public function deleteTaskListAction(Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
-
-        $questionnaireId = $request->get('questionnaireId');
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-
         $em->remove($questionnaire);
         $em->flush();
 
-        return new JsonResponse(
-            array()
-        );
+        return new JsonResponse(null);
     }
 }
