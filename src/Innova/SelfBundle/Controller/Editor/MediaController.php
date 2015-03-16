@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Class MediaController
@@ -142,7 +141,7 @@ class MediaController
         }
 
         // I have my mediaIt and ...
-        $mediaId = $request->get('mediaId');
+        //$mediaId = $request->get('mediaId');
         //$this->invalidateMediaAction($mediaId, $request->get('toBeReloaded'));
 
         // Add revisor

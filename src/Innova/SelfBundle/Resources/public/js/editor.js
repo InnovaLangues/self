@@ -1054,7 +1054,7 @@ function subquestionIdentityModal(subquestionId){
 
     $.ajax({
         url: Routing.generate('editor_subquestion-identity-form'),
-        type: 'POST',
+        type: 'GET',
         data: {
             subquestionId: subquestionId,
         }
