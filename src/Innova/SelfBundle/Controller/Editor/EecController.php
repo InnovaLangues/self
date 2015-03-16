@@ -6,7 +6,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Proposition;
 
 /**
  * Class EecController
@@ -15,6 +19,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *      name    = "",
  *      service = "innova_editor_eec"
  * )
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
+ * @ParamConverter("subquestion", isOptional="true", class="InnovaSelfBundle:Subquestion", options={"id" = "subquestionId"})
+ * @ParamConverter("proposition", isOptional="true", class="InnovaSelfBundle:Proposition", options={"id" = "propositionId"})
  */
 class EecController
 {
@@ -40,14 +47,11 @@ class EecController
 
     /**
      *
-     * @Route("/questionnaires/create-liste", name="editor_questionnaire_create-liste", options={"expose"=true})
+     * @Route("/questionnaires/create-liste/{questionnaireId}", name="editor_questionnaire_create-liste", options={"expose"=true})
      * @Method("PUT")
      */
-    public function createListeAction(Request $request)
+    public function createListeAction(Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-
         $this->eecManager->createListe($questionnaire);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
@@ -58,15 +62,11 @@ class EecController
 
     /**
      *
-     * @Route("/questionnaires/create-lacunes", name="editor_questionnaire_create-lacunes", options={"expose"=true})
+     * @Route("/questionnaires/create-lacunes/{questionnaireId}", name="editor_questionnaire_create-lacunes", options={"expose"=true})
      * @Method("PUT")
      */
-    public function createLacunesAction(Request $request)
+    public function createLacunesAction(Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-
         $this->eecManager->createLacune($questionnaire);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
@@ -77,15 +77,11 @@ class EecController
 
     /**
      *
-     * @Route("/questionnaires/create-clue", name="editor_questionnaire_create-clue", options={"expose"=true})
+     * @Route("/questionnaires/create-clue/{questionnaireId}/{subquestionId}", name="editor_questionnaire_create-clue", options={"expose"=true})
      * @Method("PUT")
      */
-    public function createClueAction(Request $request)
+    public function createClueAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $em = $this->entityManager;
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
         $clueName = $request->get('clue');
 
         $this->eecManager->createClue($questionnaire, $subquestion, $clueName);
@@ -98,36 +94,29 @@ class EecController
 
     /**
      *
-     * @Route("/questionnaires/set-clue-type", name="editor_questionnaire_set-clue-type", options={"expose"=true})
+     * @Route("/questionnaires/set-clue-type/{questionnaireId}", name="editor_questionnaire_set-clue-type", options={"expose"=true})
      * @Method("PUT")
      */
-    public function setClueTypeAction(Request $request)
+    public function setClueTypeAction(Request $request, Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
 
         $clueId = $request->get('clueId');
         $clueTypeName = $request->get('clueType');
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
         $this->eecManager->setClueType($clueId, $clueTypeName);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-        return new JsonResponse(
-            array()
-        );
+        return new JsonResponse(array());
     }
 
     /**
      *
-     * @Route("/questionnaires/create-syllable", name="editor_questionnaire_create-syllable", options={"expose"=true})
+     * @Route("/questionnaires/create-syllable/{questionnaireId}/{subquestionId}", name="editor_questionnaire_create-syllable", options={"expose"=true})
      * @Method("PUT")
      */
-    public function createSyllableAction(Request $request)
+    public function createSyllableAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $em = $this->entityManager;
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
         $syllable = $request->get('syllable');
 
         $this->eecManager->createSyllabe($syllable, $questionnaire, $subquestion);
@@ -138,10 +127,10 @@ class EecController
 
     /**
      *
-     * @Route("/questionnaires/set-display", name="editor_questionnaire_set-display", options={"expose"=true})
+     * @Route("/questionnaires/set-display/{subquestionId}", name="editor_questionnaire_set-display", options={"expose"=true})
      * @Method("PUT")
      */
-    public function setDisplayAction(Request $request)
+    public function setDisplayAction(Request $request, Subquestion $subquestion)
     {
         $em = $this->entityManager;
 
@@ -151,28 +140,20 @@ class EecController
             $display = 0;
         }
 
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
         $subquestion->setDisplayAnswer($display);
-
         $em->persist($subquestion);
         $em->flush();
 
-        return new JsonResponse(
-            array()
-        );
+        return new JsonResponse(array());
     }
 
     /**
      *
-     * @Route("/questionnaires/add-distractor", name="editor_questionnaire_add-distractor", options={"expose"=true})
+     * @Route("/questionnaires/add-distractor/{questionnaireId}", name="editor_questionnaire_add-distractor", options={"expose"=true})
      * @Method("PUT")
      */
-    public function addDistractorAction(Request $request)
+    public function addDistractorAction(Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-
         $this->eecManager->addDistractor($questionnaire);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
@@ -183,16 +164,11 @@ class EecController
 
     /**
      *
-     * @Route("/questionnaires/add-distractor-mult", name="editor_questionnaire_add-distractor-mult", options={"expose"=true})
+     * @Route("/questionnaires/add-distractor-mult/{questionnaireId}/{subquestionId}", name="editor_questionnaire_add-distractor-mult", options={"expose"=true})
      * @Method("PUT")
      */
-    public function addDistractorMultAction(Request $request)
+    public function addDistractorMultAction(Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $em = $this->entityManager;
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
-
         $this->eecManager->addDistractorMult($questionnaire, $subquestion);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
@@ -203,53 +179,40 @@ class EecController
 
     /**
      *
-     * @Route("/questionnaires/edit-distractor", name="editor_questionnaire_edit-distractor", options={"expose"=true})
+     * @Route("/questionnaires/edit-distractor/{questionnaireId}/{mediaId}", name="editor_questionnaire_edit-distractor", options={"expose"=true})
      * @Method("PUT")
      */
-    public function editDistractorAction(Request $request)
+    public function editDistractorAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
-        $em = $this->entityManager;
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($request->get('mediaId'));
         $text = $request->get('text');
 
         $this->eecManager->editDistractor($media, $text);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-        return new JsonResponse(
-            array()
-        );
+        return new JsonResponse(array());
     }
 
     /**
      *
-     * @Route("/questionnaires/ecc_get_answer", name="editor_questionnaire_get_answers", options={"expose"=true})
+     * @Route("/questionnaires/ecc_get_answer/{subquestionId}", name="editor_questionnaire_get_answers", options={"expose"=true})
      * @Method("GET")
      */
-    public function getAnswersAction(Request $request)
+    public function getAnswersAction(Subquestion $subquestion)
     {
-        $em = $this->entityManager;
-
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($request->get('subquestionId'));
         $answers = $this->eecManager->getAnswers($subquestion);
 
-        $template = $this->templating
-            ->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers));
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers));
 
         return new Response($template);
     }
 
     /**
      *
-     * @Route("/questionnaires/ecc_toggle_answer", name="ecc_toggle_answer", options={"expose"=true})
+     * @Route("/questionnaires/ecc_toggle_answer/{propositionId}", name="ecc_toggle_answer", options={"expose"=true})
      * @Method("PUT")
      */
-    public function toggleRightAnswerAction(Request $request)
+    public function toggleRightAnswerAction(Proposition $proposition)
     {
-        $em = $this->entityManager;
-
-        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($request->get('propositionId'));
         $proposition = $this->propositionManager->toggleRightAnswer($proposition);
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answer.html.twig', array('answer' => $proposition));

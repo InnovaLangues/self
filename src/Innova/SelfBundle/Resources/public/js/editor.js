@@ -449,16 +449,18 @@ function editMedia(mediaType){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_update-media'),
+        url: Routing.generate('editor_questionnaire_update-media', 
+            {
+                'questionnaireId':questionnaireId,
+                'mediaId': mediaId
+            }),
         type: 'PUT',
         data:
         {
             name: name,
             description: description,
             url: url,
-            mediaId: mediaId,
             toBeReloaded: toBeReloaded,
-            questionnaireId: questionnaireId
         }
     })
     .done(function(data) {
@@ -480,11 +482,13 @@ function createMedia(name, description, url, type) {
     var toBeReloaded = $("#entity-to-be-reloaded").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_create-media'),
+        url: Routing.generate('editor_questionnaire_create-media', 
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'PUT',
         data:
         {
-            questionnaireId: questionnaireId,
             name: name,
             description: description,
             url: url,
@@ -552,11 +556,13 @@ function unlinkMedia(){
     var toBeReloaded = $("#entity-to-be-reloaded").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_unlink-media'),
+        url: Routing.generate('editor_questionnaire_unlink-media',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'DELETE',
         data:
         {
-            questionnaireId: questionnaireId,
             entityType: entityType,
             entityId: entityId,
             entityField: entityField
@@ -633,13 +639,12 @@ function setListeningLimit(mediaId, listeningLimit){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('set-listening-limit'),
+        url: Routing.generate('set-listening-limit', {
+            'questionnaireId':questionnaireId, 
+            'mediaId':mediaId,
+            'limit': listeningLimit
+        }),
         type: 'POST',
-        data: {
-            questionnaireId: questionnaireId,
-            mediaId: mediaId,
-            listeningLimit: listeningLimit
-        }
     })
     .done(function(data) {
         afterAjax();
@@ -667,13 +672,9 @@ function setTextType(textType){
 
 function getMediaInfo(mediaId, callBack){
     $.ajax({
-        url: Routing.generate('get-media-info'),
+        url: Routing.generate('get-media-info', { 'mediaId': mediaId}),
         type: 'GET',
         dataType: 'json',
-        data:
-        {
-            mediaId: mediaId
-        }
     })
     .done(function(data) {
         return callBack(data);
@@ -692,12 +693,12 @@ function createLacunes(){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_create-lacunes'),
+        url: Routing.generate('editor_questionnaire_create-lacunes',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'PUT',
         dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-        }
     })
     .complete(function(data) {
         $("#subquestion-container").replaceWith(data.responseText);
@@ -711,12 +712,12 @@ function createListes(){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_create-liste'),
+        url: Routing.generate('editor_questionnaire_create-liste',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'PUT',
         dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-        }
     })
     .complete(function(data) {
         $("#subquestion-container").replaceWith(data.responseText);
@@ -730,11 +731,13 @@ function setClue(clue, subquestionId){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_create-clue'),
+        url: Routing.generate('editor_questionnaire_create-clue',
+            {
+                'questionnaireId': questionnaireId,
+                'subquestionId': subquestionId
+            }),
         type: 'PUT',
         data: {
-            questionnaireId: questionnaireId,
-            subquestionId: subquestionId,
             clue: clue,
         }
     })
@@ -750,13 +753,15 @@ function setClueType(clueType, clueId){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_set-clue-type'),
+        url: Routing.generate('editor_questionnaire_set-clue-type',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'PUT',
         dataType: 'json',
         data: {
             clueType: clueType,
             clueId: clueId,
-            questionnaireId: questionnaireId
         }
     })
     .complete(function(data) {
@@ -769,12 +774,14 @@ function setSyllable(syllable, subquestionId){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_create-syllable'),
+        url: Routing.generate('editor_questionnaire_create-syllable',
+            {
+                'questionnaireId': questionnaireId,
+                'subquestionId': subquestionId
+            }),
         type: 'PUT',
         dataType: 'json',
         data: {
-            questionnaireId: questionnaireId,
-            subquestionId: subquestionId,
             syllable: syllable
         }
     })
@@ -787,11 +794,13 @@ function setDisplay(display, subquestionId){
     beforeAjax();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_set-display'),
+        url: Routing.generate('editor_questionnaire_set-display',
+            {
+                'subquestionId': subquestionId,
+            }),
         type: 'PUT',
         dataType: 'json',
         data: {
-            subquestionId: subquestionId,
             display: display
         }
     })
@@ -805,11 +814,11 @@ function addDistractor(){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_add-distractor'),
+        url: Routing.generate('editor_questionnaire_add-distractor',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'PUT',
-        data: {
-            questionnaireId: questionnaireId,
-        }
     })
     .complete(function(data) {
         $("#subquestion-container").replaceWith(data.responseText);
@@ -822,12 +831,12 @@ function addDistractorMult(subquestionId){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_add-distractor-mult'),
+        url: Routing.generate('editor_questionnaire_add-distractor-mult',
+            {
+                'questionnaireId': questionnaireId,
+                'subquestionId': subquestionId
+            }),
         type: 'PUT',
-        data: {
-            subquestionId: subquestionId,
-            questionnaireId: questionnaireId,
-        }
     })
     .complete(function(data) {
         $("#subquestion-container").replaceWith(data.responseText);
@@ -840,12 +849,14 @@ function editDistractor(mediaId, text){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_edit-distractor'),
+        url: Routing.generate('editor_questionnaire_edit-distractor',
+            {
+                'questionnaireId': questionnaireId,
+                'mediaId': mediaId
+            }),
         type: 'PUT',
         dataType: 'json',
         data: {
-            questionnaireId: questionnaireId,
-            mediaId: mediaId,
             text: text
         }
     })
@@ -857,12 +868,12 @@ function editDistractor(mediaId, text){
 function getAnswers(subquestionId){
     beforeAjax();
     $.ajax({
-        url: Routing.generate('editor_questionnaire_get_answers'),
+        url: Routing.generate('editor_questionnaire_get_answers',
+            {
+                'subquestionId': subquestionId
+            }),
         type: 'GET',
         dataType: 'json',
-        data: {
-            subquestionId: subquestionId,
-        }
     })
     .complete(function(data) {
         $("#answers-modal .modal-body").html(data.responseText);
@@ -874,12 +885,12 @@ function getAnswers(subquestionId){
 function toggleRightAnswer(propositionId){
     beforeAjax();
     $.ajax({
-        url: Routing.generate('ecc_toggle_answer'),
+        url: Routing.generate('ecc_toggle_answer',
+            {
+                'propositionId': propositionId
+            }),
         type: 'PUT',
         dataType: 'json',
-        data: {
-            propositionId: propositionId,
-        }
     })
     .complete(function(data) {
         $("#answer-"+propositionId).html(data.responseText);

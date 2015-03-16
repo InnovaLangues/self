@@ -73,13 +73,12 @@ function sortableInit(){
 function addTaskToTest(questionnaireId, testId){
     $("#loader-img").show();
     $.ajax({
-        url: Routing.generate('editor_add_task_to_test'),
+        url: Routing.generate('editor_add_task_to_test',
+            {
+                'testId': testId,
+                'questionnaireId': questionnaireId
+            }),
         type: 'PUT',
-        data:
-        {
-            testId: testId,
-            questionnaireId: questionnaireId
-        }
     })
     .done(function(data) {
         $("#sortable").html(data);
@@ -91,13 +90,12 @@ function addTaskToTest(questionnaireId, testId){
 function duplicateTaskToTest(questionnaireId, testId){
     $("#loader-img").show();
     $.ajax({
-        url: Routing.generate('editor_duplicate_task_to_test'),
+        url: Routing.generate('editor_duplicate_task_to_test',
+            {
+                'testId': testId,
+                'questionnaireId': questionnaireId
+            }),
         type: 'PUT',
-        data:
-        {
-            testId: testId,
-            questionnaireId: questionnaireId
-        }
     })
     .done(function(data) {
         $("#sortable").html(data);
@@ -118,14 +116,13 @@ function saveOrder(){
     newOrder = JSON.stringify(newOrder);
 
     $.ajax({
-        url: Routing.generate('save-order-test-questionnaire'),
+        url: Routing.generate('save-order-test-questionnaire',
+            {
+                'testId': testId
+            }),
         type: 'POST',
         dataType: 'json',
-        data:
-        {
-            testId: testId,
-            newOrder: newOrder
-        }
+        data: {newOrder: newOrder}
     })
     .done(function(data) {
         $("#loader-img").hide();
@@ -137,17 +134,15 @@ function deleteTask(){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('delete-task'),
+        url: Routing.generate('delete-task',
+            {
+                'testId': testId,
+                'questionnaireId': questionnaireId
+            }),
         type: 'POST',
-        dataType: 'json',
-        data:
-        {
-            testId: testId,
-            questionnaireId: questionnaireId
-        }
+        dataType: 'json'
     })
     .done(function(data) {
-        console.log("Tâche supprimée");
         $("#task-"+questionnaireId).remove();
         $('#delete-task-modal').modal('hide');
     });
@@ -157,16 +152,14 @@ function deleteTaskList(){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('delete-task-list'),
+        url: Routing.generate('delete-task-list',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'DELETE',
         dataType: 'json',
-        data:
-        {
-            questionnaireId: questionnaireId
-        }
     })
     .done(function(data) {
-        console.log("Tâche supprimée");
         $("#task-"+questionnaireId).remove();
         $('#delete-task-modal').modal('hide');
     });
@@ -174,12 +167,12 @@ function deleteTaskList(){
 
 function createTask(testId){
     $.ajax({
-        url: Routing.generate('editor_questionnaire_create'),
+        url: Routing.generate('editor_questionnaire_create',
+            {
+                'testId': testId
+            }),
         type: 'POST',
         dataType: 'json',
-        data: {
-            testId : testId
-        }
     })
     .done(function(data) {
         window.location = Routing.generate('editor_questionnaire_show', {'questionnaireId': data.questionnaireId, 'testId' : data.testId });
