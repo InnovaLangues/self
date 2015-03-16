@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
+use Innova\SelfBundle\Entity\Media\Media;
 
 /**
  * Class EecController
@@ -22,6 +23,7 @@ use Innova\SelfBundle\Entity\Proposition;
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
  * @ParamConverter("subquestion", isOptional="true", class="InnovaSelfBundle:Subquestion", options={"id" = "subquestionId"})
  * @ParamConverter("proposition", isOptional="true", class="InnovaSelfBundle:Proposition", options={"id" = "propositionId"})
+ * @ParamConverter("media", isOptional="true", class="InnovaSelfBundle:Media\Media", options={"id" = "mediaId"})
  */
 class EecController
 {
@@ -99,8 +101,6 @@ class EecController
      */
     public function setClueTypeAction(Request $request, Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
-
         $clueId = $request->get('clueId');
         $clueTypeName = $request->get('clueType');
 
