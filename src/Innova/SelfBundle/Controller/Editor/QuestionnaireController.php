@@ -23,7 +23,6 @@ class QuestionnaireController
     protected $questionnaireManager;
     protected $orderQuestionnaireTestManager;
     protected $entityManager;
-    protected $request;
     protected $templating;
     protected $questionnaireRevisorsManager;
     protected $formFactory;
@@ -44,21 +43,13 @@ class QuestionnaireController
         $this->formFactory = $formFactory;
     }
 
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-
-        return $this;
-    }
-
     /**
      *
      * @Route("/questionnaires/set-text-title", name="editor_questionnaire_set-text-title", options={"expose"=true})
      * @Method("POST")
      */
-    public function setTextTitleAction()
+    public function setTextTitleAction(Request $request)
     {
-        $request = $this->request;
         $em = $this->entityManager;
 
         $title = $request->request->get('title');
@@ -82,10 +73,9 @@ class QuestionnaireController
      * @Route("/questionnaires/set-text-type", name="set-text-type", options={"expose"=true})
      * @Method("PUT")
      */
-    public function setTextTypeAction()
+    public function setTextTypeAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request;
 
         $questionnaireId = $request->request->get('questionnaireId');
         $textType = $request->request->get('textType');
@@ -105,15 +95,15 @@ class QuestionnaireController
      * @Route("/questionnaires/set-identity-field", name="set-identity-field", options={"expose"=true})
      * @Method("POST")
      */
-    public function setIdentityFieldAction()
+    public function setIdentityFieldAction(Request $request)
     {
         $em = $this->entityManager;
 
-        $requestForm = $this->request->request->get("questionnaire");
+        $requestForm = $request->get("questionnaire");
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($requestForm["id"]);
 
         $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
-        $form->bind($this->request);
+        $form->bind($request);
 
         if ($form->isValid()) {
             $em->persist($questionnaire);
@@ -130,10 +120,9 @@ class QuestionnaireController
     * @Route("/questionnaires/set-general-info-field", name="set-general-info-field", options={"expose"=true})
     * @Method("POST")
     */
-    public function setGeneralInfoFieldAction()
+    public function setGeneralInfoFieldAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request;
         $field = $request->request->get('field');
         $value = $request->request->get('value');
 

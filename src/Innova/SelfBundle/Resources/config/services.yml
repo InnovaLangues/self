@@ -57,9 +57,6 @@ services:
         class: Innova\SelfBundle\Controller\Editor\UploadController
         arguments:
             kernelRoot: %kernel.root_dir%
-        calls:
-            - [setRequest, [@request]]
-        scope: request
 
     innova_editor_questionnaire:
         class: Innova\SelfBundle\Controller\Editor\QuestionnaireController
@@ -70,9 +67,6 @@ services:
             templating:         @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
             formFactory: @form.factory
-        calls:
-            - [setRequest, [@request]]
-        scope: request
 
     innova_editor_task:
         class: Innova\SelfBundle\Controller\Editor\TaskController
@@ -83,9 +77,6 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
             formFactory:        @form.factory
-        calls:
-            - [setRequest, [@request]]
-        scope: request
 
     innova_editor_media:
         class: Innova\SelfBundle\Controller\Editor\MediaController
@@ -99,9 +90,6 @@ services:
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
             #cacheManager:       @fos_http_cache.cache_manager
             router:             @router
-        calls:
-            - [setRequest, [@request]]
-        scope: request
 
     innova_editor_subquestion:
         class: Innova\SelfBundle\Controller\Editor\SubquestionController
@@ -113,9 +101,6 @@ services:
             templating:         @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
             formFactory: @form.factory
-        calls:
-            - [setRequest, [@request]]
-        scope: request
 
     innova_editor_eec:
         class: Innova\SelfBundle\Controller\Editor\EecController
@@ -125,9 +110,6 @@ services:
             entityManager:          @doctrine.orm.entity_manager
             templating:             @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
-        calls:
-            - [setRequest, [@request]]
-        scope: request
 
     innova_player_trace:
         class: Innova\SelfBundle\Controller\Player\TraceController
@@ -141,9 +123,6 @@ services:
             router:             @router
             securityContext:    @security.context
             translator: @translator
-        calls:
-            - [setRequest, [@request]]
-        scope: request
 
     innova_editor_orderquestionnaire:
         class: Innova\SelfBundle\Controller\Editor\OrderQuestionnaireTestController
@@ -152,9 +131,6 @@ services:
             orderQuestionnaireTest: @self.order_questionnaire_test.manager
             questionnaireManager:   @self.questionnaire.manager
             templating:             @templating
-        calls:
-            - [setRequest, [@request]]
-        scope: request
 
     innova_locale_controller:
         class: Innova\SelfBundle\Controller\LocaleController
@@ -179,6 +155,3 @@ services:
             entityManager:          @doctrine.orm.entity_manager
             templating:                @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
-        calls:
-            - [setRequest, [@request]]
-        scope: request

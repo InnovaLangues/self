@@ -35,7 +35,6 @@ class TraceController
     protected $session;
     protected $router;
     protected $securityContext;
-    protected $request;
     protected $user;
     protected $translator;
 
@@ -65,13 +64,6 @@ class TraceController
         $this->translator = $translator;
     }
 
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-
-        return $this;
-    }
-
     /**
      * Save Trace and display a form to set the difficulty
      *
@@ -79,11 +71,11 @@ class TraceController
      * @Method("POST")
      * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
      */
-    public function saveTraceAction(Test $test, Session $session, Questionnaire $questionnaire)
+    public function saveTraceAction(Test $test, Session $session, Questionnaire $questionnaire, Request $request)
     {
         $em = $this->entityManager;
 
-        $post = $this->request->request->all();
+        $post = $request->request->all();
 
         if (isset($post["componentId"])) {
             $component = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->find($post["componentId"]);
@@ -96,7 +88,7 @@ class TraceController
             $this->session->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
             $trace = null;
         } else {
-            $agent = $this->request->headers->get('User-Agent');
+            $agent = $request->headers->get('User-Agent');
             $trace = $this->traceManager->createTrace($questionnaire, $test, $this->user, $post["totalTime"], $agent, $component, $session);
             $this->parsePost($post, $trace);
         }
@@ -193,10 +185,10 @@ class TraceController
      * @Route("trace_setDifficulty", name="trace_setDifficulty")
      * @Method("POST")
      */
-    public function traceSetDifficultyAction()
+    public function traceSetDifficultyAction(Request $request)
     {
         $em = $this->entityManager;
-        $post = $this->request->request->all();
+        $post = $request->request->all();
 
         $trace = $em->getRepository('InnovaSelfBundle:Trace')->find($post["traceId"]);
         $trace->setDifficulty($post["difficulty"]);

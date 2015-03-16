@@ -19,18 +19,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class UploadController extends Controller
 {
     protected $kernelRoot;
-    protected $request;
 
     public function __construct($kernelRoot)
     {
         $this->kernelRoot = $kernelRoot;
-    }
-
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-
-        return $this;
     }
 
     /**
@@ -38,10 +30,8 @@ class UploadController extends Controller
      * @Route("/questionnaires/upload-file", name="editor_questionnaire_upload-file", options={"expose"=true})
      * @Method("POST")
      */
-    public function uploadFileAction()
+    public function uploadFileAction(Request $request)
     {
-        $request = $this->request;
-
         $authorizedExtensions = array('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif');
         $msg = "";
         $newName = "";
@@ -72,9 +62,8 @@ class UploadController extends Controller
      * @Route("/editor/crop-image", name="editor_crop_image", options={"expose"=true})
      * @Method("PUT")
      */
-    public function cropImageAction()
+    public function cropImageAction(Request $request)
     {
-        $request = $this->request;
         $url = $request->get("url");
         $x = $request->get("x");
         $y = $request->get("y");

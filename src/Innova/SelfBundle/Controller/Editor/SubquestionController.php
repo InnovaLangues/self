@@ -23,7 +23,6 @@ class SubquestionController
     protected $propositionManager;
     protected $subquestionManager;
     protected $entityManager;
-    protected $request;
     protected $templating;
     protected $questionnaireRevisorsManager;
     protected $formFactory;
@@ -46,22 +45,14 @@ class SubquestionController
         $this->formFactory = $formFactory;
     }
 
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-
-        return $this;
-    }
-
     /**
      *
      * @Route("/questionnaires/create-subquestion", name="editor_questionnaire_create-subquestion", options={"expose"=true})
      * @Method("PUT")
      */
-    public function createSubquestionAction()
+    public function createSubquestionAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
 
         $questionnaireId = $request->get('questionnaireId');
         $questionnaireTypology = $request->get('questionnaireTypology');
@@ -90,10 +81,9 @@ class SubquestionController
      * @Route("/questionnaires/delete-subquestion", name="editor_questionnaire_delete_subquestion", options={"expose"=true})
      * @Method("DELETE")
      */
-    public function deleteSubquestionAction()
+    public function deleteSubquestionAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
 
         $subquestionId = $request->get('subquestionId');
         $questionnaireId = $request->get('questionnaireId');
@@ -116,11 +106,10 @@ class SubquestionController
      * @Route("/subquestion/display-identity-form", name="editor_subquestion-identity-form", options={"expose"=true})
      * @Method("POST")
      */
-    public function displayIdentityFormAction()
+    public function displayIdentityFormAction(Request $request)
     {
         $em = $this->entityManager;
 
-        $request = $this->request->request;
         $subquestionId = $request->get('subquestionId');
 
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
@@ -141,15 +130,15 @@ class SubquestionController
      * @Route("/subquestion/set-identity-field", name="set-subquestion-identity-field", options={"expose"=true})
      * @Method("POST")
      */
-    public function setIdentityFieldAction()
+    public function setIdentityFieldAction(Request $request)
     {
         $em = $this->entityManager;
 
-        $requestForm = $this->request->request->get("subquestion");
+        $requestForm = $request->get("subquestion");
         $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($requestForm["id"]);
 
         $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
-        $form->bind($this->request);
+        $form->bind($request);
 
         if ($form->isValid()) {
             $em->persist($subquestion);
