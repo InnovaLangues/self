@@ -23,8 +23,6 @@ class PhasedTestManager
 
     public function generateBaseComponents(Test $test)
     {
-        $em = $this->entityManager;
-
         if (!$this->componentRepo->findByTest($test)) {
             $componentTypes = $this->componentTypeRepo->findAll();
             foreach ($componentTypes as $type) {
@@ -110,7 +108,7 @@ class PhasedTestManager
         return $this;
     }
 
-    public function saveOrder($newOrderArray, Component $component)
+    public function saveOrder($newOrderArray)
     {
         $em = $this->entityManager;
 

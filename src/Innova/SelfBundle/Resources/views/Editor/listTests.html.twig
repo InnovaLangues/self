@@ -61,11 +61,11 @@
                 </a>
 
                 {% if test in app.user.favoritesTests %}
-                     <a class="btn btn-default btn-sm toggle-favorite" href="#" data-toggle="tooltip" data-original-title="{{ 'editor.test.remove_from_favorites' | trans }}" data-test-id="{{ test.id }}">
+                     <a class="btn btn-default btn-sm toggle-favorite" data-original-title="{{ 'editor.test.remove_from_favorites' | trans }}" data-test-id="{{ test.id }}">
                         <span class="glyphicon glyphicon-star"></span>
                     </a>
                 {% else %}
-                    <a class="btn btn-default btn-sm toggle-favorite" href="#" data-toggle="tooltip" data-original-title="{{ 'editor.test.add_to_favorites' | trans }}" data-test-id="{{ test.id }}">
+                    <a class="btn btn-default btn-sm toggle-favorite" data-original-title="{{ 'editor.test.add_to_favorites' | trans }}" data-test-id="{{ test.id }}">
                         <span class="glyphicon glyphicon-star-empty" ></span>
                     </a>
                 {% endif %}

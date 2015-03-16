@@ -23,7 +23,6 @@ class OrderQuestionnaireTestController
     protected $orderQuestionnaireTestManager;
     protected $questionnaireManager;
     protected $templating;
-    protected $request;
 
     public function __construct(
             $entityManager,
@@ -37,22 +36,13 @@ class OrderQuestionnaireTestController
         $this->templating = $templating;
     }
 
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-
-        return $this;
-    }
-
     /**
      * @Route("/order-test-questionnaire", name="save-order-test-questionnaire", options={"expose"=true})
      * @Method("POST")
-     * @Template("")
      */
-    public function saveOrderAction()
+    public function saveOrderAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
 
         $newOrderArray = json_decode($request->get('newOrder'));
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
@@ -65,12 +55,10 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/editor_add_task_to_test", name="editor_add_task_to_test", options={"expose"=true})
      * @Method("PUT")
-     * @Template("")
      */
-    public function addTaskToTestAction()
+    public function addTaskToTestAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
@@ -86,12 +74,10 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/editor_duplicate_task_to_test", name="editor_duplicate_task_to_test", options={"expose"=true})
      * @Method("PUT")
-     * @Template("")
      */
-    public function duplicateTaskToTestAction()
+    public function duplicateTaskToTestAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
@@ -109,12 +95,10 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/delete-task", name="delete-task", options={"expose"=true})
      * @Method("POST")
-     * @Template("")
      */
-    public function deleteTaskAction()
+    public function deleteTaskAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
 
         $testId = $request->get('testId');
         $questionnaireId = $request->get('questionnaireId');

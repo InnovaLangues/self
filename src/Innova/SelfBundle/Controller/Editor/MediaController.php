@@ -24,10 +24,9 @@ class MediaController
     protected $appManager;
     protected $commentManager;
     protected $entityManager;
-    protected $request;
     protected $templating;
     protected $questionnaireRevisorsManager;
-    protected $cacheManager;
+    //protected $cacheManager;
     protected $router;
 
     public function __construct(
@@ -38,7 +37,7 @@ class MediaController
             $entityManager,
             $templating,
             $questionnaireRevisorsManager,
-            $cacheManager,
+            //$cacheManager,
             $router
     ) {
         $this->mediaManager = $mediaManager;
@@ -48,25 +47,17 @@ class MediaController
         $this->entityManager = $entityManager;
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        $this->cacheManager = $cacheManager;
+        //$this->cacheManager = $cacheManager;
         $this->router = $router;
-    }
-
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-
-        return $this;
     }
 
     /**
      * @Route("/set-listening-limit", name="set-listening-limit", options={"expose"=true})
      * @Method("POST")
      */
-    public function setListeningLimitAction()
+    public function setListeningLimitAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($request->get('mediaId'));
@@ -84,10 +75,9 @@ class MediaController
      * @Route("/get-media-info", name="get-media-info", options={"expose"=true})
      * @Method("GET")
      */
-    public function getMediaInfoAction()
+    public function getMediaInfoAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->query;
 
         $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($request->get('mediaId'));
 
@@ -106,13 +96,11 @@ class MediaController
      * @Route("/editor_questionnaire_update-media", name="editor_questionnaire_update-media", options={"expose"=true})
      * @Method("PUT")
      */
-    public function updateMediaAction()
+    public function updateMediaAction(Request $request)
     {
-
         // Function to update database in editor
         // In Editor, I choose en task and I want to update it
         $em = $this->entityManager;
-        $request = $this->request->request;
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
 
         $this->mediaManager->updateMedia($request->get('mediaId'),
@@ -155,7 +143,7 @@ class MediaController
 
         // I have my mediaIt and ...
         $mediaId = $request->get('mediaId');
-        $this->invalidateMediaAction($mediaId, $request->get('toBeReloaded'));
+        //$this->invalidateMediaAction($mediaId, $request->get('toBeReloaded'));
 
         // Add revisor
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
@@ -163,13 +151,11 @@ class MediaController
         return new Response($template);
     }
 
-
     /**
     * Fonction qui invalide le cache de tests et des questionnaires pour un média donné
     */
     private function invalidateMediaAction($mediaId, $typeReloaded)
     {
-
         // Manager call
         $em = $this->entityManager;
 
@@ -212,7 +198,6 @@ class MediaController
             $testsForQuestionnaire = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->
                                 findBy(array('questionnaire' => $questionnaireId));
             foreach ($testsForQuestionnaire as $testForQuestionnaire) {
-
                 $testId = $testForQuestionnaire->getTest()->getId();
 
                 // Now, I will invalidate
@@ -222,26 +207,23 @@ class MediaController
                 $pathToInvalidate = $this->router->generate('questionnaire_pick',
                                         array(
                                                 'testId' => $testId,
-                                                'questionnaireId' => $questionnaireId
+                                                'questionnaireId' => $questionnaireId,
                                              )
 
                  );
                 $this->cacheManager->invalidatePath($pathToInvalidate);
-
             }
         }
-
     }
 
     /**
      * @Route("/questionnaires/create-media", name="editor_questionnaire_create-media", options={"expose"=true})
      * @Method("PUT")
      */
-    public function createMediaAction()
+    public function createMediaAction(Request $request)
     {
         $em = $this->entityManager;
 
-        $request = $this->request->request;
         $entityType = $request->get('entityType');
         $entityId = $request->get('entityId');
         $entityField = $request->get('entityField');
@@ -346,9 +328,8 @@ class MediaController
      * @Route("/questionnaires/unlink-media", name="editor_questionnaire_unlink-media", options={"expose"=true})
      * @Method("DELETE")
      */
-    public function unlinkMediaAction()
+    public function unlinkMediaAction(Request $request)
     {
-        $request = $this->request->request;
         $em = $this->entityManager;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));

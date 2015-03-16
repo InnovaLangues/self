@@ -12,6 +12,7 @@ class TestManager
     protected $orderQuestionnaireTestManager;
     protected $phasedTestManager;
     protected $session;
+    protected $user;
 
     public function __construct(
         $entityManager,
@@ -27,11 +28,12 @@ class TestManager
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
         $this->phasedTestManager = $phasedTestManager;
         $this->session = $session;
+        $this->user = $this->securityContext->getToken()->getUser();
     }
 
     public function getTestsProgress($tests, $session)
     {
-        $userId = $this->securityContext->getToken()->getUser()->getId();
+        $userId = $this->user->getId();
 
         $testsProgress = array();
         foreach ($tests as $test) {
@@ -48,22 +50,23 @@ class TestManager
         return $testsProgress;
     }
 
-    public function toggleFavorite($test)
+    public function toggleFavorite(Test $test)
     {
-        $user = $this->securityContext->getToken()->getUser();
-        $favorites = $user->getFavoritesTests();
+        $favorites = $this->user->getFavoritesTests();
         if ($favorites->contains($test)) {
-            $user->removeFavoritesTest($test);
-            $isFavorite = false;
+            $plop =  "contient déjà";
+            $this->user->removeFavoritesTest($test);
         } else {
-            $user->addFavoritesTest($test);
-            $isFavorite = true;
+            $plop =  "contient pas";
+            $this->user->addFavoritesTest($test);
         }
 
-        $this->entityManager->persist($user);
+        //$this->user->addFavoritesTest($test);
+
+        $this->entityManager->persist($this->user);
         $this->entityManager->flush();
 
-        return $isFavorite;
+        return $plop;
     }
 
     public function duplicate(Test $test)

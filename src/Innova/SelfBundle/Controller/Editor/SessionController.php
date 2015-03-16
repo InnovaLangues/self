@@ -117,8 +117,6 @@ class SessionController extends Controller
      */
     public function userResultsAction(User $user, Session $session)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $score = $this->get("self.score.manager")->calculateScoreByTest($session->getTest(), $session);
 
         return array("score" => $score, "session" => $session, "user" => $user);

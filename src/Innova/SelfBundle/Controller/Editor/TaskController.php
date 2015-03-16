@@ -26,7 +26,6 @@ class TaskController
     protected $questionManager;
     protected $orderQuestionnaireTestManager;
     protected $entityManager;
-    protected $request;
     protected $templating;
     protected $formFactory;
 
@@ -44,13 +43,6 @@ class TaskController
         $this->entityManager = $entityManager;
         $this->templating = $templating;
         $this->formFactory = $formFactory;
-    }
-
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-
-        return $this;
     }
 
     /**
@@ -139,7 +131,6 @@ class TaskController
      */
     public function showAction($questionnaireId, $testId)
     {
-
         $em = $this->entityManager;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
@@ -163,10 +154,9 @@ class TaskController
      * @Route("/questionnaire/create", name="editor_questionnaire_create", options={"expose"=true})
      * @Method("POST")
      */
-    public function createQuestionnaireAction()
+    public function createQuestionnaireAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
 
         $questionnaire = $this->questionnaireManager->createQuestionnaire();
         $this->questionManager->createQuestion($questionnaire);
@@ -191,10 +181,9 @@ class TaskController
      * @Method("DELETE")
      * @Template("")
      */
-    public function deleteTaskListAction()
+    public function deleteTaskListAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
 
         $questionnaireId = $request->get('questionnaireId');
 

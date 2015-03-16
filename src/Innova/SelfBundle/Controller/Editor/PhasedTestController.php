@@ -73,7 +73,7 @@ class PhasedTestController extends Controller
     public function saveOrder(Component $component)
     {
         $newOrderArray = json_decode($this->get('request')->request->get('newOrder'));
-        $this->get("self.phasedtest.manager")->saveOrder($newOrderArray, $component);
+        $this->get("self.phasedtest.manager")->saveOrder($newOrderArray);
 
         return new Response(null);
     }

@@ -20,7 +20,6 @@ class PropositionController
     protected $propositionManager;
     protected $entityManager;
     protected $templating;
-    protected $request;
     protected $questionnaireRevisorsManager;
 
     public function __construct($propositionManager, $entityManager, $templating, $questionnaireRevisorsManager)
@@ -31,22 +30,15 @@ class PropositionController
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
     }
 
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-
-        return $this;
-    }
-
     /**
      *
      * @Route("/questionnaires/toggle_right_answer", name="editor_questionnaire_toggle_right_anwser", options={"expose"=true})
      * @Method("PUT")
      */
-    public function toggleRightAnswserAction()
+    public function toggleRightAnswserAction(Request $request)
     {
         $em = $this->entityManager;
-        $request = $this->request->request;
+        $request = $request->request;
 
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
         $propositionId = $request->get('propositionId');

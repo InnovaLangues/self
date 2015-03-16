@@ -3,12 +3,11 @@
 namespace Innova\SelfBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Innova\SelfBundle\Entity\Test;
 
 /**
  * ClassTestController
@@ -18,12 +17,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
  *      name = "",
  *      service = "innova_test"
  * )
+ * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  */
 class TestController
 {
     protected $entityManager;
     protected $testManager;
-    protected $request;
 
     public function __construct($entityManager, $testManager)
     {
@@ -31,44 +30,28 @@ class TestController
         $this->testManager = $testManager;
     }
 
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-
-        return $this;
-    }
-
     /**
      * @Route("/student/", name="show_tests")
-     * @Cache(maxage="15", public=true)
-     * @Template()
      * @Method("GET")
+     * @Template()
      */
     public function showTestsAction()
     {
         $tests = $this->entityManager->getRepository('InnovaSelfBundle:Test')->findWithOpenSession();
-        //$testsProgress = $this->testManager->getTestsProgress($tests);
 
         return array(
             'tests' => $tests,
-            //'testsProgress' => $testsProgress,
         );
     }
 
     /**
-     * @Route("/favorite/toggle", name="test_favorite_toggle" , options={"expose"=true}))
+     * @Route("/favorite/toggle/{testId}", name="test_favorite_toggle" , options={"expose"=true}))
      * @Method("GET")
      */
-    public function toggleFavoriteAction()
+    public function toggleFavoriteAction(Test $test)
     {
-        $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($this->request->get('testId'));
-        $isFavorite = $this->testManager->toggleFavorite($test);
+        $this->testManager->toggleFavorite($test);
 
-        return new JsonResponse(
-            array(
-                'isFavorite' => $isFavorite,
-                'favoriteName' => $test->getName(),
-                )
-        );
+        return new JsonResponse();
     }
 }
