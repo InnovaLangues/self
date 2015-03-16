@@ -1,3 +1,7 @@
+[data-toggle="modal"] {
+    cursor: pointer;
+	cursor: hand;
+}
 /**********************************
 	COMPTEUR ITEM
 ***********************************/
