@@ -31,6 +31,7 @@ use Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre;
 use Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety;
+use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -232,15 +233,20 @@ class FixtureCommand extends ContainerAwareCommand
             $output->writeln("Add new Language (Chinese).");
         }
 
-            /*
-                New table for version 1.2 or version 2 (2014)
-                fixtures for levelLansad table
-            */
-            $langEng = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
-            /* Level for English language */
-            $levelLansadEngs = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
+        if (!$em->getRepository('InnovaSelfBundle:Language')->findOneByName("Spanish")) {
+            $langSp = new Language();
+            $langSp->setName("Spanish");
+            $langSp->setColor("pink");
+            $em->persist($langSp);
+            $em->flush();
+            $output->writeln("Add new Language (Spanish).");
+        }
+
+        $langEng = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
+        /* Level for English language */
+        $levelLansadEngs = array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2");
         foreach ($levelLansadEngs as $levelLansadEng) {
-            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneByName($levelLansadEng)) {
+            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadEng, 'language' => $langEng))) {
                 $level = new LevelLansad();
                 $level->setLanguage($langEng);
                 $level->setName($levelLansadEng);
@@ -250,10 +256,10 @@ class FixtureCommand extends ContainerAwareCommand
         }
 
         $langIt = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
-            /* Level for Ialian language */
-            $levelLansadIts = array("A1", "A2", "B1.1", "B1.2", "B1.3", "B2.1", "B2.2", "C1", "C2");
+        /* Level for Ialian language */
+        $levelLansadIts = array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2");
         foreach ($levelLansadIts as $levelLansadIt) {
-            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneByName($levelLansadIt)) {
+            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadIt, 'language' => $langIt))) {
                 $level = new LevelLansad();
                 $level->setLanguage($langIt);
                 $level->setName($levelLansadIt);
@@ -262,8 +268,34 @@ class FixtureCommand extends ContainerAwareCommand
             }
         }
 
-            /* Gestion du statut des tâches */
-            $status = array("Ecriture", "Révision", "Validation", "Modification post-pilotage");
+        $langCn = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Chinese");
+        /* Level for Ialian language */
+        $levelLansadCns = array("A1", "A1.1", "A1.2", "A2", "A2.1", "A2.2", "B1", "B1.1", "B1.2", "B2.1", "Débutant complet", "Faux débutant", "Intermédiaire", "Avancé");
+        foreach ($levelLansadCns as $levelLansadCn) {
+            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadCn, 'language' => $langCn))) {
+                $level = new LevelLansad();
+                $level->setLanguage($langCn);
+                $level->setName($levelLansadCn);
+                $em->persist($level);
+                $output->writeln("Add new LevelLansad (".$levelLansadCn.").");
+            }
+        }
+
+        $langSp = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Spanish");
+        /* Level for Chinese language */
+        $levelLansadSps = array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2");
+        foreach ($levelLansadSps as $levelLansadSp) {
+            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadSp, 'language' => $langSp))) {
+                $level = new LevelLansad();
+                $level->setLanguage($langSp);
+                $level->setName($levelLansadSp);
+                $em->persist($level);
+                $output->writeln("Add new LevelLansad (".$levelLansadSp.").");
+            }
+        }
+
+        /* Gestion du statut des tâches */
+        $status = array("Ecriture", "Révision", "Validation", "Modification post-pilotage");
         foreach ($status as $s) {
             if (!$em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->findOneByName($s)) {
                 $stat = new Status();
@@ -481,6 +513,16 @@ class FixtureCommand extends ContainerAwareCommand
                 $v->setName($variety);
                 $em->persist($v);
                 $output->writeln("Add new Variety (".$variety.")");
+            }
+        }
+
+        $componentTypes = array("minitest", "step1", "step2", "step3", "step4");
+        foreach ($componentTypes as $type) {
+            if (!$em->getRepository('InnovaSelfBundle:PhasedTest\ComponentType')->findOneByName($type)) {
+                $c = new ComponentType();
+                $c->setName($type);
+                $em->persist($c);
+                $output->writeln("Add new Variety (".$type.")");
             }
         }
 

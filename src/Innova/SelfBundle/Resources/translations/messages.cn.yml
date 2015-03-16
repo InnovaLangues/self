@@ -232,6 +232,19 @@ editor:
         text-type: type d'objet de la question
         identity: fiche d'identité
 
+    session:
+        name: Nom de la session
+        passwd: Mot de passe
+        active: Actif
+        list: Liste des sessions
+        create: Créer une nouvelle session
+        manage: Gérer les sessions
+        list_test: Liste des session pour le test
+        edit: Editer la session
+        results: Résultats pour la session
+        results_user: Résultats pour l'utilisateur
+        export: Exporter les résultats
+
 player:
     listening_remaining: "{0} Plus d'écoute possible |{1} 1 seule écoute restante|]1,Inf] %count% écoutes restantes"
     listen_context: Il vous faut d'abord écouter le contexte.
@@ -262,6 +275,7 @@ language:
     English: English
     Italian: Italian
     Chinese: Chinese
+    Spanish: Spanish
 
 author_right:
     not_needed: Pas besoin
@@ -352,3 +366,11 @@ genre:
 variety:
     standard: Standard
     non_standard: Non standard
+
+phased:
+    minitest: Minitest
+    step1: Etape 1
+    step2: Etape 2
+    step3: Etape 3
+    create_alternative: Créer une alternative
+    delete_alternative: Supprimer l'alternative

@@ -149,6 +149,11 @@ class Questionnaire
     */
     private $orderQuestionnaireTests;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent", mappedBy="questionnaire")
+    */
+    private $orderQuestionnaireComponents;
+
      /**
     * @ORM\ManyToOne(targetEntity="Language", inversedBy="questionnaires")
     */
@@ -1347,5 +1352,56 @@ class Questionnaire
     public function getVarieties()
     {
         return $this->varieties;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->revisors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mediaLimits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mediaClicks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->editorLogs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orderQuestionnaireTests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sourceTypes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->channels = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->varieties = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add orderQuestionnaireComponents
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     * @return Questionnaire
+     */
+    public function addOrderQuestionnaireComponent(\Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents)
+    {
+        $this->orderQuestionnaireComponents[] = $orderQuestionnaireComponents;
+    
+        return $this;
+    }
+
+    /**
+     * Remove orderQuestionnaireComponents
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     */
+    public function removeOrderQuestionnaireComponent(\Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents)
+    {
+        $this->orderQuestionnaireComponents->removeElement($orderQuestionnaireComponents);
+    }
+
+    /**
+     * Get orderQuestionnaireComponents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrderQuestionnaireComponents()
+    {
+        return $this->orderQuestionnaireComponents;
     }
 }

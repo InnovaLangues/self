@@ -15,14 +15,13 @@
             {% endif %}
 
                 <div class="btn-group" role="group">
-                    <a class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ typo }}" href="{{ path('questionnaire_pick', { testId: test.id, questionnaireId: questionnaire.id }) }}">
-                        {{ theme }}
+                    <a class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ typo }}" href="{{ path('questionnaire_pick', { testId: test.id, sessionId: session.id, questionnaireId: questionnaire.id }) }}">
+                       {{ i + 1 }} - {{ theme }}
                     </a>
                     <a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id, 'testId': test.id }) }}">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                 </div>
-
         {% endfor %}
          </div>
     </div>

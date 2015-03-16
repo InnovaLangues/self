@@ -102,6 +102,7 @@ editor:
         archive: Archiver
         unarchive: Désarchiver
         archived: Tests archivés
+        phased: Test à étapes
 
     task:
         task: Tâche
@@ -247,6 +248,19 @@ editor:
         text-type: type d'objet de la question
         identity: fiche d'identité
 
+    session:
+        name: Nom de la session
+        passwd: Mot de passe
+        active: Actif
+        list: Liste des sessions
+        create: Créer une nouvelle session
+        manage: Gérer les sessions
+        list_test: Liste des session pour le test
+        edit: Editer la session
+        results: Résultats pour la session
+        results_user: Résultats pour l'utilisateur
+        export: Exporter les résultats
+
 player:
     listening_remaining: "{0} Reste 0 écoute |{1} Reste 1 écoute|]1,Inf] Reste %count% écoutes"
     listen_context: Il vous faut d'abord écouter le contexte.
@@ -277,6 +291,7 @@ language:
     English: Anglais
     Italian: Italien
     Chinese: Chinois
+    Spanish: Espagnol
 
 author_right:
     not_needed: Pas besoin
@@ -367,3 +382,11 @@ genre:
 variety:
     standard: Standard
     non_standard: Non standard
+
+phased:
+    minitest: Minitest
+    step1: Etape 1
+    step2: Etape 2
+    step3: Etape 3
+    create_alternative: Créer une alternative
+    delete_alternative: Supprimer l'alternative

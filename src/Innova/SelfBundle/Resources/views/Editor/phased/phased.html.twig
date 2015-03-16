@@ -1,0 +1,60 @@
+{% import _self as macros %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {% autoescape 'html' %}
+        {{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}
+        {% endautoescape %}
+    </div>
+    <div id="components" class="panel-body">
+        <div class="row">
+            {{ macros.panelComponentType(test, 1, "minitest") }}
+        </div>
+        <div class="row">
+            {{ macros.panelComponentType(test, 2, "step1") }}
+            {{ macros.panelComponentType(test, 3, "step2") }}
+            {{ macros.panelComponentType(test, 4, "step3") }}
+            {{ macros.panelComponentType(test, 5, "step4") }}
+        </div>
+    </div>
+</div>
+
+{% macro panelComponentType(test, type, typeName) %}
+    <div class="col-md-3" {% if type == 1 %}style="float:none;margin: 0 auto;"{% endif %}>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                {% set nameTrans = "phased."~typeName %}
+                {{ nameTrans | trans }}
+                <div class="pull-right">
+                    <a class="btn btn-default btn-xs" href="{{ path('editor_generate_component', { 'testId': test.id, 'typeId': type  }) }}" toggle="tooltip" data-original-title="{{'phased.create_alternative' | trans }}">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body" style="padding:0;margin:0 0 -20px 0">
+                {% for component in test.components if component.componentType.name == typeName %}
+                    {% include "InnovaSelfBundle:Editor/phased:component.html.twig" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+<div id="potential-tasks-modal" class="modal fade" data-component-id="">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">
+                    {{ 'editor.task.add_existing' | trans }}
+                    <img class="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
+                </h4>
+            </div>
+            <div id="potential-tasks" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

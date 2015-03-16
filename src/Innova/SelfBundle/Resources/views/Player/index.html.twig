@@ -7,28 +7,17 @@
 {% block body -%}
     {% import "InnovaSelfBundle:Player:common/macros.html.twig" as macros %}
 
-    <!-- Changement de compétence, je dois afficher l'aide -->
-    {% if displayHelp %}
-        <!-- Les pages d'aide sont en CamelCase : helpCo.html.twig, helpCe.html.twig et helpEEc.html.twig -->
-        <!-- Récupération du niveau avec la première lettre en majuscule -->
-        {% set skill = questionnaire.skill.name|capitalize %}
-        {% set helpName = 'help' ~ skill ~ '.html.twig' %}
-        <!-- Affichage de la page d'aide adéquate -->
-        {% include 'InnovaSelfBundle::Main/' ~ helpName %}
-    {% else %}
-        {# item #}
-        {% include "InnovaSelfBundle:Player/common:item.html.twig" %}
+    {# item #}
+    {% include "InnovaSelfBundle:Player/common:item.html.twig" %}
 
-        {# Compteur n° de la tâche #}
-        {% include "InnovaSelfBundle:Player/common:compteur.html.twig" %}
+    {# Compteur n° de la tâche #}
+    {% include "InnovaSelfBundle:Player/common:compteur.html.twig" %}
 
-        {% include "InnovaSelfBundle:Player/common:specialCharPicker.html.twig" %}
+    {% include "InnovaSelfBundle:Player/common:specialCharPicker.html.twig" %}
 
-        {% include "InnovaSelfBundle:Player/common:admin.html.twig" %}
-    {% endif %}
+    {% include "InnovaSelfBundle:Player/common:admin.html.twig" %}
 
     {% include "InnovaSelfBundle:Player/common:modaleListenContext.html.twig" %}
-
 {% endblock %}
 
 {% block javascripts %}

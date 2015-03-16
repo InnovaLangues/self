@@ -51,6 +51,7 @@ services:
             session: @session
             router: @router
             playerManager: @self.player.manager
+            scoreManager: @self.score.manager
 
     innova_editor_upload:
         class: Innova\SelfBundle\Controller\Editor\UploadController
@@ -164,9 +165,6 @@ services:
         class: Innova\SelfBundle\Controller\Player\MediaClickController
         arguments:
             mediaClickManager: @self.mediaclick.manager
-        calls:
-            - [setRequest, [@request]]
-        scope: request
 
     innova_test:
         class: Innova\SelfBundle\Controller\TestController

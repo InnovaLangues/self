@@ -1,0 +1,28 @@
+{% if questionnaires|length <1  %}
+    {{ 'editor.task.no_potential' | trans }}
+{% else %}
+    <div class="input-group">
+        <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
+        <input type="text" id="search" class="form-control" value="">
+    </div>
+    <hr/>
+    <ul id="tasks" class="list-group">
+    {% for questionnaire in questionnaires %}
+        <li class="list-group-item">
+            <span class="btn btn-default add-questionnaire" data-questionnaire-id="{{ questionnaire.id }}">
+                <span class="glyphicon glyphicon-plus"></span> {{ 'generic.add' | trans }}
+            </span>
+
+            <span class="btn btn-default duplicate-questionnaire" data-questionnaire-id="{{ questionnaire.id }}">
+                <span class="glyphicon glyphicon-asterisk"></span> {{ 'editor.task.duplicate_and_add' | trans }}
+            </span>
+
+            {% if questionnaire.theme != "" %}
+                {{ questionnaire.theme }}
+            {% else %}
+                {{ 'editor.task.unnamed' | trans }}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}

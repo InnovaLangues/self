@@ -10,16 +10,26 @@ class TestManager
     protected $securityContext;
     protected $questionnaireManager;
     protected $orderQuestionnaireTestManager;
+    protected $phasedTestManager;
+    protected $session;
 
-    public function __construct($entityManager, $securityContext, $questionnaireManager, $orderQuestionnaireTestManager)
-    {
+    public function __construct(
+        $entityManager,
+        $securityContext,
+        $questionnaireManager,
+        $orderQuestionnaireTestManager,
+        $phasedTestManager,
+        $session
+    ) {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
         $this->questionnaireManager = $questionnaireManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
+        $this->phasedTestManager = $phasedTestManager;
+        $this->session = $session;
     }
 
-    public function getTestsProgress($tests)
+    public function getTestsProgress($tests, $session)
     {
         $userId = $this->securityContext->getToken()->getUser()->getId();
 
@@ -59,13 +69,11 @@ class TestManager
     public function duplicate(Test $test)
     {
         $name = $test->getName();
-        $actif = $test->getActif();
         $language = $test->getLanguage();
         $orderedTasks = $test->getOrderQuestionnaireTests();
 
         $newTest = new Test();
         $newTest->setName("Copie de ".$name);
-        $newTest->setActif($actif);
         $newTest->setLanguage($language);
         $newTest->setTestOrigin($test);
 
@@ -86,12 +94,35 @@ class TestManager
     {
         if ($test->isArchived()) {
             $test->setArchived(false);
+            $msg = 'Le test '.$test->getName().' a été désarchivé';
         } else {
             $test->setArchived(true);
+            $msg = 'Le test '.$test->getName().' a été archivé';
         }
 
         $this->entityManager->persist($test);
         $this->entityManager->flush();
+
+        $this->session->getFlashBag()->set('success', $msg);
+
+        return $test;
+    }
+
+    public function togglePhased(Test $test)
+    {
+        if ($test->getPhased()) {
+            $test->setPhased(false);
+            $msg = 'Le test '.$test->getName().' n\'est plus un test a étape';
+        } else {
+            $test->setPhased(true);
+            $msg = 'Le test '.$test->getName().' est maintenant un test a étape';
+            $this->phasedTestManager->generateBaseComponents($test);
+        }
+
+        $this->entityManager->persist($test);
+        $this->entityManager->flush();
+
+        $this->session->getFlashBag()->set('success', $msg);
 
         return $test;
     }

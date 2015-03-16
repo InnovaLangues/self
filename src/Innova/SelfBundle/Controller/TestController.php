@@ -46,12 +46,12 @@ class TestController
      */
     public function showTestsAction()
     {
-        $tests = $this->entityManager->getRepository('InnovaSelfBundle:Test')->findByActif(true);
-        $testsProgress = $this->testManager->getTestsProgress($tests);
+        $tests = $this->entityManager->getRepository('InnovaSelfBundle:Test')->findWithOpenSession();
+        //$testsProgress = $this->testManager->getTestsProgress($tests);
 
         return array(
             'tests' => $tests,
-            'testsProgress' => $testsProgress
+            //'testsProgress' => $testsProgress,
         );
     }
 

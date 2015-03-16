@@ -19,7 +19,8 @@
                 {% if proposition.media.mediaType.name == "texte" %}
                     {{ macros.translateVF(proposition.media.description) }}
                 {% elseif proposition.media.mediaType.name == "image" %}
-                    <img width="100%"  src="{{ asset('upload/media/') ~ proposition.media.url }}" />
+                    {{ macros.image(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans, 230, 230) }}
+                    {{ macros.modale(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans) }}
                 {% endif %}
             </label>
         </div>

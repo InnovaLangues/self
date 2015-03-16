@@ -12,8 +12,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Manager\PlayerManager;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class PlayerController
@@ -23,6 +25,8 @@ use Innova\SelfBundle\Manager\PlayerManager;
  *      name = "innova_player",
  *      service = "innova_player"
  * )
+ * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
+ * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})
  */
 class PlayerController
 {
@@ -32,13 +36,15 @@ class PlayerController
     protected $router;
     protected $user;
     protected $playerManager;
+    protected $scoreManager;
 
     public function __construct(
         SecurityContextInterface $securityContext,
         EntityManager $entityManager,
         SessionInterface $session,
         RouterInterface $router,
-        PlayerManager $playerManager
+        PlayerManager $playerManager,
+        $scoreManager
     ) {
         $this->securityContext = $securityContext;
         $this->entityManager = $entityManager;
@@ -46,82 +52,87 @@ class PlayerController
         $this->router = $router;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->playerManager = $playerManager;
+        $this->scoreManager = $scoreManager;
+        $this->questionnaireRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
     }
 
     /**
-     * Try to pick a questionnaire entity for a given test not done yet by the user
+     * Try to pick a questionnaire entity for a given test and a given sessionr
      * and display it if possible.
      *
-     * @Route("student/test/start/{id}/{displayHelp}/", name="test_start")
+     * @Route("student/test/start/{testId}/{sessionId}", name="test_start")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
-    public function startAction(Test $test, $displayHelp)
+    public function startAction(Test $test, Session $session)
     {
         $em = $this->entityManager;
 
-        $questionnaire = $this->playerManager->findAQuestionnaireWithoutTrace($test);
-        if (is_null($questionnaire)) {
-            return new RedirectResponse($this->router->generate('test_end', array("id" => $test->getId())));
-        } else {
-            /* en attendant que les videos soient prêtes
-            if ($displayHelp){
-                    $displayHelp = $this->playerManager->displayHelp($test, $questionnaire);
-            }
-            */
-            $displayHelp = false;
-            $countQuestionnaireDone = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $this->user->getId());
-            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-            $countQuestionnaireTotal = count($questionnaires);
+        $sessionLogged = $this->session->get('sessionLogged-'.$session->getId());
+        if ($sessionLogged != 1) {
+            $url = $this->router->generate('session_log_form', array('sessionId' => $session->getId()));
 
-            return array(
+            return new RedirectResponse($url);
+        }
+
+        $orderQuestionnaire = $this->playerManager->pickQuestionnaire($test, $session);
+
+        if (is_null($orderQuestionnaire)) {
+            $url = $this->router->generate('test_end', array("testId" => $test->getId(), 'sessionId' => $session->getId()));
+
+            return new RedirectResponse($url);
+        }
+        $questionnaire = $orderQuestionnaire->getQuestionnaire();
+        $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
+
+        $questionnaires = $this->questionnaireRepo->getByTest($test);
+        if ($component) {
+            $countQuestionnaireTotal = count($component->getOrderQuestionnaireComponents());
+            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTestByComponent($test, $this->user, $session, $component);
+        } else {
+            $countQuestionnaireTotal = count($questionnaires);
+            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTestBySession($test->getId(), $this->user->getId(), $session->getId());
+        }
+
+        return array(
                 'test' => $test,
+                'session' => $session,
+                'component' => $component,
                 'questionnaire' => $questionnaire,
                 'questionnaires' => $questionnaires,
                 'countQuestionnaireDone' => $countQuestionnaireDone,
                 'countQuestionnaireTotal' => $countQuestionnaireTotal,
-                'displayHelp' => $displayHelp,
             );
-        }
     }
 
      /**
      * Gère la vue de fin de test
      *
-     * @Route("/test_end/{id}", name="test_end")
+     * @Route("/test_end/{testId}/session/{sessionId}", name="test_end")
      * @Template("InnovaSelfBundle:Player:common/end.html.twig")
      * @Method("GET")
      */
-    public function endAction(Test $test)
+    public function endAction(Test $test, Session $session)
     {
-        $em = $this->entityManager;
+        $score = $this->scoreManager->calculateScoreByTest($test, $session);
 
-        $nbRightAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countRightAnswerByUserByTest($test->getId(), $this->user->getId());
-
-        $nbAnswer = $em->getRepository('InnovaSelfBundle:Questionnaire')
-                            ->countAnswerByUserByTest($test->getId(), $this->user->getId());
-
-        $pourcentRightAnswer = number_format(($nbRightAnswer/$nbAnswer)*100, 0);
-
-        return array("pourcentRightAnswer" => $pourcentRightAnswer);
+        return array("score" => $score);
     }
 
     /**
      * @Route(
-     *      "admin/test/{testId}/questionnaire/{questionnaireId}",
+     *      "admin/test/{testId}/session/{sessionId}/questionnaire/{questionnaireId}",
      *      name="questionnaire_pick"
      * )
-     * @ParamConverter("test", class="InnovaSelfBundle:Test", options={"mapping": {"testId": "id" }})
      * @ParamConverter("questionnairePicked", class="InnovaSelfBundle:Questionnaire", options={"mapping": {"questionnaireId": "id"}})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
-    public function pickAQuestionnaireAction(Test $test, Questionnaire $questionnairePicked)
+    public function pickAQuestionnaireAction(Test $test, Session $session, Questionnaire $questionnairePicked)
     {
         $em = $this->entityManager;
 
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
+        $questionnaires = $this->questionnaireRepo->getByTest($test);
 
         $i = 0;
         foreach ($questionnaires as $q) {
@@ -134,10 +145,42 @@ class PlayerController
 
         return array(
             'test' => $test,
+            'session' => $session,
             'questionnaires' => $questionnaires,
             'questionnaire' => $questionnairePicked,
             'countQuestionnaireDone' => $countQuestionnaireDone,
-            'displayHelp' => false,
+            'component' => null,
         );
+    }
+
+    /**
+     *
+     * @Route("/form/session/{sessionId}", name="session_log_form")
+     * @Template("InnovaSelfBundle:Player:common/log.html.twig")
+     */
+    public function sessionLogForm(Session $session)
+    {
+        return array(
+            'session' => $session,
+        );
+    }
+
+     /**
+     *
+     * @Route("/log/session/{sessionId}", name="session_log")
+     */
+    public function sessionLog(Session $session, Request $request)
+    {
+        $post = $request->request->all();
+
+        if ($post["passwd"] == $session->getPasswd()) {
+            $this->session->set('sessionLogged-'.$session->getId(), 1);
+            $url = $this->router->generate('test_start', array("testId" => $session->getTest()->getId(), "sessionId" => $session->getId()));
+        } else {
+            $this->session->getFlashBag()->set('warning', 'wrong passwd');
+            $url = $this->router->generate('session_log_form', array("sessionId" => $session->getId()));
+        }
+
+        return new RedirectResponse($url);
     }
 }

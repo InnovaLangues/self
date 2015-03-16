@@ -57,16 +57,7 @@ class OrderQuestionnaireTestController
         $newOrderArray = json_decode($request->get('newOrder'));
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($request->get('testId'));
 
-        $entitiesToRemove = $test->getOrderQuestionnaireTests();
-        foreach ($entitiesToRemove as $entity) {
-            $em->remove($entity);
-        }
-        $em->flush();
-
-        foreach ($newOrderArray as $questionnaireId) {
-            $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-            $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
-        }
+        $this->orderQuestionnaireTestManager->saveOrder($newOrderArray, $test);
 
         return new JsonResponse(null);
     }

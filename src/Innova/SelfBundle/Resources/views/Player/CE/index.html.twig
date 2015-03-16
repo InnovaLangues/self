@@ -13,7 +13,7 @@
 
 {% for question in questionnaire.questions %}
 <div id="right-container-CO" class="col-md-7 right-container">
-    <form class="col-md-12" id="main_form" action="{{ path('trace_submit') }}" method="post">
+    <form class="col-md-12" id="main_form" action="{{ path('trace_submit', { 'testId': test.id, 'sessionId': session.id, 'questionnaireId': questionnaire.id }) }}" method="post">
         {# ONGLETS #}
         {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
 

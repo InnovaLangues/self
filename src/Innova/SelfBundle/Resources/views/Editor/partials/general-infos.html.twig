@@ -6,15 +6,24 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    {{ macros.help("Titre de la tâche. Ne sera pas visible lors de la passation.") }} {{ form_label(taskInfosForm.theme) }}
+                    {{ macros.help("Titre de la tâche. Ne sera pas visible lors de la passation.") }} 
+                    {{ form_label(taskInfosForm.theme) }}
                     {{ form_widget(taskInfosForm.theme) }}
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-group">
-                    {{ macros.help("Compétence visée : compréhension orale, écrite, ou expression écrite courte.") }} {{ form_label(taskInfosForm.skill) }}
-                    {{ form_widget(taskInfosForm.skill) }}
+                    {{ macros.help("Compétence visée : compréhension orale, écrite, ou expression écrite courte.") }} 
+                    {{ form_label(taskInfosForm.skill) }}
+
+
+                    {% if taskInfosForm.vars.value.skill != null %}
+                        {{ form_widget(taskInfosForm.skill, { 'attr': { 'disabled': 'disabled' } }) }}
+                    {% else %}
+                        {{ form_widget(taskInfosForm.skill) }}
+                    {% endif %}
+
                 </div>
             </div>
 

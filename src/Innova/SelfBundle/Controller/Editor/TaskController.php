@@ -64,7 +64,7 @@ class TaskController
     {
         $em = $this->entityManager;
 
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllLight();
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
 
         return array(
             'questionnaires' => $questionnaires,
@@ -81,7 +81,7 @@ class TaskController
     public function listQuestionnairesByLanguageAction($languageId)
     {
         $em = $this->entityManager;
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAllLight($languageId);
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($languageId);
 
         return array(
             'questionnaires' => $questionnaires,
@@ -100,14 +100,16 @@ class TaskController
         $em = $this->entityManager;
 
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $orders = $test->getOrderQuestionnaireTests();
-        $potentialQuestionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getPotentialByTest($test);
 
-        return array(
-            'test' => $test,
-            'orders' => $orders,
-            'potentialQuestionnaires' => $potentialQuestionnaires,
-        );
+        if ($test->getPhased()) {
+            $template = $this->templating->render('InnovaSelfBundle:Editor/phased:test.html.twig', array('test' => $test));
+        } else {
+            $orders = $test->getOrderQuestionnaireTests();
+            $potentialQuestionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getPotentialByTest($test);
+            $template = $this->templating->render('InnovaSelfBundle:Editor:listTestQuestionnaires.html.twig', array('test' => $test, 'orders' => $orders, 'potentialQuestionnaires' => $potentialQuestionnaires));
+        }
+
+        return new Response($template);
     }
 
     /**

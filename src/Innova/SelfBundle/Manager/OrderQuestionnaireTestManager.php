@@ -53,5 +53,24 @@ class OrderQuestionnaireTestManager
             $i++;
         }
         $em->flush();
+
+        return $this;
+    }
+
+    public function saveOrder($newOrderArray, $test)
+    {
+        $em = $this->entityManager;
+
+        $i = 0;
+        foreach ($newOrderArray as $questionnaireId) {
+            $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+            $i++;
+            $orderQuestionnaireTest = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array("questionnaire" => $questionnaire, "test" => $test));
+            $orderQuestionnaireTest->setDisplayOrder($i+1);
+            $em->persist($orderQuestionnaireTest);
+        }
+        $em->flush();
+
+        return $this;
     }
 }

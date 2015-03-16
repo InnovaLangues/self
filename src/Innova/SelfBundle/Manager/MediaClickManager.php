@@ -3,6 +3,11 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Media\MediaClick;
+use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Entity\Media\Media;
+use Innova\SelfBundle\Entity\PhasedTest\Component;
 
 class MediaClickManager
 {
@@ -17,18 +22,13 @@ class MediaClickManager
         $this->user = $this->securityContext->getToken()->getUser();
     }
 
-    public function getRemainingListening($mediaId, $questionnaireId, $testId)
+    public function getRemainingListening(Media $media, Questionnaire $questionnaire, Test $test, Session $session, Component $component = null)
     {
-        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
-        $questionnaire = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-        $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
-
-        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
+        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire, $session, $component);
         $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array(
                                                                                     'media' => $media,
                                                                                     'questionnaire' => $questionnaire,
                                                                                 ));
-
         if (is_null($mediaLimit) || $mediaLimit->getListeningLimit() == 0) {
             $remainingListening = "X";
         } else {
@@ -38,17 +38,15 @@ class MediaClickManager
         return $remainingListening;
     }
 
-    public function createMediaClick($mediaId, $questionnaireId, $testId)
+    public function createMediaClick(Media $media, Questionnaire $questionnaire, Test $test, Session $session, Component $component = null)
     {
-        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
-        $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $questionnaire = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-
         if (!$this->securityContext->isGranted('ROLE_ADMIN')) {
             $mediaClick = new MediaClick();
             $mediaClick->setMedia($media);
             $mediaClick->setUser($this->user);
             $mediaClick->setTest($test);
+            $mediaClick->setSession($session);
+            $mediaClick->setComponent($component);
             $mediaClick->setQuestionnaire($questionnaire);
 
             $this->entityManager->persist($mediaClick);
@@ -58,13 +56,9 @@ class MediaClickManager
         return $this;
     }
 
-    public function isMediaPlayable($mediaId, $testId, $questionnaireId)
+    public function isMediaPlayable(Media $media, Test $test, Questionnaire $questionnaire, Session $session, Component $component = null)
     {
-        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
-        $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $questionnaire = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-
-        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire);
+        $nbClick = $this->getMediaClickCount($media, $test, $questionnaire, $session, $component);
         $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array('media' => $media, 'questionnaire' => $questionnaire));
 
         if (is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 || $this->securityContext->isGranted('ROLE_ADMIN')) {
@@ -74,7 +68,7 @@ class MediaClickManager
         }
     }
 
-    public function getMediaClickCount($media, $test, $questionnaire)
+    public function getMediaClickCount(Media $media, Test $test, Questionnaire $questionnaire, Session $session, Component $component = null)
     {
         $mediaClicks = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaClick')
                         ->findBy(array(
@@ -82,6 +76,8 @@ class MediaClickManager
                                         'test' => $test,
                                         'questionnaire' => $questionnaire,
                                         'user' => $this->user,
+                                        'session' => $session,
+                                        'component' => $component,
                                       )
                                 );
 
