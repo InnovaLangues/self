@@ -9,6 +9,7 @@ vendor/*
 # Web directories
 web/bundles/*
 web/upload/*
+!web/upload/.gitkeep
 web/media/*
 
 # Configuration files
@@ -36,4 +37,5 @@ app/data/session/*
 !app/data/session/.gitkeep
 app/data/export/*
 app/data/exportPdf/*
+!app/data/exportPdf/.gitkeep
 !app/data/export/.gitkeep
