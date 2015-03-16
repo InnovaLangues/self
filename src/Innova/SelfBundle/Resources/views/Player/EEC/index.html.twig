@@ -19,13 +19,13 @@
         </div>
         <div id="right-container-CO" class="col-md-7 right-container">
             {% if (question.typology.name in typoCe) %}
-                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit') }}" method="post">
+                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit', { 'testId': test.id, 'sessionId': session.id, 'questionnaireId': questionnaire.id }) }}" method="post">
                     {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
                     {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
                     {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
                 </form>
             {% else %}
-                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit') }}" method="post">
+                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit', { 'testId': test.id, 'sessionId': session.id, 'questionnaireId': questionnaire.id }) }}" method="post">
                     {% include "InnovaSelfBundle:Player/EEC:consigne.html.twig" %}
                     {% include "InnovaSelfBundle:Player/EEC:situation.html.twig" %}
                     {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
@@ -39,7 +39,7 @@
             {% include "InnovaSelfBundle:Player/CE:situation.html.twig" %}
             </div>
             <div id="right-container-CO" class="col-md-7 right-container">
-                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit') }}" method="post">
+                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit', { 'testId': test.id, 'sessionId': session.id, 'questionnaireId': questionnaire.id }) }}" method="post">
                     {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
                     {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
                     {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
@@ -47,7 +47,7 @@
             </div>
         {% else %}
             <div id="left-container-EEC" class="col-md-12 left-container">
-                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit') }}" method="post">
+                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit', { 'testId': test.id, 'sessionId': session.id, 'questionnaireId': questionnaire.id }) }}" method="post">
                     {% include "InnovaSelfBundle:Player/EEC:contexte.html.twig" %}
                     {% include "InnovaSelfBundle:Player/EEC:consigne.html.twig" %}
                     {% include "InnovaSelfBundle:Player/EEC:situation.html.twig" %}

@@ -247,6 +247,19 @@ editor:
         text-type: Tipo di testo
         identity: fiche d'identité
 
+    session:
+        name: Nom de la session
+        passwd: Mot de passe
+        active: Actif
+        list: Liste des sessions
+        create: Créer une nouvelle session
+        manage: Gérer les sessions
+        list_test: Liste des session pour le test
+        edit: Editer la session
+        results: Résultats pour la session
+        results_user: Résultats pour l'utilisateur
+        export: Exporter les résultats
+
 player:
     listening_remaining: "{0} No ascolto possibilo |{1} 1 solo ascolto|]1,Inf] %count% ascolti possibili"
     listen_context: Devi ascoltare prima il contesto.
@@ -368,3 +381,11 @@ genre:
 variety:
     standard: Standard
     non_standard: Non standard
+
+phased:
+    minitest: Minitest
+    step1: Etape 1
+    step2: Etape 2
+    step3: Etape 3
+    create_alternative: Créer une alternative
+    delete_alternative: Supprimer l'alternative

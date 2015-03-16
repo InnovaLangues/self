@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset("bundles/innovaself/css/editor-task-list.css") }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body -%}
+
+<a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
+    <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
+</a>
+
+<img class="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
+
+<hr />
+
+{% include "InnovaSelfBundle:Editor/phased:phased.html.twig" %}
+
+{% if test.copies|length > 0 %}
+    <div class="alert alert-info" role="alert">
+        Copies de ce test :
+        {% for copy in test.copies %}
+            <a href="{{ path('editor_test_questionnaires_show', { 'testId': copy.id }) }}"><i>{{ copy.name }}</i></a> -
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if test.testOrigin %}
+    <div class="alert alert-info" role="alert">
+        Ce test est une copie de <a href="{{ path('editor_test_questionnaires_show', { 'testId': test.testOrigin.id }) }}"><i>{{ test.testOrigin.name }}</i></a>.
+    </div>
+{% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-phased.js") }}"></script>
+{% endblock %}

@@ -242,16 +242,14 @@ function checkSelect(){
 function checkMediaClicks(mediaId, callBack){
     var questionnaireId = $("#questionnaireId").val();
     var testId = $("#testId").val();
+    var sessionId = $("#sessionId").val();
+    var componentId = $("#componentId").val();
+
     $.ajax({
-        url: Routing.generate('is-media-playable'),
+        url: Routing.generate('is-media-playable', 
+            {mediaId:mediaId, testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
         type: 'GET',
         dataType: 'json',
-        data:
-        {
-            questionnaireId: questionnaireId,
-            testId: testId,
-            mediaId: mediaId
-        }
     })
     .done(function(data, isPlayable ) {
         isPlayable = data['isPlayable'];
@@ -264,17 +262,14 @@ function getRemainingListening(){
         var questionnaireId = $("#questionnaireId").val();
         var testId = $("#testId").val();
         var mediaId = $('[sound="situation"]').data("media-id");
+        var sessionId = $("#sessionId").val();
+        var componentId = $("#componentId").val();
 
         $.ajax({
-            url: Routing.generate('get-remaining-listening'),
+            url: Routing.generate('get-remaining-listening', 
+                {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
             type: 'GET',
             dataType: 'json',
-            data:
-            {
-                questionnaireId: questionnaireId,
-                testId: testId,
-                mediaId: mediaId
-            }
         })
         .done(function(data) {
             $('#listens-counter').removeClass('hidden');
@@ -286,17 +281,14 @@ function getRemainingListening(){
 function updateMediaClicks(mediaId){
     var questionnaireId = $("#questionnaireId").val();
     var testId = $("#testId").val();
-
+    var sessionId = $("#sessionId").val();
+    var componentId = $("#componentId").val();
+    
     $.ajax({
-        url: Routing.generate('increment-media-clicks'),
+        url: Routing.generate('increment-media-clicks', 
+                {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
         type: 'GET',
         dataType: 'json',
-        data:
-        {
-            questionnaireId: questionnaireId,
-            testId: testId,
-            mediaId: mediaId
-        }
     })
     .done(function(data) {
         if ($('[sound="situation"]').data("media-id") == mediaId){

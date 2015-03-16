@@ -26,11 +26,10 @@
     {% endif %}
 {% endmacro %}
 
-{% macro image(id, media, tooltip, width) %}
+{% macro image(id, media, tooltip, width, maxheight) %}
     {% import _self as macros %}
-    {# {{ macros.modale(id, media, tooltip) }} #}
     <div style='position: relative;'>
-        <img data-toggle="modal" width="{{ width }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
+        <img data-toggle="modal" style="max-width:{{ width }}px; max-height:{{ maxheight }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
     </div>
 {% endmacro %}
 

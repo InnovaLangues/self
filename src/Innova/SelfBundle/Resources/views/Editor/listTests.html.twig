@@ -22,8 +22,8 @@
     <thead>
         <tr>
             <th>{{ 'editor.test.name' | trans }}</th>
-            <th>{{ 'editor.task.count' | trans }}</th>
-            <th>{{ 'editor.test.is_active' | trans }}</th>
+            <th class="text-center">{{ 'editor.task.count' | trans }}</th>
+            <th class="text-center">{{ 'editor.test.phased' | trans }}</th>
             <th></th>
         </tr>
     </thead>
@@ -33,25 +33,31 @@
             <td>
                 {{ test.name }}
             </td>
-            <td>
-                {{ test.orderQuestionnaireTests|length }}
+            <td class="text-center">
+                {% if not test.phased %}
+                    {{ test.orderQuestionnaireTests|length }}
+                {% else %}
+                    -
+                {% endif %}
             </td>
-            <td>
-                {% if test.actif %}
+            
+            <td class="text-center">
+                {% if test.phased %}
                     {{ 'generic.yes' | trans }}
                 {% else %}
                     {{ 'generic.no' | trans }}
                 {% endif %}
             </td>
+
             <td class="text-right">
-                <a id="play-test" class="btn btn-default btn-sm " href="{{ path('test_start', { 'id': test.id,  'displayHelp': 0} )}}">
-                    <span class="glyphicon glyphicon-play"></span> {{ 'generic.player' | trans }}
-                </a>
                 <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_form', { 'testId': test.id }) }}">
-                    <span class="glyphicon glyphicon-edit"></span> {{ 'generic.edit' | trans }}
+                    <span class="glyphicon glyphicon-cog"></span> {{ 'generic.edit' | trans }}
+                </a>
+                <a class="btn btn-default btn-sm " href="{{ path('editor_test_sessions', { 'testId': test.id } )}}">
+                    <span class="glyphicon glyphicon-calendar"></span> {{ 'editor.session.manage' | trans }}
                 </a>
                 <a class="btn btn-default btn-sm" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
-                    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.manage' | trans }}
+                    <span class="glyphicon glyphicon-edit"></span> {{ 'editor.task.manage' | trans }}
                 </a>
 
                 {% if test in app.user.favoritesTests %}
@@ -63,7 +69,6 @@
                         <span class="glyphicon glyphicon-star-empty" ></span>
                     </a>
                 {% endif %}
-
             </td>
         </tr>
     {% endfor %}

@@ -239,6 +239,19 @@ editor:
         text-type: Question type
         identity: Identity card
 
+    session:
+        name: Session name
+        passwd: Password
+        active: Actif
+        list: Sessions list
+        create: Create a session
+        manage: Manager session
+        list_test: Sessions list for test
+        edit: Edit session
+        results: Session results
+        results_user: Session results for user
+        export: Export results
+
 player:
     listening_remaining: "{0} No remaining listening |{1} Only 1 listening remaining|]1,Inf] %count% listenings remaining"
     listen_context: First listen to the context
@@ -359,3 +372,11 @@ genre:
 variety:
     standard: Standard
     non_standard: Non standard
+
+phased:
+    minitest: Minitest
+    step1: Step 1
+    step2: Step 2
+    step3: Step 3
+    create_alternative: Create an alternative
+    delete_alternative: Remove the alternative

@@ -3,37 +3,62 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
-use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Entity\PhasedTest\Component;
+use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
+use Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent;
 
 class PlayerManager
 {
     protected $entityManager;
     protected $securityContext;
+    protected $scoreManager;
     protected $user;
 
-    public function __construct($entityManager, $securityContext)
+    public function __construct($entityManager, $securityContext, $scoreManager)
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
+        $this->scoreManager = $scoreManager;
         $this->user = $this->securityContext->getToken()->getUser();
+        $this->traceRepo = $this->entityManager->getRepository('InnovaSelfBundle:Trace');
+        $this->componentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component');
+        $this->componentTypeRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\ComponentType');
+        $this->orderQCRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent');
+        $this->propositionRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
     }
 
     /**
      * Pick a questionnaire entity for a given test not done yet by the user.
      */
-    public function findAQuestionnaireWithoutTrace(Test $test)
+    public function pickQuestionnaire(Test $test, Session $session)
+    {
+        if ($test->getPhased()) {
+            $orderQuestionnaire = $this->pickQuestionnairePhased($test, $session);
+        } else {
+            $orderQuestionnaire = $this->pickQuestionnaireClassic($test, $session);
+        }
+
+        return $orderQuestionnaire;
+    }
+
+    /**
+     * Picks orderedQuestionnaire for a classic test
+     */
+    private function pickQuestionnaireClassic(Test $test, Session $session)
     {
         $orderedQuestionnaires = $test->getOrderQuestionnaireTests();
         $questionnaireWithoutTrace = null;
 
         foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
-            $traces = $this->entityManager->getRepository('InnovaSelfBundle:Trace')->findBy(
-                array(  'user' => $this->user->getId(),
+            $traces = $this->traceRepo->findBy(
+                array(  'user' => $this->user,
                         'test' => $test->getId(),
-                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire()->getId(),
+                        'session' => $session,
+                        'questionnaire' => $orderedQuestionnaire->getQuestionnaire(),
                 ));
             if (count($traces) == 0) {
-                $questionnaireWithoutTrace = $orderedQuestionnaire->getQuestionnaire();
+                $questionnaireWithoutTrace = $orderedQuestionnaire;
                 break;
             }
         }
@@ -41,48 +66,110 @@ class PlayerManager
         return $questionnaireWithoutTrace;
     }
 
-    public function findPreviousQuestionnaire($test, $questionnaire)
+    /**
+     * Picks orderedQuestionnaire for a phased test
+     */
+    private function pickQuestionnairePhased(Test $test, Session $session)
     {
-        $previousQuestionnaire = null;
+        // On teste si l'utilisateur a déjà des traces pour le test et la session courante
+        if ($traces = $this->traceRepo->findBy(array('user' => $this->user, 'test' => $test, 'session' => $session))) {
+            $lastTrace = end($traces);
+            $questionnaire = $lastTrace->getQuestionnaire();
+            $component = $lastTrace->getComponent();
+            $orderQC = $this->orderQCRepo->findOneBy(array("questionnaire" => $questionnaire, "component" => $component));
 
-        $currentQuestionnaireOrder = $this->entityManager->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
-            array(
-                    'test' => $test,
-                    'questionnaire' => $questionnaire,
-            ))->getDisplayOrder();
-
-        $displayOrder = $currentQuestionnaireOrder - 1;
-
-        $previousQuestionnaireOrder = $this->entityManager->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(
-            array(
-                    'test' => $test,
-                    'displayOrder' => $displayOrder,
-            ));
-
-        if ($previousQuestionnaireOrder) {
-            $previousQuestionnaire = $previousQuestionnaireOrder->getQuestionnaire();
+            // on prend la tâche suivante pour le composant courant
+            if (!$nextOrderQuestionnaire = $this->pickNextQuestionnaire($component, $orderQC)) {
+                // s'il n'existe pas on prend le prochain composant
+                if ($nextComponent = $this->pickNextComponent($test, $session, $component)) {
+                    // on récupère le 1er élement du composant
+                    $nextOrderQuestionnaire = $this->pickNextQuestionnaire($nextComponent);
+                } else {
+                    // si pas de composant, c'est la fin
+                    return;
+                }
+            }
+        } else {
+            $nextComponent = $this->pickNextComponent($test, $session);
+            $nextOrderQuestionnaire = $this->pickNextQuestionnaire($nextComponent);
         }
 
-        return $previousQuestionnaire;
+        return $nextOrderQuestionnaire;
     }
 
-    public function displayHelp(Test $test, Questionnaire $questionnaire)
+    /**
+     * Picks next orderQuestionnaire for a given component
+     */
+    private function pickNextQuestionnaire(Component $component, OrderQuestionnaireComponent $orderQC = null)
     {
-        // Il faut afficher l'aide à chaque fois que l'on change d'expression pour le test : CO ou CE ou EEC
-        // 1 : recherche de la question précédente
-        $previousQuestionnaire = $this->findPreviousQuestionnaire($test, $questionnaire);
-        $displayHelp = true;
+        $displayOrder = ($orderQC != null) ? $orderQC->getDisplayOrder() + 1 : 1;
+        $nextOrderQC = $this->orderQCRepo->findOneBy(array("component" => $component, "displayOrder" => $displayOrder));
 
-        if ($previousQuestionnaire !== null) {
-            // 2 : recherche des informations sur la question
-            $skillBefore = $previousQuestionnaire->getSkill();
-            $skill = $questionnaire->getSkill();
-            // 3 : affichage ou non de l'aide. On n'affiche pas l'aide si on a la même compétence
-            if ($skillBefore == $skill) {
-                $displayHelp = false;
+        return $nextOrderQC;
+    }
+
+    /**
+     * Picks next component for a given test / session, depending of a possible previous one
+     */
+    private function pickNextComponent(Test $test, Session $session, Component $component = null)
+    {
+        // si on a déjà un composant, faut prendre le suivant dépendament du score et du nombre de composant déjà fait pour la session
+        if ($component) {
+            $componentsDone = $this->componentRepo->findDoneByUserByTestBySession($this->user, $test, $session);
+            $componentType = $component->getComponentType();
+            $componentTypeName = $componentType->getName();
+            $componentTypeId = $componentType->getId();
+
+            // si on a déjà fait 3 composants -> stop
+            if (count($componentsDone) >= 3) {
+                return;
+            } else {
+                $score = $this->scoreManager->calculateScoreByComponent($test, $session, $component);
+                // si c'est un mitest on est redirigé vers une des étapes
+                if ($componentTypeName == "minitest") {
+                    if ($score < 20) {
+                        $nextComponentTypeName = "step1";
+                    } elseif ($score < 40) {
+                        $nextComponentTypeName = "step2";
+                    } elseif ($score < 80) {
+                        $nextComponentTypeName = "step3";
+                    } else {
+                        $nextComponentTypeName = "step4";
+                    }
+                } else {
+                    // sinon, dépendamment du score on descend ou monte d'un niveau
+                    if ($score < 20 && $componentTypeName != "step1") {
+                        $nextComponentTypeName = $this->componentTypeRepo->findOneById($componentTypeId - 1)->getName();
+                    } elseif ($score > 80 && $componentTypeName != "step4") {
+                        $nextComponentTypeName = $this->componentTypeRepo->findOneById($componentTypeId + 1)->getName();
+                    } else {
+                        return;
+                    }
+                }
             }
+        } else {
+            // sinon c'est qu'on commence le test alors on lui propose un minitest
+            $nextComponentTypeName = "minitest";
         }
 
-        return $displayHelp;
+        $nextComponentType = $this->componentTypeRepo->findOneByName($nextComponentTypeName);
+        $nextComponent = $this->pickComponentAmongAlternatives($nextComponentType, $test);
+
+        return $nextComponent;
+    }
+
+    /**
+     * Picks a component of a given componentType for a user.
+     * Favor not done yet component in another session
+     */
+    private function pickComponentAmongAlternatives(ComponentType $componentType, Test $test)
+    {
+        if (!$candidates = $this->componentRepo->findNotDoneByTypeByUserByTest($this->user, $test, $componentType)) {
+            $candidates = $this->componentRepo->findBy(array("test" => $test, "componentType" => $componentType));
+        }
+
+        $component = $candidates[array_rand($candidates)];
+
+        return $component;
     }
 }

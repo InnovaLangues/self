@@ -22,8 +22,10 @@
                     {{ macros.translateVF(proposition.media.description) }}
                     </label>
             {% elseif proposition.media.mediaType.name == "image" %}
-                {{ macros.image(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans, 150) }}
-                {{ macros.modale(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans) }}
+                <label for="input-proposition{{ proposition.id }}" class="proposition-CO-text">
+                    {{ macros.image(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans, 230, 230) }}
+                    {{ macros.modale(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans) }}
+                </label>
             </label>
             {% endif %}
         </div>

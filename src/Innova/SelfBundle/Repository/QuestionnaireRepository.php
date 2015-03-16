@@ -61,6 +61,54 @@ class QuestionnaireRepository extends EntityRepository
      *
      * @return int number of traces for the test and the user
      */
+    public function countDoneYetByUserByTestBySession($testId, $userId, $sessionId)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        LEFT JOIN t.questionnaire tq
+        WHERE t.user = :userId
+        AND t.test = :testId
+        AND t.session = :sessionId";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('testId', $testId)
+                ->setParameter('sessionId', $sessionId)
+                ->setParameter('userId', $userId);
+
+        return count($query->getResult());
+    }
+
+    /**
+     * countDoneYetByUserByTestByComponent count traces for test, session, and component
+     * @param id $testId
+     * @param id $userId
+     *
+     * @return int number of traces for the test and the user
+     */
+    public function countDoneYetByUserByTestByComponent($test, $user, $session, $component)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        LEFT JOIN t.questionnaire tq
+        WHERE t.user = :user
+        AND t.test = :test
+        AND t.component = :component
+        AND t.session = :session";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test)
+                ->setParameter('session', $session)
+                ->setParameter('component', $component)
+                ->setParameter('user', $user);
+
+        return count($query->getResult());
+    }
+
+    /**
+     * getQuestionnairesDoneYetByUserByTest questionnairre done for an user and a test
+     * @param id $testId
+     * @param id $userId
+     *
+     * @return int number of traces for the test and the user
+     */
     public function getQuestionnairesDoneYetByUserByTest($testId, $userId)
     {
         $dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
@@ -83,17 +131,21 @@ class QuestionnaireRepository extends EntityRepository
      *
      * @return int number of traces for the test and the questionnaire and the user
      */
-    public function countTraceByUserByTestByQuestionnaire($testId, $questionnaireId, $userId)
+    public function countTraceByUserByTestByQuestionnaire($test, $questionnaire, $user, $component, $session)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
-        WHERE t.user = :userId
-        AND t.test = :testId
-        AND t.questionnaire = :questionnaireId";
+        WHERE t.user = :user
+        AND t.test = :test
+        AND t.component = :component
+        AND t.session = :session
+        AND t.questionnaire = :questionnaire";
 
         $query = $this->_em->createQuery($dql)
-                ->setParameter('testId', $testId)
-                ->setParameter('questionnaireId', $questionnaireId)
-                ->setParameter('userId', $userId);
+                ->setParameter('test', $test)
+                ->setParameter('questionnaire', $questionnaire)
+                ->setParameter('user', $user)
+                ->setParameter('component', $component)
+                ->setParameter('session', $session);
 
         return count($query->getResult());
     }
@@ -159,13 +211,37 @@ class QuestionnaireRepository extends EntityRepository
     public function getByTest($test)
     {
         $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
-        LEFT JOIN q.orderQuestionnaireTests qo
-        WHERE qo.test = :test
-        ORDER BY qo.displayOrder
+        LEFT JOIN q.orderQuestionnaireTests qot
+        LEFT JOIN q.orderQuestionnaireComponents qoc
+        LEFT JOIN qoc.component c
+        LEFT JOIN c.componentType ct
+        WHERE qot.test = :test OR c.test = :test
+        ORDER BY
         ";
+
+        $dql .= (!$test->getPhased()) ? "qot.displayOrder" : "ct.id, qoc.displayOrder";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('test', $test);
+
+        return $query->getResult();
+    }
+
+    public function findPotentialByComponent($component)
+    {
+        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        WHERE NOT EXISTS (
+            SELECT otc FROM Innova\SelfBundle\Entity\PhasedTest\orderQuestionnaireComponent otc
+            LEFT JOIN otc.component c
+            WHERE otc.questionnaire = q
+            AND (otc.component = :component
+            OR c.componentType != :type)
+        )
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('component', $component)
+                ->setParameter('type', $component->getComponentType());
 
         return $query->getResult();
     }

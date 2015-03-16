@@ -31,9 +31,9 @@ class Test
     /**
      * @var string
      *
-     * @ORM\Column(name="actif", type="boolean")
+     * @ORM\Column(name="phased", type="boolean")
      */
-    private $actif;
+    private $phased = 0;
 
     /**
     * @ORM\OneToMany(targetEntity="Trace", mappedBy="test", cascade={"remove"})
@@ -79,10 +79,19 @@ class Test
      */
     private $archived = 0;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\Component", mappedBy="test", cascade={"remove"})
+    */
+    protected $components;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Session", mappedBy="test", cascade={"remove"})
+    */
+    protected $sessions;
+
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->actif = false;
     }
 
     public function __toString()
@@ -210,30 +219,6 @@ class Test
     public function getLanguage()
     {
         return $this->language;
-    }
-
-    /**
-     * Set actif
-     *
-     * @param  boolean $actif
-     * @return Test
-     */
-    public function setActif($actif)
-    {
-        $this->actif = $actif;
-
-        return $this;
-    }
-
-    /**
-     * Get actif
-     *
-     * @return boolean
-     */
-
-    public function getActif()
-    {
-        return $this->actif;
     }
 
     /**
@@ -379,5 +364,104 @@ class Test
     public function isArchived()
     {
         return $this->archived;
+    }
+
+    /**
+     * Set phased
+     *
+     * @param  boolean $phased
+     * @return Test
+     */
+    public function setPhased($phased)
+    {
+        $this->phased = $phased;
+
+        return $this;
+    }
+
+    /**
+     * Get phased
+     *
+     * @return boolean
+     */
+    public function getPhased()
+    {
+        return $this->phased;
+    }
+
+    /**
+     * Get archived
+     *
+     * @return boolean
+     */
+    public function getArchived()
+    {
+        return $this->archived;
+    }
+
+    /**
+     * Add components
+     *
+     * @param  \Innova\SelfBundle\Entity\PhasedTest\Component $components
+     * @return Test
+     */
+    public function addComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $components)
+    {
+        $this->components[] = $components;
+
+        return $this;
+    }
+
+    /**
+     * Remove components
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $components
+     */
+    public function removeComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $components)
+    {
+        $this->components->removeElement($components);
+    }
+
+    /**
+     * Get components
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComponents()
+    {
+        return $this->components;
+    }
+
+    /**
+     * Add sessions
+     *
+     * @param  \Innova\SelfBundle\Entity\Session $sessions
+     * @return Test
+     */
+    public function addSession(\Innova\SelfBundle\Entity\Session $sessions)
+    {
+        $this->sessions[] = $sessions;
+
+        return $this;
+    }
+
+    /**
+     * Remove sessions
+     *
+     * @param \Innova\SelfBundle\Entity\Session $sessions
+     */
+    public function removeSession(\Innova\SelfBundle\Entity\Session $sessions)
+    {
+        $this->sessions->removeElement($sessions);
+    }
+
+    /**
+     * Get sessions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSessions()
+    {
+        return $this->sessions;
     }
 }

@@ -5,8 +5,10 @@ namespace Innova\SelfBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Session;
 
 /**
  * Class ExportController
@@ -16,6 +18,7 @@ use Innova\SelfBundle\Entity\Test;
  *      name = "",
  *      service = "innova_export"
  * )
+ * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  */
 class ExportController
 {
@@ -85,18 +88,16 @@ class ExportController
     /**
      * exportCsvSQL function
      * @Route(
-     *     "/admin/csv-export/export/test/{testId}/{tia}",
+     *     "/admin/csv-export/export/test/{testId}/{sessionId}/{tia}",
      *     name = "csv-export"
      * )
      *
      * @Method("PUT")
      * @Template()
      */
-    public function exportCsvAction($testId, $tia)
+    public function exportCsvAction(Test $test, Session $session, $tia)
     {
-        $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
-
-        $csvName = $this->exportManager->exportCsvAction($test, $tia);
+        $csvName = $this->exportManager->exportCsvAction($test, $session, $tia);
         $fileList = $this->exportManager->getFileList($test, "csv");
 
         return array(
@@ -117,10 +118,8 @@ class ExportController
      * @Method("GET")
      * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
-    public function showCsvAction($testId, $tia)
+    public function showCsvAction(Test $test, $tia)
     {
-        $test = $this->entityManager->getRepository('InnovaSelfBundle:Test')->find($testId);
-
         $fileList = $this->exportManager->getFileList($test, "csv");
 
         return array(
@@ -133,7 +132,7 @@ class ExportController
      /**
      * exportPdf function
      * @Route(
-     *     "/admin/pdf-export/test/{id}",
+     *     "/admin/pdf-export/test/{testId}",
      *     name = "pdf-export"
      * )
      *
@@ -158,7 +157,7 @@ class ExportController
     /**
      * exportPdf function
      * @Route(
-     *     "/admin/pdf-export/show/test/{id}",
+     *     "/admin/pdf-export/show/test/{testId}",
      *     name = "pdf-export-show"
      * )
      *

@@ -26,9 +26,11 @@
             {% endif %}
 
             <span class="buttons">
+                {#
                 <a toggle="tooltip" data-original-title="{{ 'generic.player' | trans }}" class="btn btn-default btn-sm" href="{{ path('questionnaire_pick', { testId: order.test.id, questionnaireId: order.questionnaire.id }) }}">
                     <span class="glyphicon glyphicon-play"></span>
                 </a>
+                #}
                 <a toggle="tooltip" data-original-title="{{ 'generic.edit' | trans }}" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id, 'testId': order.test.id }) }}">
                     <span class="glyphicon glyphicon-edit"></span>
                 </a>

@@ -97,6 +97,7 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
+            scoreManager:       @self.score.manager
 
     self.export.manager:
         class: Innova\SelfBundle\Manager\ExportManager
@@ -110,16 +111,29 @@ services:
     self.test.manager:
         class: Innova\SelfBundle\Manager\TestManager
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
-            questionnaireManager: @self.questionnaire.manager
-            orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
+            entityManager:                  @doctrine.orm.entity_manager
+            securityContext:                @security.context
+            questionnaireManager:           @self.questionnaire.manager
+            orderQuestionnaireTestManager:  @self.order_questionnaire_test.manager
+            phasedTestManager:              @self.phasedtest.manager
+            session:                        @session
 
     self.eec.manager:
         class: Innova\SelfBundle\Manager\EecManager
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
+            entityManager:          @doctrine.orm.entity_manager
             questionManager:        @self.question.manager
             subquestionManager:     @self.subquestion.manager
             propositionManager:     @self.proposition.manager
             mediaManager:           @self.media.manager
+
+    self.phasedtest.manager:
+        class: Innova\SelfBundle\Manager\PhasedTestManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    self.score.manager:
+        class: Innova\SelfBundle\Manager\ScoreManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context

@@ -6,12 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Language;
 
 /**
  * Test controller.
  *
  * @Route("admin/editor")
+ * @ParamConverter("test",      isOptional="true", class="InnovaSelfBundle:Test",       options={"id" = "testId"})
+ * @ParamConverter("language",  isOptional="true", class="InnovaSelfBundle:Language",   options={"id" = "languageId"})
  */
 class TestController extends Controller
 {
@@ -24,12 +28,9 @@ class TestController extends Controller
      */
     public function listTestsAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
+        $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
 
-        return array(
-            'tests' => $tests,
-        );
+        return array('tests' => $tests);
     }
 
     /**
@@ -39,16 +40,11 @@ class TestController extends Controller
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
      */
-    public function listTestsByLanguageAction($languageId)
+    public function listTestsByLanguageAction(Language $language)
     {
-        $em = $this->getDoctrine()->getManager();
+        $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findBy(array("language" => $language, "archived" => false));
 
-        $language = $em->getRepository('InnovaSelfBundle:Language')->find($languageId);
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findBy(array("language" => $language, "archived" => false));
-
-        return array(
-            'tests' => $tests,
-        );
+        return array('tests' => $tests);
     }
 
     /**
@@ -60,12 +56,9 @@ class TestController extends Controller
      */
     public function listArchivedTestsAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findByArchived(true);
+        $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(true);
 
-        return array(
-            'tests' => $tests,
-        );
+        return array('tests' => $tests);
     }
 
     /**
@@ -85,7 +78,6 @@ class TestController extends Controller
      *
      * @Route("/test/create", name="editor_test_create")
      * @Method("POST")
-     * @Template("")
      */
     public function createTestAction()
     {
@@ -111,14 +103,9 @@ class TestController extends Controller
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:editTestForm.html.twig")
      */
-    public function editTestFormAction($testId)
+    public function editTestFormAction(Test $test)
     {
-        $em = $this->getDoctrine()->getManager();
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-
-        return array(
-                    'test' => $test,
-        );
+        return array('test' => $test);
     }
 
     /**
@@ -126,14 +113,12 @@ class TestController extends Controller
      *
      * @Route("/test/{testId}/edit", name="editor_test_edit")
      * @Method("POST")
-     * @Template("")
      */
-    public function editTestAction($testId)
+    public function editTestAction(Test $test)
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->get('request');
 
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $test->setName($request->request->get('test-name'));
         $language = $em->getRepository('InnovaSelfBundle:Language')->find($request->request->get('test-language'));
 
@@ -142,13 +127,6 @@ class TestController extends Controller
             $questionnaire = $order->getQuestionnaire();
             $questionnaire->setLanguage($language);
             $em->persist($questionnaire);
-        }
-
-        $display = $request->request->get('test-display');
-        if ($display == "actif") {
-            $test->setActif(true);
-        } else {
-            $test->setActif(false);
         }
 
         $em->persist($test);
@@ -162,14 +140,10 @@ class TestController extends Controller
      *
      * @Route("/test/{testId}/delete", name="editor_test_delete")
      * @Method("DELETE")
-     * @Template("")
      */
-    public function deleteTestAction($testId)
+    public function deleteTestAction(Test $test)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-
         $em->remove($test);
         $em->flush();
 
@@ -181,13 +155,9 @@ class TestController extends Controller
      *
      * @Route("/test/{testId}/duplicate", name="editor_test_duplicate")
      * @Method("GET")
-     * @Template("")
      */
-    public function duplicateTestAction($testId)
+    public function duplicateTestAction(Test $test)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $this->get("self.test.manager")->duplicate($test);
         $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a été dupliqué');
 
@@ -199,21 +169,10 @@ class TestController extends Controller
      *
      * @Route("/test/{testId}/archive", name="editor_test_archive")
      * @Method("GET")
-     * @Template("")
      */
-    public function archiveTestAction($testId)
+    public function archiveTestAction(Test $test)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $test = $this->get("self.test.manager")->toggleArchived($test);
-
-        if ($test->isArchived()) {
-            $msg = 'Le test '.$test->getName().' a été archivé';
-        } else {
-            $msg = 'Le test '.$test->getName().' a été désarchivé';
-        }
-        $this->get('session')->getFlashBag()->set('success', $msg);
+        $this->get("self.test.manager")->toggleArchived($test);
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
