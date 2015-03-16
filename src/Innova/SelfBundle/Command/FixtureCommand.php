@@ -270,7 +270,7 @@ class FixtureCommand extends ContainerAwareCommand
 
         $langCn = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Chinese");
         /* Level for Ialian language */
-        $levelLansadCns = array("A1", "A1.1", "A1.2", "A2", "A2.1", "A2.2", "B1" "B1.1", "B1.2", "B2.1", "Débutant complet", "Faux débutant", "Intermédiaire", "Avancé");
+        $levelLansadCns = array("A1", "A1.1", "A1.2", "A2", "A2.1", "A2.2", "B1", "B1.1", "B1.2", "B2.1", "Débutant complet", "Faux débutant", "Intermédiaire", "Avancé");
         foreach ($levelLansadCns as $levelLansadCn) {
             if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadCn, 'language' => $langCn))) {
                 $level = new LevelLansad();
