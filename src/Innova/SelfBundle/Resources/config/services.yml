@@ -97,7 +97,7 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
-            cacheManager:       @fos_http_cache.cache_manager
+            #cacheManager:       @fos_http_cache.cache_manager
             router:             @router
         calls:
             - [setRequest, [@request]]
@@ -171,10 +171,7 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             testManager:    @self.test.manager
-        calls:
-            - [setRequest, [@request]]
-        scope: request
-
+            
     innova_editor_proposition:
         class: Innova\SelfBundle\Controller\Editor\PropositionController
         arguments:

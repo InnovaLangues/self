@@ -117,6 +117,7 @@ class User extends BaseUser
         parent::__construct();
         $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->favoritesTests = new \Doctrine\Common\Collections\ArrayCollection();
         $this->locale = "fr";
     }
 

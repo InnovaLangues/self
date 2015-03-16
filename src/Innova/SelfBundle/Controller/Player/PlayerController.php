@@ -66,8 +66,6 @@ class PlayerController
      */
     public function startAction(Test $test, Session $session)
     {
-        $em = $this->entityManager;
-
         $sessionLogged = $this->session->get('sessionLogged-'.$session->getId());
         if ($sessionLogged != 1) {
             $url = $this->router->generate('session_log_form', array('sessionId' => $session->getId()));
@@ -130,8 +128,6 @@ class PlayerController
      */
     public function pickAQuestionnaireAction(Test $test, Session $session, Questionnaire $questionnairePicked)
     {
-        $em = $this->entityManager;
-
         $questionnaires = $this->questionnaireRepo->getByTest($test);
 
         $i = 0;

@@ -108,7 +108,6 @@ class MediaController
      */
     public function updateMediaAction()
     {
-
         // Function to update database in editor
         // In Editor, I choose en task and I want to update it
         $em = $this->entityManager;
@@ -155,7 +154,7 @@ class MediaController
 
         // I have my mediaIt and ...
         $mediaId = $request->get('mediaId');
-        $this->invalidateMediaAction($mediaId, $request->get('toBeReloaded'));
+        //$this->invalidateMediaAction($mediaId, $request->get('toBeReloaded'));
 
         // Add revisor
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
@@ -163,13 +162,11 @@ class MediaController
         return new Response($template);
     }
 
-
     /**
     * Fonction qui invalide le cache de tests et des questionnaires pour un média donné
     */
     private function invalidateMediaAction($mediaId, $typeReloaded)
     {
-
         // Manager call
         $em = $this->entityManager;
 
@@ -212,7 +209,6 @@ class MediaController
             $testsForQuestionnaire = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->
                                 findBy(array('questionnaire' => $questionnaireId));
             foreach ($testsForQuestionnaire as $testForQuestionnaire) {
-
                 $testId = $testForQuestionnaire->getTest()->getId();
 
                 // Now, I will invalidate
@@ -222,15 +218,13 @@ class MediaController
                 $pathToInvalidate = $this->router->generate('questionnaire_pick',
                                         array(
                                                 'testId' => $testId,
-                                                'questionnaireId' => $questionnaireId
+                                                'questionnaireId' => $questionnaireId,
                                              )
 
                  );
                 $this->cacheManager->invalidatePath($pathToInvalidate);
-
             }
         }
-
     }
 
     /**
