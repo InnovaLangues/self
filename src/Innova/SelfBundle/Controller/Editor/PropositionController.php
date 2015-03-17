@@ -3,9 +3,11 @@
 namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Proposition;
 
 /**
  * Class PropositionController
@@ -14,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  *      name    = "",
  *      service = "innova_editor_proposition"
  * )
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",       options={"id" = "questionnaireId"})
+ * @ParamConverter("proposition",     isOptional="true", class="InnovaSelfBundle:Proposition",      options={"id" = "propositionId"})
  */
 class PropositionController
 {
@@ -32,23 +36,17 @@ class PropositionController
 
     /**
      *
-     * @Route("/questionnaires/toggle_right_answer", name="editor_questionnaire_toggle_right_anwser", options={"expose"=true})
+     * @Route("/toggle_right_answer/{questionnaireId}/{propositionId}", name="editor_questionnaire_toggle_right_anwser", options={"expose"=true})
      * @Method("PUT")
      */
-    public function toggleRightAnswserAction(Request $request)
+    public function toggleRightAnswserAction(Questionnaire $questionnaire, Proposition $proposition)
     {
         $em = $this->entityManager;
-        $request = $request->request;
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->get('questionnaireId'));
-        $propositionId = $request->get('propositionId');
-        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
 
         $proposition = $this->propositionManager->toggleRightAnswer($proposition);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:proposition.html.twig', array('questionnaire' => $questionnaire, 'proposition' => $proposition));
-
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         return new Response($template);
     }

@@ -127,8 +127,6 @@ class TraceController
      */
     private function createAnswerProposition(Trace $trace, $saisie, Subquestion $subquestion)
     {
-        $em = $this->entityManager;
-
         $typo = $subquestion->getTypology()->getName();
 
         if ($typo == "TLQROC") {

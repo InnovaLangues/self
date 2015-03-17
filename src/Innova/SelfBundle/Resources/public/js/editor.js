@@ -619,12 +619,12 @@ function toggleRightWrong(propositionId){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_toggle_right_anwser'),
+        url: Routing.generate('editor_questionnaire_toggle_right_anwser',
+            {
+                'questionnaireId': questionnaireId,
+                'propositionId': propositionId
+            }),
         type: 'PUT',
-        data: {
-            questionnaireId: questionnaireId,
-            propositionId: propositionId,
-        }
     })
     .done(function(data) {
         afterAjax();
