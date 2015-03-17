@@ -531,11 +531,13 @@ function setTextTitle(questionnaireId) {
     beforeAjax();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_set-text-title'),
+        url: Routing.generate('editor_questionnaire_set-text-title',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'POST',
         dataType: 'json',
         data: {
-            questionnaireId: questionnaireId,
             title: $("#text-title").val()
         }
     })
@@ -657,10 +659,12 @@ function setTextType(textType){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('set-text-type'),
+        url: Routing.generate('set-text-type',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'PUT',
         data: {
-            questionnaireId: questionnaireId,
             textType: textType,
         }
     })
@@ -1019,11 +1023,15 @@ $(document).on('focusin', function(e) {
 **************************************************/
 function setIdentityField(form){
     var data = form.serializeArray();
+    var questionnaireId = $("#questionnaire-id").val();
     beforeAjax();
 
     $.ajax({
         type: 'POST',
-        url: Routing.generate('set-identity-field'),
+        url: Routing.generate('set-identity-field',
+            {
+                'questionnaireId': questionnaireId
+            }),
         data: data,
         complete: function(data) {
             $('#modal-subquestion-identity').modal('hide');
@@ -1036,11 +1044,13 @@ function setIdentityField(form){
 function setGeneralInfoFields(questionnaireId, field, value){
     beforeAjax();
     $.ajax({
-        url: Routing.generate('set-general-info-field'),
+        url: Routing.generate('set-general-info-field',
+            {
+                'questionnaireId': questionnaireId
+            }),
             type: 'POST',
             dataType: 'json',
             data: {
-                questionnaireId: questionnaireId,
                 field: field,
                 value: value
             }
