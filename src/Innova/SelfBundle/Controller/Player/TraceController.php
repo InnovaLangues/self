@@ -9,8 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Trace;
 
 /**
  * Class TraceController
@@ -23,6 +25,7 @@ use Innova\SelfBundle\Entity\Questionnaire;
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
+ * @ParamConverter("trace", isOptional="true", class="InnovaSelfBundle:Trace", options={"id" = "traceId"})
  */
 
 class TraceController
@@ -69,7 +72,6 @@ class TraceController
      *
      * @Route("trace_submit/{testId}/{sessionId}/{questionnaireId}", name="trace_submit")
      * @Method("POST")
-     * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
      */
     public function saveTraceAction(Test $test, Session $session, Questionnaire $questionnaire, Request $request)
     {
@@ -83,23 +85,24 @@ class TraceController
             $component = null;
         }
 
-        $countTrace = $em->getRepository('InnovaSelfBundle:Questionnaire')->countTraceByUserByTestByQuestionnaire($test, $questionnaire, $this->user, $component, $session);
-        if ($countTrace > 0) {
-            $this->session->getFlashBag()->set('notice', 'Vous avez déjà répondu à cette question.');
-            $trace = null;
+        $trace = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByUserByTestByQuestionnaire($test, $questionnaire, $this->user, $component, $session);
+        if ($trace) {
+            $this->session->getFlashBag()->set('danger', 'Vous avez déjà répondu à cette question.');
         } else {
             $agent = $request->headers->get('User-Agent');
             $trace = $this->traceManager->createTrace($questionnaire, $test, $this->user, $post["totalTime"], $agent, $component, $session);
             $this->parsePost($post, $trace);
         }
 
-        return array("trace" => $trace, "test" => $test, "session" => $session);
+        $url = $this->router->generate('trace_difficulty_form', array('testId' => $test->getId(), 'sessionId' => $session->getId(), 'traceId' => $trace->getId() ));
+
+        return new RedirectResponse($url);
     }
 
     /**
     * Parse post var
     */
-    private function parsePost($post, $trace)
+    private function parsePost($post, Trace $trace)
     {
         $em = $this->entityManager;
         $this->session->getFlashBag()->set('success', $this->translator->trans("trace.answer_saved", array(), "messages"));
@@ -109,9 +112,10 @@ class TraceController
             if (is_array($postVar)) {
                 foreach ($postVar as $key => $propositionId) {
                     if ($subquestion->getTypology()->getName() != "TLQROC") {
-                        $this->createAnswer($trace, $propositionId, $subquestionId);
+                        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
+                        $this->answerManager->createAnswer($trace, $subquestion, $proposition);
                     } else {
-                        $this->createAnswerProposition($trace, $propositionId, $subquestionId);
+                        $this->createAnswerProposition($trace, $propositionId, $subquestion);
                     }
                 }
             }
@@ -119,27 +123,12 @@ class TraceController
     }
 
     /**
-     * si la proposition est de type numéric alors on est dans le cas d'un choix dans une liste
-     */
-    private function createAnswer($trace, $propositionId, $subquestionId)
-    {
-        $em = $this->entityManager;
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
-        $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
-
-        $answer = $this->answerManager->createAnswer($trace, $subquestion, $proposition);
-
-        return $answer;
-    }
-
-    /**
      * si la proposition N'est PAS de type numéric alors on est dans le cas d'une SAISIE
      */
-    private function createAnswerProposition($trace, $saisie, $subquestionId)
+    private function createAnswerProposition(Trace $trace, $saisie, Subquestion $subquestion)
     {
         $em = $this->entityManager;
 
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
         $typo = $subquestion->getTypology()->getName();
 
         if ($typo == "TLQROC") {
@@ -180,25 +169,33 @@ class TraceController
     }
 
     /**
+     * Display difficulty form for a task
+     *
+     * @Route("trace_difficulty/{sessionId}/{testId}/{traceId}", name="trace_difficulty_form")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
+     */
+    public function displayDifficulty(Test $test, Session $session, Trace $trace)
+    {
+        return array("trace" => $trace, "test" => $test, "session" => $session);
+    }
+
+    /**
      * update a trace to set the difficulty
      *
-     * @Route("trace_setDifficulty", name="trace_setDifficulty")
+     * @Route("trace_setDifficulty/{traceId}/{testId}/{sessionId}", name="trace_setDifficulty")
      * @Method("POST")
      */
-    public function traceSetDifficultyAction(Request $request)
+    public function traceSetDifficultyAction(Request $request, Trace $trace, Test $test, Session $session)
     {
         $em = $this->entityManager;
         $post = $request->request->all();
 
-        $trace = $em->getRepository('InnovaSelfBundle:Trace')->find($post["traceId"]);
         $trace->setDifficulty($post["difficulty"]);
         $em->persist($trace);
         $em->flush();
 
-        $testId = $trace->getTest()->getId();
-        $sessionId = $trace->getSession()->getId();
-
-        $url = $this->router->generate('test_start', array('testId' => $testId, 'sessionId' => $sessionId));
+        $url = $this->router->generate('test_start', array('testId' => $test->getId(), 'sessionId' => $session->getId()));
 
         return new RedirectResponse($url);
     }

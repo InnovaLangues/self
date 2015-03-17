@@ -162,7 +162,7 @@ class PlayerController
     }
 
      /**
-     * @Method("GET")
+     * @Method("POST")
      * @Route("/log/session/{sessionId}", name="session_log")
      */
     public function sessionLog(Session $session, Request $request)
