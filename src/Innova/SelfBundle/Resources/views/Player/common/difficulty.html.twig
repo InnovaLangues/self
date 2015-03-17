@@ -1,45 +1,30 @@
 {% extends '::base.html.twig' %}
 {% block body -%}
+    {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-{{ label }}">{{ flash }}</div>
+        {% endfor %}
+    {% endfor %}
 
-{#
-On vient dans cette vue en faisant 2 traitements différents.
-1 / Si l'utilisateur a validé "normalement" alors j'affiche le formulaire de "Difficulté"
-2 / Si l'utilisateur a déjà validé une réponse et qu'il a fait "back" pour corriger alors ceci n'est pas autorisé.
-Et dans ce cas, j'affiche un message d'erreur et je le route vers le questionnaire suivant.
-#}
+    <form action="{{ path('trace_setDifficulty', { 'traceId': trace.id, 'testId': test.id, 'sessionId': session.id }) }}" method="post">
+        {{ 'trace.action.evaluate' | trans }}
+        <label class="radio">
+            <input type="radio" name="difficulty" value=1 required> {{ 'trace.field.difficulty.veryEasy' | trans }}
+        </label>
+        <label class="radio">
+            <input type="radio" name="difficulty" value=2 required> {{ 'trace.field.difficulty.easy' | trans }}
+        </label>
+        <label class="radio">
+            <input type="radio" name="difficulty" value=3 required> {{ 'trace.field.difficulty.normal' | trans }}
+        </label>
+        <label class="radio">
+            <input type="radio" name="difficulty" value=4 required> {{ 'trace.field.difficulty.difficult' | trans }}
+        </label>
+        <label class="radio">
+            <input type="radio" name="difficulty" value=5 required> {{ 'trace.field.difficulty.veryDifficult' | trans }}
+        </label>
 
-    {% if trace == null %} {# Dans ce cas, l'utilisateur a déjà une trace et il a fait "back" #}
-        <form action="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id }) }}" method="get">
-            {% for flashMessage in app.session.flashbag.get('notice') %}
-                <div class="alert alert-danger">{{ flashMessage }}</div>
-            {% endfor %}
-            <input type="submit" class="btn btn-primary" value="{{ 'trace.test_continue' | trans }}"/>
-        </form>
-    {% else %}
-        <form action="{{ path('trace_setDifficulty') }}" method="post">
-            {% for flashMessage in app.session.flashbag.get('success') %}
-                <div class="alert alert-success">{{ flashMessage }}</div>
-            {% endfor %}
-            {{ 'trace.action.evaluate' | trans }}
-            <label class="radio">
-                <input type="radio" name="difficulty" value=1 required> {{ 'trace.field.difficulty.veryEasy' | trans }}
-            </label>
-            <label class="radio">
-                <input type="radio" name="difficulty" value=2 required> {{ 'trace.field.difficulty.easy' | trans }}
-            </label>
-            <label class="radio">
-                <input type="radio" name="difficulty" value=3 required> {{ 'trace.field.difficulty.normal' | trans }}
-            </label>
-            <label class="radio">
-                <input type="radio" name="difficulty" value=4 required> {{ 'trace.field.difficulty.difficult' | trans }}
-            </label>
-            <label class="radio">
-                <input type="radio" name="difficulty" value=5 required> {{ 'trace.field.difficulty.veryDifficult' | trans }}
-            </label>
-
-            <input type="hidden" name="traceId" value="{{ trace.id }}"/>
-            <input type="submit" class="btn btn-primary" value="{{ 'generic.validate' | trans }}"/>
-        </form>
-    {% endif %}
-
+        <input type="hidden" name="traceId" value="{{ trace.id }}"/>
+        <input type="submit" class="btn btn-primary" value="{{ 'generic.validate' | trans }}"/>
+    </form>
 {% endblock %}

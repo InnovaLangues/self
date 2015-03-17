@@ -80,7 +80,7 @@ class PlayerManager
 
             // on prend la tâche suivante pour le composant courant
             if (!$nextOrderQuestionnaire = $this->pickNextQuestionnaire($component, $orderQC)) {
-                // s'il n'existe pas on prend le prochain composant
+                // s'elle n'existe pas on prend le prochain composant
                 if ($nextComponent = $this->pickNextComponent($test, $session, $component)) {
                     // on récupère le 1er élement du composant
                     $nextOrderQuestionnaire = $this->pickNextQuestionnaire($nextComponent);

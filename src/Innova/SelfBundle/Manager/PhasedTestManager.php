@@ -116,7 +116,7 @@ class PhasedTestManager
         foreach ($newOrderArray as $orderId) {
             $i++;
             $orderQuestionnaireComponent = $this->orderQuestionnaireComponentRepo->find($orderId);
-            $orderQuestionnaireComponent->setDisplayOrder($i+1);
+            $orderQuestionnaireComponent->setDisplayOrder($i);
             $em->persist($orderQuestionnaireComponent);
         }
         $em->flush();
