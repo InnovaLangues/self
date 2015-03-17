@@ -102,7 +102,7 @@ class PlayerManager
      */
     private function pickNextQuestionnaire(Component $component, OrderQuestionnaireComponent $orderQC = null)
     {
-        $displayOrder = ($orderQC != null) ? $orderQC->getDisplayOrder() + 1 : 1;
+        $displayOrder = ($orderQC !== null) ? $orderQC->getDisplayOrder() + 1 : 1;
         $nextOrderQC = $this->orderQCRepo->findOneBy(array("component" => $component, "displayOrder" => $displayOrder));
 
         return $nextOrderQC;
