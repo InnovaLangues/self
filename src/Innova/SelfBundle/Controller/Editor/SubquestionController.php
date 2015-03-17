@@ -6,8 +6,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Form\Type\SubquestionType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Typology;
 
 /**
  * Class MediaController
@@ -16,6 +20,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *      name    = "",
  *      service = "innova_editor_subquestion"
  * )
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
+ * @ParamConverter("typology",      isOptional="true", class="InnovaSelfBundle:Typology", options={"id" = "typologyId"})
+ * @ParamConverter("subquestion",   isOptional="true", class="InnovaSelfBundle:Subquestion", options={"id" = "subquestionId"})
  */
 class SubquestionController
 {
@@ -47,22 +54,15 @@ class SubquestionController
 
     /**
      *
-     * @Route("/questionnaires/create-subquestion", name="editor_questionnaire_create-subquestion", options={"expose"=true})
+     * @Route("/questionnaire/create-subquestion/{questionnaireId}/{typologyId}", name="editor_questionnaire_create-subquestion", options={"expose"=true})
      * @Method("PUT")
      */
-    public function createSubquestionAction(Request $request)
+    public function createSubquestionAction(Questionnaire $questionnaire, Typology $typology)
     {
         $em = $this->entityManager;
 
-        $questionnaireId = $request->get('questionnaireId');
-        $questionnaireTypology = $request->get('questionnaireTypology');
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $question = $questionnaire->getQuestions()[0];
-        $typology = $em->getRepository('InnovaSelfBundle:Typology')->find($questionnaireTypology);
-
         $subquestion = $this->subquestionManager->createSubquestion($typology, $question);
-
         $this->propositionManager->createVfPropositions($questionnaire, $subquestion, $typology);
 
         $em->persist($subquestion);
@@ -78,22 +78,16 @@ class SubquestionController
 
     /**
      *
-     * @Route("/questionnaires/delete-subquestion", name="editor_questionnaire_delete_subquestion", options={"expose"=true})
+     * @Route("/questionnaire/{questionnaireId}/delete-subquestion/{subquestionId}", name="editor_questionnaire_delete_subquestion", options={"expose"=true})
      * @Method("DELETE")
      */
-    public function deleteSubquestionAction(Request $request)
+    public function deleteSubquestionAction(Questionnaire $questionnaire, Subquestion $subquestion)
     {
         $em = $this->entityManager;
 
-        $subquestionId = $request->get('subquestionId');
-        $questionnaireId = $request->get('questionnaireId');
-
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
         $em->remove($subquestion);
+
         $em->flush();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
@@ -103,16 +97,12 @@ class SubquestionController
 
     /**
      *
-     * @Route("/subquestion/display-identity-form", name="editor_subquestion-identity-form", options={"expose"=true})
+     * @Route("/subquestion/{subquestionId}/display-identity-form", name="editor_subquestion-identity-form", options={"expose"=true})
      * @Method("GET")
      */
-    public function displayIdentityFormAction(Request $request)
+    public function displayIdentityFormAction(Subquestion $subquestion)
     {
-        $em = $this->entityManager;
-
-        $subquestionId = $request->get('subquestionId');
-
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
+        $subquestionId = $subquestion->getId();
         $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion-identity.html.twig',
@@ -127,15 +117,12 @@ class SubquestionController
 
     /**
      *
-     * @Route("/subquestion/set-identity-field", name="set-subquestion-identity-field", options={"expose"=true})
+     * @Route("/subquestion/{subquestionId}/set-identity-field/", name="set-subquestion-identity-field", options={"expose"=true})
      * @Method("POST")
      */
-    public function setIdentityFieldAction(Request $request)
+    public function setIdentityFieldAction(Request $request, Subquestion $subquestion)
     {
         $em = $this->entityManager;
-
-        $requestForm = $request->get("subquestion");
-        $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($requestForm["id"]);
 
         $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
         $form->bind($request);

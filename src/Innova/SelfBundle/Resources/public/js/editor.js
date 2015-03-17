@@ -531,11 +531,13 @@ function setTextTitle(questionnaireId) {
     beforeAjax();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_set-text-title'),
+        url: Routing.generate('editor_questionnaire_set-text-title',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'POST',
         dataType: 'json',
         data: {
-            questionnaireId: questionnaireId,
             title: $("#text-title").val()
         }
     })
@@ -579,13 +581,14 @@ function unlinkMedia(){
 function createSubquestion(questionnaireId) {
     beforeAjax();
     $.ajax({
-        url: Routing.generate('editor_questionnaire_create-subquestion'),
+        url: Routing.generate('editor_questionnaire_create-subquestion',
+            {
+                'questionnaireId': questionnaireId,
+                'typologyId': $("#typology").val()
+
+            }),
         type: 'PUT',
         dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-            questionnaireTypology: $("#typology").val()
-        }
     })
     .complete(function(data) {
         afterAjax();
@@ -597,13 +600,13 @@ function deleteSubquestion(questionnaireId, subquestionId){
     beforeAjax();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_delete_subquestion'),
+        url: Routing.generate('editor_questionnaire_delete_subquestion',
+            {
+                'questionnaireId': questionnaireId,
+                'subquestionId': subquestionId
+            }),
         type: 'DELETE',
         dataType: 'json',
-        data: {
-            questionnaireId: questionnaireId,
-            subquestionId: subquestionId,
-        }
     })
     .complete(function(data) {
         afterAjax();
@@ -619,12 +622,12 @@ function toggleRightWrong(propositionId){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('editor_questionnaire_toggle_right_anwser'),
+        url: Routing.generate('editor_questionnaire_toggle_right_anwser',
+            {
+                'questionnaireId': questionnaireId,
+                'propositionId': propositionId
+            }),
         type: 'PUT',
-        data: {
-            questionnaireId: questionnaireId,
-            propositionId: propositionId,
-        }
     })
     .done(function(data) {
         afterAjax();
@@ -657,10 +660,12 @@ function setTextType(textType){
     var questionnaireId = $("#questionnaire-id").val();
 
     $.ajax({
-        url: Routing.generate('set-text-type'),
+        url: Routing.generate('set-text-type',
+            {
+                'questionnaireId': questionnaireId
+            }),
         type: 'PUT',
         data: {
-            questionnaireId: questionnaireId,
             textType: textType,
         }
     })
@@ -1019,11 +1024,15 @@ $(document).on('focusin', function(e) {
 **************************************************/
 function setIdentityField(form){
     var data = form.serializeArray();
+    var questionnaireId = $("#questionnaire-id").val();
     beforeAjax();
 
     $.ajax({
         type: 'POST',
-        url: Routing.generate('set-identity-field'),
+        url: Routing.generate('set-identity-field',
+            {
+                'questionnaireId': questionnaireId
+            }),
         data: data,
         complete: function(data) {
             $('#modal-subquestion-identity').modal('hide');
@@ -1036,11 +1045,13 @@ function setIdentityField(form){
 function setGeneralInfoFields(questionnaireId, field, value){
     beforeAjax();
     $.ajax({
-        url: Routing.generate('set-general-info-field'),
+        url: Routing.generate('set-general-info-field',
+            {
+                'questionnaireId': questionnaireId
+            }),
             type: 'POST',
             dataType: 'json',
             data: {
-                questionnaireId: questionnaireId,
                 field: field,
                 value: value
             }
@@ -1064,11 +1075,11 @@ function subquestionIdentityModal(subquestionId){
     beforeAjax();
 
     $.ajax({
-        url: Routing.generate('editor_subquestion-identity-form'),
+        url: Routing.generate('editor_subquestion-identity-form',
+            {
+                'subquestionId': subquestionId
+            }),
         type: 'GET',
-        data: {
-            subquestionId: subquestionId,
-        }
     })
     .done(function(data) {
         $('#modal-subquestion-identity').find(".modal-body").html(data);
@@ -1084,7 +1095,10 @@ function postForm(form){
 
     $.ajax({
         type: 'POST',
-        url: Routing.generate('set-subquestion-identity-field'),
+        url: Routing.generate('set-subquestion-identity-field',
+            {
+                'subquestionId': $("#subquestion_id").val()
+            }),
         data: data,
         complete: function(data) {
             $('#modal-subquestion-identity').modal('hide');

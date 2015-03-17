@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Form\Type\QuestionnaireType;
+use Innova\SelfBundle\Entity\Questionnaire;
 
 /**
  * Class QuestionnaireController
@@ -16,6 +18,7 @@ use Innova\SelfBundle\Form\Type\QuestionnaireType;
  *      name    = "",
  *      service = "innova_editor_questionnaire"
  * )
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",       options={"id" = "questionnaireId"})
  */
 
 class QuestionnaireController
@@ -45,16 +48,14 @@ class QuestionnaireController
 
     /**
      *
-     * @Route("/questionnaires/set-text-title", name="editor_questionnaire_set-text-title", options={"expose"=true})
+     * @Route("/questionnaire/{questionnaireId}/set-text-title", name="editor_questionnaire_set-text-title", options={"expose"=true})
      * @Method("POST")
      */
-    public function setTextTitleAction(Request $request)
+    public function setTextTitleAction(Request $request, Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
 
         $title = $request->request->get('title');
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
-
         $questionnaire->setTextTitle($title);
         $em->persist($questionnaire);
         $em->flush();
@@ -70,17 +71,14 @@ class QuestionnaireController
 
     /**
      *
-     * @Route("/questionnaires/set-text-type", name="set-text-type", options={"expose"=true})
+     * @Route("/questionnaire/{questionnaireId}/set-text-type", name="set-text-type", options={"expose"=true})
      * @Method("PUT")
      */
-    public function setTextTypeAction(Request $request)
+    public function setTextTypeAction(Request $request, Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
 
-        $questionnaireId = $request->request->get('questionnaireId');
         $textType = $request->request->get('textType');
-
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
         $questionnaire->setDialogue($textType);
         $em->persist($questionnaire);
         $em->flush();
@@ -92,16 +90,14 @@ class QuestionnaireController
 
     /**
      *
-     * @Route("/questionnaires/set-identity-field", name="set-identity-field", options={"expose"=true})
+     * @Route("/questionnaire/{questionnaireId}/set-identity-field/", name="set-identity-field", options={"expose"=true})
      * @Method("POST")
      */
-    public function setIdentityFieldAction(Request $request)
+    public function setIdentityFieldAction(Request $request, Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
 
         $requestForm = $request->get("questionnaire");
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($requestForm["id"]);
-
         $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
         $form->bind($request);
 
@@ -117,16 +113,14 @@ class QuestionnaireController
 
      /**
     *
-    * @Route("/questionnaires/set-general-info-field", name="set-general-info-field", options={"expose"=true})
+    * @Route("/questionnaire/{questionnaireId}/set-general-info-field", name="set-general-info-field", options={"expose"=true})
     * @Method("POST")
     */
-    public function setGeneralInfoFieldAction(Request $request)
+    public function setGeneralInfoFieldAction(Request $request, Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
         $field = $request->request->get('field');
         $value = $request->request->get('value');
 
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($request->request->get('questionnaireId'));
         $response = $this->questionnaireManager->setIdentityField($questionnaire, $field, $value);
 
         return $response;
