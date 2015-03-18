@@ -22,14 +22,12 @@ use Innova\SelfBundle\Entity\Proposition;
 class PropositionController
 {
     protected $propositionManager;
-    protected $entityManager;
     protected $templating;
     protected $questionnaireRevisorsManager;
 
-    public function __construct($propositionManager, $entityManager, $templating, $questionnaireRevisorsManager)
+    public function __construct($propositionManager, $templating, $questionnaireRevisorsManager)
     {
         $this->propositionManager = $propositionManager;
-        $this->entityManager = $entityManager;
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
     }
@@ -41,8 +39,6 @@ class PropositionController
      */
     public function toggleRightAnswserAction(Questionnaire $questionnaire, Proposition $proposition)
     {
-        $em = $this->entityManager;
-
         $proposition = $this->propositionManager->toggleRightAnswer($proposition);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 

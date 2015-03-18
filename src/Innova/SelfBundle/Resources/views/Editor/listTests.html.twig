@@ -2,7 +2,7 @@
 
 {% block body -%}
 
-<a class="btn btn-default btn-sm" href="{{ path('editor_test_create_form') }}">
+<a class="btn btn-default btn-sm" href="{{ path('editor_test_create') }}">
     <span class="glyphicon glyphicon-plus"></span> {{ 'editor.test.create' | trans }}
 </a>
 
@@ -50,7 +50,7 @@
             </td>
 
             <td class="text-right">
-                <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_form', { 'testId': test.id }) }}">
+                <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit', { 'testId': test.id }) }}">
                     <span class="glyphicon glyphicon-cog"></span> {{ 'generic.edit' | trans }}
                 </a>
                 <a class="btn btn-default btn-sm " href="{{ path('editor_test_sessions', { 'testId': test.id } )}}">

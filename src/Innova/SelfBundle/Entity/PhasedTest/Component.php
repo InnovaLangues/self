@@ -35,7 +35,7 @@ class Component
     private $alternativeNumber;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test", inversedBy="components")
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test", inversedBy="components", cascade={"persist"})
     */
     protected $test;
 
@@ -173,13 +173,13 @@ class Component
     /**
      * Add traces
      *
-     * @param \Innova\SelfBundle\Entity\Trace $traces
+     * @param  \Innova\SelfBundle\Entity\Trace $traces
      * @return Component
      */
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
     {
         $this->traces[] = $traces;
-    
+
         return $this;
     }
 
@@ -196,7 +196,7 @@ class Component
     /**
      * Get traces
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTraces()
     {

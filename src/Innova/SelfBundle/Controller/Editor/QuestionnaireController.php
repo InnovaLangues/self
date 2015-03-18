@@ -97,7 +97,6 @@ class QuestionnaireController
     {
         $em = $this->entityManager;
 
-        $requestForm = $request->get("questionnaire");
         $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
         $form->bind($request);
 

@@ -5,52 +5,22 @@
 <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
     <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
 </a>
-<input value="{{'editor.test.delete' | trans }}" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-test-modal">
-<a href="{{ path('editor_test_duplicate', { 'testId': test.id }) }}" class="btn btn-sm btn-default">
-    {{'editor.test.duplicate' | trans }}
-</a>
-<a href="{{ path('editor_test_archive', { 'testId': test.id }) }}" class="btn btn-sm btn-default">
-    {% if test.isArchived %}
-        {{'editor.test.unarchive' | trans }}
-    {% else %}
-        {{'editor.test.archive' | trans }}
-    {% endif %}
-</a>
-
-<a href="{{ path('editor_test_phase', { 'testId': test.id }) }}" class="btn btn-sm btn-default">
-    {% if test.phased %}
-        Unphased
-    {% else %}
-        Phased
-    {% endif %}
-</a>
+{% if test is defined %}
+    <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-test-modal">
+        {{'editor.test.delete' | trans }}
+    </a>
+    <a href="{{ path('editor_test_duplicate', { 'testId': test.id }) }}" class="btn btn-sm btn-default">
+        {{'editor.test.duplicate' | trans }}
+    </a>
+{% endif %}
 
 <hr/>
 
 <h3>{{ 'editor.test.edition' | trans }}</h3>
-<form role="form" action="{{ path('editor_test_edit', { 'testId': test.id }) }}" method="POST">
-    <div class="form-group">
-        <label for="test-name">{{ 'editor.test.name' | trans }}</label>
-        <input value="{{ test.name }}" id="test-name" type="text" class="form-control" name="test-name" required />
-    </div>
+{{ form(form) }}
 
-    <div class="form-group">
-        <label for="test-language">{{ 'editor.test.language' | trans }}</label>
-        <select id="test-language" class="form-control" name="test-language" required />
-            {% for language in get_languages() %}
-                {% set languageTransl =   'language.'~language.name %}
-                <option {% if test.language == language %}selected{% endif %} value="{{ language.id }}">{{languageTransl | trans }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    
-    <div class="form-group ">
-        <div class="pull-right">
-            <input type="submit" value="{{ 'generic.save' | trans }}" class="btn btn-default">
-        </div>
-    </div>
-</form>
 
+{% if test is defined %}
 <div class="modal fade" id="delete-test-modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -69,4 +39,6 @@
         </div>
     </div>
 </div>
+{% endif %}
+
 {% endblock %}

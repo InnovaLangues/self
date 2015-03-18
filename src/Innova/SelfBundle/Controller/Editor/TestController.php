@@ -3,10 +3,12 @@
 namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Innova\SelfBundle\Form\Type\TestType;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Language;
 
@@ -62,80 +64,6 @@ class TestController extends Controller
     }
 
     /**
-     * Display form to create a new Questionnaire entity.
-     *
-     * @Route("/test/newform", name="editor_test_create_form")
-     * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:createTestForm.html.twig")
-     */
-    public function createTestFormAction()
-    {
-        return array();
-    }
-
-    /**
-     * Creates a new Test entity.
-     *
-     * @Route("/test/create", name="editor_test_create")
-     * @Method("POST")
-     */
-    public function createTestAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request');
-
-        $test = new Test();
-        $test->setName($request->request->get('test-name'));
-        $test->setLanguage($em->getRepository('InnovaSelfBundle:Language')->find($request->request->get('test-language')));
-
-        $em->persist($test);
-        $em->flush();
-
-        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a été créé');
-
-        return $this->redirect($this->generateUrl('editor_tests_show'));
-    }
-
-    /**
-     * Display form to edit a test entity.
-     *
-     * @Route("/test/{testId}/editform", name="editor_test_edit_form")
-     * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:editTestForm.html.twig")
-     */
-    public function editTestFormAction(Test $test)
-    {
-        return array('test' => $test);
-    }
-
-    /**
-     * Edits a test entity.
-     *
-     * @Route("/test/{testId}/edit", name="editor_test_edit")
-     * @Method("POST")
-     */
-    public function editTestAction(Test $test)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request');
-
-        $test->setName($request->request->get('test-name'));
-        $language = $em->getRepository('InnovaSelfBundle:Language')->find($request->request->get('test-language'));
-
-        $test->setLanguage($language);
-        foreach ($test->getOrderQuestionnaireTests() as $order) {
-            $questionnaire = $order->getQuestionnaire();
-            $questionnaire->setLanguage($language);
-            $em->persist($questionnaire);
-        }
-
-        $em->persist($test);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('editor_tests_show'));
-    }
-
-    /**
      * Edits a test entity.
      *
      * @Route("/test/{testId}/delete", name="editor_test_delete")
@@ -159,21 +87,70 @@ class TestController extends Controller
     public function duplicateTestAction(Test $test)
     {
         $this->get("self.test.manager")->duplicate($test);
-        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a été dupliqué');
+        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué');
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
 
     /**
-     * Archive a test entity.
+     * Display form to create a new Questionnaire entity.
      *
-     * @Route("/test/{testId}/archive", name="editor_test_archive")
-     * @Method("GET")
+     * @Route("/test/newform", name="editor_test_create")
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Editor:editTestForm.html.twig")
      */
-    public function archiveTestAction(Test $test)
+    public function newAction(Request $request)
     {
-        $this->get("self.test.manager")->toggleArchived($test);
+        $test = new Test();
+        $form = $this->handleForm($test, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('success', "Le test a bien été créée");
 
-        return $this->redirect($this->generateUrl('editor_tests_show'));
+            return $this->redirect($this->generateUrl('editor_tests_show'));
+        }
+
+        return array('form' => $form->createView());
+    }
+
+    /**
+     * Edits a test entity.
+     *
+     * @Route("/test/{testId}/edit", name="editor_test_edit")
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Editor:editTestForm.html.twig")
+     */
+    public function editAction(Test $test, Request $request)
+    {
+        $form = $this->handleForm($test, $request);
+
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('success', "Le test a bien été modifiée");
+
+            return $this->redirect($this->generateUrl('editor_tests_show'));
+        }
+
+        return array('form' => $form->createView(), 'test' => $test);
+    }
+
+    /**
+     * Handles test form
+     */
+    private function handleForm(Test $test, $request)
+    {
+        $form = $this->get('form.factory')->createBuilder(new TestType(), $test)->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($test);
+                $em->flush();
+
+                return;
+            }
+        }
+
+        return $form;
     }
 }

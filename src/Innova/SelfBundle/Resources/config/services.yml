@@ -151,7 +151,6 @@ services:
     innova_editor_proposition:
         class: Innova\SelfBundle\Controller\Editor\PropositionController
         arguments:
-            propositionManager: @self.proposition.manager
-            entityManager:          @doctrine.orm.entity_manager
-            templating:                @templating
-            questionnaireRevisorsManager: @self.questionnaire_revisors.manager
+            propositionManager:             @self.proposition.manager
+            templating:                     @templating
+            questionnaireRevisorsManager:   @self.questionnaire_revisors.manager

@@ -11,6 +11,7 @@ class TestManager
     protected $questionnaireManager;
     protected $orderQuestionnaireTestManager;
     protected $phasedTestManager;
+    protected $componentManager;
     protected $session;
     protected $user;
 
@@ -20,6 +21,7 @@ class TestManager
         $questionnaireManager,
         $orderQuestionnaireTestManager,
         $phasedTestManager,
+        $componentManager,
         $session
     ) {
         $this->entityManager = $entityManager;
@@ -27,6 +29,7 @@ class TestManager
         $this->questionnaireManager = $questionnaireManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
         $this->phasedTestManager = $phasedTestManager;
+        $this->componentManager = $componentManager;
         $this->session = $session;
         $this->user = $this->securityContext->getToken()->getUser();
     }
@@ -74,10 +77,14 @@ class TestManager
         $name = $test->getName();
         $language = $test->getLanguage();
         $orderedTasks = $test->getOrderQuestionnaireTests();
+        $components = $test->getComponents();
+        $phased = $test->getPhased();
 
         $newTest = new Test();
         $newTest->setName("Copie de ".$name);
         $newTest->setLanguage($language);
+        $newTest->setPhased($phased);
+        $newTest->setArchived(false);
         $newTest->setTestOrigin($test);
 
         foreach ($orderedTasks as $orderedTask) {
@@ -85,6 +92,11 @@ class TestManager
             $newTask = $this->questionnaireManager->duplicate($task);
             $newOrderedTask = $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($newTest, $newTask);
             $newTest->addOrderQuestionnaireTest($newOrderedTask);
+        }
+
+        foreach ($components as $component) {
+            $newComponent = $this->componentManager->duplicate($component, $newTest);
+            $newTest->addComponent($newComponent);
         }
 
         $this->entityManager->persist($newTest);
