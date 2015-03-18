@@ -38,8 +38,7 @@
                                             <li class="divider"></li>
                                             {% set languages = get_languages() %}
                                             {% for language in languages %}
-                                                {% set languageTransl =   'language.'~language.name %}
-                                                <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{languageTransl | trans }}</a></li>
+                                                <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{language.name | trans }}</a></li>
                                             {% endfor %}
                                             <li class="divider"></li>
                                             <li><a href="{{ path('editor_test_create') }}">
@@ -63,8 +62,7 @@
                                             <li><a href="{{path('editor_questionnaires_show')}}">{{ 'editor.task.all_tasks' | trans }}</a></li>
                                             <li class="divider"></li>
                                             {% for language in languages %}
-                                                {% set languageTransl =   'language.'~language.name %}
-                                                <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{languageTransl | trans }}</a></li>
+                                                <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{ language.name | trans }}</a></li>
                                             {% endfor %}
                                         </ul>
                                     </li>

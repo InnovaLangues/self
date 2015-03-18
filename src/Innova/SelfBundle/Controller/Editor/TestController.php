@@ -104,7 +104,7 @@ class TestController extends Controller
         $test = new Test();
         $form = $this->handleForm($test, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('success', "Le test a bien été créée");
+            $this->get("session")->getFlashBag()->set('success', "Le test a bien été créé");
 
             return $this->redirect($this->generateUrl('editor_tests_show'));
         }

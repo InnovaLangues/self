@@ -11,7 +11,7 @@ class TestType extends AbstractType
     {
         $builder->add('name', 'text', array(
                 'attr' => array('class' => 'form-control', 'data-field' => 'name'),
-                'label'  => 'name',
+                'label'  => 'editor.test.name',
                 'translation_domain' => 'messages',
             ));
 
@@ -19,21 +19,21 @@ class TestType extends AbstractType
                 'class' => 'InnovaSelfBundle:Language',
                 'property' => 'name',
                 'attr' => array('class' => 'form-control', 'data-field' => 'language'),
-                'label'  => 'language',
+                'label'  => 'editor.identity.language',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('phased', 'choice', array(
                 'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'phased'),
-                'label'  => 'phased',
+                'label'  => 'editor.test.phased',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('archived', 'choice', array(
                 'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'archived'),
-                'label'  => 'archived',
+                'label'  => 'editor.test.archive',
                 'translation_domain' => 'messages',
             ));
 

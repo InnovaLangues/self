@@ -16,9 +16,44 @@
 
 <hr/>
 
-<h3>{{ 'editor.test.edition' | trans }}</h3>
-{{ form(form) }}
+{% if test is defined %}
+    <h3>{{ 'editor.test.edition' | trans }}</h3>
+{% else %}
+    <h3>{{ 'editor.test.create' | trans }}</h3>
+{% endif %}
 
+<form method="post">
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.language) }}
+        {{ form_widget(form.language) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.phased) }}
+         {% if test is defined %}
+            {{ form_widget(form.phased, { 'attr': { 'disabled': 'disabled' } }) }}
+        {% else %}
+            {{ form_widget(form.phased) }}
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.archived) }}
+        {{ form_widget(form.archived) }}
+    </div>
+
+    <div class="form-group text-right">
+        {{ form_label(form.save) }}
+        {{ form_widget(form.save) }}
+    </div>
+
+    {{ form_widget(form._token) }}
+</form>
 
 {% if test is defined %}
 <div class="modal fade" id="delete-test-modal">
