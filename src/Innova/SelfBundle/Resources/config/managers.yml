@@ -116,6 +116,7 @@ services:
             questionnaireManager:           @self.questionnaire.manager
             orderQuestionnaireTestManager:  @self.order_questionnaire_test.manager
             phasedTestManager:              @self.phasedtest.manager
+            componentManager:               @self.component.manager
             session:                        @session
 
     self.eec.manager:
@@ -137,3 +138,15 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
+
+    self.component.manager:
+        class: Innova\SelfBundle\Manager\ComponentManager
+        arguments:
+            entityManager:                      @doctrine.orm.entity_manager
+            orderquestionnairecomponentManager: @self.orderquestionnairecomponent.manager
+
+    self.orderquestionnairecomponent.manager:
+        class: Innova\SelfBundle\Manager\OrderQuestionnaireComponentManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            questionnaireManager:           @self.questionnaire.manager
