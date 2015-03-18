@@ -57,19 +57,14 @@ class TestManager
     {
         $favorites = $this->user->getFavoritesTests();
         if ($favorites->contains($test)) {
-            $plop =  "contient déjà";
             $this->user->removeFavoritesTest($test);
         } else {
-            $plop =  "contient pas";
             $this->user->addFavoritesTest($test);
         }
-
-        //$this->user->addFavoritesTest($test);
-
         $this->entityManager->persist($this->user);
         $this->entityManager->flush();
 
-        return $plop;
+        return;
     }
 
     public function duplicate(Test $test)
