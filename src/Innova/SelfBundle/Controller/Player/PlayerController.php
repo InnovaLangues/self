@@ -118,6 +118,20 @@ class PlayerController
     }
 
     /**
+     * @Route("/student/", name="show_tests")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Player:showTests.html.twig")
+     */
+    public function showTestsAction()
+    {
+        $tests = $this->entityManager->getRepository('InnovaSelfBundle:Test')->findWithOpenSession();
+
+        return array(
+            'tests' => $tests,
+        );
+    }
+
+    /**
      * @Route(
      *      "admin/test/{testId}/session/{sessionId}/questionnaire/{questionnaireId}",
      *      name="questionnaire_pick"

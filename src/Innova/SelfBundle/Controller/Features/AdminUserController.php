@@ -1,5 +1,5 @@
 <?php
-namespace Innova\SelfBundle\Controller;
+namespace Innova\SelfBundle\Controller\Features;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

@@ -133,6 +133,17 @@ class TestController extends Controller
     }
 
     /**
+     * @Route("/favorite/toggle/{testId}", name="test_favorite_toggle" , options={"expose"=true}))
+     * @Method("GET")
+     */
+    public function toggleFavoriteAction(Test $test)
+    {
+        $this->get("self.test.manager")->toggleFavorite($test);
+
+        return new JsonResponse();
+    }
+
+    /**
      * Handles test form
      */
     private function handleForm(Test $test, $request)

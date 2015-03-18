@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Editor;
+namespace Innova\SelfBundle\Controller\Features;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -28,7 +28,7 @@ class SessionController extends Controller
      *
      * @Route("/test/{testId}/sessions", name="editor_test_sessions")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:session/list.html.twig")
+     * @Template("InnovaSelfBundle:Features:Session/list.html.twig")
      */
     public function listAction(Test $test)
     {
@@ -39,7 +39,7 @@ class SessionController extends Controller
      *
      * @Route("/test/{testId}/session/create", name="editor_test_create_session")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Editor:session/new.html.twig")
+     * @Template("InnovaSelfBundle:Features:Session/new.html.twig")
      */
     public function newAction(Test $test, Request $request)
     {
@@ -62,7 +62,7 @@ class SessionController extends Controller
      *
      * @Route("/session/{sessionId}/remove", name="editor_test_delete_session", options = {"expose"=true})
      * @Method("DELETE")
-     * @Template("InnovaSelfBundle:Editor:session/list.html.twig")
+     * @Template("InnovaSelfBundle:Features:Session/list.html.twig")
      */
     public function deleteAction(Session $session)
     {
@@ -80,7 +80,7 @@ class SessionController extends Controller
      *
      * @Route("/test/{testId}/session/{sessionId}", name="editor_test_edit_session")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Editor:session/new.html.twig")
+     * @Template("InnovaSelfBundle:Features:Session/new.html.twig")
      */
     public function editAction(Test $test, Session $session, Request $request)
     {
@@ -99,7 +99,7 @@ class SessionController extends Controller
      *
      * @Route("/session/{sessionId}/results", name="editor_test_session_results")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:session/results.html.twig")
+     * @Template("InnovaSelfBundle:Features:Session/results.html.twig")
      */
     public function resultsAction(Session $session)
     {
@@ -113,7 +113,7 @@ class SessionController extends Controller
      *
      * @Route("/user/{userId}/session/{sessionId}/results", name="editor_session_user_results")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:session/userResults.html.twig")
+     * @Template("InnovaSelfBundle:Features:Session/userResults.html.twig")
      */
     public function userResultsAction(User $user, Session $session)
     {
