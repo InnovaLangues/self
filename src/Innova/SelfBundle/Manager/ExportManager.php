@@ -34,7 +34,7 @@ class ExportManager
         // Appel de la vue et de la génération du PDF
         $this->knpSnappyPdf->generateFromHtml(
             $this->templating->render(
-                'InnovaSelfBundle:Export:templatePdf.html.twig', array('test' => $test)),
+                'InnovaSelfBundle:Features\Export:templatePdf.html.twig', array('test' => $test)),
                 $this->kernelRoot."/data/exportPdf/".$test->getId()."/".$pdfName
         );
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller;
+namespace Innova\SelfBundle\Controller\Features;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

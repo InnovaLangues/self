@@ -277,11 +277,10 @@ trace:
             difficult: Difficult
             veryDifficult: Very difficult
 
-language:
-    English: English
-    Italian: Italian
-    Chinese: Chinese
-    Spanish: Spanish
+English: English
+Italian: Italian
+Chinese: Chinese
+Spanish: Spanish
 
 author_right:
     not_needed: Pas besoin

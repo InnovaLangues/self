@@ -286,13 +286,12 @@ trace:
             difficult: Difficile
             veryDifficult: Molto difficile
 
-language:
-    English: Inglese
-    Italian: Italiano
-    Chinese: Cinese
-    Spanish: Spagnolo
+English: Inglese
+Italian: Italiano
+Chinese: Cinese
+Spanish: Spagnolo
 
-    author_right:
+author_right:
     not_needed: Pas besoin
     authorized: Autorisé
     pending: En attente

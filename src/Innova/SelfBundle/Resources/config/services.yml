@@ -37,7 +37,7 @@ services:
             - { name: form.type, alias: innova_selfbundle_user }
 
     innova_export:
-        class: Innova\SelfBundle\Controller\ExportController
+        class: Innova\SelfBundle\Controller\Features\ExportController
         arguments:
             kernelRoot: %kernel.root_dir%
             entityManager: @doctrine.orm.entity_manager
@@ -133,7 +133,7 @@ services:
             templating:             @templating
 
     innova_locale_controller:
-        class: Innova\SelfBundle\Controller\LocaleController
+        class: Innova\SelfBundle\Controller\Features\LocaleController
         arguments:
             localeManager:          @self.locale.manager
 

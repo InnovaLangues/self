@@ -104,7 +104,7 @@ class TestController extends Controller
         $test = new Test();
         $form = $this->handleForm($test, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('success', "Le test a bien été créée");
+            $this->get("session")->getFlashBag()->set('success', "Le test a bien été créé");
 
             return $this->redirect($this->generateUrl('editor_tests_show'));
         }
@@ -130,6 +130,17 @@ class TestController extends Controller
         }
 
         return array('form' => $form->createView(), 'test' => $test);
+    }
+
+    /**
+     * @Route("/favorite/toggle/{testId}", name="test_favorite_toggle" , options={"expose"=true}))
+     * @Method("GET")
+     */
+    public function toggleFavoriteAction(Test $test)
+    {
+        $this->get("self.test.manager")->toggleFavorite($test);
+
+        return new JsonResponse();
     }
 
     /**
