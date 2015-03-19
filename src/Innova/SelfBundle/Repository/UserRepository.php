@@ -44,4 +44,36 @@ class UserRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findAnotherByEmail($user)
+    {
+        $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
+        WHERE u.email = :email
+        ";
+
+        if ($user->getId()) {
+            $dql .= " AND u.id != ".$user->getId();
+        }
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('email', $user->getEmail());
+
+        return $query->getResult();
+    }
+
+    public function findAnotherByUsername($user)
+    {
+        $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
+        WHERE u.username = :username
+        ";
+
+        if ($user->getId()) {
+            $dql .= " AND u.id != ".$user->getId();
+        }
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('username', $user->getUsername());
+
+        return $query->getResult();
+    }
 }

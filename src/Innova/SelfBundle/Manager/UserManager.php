@@ -34,4 +34,24 @@ class UserManager
 
         return $this;
     }
+
+    public function checkExistingUsername(User $user)
+    {
+        $user = $this->entityManager->getRepository('InnovaSelfBundle:User')->findAnotherByUsername($user);
+        if ($user) {
+            return "Existing user with this username";
+        }
+
+        return;
+    }
+
+    public function checkExistingEmail(User $user)
+    {
+        $user = $this->entityManager->getRepository('InnovaSelfBundle:User')->findAnotherByEmail($user);
+        if ($user) {
+            return "Existing user with this email";
+        }
+
+        return;
+    }
 }

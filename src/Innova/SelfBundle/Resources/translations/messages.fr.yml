@@ -260,6 +260,8 @@ editor:
         results: Résultats pour la session
         results_user: Résultats pour l'utilisateur
         export: Exporter les résultats
+        available: Sessions disponibles
+        no-available: Aucune session disponible
 
 player:
     listening_remaining: "{0} Reste 0 écoute |{1} Reste 1 écoute|]1,Inf] Reste %count% écoutes"

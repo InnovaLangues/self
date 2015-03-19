@@ -5,7 +5,14 @@
         <div class="alert alert-success">{{ flashMessage }}</div>
     {% endfor %}
 
-    <h1>{{ 'user.list' | trans }}</h1>
+    <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
+        <span class="glyphicon glyphicon-plus"></span>
+        Créer un utilisateur
+    </a>
+
+    <hr/>
+
+    <h2>{{ 'user.list' | trans }}</h2>
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">

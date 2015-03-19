@@ -1,7 +1,33 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+    <a href="{{ path('user_edit', {'userId': user.id } )}}" class="btn btn-sm btn-default">
+        <span class="glyphicon glyphicon-pencil"></span>
+        Editer l'utilisateur
+    </a>
+
+    <a href="{{ path('passwd_edit', {'userId': user.id } )}}" class="btn btn-sm btn-default">
+        <span class="glyphicon glyphicon-lock"></span>
+        Modifier le mot de passe
+    </a>
+    
+    {% if user != app.user %}
+        <a class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#delete-modal">
+            <span class="glyphicon glyphicon-trash"></span>
+            Supprimer l'utilisateur
+        </a>
+    {% endif %}
+
+    <hr/>
+    
     <h2>Informations</h2>
+
+    {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-{{ label }}">{{ flash }}</div>
+        {% endfor %}
+    {% endfor %}
+
     <table class="record_properties table">
         <tbody>
             <tr>
@@ -12,17 +38,6 @@
                 <th>{{ 'user.email' | trans }}</th>
                 <td>{{ user.email }}</td>
             </tr>
-
-            {% if user != app.user %}
-            <tr>
-                <td>
-                    <a class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#delete-modal">Supprimer l'utilisateur</a>
-                </td>
-                <td>
-                </td>
-            </tr>
-            {% endif %}
-
         </tbody>
     </table>
 
