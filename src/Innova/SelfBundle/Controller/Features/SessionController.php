@@ -48,7 +48,7 @@ class SessionController extends Controller
         $session->setActif(false);
         $session->setTest($test);
 
-        $form = $this->handleForm($session, $request, $test);
+        $form = $this->handleForm($session, $request);
         if (!$form) {
             $this->get("session")->getFlashBag()->set('info', "La session a bien été créée");
 
@@ -84,7 +84,7 @@ class SessionController extends Controller
      */
     public function editAction(Test $test, Session $session, Request $request)
     {
-        $form = $this->handleForm($session, $request, $test);
+        $form = $this->handleForm($session, $request);
 
         if (!$form) {
             $this->get("session")->getFlashBag()->set('info', "La session a bien été modifiée");
@@ -147,7 +147,7 @@ class SessionController extends Controller
     /**
      * Handles session form
      */
-    private function handleForm(Session $session, $request, Test $test)
+    private function handleForm(Session $session, $request)
     {
         $form = $this->get('form.factory')->createBuilder(new SessionType(), $session)->getForm();
 

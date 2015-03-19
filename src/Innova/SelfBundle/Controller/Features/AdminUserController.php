@@ -136,7 +136,7 @@ class AdminUserController extends Controller
     {
         $user = new User();
 
-        $form = $this->handleForm($user, true, $request);
+        $form = $this->handleForm($user, $request);
         if (!$form) {
             $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été créée");
 
@@ -154,7 +154,7 @@ class AdminUserController extends Controller
      */
     public function editAction(User $user, Request $request)
     {
-        $form = $this->handleForm($user, false,  $request);
+        $form = $this->handleForm($user, $request);
 
         if (!$form) {
             $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
@@ -187,7 +187,7 @@ class AdminUserController extends Controller
     /**
      * Handles session form
      */
-    private function handleForm(User $user, $creation, $request)
+    private function handleForm(User $user, $request)
     {
         $form = $this->get('form.factory')->createBuilder(new UserType(), $user)->getForm();
 
