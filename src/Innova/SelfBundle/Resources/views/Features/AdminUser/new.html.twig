@@ -1,21 +1,60 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>{{ 'user.creation' | trans }}</h1>
+	
+	{% if user is defined %}
+	<a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Revenir à la fiche
+    </a>
 
-    {{ form_start(form) }}
-	<div class="form-group">
-    	<label for="username">{{ form_label(form.username) }}</label>
-		{{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
-	</div>
+    <hr/>
+    {% endif %}
 
-    {% do form.submit.setRendered %}
+    <h2>
+    {% if user is not defined %}
+    	{{ 'user.creation' | trans }}
+    {% else %}
+    	Modification de l'utilisateur
+    {% endif %}
+    </h2>
 
-    {{ form_rest(form) }}
+    <form method="post">
+	    {% if not form.vars.valid %}
+		    <div class="alert alert-danger">
+		    	{{ form_errors(form) }}
+		    </div>
+	    {% endif %}
 
-	<button type="submit" class="btn btn-primary">{{ 'generic.create' | trans }}</button>
-    <a href="{{ path('test') }}" class="btn btn-default">{{ 'user.list' | trans }}</a>
+	    {{ form_label(form.lastname) }}
+	    {{ form_widget(form.lastname, { 'attr': {'class': 'form-control'} }) }}
 
-    {{ form_end(form) }}
+	    {{ form_label(form.firstname) }}
+	    {{ form_widget(form.firstname, { 'attr': {'class': 'form-control'} }) }}
+
+	    {{ form_label(form.originStudent) }}
+	    {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
+
+	    {{ form_label(form.username) }}
+	    {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
+
+	    {{ form_label(form.email) }}
+	    {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+
+	    {% if user is not defined %}
+		    {{ form_label(form.plainPassword.first) }}
+		    {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'} }) }}
+
+		    {{ form_label(form.plainPassword.second) }}
+		    {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
+	    {% endif %}
+
+	    <br/>
+	    <div class="form-group">
+	    	{{ form_widget(form.save, { 'attr': {'class': 'btn btn-primary pull-right'}}) }}
+	    </div>
+
+	    {{ form_widget(form._token) }}
+    </form>
 
 {% endblock %}

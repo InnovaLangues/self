@@ -2,14 +2,20 @@
 namespace Innova\SelfBundle\Controller\Features;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Form\Type\UserType;
+use Symfony\Component\Form\FormError;
 
 /**
  * Test controller.
  *
  * @Route("/admin/users")
+ * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
  */
 class AdminUserController extends Controller
 {
@@ -118,5 +124,101 @@ class AdminUserController extends Controller
         }
 
         return $this->redirect($this->generateUrl('admin_user'));
+    }
+
+     /**
+     *
+     * @Route("/user/create", name="user_create")
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Features:AdminUser/new.html.twig")
+     */
+    public function newAction(Request $request)
+    {
+        $user = new User();
+
+        $form = $this->handleForm($user, true, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été créée");
+
+            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+        }
+
+        return array('form' => $form->createView());
+    }
+
+    /**
+     *
+     * @Route("/user/{userId}/edit", name="user_edit")
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Features:AdminUser/new.html.twig")
+     */
+    public function editAction(User $user, Request $request)
+    {
+        $form = $this->handleForm($user, false,  $request);
+
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
+
+            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+        }
+
+        return array('form' => $form->createView(), 'user' => $user);
+    }
+
+    /**
+     *
+     * @Route("/user/{userId}/passwd", name="passwd_edit")
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Features:AdminUser/passwd.html.twig")
+     */
+    public function editPasswordAction(User $user, Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $password = $request->request->get('passwd');
+            $user->setPlainPassword($password);
+            $this->get("session")->getFlashBag()->set('info', "Le mot de passe a bien été modifié");
+
+            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+        }
+
+        return array('user' => $user);
+    }
+
+    /**
+     * Handles session form
+     */
+    private function handleForm(User $user, $creation, $request)
+    {
+        $form = $this->get('form.factory')->createBuilder(new UserType(), $user)->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $um = $this->get("self.user.manager");
+                $hasError = false;
+                if ($error = $um->checkExistingUsername($user)) {
+                    $form->addError(new FormError($error));
+                    $hasError = true;
+                }
+                if ($error = $um->checkExistingEmail($user)) {
+                    $form->addError(new FormError($error));
+                    $hasError = true;
+                }
+
+                if ($hasError) {
+                    return $form;
+                }
+
+                $em = $this->getDoctrine()->getManager();
+                $user->setEnabled(true);
+                $em->persist($user);
+                $em->flush();
+
+                return;
+            }
+        }
+
+        return $form;
     }
 }

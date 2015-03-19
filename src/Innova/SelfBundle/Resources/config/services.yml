@@ -54,7 +54,7 @@ services:
             scoreManager: @self.score.manager
 
     innova_editor_upload:
-        class: Innova\SelfBundle\Controller\Editor\UploadController
+        class: Innova\SelfBundle\Controller\Features\UploadController
         arguments:
             kernelRoot: %kernel.root_dir%
 

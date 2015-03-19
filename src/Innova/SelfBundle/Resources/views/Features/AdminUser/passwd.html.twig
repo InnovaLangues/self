@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Revenir à la fiche
+    </a>
+
+    <hr/>
+    
+    <h2>Changement du mot de passe</h2>
+
+    <form method="post">
+        <div class="form-group">
+        <label for="passwd">Nouveau mot de passe</label>
+            <input class="form-control" type="password" id="passwd" name="passwd" value="" required/>
+        </div>
+        <button type="submit" class="btn btn-default btn-primary">Valider</button>
+    </form>
+{% endblock %}

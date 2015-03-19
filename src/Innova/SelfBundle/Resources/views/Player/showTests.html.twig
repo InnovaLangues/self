@@ -20,15 +20,15 @@
 {% if tests is not empty %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">{{ 'test.available' | trans }}</h3>
+            <h3 class="panel-title">{{ 'editor.session.available' | trans }}</h3>
         </div>
         <div class="panel-body">
             {% for i, test in tests %}
             <div class='row pull-left col-md-3 test-available'>
-                <div class="panel panel-default  ">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ test.name }}</div>
                     <div class="panel-body">
                         <div> 
-                            <p>{{ test.name }}</p>
                             {% for session in test.sessions if session.actif == 1 %}
                                 <p>
                                      <a href="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id } )}}">{{ session.name }}</a>
@@ -60,7 +60,7 @@
 {% else %}
     <div class="panel panel-default ">
         <div class="panel-body">
-            <p class="alert alert-danger">{{ 'test.no_registered' | trans }}</p>
+            <p class="alert alert-danger">{{ 'editor.session.no-available' | trans }}</p>
         </div>
     </div>
 {% endif %}
