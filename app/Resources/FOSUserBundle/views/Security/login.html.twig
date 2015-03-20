@@ -3,9 +3,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-{% if error %}
-    <div class="alert alert-warning">{{ error|trans }}</div>
-{% endif %}
+
 
 <div class="modal-body">
     <div class="well">
@@ -15,6 +13,11 @@
                     <legend class="">{{ 'security.login.submit'|trans }}</legend>
                 </div>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                {% if error %}
+                    <div class="alert alert-warning">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
                 <div class="form-group">
                     <label for="username" class="col-lg-2 control-label">{{ 'security.login.username'|trans }}</label>
                     <div class="col-lg-10">
