@@ -61,6 +61,7 @@ services:
         class: Innova\SelfBundle\Manager\UserManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            formFactory:        @form.factory
 
     self.comment.manager:
         class: Innova\SelfBundle\Manager\CommentManager

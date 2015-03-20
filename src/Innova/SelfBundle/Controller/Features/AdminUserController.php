@@ -8,8 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\User;
-use Innova\SelfBundle\Form\Type\UserType;
-use Symfony\Component\Form\FormError;
 
 /**
  * Test controller.
@@ -136,7 +134,7 @@ class AdminUserController extends Controller
     {
         $user = new User();
 
-        $form = $this->handleForm($user, $request);
+        $form = $this->get("self.user.manager")->handleForm($user, $request);
         if (!$form) {
             $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été créée");
 
@@ -154,7 +152,7 @@ class AdminUserController extends Controller
      */
     public function editAction(User $user, Request $request)
     {
-        $form = $this->handleForm($user, $request);
+        $form = $this->get("self.user.manager")->handleForm($user, $request);
 
         if (!$form) {
             $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
@@ -182,43 +180,5 @@ class AdminUserController extends Controller
         }
 
         return array('user' => $user);
-    }
-
-    /**
-     * Handles session form
-     */
-    private function handleForm(User $user, $request)
-    {
-        $form = $this->get('form.factory')->createBuilder(new UserType(), $user)->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $um = $this->get("self.user.manager");
-                $hasError = false;
-                if ($error = $um->checkExistingUsername($user)) {
-                    $form->addError(new FormError($error));
-                    $hasError = true;
-                }
-                if ($error = $um->checkExistingEmail($user)) {
-                    $form->addError(new FormError($error));
-                    $hasError = true;
-                }
-
-                if ($hasError) {
-                    return $form;
-                }
-
-                $em = $this->getDoctrine()->getManager();
-                $user->setEnabled(true);
-                $em->persist($user);
-                $em->flush();
-
-                return;
-            }
-        }
-
-        return $form;
     }
 }

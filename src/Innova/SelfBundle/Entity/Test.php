@@ -33,7 +33,7 @@ class Test
      *
      * @ORM\Column(name="phased", type="boolean")
      */
-    private $phased = 0;
+    private $phased;
 
     /**
     * @ORM\OneToMany(targetEntity="Trace", mappedBy="test", cascade={"remove"})

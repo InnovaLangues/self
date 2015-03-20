@@ -26,19 +26,6 @@ use Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent;
 class PhasedTestController extends Controller
 {
     /**
-     * Toggle phased attribute of a test entity.
-     *
-     * @Route("/phase/test/{testId}", name="editor_test_phase")
-     * @Method("GET")
-     */
-    public function phaseTestAction(Test $test)
-    {
-        $this->get("self.test.manager")->togglePhased($test);
-
-        return $this->redirect($this->generateUrl('editor_tests_show'));
-    }
-
-    /**
      * Generate a component for a test entity
      *
      * @Route("/test/{testId}/add/component/{typeId}", name="editor_generate_component")

@@ -36,7 +36,7 @@
     <div class="form-group">
         {{ form_label(form.phased) }}
          {% if test is defined %}
-            {{ form_widget(form.phased, { 'attr': { 'disabled': 'disabled' } }) }}
+            {{ form_widget(form.phased, { 'attr': { 'readonly': 'readonly' } }) }}
         {% else %}
             {{ form_widget(form.phased) }}
         {% endif %}

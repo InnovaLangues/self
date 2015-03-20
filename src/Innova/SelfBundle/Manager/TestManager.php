@@ -117,23 +117,4 @@ class TestManager
 
         return $test;
     }
-
-    public function togglePhased(Test $test)
-    {
-        if ($test->getPhased()) {
-            $test->setPhased(false);
-            $msg = 'Le test '.$test->getName().' n\'est plus un test a étape';
-        } else {
-            $test->setPhased(true);
-            $msg = 'Le test '.$test->getName().' est maintenant un test a étape';
-            $this->phasedTestManager->generateBaseComponents($test);
-        }
-
-        $this->entityManager->persist($test);
-        $this->entityManager->flush();
-
-        $this->session->getFlashBag()->set('success', $msg);
-
-        return $test;
-    }
 }

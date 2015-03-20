@@ -3,11 +3,8 @@
 {% block body -%}
 
 <h3>Authentification session <b>{{ session.name }}</b></h3>
-<hr/>
 
-{% for flashMessage in app.session.flashbag.get('warning') %}
-    <div class="alert alert-warning">{{ flashMessage }}</div>
-{% endfor %}
+<hr/>
 
 <form class="col-md-6" action="{{ path('session_log', { 'sessionId': session.id }) }}" method="post" autocomplete="off">
     <div class="form-group">

@@ -9,10 +9,6 @@
 <hr/>
 <h3>{{ 'editor.session.list_test' | trans }} <b>{{ test.name }}</b> </h3>
 
-{% for flashMessage in app.session.flashbag.get('info') %}
-    <div class="alert alert-info">{{ flashMessage }}</div>
-{% endfor %}
-
 <table class="table table-striped">
     <thead>
         <tr>
