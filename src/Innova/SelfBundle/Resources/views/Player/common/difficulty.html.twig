@@ -1,11 +1,5 @@
 {% extends '::base.html.twig' %}
 {% block body -%}
-    {% for label, flashes in app.session.flashbag.all %}
-        {% for flash in flashes %}
-            <div class="alert alert-{{ label }}">{{ flash }}</div>
-        {% endfor %}
-    {% endfor %}
-
     <form action="{{ path('trace_setDifficulty', { 'traceId': trace.id, 'testId': test.id, 'sessionId': session.id }) }}" method="post">
         {{ 'trace.action.evaluate' | trans }}
         <label class="radio">

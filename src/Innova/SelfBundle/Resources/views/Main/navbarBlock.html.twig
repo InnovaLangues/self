@@ -80,6 +80,11 @@
                     </ul>
                     <ul class="nav navbar-nav pull-right">
                         <li>
+                            <a href="{{ path('self_user_display') }}">
+                                <span class="glyphicon glyphicon-user"></span> {{ app.user.username }}
+                            </a>
+                        </li>
+                         <li>
                             <a href="{{ path('fos_user_security_logout') }}">
                                 <span class="glyphicon glyphicon-log-out"></span> {{ 'menu.logout' | trans }}
                             </a>

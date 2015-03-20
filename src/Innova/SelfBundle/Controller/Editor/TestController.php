@@ -72,9 +72,13 @@ class TestController extends Controller
      */
     public function deleteTestAction(Test $test)
     {
+        $testName = $test->getName();
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($test);
         $em->flush();
+
+        $this->get('session')->getFlashBag()->set('success', 'Le test '.$testName.' a bien été supprimé.');
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
@@ -88,7 +92,7 @@ class TestController extends Controller
     public function duplicateTestAction(Test $test)
     {
         $this->get("self.test.manager")->duplicate($test);
-        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué');
+        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué.');
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
@@ -105,7 +109,7 @@ class TestController extends Controller
         $test = new Test();
         $form = $this->handleForm($test, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('success', "Le test a bien été créé");
+            $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()." a bien été créé.");
 
             return $this->redirect($this->generateUrl('editor_tests_show'));
         }
@@ -125,7 +129,7 @@ class TestController extends Controller
         $form = $this->handleForm($test, $request);
 
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('success', "Le test a bien été modifiée");
+            $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()."a bien été modifié.");
 
             return $this->redirect($this->generateUrl('editor_tests_show'));
         }
@@ -149,13 +153,17 @@ class TestController extends Controller
      */
     private function handleForm(Test $test, $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $form = $this->get('form.factory')->createBuilder(new TestType(), $test)->getForm();
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
+                if (!$test->getId() && $test->getPhased()) {
+                    $test = $this->get("self.phasedtest.manager")->generateBaseComponents($test);
+                }
+
                 $em->persist($test);
                 $em->flush();
 
