@@ -238,6 +238,7 @@ class Questionnaire
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $reception;
 
@@ -245,6 +246,11 @@ class Questionnaire
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Length", inversedBy="questionnaires")
     */
     protected $length;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength", inversedBy="questionnaires")
+    */
+    protected $textLength;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
@@ -1375,13 +1381,13 @@ class Questionnaire
     /**
      * Add orderQuestionnaireComponents
      *
-     * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     * @param  \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
      * @return Questionnaire
      */
     public function addOrderQuestionnaireComponent(\Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents)
     {
         $this->orderQuestionnaireComponents[] = $orderQuestionnaireComponents;
-    
+
         return $this;
     }
 
@@ -1398,7 +1404,7 @@ class Questionnaire
     /**
      * Get orderQuestionnaireComponents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrderQuestionnaireComponents()
     {

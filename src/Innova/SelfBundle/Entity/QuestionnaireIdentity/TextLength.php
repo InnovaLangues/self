@@ -5,12 +5,12 @@ namespace Innova\SelfBundle\Entity\QuestionnaireIdentity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Reception
+ * Length
  *
- * @ORM\Table("questionnaireReception")
+ * @ORM\Table("questionnaireTextLength")
  * @ORM\Entity
  */
-class Reception
+class TextLength
 {
     /**
      * @var integer
@@ -36,7 +36,7 @@ class Reception
     private $description;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Questionnaire", mappedBy="reception")
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Questionnaire", mappedBy="textLength")
     */
     protected $questionnaires;
 
@@ -53,8 +53,8 @@ class Reception
     /**
      * Set name
      *
-     * @param  string    $name
-     * @return Reception
+     * @param  string $name
+     * @return Length
      */
     public function setName($name)
     {
@@ -84,7 +84,7 @@ class Reception
      * Add questionnaires
      *
      * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     * @return Reception
+     * @return Length
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
@@ -116,8 +116,8 @@ class Reception
     /**
      * Set description
      *
-     * @param  string    $description
-     * @return Reception
+     * @param  string $description
+     * @return Length
      */
     public function setDescription($description)
     {
