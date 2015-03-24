@@ -2,8 +2,6 @@
 
 namespace Innova\SelfBundle\Manager\Identity;
 
-use Innova\SelfBundle\Entity\Skill;
-
 class SkillManager
 {
     protected $entityManager;
