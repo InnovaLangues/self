@@ -1,6 +1,6 @@
 services:
     self.questionnaire.manager:
-        class: Innova\SelfBundle\Manager\QuestionnaireManager
+        class: Innova\SelfBundle\Manager\Editor\QuestionnaireManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
@@ -11,37 +11,37 @@ services:
             questionManager:    @self.question.manager
 
     self.question.manager:
-        class: Innova\SelfBundle\Manager\QuestionManager
+        class: Innova\SelfBundle\Manager\Editor\QuestionManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             subquestionManager: @self.subquestion.manager
 
     self.subquestion.manager:
-        class: Innova\SelfBundle\Manager\SubquestionManager
+        class: Innova\SelfBundle\Manager\Editor\SubquestionManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             mediaManager:       @self.media.manager
             propositionManager:    @self.proposition.manager
 
     self.order_questionnaire_test.manager:
-        class: Innova\SelfBundle\Manager\OrderQuestionnaireTestManager
+        class: Innova\SelfBundle\Manager\Editor\OrderQuestionnaireTestManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
     self.proposition.manager:
-        class: Innova\SelfBundle\Manager\PropositionManager
+        class: Innova\SelfBundle\Manager\Editor\PropositionManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             mediaManager:       @self.media.manager
 
     self.media.manager:
-        class: Innova\SelfBundle\Manager\MediaManager
+        class: Innova\SelfBundle\Manager\Media\MediaManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
 
     self.app.manager:
-        class: Innova\SelfBundle\Manager\AppManager
+        class: Innova\SelfBundle\Manager\Editor\AppManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             propositionManager: @self.proposition.manager
@@ -69,14 +69,8 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
 
-    self.editor_log.manager:
-        class: Innova\SelfBundle\Manager\EditorLogManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
-
     self.questionnaire_revisors.manager:
-        class: Innova\SelfBundle\Manager\QuestionnaireRevisorsManager
+        class: Innova\SelfBundle\Manager\Editor\QuestionnaireRevisorsManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
@@ -88,7 +82,7 @@ services:
             securityContext:    @security.context
 
     self.mediaclick.manager:
-        class: Innova\SelfBundle\Manager\MediaClickManager
+        class: Innova\SelfBundle\Manager\Media\MediaClickManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
@@ -110,7 +104,7 @@ services:
             templating:            @templating
 
     self.test.manager:
-        class: Innova\SelfBundle\Manager\TestManager
+        class: Innova\SelfBundle\Manager\Editor\TestManager
         arguments:
             entityManager:                  @doctrine.orm.entity_manager
             securityContext:                @security.context
@@ -121,7 +115,7 @@ services:
             session:                        @session
 
     self.eec.manager:
-        class: Innova\SelfBundle\Manager\EecManager
+        class: Innova\SelfBundle\Manager\Editor\EecManager
         arguments:
             entityManager:          @doctrine.orm.entity_manager
             questionManager:        @self.question.manager
@@ -130,7 +124,7 @@ services:
             mediaManager:           @self.media.manager
 
     self.phasedtest.manager:
-        class: Innova\SelfBundle\Manager\PhasedTestManager
+        class: Innova\SelfBundle\Manager\Editor\PhasedTest\PhasedTestManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
@@ -141,16 +135,16 @@ services:
             securityContext:    @security.context
 
     self.component.manager:
-        class: Innova\SelfBundle\Manager\ComponentManager
+        class: Innova\SelfBundle\Manager\Editor\PhasedTest\ComponentManager
         arguments:
             entityManager:                      @doctrine.orm.entity_manager
             orderquestionnairecomponentManager: @self.orderquestionnairecomponent.manager
 
     self.orderquestionnairecomponent.manager:
-        class: Innova\SelfBundle\Manager\OrderQuestionnaireComponentManager
+        class: Innova\SelfBundle\Manager\Editor\PhasedTest\OrderQuestionnaireComponentManager
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
-            questionnaireManager:           @self.questionnaire.manager
+            entityManager:          @doctrine.orm.entity_manager
+            questionnaireManager:   @self.questionnaire.manager
 
     self.reception.manager:
         class: Innova\SelfBundle\Manager\Identity\ReceptionManager
@@ -278,7 +272,7 @@ services:
             entityManager:      @doctrine.orm.entity_manager
 
     self.componentType.manager:
-        class: Innova\SelfBundle\Manager\PhasedTest\ComponentTypeManager
+        class: Innova\SelfBundle\Manager\Editor\PhasedTest\ComponentTypeManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 

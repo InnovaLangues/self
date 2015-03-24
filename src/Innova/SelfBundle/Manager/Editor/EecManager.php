@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Manager;
+namespace Innova\SelfBundle\Manager\Editor;
 
 use Innova\SelfBundle\Entity\Clue;
 use Innova\SelfBundle\Entity\Questionnaire;

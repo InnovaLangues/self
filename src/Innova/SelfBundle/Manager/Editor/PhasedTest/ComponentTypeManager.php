@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Manager\PhasedTest;
+namespace Innova\SelfBundle\Manager\Editor\PhasedTest;
 
 use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Manager;
+namespace Innova\SelfBundle\Manager\Editor;
 
 use Innova\SelfBundle\Entity\Test;
 
@@ -32,25 +32,6 @@ class TestManager
         $this->componentManager = $componentManager;
         $this->session = $session;
         $this->user = $this->securityContext->getToken()->getUser();
-    }
-
-    public function getTestsProgress($tests, $session)
-    {
-        $userId = $this->user->getId();
-
-        $testsProgress = array();
-        foreach ($tests as $test) {
-            $countDone = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $userId);
-            $countTotal = count($test->getOrderQuestionnaireTests());
-            if ($countTotal < 1) {
-                $countTotal = 1;
-            }
-            $number = $countDone/$countTotal*100;
-
-            $testsProgress[] = number_format($number, 2, '.', ' ');
-        }
-
-        return $testsProgress;
     }
 
     public function toggleFavorite(Test $test)
