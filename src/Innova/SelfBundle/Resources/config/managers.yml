@@ -246,6 +246,16 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
+    self.socialLocation.manager:
+        class: Innova\SelfBundle\Manager\Identity\SocialLocationManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    self.productionType.manager:
+        class: Innova\SelfBundle\Manager\Identity\ProductionTypeManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
     self.originStudent.manager:
         class: Innova\SelfBundle\Manager\OriginStudentManager
         arguments:

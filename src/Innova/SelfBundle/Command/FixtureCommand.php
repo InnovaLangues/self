@@ -21,20 +21,22 @@ class FixtureCommand extends ContainerAwareCommand
         $start = time();
 
         $typologyManager = $this->getContainer()->get("self.typology.manager");
-        $typologyManager->create(array( array("TVF", "Vrai-Faux"), array("TQRU", "Question à Réponse Unique"),
-                                        array("TQRM", "Question à Réponses Multiples"), array("TLCMLDM", "Liste de mots"),
-                                        array("APP", "Appariemment"), array("TVFNM", "Vrai-Faux-Non Mentionné"),
-                                        array("TLCMLMULT", "Listes de choix multiple"), array("TLQROC", "Question Réponse Ouverte Courte"),
+        $typologyManager->create(array(
+            array("TVF", "Vrai-Faux"), array("TQRU", "Question à Réponse Unique"),
+            array("TQRM", "Question à Réponses Multiples"), array("TLCMLDM", "Liste de mots"),
+            array("APP", "Appariemment"), array("TVFNM", "Vrai-Faux-Non Mentionné"),
+            array("TLCMLMULT", "Listes de choix multiple"), array("TLQROC", "Question Réponse Ouverte Courte"),
         ));
 
         $skillManager = $this->getContainer()->get("self.skill.manager");
-        $skillManager->create(array(    array("CO", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
-                                        array("CE", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
-                                        array("EEC", array("TLCMLMULT", "TLQROC", "TLCMLDM", "TQRU")),
+        $skillManager->create(array(
+            array("CO", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
+            array("CE", array("APP", "TQRM", "TQRU", "TVF", "TVFNM")),
+            array("EEC", array("TLCMLMULT", "TLQROC", "TLCMLDM", "TQRU")),
         ));
 
         $levelManager = $this->getContainer()->get("self.level.manager");
-        $levelManager->create(array("A1", "A2", "B1", "B2", "C1"));
+        $levelManager->create(array("A1", "A1+", "A2", "A2+", "B1", "B1+", "B2", "B2+", "C1", "C1+"));
 
         $originStudentManager = $this->getContainer()->get("self.originStudent.manager");
         $originStudentManager->create(array("LANSAD", "LLCE", "LEA", "UJF", "Formation continue", "Autres"));
@@ -53,6 +55,12 @@ class FixtureCommand extends ContainerAwareCommand
         $componentTypeManager = $this->getContainer()->get("self.componentType.manager");
         $componentTypeManager->create(array("minitest", "step1", "step2", "step3", "step4"));
 
+        $clueTypeManager = $this->getContainer()->get("self.clueType.manager");
+        $clueTypeManager->create(array(
+            array("fonctionnel", "clue-fonctionnel"),
+            array("didactique", "clue-didactique"), )
+        );
+
         /* MEDIA */
         $mediaTypeManager = $this->getContainer()->get("self.mediaType.manager");
         $mediaTypeManager->create(array("audio", "video", "texte", "image"));
@@ -65,10 +73,10 @@ class FixtureCommand extends ContainerAwareCommand
         $statusManager->create(array("Ecriture", "Révision", "Validation", "Modification post-pilotage"));
 
         $lengthManager = $this->getContainer()->get("self.audioLength.manager");
-        $lengthManager->create(array("short", "medium", "long", "very_long"));
+        $lengthManager->create(array("length.short", "length.medium", "length.long", "length.very_long"));
 
         $textlengthManager = $this->getContainer()->get("self.textLength.manager");
-        $textlengthManager->create(array("very", "short", "medium", "long", "very_long"));
+        $textlengthManager->create(array("text_length.very_short", "text_length.short", "text_length.medium", "text_length.long", "text_length.very_long"));
 
         $sourceManager = $this->getContainer()->get("self.source.manager");
         $sourceManager->create(array("source.certification", "source.textbook", "source.intern", "source.other"));
@@ -93,28 +101,49 @@ class FixtureCommand extends ContainerAwareCommand
         $registerManager->create(array("register.formal_elevated", "register.formal_neutral", "register.informal", "register.mixte"));
 
         $focusManager = $this->getContainer()->get("self.focus.manager");
-        $focusManager->create(array("focus.lexical", "focus.communicative", "focus.morphosyntaxic"));
+        $focusManager->create(array("focus.lexical", "focus.communicative", "focus.morphosyntaxic", "focus.textualCohesion"));
 
         $cognitiveOpManager = $this->getContainer()->get("self.cognitiveOp.manager");
-        $cognitiveOpManager->create(array("cognitive.global_comprehension", "cognitive.detailed_comprehension", "cognitive.infer_context", "cognitive.infer_intention", "cognitive.infer_state", "cognitive.infer_register", "cognitive.interaction"));
+        $cognitiveOpManager->create(array(
+            "cognitive.global_comprehension", "cognitive.detailed_comprehension", "cognitive.infer_context", "cognitive.infer_intention",
+            "cognitive.infer_state", "cognitive.infer_register", "cognitive.infer_information", "cognitive.interaction",
+            "cognitive.completeMessage", "cognitive.reformulateMessage", "cognitive.interact", "cognitive.readBack", "cognitive.other",
+        ));
 
         $sourceTypeManager = $this->getContainer()->get("self.sourceType.manager");
         $sourceTypeManager->create(array("sourceType.audio", "sourceType.video", "sourceType.text", "sourceType.image"));
 
         $channelManager = $this->getContainer()->get("self.channel.manager");
-        $channelManager->create(array("channel.phone", "channel.videoconf", "channel.speaker", "channel.radio", "channel.tv", "channel.web", "channel.tutorial", "channel.localRecord", "channel.GPS", "channel.other"));
+        $channelManager->delete(array("channel.radio", "channel.tv", "channel.web", "channel.localRecord"));
+        $channelManager->create(array(
+            "channel.phone", "channel.visual", "channel.chat_sms_oral", "channel.chat_sms_written", "channel.tools", "channel.videoconf",
+            "channel.speaker", "channel.tutorial", "channel.GPS", "channel.other", "channel.postit", "channel.brochure", "channel.ticket", "channel.notice",
+        ));
+
+        $socialLocationManager = $this->getContainer()->get("self.socialLocation.manager");
+        $socialLocationManager->create(array(
+            "socialLocation.radio", "socialLocation.tv", "socialLocation.web", "socialLocation.institution", "socialLocation.press",
+            "socialLocation.edition", "socialLocation.other",
+        ));
 
         $genreManager = $this->getContainer()->get("self.genre.manager");
-        $genreManager->create(array("genre.informative", "genre.argumentative", "genre.narrative", "genre.descriptive", "genre.literary", "genre.conversational", "genre.cmd_synchrone", "genre.cmd_asynchrone"));
+        $genreManager->create(array("genre.informative", "genre.argumentative", "genre.narrative", "genre.explicatif", "genre.descriptive",
+            "genre.injonctif", "genre.expressif", "genre.poetique", ));
+        $genreManager->delete(array("genre.literary", "genre.conversational", "genre.cmd_synchrone", "genre.cmd_asynchrone"));
 
         $varietyManager = $this->getContainer()->get("self.variety.manager");
-        $varietyManager->create(array("variety.standard", "variety.non_standard"));
+        $varietyManager->delete(array("variety.standard", "variety.non_standard"));
+        $varietyManager->create(array(
+            "variety.italian.standard", "variety.italian.nonstandard_diatopie", "variety.italian.nonstandard_diastratie", "variety.italian.nonstandard_diaphasie",
+            "variety.english.us_standard", "variety.english.uk_standard", "variety.english.other_standard", "variety.english.regional", "variety.english.secondLang",
+            "variety.chinese.standard", "variety.chinese.taiwan", "variety.chinese.otherVariant", "variety.chinese.secondLang",
+        ));
 
-        $clueTypeManager = $this->getContainer()->get("self.clueType.manager");
-        $clueTypeManager->create(array(
-            array("fonctionnel", "clue-fonctionnel"),
-            array("didactique", "clue-didactique"), )
-        );
+        $productionTypeManager = $this->getContainer()->get("self.productionType.manager");
+        $productionTypeManager->create(array(
+            "productionType.monologal.self", "productionType.monologal.hetero",
+            "productionType.dialogal.bi", "productionType.dialogal.poly",
+        ));
 
         $now = time();
         $duration = $now - $start;

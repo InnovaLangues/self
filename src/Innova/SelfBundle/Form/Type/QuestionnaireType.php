@@ -17,12 +17,27 @@ class QuestionnaireType extends AbstractType
                 'translation_domain' => 'messages',
             ));
 
+        $builder->add('speechType', 'textarea', array(
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'speechType'),
+                'label'  => 'editor.identity.speechType',
+                'translation_domain' => 'messages',
+            ));
+
         $builder->add('level', 'entity', array(
                 'class' => 'InnovaSelfBundle:Level',
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class' => 'form-control identity-select', 'data-field' => 'level'),
                 'label'  => 'editor.identity.level',
+                'translation_domain' => 'messages',
+            ));
+
+        $builder->add('productionType', 'entity', array(
+                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\ProductionType',
+                'property' => 'name',
+                'empty_value' => "-",
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'productionType'),
+                'label'  => 'editor.identity.productionType',
                 'translation_domain' => 'messages',
             ));
 
@@ -102,10 +117,20 @@ class QuestionnaireType extends AbstractType
                 'required' => false,
             ));
 
+        $builder->add('socialLocations', 'entity', array(
+                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SocialLocation',
+                'property' => 'name',
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'socialLocations',  'size' => 4),
+                'label'  => 'editor.identity.socialLocation',
+                'translation_domain' => 'messages',
+                'multiple' => true,
+                'required' => false,
+            ));
+
         $builder->add('varieties', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Variety',
                 'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'varieties',  'size' => 2),
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'varieties',  'size' => 4),
                 'label'  => 'editor.identity.variety',
                 'translation_domain' => 'messages',
                 'multiple' => true,
@@ -163,12 +188,27 @@ class QuestionnaireType extends AbstractType
                 'translation_domain' => 'messages',
             ));
 
+        $builder->add('textLength', 'entity', array(
+                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\TextLength',
+                'property' => 'name',
+                'empty_value' => "-",
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'length'),
+                'label'  => 'editor.identity.textLength',
+                'translation_domain' => 'messages',
+            ));
+
         $builder->add('flow', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Flow',
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class' => 'form-control identity-select', 'data-field' => 'flow'),
                 'label'  => 'editor.identity.flow',
+                'translation_domain' => 'messages',
+            ));
+
+        $builder->add('lisibility', 'text', array(
+                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'lisibility'),
+                'label'  => 'editor.identity.lisibility',
                 'translation_domain' => 'messages',
             ));
     }

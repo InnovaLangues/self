@@ -162,6 +162,13 @@ class Questionnaire
     // FICHE D'IDENTITE
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="lisibility", type="string", length=255, nullable=true)
+     */
+    private $lisibility;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires")
     */
     protected $skill;
@@ -203,6 +210,13 @@ class Questionnaire
     private $sourceMore;
 
     /**
+     * @var text
+     *
+     * @ORM\Column(name="questionnaires_speechType", type="text", nullable=true)
+     */
+    private $speechType;
+
+    /**
     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType", inversedBy="questionnaires")
     * @ORM\JoinTable(name="questionnaires_sourceType")
     */
@@ -213,6 +227,12 @@ class Questionnaire
     * @ORM\JoinTable(name="questionnaires_channel")
     */
     protected $channels;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation", inversedBy="questionnaires")
+    * @ORM\JoinTable(name="questionnaires_socialLocation")
+    */
+    protected $socialLocations;
 
     /**
     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre", inversedBy="questionnaires")
@@ -230,6 +250,11 @@ class Questionnaire
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
     */
     protected $domain;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType", inversedBy="questionnaires")
+    */
+    protected $productionType;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Register", inversedBy="questionnaires")
@@ -1409,5 +1434,130 @@ class Questionnaire
     public function getOrderQuestionnaireComponents()
     {
         return $this->orderQuestionnaireComponents;
+    }
+
+    /**
+     * Set lisibility
+     *
+     * @param  string        $lisibility
+     * @return Questionnaire
+     */
+    public function setLisibility($lisibility)
+    {
+        $this->lisibility = $lisibility;
+
+        return $this;
+    }
+
+    /**
+     * Get lisibility
+     *
+     * @return string
+     */
+    public function getLisibility()
+    {
+        return $this->lisibility;
+    }
+
+    /**
+     * Add socialLocations
+     *
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
+     * @return Questionnaire
+     */
+    public function addSocialLocation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations)
+    {
+        $this->socialLocations[] = $socialLocations;
+
+        return $this;
+    }
+
+    /**
+     * Remove socialLocations
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
+     */
+    public function removeSocialLocation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations)
+    {
+        $this->socialLocations->removeElement($socialLocations);
+    }
+
+    /**
+     * Get socialLocations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSocialLocations()
+    {
+        return $this->socialLocations;
+    }
+
+    /**
+     * Set textLength
+     *
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength
+     * @return Questionnaire
+     */
+    public function setTextLength(\Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength = null)
+    {
+        $this->textLength = $textLength;
+
+        return $this;
+    }
+
+    /**
+     * Get textLength
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength
+     */
+    public function getTextLength()
+    {
+        return $this->textLength;
+    }
+
+    /**
+     * Set speechType
+     *
+     * @param  string        $speechType
+     * @return Questionnaire
+     */
+    public function setSpeechType($speechType)
+    {
+        $this->speechType = $speechType;
+
+        return $this;
+    }
+
+    /**
+     * Get speechType
+     *
+     * @return string
+     */
+    public function getSpeechType()
+    {
+        return $this->speechType;
+    }
+
+    /**
+     * Set productionType
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType
+     * @return Questionnaire
+     */
+    public function setProductionType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType = null)
+    {
+        $this->productionType = $productionType;
+    
+        return $this;
+    }
+
+    /**
+     * Get productionType
+     *
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType 
+     */
+    public function getProductionType()
+    {
+        return $this->productionType;
     }
 }
