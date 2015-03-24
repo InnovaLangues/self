@@ -185,6 +185,7 @@ editor:
         register: Register
         reception: Reception type
         length: Length
+        text_length: Text length
         flow: Flow
         status: Status
         language: Language
@@ -199,9 +200,10 @@ editor:
         cognitive_main: Main cognitive operations
         cognitive_secondary: Secondary cognitive operations
         channel: Canal
-        sourceType: Nature de l'objet de la question
+        sourceType: Format
         genre: Genre
         variety: Variety
+        lisibility: Indice de lisibilité
 
     log:
         editor_create: Create
@@ -300,6 +302,7 @@ register:
     formal_elevated: Formel soutenu
     formal_neutral: Formel neutre
     informal: Informel
+    mixte: Mixte
 
 reception:
     listener_monodirectional:
@@ -307,9 +310,17 @@ reception:
     performer:
 
 length:
-    short: Court
-    medium: Moyen
-    long: Long
+    short: Ecoute brève: 5"- 20"
+    medium: Ecoute moyenne: 21” - 40"
+    long: Ecoute longue: 41"- 60"
+    very_long: Ecoute très longue: > 60"
+
+text_length:
+    very_short: Très bref (1-10)
+    short : Bref (11-30)
+    medium: Moyen (31 - 80)
+    long: Long: (81 - 200)
+    very_long: Très long (>200)
 
 flow:
     slow: Lent
