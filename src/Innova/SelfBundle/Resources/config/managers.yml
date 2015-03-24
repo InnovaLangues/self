@@ -257,6 +257,16 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
+    self.levelLansad.manager:
+        class: Innova\SelfBundle\Manager\LevelLansadManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    self.clueType.manager:
+        class: Innova\SelfBundle\Manager\ClueTypeManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
     self.mediaPurpose.manager:
         class: Innova\SelfBundle\Manager\Media\MediaPurposeManager
         arguments:

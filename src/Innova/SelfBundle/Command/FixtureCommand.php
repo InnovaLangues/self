@@ -5,16 +5,6 @@ namespace Innova\SelfBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Innova\SelfBundle\Entity\Level;
-use Innova\SelfBundle\Entity\OriginStudent;
-use Innova\SelfBundle\Entity\Language;
-use Innova\SelfBundle\Entity\LevelLansad;
-use Innova\SelfBundle\Entity\ClueType;
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType;
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel;
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre;
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety;
-use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
 
 class FixtureCommand extends ContainerAwareCommand
 {
@@ -29,7 +19,6 @@ class FixtureCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $start = time();
-        $em = $this->getContainer()->get('doctrine')->getManager();
 
         $typologyManager = $this->getContainer()->get("self.typology.manager");
         $typologyManager->create(array( array("TVF", "Vrai-Faux"), array("TQRU", "Question à Réponse Unique"),
@@ -52,6 +41,17 @@ class FixtureCommand extends ContainerAwareCommand
 
         $languageManager = $this->getContainer()->get("self.language.manager");
         $languageManager->create(array("English", "Italian", "Chinese", "Spanish"));
+
+        $levelLansadManager = $this->getContainer()->get("self.levelLansad.manager");
+        $levelLansadManager->create(array(
+            array("English", array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2")),
+            array("Italian", array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2")),
+            array("Chinese", array("A1", "A1.1", "A1.2", "A2", "A2.1", "A2.2", "B1", "B1.1", "B1.2", "B2.1", "Débutant complet", "Faux débutant", "Intermédiaire", "Avancé")),
+            array("Spanish", array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2")),
+        ));
+
+        $componentTypeManager = $this->getContainer()->get("self.componentType.manager");
+        $componentTypeManager->create(array("minitest", "step1", "step2", "step3", "step4"));
 
         /* MEDIA */
         $mediaTypeManager = $this->getContainer()->get("self.mediaType.manager");
@@ -110,78 +110,11 @@ class FixtureCommand extends ContainerAwareCommand
         $varietyManager = $this->getContainer()->get("self.variety.manager");
         $varietyManager->create(array("variety.standard", "variety.non_standard"));
 
-        $componentTypeManager = $this->getContainer()->get("self.componentType.manager");
-        $componentTypeManager->create(array("minitest", "step1", "step2", "step3", "step4"));
-
-        $langEng = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("English");
-        /* Level for English language */
-        $levelLansadEngs = array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2");
-        foreach ($levelLansadEngs as $levelLansadEng) {
-            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadEng, 'language' => $langEng))) {
-                $level = new LevelLansad();
-                $level->setLanguage($langEng);
-                $level->setName($levelLansadEng);
-                $em->persist($level);
-                $output->writeln("Add new LevelLansad (".$levelLansadEng.").");
-            }
-        }
-
-        $langIt = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Italian");
-        /* Level for Ialian language */
-        $levelLansadIts = array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2");
-        foreach ($levelLansadIts as $levelLansadIt) {
-            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadIt, 'language' => $langIt))) {
-                $level = new LevelLansad();
-                $level->setLanguage($langIt);
-                $level->setName($levelLansadIt);
-                $em->persist($level);
-                $output->writeln("Add new LevelLansad (".$levelLansadIt.").");
-            }
-        }
-
-        $langCn = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Chinese");
-        /* Level for Ialian language */
-        $levelLansadCns = array("A1", "A1.1", "A1.2", "A2", "A2.1", "A2.2", "B1", "B1.1", "B1.2", "B2.1", "Débutant complet", "Faux débutant", "Intermédiaire", "Avancé");
-        foreach ($levelLansadCns as $levelLansadCn) {
-            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadCn, 'language' => $langCn))) {
-                $level = new LevelLansad();
-                $level->setLanguage($langCn);
-                $level->setName($levelLansadCn);
-                $em->persist($level);
-                $output->writeln("Add new LevelLansad (".$levelLansadCn.").");
-            }
-        }
-
-        $langSp = $em->getRepository('InnovaSelfBundle:Language')->findOneByName("Spanish");
-        /* Level for Chinese language */
-        $levelLansadSps = array("A1", "A2", "B1.1", "B1.2", "B2.1", "B2.2", "C1", "C2");
-        foreach ($levelLansadSps as $levelLansadSp) {
-            if (!$em->getRepository('InnovaSelfBundle:LevelLansad')->findOneBy(array('name' => $levelLansadSp, 'language' => $langSp))) {
-                $level = new LevelLansad();
-                $level->setLanguage($langSp);
-                $level->setName($levelLansadSp);
-                $em->persist($level);
-                $output->writeln("Add new LevelLansad (".$levelLansadSp.").");
-            }
-        }
-
-            /* Gestion du mediaPurpose... à quoi sert le media (consigne, contexte, proposition, etc.) */
-            $clueTypes = array(array("fonctionnel", "clue-fonctionnel"), array("didactique", "clue-didactique"));
-        foreach ($clueTypes as $clueType) {
-            if (!$clueTyp = $em->getRepository('InnovaSelfBundle:ClueType')->findOneByName($clueType[0])) {
-                $c = new clueType();
-                $c->setName($clueType[0]);
-                $c->setColor($clueType[1]);
-                $em->persist($c);
-                $output->writeln("Add new clueType (".$clueType[0].").");
-            } elseif ($clueTyp->getColor() != $clueType[1]) {
-                $clueTyp->setColor($clueType[1]);
-                $em->persist($clueTyp);
-                $output->writeln("Edit clueType (".$clueType[0].").");
-            }
-        }
-
-        $em->flush();
+        $clueTypeManager = $this->getContainer()->get("self.clueType.manager");
+        $clueTypeManager->create(array(
+            array("fonctionnel", "clue-fonctionnel"),
+            array("didactique", "clue-didactique"), )
+        );
 
         $now = time();
         $duration = $now - $start;
