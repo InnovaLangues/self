@@ -194,7 +194,8 @@ editor:
         register: Registre
         reception: Type de réception
         length: Durée
-        text_length: Longueur du texte
+        textLength: Longueur du texte (nombre de mots)
+        productionType: Type de production
         flow: Débit
         status: Statut
         language: Langue
@@ -208,9 +209,10 @@ editor:
         focuses: Focus
         cognitive_main: Opérations cognitives principales
         cognitive_secondary: Opérations cognitives secondaires
-        channel: Lieu social de production
+        channel: Mode de production
+        socialLocation: Lieu social de production
         sourceType: Format
-        genre: Genre
+        genre: Mode de discours
         variety: Variété
         lisibility: Indice de lisibilité
 
@@ -352,6 +354,7 @@ focus:
     lexical: Lexical
     communicative: Communicatif
     morphosyntaxic: Morphosyntaxique
+    textualCohesion: Cohésion textuelle
 
 cognitive:
     global_comprehension: Compréhension globale
@@ -361,15 +364,29 @@ cognitive:
     infer_state: Reconnaitre l'état d'âme
     infer_register: Reconnaitre les registres
     interaction: Interaction
+    infer_information: Reconnaître des informations implicites
+    completeMessage: Compléter un message
+    reformulateMessage: Reformuler un message / une phrase
+    interact: Interagir
+    readBack: Relire pour corriger
+    other: Autre
 
-channel:
+socialLocation:
     radio: Radio
     tv: Télévision
     web: Web
-    institutions: Institutions (politiques, éducatives, administratives, etc.)
+    institution: Institutions (politiques, éducatives, administratives, etc.)
     press: Presse (magazine, journal, etc.)
     edition: Edition (libre, encyclopédie)
     other: Autre
+
+productionType:
+    monologal:
+        self: monologal (autogéré)
+        hetero: monologal (hétérogéré)
+    dialogal:
+        bi: dialogal (entre 2 personnes)
+        poly: dialogal (entre plusieurs personnes)
 
 sourceType:
     audio: Audio
@@ -384,12 +401,26 @@ genre:
     descriptive: Descriptif
     literary: Littéraire
     conversational: Conversationnel
-    cmd_synchrone: CMD synchrone
-    cmd_asynchrone: CMD asynchrone
+
 
 variety:
-    standard: Standard
-    non_standard: Non standard
+    italian:
+        standard: Italien - Standard
+        nonstandard: Italien - Non standard marqué en diatopie
+        nonstandard_diatopie: Italien - Non standard marqué en diatopie
+        nonstandard_diastratie: Italien - Non standard marqué en diastratie
+        nonstandard_diaphasie: Italien - Non standard marqué en diaphasie
+    english:
+        us_standard: Anglais - Américain standard
+        uk_standard: Anglais - Britannique standard
+        other_standard: Anglais - Autre standard
+        regional: Anglais - Variété régionale marquée
+        secondLang: Anglais - Langue seconde
+    chinese:
+        standard: Mandarin - Standard
+        taiwan: Mandarin - De Taiwan
+        otherVariant: Mandarin - Autres variantes
+        secondLang: Mandarin - Langue seconde
 
 phased:
     minitest: Minitest

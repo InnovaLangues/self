@@ -2,7 +2,9 @@
 
 namespace Innova\SelfBundle\Manager\Identity;
 
-class SkillManager
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation;
+
+class SocialLocationManager
 {
     protected $entityManager;
 
@@ -16,18 +18,10 @@ class SkillManager
         $em = $this->entityManager;
 
         foreach ($array as $el) {
-            $skillName = $el[0];
-            $typoNames = $el[1];
-            if ($skill = $this->findByName($skillName)) {
-                foreach ($typoNames as $typoName) {
-                    $skillTypos = $skill->getTypologys();
-                    if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typoName)) {
-                        if (!$skillTypos->contains($typo)) {
-                            $skill->addTypology($typo);
-                            $em->persist($skill);
-                        }
-                    }
-                }
+            if (!$this->findByName($el)) {
+                $r = new SocialLocation();
+                $r->setName($el);
+                $em->persist($r);
             }
         }
 
@@ -55,6 +49,6 @@ class SkillManager
     {
         $em = $this->entityManager;
 
-        return $em->getRepository('InnovaSelfBundle:Skill')->findOneByName($name);
+        return $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\SocialLocation')->findOneByName($name);
     }
 }

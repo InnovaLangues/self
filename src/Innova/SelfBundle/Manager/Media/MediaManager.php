@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Manager;
+namespace Innova\SelfBundle\Manager\Media;
 
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Media\Media;

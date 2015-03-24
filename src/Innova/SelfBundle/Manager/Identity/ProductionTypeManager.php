@@ -1,10 +1,10 @@
 <?php
 
-namespace Innova\SelfBundle\Manager\PhasedTest;
+namespace Innova\SelfBundle\Manager\Identity;
 
-use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType;
 
-class ComponentTypeManager
+class ProductionTypeManager
 {
     protected $entityManager;
 
@@ -19,7 +19,7 @@ class ComponentTypeManager
 
         foreach ($array as $el) {
             if (!$this->findByName($el)) {
-                $r = new ComponentType.php();
+                $r = new ProductionType();
                 $r->setName($el);
                 $em->persist($r);
             }
@@ -49,6 +49,6 @@ class ComponentTypeManager
     {
         $em = $this->entityManager;
 
-        return $em->getRepository('InnovaSelfBundle:PhasedTest\ComponentType')->findOneByName($name);
+        return $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\ProductionType')->findOneByName($name);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Manager;
+namespace Innova\SelfBundle\Manager\Editor;
 
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Form\Type\TaskInfosType;

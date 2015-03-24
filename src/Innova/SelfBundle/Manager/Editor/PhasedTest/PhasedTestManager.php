@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Manager;
+namespace Innova\SelfBundle\Manager\Editor\PhasedTest;
 
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;

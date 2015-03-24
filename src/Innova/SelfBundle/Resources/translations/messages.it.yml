@@ -192,23 +192,26 @@ editor:
         domain: Domaine
         register: Registre
         reception: Type de réception
-        length: Longueur
+        length: Durée
+        textLength: Longueur du texte (nombre de mots)
+        productionType: Type de production
         flow: Débit
         status: Statut
-        language: Lingua
-        level: Livello
+        language: Langue
+        level: Niveau
         createdby: Tâche créée par
         revisedby: et révisée par
-        skill: Competenza
-        theme: Titolo
-        fixedOrder: Ordine fisso
+        skill: Compétence
+        theme: Titre
+        fixedOrder: Ordre fixe
         authorMore: Auteur(s) de la tâche
         focuses: Focus
         cognitive_main: Opérations cognitives principales
         cognitive_secondary: Opérations cognitives secondaires
-        channel: Canal
+        channel: Mode de production
+        socialLocation: Lieu social de production
         sourceType: Format
-        genre: Genre
+        genre: Mode de discours
         variety: Variété
         lisibility: Indice de lisibilité
 
@@ -313,9 +316,8 @@ register:
     mixte: Mixte
 
 reception:
-    listener_monodirectional:
-    listener_pluridirectional:
-    performer:
+    listener: En tant que récepteur
+    listener_interact: En tant que récepteur - interactant
 
 length:
     short: Ecoute brève: 5"- 20"
@@ -329,7 +331,6 @@ text_length:
     medium: Moyen (31 - 80)
     long: Long: (81 - 200)
     very_long: Très long (>200)
-
 
 flow:
     slow: Lent
@@ -352,6 +353,7 @@ focus:
     lexical: Lexical
     communicative: Communicatif
     morphosyntaxic: Morphosyntaxique
+    textualCohesion: Cohésion textuelle
 
 cognitive:
     global_comprehension: Compréhension globale
@@ -361,18 +363,29 @@ cognitive:
     infer_state: Reconnaitre l'état d'âme
     infer_register: Reconnaitre les registres
     interaction: Interaction
+    infer_information: Reconnaître des informations implicites
+    completeMessage: Compléter un message
+    reformulateMessage: Reformuler un message / une phrase
+    interact: Interagir
+    readBack: Relire pour corriger
+    other: Autre
 
-channel:
-    phone: Téléphone
-    videoconf: Vidéo-conférence
-    speaker: Moyen de sonorisation (haut-parleur)
+socialLocation:
     radio: Radio
     tv: Télévision
     web: Web
-    tutorial: Didacticiel interactif
-    localRecord: Enregistrement local
-    GPS: GPS
+    institution: Institutions (politiques, éducatives, administratives, etc.)
+    press: Presse (magazine, journal, etc.)
+    edition: Edition (libre, encyclopédie)
     other: Autre
+
+productionType:
+    monologal:
+        self: monologal (autogéré)
+        hetero: monologal (hétérogéré)
+    dialogal:
+        bi: dialogal (entre 2 personnes)
+        poly: dialogal (entre plusieurs personnes)
 
 sourceType:
     audio: Audio
@@ -387,12 +400,25 @@ genre:
     descriptive: Descriptif
     literary: Littéraire
     conversational: Conversationnel
-    cmd_synchrone: CMD synchrone
-    cmd_asynchrone: CMD asynchrone
+
 
 variety:
-    standard: Standard
-    non_standard: Non standard
+    italian:
+        standard: Italien - Standard
+        nonstandard_diatopie: Italien - Non standard marqué en diatopie
+        nonstandard_diastratie: Italien - Non standard marqué en diastratie
+        nonstandard_diaphasie: Italien - Non standard marqué en diaphasie
+    english:
+        us_standard: Anglais - Américain standard
+        uk_standard: Anglais - Britannique standard
+        other_standard: Anglais - Autre standard
+        regional: Anglais - Variété régionale marquée
+        secondLang: Anglais - Langue seconde
+    chinese:
+        standard: Mandarin - Standard
+        taiwan: Mandarin - De Taiwan
+        otherVariant: Mandarin - Autres variantes
+        secondLang: Mandarin - Langue seconde
 
 phased:
     minitest: Minitest
