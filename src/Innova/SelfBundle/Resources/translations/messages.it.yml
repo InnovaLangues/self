@@ -265,6 +265,7 @@ editor:
         export: Exporter les résultats
         available: Sessions disponibles
         no-available: Aucune session disponible
+        test: Voir dans le player
 
 player:
     listening_remaining: "{0} No ascolto possibilo |{1} 1 solo ascolto|]1,Inf] %count% ascolti possibili"
