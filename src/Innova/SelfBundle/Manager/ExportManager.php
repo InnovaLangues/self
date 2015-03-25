@@ -28,10 +28,10 @@ class ExportManager
         $this->user = $this->securityContext->getToken()->getUser();
     }
 
-    public function exportSessionUserPdfAction(Session $session)
+    public function exportSessionUserPdfAction(Session $session, User $user)
     {
         $fs = new Filesystem();
-        $userId = $this->user->getId();
+        $userId = $user->getId();
         $sessionId = $session->getId();
 
         $pdfName = "self_export-".$userId."pdf-session_".$sessionId."-".date("d-m-Y_H:i:s").'.pdf';
@@ -39,7 +39,7 @@ class ExportManager
         $fileName = $pdfPathExport."/".$pdfName;
         $fs->mkdir($pdfPathExport, 0777);
 
-        $score = $this->scoreManager->calculateScoreByTest($session->getTest(), $session);
+        $score = $this->scoreManager->calculateScoreByTest($session->getTest(), $session, $user);
 
         $this->knpSnappyPdf->generateFromHtml(
             $this->templating->render(

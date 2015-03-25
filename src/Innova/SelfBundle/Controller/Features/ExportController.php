@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
 
 /**
@@ -20,18 +21,22 @@ use Innova\SelfBundle\Entity\Session;
  * )
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session",  options={"id" = "sessionId"})
+ * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User",  options={"id" = "userId"})
  */
 class ExportController
 {
     protected $kernelRoot;
     protected $entityManager;
     protected $exportManager;
+    protected $securityContext;
 
-    public function __construct($kernelRoot, $entityManager, $exportManager)
+    public function __construct($kernelRoot, $entityManager, $exportManager, $securityContext)
     {
         $this->kernelRoot = $kernelRoot;
         $this->entityManager = $entityManager;
         $this->exportManager = $exportManager;
+        $this->securityContext = $securityContext;
+        $this->user = $this->securityContext->getToken()->getUser();
     }
 
     /**
@@ -184,11 +189,35 @@ class ExportController
      * )
      *
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features\Export:exportPdf.html.twig")
      */
     public function exportSessionUserPdfAction(Session $session)
     {
-        $pdf = $this->exportManager->exportSessionUserPdfAction($session);
+        $pdf = $this->exportManager->exportSessionUserPdfAction($session, $this->user);
+
+        $response = new Response();
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($pdf));
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($pdf).'";');
+        $response->headers->set('Content-length', filesize($pdf));
+        $response->sendHeaders();
+
+        $response->setContent(file_get_contents($pdf));
+
+        return $response;
+    }
+
+    /**
+     * exportPdf function
+     * @Route(
+     *     "/admin/pdf-export/session/{sessionId}/user/{userId}",
+     *     name = "admin-pdf-export-session-user"
+     * )
+     *
+     * @Method("GET")
+     */
+    public function exportSessionUserPdfAdminAction(Session $session, User $user)
+    {
+        $pdf = $this->exportManager->exportSessionUserPdfAction($session, $user);
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'private');

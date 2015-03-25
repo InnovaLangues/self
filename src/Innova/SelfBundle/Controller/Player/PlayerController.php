@@ -112,7 +112,7 @@ class PlayerController
      */
     public function endAction(Test $test, Session $session)
     {
-        $score = $this->scoreManager->calculateScoreByTest($test, $session);
+        $score = $this->scoreManager->calculateScoreByTest($test, $session, $this->user);
 
         return array("score" => $score, "session" => $session);
     }

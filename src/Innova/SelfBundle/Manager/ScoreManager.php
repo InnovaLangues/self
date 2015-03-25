@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\PhasedTest\Component;
@@ -20,6 +21,8 @@ class ScoreManager
         $this->user = $this->securityContext->getToken()->getUser();
         $this->traceRepo = $this->entityManager->getRepository('InnovaSelfBundle:Trace');
         $this->propositionRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
+        $this->skillRepo = $this->entityManager->getRepository('InnovaSelfBundle:Skill');
+        $this->levelRepo = $this->entityManager->getRepository('InnovaSelfBundle:Level');
     }
 
     public function calculateScoreByComponent(Test $test, Session $session, Component $component)
@@ -38,13 +41,13 @@ class ScoreManager
         return $score/$nbSubquestions*100;
     }
 
-    public function calculateScoreByTest(Test $test, Session $session)
+    public function calculateScoreByTest(Test $test, Session $session, User $user)
     {
         $score = 0;
         $nbSubquestions = 0;
-        $scores = array();
+        $scores = $this->initializeScoreArray();
 
-        $traces = $this->traceRepo->findBy(array('user' => $this->user, 'test' => $test, 'session' => $session));
+        $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
         foreach ($traces as $trace) {
             $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
             foreach ($subquestions as $subquestion) {
@@ -52,16 +55,6 @@ class ScoreManager
                 $nbSubquestions++;
                 $skill = $questionnaire->getSkill()->getName();
                 $level = $questionnaire->getLevel()->getName();
-
-                if (!isset($scores[$skill])) {
-                    $scores[$skill] = array();
-                }
-
-                if (!isset($scores[$skill][$level])) {
-                    $scores[$skill][$level] = array();
-                    $scores[$skill][$level]["count"] = 0;
-                    $scores[$skill][$level]["correct"] = 0;
-                }
 
                 if ($this->subquestionCorrect($subquestion, $session, null)) {
                     $score++;
@@ -95,5 +88,26 @@ class ScoreManager
         }
 
         return $correct;
+    }
+
+    private function initializeScoreArray()
+    {
+        $skills = $this->skillRepo->findAll();
+        $levels = $this->levelRepo->findAll();
+
+        $scores = array();
+
+        foreach ($skills as $skill) {
+            $skillName = $skill->getName();
+            $scores[$skillName] = array();
+            foreach ($levels as $level) {
+                $levelName = $level->getName();
+                $scores[$skillName][$levelName] = array();
+                $scores[$skillName][$levelName]["count"] = 0;
+                $scores[$skillName][$levelName]["correct"] = 0;
+            }
+        }
+
+        return $scores;
     }
 }

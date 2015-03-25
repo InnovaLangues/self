@@ -12,7 +12,13 @@
 				</tr>
 				<tr>
 					{% for levelName, plop in levels %}
-		                <td>{{ plop.correct }} / {{ plop.count }}</td>
+						<td>
+							{% if plop.count != 0 %}
+			                	{{ plop.correct }} / {{ plop.count }}
+			                {% else %}
+			                 	-
+			               	{% endif %}
+			            </td>
 		            {% endfor %}
 				</tr>
             </table>
