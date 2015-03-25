@@ -98,10 +98,11 @@ services:
         class: Innova\SelfBundle\Manager\ExportManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            scoreManager:       @self.score.manager
             securityContext:    @security.context
-            kernelRoot:            %kernel.root_dir%
-            knpSnappyPdf:      @knp_snappy.pdf
-            templating:            @templating
+            kernelRoot:         %kernel.root_dir%
+            knpSnappyPdf:       @knp_snappy.pdf
+            templating:         @templating
 
     self.test.manager:
         class: Innova\SelfBundle\Manager\Editor\TestManager

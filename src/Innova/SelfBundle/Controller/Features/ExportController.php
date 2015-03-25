@@ -19,6 +19,7 @@ use Innova\SelfBundle\Entity\Session;
  *      service = "innova_export"
  * )
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
+ * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session",  options={"id" = "sessionId"})
  */
 class ExportController
 {
@@ -173,5 +174,31 @@ class ExportController
             "test" => $test,
             "fileList" => $fileList,
         );
+    }
+
+    /**
+     * exportPdf function
+     * @Route(
+     *     "/student/pdf-export/session/{sessionId}",
+     *     name = "pdf-export-session-user"
+     * )
+     *
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Features\Export:exportPdf.html.twig")
+     */
+    public function exportSessionUserPdfAction(Session $session)
+    {
+        $pdf = $this->exportManager->exportSessionUserPdfAction($session);
+
+        $response = new Response();
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($pdf));
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($pdf).'";');
+        $response->headers->set('Content-length', filesize($pdf));
+        $response->sendHeaders();
+
+        $response->setContent(file_get_contents($pdf));
+
+        return $response;
     }
 }

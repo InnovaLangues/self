@@ -1,7 +1,14 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h2>Résultats par compétence</h2>
+    <h2>
+    	Résultats par compétence et par niveau
+    	<a class=" pull-right btn btn-primary" href="{{ path('pdf-export-session-user', { 'sessionId': session.id }) }}">
+    		<span class="glyphicon glyphicon-floppy-disk"></span>
+    		Exporter au format PDF
+    	</a>
+    </h2>
+
     <hr/>
 
     {% include "InnovaSelfBundle:Player/common:score.html.twig" %}
