@@ -4,12 +4,7 @@ $(document).ready(function() {
     afterAjax();
     disableAndHideElements();
 
-
-    $( "#questionnaire-identity" ).on( "change", 'select.identity-select, :checkbox.identity-select', function() {
-        setIdentityField( $("#questionnaire-identity"), function( response ){});
-    });
-
-    $( "#questionnaire-identity" ).on( "blur", 'textarea.identity-select, :text.identity-select', function() {
+    $( "#identity-container" ).on( "click", '#save-identity-task', function() {
         setIdentityField( $("#questionnaire-identity"), function( response ){});
     });
 
