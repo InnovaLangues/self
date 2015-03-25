@@ -114,7 +114,7 @@ class PlayerController
     {
         $score = $this->scoreManager->calculateScoreByTest($test, $session);
 
-        return array("score" => $score);
+        return array("score" => $score, "session" => $session);
     }
 
     /**

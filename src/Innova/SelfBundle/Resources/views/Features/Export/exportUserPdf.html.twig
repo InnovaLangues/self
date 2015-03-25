@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Export PDF : du {{ "now"|date("d/m/Y") }} </title>
+        <style type="text/css">
+        .page-breaker {
+            display: block;
+            page-break-after: always;
+            clear:both;
+        }
+        </style>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <h1>Utilisateur : {{ app.user.username }}</h1>
+        <h1>Session : {{ session.name }}</h1>
+        {% include "InnovaSelfBundle:Player/common:score.html.twig" %}
+    </body>
+</html>

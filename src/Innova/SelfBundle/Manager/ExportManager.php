@@ -10,20 +10,44 @@ use Symfony\Component\Filesystem\Filesystem;
 class ExportManager
 {
     protected $entityManager;
+    protected $scoreManager;
     protected $securityContext;
     protected $kernelRoot;
     protected $knpSnappyPdf;
     protected $templating;
     protected $user;
 
-    public function __construct($entityManager, $securityContext, $kernelRoot, $knpSnappyPdf, $templating)
+    public function __construct($entityManager, $scoreManager, $securityContext, $kernelRoot, $knpSnappyPdf, $templating)
     {
         $this->entityManager = $entityManager;
+        $this->scoreManager = $scoreManager;
         $this->securityContext = $securityContext;
         $this->kernelRoot = $kernelRoot;
         $this->knpSnappyPdf = $knpSnappyPdf;
         $this->templating = $templating;
         $this->user = $this->securityContext->getToken()->getUser();
+    }
+
+    public function exportSessionUserPdfAction(Session $session)
+    {
+        $fs = new Filesystem();
+        $userId = $this->user->getId();
+        $sessionId = $session->getId();
+
+        $pdfName = "self_export-".$userId."pdf-session_".$sessionId."-".date("d-m-Y_H:i:s").'.pdf';
+        $pdfPathExport = $this->kernelRoot."/data/user/";
+        $fileName = $pdfPathExport."/".$pdfName;
+        $fs->mkdir($pdfPathExport, 0777);
+
+        $score = $this->scoreManager->calculateScoreByTest($session->getTest(), $session);
+
+        $this->knpSnappyPdf->generateFromHtml(
+            $this->templating->render(
+                'InnovaSelfBundle:Features\Export:exportUserPdf.html.twig', array('score' => $score, 'session' => $session)),
+                $fileName
+        );
+
+        return $fileName;
     }
 
     public function exportPdfAction(Test $test)
