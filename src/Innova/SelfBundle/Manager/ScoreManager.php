@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\PhasedTest\Component;
@@ -38,13 +39,13 @@ class ScoreManager
         return $score/$nbSubquestions*100;
     }
 
-    public function calculateScoreByTest(Test $test, Session $session)
+    public function calculateScoreByTest(Test $test, Session $session, User $user)
     {
         $score = 0;
         $nbSubquestions = 0;
         $scores = array();
 
-        $traces = $this->traceRepo->findBy(array('user' => $this->user, 'test' => $test, 'session' => $session));
+        $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
         foreach ($traces as $trace) {
             $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
             foreach ($subquestions as $subquestion) {

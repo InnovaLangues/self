@@ -10,6 +10,13 @@
 	<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
 </a>
 
+<a class="btn btn-default btn-sm" href="{{ path('admin-pdf-export-session-user', { 'sessionId': session.id, 'userId': user.id }) }}">
+	<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
+</a>
+
+
+
+
 <hr/>
 <h3>{{ 'editor.session.results_user' | trans }} <b>{{ user.username }}</b> </h3>
 
