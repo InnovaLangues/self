@@ -89,7 +89,34 @@ class GroupController extends Controller
             return $this->redirect($this->generateUrl('editor_groups'));
         }
 
-        return array('form' => $form->createView());
+        return array('form' => $form->createView(), 'group' => $group);
+    }
+
+    /**
+     *
+     * @Route("/{groupId}/import", name="editor_group_import_user")
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Features:Group/import.html.twig")
+     */
+    public function importUserAction(Group $group, Request $request)
+    {
+        $defaultData = array();
+        $form = $this->createFormBuilder($defaultData)
+                                        ->add('file', 'file')
+                                        ->add('submit', 'submit', array('label' => 'generic.save', 'attr' => array('class' => 'btn btn-default btn-primary')))
+                                        ->getForm();
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            $data = $form->getData();
+            $fileName = $data["file"]->getClientOriginalName();
+            $path = $this->get('kernel')->getRootDir()."/data/importCsv/";
+            $completePath = $path."/".$fileName;
+            $data["file"]->move($path, $fileName);
+
+            $this->get("self.user.manager")->importCsv($group, $completePath);
+        }
+
+        return array('group' => $group, 'form' => $form->createView());
     }
 
     /**

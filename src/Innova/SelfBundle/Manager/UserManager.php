@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\Group;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Innova\SelfBundle\Form\Type\UserType;
@@ -93,5 +94,14 @@ class UserManager
         }
 
         return $form;
+    }
+
+    public function importCsv(Group $group, $completePath)
+    {
+        $file = fopen($completePath, 'r');
+        while (($row = fgetcsv($file, 0, ';')) !== FALSE) {
+            var_dump($row);
+            // create_user
+        }
     }
 }

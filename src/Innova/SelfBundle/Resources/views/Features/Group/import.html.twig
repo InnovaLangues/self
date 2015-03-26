@@ -5,15 +5,11 @@
 <a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
     <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
 </a>
-
-{% if group is defined %}
-<a class="btn btn-default btn-sm" href="{{ path('editor_group_import_user',  { 'groupId': group.id }) }}">
-    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.import' | trans }}
-</a>
-{% endif %}
-
 <hr/>
+<h3>{{ 'group.import' | trans }} <b></h3>
 
+<form action="#" method="post" {{ form_enctype(form) }}>
 {{ form(form) }}
+</form>
 
 {% endblock %}
