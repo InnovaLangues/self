@@ -392,6 +392,11 @@ genre:
     descriptive: Descriptif
     literary: Littéraire
     conversational: Conversationnel
+    explicatif: Explicatif
+    injonctif: Injonctif
+    expressif: Expressif
+    poetique: Poétique
+
 
 
 variety:
@@ -418,3 +423,19 @@ phased:
     step3: Step 3
     create_alternative: Create an alternative
     delete_alternative: Remove the alternative
+
+channel:
+    phone: Téléphone
+    videoconf: Visioconférence
+    speaker: Moyen de sonorisation
+    tutorial: Didacticiel interactif
+    GPS: GPS
+    other: Autre
+    visual: Visu
+    chat_sms_oral: Chat/SMS oral
+    chat_sms_written: Chat/SMS par téléphoe
+    tools: Outil 2.0
+    postit: Post-it / message bref
+    brochure: Brochure / dépliant 
+    ticket: Tickets (train, théâtre, reçu)
+    notice: Panneau / affiche

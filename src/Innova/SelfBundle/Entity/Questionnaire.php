@@ -170,6 +170,7 @@ class Questionnaire
 
     /**
     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $skill;
 
@@ -189,16 +190,19 @@ class Questionnaire
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $authorRight;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Source", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $source;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $sourceOperation;
 
@@ -248,16 +252,19 @@ class Questionnaire
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $domain;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $productionType;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Register", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $register;
 
@@ -269,16 +276,19 @@ class Questionnaire
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Length", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $length;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $textLength;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
+    * @ORM\JoinColumn(onDelete="SET NULL")
     */
     protected $flow;
 
@@ -1541,20 +1551,20 @@ class Questionnaire
     /**
      * Set productionType
      *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType
+     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType
      * @return Questionnaire
      */
     public function setProductionType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType = null)
     {
         $this->productionType = $productionType;
-    
+
         return $this;
     }
 
     /**
      * Get productionType
      *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType 
+     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType
      */
     public function getProductionType()
     {
