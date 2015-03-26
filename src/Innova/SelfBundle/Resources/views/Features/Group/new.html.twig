@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
+    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
+</a>
+
+<hr/>
+
+{{ form(form) }}
+
+{% endblock %}

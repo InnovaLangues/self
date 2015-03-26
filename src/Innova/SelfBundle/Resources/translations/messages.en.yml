@@ -15,6 +15,7 @@ menu:
     credit : Credits
     logout: Logout
     language_change: Change language
+    groups: Groupes
 
 export:
     file_generated: The file has been generated
@@ -439,3 +440,12 @@ channel:
     brochure: Brochure / dépliant 
     ticket: Tickets (train, théâtre, reçu)
     notice: Panneau / affiche
+
+group:
+    create: Créer un groupe
+    list: Liste des groupes
+    name: Nom du groupe
+    edit: Editer le groupe
+    delete: Supprimer le groupe
+    sessions: Sessions liées au groupe
+    users: Membres du groupe

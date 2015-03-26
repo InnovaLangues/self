@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a class="btn btn-default btn-sm" href="{{ path('editor_group_create') }}">
+    <span class="glyphicon glyphicon-plus"></span> {{ 'group.create' | trans }}
+</a>
+
+<hr/>
+<h3>{{ 'group.list' | trans }} <b></h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{{ 'group.name' | trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+		{% for group in groups %}
+			<tr>
+				<td>
+					{{ group.name }}
+				</td>
+				<td class="text-right">
+                    <a class="btn btn-default btn-sm" href="{{ path('editor_group_edit', { 'groupId': group.id }) }}">
+                        <span class="glyphicon glyphicon-edit"></span> {{ 'group.edit' | trans }}
+                    </a>
+                    <a class="btn btn-sm btn-danger" href="{{ path('editor_group_delete', { 'groupId': group.id }) }}">
+                        <span class="glyphicon glyphicon-trash"></span> {{ 'group.delete' | trans }}
+                    </a>
+				</td>
+			</tr>
+		{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

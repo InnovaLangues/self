@@ -71,7 +71,7 @@ class ScoreManager
 
         $choices = $this->propositionRepo->getByUserTraceAndSubquestion($subquestion, $this->user, $component, $session);
 
-        // Teste si les choix de l'étudiant sont présent dans les bonnes réponses.
+        // Teste si les choix de l'étudiant sont présents dans les bonnes réponses.
         foreach ($choices as $choice) {
             if (!in_array($choice, $rightProps)) {
                 $correct = false;

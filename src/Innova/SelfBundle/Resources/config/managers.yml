@@ -63,6 +63,11 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             formFactory:        @form.factory
 
+    self.group.manager:
+        class: Innova\SelfBundle\Manager\GroupManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
     self.comment.manager:
         class: Innova\SelfBundle\Manager\CommentManager
         arguments:
