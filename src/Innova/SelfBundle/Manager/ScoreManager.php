@@ -89,7 +89,7 @@ class ScoreManager
     private function initializeScoreArray()
     {
         $skills = $this->skillRepo->findAll();
-        $levels = $this->levelRepo->findAll();
+        $levels = $this->levelRepo->findBy(array(), array('name' => 'ASC'));
 
         $scores = array();
 
