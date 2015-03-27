@@ -86,7 +86,7 @@ class GroupController extends Controller
         if (!$form) {
             $this->get("session")->getFlashBag()->set('info', "Le groupe a bien été modifié");
 
-            return $this->redirect($this->generateUrl('editor_groups'));
+            return $this->redirect($this->generateUrl('editor_group_edit', array('groupId' => $group->getId())));
         }
 
         return array('form' => $form->createView(), 'group' => $group);
@@ -114,6 +114,8 @@ class GroupController extends Controller
             $data["file"]->move($path, $fileName);
 
             $this->get("self.user.manager")->importCsv($group, $completePath);
+
+            return $this->redirect($this->generateUrl('editor_group_edit', array('groupId' => $group->getId())));
         }
 
         return array('group' => $group, 'form' => $form->createView());

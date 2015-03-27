@@ -8,7 +8,7 @@
 
 {% if group is defined %}
 <a class="btn btn-default btn-sm" href="{{ path('editor_group_import_user',  { 'groupId': group.id }) }}">
-    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.import' | trans }}
+    <span class="glyphicon glyphicon-import"></span> {{ 'group.import' | trans }}
 </a>
 {% endif %}
 
