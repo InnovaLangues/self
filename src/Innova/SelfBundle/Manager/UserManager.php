@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\Group;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Innova\SelfBundle\Form\Type\UserType;
@@ -11,11 +12,15 @@ class UserManager
 {
     protected $entityManager;
     protected $formFactory;
+    protected $fosUserManager;
+    protected $session;
 
-    public function __construct($entityManager, $formFactory)
+    public function __construct($entityManager, $formFactory, $fosUserManager, $session)
     {
-        $this->entityManager = $entityManager;
-        $this->formFactory = $formFactory;
+        $this->entityManager    = $entityManager;
+        $this->formFactory      = $formFactory;
+        $this->fosUserManager   = $fosUserManager;
+        $this->session          = $session;
     }
 
     public function setLocale(User $user, $locale)
@@ -93,5 +98,46 @@ class UserManager
         }
 
         return $form;
+    }
+
+    public function importCsv(Group $group, $completePath)
+    {
+        $em = $this->entityManager;
+        $file = fopen($completePath, 'r');
+        $errors = "";
+        $success = "";
+
+        while (($row = fgetcsv($file, 0, ';', '\'')) !== FALSE) {
+            $userName   = $row[0];
+            $email      = $row[1];
+            $password   = $row[2];
+
+            if ($em->getRepository("InnovaSelfBundle:User")->findByUsername($userName)) {
+                $errors .= "Un utilisateur existe déjà avec le nom d'utilisateur: ".$userName."<br/>";
+                continue;
+            }
+
+            if ($em->getRepository("InnovaSelfBundle:User")->findByEmail($email)) {
+                $errors .= "Un utilisateur existe déjà avec l'email: ".$email."<br/>";
+                continue;
+            }
+
+            $user = $this->fosUserManager->create($userName, $password, $email, false, false);
+            $group->addUser($user);
+            $success .= "L'utilisateur ".$userName." (".$email.") a bien été créé et ajouté au groupe<br/>";
+        }
+
+        if ($errors != "") {
+            $this->session->getFlashBag()->set('danger', $errors);
+        }
+        if ($success != "") {
+            $this->session->getFlashBag()->set('info', $success);
+        }
+
+        unlink($completePath);
+        $em->persist($group);
+        $em->flush();
+
+        return;
     }
 }

@@ -74,6 +74,7 @@ class FixtureCommand extends ContainerAwareCommand
 
         $lengthManager = $this->getContainer()->get("self.audioLength.manager");
         $lengthManager->create(array("length.short", "length.medium", "length.long", "length.very_long"));
+        $lengthManager->delete(array("short", "medium", "long"));
 
         $textlengthManager = $this->getContainer()->get("self.textLength.manager");
         $textlengthManager->create(array("text_length.very_short", "text_length.short", "text_length.medium", "text_length.long", "text_length.very_long"));

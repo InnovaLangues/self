@@ -34,10 +34,12 @@ app/sessions/*
 
 # Export
 app/data/session/*
-!app/data/session/.gitkeep
 app/data/export/*
 app/data/exportPdf/*
 app/data/user/*
-!app/data/exportPdf/.gitkeep
+app/data/importCsv/*
+!app/data/session/.gitkeep
 !app/data/export/.gitkeep
+!app/data/exportPdf/.gitkeep
 !app/data/user/.gitkeep
+!app/data/importCsv/.gitkeep

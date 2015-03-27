@@ -76,4 +76,17 @@ class UserRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function groupWithUserAndSession($user, $session)
+    {
+        $dql = "SELECT g FROM Innova\SelfBundle\Entity\Group g
+        WHERE :user MEMBER OF g.users AND :session MEMBER OF g.sessions
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('session', $session)
+                ->setParameter('user', $user);
+
+        return $query->getResult();
+    }
 }

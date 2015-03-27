@@ -181,4 +181,15 @@ class AdminUserController extends Controller
 
         return array('user' => $user);
     }
+
+    /**
+     *
+     * @Route("/csv-import/", name="user_import")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Features:AdminUser/import.html.twig")
+     */
+    public function importUserAction()
+    {
+        return array();
+    }
 }

@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a class="btn btn-default btn-sm" href="{{ path('editor_group_edit', { 'groupId': group.id }) }}">
+    <span class="glyphicon glyphicon-chevron-left"></span> {{ 'group.back' | trans }}
+</a>
+
+<a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
+    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
+</a>
+
+<hr/>
+<h3>{{ 'group.import' | trans }} ({{ group.name }}) <b></h3>
+
+<div class="well">
+	Le fichier CSV doit respecter ce format :
+	'nomdutilisateur';'email':'password';
+</div>
+
+
+<form action="#" method="post" {{ form_enctype(form) }}>
+	<div class="form-group">
+    	{{ form_widget(form.file) }}
+    </div>
+    {{ form(form) }}
+</form>
+
+{% endblock %}

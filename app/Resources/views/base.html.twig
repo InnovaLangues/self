@@ -19,7 +19,7 @@
                 <div class="col-md-12">
                     {% for label, flashes in app.session.flashbag.all %}
                         {% for flash in flashes %}
-                            <div class="alert alert-{{ label }}">{{ flash }}</div>
+                            <div class="alert alert-{{ label }}">{{ flash |raw }}</div>
                         {% endfor %}
                     {% endfor %}
                     {% block body %}{% endblock %}

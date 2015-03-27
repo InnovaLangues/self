@@ -15,6 +15,7 @@ menu:
     credit : Crédits
     logout: Déconnexion
     language_change: Changez la langue
+    groups: Groupes
 
 export:
     file_generated: Le fichier a été généré
@@ -215,6 +216,7 @@ editor:
         genre: Mode de discours
         variety: Variété
         lisibility: Indice de lisibilité
+        speechType: Genre de discours
 
     log:
         editor_create: Création de
@@ -402,6 +404,10 @@ genre:
     descriptive: Descriptif
     literary: Littéraire
     conversational: Conversationnel
+    explicatif: Explicatif
+    injonctif: Injonctif
+    expressif: Expressif
+    poetique: Poétique
 
 
 variety:
@@ -430,3 +436,30 @@ phased:
     step3: Etape 3
     create_alternative: Créer une alternative
     delete_alternative: Supprimer l'alternative
+
+channel:
+    phone: Téléphone
+    videoconf: Visioconférence
+    speaker: Moyen de sonorisation
+    tutorial: Didacticiel interactif
+    GPS: GPS
+    other: Autre
+    visual: Visu
+    chat_sms_oral: Chat/SMS oral
+    chat_sms_written: Chat/SMS par téléphoe
+    tools: Outil 2.0
+    postit: Post-it / message bref
+    brochure: Brochure / dépliant 
+    ticket: Tickets (train, théâtre, reçu)
+    notice: Panneau / affiche
+
+group:
+    create: Créer un groupe
+    list: Liste des groupes
+    name: Nom du groupe
+    edit: Editer le groupe
+    delete: Supprimer le groupe
+    sessions: Sessions liées au groupe
+    users: Membres du groupe
+    import: Import d'utilisateurs
+    back: Revenir au groupe

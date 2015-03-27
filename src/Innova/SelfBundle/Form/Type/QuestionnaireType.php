@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\ORM\EntityRepository;
 
 class QuestionnaireType extends AbstractType
 {
@@ -25,6 +26,7 @@ class QuestionnaireType extends AbstractType
 
         $builder->add('level', 'entity', array(
                 'class' => 'InnovaSelfBundle:Level',
+                'query_builder' => function (EntityRepository $er) {return $er->createQueryBuilder('l')->orderBy('l.name', 'ASC');},
                 'property' => 'name',
                 'empty_value' => "-",
                 'attr' => array('class' => 'form-control identity-select', 'data-field' => 'level'),

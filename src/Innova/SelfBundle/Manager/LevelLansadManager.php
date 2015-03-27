@@ -19,13 +19,15 @@ class LevelLansadManager
 
         foreach ($array as $el) {
             $language = $em->getRepository('InnovaSelfBundle:Language')->findOneByName($el[0]);
-            $name = $el[1];
+            $names = $el[1];
 
-            if (!$this->findByNameAndLanguage($name, $language)) {
-                $level = new LevelLansad();
-                $level->setLanguage($language);
-                $level->setName($name);
-                $em->persist($level);
+            foreach ($names as $name) {
+                if (!$this->findByNameAndLanguage($name, $language)) {
+                    $level = new LevelLansad();
+                    $level->setLanguage($language);
+                    $level->setName($name);
+                    $em->persist($level);
+                }
             }
         }
         $em->flush();

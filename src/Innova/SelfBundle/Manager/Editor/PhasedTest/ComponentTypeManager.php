@@ -19,7 +19,7 @@ class ComponentTypeManager
 
         foreach ($array as $el) {
             if (!$this->findByName($el)) {
-                $r = new ComponentType.php();
+                $r = new ComponentType();
                 $r->setName($el);
                 $em->persist($r);
             }

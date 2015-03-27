@@ -43,8 +43,6 @@ class ScoreManager
 
     public function calculateScoreByTest(Test $test, Session $session, User $user)
     {
-        $score = 0;
-        $nbSubquestions = 0;
         $scores = $this->initializeScoreArray();
 
         $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
@@ -52,12 +50,10 @@ class ScoreManager
             $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
             foreach ($subquestions as $subquestion) {
                 $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
-                $nbSubquestions++;
                 $skill = $questionnaire->getSkill()->getName();
                 $level = $questionnaire->getLevel()->getName();
 
                 if ($this->subquestionCorrect($subquestion, $session, null)) {
-                    $score++;
                     $scores[$skill][$level]["correct"]++;
                 }
 
@@ -75,7 +71,7 @@ class ScoreManager
 
         $choices = $this->propositionRepo->getByUserTraceAndSubquestion($subquestion, $this->user, $component, $session);
 
-        // Teste si les choix de l'étudiant sont présent dans les bonnes réponses.
+        // Teste si les choix de l'étudiant sont présents dans les bonnes réponses.
         foreach ($choices as $choice) {
             if (!in_array($choice, $rightProps)) {
                 $correct = false;
@@ -93,7 +89,7 @@ class ScoreManager
     private function initializeScoreArray()
     {
         $skills = $this->skillRepo->findAll();
-        $levels = $this->levelRepo->findAll();
+        $levels = $this->levelRepo->findBy(array(), array('name' => 'ASC'));
 
         $scores = array();
 
