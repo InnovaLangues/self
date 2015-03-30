@@ -53,6 +53,7 @@ registration:
     EE_level: Niveau obtenu en EE (expression écrite)
     next_step: Etape suivante
     test_dialang: Avez-vous déjà passé un test Dialang ?
+    forgotten_paswd: Mot de passe oublié ?
 
 test:
     available: Tests disponibles
@@ -460,6 +461,9 @@ group:
     edit: Editer le groupe
     delete: Supprimer le groupe
     sessions: Sessions liées au groupe
+    no_session: Aucune session liée à ce groupe
     users: Membres du groupe
+    no_user: Aucun utilisateur lié à ce groupe
     import: Import d'utilisateurs
     back: Revenir au groupe
+    display: Détails du groupe

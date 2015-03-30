@@ -77,6 +77,9 @@ fos_user:
     registration:
         form:
             type: innova_selfbundle_user
+    from_email:
+        address:        self@innovalangues.net
+        sender_name:    SELF Innovalangues
 
 stfalcon_tinymce:
     include_jquery: false
