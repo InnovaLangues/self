@@ -37,6 +37,17 @@ class GroupController extends Controller
 
     /**
      *
+     * @Route("{groupId}/display", name="editor_group_display")
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Features:Group/display.html.twig")
+     */
+    public function displayAction(Group $group)
+    {
+        return array('group' => $group);
+    }
+
+    /**
+     *
      * @Route("/create", name="editor_group_create")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Features:Group/new.html.twig")

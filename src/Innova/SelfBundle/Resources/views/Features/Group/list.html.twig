@@ -23,6 +23,9 @@
 					{{ group.name }}
 				</td>
 				<td class="text-right">
+                    <a class="btn btn-default btn-sm" href="{{ path('editor_group_display', { 'groupId': group.id }) }}">
+                        <span class="glyphicon glyphicon-play"></span> {{ 'group.display' | trans }}
+                    </a>
                     <a class="btn btn-default btn-sm" href="{{ path('editor_group_edit', { 'groupId': group.id }) }}">
                         <span class="glyphicon glyphicon-edit"></span> {{ 'group.edit' | trans }}
                     </a>
