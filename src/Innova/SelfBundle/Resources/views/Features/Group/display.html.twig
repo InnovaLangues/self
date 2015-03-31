@@ -17,7 +17,7 @@
 <h4> {{ 'group.sessions' | trans }} </h4>
 {% if group.sessions | length > 0 %}
 	{% for session in group.sessions %}
-	    {{ session.name }} -
+	    <a href="{{ path('editor_test_edit_session', { 'testId': session.test.id, 'sessionId': session.id }) }}">{{ session.test.name }} - {{ session.name }}</a> -
 	{% endfor %}
 {% else %}
     <div class="alert alert-info" role="alert">{{ 'group.no_session' | trans }}</div>
@@ -26,7 +26,7 @@
 <h4> {{ 'group.users' | trans }} </h4>
 {% if group.users | length > 0 %}
 	{% for user in group.users %}
-	    {{ user.username }} -
+	<a href="{{ path('admin_user_show', { 'id': user.id }) }}">{{ user.username }}</a> -
 	{% endfor %}
 {% else %}
     <div class="alert alert-info" role="alert">{{ 'group.no_user' | trans }}</div>

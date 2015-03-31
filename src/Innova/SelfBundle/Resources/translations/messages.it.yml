@@ -457,4 +457,9 @@ group:
     edit: Editer le groupe
     delete: Supprimer le groupe
     sessions: Sessions liées au groupe
+    no_session: Aucune session liée à ce groupe
     users: Membres du groupe
+    no_user: Aucun utilisateur lié à ce groupe
+    import: Import d'utilisateurs
+    back: Revenir au groupe
+    display: Détails du groupe

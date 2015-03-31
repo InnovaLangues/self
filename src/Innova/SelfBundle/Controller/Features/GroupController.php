@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Group controller.
  *
- * @Route("admin/editor/groups/")
+ * @Route("admin/editor/groups")
  * @ParamConverter("group", isOptional="true", class="InnovaSelfBundle:Group",  options={"id" = "groupId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})

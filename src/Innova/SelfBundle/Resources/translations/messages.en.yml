@@ -442,10 +442,15 @@ channel:
     notice: Panneau / affiche
 
 group:
-    create: Créer un groupe
-    list: Liste des groupes
-    name: Nom du groupe
-    edit: Editer le groupe
-    delete: Supprimer le groupe
-    sessions: Sessions liées au groupe
-    users: Membres du groupe
+    create: Create a group
+    list: List groups
+    name: Group name
+    edit: Edit group
+    delete: Delete groupe
+    sessions: Group sessions
+    no_session: No session for this group
+    users: Group members
+    no_user: No member for this group
+    import: Import users
+    back: Back to group
+    display: Group detail
