@@ -69,7 +69,7 @@ class PlayerController
         $sessionLogged = $this->session->get('sessionLogged-'.$session->getId());
         $isUserInAuthorizedGroup = $this->entityManager->getRepository('InnovaSelfBundle:User')->groupWithUserAndSession($this->user, $session);
 
-        if ($sessionLogged != 1 || !$isUserInAuthorizedGroup) {
+        if ($sessionLogged != 1 && !$isUserInAuthorizedGroup) {
             $url = $this->router->generate('session_log_form', array('sessionId' => $session->getId()));
 
             return new RedirectResponse($url);
