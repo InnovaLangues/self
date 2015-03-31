@@ -2,8 +2,11 @@
     <div class="panel-heading">
         #{{ component.alternativeNumber+1 }}
         <div class="pull-right">
-            <a class="btn btn-default btn-xs get-potentials" data-test-id="{{ test.id }}" data-component-id="{{ component.id }}" toggle="tooltip" data-original-title="{{'editor.task.add_existing' | trans }}">
+            <a class="btn btn-default btn-xs" href="{{ path('editor_create_task_component', { 'componentId': component.id  }) }}"  toggle="tooltip" data-original-title="{{'editor.task.create' | trans }}">
                 <span class="glyphicon glyphicon-plus"></span>
+            </a>
+            <a class="btn btn-default btn-xs get-potentials" data-test-id="{{ test.id }}" data-component-id="{{ component.id }}" toggle="tooltip" data-original-title="{{'editor.task.add_existing' | trans }}">
+                <span class="glyphicon glyphicon-log-in"></span>
             </a>
             <a class="btn btn-default btn-xs" href="{{ path('editor_remove_component', { 'testId': test.id, 'componentId': component.id  }) }}" toggle="tooltip" data-original-title="{{'phased.delete_alternative' | trans }}">
                 <span class="glyphicon glyphicon-trash"></span>

@@ -78,6 +78,25 @@ class PhasedTestController extends Controller
         return new Response(null);
     }
 
+    /**
+     * Create a questionnaire and add it to a component
+     *
+     * @Route("/component/{componentId}/add/orderQuestionnaireComponent", name="editor_create_task_component", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function createQuestionnaireToComponent(Component $component)
+    {
+        $questionnaire = $this->get("self.phasedtest.manager")->createQuestionnaireToComponent($component);
+
+        $qId = $questionnaire->getId();
+
+        return $this->redirect($this->generateUrl(
+                'editor_questionnaire_show',
+                array('questionnaireId' => $qId, 'testId' => $component->getTest()->getId())
+            )
+        );
+    }
+
      /**
      * Get potential questionnaires to a component
      *

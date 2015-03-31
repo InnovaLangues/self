@@ -11,10 +11,14 @@ use Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent;
 class PhasedTestManager
 {
     protected $entityManager;
+    protected $questionnaireManager;
+    protected $questionManager;
 
-    public function __construct($entityManager)
+    public function __construct($entityManager, $questionnaireManager, $questionManager)
     {
         $this->entityManager = $entityManager;
+        $this->questionnaireManager = $questionnaireManager;
+        $this->questionManager = $questionManager;
         $this->componentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component');
         $this->componentTypeRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\ComponentType');
         $this->orderQuestionnaireComponentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent');
@@ -72,6 +76,16 @@ class PhasedTestManager
         $questionnaires = $this->questionnaireRepo->findPotentialByComponent($component);
 
         return $questionnaires;
+    }
+
+    public function createQuestionnaireToComponent(Component $component)
+    {
+        $questionnaire = $this->questionnaireManager->createQuestionnaire();
+        $this->questionManager->createQuestion($questionnaire);
+
+        $this->addQuestionnaireToComponent($questionnaire, $component);
+
+        return $questionnaire;
     }
 
     public function addQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)

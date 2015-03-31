@@ -134,7 +134,9 @@ services:
     self.phasedtest.manager:
         class: Innova\SelfBundle\Manager\Editor\PhasedTest\PhasedTestManager
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
+            entityManager:          @doctrine.orm.entity_manager
+            questionnaireManager:   @self.questionnaire.manager
+            questionManager:        @self.question.manager
 
     self.score.manager:
         class: Innova\SelfBundle\Manager\ScoreManager
