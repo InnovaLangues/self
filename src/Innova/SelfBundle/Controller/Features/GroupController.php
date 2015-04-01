@@ -70,7 +70,7 @@ class GroupController extends Controller
     /**
      *
      * @Route("/{groupId}/remove", name="editor_group_delete", options = {"expose"=true})
-     * @Method("GET")
+     * @Method("DELETE")
      * @Template("InnovaSelfBundle:Features:Group/list.html.twig")
      */
     public function deleteAction(Group $group)
