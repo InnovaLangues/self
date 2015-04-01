@@ -31,7 +31,7 @@ class PhasedTestController extends Controller
      * @Route("/test/{testId}/add/component/{typeId}", name="editor_generate_component")
      * @Method("GET")
      */
-    public function generateComponent(Test $test, ComponentType $type)
+    public function generateComponentAction(Test $test, ComponentType $type)
     {
         $this->get("self.phasedtest.manager")->generateComponent($test, $type);
 
@@ -44,7 +44,7 @@ class PhasedTestController extends Controller
      * @Route("/test/{testId}/remove/component/{componentId}", name="editor_remove_component")
      * @Method("GET")
      */
-    public function removeComponent(Test $test, Component $component)
+    public function removeComponentAction(Test $test, Component $component)
     {
         $this->get("self.phasedtest.manager")->removeComponent($test, $component);
 
@@ -57,7 +57,7 @@ class PhasedTestController extends Controller
      * @Route("/order/component/{componentId}", name="save-order-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
-    public function saveOrder(Component $component)
+    public function saveOrderAction(Component $component)
     {
         $newOrderArray = json_decode($this->get('request')->request->get('newOrder'));
         $this->get("self.phasedtest.manager")->saveOrder($newOrderArray);
@@ -71,7 +71,7 @@ class PhasedTestController extends Controller
      * @Route("/remove/orderQuestionnaireComponent/{orderQuestionnaireComponentId}", name="remove-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
-    public function removeQuestionnaireFromComponent(OrderQuestionnaireComponent $orderQuestionnaireComponent)
+    public function removeQuestionnaireFromComponentAction(OrderQuestionnaireComponent $orderQuestionnaireComponent)
     {
         $this->get("self.phasedtest.manager")->removeQuestionnaireFromComponent($orderQuestionnaireComponent);
 
@@ -84,7 +84,7 @@ class PhasedTestController extends Controller
      * @Route("/component/{componentId}/add/orderQuestionnaireComponent", name="editor_create_task_component", options={"expose"=true})
      * @Method("GET")
      */
-    public function createQuestionnaireToComponent(Component $component)
+    public function createQuestionnaireToComponentAction(Component $component)
     {
         $questionnaire = $this->get("self.phasedtest.manager")->createQuestionnaireToComponent($component);
 
@@ -103,7 +103,7 @@ class PhasedTestController extends Controller
      * @Route("/potentials/{componentId}", name="get-component-potentials", options={"expose"=true})
      * @Method("POST")
      */
-    public function getPotentialQuestionnaires(Component $component)
+    public function getPotentialQuestionnairesAction(Component $component)
     {
         $questionnaires = $this->get("self.phasedtest.manager")->getPotentialQuestionnaires($component);
         $template = $this->renderView('InnovaSelfBundle:Editor/phased:potentials.html.twig', array('questionnaires' => $questionnaires));
@@ -117,7 +117,7 @@ class PhasedTestController extends Controller
      * @Route("/add/component/{componentId}/questionnaire/{questionnaireId}", name="add-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
-    public function addQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)
+    public function addQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
         $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($questionnaire, $component);
         $template = $this->renderView('InnovaSelfBundle:Editor/phased:tasks.html.twig', array('component' => $component));
@@ -131,7 +131,7 @@ class PhasedTestController extends Controller
      * @Route("/duplicate/component/{componentId}/questionnaire/{questionnaireId}", name="duplicate-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
-    public function duplicateQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)
+    public function duplicateQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
         $newQuestionnaire = $this->get("self.questionnaire.manager")->duplicate($questionnaire);
         $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($newQuestionnaire, $component);

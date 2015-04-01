@@ -32,7 +32,7 @@ class LocaleController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changeLocale($_locale)
+    public function changeLocaleAction($_locale)
     {
         $this->localeManager->setUserLocale($_locale);
 
