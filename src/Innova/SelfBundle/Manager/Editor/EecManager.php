@@ -247,4 +247,15 @@ class EecManager
 
         return $answers;
     }
+
+    public function setDisplayAction(Subquestion $subquestion, $display)
+    {
+        $em = $this->entityManager;
+
+        $display = ($display == "true") ? 1 : 0;
+
+        $subquestion->setDisplayAnswer($display);
+        $em->persist($subquestion);
+        $em->flush();
+    }
 }

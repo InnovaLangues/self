@@ -33,4 +33,16 @@ class CommentManager
 
         return $comment;
     }
+
+    public function updateCommentDate(Media $media)
+    {
+        $em = $this->entityManager;
+
+        $comment = $em->getRepository('InnovaSelfBundle:Comment')->findOneByDescription($media);
+        $comment->setEditDate(new \Datetime());
+        $em->persist($comment);
+        $em->flush();
+
+        return $this;
+    }
 }
