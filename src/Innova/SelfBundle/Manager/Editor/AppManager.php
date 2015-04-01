@@ -60,6 +60,8 @@ class AppManager
 
     public function deleteDistractor(Question $question, Proposition $proposition)
     {
+        $em = $this->entityManager;
+
         $media = $proposition->getMedia();
         foreach ($question->getSubquestions() as $subquestion) {
             foreach ($subquestion->getPropositions() as $needle) {

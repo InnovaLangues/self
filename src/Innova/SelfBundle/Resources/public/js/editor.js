@@ -642,7 +642,7 @@ function setListeningLimit(mediaId, listeningLimit){
             'mediaId':mediaId,
             'limit': listeningLimit
         }),
-        type: 'POST',
+        type: 'PUT',
     })
     .done(function(data) {
         afterAjax();

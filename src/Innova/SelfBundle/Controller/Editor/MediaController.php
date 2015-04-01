@@ -30,7 +30,6 @@ class MediaController
     protected $entityManager;
     protected $templating;
     protected $questionnaireRevisorsManager;
-    protected $router;
     protected $templatingManager;
     protected $questionnaireManager;
 
@@ -42,7 +41,6 @@ class MediaController
             $entityManager,
             $templating,
             $questionnaireRevisorsManager,
-            $router,
             $templatingManager,
             $questionnaireManager
     ) {
@@ -53,7 +51,6 @@ class MediaController
         $this->entityManager = $entityManager;
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        $this->router = $router;
         $this->templatingManager = $templatingManager;
         $this->questionnaireManager = $questionnaireManager;
         $this->subqRepo = $this->entityManager->getRepository('InnovaSelfBundle:Subquestion');
@@ -62,7 +59,7 @@ class MediaController
 
     /**
      * @Route("/set-listening-limit/{questionnaireId}/{mediaId}/{limit}", name="set-listening-limit", options={"expose"=true})
-     * @Method("POST")
+     * @Method("PUT")
      */
     public function setListeningLimitAction(Questionnaire $questionnaire, Media $media, $limit)
     {
@@ -95,7 +92,6 @@ class MediaController
      */
     public function updateMediaAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
-        $em = $this->entityManager;
         $case = $request->get('toBeReloaded');
 
         $this->mediaManager->updateMedia($media->getId(), $request->get('url'), $request->get('name'), $request->get('description'));

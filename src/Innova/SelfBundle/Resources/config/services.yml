@@ -89,7 +89,6 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
-            router:             @router
             templatingManager:  @self.templating.manager
             questionnaireManager:           @self.questionnaire.manager
 
