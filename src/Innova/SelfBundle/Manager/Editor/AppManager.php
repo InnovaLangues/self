@@ -57,4 +57,20 @@ class AppManager
 
         return true;
     }
+
+    public function deleteDistractor(Question $question, Proposition $proposition)
+    {
+        $media = $proposition->getMedia();
+        foreach ($question->getSubquestions() as $subquestion) {
+            foreach ($subquestion->getPropositions() as $needle) {
+                if ($needle->getMedia() == $media) {
+                    $em->remove($needle);
+                }
+            }
+        }
+        $em->remove($media);
+        $em->flush();
+
+        return $this;
+    }
 }

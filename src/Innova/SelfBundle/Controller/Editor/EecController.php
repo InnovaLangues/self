@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
@@ -34,11 +33,11 @@ class EecController
     protected $questionnaireRevisorsManager;
 
     public function __construct(
-            $eecManager,
-            $propositionManager,
-            $entityManager,
-            $templating,
-            $questionnaireRevisorsManager
+        $eecManager,
+        $propositionManager,
+        $entityManager,
+        $templating,
+        $questionnaireRevisorsManager
     ) {
         $this->eecManager = $eecManager;
         $this->propositionManager = $propositionManager;
@@ -84,9 +83,7 @@ class EecController
      */
     public function createClueAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $clueName = $request->get('clue');
-
-        $this->eecManager->createClue($questionnaire, $subquestion, $clueName);
+        $this->eecManager->createClue($questionnaire, $subquestion, $request->get('clue'));
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
@@ -107,7 +104,7 @@ class EecController
         $this->eecManager->setClueType($clueId, $clueTypeName);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-        return new JsonResponse(array());
+        return new Response(null, 200);
     }
 
     /**
@@ -117,34 +114,22 @@ class EecController
      */
     public function createSyllableAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $syllable = $request->get('syllable');
-
-        $this->eecManager->createSyllabe($syllable, $questionnaire, $subquestion);
+        $this->eecManager->createSyllabe($request->get('syllable'), $questionnaire, $subquestion);
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-        return new JsonResponse(array());
+        return new Response(null, 200);
     }
 
     /**
      *
-     * @Route("/questionnaires/set-display/{subquestionId}", name="editor_questionnaire_set-display", options={"expose"=true})
+     * @Route("/questionnaires/set-display/{subquestionId}/{display}/", name="editor_questionnaire_set-display", options={"expose"=true})
      * @Method("PUT")
      */
-    public function setDisplayAction(Request $request, Subquestion $subquestion)
+    public function setDisplayAction(Subquestion $subquestion, $display)
     {
-        $em = $this->entityManager;
+        $this->eecManager->setDisplayAction($subquestion, $display);
 
-        if ($request->get('display') == "true") {
-            $display = 1;
-        } else {
-            $display = 0;
-        }
-
-        $subquestion->setDisplayAnswer($display);
-        $em->persist($subquestion);
-        $em->flush();
-
-        return new JsonResponse(array());
+        return new Response(null, 200);
     }
 
     /**
@@ -184,12 +169,10 @@ class EecController
      */
     public function editDistractorAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
-        $text = $request->get('text');
-
-        $this->eecManager->editDistractor($media, $text);
+        $this->eecManager->editDistractor($media, $request->get('text'));
         $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-        return new JsonResponse(array());
+        return new Response(null, 200);
     }
 
     /**

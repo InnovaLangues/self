@@ -10,11 +10,13 @@ class MediaManager
 {
     protected $entityManager;
     protected $questionnaireRevisorsManager;
+    //protected $cacheManager;
 
     public function __construct($entityManager, $questionnaireRevisorsManager)
     {
         $this->entityManager = $entityManager;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
+        //$this->cacheManager = $cacheManager;
     }
 
     public function createMedia(Questionnaire $questionnaire = null, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
@@ -118,6 +120,65 @@ class MediaManager
             $em->flush();
 
             return $newMedia;
+        }
+    }
+
+    /**
+    * Fonction qui invalide le cache de tests et des questionnaires pour un média donné
+    */
+    private function invalidateMediaAction(Media $media, $typeReloaded)
+    {
+        $em = $this->entityManager;
+
+        // Suivant la zone modifiée, appel du questionnaire
+        switch ($typeReloaded) {
+            case 'contexte':
+                $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaContext($media);
+                break;
+            case 'texte':
+                $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($media);
+                break;
+            case 'functional-instruction':
+                $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFunctionalInstruction($media);
+                break;
+            case 'feedback':
+                $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFeedback($media);
+                break;
+            case 'subquestion':
+                $subquestions = $em->getRepository('InnovaSelfBundle:Subquestion')->findBymediaAmorce($media);
+                foreach ($subquestions as $subquestion) {
+                    $questions = $em->getRepository('InnovaSelfBundle:Question')->findByQuestionnaire($subquestion->getQuestion());
+                    foreach ($questions as $question) {
+                        $questionnaireId = $question->getQuestionnaire()->getId();
+                        $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findById($questionnaireId);
+                    }
+                }
+                break;
+        }
+
+        // A ce niveau, j'ai tous les questionnaires qui ont le média modifié
+        foreach ($questionnairesForMedia as $questionnaireForMedia) {
+            $questionnaireId = $questionnaireForMedia->getId();
+
+            // Appel des tests qui ont ce questionnaire dans leur liste
+            $testsForQuestionnaire = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->
+                                findBy(array('questionnaire' => $questionnaireId));
+            foreach ($testsForQuestionnaire as $testForQuestionnaire) {
+                $testId = $testForQuestionnaire->getTest()->getId();
+
+                // Now, I will invalidate
+                // questionnaire_pick : route définie dans le playerController.
+                // admin/test/{testId}/questionnaire/{questionnaireId}",
+                // Add router service
+                $pathToInvalidate = $this->router->generate('questionnaire_pick',
+                                        array(
+                                                'testId' => $testId,
+                                                'questionnaireId' => $questionnaireId,
+                                             )
+
+                 );
+                $this->cacheManager->invalidatePath($pathToInvalidate);
+            }
         }
     }
 }

@@ -50,6 +50,29 @@ class QuestionnaireManager
         return $questionnaire;
     }
 
+    public function editQuestionnaireField(Questionnaire $questionnaire, $field, $value)
+    {
+        $em = $this->entityManager;
+
+        if ($field == "contexte") {
+            $questionnaire->setMediaContext($value);
+        } elseif ($field == "texte") {
+            $questionnaire->setMediaText($value);
+        } elseif ($field == "feedback") {
+            $questionnaire->setMediaFeedback($value);
+        } elseif ($field == "blank-text") {
+            $questionnaire->setMediaBlankText($value);
+        } elseif ($field == "functional-instruction") {
+            $questionnaire->setMediaFunctionalInstruction($value);
+        } elseif ($field == "instruction") {
+            $questionnaire->setMediaInstruction($value);
+        }
+        $em->persist($questionnaire);
+        $em->flush();
+
+        return $questionnaire;
+    }
+
     public function setTypology(Questionnaire $questionnaire, $typologyName)
     {
         $em = $this->entityManager;

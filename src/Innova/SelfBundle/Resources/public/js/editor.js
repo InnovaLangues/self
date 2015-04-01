@@ -758,7 +758,6 @@ function setClueType(clueType, clueId){
                 'questionnaireId': questionnaireId
             }),
         type: 'PUT',
-        dataType: 'json',
         data: {
             clueType: clueType,
             clueId: clueId,
@@ -780,7 +779,6 @@ function setSyllable(syllable, subquestionId){
                 'subquestionId': subquestionId
             }),
         type: 'PUT',
-        dataType: 'json',
         data: {
             syllable: syllable
         }
@@ -797,12 +795,9 @@ function setDisplay(display, subquestionId){
         url: Routing.generate('editor_questionnaire_set-display',
             {
                 'subquestionId': subquestionId,
+                'display': display
             }),
         type: 'PUT',
-        dataType: 'json',
-        data: {
-            display: display
-        }
     })
     .done(function(data) {
         afterAjax();
@@ -855,7 +850,6 @@ function editDistractor(mediaId, text){
                 'mediaId': mediaId
             }),
         type: 'PUT',
-        dataType: 'json',
         data: {
             text: text
         }
