@@ -10,6 +10,10 @@
     <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
 </a>
 
+<a class="btn btn-default btn-sm" href="{{ path('editor_group_import_user', { 'groupId': group.id }) }}">
+    <span class="glyphicon glyphicon-import"></span> {{ 'group.import' | trans }}
+</a>
+
 <hr/>
 
 <h3>{{ group.name }}</h3>

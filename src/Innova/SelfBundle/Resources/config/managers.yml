@@ -65,11 +65,6 @@ services:
             fosUserManager:     @fos_user.util.user_manipulator
             session:            @session
 
-    self.group.manager:
-        class: Innova\SelfBundle\Manager\GroupManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
     self.comment.manager:
         class: Innova\SelfBundle\Manager\CommentManager
         arguments:
