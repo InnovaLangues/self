@@ -179,20 +179,20 @@ class MediaClick
     /**
      * Set component
      *
-     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $component
+     * @param  \Innova\SelfBundle\Entity\PhasedTest\Component $component
      * @return MediaClick
      */
     public function setComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $component = null)
     {
         $this->component = $component;
-    
+
         return $this;
     }
 
     /**
      * Get component
      *
-     * @return \Innova\SelfBundle\Entity\PhasedTest\Component 
+     * @return \Innova\SelfBundle\Entity\PhasedTest\Component
      */
     public function getComponent()
     {

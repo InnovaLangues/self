@@ -173,7 +173,7 @@ class TraceController
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
      */
-    public function displayDifficulty(Test $test, Session $session, Trace $trace)
+    public function displayDifficultyAction(Test $test, Session $session, Trace $trace)
     {
         return array("trace" => $trace, "test" => $test, "session" => $session);
     }

@@ -114,7 +114,7 @@ class TaskController
      * @Route("/test/{testId}/potentials", name="editor_test_questionnaires_potentials", options={"expose"=true})
      * @Method("GET")
      */
-    public function getPotentialQuestionnaires(Test $test)
+    public function getPotentialQuestionnairesAction(Test $test)
     {
         $em = $this->entityManager;
 

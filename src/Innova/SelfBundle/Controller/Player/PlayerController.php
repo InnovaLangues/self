@@ -170,7 +170,7 @@ class PlayerController
      * @Route("/form/session/{sessionId}", name="session_log_form")
      * @Template("InnovaSelfBundle:Player:common/log.html.twig")
      */
-    public function sessionLogForm(Session $session)
+    public function sessionLogFormAction(Session $session)
     {
         return array(
             'session' => $session,
@@ -181,7 +181,7 @@ class PlayerController
      * @Method("POST")
      * @Route("/log/session/{sessionId}", name="session_log")
      */
-    public function sessionLog(Session $session, Request $request)
+    public function sessionLogAction(Session $session, Request $request)
     {
         $post = $request->request->all();
 
