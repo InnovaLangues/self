@@ -86,8 +86,15 @@ class DeleteAllCommand extends ContainerAwareCommand
             }
             $em->flush();
 
-            $output->writeln("Suppression ORDER ...");
+            $output->writeln("Suppression ORDER Test ...");
             $orders = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findAll();
+            foreach ($orders as $order) {
+                $em->remove($order);
+            }
+            $em->flush();
+
+            $output->writeln("Suppression ORDER Component ...");
+            $orders = $em->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent')->findAll();
             foreach ($orders as $order) {
                 $em->remove($order);
             }
@@ -100,7 +107,7 @@ class DeleteAllCommand extends ContainerAwareCommand
             }
             $em->flush();
 
-            $output->writeln("Suppression MediaLimit ...");
+            $output->writeln("Suppression MEDIALIMIT ...");
             $limits = $em->getRepository('InnovaSelfBundle:Media\MediaLimit')->findAll();
             foreach ($limits as $limit) {
                 $em->remove($limit);
@@ -123,6 +130,13 @@ class DeleteAllCommand extends ContainerAwareCommand
 
             $output->writeln("Suppression TEST ...");
             $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+            foreach ($tests as $test) {
+                $em->remove($test);
+            }
+            $em->flush();
+
+            $output->writeln("Suppression USER ...");
+            $tests = $em->getRepository('InnovaSelfBundle:User')->findAll();
             foreach ($tests as $test) {
                 $em->remove($test);
             }
