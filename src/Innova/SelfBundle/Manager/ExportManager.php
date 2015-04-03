@@ -96,11 +96,12 @@ class ExportManager
         $fs = new Filesystem();
         $sessionId = $session->getId();
 
-        $fileContent = "";
         $filename = "self_export-session".$sessionId."-".date("d-m-Y_H:i:s").'.csv';
         $sessionPathExport = $this->kernelRoot."/data/session/".$sessionId."/";
         $fs->mkdir($sessionPathExport, 0777);
         $csvh = fopen($sessionPathExport."/".$filename, 'w+');
+
+        $fileContent = $this->getCsvSessionContent($session);
 
         fwrite($csvh, $fileContent);
         fclose($csvh);
@@ -578,5 +579,46 @@ class ExportManager
         $csv .= "\n";
 
         return array($propLetters, $rightProps, $result, $csv, $typology, $theme);
+    }
+
+    private function getCsvSessionContent(Session $session)
+    {
+        $csv = "";
+        $em = $this->entityManager;
+
+        $users = $em->getRepository('InnovaSelfBundle:User')->findBySession($session);
+        $levels = $em->getRepository('InnovaSelfBundle:Level')->findBy(array(), array('name' => 'ASC'));
+        $skills = $em->getRepository('InnovaSelfBundle:Skill')->findAll();
+
+        $csv .= $this->addColumn("-");
+
+        foreach ($skills as $skill) {
+            foreach ($levels as $level) {
+                $csv .= $this->addColumn($level->getName()." (".$skill->getName().")");
+            }
+        }
+
+        $csv .= "\n";
+
+        foreach ($users as $user) {
+            $csv .= $this->addColumn($user->getUsername());
+            $scores = $this->scoreManager->calculateScoreByTest($session->getTest(), $session, $user);
+
+            foreach ($skills as $skill) {
+                foreach ($levels as $level) {
+                    $correct = $scores[$skill->getName()][$level->getName()]["correct"];
+                    $total = $scores[$skill->getName()][$level->getName()]["count"];
+
+                    $display = ($total == 0) ? "-" : $correct."/".$total;
+
+                    $csv .= $this->addColumn($display);
+                }
+            }
+            $csv .= "\n";
+        }
+
+        $csv .= "\n";
+
+        return $csv;
     }
 }
