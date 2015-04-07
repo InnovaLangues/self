@@ -69,6 +69,8 @@
                                             {% for language in languages %}
                                                 <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{ language.name | trans }}</a></li>
                                             {% endfor %}
+                                            <li class="divider"></li>
+                                            <li><a href="{{path('editor_questionnaires_orphan_show')}}">{{ 'editor.task.orphan' | trans }}</a></li>
                                         </ul>
                                     </li>
                                 </ul>

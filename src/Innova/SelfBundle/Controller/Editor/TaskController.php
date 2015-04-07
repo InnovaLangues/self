@@ -109,6 +109,24 @@ class TaskController
     }
 
     /**
+     * Lists all Questionnaire entities.
+     *
+     * @Route("/questionnaires/orphans", name="editor_questionnaires_orphan_show")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
+     */
+    public function listOrphansAction()
+    {
+        $em = $this->entityManager;
+
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findOrphans();
+
+        return array(
+            'questionnaires' => $questionnaires,
+        );
+    }
+
+    /**
      * Get questionnaires not associated yet to a test
      *
      * @Route("/test/{testId}/potentials", name="editor_test_questionnaires_potentials", options={"expose"=true})

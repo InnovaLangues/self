@@ -126,6 +126,7 @@ editor:
         no_task:  No task created
         no_task_yet: No task for this test. You can create, or select an existing on through the corresponding buttons.
         duplicate_and_add: Duplicate and add
+        orphan: Orphan tasks
     questionnaire:
         general_infos: General information
         title: Title

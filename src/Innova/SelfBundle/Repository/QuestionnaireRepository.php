@@ -55,6 +55,26 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
+     * Returns orphan tasks. Not associate to a testQuestionnaire or testComponent
+     */
+    public function findOrphans()
+    {
+        $dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        WHERE NOT EXISTS (
+            SELECT otc FROM Innova\SelfBundle\Entity\PhasedTest\orderQuestionnaireComponent otc
+            WHERE otc.questionnaire = q
+        ) AND NOT EXISTS (
+            SELECT otq FROM Innova\SelfBundle\Entity\orderQuestionnaireTest otq
+            WHERE otq.questionnaire = q
+        )
+        ";
+
+        $query = $this->_em->createQuery($dql);
+
+        return $query->getResult();
+    }
+
+    /**
      * countDoneYetByUserByTest count traces for test and for user
      * @param id $testId
      * @param id $userId
