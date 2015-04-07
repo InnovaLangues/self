@@ -129,6 +129,7 @@ editor:
         no_potential: Non ci sono task da associare
         no_task:  Non c’è nessun task già creato per questo test
         no_task_yet: Aucune tâche pour ce test. Vous pouvez en créer ou en ajouter une existante via les boutons correspondants.
+        orphan: Tâches orphelines
         duplicate_and_add: Dupliquer et ajouter
     questionnaire:
         general_infos: Informazioni generali

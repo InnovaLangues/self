@@ -120,6 +120,7 @@ editor:
         no_task:  Il n'y aucune tâche de créée actuellement.
         no_task_yet: Aucune tâche pour ce test. Vous pouvez en créer ou en ajouter une existante via les boutons correspondants.
         duplicate_and_add: Dupliquer et ajouter
+        orphan: Tâches orphelines
     questionnaire:
         general_infos: Informations générales
         title: Titre
