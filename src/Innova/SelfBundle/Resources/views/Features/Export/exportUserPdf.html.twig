@@ -14,8 +14,16 @@
         <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
     </head>
     <body>
-        <h1>Utilisateur : {{ app.user.username }}</h1>
-        <h1>Session : {{ session.name }}</h1>
+        <h1>
+            {% if app.user.firstname is defined and app.user.lastname is defined %}
+                {{ app.user.lastname }} {{ app.user.firstname }}
+            {% else %} 
+                {{ app.user.username }}
+            {% endif %}
+        </h1>
+        <h1>
+            Test : {{ session.test.name }} ({{ session.name}})
+        </h1>
         {% include "InnovaSelfBundle:Player/common:score.html.twig" %}
     </body>
 </html>
