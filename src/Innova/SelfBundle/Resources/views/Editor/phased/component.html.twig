@@ -8,7 +8,7 @@
             <a class="btn btn-default btn-xs get-potentials" data-test-id="{{ test.id }}" data-component-id="{{ component.id }}" toggle="tooltip" data-original-title="{{'editor.task.add_existing' | trans }}">
                 <span class="glyphicon glyphicon-log-in"></span>
             </a>
-            <a class="btn btn-default btn-xs" href="{{ path('editor_remove_component', { 'testId': test.id, 'componentId': component.id  }) }}" toggle="tooltip" data-original-title="{{'phased.delete_alternative' | trans }}">
+            <a data-test-id="{{ test.id }}" data-component-id="{{ component.id }}" class="btn btn-default btn-xs remove-alternative" href="#">
                 <span class="glyphicon glyphicon-trash"></span>
             </a>
             <span id="save-order-{{ component.id }}" class="btn btn-default btn-xs save-order" data-component-id="{{ component.id }}" toggle="tooltip" data-original-title="{{'editor.task.save_order' | trans }}" disabled>

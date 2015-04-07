@@ -58,3 +58,45 @@
         </div>
     </div>
 </div>
+
+<div id="delete-component-modal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">
+                    {{ 'editor.component.remove' | trans }}
+                    <img class="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
+                </h4>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer le composant ? Cela supprimera aussi les traces associées.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
+                <a href="#" type="button" id="remove-component-confirm" class="btn btn-danger">Oui, supprimer le composant</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="delete-order-questionnaire-component-modal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">
+                    {{ 'editor.questionnaire.remove' | trans }}
+                    <img class="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
+                </h4>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer la tâche de ce composant ? Cela supprimera aussi les traces associées.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
+                <a href="#" type="button" id="remove-questionnaire-confirm" class="btn btn-danger">Oui, supprimer la tâche</a>
+            </div>
+        </div>
+    </div>
+</div>
