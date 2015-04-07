@@ -46,7 +46,7 @@ class Component
     private $orderQuestionnaireComponents;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="component")
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="component", cascade={"remove"})
     */
     protected $traces;
 

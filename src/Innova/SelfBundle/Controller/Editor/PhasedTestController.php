@@ -41,7 +41,7 @@ class PhasedTestController extends Controller
     /**
      * Remove a component from a test entity
      *
-     * @Route("/test/{testId}/remove/component/{componentId}", name="editor_remove_component")
+     * @Route("/test/{testId}/remove/component/{componentId}", name="editor_remove_component", options={"expose"=true})
      * @Method("GET")
      */
     public function removeComponentAction(Test $test, Component $component)

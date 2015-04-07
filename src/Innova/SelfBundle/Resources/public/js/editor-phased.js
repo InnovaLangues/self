@@ -32,12 +32,25 @@ $( "body" ).on( "click", '.duplicate-questionnaire', function() {
     
 });
 
+$( "body" ).on( "click", '.remove-alternative', function() {
+    var testId = $(this).data("test-id");
+    var componentId = $(this).data("component-id");
+    var url = Routing.generate('editor_remove_component', { 'testId': testId, 'componentId': componentId  });
+    $("#remove-component-confirm").attr("href", url);
+    $('#delete-component-modal').modal('show');
+});
+
 $( "body" ).on( "click", '.remove-questionnaire', function() {
     $(this).attr("disabled", true);
     var orderQuestionnaireComponentId = $(this).data("order-questionnaire-id");
-    removeQuestionnaire(orderQuestionnaireComponentId);
+    $("#remove-questionnaire-confirm").data("order-questionnaire-component-id", orderQuestionnaireComponentId);
+    $('#delete-order-questionnaire-component-modal').modal('show');
 });
 
+$( "body" ).on( "click", '#remove-questionnaire-confirm', function() {
+    var orderQuestionnaireComponentId = $(this).data("order-questionnaire-component-id");
+    removeQuestionnaire(orderQuestionnaireComponentId);
+});
 
 function getPotentials(componentId)
 {
@@ -89,6 +102,7 @@ function removeQuestionnaire(orderQuestionnaireComponentId)
     .done(function(data) {
         $("#order"+orderQuestionnaireComponentId).remove();
         $(".loader-img").hide();
+        $('#delete-order-questionnaire-component-modal').modal('hide');
     });
 }
 
