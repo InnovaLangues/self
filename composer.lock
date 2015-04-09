@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c6d1bc1eed077252edf13e7908337404",
+    "hash": "cc8f5d87630537b539110ba1ab0323d4",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -1360,6 +1360,68 @@
             "time": "2014-12-17 16:24:52"
         },
         {
+            "name": "innova/gitter-bundle",
+            "version": "dev-master",
+            "target-dir": "Innova/GitterBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/InnovaLangues/GitterBundle.git",
+                "reference": "466983eee0528037628fa05c7a32fb8b165ab6f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/InnovaLangues/GitterBundle/zipball/c14737164f7f8e841634804861619aa6c4721387",
+                "reference": "466983eee0528037628fa05c7a32fb8b165ab6f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.1"
+            },
+            "type": "symfony2-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Innova\\GitterBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arnaud Bey",
+                    "email": "arnaud.bey@u-grenoble3.fr"
+                },
+                {
+                    "name": "Axel Penin",
+                    "email": "axel.penin@u-grenoble3.fr"
+                },
+                {
+                    "name": "Eric Vincent",
+                    "email": "eric.vincent@u-grenoble3.fr"
+                },
+                {
+                    "name": "Donovan Tengblad",
+                    "email": "donovan.tengblad@u-grenoble3.fr"
+                },
+                {
+                    "name": "Patrick Guillou",
+                    "email": "patrick.guillou@u-grenoble3.fr"
+                },
+                {
+                    "name": "Nicolas Dufour",
+                    "email": "nicolas.dufour@u-grenoble3.fr"
+                }
+            ],
+            "description": "Gitter Bundle",
+            "homepage": "http://github.com/InnovaLangues/GitterBundle",
+            "keywords": [
+                "Innova",
+                "gitter"
+            ],
+            "time": "2015-04-08 14:33:02"
+        },
+        {
             "name": "jdorn/sql-formatter",
             "version": "dev-master",
             "source": {
@@ -2479,7 +2541,8 @@
         "doctrine/doctrine-migrations-bundle": 20,
         "stfalcon/tinymce-bundle": 20,
         "knplabs/knp-snappy-bundle": 20,
-        "willdurand/js-translation-bundle": 0
+        "willdurand/js-translation-bundle": 0,
+        "innova/gitter-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
