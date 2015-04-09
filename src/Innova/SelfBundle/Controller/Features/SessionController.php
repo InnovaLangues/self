@@ -17,13 +17,26 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Session controller.
  *
- * @Route("admin/editor")
+ * @Route("session-management")
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
  */
 class SessionController extends Controller
 {
+    /**
+     *
+     * @Route("/tests", name="session_list")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
+     */
+    public function listTestsAction()
+    {
+        $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
+
+        return array('tests' => $tests);
+    }
+
     /**
      *
      * @Route("/test/{testId}/sessions", name="editor_test_sessions")
