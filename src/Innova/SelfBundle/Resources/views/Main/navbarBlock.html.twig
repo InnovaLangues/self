@@ -76,6 +76,22 @@
                                 </ul>
                             </li>
                         {% endif %}
+
+                        {% if app.user is not null and is_granted('ROLE_SESSIONMANAGER') %}
+                            <li>
+                                <a href="{{ path('session_list') }}">
+                                    <span class="glyphicon glyphicon-user"></span> Session
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ path('show_tests') }}">
+                                    <span class="glyphicon glyphicon-play-circle"></span>
+                                    {{ 'menu.tests' | trans }}
+                                </a>
+                            </li>
+                        {% endif %}
+
                         <li>
                             <a data-toggle="modal" href="#helpModal">
                                 <span class="glyphicon glyphicon-question-sign"></span>
