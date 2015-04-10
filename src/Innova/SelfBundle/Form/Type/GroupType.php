@@ -38,9 +38,10 @@ class GroupType extends AbstractType
             ));
 
         $builder->add('save', 'submit', array(
-                'label' => 'generic.save',
-                'attr' => array('class' => 'btn btn-default btn-primary'),
-            ));
+            'attr' => array('class' => 'btn btn-primary'),
+            'label'  => 'generic.validate',
+            'translation_domain' => 'messages',
+        ));
     }
 
     public function getName()
