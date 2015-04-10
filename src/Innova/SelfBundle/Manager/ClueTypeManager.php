@@ -2,7 +2,7 @@
 
 namespace Innova\SelfBundle\Manager;
 
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\ClueType;
+use Innova\SelfBundle\Entity\ClueType;
 
 class ClueTypeManager
 {

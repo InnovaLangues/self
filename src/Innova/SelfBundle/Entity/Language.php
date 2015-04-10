@@ -31,7 +31,7 @@ class Language
     /**
      * @var string
      *
-     * @ORM\Column(name="color", type="string", length=255)
+     * @ORM\Column(name="color", type="string", length=255, nullable=true)
      */
     private $color;
 

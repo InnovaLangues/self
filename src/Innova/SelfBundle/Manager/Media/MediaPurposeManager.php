@@ -2,7 +2,7 @@
 
 namespace Innova\SelfBundle\Manager\Media;
 
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\MediaPurpose;
+use Innova\SelfBundle\Entity\Media\MediaPurpose;
 
 class MediaPurposeManager
 {
