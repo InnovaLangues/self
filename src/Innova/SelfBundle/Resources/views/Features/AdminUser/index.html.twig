@@ -1,10 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
-        <span class="glyphicon glyphicon-plus"></span>
-        Créer un utilisateur
-    </a>
+
+    {% if checkRight("right_createuser") %}
+        <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
+            <span class="glyphicon glyphicon-plus"></span>
+            Créer un utilisateur
+        </a>
+    {% endif %}
 
     <hr/>
 

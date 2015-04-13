@@ -3,12 +3,19 @@
 {% block body -%}
 	
 	{% if user is defined and is_granted('ROLE_ADMIN') %}
-	<a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        Revenir à la fiche
-    </a>
+		<a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
+	        <span class="glyphicon glyphicon-chevron-left"></span>
+	        Revenir à la fiche
+	    </a>
 
-    <hr/>
+    	{% if checkRight("right_editrightsuser") %}
+    		<a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
+		        Editer les permissions
+	    	</a>
+    	{% endif %}
+
+    	<hr/>
+    	
     {% endif %}
 
     <h2>

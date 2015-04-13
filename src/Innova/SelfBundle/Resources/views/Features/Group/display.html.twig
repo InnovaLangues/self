@@ -2,17 +2,23 @@
 
 {% block body -%}
 
-<a class="btn btn-default btn-sm" href="{{ path('editor_group_edit', { 'groupId': group.id }) }}">
-    <span class="glyphicon glyphicon-edit"></span> {{ 'group.edit' | trans }}
-</a>
+{% if checkRight("right_editgroup") %}
+	<a class="btn btn-default btn-sm" href="{{ path('editor_group_edit', { 'groupId': group.id }) }}">
+	    <span class="glyphicon glyphicon-edit"></span> {{ 'group.edit' | trans }}
+	</a>
+{% endif %}
 
-<a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
-    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
-</a>
+{% if checkRight("right_listgroup") %}
+	<a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
+	    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
+	</a>
+{% endif %}
 
-<a class="btn btn-default btn-sm" href="{{ path('editor_group_import_user', { 'groupId': group.id }) }}">
-    <span class="glyphicon glyphicon-import"></span> {{ 'group.import' | trans }}
-</a>
+{% if checkRight("right_csvimportgroup") %}
+	<a class="btn btn-default btn-sm" href="{{ path('editor_group_import_user', { 'groupId': group.id }) }}">
+	    <span class="glyphicon glyphicon-import"></span> {{ 'group.import' | trans }}
+	</a>
+{% endif %}
 
 <hr/>
 

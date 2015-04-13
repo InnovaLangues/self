@@ -146,6 +146,47 @@ class FixtureCommand extends ContainerAwareCommand
             "productionType.dialogal.bi", "productionType.dialogal.poly",
         ));
 
+        $rightGroupManager = $this->getContainer()->get("self.rightgroup.manager");
+        $rightGroupManager->createGroups(array("rightgroup_tasks", "rightgroup_tests", "rightgroup_sessions", "rightgroup_groups", "rightgroup_users"));
+
+        $rightManager = $this->getContainer()->get("self.right.manager");
+        $rightManager->createRights(array(
+            // task
+            array("right_createtask", "rightgroup_tasks"),
+            array("right_deletetask", "rightgroup_tasks"),
+            array("right_edittask", "rightgroup_tasks"),
+            array("right_listtask", "rightgroup_tasks"),
+            // test (ok view)
+            array("right_createtest", "rightgroup_tests"),
+            array("right_deletetest", "rightgroup_tests"),
+            array("right_edittest", "rightgroup_tests"),
+            array("right_listtest", "rightgroup_tests"),
+            array("right_duplicatetest", "rightgroup_tests"),
+            array("right_managesessiontest", "rightgroup_tests"),
+            array("right_managetaskstest", "rightgroup_tests"),
+            // user (ok view)
+            array("right_listuser", "rightgroup_users"),
+            array("right_createuser", "rightgroup_users"),
+            array("right_deleteuser", "rightgroup_users"),
+            array("right_edituser", "rightgroup_users"),
+            array("right_deletetraceuser", "rightgroup_users"),
+            array("right_editpassworduser", "rightgroup_users"),
+            array("right_editrightsuser", "rightgroup_users"),
+            // group (ok view)
+            array("right_listgroup", "rightgroup_groups"),
+            array("right_editgroup", "rightgroup_groups"),
+            array("right_creategroup", "rightgroup_groups"),
+            array("right_deletegroup", "rightgroup_groups"),
+            array("right_csvimportgroup", "rightgroup_groups"),
+             // session (ok view)
+            array("right_deletesession", "rightgroup_sessions"),
+            array("right_listsession", "rightgroup_sessions"),
+            array("right_editsession", "rightgroup_sessions"),
+            array("right_createsession", "rightgroup_sessions"),
+            array("right_exportresultssession", "rightgroup_sessions"),
+            array("right_individualresultssession", "rightgroup_sessions"),
+        ));
+
         $now = time();
         $duration = $now - $start;
 
