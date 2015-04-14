@@ -28,7 +28,7 @@ class RightUserTask
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire")
     */
-    protected $task;
+    protected $target;
 
     /**
      * @var boolean
@@ -208,5 +208,28 @@ class RightUserTask
     public function getTask()
     {
         return $this->task;
+    }
+
+    /**
+     * Set target
+     *
+     * @param \Innova\SelfBundle\Entity\Questionnaire $target
+     * @return RightUserTask
+     */
+    public function setTarget(\Innova\SelfBundle\Entity\Questionnaire $target = null)
+    {
+        $this->target = $target;
+    
+        return $this;
+    }
+
+    /**
+     * Get target
+     *
+     * @return \Innova\SelfBundle\Entity\Questionnaire 
+     */
+    public function getTarget()
+    {
+        return $this->target;
     }
 }

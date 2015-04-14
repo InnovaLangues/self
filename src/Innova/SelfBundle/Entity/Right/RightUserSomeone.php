@@ -28,7 +28,7 @@ class RightUserSomeone
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User")
     */
-    protected $someone;
+    protected $target;
 
     /**
      * @var boolean
@@ -71,9 +71,17 @@ class RightUserSomeone
     private $canEditPassword = 0;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="canEditRights", type="boolean")
+     *
+     */
+    private $canEditRights = 0;
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -83,20 +91,20 @@ class RightUserSomeone
     /**
      * Set canCreate
      *
-     * @param boolean $canCreate
+     * @param  boolean          $canCreate
      * @return RightUserSomeone
      */
     public function setCanCreate($canCreate)
     {
         $this->canCreate = $canCreate;
-    
+
         return $this;
     }
 
     /**
      * Get canCreate
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanCreate()
     {
@@ -106,20 +114,20 @@ class RightUserSomeone
     /**
      * Set canEdit
      *
-     * @param boolean $canEdit
+     * @param  boolean          $canEdit
      * @return RightUserSomeone
      */
     public function setCanEdit($canEdit)
     {
         $this->canEdit = $canEdit;
-    
+
         return $this;
     }
 
     /**
      * Get canEdit
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanEdit()
     {
@@ -129,20 +137,20 @@ class RightUserSomeone
     /**
      * Set canDelete
      *
-     * @param boolean $canDelete
+     * @param  boolean          $canDelete
      * @return RightUserSomeone
      */
     public function setCanDelete($canDelete)
     {
         $this->canDelete = $canDelete;
-    
+
         return $this;
     }
 
     /**
      * Get canDelete
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanDelete()
     {
@@ -152,20 +160,20 @@ class RightUserSomeone
     /**
      * Set canDeleteTrace
      *
-     * @param boolean $canDeleteTrace
+     * @param  boolean          $canDeleteTrace
      * @return RightUserSomeone
      */
     public function setCanDeleteTrace($canDeleteTrace)
     {
         $this->canDeleteTrace = $canDeleteTrace;
-    
+
         return $this;
     }
 
     /**
      * Get canDeleteTrace
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanDeleteTrace()
     {
@@ -175,20 +183,20 @@ class RightUserSomeone
     /**
      * Set canEditPassword
      *
-     * @param boolean $canEditPassword
+     * @param  boolean          $canEditPassword
      * @return RightUserSomeone
      */
     public function setCanEditPassword($canEditPassword)
     {
         $this->canEditPassword = $canEditPassword;
-    
+
         return $this;
     }
 
     /**
      * Get canEditPassword
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanEditPassword()
     {
@@ -198,20 +206,20 @@ class RightUserSomeone
     /**
      * Set user
      *
-     * @param \Innova\SelfBundle\Entity\User $user
+     * @param  \Innova\SelfBundle\Entity\User $user
      * @return RightUserSomeone
      */
     public function setUser(\Innova\SelfBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Innova\SelfBundle\Entity\User 
+     * @return \Innova\SelfBundle\Entity\User
      */
     public function getUser()
     {
@@ -221,23 +229,69 @@ class RightUserSomeone
     /**
      * Set someone
      *
-     * @param \Innova\SelfBundle\Entity\User $someone
+     * @param  \Innova\SelfBundle\Entity\User $someone
      * @return RightUserSomeone
      */
     public function setSomeone(\Innova\SelfBundle\Entity\User $someone = null)
     {
         $this->someone = $someone;
-    
+
         return $this;
     }
 
     /**
      * Get someone
      *
-     * @return \Innova\SelfBundle\Entity\User 
+     * @return \Innova\SelfBundle\Entity\User
      */
     public function getSomeone()
     {
         return $this->someone;
+    }
+
+    /**
+     * Set canEditRights
+     *
+     * @param boolean $canEditRights
+     * @return RightUserSomeone
+     */
+    public function setCanEditRights($canEditRights)
+    {
+        $this->canEditRights = $canEditRights;
+    
+        return $this;
+    }
+
+    /**
+     * Get canEditRights
+     *
+     * @return boolean 
+     */
+    public function getCanEditRights()
+    {
+        return $this->canEditRights;
+    }
+
+    /**
+     * Set target
+     *
+     * @param \Innova\SelfBundle\Entity\User $target
+     * @return RightUserSomeone
+     */
+    public function setTarget(\Innova\SelfBundle\Entity\User $target = null)
+    {
+        $this->target = $target;
+    
+        return $this;
+    }
+
+    /**
+     * Get target
+     *
+     * @return \Innova\SelfBundle\Entity\User 
+     */
+    public function getTarget()
+    {
+        return $this->target;
     }
 }

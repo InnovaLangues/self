@@ -22,9 +22,11 @@ class RightExtension extends \Twig_Extension
         $this->rightManager = $rightManager;
     }
 
-    public function checkRight($rightName)
+    public function checkRight($rightName, $entity = null)
     {
-        return $this->rightManager->checkRight($rightName, $this->securityContext->getToken()->getUser());
+        $user = $this->securityContext->getToken()->getUser();
+
+        return $this->rightManager->checkRight($rightName, $user, $entity);
     }
 
     public function getFunctions()

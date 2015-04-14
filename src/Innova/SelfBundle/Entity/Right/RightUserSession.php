@@ -28,7 +28,7 @@ class RightUserSession
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Session")
     */
-    protected $session;
+    protected $target;
 
     /**
      * @var boolean
@@ -81,7 +81,7 @@ class RightUserSession
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -91,20 +91,20 @@ class RightUserSession
     /**
      * Set canCreate
      *
-     * @param boolean $canCreate
+     * @param  boolean          $canCreate
      * @return RightUserSession
      */
     public function setCanCreate($canCreate)
     {
         $this->canCreate = $canCreate;
-    
+
         return $this;
     }
 
     /**
      * Get canCreate
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanCreate()
     {
@@ -114,20 +114,20 @@ class RightUserSession
     /**
      * Set canEdit
      *
-     * @param boolean $canEdit
+     * @param  boolean          $canEdit
      * @return RightUserSession
      */
     public function setCanEdit($canEdit)
     {
         $this->canEdit = $canEdit;
-    
+
         return $this;
     }
 
     /**
      * Get canEdit
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanEdit()
     {
@@ -137,20 +137,20 @@ class RightUserSession
     /**
      * Set canDelete
      *
-     * @param boolean $canDelete
+     * @param  boolean          $canDelete
      * @return RightUserSession
      */
     public function setCanDelete($canDelete)
     {
         $this->canDelete = $canDelete;
-    
+
         return $this;
     }
 
     /**
      * Get canDelete
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanDelete()
     {
@@ -160,20 +160,20 @@ class RightUserSession
     /**
      * Set canList
      *
-     * @param boolean $canList
+     * @param  boolean          $canList
      * @return RightUserSession
      */
     public function setCanList($canList)
     {
         $this->canList = $canList;
-    
+
         return $this;
     }
 
     /**
      * Get canList
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanList()
     {
@@ -183,20 +183,20 @@ class RightUserSession
     /**
      * Set canExportIndividual
      *
-     * @param boolean $canExportIndividual
+     * @param  boolean          $canExportIndividual
      * @return RightUserSession
      */
     public function setCanExportIndividual($canExportIndividual)
     {
         $this->canExportIndividual = $canExportIndividual;
-    
+
         return $this;
     }
 
     /**
      * Get canExportIndividual
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanExportIndividual()
     {
@@ -206,20 +206,20 @@ class RightUserSession
     /**
      * Set canExportCollective
      *
-     * @param boolean $canExportCollective
+     * @param  boolean          $canExportCollective
      * @return RightUserSession
      */
     public function setCanExportCollective($canExportCollective)
     {
         $this->canExportCollective = $canExportCollective;
-    
+
         return $this;
     }
 
     /**
      * Get canExportCollective
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanExportCollective()
     {
@@ -229,20 +229,20 @@ class RightUserSession
     /**
      * Set user
      *
-     * @param \Innova\SelfBundle\Entity\User $user
+     * @param  \Innova\SelfBundle\Entity\User $user
      * @return RightUserSession
      */
     public function setUser(\Innova\SelfBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Innova\SelfBundle\Entity\User 
+     * @return \Innova\SelfBundle\Entity\User
      */
     public function getUser()
     {
@@ -252,23 +252,46 @@ class RightUserSession
     /**
      * Set session
      *
-     * @param \Innova\SelfBundle\Entity\Session $session
+     * @param  \Innova\SelfBundle\Entity\Session $session
      * @return RightUserSession
      */
     public function setSession(\Innova\SelfBundle\Entity\Session $session = null)
     {
         $this->session = $session;
-    
+
         return $this;
     }
 
     /**
      * Get session
      *
-     * @return \Innova\SelfBundle\Entity\Session 
+     * @return \Innova\SelfBundle\Entity\Session
      */
     public function getSession()
     {
         return $this->session;
+    }
+
+    /**
+     * Set target
+     *
+     * @param \Innova\SelfBundle\Entity\Session $target
+     * @return RightUserSession
+     */
+    public function setTarget(\Innova\SelfBundle\Entity\Session $target = null)
+    {
+        $this->target = $target;
+    
+        return $this;
+    }
+
+    /**
+     * Get target
+     *
+     * @return \Innova\SelfBundle\Entity\Session 
+     */
+    public function getTarget()
+    {
+        return $this->target;
     }
 }

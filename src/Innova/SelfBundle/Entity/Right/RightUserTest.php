@@ -28,7 +28,7 @@ class RightUserTest
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test")
     */
-    protected $test;
+    protected $target;
 
     /**
      * @var boolean
@@ -283,23 +283,46 @@ class RightUserTest
     /**
      * Set canDelete
      *
-     * @param boolean $canDelete
+     * @param  boolean       $canDelete
      * @return RightUserTest
      */
     public function setCanDelete($canDelete)
     {
         $this->canDelete = $canDelete;
-    
+
         return $this;
     }
 
     /**
      * Get canDelete
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanDelete()
     {
         return $this->canDelete;
+    }
+
+    /**
+     * Set target
+     *
+     * @param \Innova\SelfBundle\Entity\Test $target
+     * @return RightUserTest
+     */
+    public function setTarget(\Innova\SelfBundle\Entity\Test $target = null)
+    {
+        $this->target = $target;
+    
+        return $this;
+    }
+
+    /**
+     * Get target
+     *
+     * @return \Innova\SelfBundle\Entity\Test 
+     */
+    public function getTarget()
+    {
+        return $this->target;
     }
 }

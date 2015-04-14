@@ -31,7 +31,13 @@ class TestController extends Controller
      */
     public function listTestsAction()
     {
-        $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right_listtest", $currentUser)) {
+            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
+        } else {
+            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findAuthorized($currentUser);
+        }
 
         return array('tests' => $tests);
     }
@@ -45,7 +51,13 @@ class TestController extends Controller
      */
     public function listTestsByLanguageAction(Language $language)
     {
-        $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findBy(array("language" => $language, "archived" => false));
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right_listtest", $currentUser)) {
+            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findBy(array("language" => $language, "archived" => false));
+        } else {
+            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findAuthorizedByLanguage($currentUser, $language);
+        }
 
         return array('tests' => $tests);
     }

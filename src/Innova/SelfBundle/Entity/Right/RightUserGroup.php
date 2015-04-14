@@ -28,7 +28,7 @@ class RightUserGroup
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Group")
     */
-    protected $group;
+    protected $target;
 
     /**
      * @var boolean
@@ -73,7 +73,7 @@ class RightUserGroup
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -83,20 +83,20 @@ class RightUserGroup
     /**
      * Set canCreate
      *
-     * @param boolean $canCreate
+     * @param  boolean        $canCreate
      * @return RightUserGroup
      */
     public function setCanCreate($canCreate)
     {
         $this->canCreate = $canCreate;
-    
+
         return $this;
     }
 
     /**
      * Get canCreate
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanCreate()
     {
@@ -106,20 +106,20 @@ class RightUserGroup
     /**
      * Set canEdit
      *
-     * @param boolean $canEdit
+     * @param  boolean        $canEdit
      * @return RightUserGroup
      */
     public function setCanEdit($canEdit)
     {
         $this->canEdit = $canEdit;
-    
+
         return $this;
     }
 
     /**
      * Get canEdit
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanEdit()
     {
@@ -129,20 +129,20 @@ class RightUserGroup
     /**
      * Set canDelete
      *
-     * @param boolean $canDelete
+     * @param  boolean        $canDelete
      * @return RightUserGroup
      */
     public function setCanDelete($canDelete)
     {
         $this->canDelete = $canDelete;
-    
+
         return $this;
     }
 
     /**
      * Get canDelete
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanDelete()
     {
@@ -152,20 +152,20 @@ class RightUserGroup
     /**
      * Set canList
      *
-     * @param boolean $canList
+     * @param  boolean        $canList
      * @return RightUserGroup
      */
     public function setCanList($canList)
     {
         $this->canList = $canList;
-    
+
         return $this;
     }
 
     /**
      * Get canList
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanList()
     {
@@ -175,20 +175,20 @@ class RightUserGroup
     /**
      * Set canImportCsv
      *
-     * @param boolean $canImportCsv
+     * @param  boolean        $canImportCsv
      * @return RightUserGroup
      */
     public function setCanImportCsv($canImportCsv)
     {
         $this->canImportCsv = $canImportCsv;
-    
+
         return $this;
     }
 
     /**
      * Get canImportCsv
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanImportCsv()
     {
@@ -198,20 +198,20 @@ class RightUserGroup
     /**
      * Set user
      *
-     * @param \Innova\SelfBundle\Entity\User $user
+     * @param  \Innova\SelfBundle\Entity\User $user
      * @return RightUserGroup
      */
     public function setUser(\Innova\SelfBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Innova\SelfBundle\Entity\User 
+     * @return \Innova\SelfBundle\Entity\User
      */
     public function getUser()
     {
@@ -221,23 +221,46 @@ class RightUserGroup
     /**
      * Set group
      *
-     * @param \Innova\SelfBundle\Entity\Group $group
+     * @param  \Innova\SelfBundle\Entity\Group $group
      * @return RightUserGroup
      */
     public function setGroup(\Innova\SelfBundle\Entity\Group $group = null)
     {
         $this->group = $group;
-    
+
         return $this;
     }
 
     /**
      * Get group
      *
-     * @return \Innova\SelfBundle\Entity\Group 
+     * @return \Innova\SelfBundle\Entity\Group
      */
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Set target
+     *
+     * @param \Innova\SelfBundle\Entity\Group $target
+     * @return RightUserGroup
+     */
+    public function setTarget(\Innova\SelfBundle\Entity\Group $target = null)
+    {
+        $this->target = $target;
+    
+        return $this;
+    }
+
+    /**
+     * Get target
+     *
+     * @return \Innova\SelfBundle\Entity\Group 
+     */
+    public function getTarget()
+    {
+        return $this->target;
     }
 }

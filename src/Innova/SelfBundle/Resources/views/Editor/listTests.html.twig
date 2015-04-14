@@ -2,7 +2,7 @@
 
 {% block body -%}
 
-{% if checkRight("right_createtest", app.user) %}                                                                               
+{% if checkRight("right_createtest") %}                                                                               
     <a class="btn btn-default btn-sm" href="{{ path('editor_test_create') }}">
         <span class="glyphicon glyphicon-plus"></span> {{ 'editor.test.create' | trans }}
     </a>
@@ -47,20 +47,20 @@
             </td>
 
             <td class="text-right">
-                {% if checkRight("right_managesessiontest") %}
+                {% if checkRight("right_managesessiontest", test) %}
                     <a class="btn btn-default btn-sm " href="{{ path('editor_test_sessions', { 'testId': test.id } )}}">
                         <span class="glyphicon glyphicon-calendar"></span> {{ 'editor.session.manage' | trans }}
                     </a>
                 {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
-                    {% if checkRight("right_edittest") %}
+                    {% if checkRight("right_edittest", test) %}
                         <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit', { 'testId': test.id }) }}">
                             <span class="glyphicon glyphicon-cog"></span> {{ 'generic.edit' | trans }}
                         </a>
                     {% endif %}
 
-                    {% if checkRight("right_managetaskstest") %}
+                    {% if checkRight("right_managetaskstest", test) %}
                         <a class="btn btn-default btn-sm" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
                             <span class="glyphicon glyphicon-edit"></span> {{ 'editor.task.manage' | trans }}
                         </a>

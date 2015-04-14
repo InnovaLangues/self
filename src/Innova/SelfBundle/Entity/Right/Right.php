@@ -28,6 +28,20 @@ class Right
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="attribute", type="string", length=255, nullable=true)
+     */
+    private $attribute;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="class", type="string", length=255)
+     */
+    private $class;
+
+    /**
     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\User")
     * @ORM\JoinTable(name="right_user")
     */
@@ -133,5 +147,51 @@ class Right
     public function getRightGroup()
     {
         return $this->rightGroup;
+    }
+
+    /**
+     * Set attribute
+     *
+     * @param  string $attribute
+     * @return Right
+     */
+    public function setAttribute($attribute)
+    {
+        $this->attribute = $attribute;
+
+        return $this;
+    }
+
+    /**
+     * Get attribute
+     *
+     * @return string
+     */
+    public function getAttribute()
+    {
+        return $this->attribute;
+    }
+
+    /**
+     * Set class
+     *
+     * @param  string $class
+     * @return Right
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+
+        return $this;
+    }
+
+    /**
+     * Get class
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 }
