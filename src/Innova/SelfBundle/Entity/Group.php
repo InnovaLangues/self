@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Group
  * @ORM\Table(name="user_group")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\GroupRepository")
  */
 class Group
 {

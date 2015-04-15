@@ -31,7 +31,14 @@ class AdminUserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InnovaSelfBundle:User')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right_listuser", $currentUser)) {
+            $entities = $em->getRepository('InnovaSelfBundle:User')->findAll();
+        } else {
+            $entities = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findAuthorized($currentUser);
+        }
 
         return array(
             'entities' => $entities,
@@ -213,10 +220,8 @@ class AdminUserController extends Controller
             throw new AccessDeniedException();
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $groups = $em->getRepository('InnovaSelfBundle:Right\RightGroup')->findAll();
         $this->get("self.right.manager")->toggleRight($right, $user);
 
-        return array('groups' => $groups, 'user' => $user);
+        return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
     }
 }

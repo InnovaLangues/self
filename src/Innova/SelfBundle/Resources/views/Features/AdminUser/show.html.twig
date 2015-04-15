@@ -1,28 +1,28 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    {% if tests is defined %}
-        {% if checkRight("right_edituser") %}
-            <a href="{{ path('user_edit', {'userId': user.id } )}}" class="btn btn-sm btn-default">
-                <span class="glyphicon glyphicon-pencil"></span>
-                Editer l'utilisateur
-            </a>
-        {% endif %}
+    {% if checkRight("right_edituser", user) %}
+        <a href="{{ path('user_edit', {'userId': user.id } )}}" class="btn btn-sm btn-default">
+            <span class="glyphicon glyphicon-pencil"></span>
+            Editer l'utilisateur
+        </a>
+    {% endif %}
 
-        {% if checkRight("right_editpassworduser") %}
-            <a href="{{ path('passwd_edit', {'userId': user.id } )}}" class="btn btn-sm btn-default">
-                <span class="glyphicon glyphicon-lock"></span>
-                Modifier le mot de passe
-            </a>
-        {% endif %}
+    {% if checkRight("right_editpassworduser", user) %}
+        <a href="{{ path('passwd_edit', {'userId': user.id } )}}" class="btn btn-sm btn-default">
+            <span class="glyphicon glyphicon-lock"></span>
+            Modifier le mot de passe
+        </a>
+    {% endif %}
 
-        {% if checkRight("right_editrightsuser") %}
-            <a class="btn btn-default btn-sm" href="{{ path('admin_user_rights', { 'userId': user.id }) }}">
-                Editer les permissions
-            </a>
-        {% endif %}
+    {% if checkRight("right_editrightsuser", user) %}
+        <a class="btn btn-default btn-sm" href="{{ path('admin_user_rights', { 'userId': user.id }) }}">
+            Editer les permissions
+        </a>
+    {% endif %}
 
-        {% if user != app.user and checkRight("right_deleteuser") %}
+    {% if user != app.user %}
+        {% if checkRight("right_deleteuser", user) %}
             <a class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#delete-modal">
                 <span class="glyphicon glyphicon-trash"></span>
                 Supprimer l'utilisateur

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table("session")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\SessionRepository")
  */
 class Session
 {

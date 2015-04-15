@@ -29,10 +29,19 @@ class RightExtension extends \Twig_Extension
         return $this->rightManager->checkRight($rightName, $user, $entity);
     }
 
+    public function hasRightsOnGroup($groupClass)
+    {
+        $user = $this->securityContext->getToken()->getUser();
+        $hasRights = $this->rightManager->hasRightsOnGroup($groupClass, $user);
+
+        return $hasRights;
+    }
+
     public function getFunctions()
     {
         return array(
             'checkRight' => new \Twig_Function_Method($this, 'checkRight'),
+            'hasRightsOnGroup' => new \Twig_Function_Method($this, 'hasRightsOnGroup'),
         );
     }
 

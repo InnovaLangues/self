@@ -8,8 +8,16 @@
     </a>
 {% endif %}
 
+{% set canEditRights = false %} 
+{% if checkRight("right_editrightssession") %}
+    {% set canEditRights = true %} 
+{% endif %}
+
+
+
 <hr/>
 <h3>{{ 'editor.session.list_test' | trans }} <b>{{ test.name }}</b> </h3>
+
 
 <table class="table table-striped">
     <thead>
@@ -19,7 +27,7 @@
         </tr>
     </thead>
     <tbody>
-		{% for session in test.sessions %}
+		{% for session in sessions %}
 			<tr>
 				<td>
 					{{ session.name }}
@@ -28,6 +36,13 @@
                     <a class="btn btn-default btn-sm" href="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id }) }}">
                         <span class="glyphicon glyphicon-play"></span> {{ 'editor.session.test' | trans }}
                     </a>
+
+                    {% if canEditRights %}
+                    <a class="btn btn-default btn-sm" href="{{ path('editor_session_rights', {'sessionId': session.id }) }}">
+                        <span class="glyphicon glyphicon-edit"></span> Droits
+                    </a>
+                    {% endif %}
+
                     {% if checkRight("right_editsession", session) %}
 					<a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_session', { 'testId': test.id, 'sessionId': session.id }) }}">
 						<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}

@@ -275,23 +275,46 @@ class RightUserSession
     /**
      * Set target
      *
-     * @param \Innova\SelfBundle\Entity\Session $target
+     * @param  \Innova\SelfBundle\Entity\Session $target
      * @return RightUserSession
      */
     public function setTarget(\Innova\SelfBundle\Entity\Session $target = null)
     {
         $this->target = $target;
-    
+
         return $this;
     }
 
     /**
      * Get target
      *
-     * @return \Innova\SelfBundle\Entity\Session 
+     * @return \Innova\SelfBundle\Entity\Session
      */
     public function getTarget()
     {
         return $this->target;
+    }
+
+    /**
+     * Set canEditRights
+     *
+     * @param  boolean          $canEditRights
+     * @return RightUserSession
+     */
+    public function setCanEditRights($canEditRights)
+    {
+        $this->canEditRights = $canEditRights;
+
+        return $this;
+    }
+
+    /**
+     * Get canEditRights
+     *
+     * @return boolean
+     */
+    public function getCanEditRights()
+    {
+        return $this->canEditRights;
     }
 }

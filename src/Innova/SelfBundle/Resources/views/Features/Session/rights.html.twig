@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a  href="{{ path('editor_session_rights_add', { 'sessionId': session.id }) }}" class="btn btn-default btn-sm">Ajouter</a>
+
+<hr/>
+
+<h3> Utilisateurs ayant des droits pour la session {{ session.name }}</h3>
+
+<ul class="list-group"> 
+{% for right in rights %}
+    <li class="list-group-item">
+        {{ right.user.username }}
+        <span class="pull-right">
+            <a href="{{ path('editor_session_rights_edit', { 'sessionId': session.id, 'rightId': right.id }) }}" class="btn btn-default btn-xs">Editer les droits
+            </a>
+        </span>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

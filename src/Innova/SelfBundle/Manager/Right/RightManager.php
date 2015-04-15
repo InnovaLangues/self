@@ -73,4 +73,34 @@ class RightManager
 
         return $this;
     }
+
+    public function hasRightsOnGroup($groupClass, $user)
+    {
+        $em = $this->entityManager;
+        $repoName = "InnovaSelfBundle:Right\\".$groupClass;
+
+        switch ($groupClass) {
+            case 'RightUserTest':
+                $authorized = $em->getRepository("InnovaSelfBundle:Test")->findAuthorized($user);
+                break;
+
+            case 'RightUserSomeone':
+                $authorized = $em->getRepository("InnovaSelfBundle:User")->findAuthorized($user);
+                break;
+
+            case 'RightUserGroup':
+                $authorized = $em->getRepository("InnovaSelfBundle:Group")->findAuthorized($user);
+                break;
+
+            case 'RightUserSession':
+                $authorized = $em->getRepository("InnovaSelfBundle:Session")->findAuthorized($user);
+                break;
+        }
+
+        if ($authorized) {
+            return true;
+        }
+
+        return false;
+    }
 }

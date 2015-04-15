@@ -87,6 +87,38 @@ class RightUserTest
     private $canManageTask = 0;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="canAddTask", type="boolean")
+     *
+     */
+    private $canAddTask = 0;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="canReorderTasks", type="boolean")
+     *
+     */
+    private $canReorderTasks = 0;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="canDeleteTask", type="boolean")
+     *
+     */
+    private $canDeleteTask = 0;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="canEditTask", type="boolean")
+     *
+     */
+    private $canEditTask = 0;
+
+    /**
      * Get id
      *
      * @return integer
@@ -306,23 +338,115 @@ class RightUserTest
     /**
      * Set target
      *
-     * @param \Innova\SelfBundle\Entity\Test $target
+     * @param  \Innova\SelfBundle\Entity\Test $target
      * @return RightUserTest
      */
     public function setTarget(\Innova\SelfBundle\Entity\Test $target = null)
     {
         $this->target = $target;
-    
+
         return $this;
     }
 
     /**
      * Get target
      *
-     * @return \Innova\SelfBundle\Entity\Test 
+     * @return \Innova\SelfBundle\Entity\Test
      */
     public function getTarget()
     {
         return $this->target;
+    }
+
+    /**
+     * Set canAddTask
+     *
+     * @param  boolean       $canAddTask
+     * @return RightUserTest
+     */
+    public function setCanAddTask($canAddTask)
+    {
+        $this->canAddTask = $canAddTask;
+
+        return $this;
+    }
+
+    /**
+     * Get canAddTask
+     *
+     * @return boolean
+     */
+    public function getCanAddTask()
+    {
+        return $this->canAddTask;
+    }
+
+    /**
+     * Set canReorderTasks
+     *
+     * @param  boolean       $canReorderTasks
+     * @return RightUserTest
+     */
+    public function setCanReorderTasks($canReorderTasks)
+    {
+        $this->canReorderTasks = $canReorderTasks;
+
+        return $this;
+    }
+
+    /**
+     * Get canReorderTasks
+     *
+     * @return boolean
+     */
+    public function getCanReorderTasks()
+    {
+        return $this->canReorderTasks;
+    }
+
+    /**
+     * Set canDeleteTask
+     *
+     * @param boolean $canDeleteTask
+     * @return RightUserTest
+     */
+    public function setCanDeleteTask($canDeleteTask)
+    {
+        $this->canDeleteTask = $canDeleteTask;
+    
+        return $this;
+    }
+
+    /**
+     * Get canDeleteTask
+     *
+     * @return boolean 
+     */
+    public function getCanDeleteTask()
+    {
+        return $this->canDeleteTask;
+    }
+
+    /**
+     * Set canEditTask
+     *
+     * @param boolean $canEditTask
+     * @return RightUserTest
+     */
+    public function setCanEditTask($canEditTask)
+    {
+        $this->canEditTask = $canEditTask;
+    
+        return $this;
+    }
+
+    /**
+     * Get canEditTask
+     *
+     * @return boolean 
+     */
+    public function getCanEditTask()
+    {
+        return $this->canEditTask;
     }
 }

@@ -28,13 +28,13 @@
                     <a class="btn btn-default btn-sm" href="{{ path('editor_group_display', { 'groupId': group.id }) }}">
                         <span class="glyphicon glyphicon-play"></span> {{ 'group.display' | trans }}
                     </a>
-                    {% if checkRight("right_editgroup") %}
+                    {% if checkRight("right_editgroup", group) %}
                         <a class="btn btn-default btn-sm" href="{{ path('editor_group_edit', { 'groupId': group.id }) }}">
                             <span class="glyphicon glyphicon-edit"></span> {{ 'group.edit' | trans }}
                         </a>
                     {% endif %}
 
-                    {% if checkRight("right_deletegroup") %}
+                    {% if checkRight("right_deletegroup", group) %}
                         <a class="btn btn-sm btn-danger rest" data-method="DELETE" href="{{ path('editor_group_delete', { 'groupId': group.id }) }}">
                             <span class="glyphicon glyphicon-trash"></span> {{ 'group.delete' | trans }}
                         </a>

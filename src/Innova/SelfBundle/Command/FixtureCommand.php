@@ -156,6 +156,7 @@ class FixtureCommand extends ContainerAwareCommand
             array("right_deletetask", "rightgroup_tasks", "canDelete", "RightUserTask"),
             array("right_edittask", "rightgroup_tasks", "canEdit", "RightUserTask"),
             array("right_listtask", "rightgroup_tasks", null, "RightUserTask"),
+
             // test (ok view)
             array("right_createtest", "rightgroup_tests", null, "RightUserTest"),
             array("right_deletetest", "rightgroup_tests", "canDelete", "RightUserTest"),
@@ -164,6 +165,11 @@ class FixtureCommand extends ContainerAwareCommand
             array("right_duplicatetest", "rightgroup_tests", "canDuplicate", "RightUserTest"),
             array("right_managesessiontest", "rightgroup_tests", "canManageSession", "RightUserTest"),
             array("right_managetaskstest", "rightgroup_tests", "canManageTask", "RightUserTest"),
+            array("right_addtasktest", "rightgroup_tests", "canAddTask", "RightUserTest"),
+            array("right_reordertasktest", "rightgroup_tests", "canReorderTasks", "RightUserTest"),
+            array("right_deletetasktest", "rightgroup_tests", "canDeleteTask", "RightUserTest"),
+            array("right_edittasktest", "rightgroup_tests", "canEditTask", "RightUserTest"),
+
             // user (ok view)
             array("right_listuser", "rightgroup_users", null, "RightUserSomeone"),
             array("right_createuser", "rightgroup_users", null, "RightUserSomeone"),
@@ -179,13 +185,15 @@ class FixtureCommand extends ContainerAwareCommand
             array("right_creategroup", "rightgroup_groups", null, "RightUserGroup"),
             array("right_deletegroup", "rightgroup_groups", "canDelete", "RightUserGroup"),
             array("right_csvimportgroup", "rightgroup_groups", "canImportCsv", "RightUserGroup"),
-             // session (ok view)
+
+            // session (ok view)
             array("right_deletesession", "rightgroup_sessions", "canDelete", "RightUserSession"),
             array("right_listsession", "rightgroup_sessions", null, "RightUserSession"),
             array("right_editsession", "rightgroup_sessions", "canEdit", "RightUserSession"),
             array("right_createsession", "rightgroup_sessions", null, "RightUserSession"),
-            array("right_exportresultssession", "rightgroup_sessions", "canExportIndividual", "RightUserSession"),
-            array("right_individualresultssession", "rightgroup_sessions", "canExportCollective", "RightUserSession"),
+            array("right_individualresultssession", "rightgroup_sessions", "canExportIndividual", "RightUserSession"),
+            array("right_exportresultssession", "rightgroup_sessions", "canExportCollective", "RightUserSession"),
+            array("right_editrightssession", "rightgroup_sessions", null, "RightUserSession"),
         ));
 
         $now = time();

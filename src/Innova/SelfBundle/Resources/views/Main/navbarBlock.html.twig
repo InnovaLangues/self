@@ -16,7 +16,7 @@
                                 </li>
                             {% endif %}
 
-                            {% if checkRight("right_listgroup") %}
+                            {% if checkRight("right_listgroup") or checkRight("right_creategroup") or hasRightsOnGroup("RightUserGroup") %}
                                 <li>
                                     <a href="{{ path('editor_groups') }}">
                                         <span class="glyphicon glyphicon-certificate"></span> {{ 'menu.groups' | trans }}
@@ -45,7 +45,9 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#">Tests</a>
                                         <ul class="dropdown-menu">
-                                        {% if checkRight("right_listtest") %}
+
+
+                                        {% if checkRight("right_listtest") or checkRight("right_createtest") or hasRightsOnGroup("RightUserTest") %}
                                             <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
                                             <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
                                             <li class="divider"></li>
@@ -81,7 +83,7 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#">{{ 'editor.task.tasks' | trans }}</a>
                                         <ul class="dropdown-menu">
-                                            {% if checkRight("right_listtask") %}
+                                            {% if checkRight("right_listtask") or checkRight("right_createtask") or checkRight("right_edittask") or checkRight("right_deletetask")%}
                                                 <li><a href="{{path('editor_questionnaires_show')}}">{{ 'editor.task.all_tasks' | trans }}</a></li>
                                                 <li class="divider"></li>
                                                 {% set languages = get_languages() %}
@@ -96,15 +98,6 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </li>
-                        {% endif %}
-
-                        {% if checkRight("right_listsession") %}
-                            <li>
-                                <a href="{{ path('session_list') }}">
-                                    <span class="glyphicon glyphicon-user"></span> 
-                                    Sessions
-                                </a>
                             </li>
                         {% endif %}
 

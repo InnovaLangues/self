@@ -5,15 +5,30 @@
 {% endblock %}
 
 {% block body -%}
-<a id="create-task" class="btn btn-default btn-sm" data-test-id="0">
-    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
-</a>
-
+{% if checkRight("right_createtask") %}
+    <a id="create-task" class="btn btn-default btn-sm" data-test-id="0">
+        <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
+    </a>
+{% endif %}
 <hr/>
+
 
 {% if questionnaires|length <1  %}
     {{ 'editor.task.no_task' | trans }}
 {% else %}
+
+    {% set canEdit = false %}
+    {% set canDelete = false %}
+
+    {% if checkRight("right_edittask") %}
+        {% set canEdit = true %}
+    {% endif %}
+
+    {% if checkRight("right_deletetask") %}
+        {% set canDelete = true %}
+    {% endif %}
+
+
     <h3>{{ 'editor.task.list_global' | trans }}</h3>
 
     <div class="input-group">
@@ -86,12 +101,17 @@
                 {% endif %}
                 </td>
                 <td class="text-right">
-                    <a toggle="tooltip" data-original-title="{{ 'generic.edit' | trans }}" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
-                        <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                    <a toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}" class="btn btn-default btn-danger btn-sm delete-task" {% if countTests != 0 %}disabled{% endif %} data-questionnaire-id="{{ questionnaire.id}}">
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </a>
+                    {% if canEdit %}
+                        <a toggle="tooltip" data-original-title="{{ 'generic.edit' | trans }}" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id }) }}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    {% endif %}
+
+                    {% if canDelete %}
+                        <a toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}" class="btn btn-default btn-danger btn-sm delete-task" {% if countTests != 0 %}disabled{% endif %} data-questionnaire-id="{{ questionnaire.id}}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
