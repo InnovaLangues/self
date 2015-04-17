@@ -2,12 +2,20 @@
 
 {% block body -%}
 
-<a class="btn btn-default btn-sm" href="{{ path('editor_test_create_session', { 'testId': test.id }) }}">
-    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.session.create' | trans }}
-</a>
+{% if checkRight("right.createsession") %}
+    <a class="btn btn-default btn-sm" href="{{ path('editor_test_create_session', { 'testId': test.id }) }}">
+        <span class="glyphicon glyphicon-plus"></span> {{ 'editor.session.create' | trans }}
+    </a>
+{% endif %}
+
+{% set canEditRights = false %} 
+{% if checkRight("right.editrightssession") %}
+    {% set canEditRights = true %} 
+{% endif %}
 
 <hr/>
 <h3>{{ 'editor.session.list_test' | trans }} <b>{{ test.name }}</b> </h3>
+
 
 <table class="table table-striped">
     <thead>
@@ -17,7 +25,7 @@
         </tr>
     </thead>
     <tbody>
-		{% for session in test.sessions %}
+		{% for session in sessions %}
 			<tr>
 				<td>
 					{{ session.name }}
@@ -26,18 +34,37 @@
                     <a class="btn btn-default btn-sm" href="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id }) }}">
                         <span class="glyphicon glyphicon-play"></span> {{ 'editor.session.test' | trans }}
                     </a>
+
+                    {% if canEditRights %}
+                    <a class="btn btn-default btn-sm" href="{{ path('editor_session_rights', {'sessionId': session.id }) }}">
+                        <span class="glyphicon glyphicon-lock"></span> Permissions
+                    </a>
+                    {% endif %}
+
+                    {% if checkRight("right.editsession", session) %}
 					<a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_session', { 'testId': test.id, 'sessionId': session.id }) }}">
 						<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
 					</a>
+                    {% endif %}
+
+                    {% if checkRight("right.individualresultssession", session) %}
 					<a class="btn btn-default btn-sm" href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
 						<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
 					</a>
+                    {% endif %}
+
+                    {% if checkRight("right.exportresultssession", session) %}
                     <a class="btn btn-default btn-sm" href="{{ path('editor_session_export_results', {'sessionId': session.id }) }}">
                         <span class="glyphicon glyphicon-download-alt"></span> {{ 'editor.session.export' | trans }}
                     </a>
+                    {% endif %}
+
+                    {% if checkRight("right.deletesession", session) %}
 					<a class="btn btn-sm btn-danger delete-session" data-session-id="{{ session.id }}">
 						<span class="glyphicon glyphicon-trash"></span>
 					</a>
+                    {% endif %}
+
 				</td>
 			</tr>
 		{% endfor %}

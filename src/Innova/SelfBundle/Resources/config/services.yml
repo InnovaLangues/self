@@ -28,6 +28,15 @@ services:
         tags:
             - { name: twig.extension }
 
+    twig.extension.check_right:
+        class: Innova\SelfBundle\Twig\RightExtension
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.context
+            rightManager:       @self.right.manager
+        tags:
+            - { name: twig.extension }
+
     innova_user.registration.form.type:
         class: Innova\SelfBundle\Form\UserType
         arguments:

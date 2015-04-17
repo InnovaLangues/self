@@ -2,7 +2,7 @@
 
 namespace Innova\SelfBundle\Manager\Media;
 
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\MediaType;
+use Innova\SelfBundle\Entity\Media\MediaType;
 
 class MediaTypeManager
 {

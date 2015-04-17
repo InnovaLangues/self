@@ -38,6 +38,7 @@ user:
     name: Nom
     email: Adresse mail
     admin_users: Administrateurs
+    session_managers: Gestionnaires de sessions
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires

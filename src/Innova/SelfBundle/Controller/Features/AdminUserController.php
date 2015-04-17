@@ -8,12 +8,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\Right\Right;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Test controller.
  *
  * @Route("/admin/users")
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
+ * @ParamConverter("right", isOptional="true", class="InnovaSelfBundle:Right\Right", options={"id" = "rightId"})
  */
 class AdminUserController extends Controller
 {
@@ -28,7 +31,14 @@ class AdminUserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InnovaSelfBundle:User')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
+            $entities = $em->getRepository('InnovaSelfBundle:User')->findAll();
+        } else {
+            $entities = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findAuthorized($currentUser);
+        }
 
         return array(
             'entities' => $entities,
@@ -180,5 +190,39 @@ class AdminUserController extends Controller
         }
 
         return array('user' => $user);
+    }
+
+    /**
+     *
+     * @Route("/user/{userId}/edit_rights", name="admin_user_rights")
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Features:AdminUser/rights.html.twig")
+     */
+    public function displayRightsAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $groups = $em->getRepository('InnovaSelfBundle:Right\RightGroup')->findAll();
+
+        return array('groups' => $groups, 'user' => $user);
+    }
+
+    /**
+     *
+     * @Route("/user/{userId}/{rightId}", name="admin_user_toggle_right")
+     * @Method({"GET"})
+     * @Template("InnovaSelfBundle:Features:AdminUser/rights.html.twig")
+     */
+    public function toggleRight(User $user, Right $right)
+    {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+        if (!$this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
+            throw new AccessDeniedException();
+        }
+
+        $this->get("self.right.manager")->toggleRight($right, $user);
+        $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
+
+        return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
     }
 }

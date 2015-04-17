@@ -2,13 +2,17 @@
 
 {% block body -%}
 
-<a class="btn btn-default btn-sm" href="{{ path('editor_group_edit', { 'groupId': group.id }) }}">
-    <span class="glyphicon glyphicon-chevron-left"></span> {{ 'group.back' | trans }}
-</a>
+{% if checkRight("right.editgroup", group) %}
+	<a class="btn btn-default btn-sm" href="{{ path('editor_group_edit', { 'groupId': group.id }) }}">
+	    <span class="glyphicon glyphicon-chevron-left"></span> {{ 'group.back' | trans }}
+	</a>
+{% endif %}
 
-<a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
-    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
-</a>
+{% if checkRight("right.listgroup") %}
+	<a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
+	    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
+	</a>
+{% endif %}
 
 <hr/>
 <h3>{{ 'group.import' | trans }} ({{ group.name }}) <b></h3>

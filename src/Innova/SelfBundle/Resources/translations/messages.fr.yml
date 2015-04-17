@@ -38,6 +38,8 @@ user:
     name: Nom
     email: Adresse mail
     admin_users: Administrateurs
+    session_managers: Gestionnaires de sessions
+    rights: Permissions de l'utilisateur
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires
@@ -468,3 +470,64 @@ group:
     import: Import d'utilisateurs
     back: Revenir au groupe
     display: Détails du groupe
+
+right:
+    createtask: Créer une tâche
+    deletetask: Supprimer une tâche
+    edittask: Editer une tâche
+    listtask: Lister les tâches
+    createtest: Créer un test
+    deletetest: Supprimer un test
+    edittest: Editer un test
+    listtest: Lister les tests
+    duplicatetest: Dupliquer un test 
+    managesessiontest: Gérer les session
+    managetaskstest: Gérer les tâches
+    addtasktest: Ajouter une tâche
+    reordertasktest: Réordonner les tâches
+    deletetasktest: Supprimer une tâche d'un test
+    edittasktest: Editer une tâche d'un test
+    editrightstest: Editer les permissions des tests
+    listuser: Lister les utilisateurs
+    createuser: Créer un utilisateur
+    deleteuser: Supprimer un utilisateur
+    edituser: Editer un utilisateur
+    deletetraceuser: Supprimer les traces d'un utilisateur
+    editpassworduser: Changer le mot de passe d'un utiliszteur
+    editrightsuser: Editer les permissions des utilisateurs
+    listgroup: Lister les groupes
+    editgroup: Editer un groupe
+    creategroup: Créer un groupe
+    deletegroup: Supprimer un groupe
+    csvimportgroup: Importer des utilisateurs via fichier CSV
+    editrightsgroup: Editer les permissions des groupes
+    deletesession: Supprimer une session
+    listsession: Lister les sessions
+    editsession: Editer les sessions
+    createsession: Créer une session
+    individualresultssession: Exporter PDF par utilisateur
+    exportresultssession: Exporter collectivement CSV
+    editrightssession: Editer les permissions d'une session
+
+rightgroup:
+    tasks: Permissions sur les tâches
+    tests: Permissions sur les tests
+    sessions: Permissions sur les sessions
+    groups: Permissions sur les groupes
+    users: Permissions sur les utilisateurs
+
+
+canDelete: Peut supprimer
+canEdit: Peut Editer
+canDuplicate: Peut dupliquer
+canManageSession: Peut gérer les session
+canManageTask: Peut gérer les tâches
+canAddTask: Peut ajouter des tâches
+canReorderTasks: Peut réordonner les tâches
+canDeleteTask: Peut supprimer les tâches
+canEditTask: Peut éditer les tâches
+canDeleteTrace: Peut Supprimer les traces
+canEditPassword: Peut éditer le mot de passe
+canImportCsv: Peut importer via CSV
+canExportIndividual: Peut exporter individuellement
+canExportCollective: Peut exporter collectivement

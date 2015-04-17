@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Entity\Right\RightUserSession;
 use Innova\SelfBundle\Form\Type\SessionType;
 use Innova\SelfBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,22 +22,10 @@ use Symfony\Component\HttpFoundation\Response;
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
+ * @ParamConverter("rightUserSession", isOptional="true", class="InnovaSelfBundle:Right\RightUserSession", options={"id" = "rightId"})
  */
 class SessionController extends Controller
 {
-    /**
-     *
-     * @Route("/tests", name="session_list")
-     * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
-     */
-    public function listTestsAction()
-    {
-        $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
-
-        return array('tests' => $tests);
-    }
-
     /**
      *
      * @Route("/test/{testId}/sessions", name="editor_test_sessions")
@@ -45,7 +34,15 @@ class SessionController extends Controller
      */
     public function listAction(Test $test)
     {
-        return array("test" => $test);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.listsession", $currentUser, $test)) {
+            $sessions = $test->getSessions();
+        } else {
+            $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findAuthorized($test, $currentUser);
+        }
+
+        return array("test" => $test, "sessions" => $sessions);
     }
 
     /**

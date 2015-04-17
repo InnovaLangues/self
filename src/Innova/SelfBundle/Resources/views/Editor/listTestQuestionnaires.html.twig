@@ -6,19 +6,30 @@
 
 {% block body -%}
 
-<a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
-    <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
-</a>
-<a id="create-task" class="btn btn-default btn-sm" data-test-id = "{{ test.id }}">
-    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create_test' | trans }}
-</a>
-<a id="add-existing-task" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-task-modal">
-    <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.add_existing' | trans }}
-</a>
-<a disabled="disabled" class="btn btn-default btn-sm" id="save-order">
-    <span class="glyphicon glyphicon-floppy-disk"></span>
-    {{ 'editor.task.save_order' | trans }}
-</a>
+{% if checkRight("right.listtest") %}
+    <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
+        <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
+    </a>
+{% endif %}
+
+{% if checkRight("right.createtask", test) and checkRight("right.addtasktest", test) %}
+    <a id="create-task" class="btn btn-default btn-sm" data-test-id = "{{ test.id }}">
+        <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create_test' | trans }}
+    </a>
+{% endif %}
+
+{% if checkRight("right.addtasktest", test) %}
+    <a id="add-existing-task" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-task-modal">
+        <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.add_existing' | trans }}
+    </a>
+{% endif %}
+
+{% if checkRight("right.reordertasktest", test) %}
+    <a disabled="disabled" class="btn btn-default btn-sm" id="save-order">
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+        {{ 'editor.task.save_order' | trans }}
+    </a>
+{% endif %}
 
 <img id="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
 

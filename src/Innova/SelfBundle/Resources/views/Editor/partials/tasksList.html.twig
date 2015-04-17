@@ -1,6 +1,17 @@
 {% if orders|length < 1 %}
     Il n'y a aucune tâche associée à ce test.
 {% else %}
+    {% set canEdit = false %}
+    {% set canDelete = false %}
+
+    {% if checkRight("right.edittasktest", orders[0].test) %}
+        {% set canEdit = true %}
+    {% endif %}
+
+    {% if checkRight("right.deletetasktest", orders[0].test) %}
+        {% set canDelete = true %}
+    {% endif %}
+
     {% for order in orders %}
         <li id="task-{{ order.questionnaire.id }}" class="questionnaire list-group-item" data-questionnaire-id="{{ order.questionnaire.id }}" data-test-id="{{ order.test.id }}">
 
@@ -31,12 +42,18 @@
                     <span class="glyphicon glyphicon-play"></span>
                 </a>
                 #}
-                <a toggle="tooltip" data-original-title="{{ 'generic.edit' | trans }}" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id, 'testId': order.test.id }) }}">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </a>
-                <a toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}" class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </a>
+
+                {% if canEdit %}
+                    <a toggle="tooltip" data-original-title="{{ 'generic.edit' | trans }}" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id, 'testId': order.test.id }) }}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                {% endif %}
+                 
+                {% if canDelete %}
+                    <a toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}" class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                {% endif %}
             </span>
         </li>
     {% endfor %}

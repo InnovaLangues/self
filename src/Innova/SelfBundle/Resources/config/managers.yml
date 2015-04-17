@@ -298,3 +298,12 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
 
+    self.right.manager:
+        class: Innova\SelfBundle\Manager\Right\RightManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    self.rightgroup.manager:
+        class: Innova\SelfBundle\Manager\Right\RightGroupManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager

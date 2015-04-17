@@ -1,10 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
-        <span class="glyphicon glyphicon-plus"></span>
-        Créer un utilisateur
-    </a>
+
+    {% if checkRight("right.createuser") %}
+        <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
+            <span class="glyphicon glyphicon-plus"></span>
+            Créer un utilisateur
+        </a>
+    {% endif %}
 
     <hr/>
 
@@ -23,9 +26,29 @@
                 <div class="panel-body">
                     <ul class="list-group">
                         {% for entity in entities if "ROLE_SUPER_ADMIN" in entity.roles %}
-                        <li class="list-group-item">
-                            <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a>
-                        </li>
+                            <li class="list-group-item">
+                                <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#session-users" aria-expanded="true" aria-controls="session-users">
+                    {{ 'user.session_managers' | trans }}
+                    </a>
+                </h4>
+            </div>
+            <div id="session-users" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {% for entity in entities if "ROLE_SESSIONMANAGER" in entity.roles %}
+                            <li class="list-group-item">
+                                <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -42,10 +65,10 @@
             <div id="classic-users" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body">
                     <ul class="list-group">
-                        {% for entity in entities if "ROLE_SUPER_ADMIN" not in entity.roles %}
-                        <li class="list-group-item">
-                            <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a>
-                        </li>
+                        {% for entity in entities if "ROLE_SUPER_ADMIN" not in entity.roles and "ROLE_SESSIONMANAGER" not in entity.roles %}
+                            <li class="list-group-item">
+                                <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>

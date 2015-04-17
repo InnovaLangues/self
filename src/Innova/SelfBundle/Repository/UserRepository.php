@@ -89,4 +89,27 @@ class UserRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findAuthorized($user)
+    {
+        $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
+        WHERE EXISTS (
+            SELECT r FROM Innova\SelfBundle\Entity\Right\RightUserSomeone r
+            WHERE r.user = :user
+            AND r.target = u
+            AND (
+                r.canDelete = 1 OR
+                r.canDeleteTrace = 1 OR
+                r.canEdit = 1 OR
+                r.canDeleteTrace = 1 OR
+                r.canEditRights = 1
+                )
+            )
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                                ->setParameter('user', $user);
+
+        return $query->getResult();
+    }
 }

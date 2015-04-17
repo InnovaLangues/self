@@ -146,6 +146,58 @@ class FixtureCommand extends ContainerAwareCommand
             "productionType.dialogal.bi", "productionType.dialogal.poly",
         ));
 
+        $rightGroupManager = $this->getContainer()->get("self.rightgroup.manager");
+        $rightGroupManager->createGroups(array("rightgroup.tasks", "rightgroup.tests", "rightgroup.sessions", "rightgroup.groups", "rightgroup.users"));
+
+        $rightManager = $this->getContainer()->get("self.right.manager");
+        $rightManager->createRights(array(
+            // task
+            array("right.createtask", "rightgroup.tasks", null, "RightUserTask"),
+            array("right.deletetask", "rightgroup.tasks", "canDelete", "RightUserTask"),
+            array("right.edittask", "rightgroup.tasks", "canEdit", "RightUserTask"),
+            array("right.listtask", "rightgroup.tasks", null, "RightUserTask"),
+
+            // test (ok view)
+            array("right.createtest", "rightgroup.tests", null, "RightUserTest"),
+            array("right.deletetest", "rightgroup.tests", "canDelete", "RightUserTest"),
+            array("right.edittest", "rightgroup.tests", "canEdit", "RightUserTest"),
+            array("right.listtest", "rightgroup.tests", null, "RightUserTest"),
+            array("right.duplicatetest", "rightgroup.tests", "canDuplicate", "RightUserTest"),
+            array("right.managesessiontest", "rightgroup.tests", "canManageSession", "RightUserTest"),
+            array("right.managetaskstest", "rightgroup.tests", "canManageTask", "RightUserTest"),
+            array("right.addtasktest", "rightgroup.tests", "canAddTask", "RightUserTest"),
+            array("right.reordertasktest", "rightgroup.tests", "canReorderTasks", "RightUserTest"),
+            array("right.deletetasktest", "rightgroup.tests", "canDeleteTask", "RightUserTest"),
+            array("right.edittasktest", "rightgroup.tests", "canEditTask", "RightUserTest"),
+            array("right.editrightstest", "rightgroup.tests", null, "RightUserTest"),
+
+            // user (ok view)
+            array("right.listuser", "rightgroup.users", null, "RightUserSomeone"),
+            array("right.createuser", "rightgroup.users", null, "RightUserSomeone"),
+            array("right.deleteuser", "rightgroup.users", "canDelete", "RightUserSomeone"),
+            array("right.edituser", "rightgroup.users", "canEdit", "RightUserSomeone"),
+            array("right.deletetraceuser", "rightgroup.users", "canDeleteTrace", "RightUserSomeone"),
+            array("right.editpassworduser", "rightgroup.users", "canEditPassword", "RightUserSomeone"),
+            array("right.editrightsuser", "rightgroup.users", 'canEditRights', "RightUserSomeone"),
+
+            // group (ok view)
+            array("right.listgroup", "rightgroup.groups", null, "RightUserGroup"),
+            array("right.editgroup", "rightgroup.groups", "canEdit", "RightUserGroup"),
+            array("right.creategroup", "rightgroup.groups", null, "RightUserGroup"),
+            array("right.deletegroup", "rightgroup.groups", "canDelete", "RightUserGroup"),
+            array("right.csvimportgroup", "rightgroup.groups", "canImportCsv", "RightUserGroup"),
+            array("right.editrightsgroup", "rightgroup.groups", null, "RightUserGroup"),
+
+            // session (ok view)
+            array("right.deletesession", "rightgroup.sessions", "canDelete", "RightUserSession"),
+            array("right.listsession", "rightgroup.sessions", null, "RightUserSession"),
+            array("right.editsession", "rightgroup.sessions", "canEdit", "RightUserSession"),
+            array("right.createsession", "rightgroup.sessions", null, "RightUserSession"),
+            array("right.individualresultssession", "rightgroup.sessions", "canExportIndividual", "RightUserSession"),
+            array("right.exportresultssession", "rightgroup.sessions", "canExportCollective", "RightUserSession"),
+            array("right.editrightssession", "rightgroup.sessions", null, "RightUserSession"),
+        ));
+
         $now = time();
         $duration = $now - $start;
 

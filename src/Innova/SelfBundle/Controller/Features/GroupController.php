@@ -30,14 +30,20 @@ class GroupController extends Controller
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $groups = $em->getRepository("InnovaSelfBundle:Group")->findAll();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.listgroup", $currentUser)) {
+            $groups = $em->getRepository("InnovaSelfBundle:Group")->findAll();
+        } else {
+            $groups = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Group')->findAuthorized($currentUser);
+        }
 
         return array("groups" => $groups);
     }
 
     /**
      *
-     * @Route("{groupId}/display", name="editor_group_display")
+     * @Route("/{groupId}/display", name="editor_group_display")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Features:Group/display.html.twig")
      */

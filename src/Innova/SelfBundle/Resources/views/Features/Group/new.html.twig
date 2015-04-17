@@ -2,14 +2,16 @@
 
 {% block body -%}
 
-<a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
-    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
-</a>
+{% if checkRight("right.listgroup") %}
+	<a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
+	    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
+	</a>
+{% endif %}
 
-{% if group.id is not null %}
-<a class="btn btn-default btn-sm" href="{{ path('editor_group_import_user', { 'groupId': group.id }) }}">
-    <span class="glyphicon glyphicon-import"></span> {{ 'group.import' | trans }}
-</a>
+{% if group.id is not null and checkRight("right.csvimportgroup", group) %}
+	<a class="btn btn-default btn-sm" href="{{ path('editor_group_import_user', { 'groupId': group.id }) }}">
+	    <span class="glyphicon glyphicon-import"></span> {{ 'group.import' | trans }}
+	</a>
 {% endif %}
 
 <hr/>
@@ -17,3 +19,15 @@
 {{ form(form) }}
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/css/select2.min.css" rel="stylesheet" />
+	<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/js/select2.min.js"></script>
+
+	<script type="text/javascript">
+  		$('#group_sessions, #group_users').select2();
+	</script>
+{% endblock %}
+
+

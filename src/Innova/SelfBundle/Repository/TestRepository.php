@@ -24,4 +24,44 @@ class TestRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findAuthorized($user)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Test t
+        WHERE EXISTS (
+            SELECT r FROM Innova\SelfBundle\Entity\Right\RightUserTest r
+            WHERE r.user = :user
+            AND r.target = t
+            AND (
+                r.canEdit = 1 OR
+                r.canManageSession = 1 OR
+                r.canManageTask = 1
+            )
+        )";
+
+        $query = $this->_em->createQuery($dql)->setParameter('user', $user);
+
+        return $query->getResult();
+    }
+
+    public function findAuthorizedByLanguage($user, $language)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Test t
+        WHERE EXISTS (
+            SELECT r FROM Innova\SelfBundle\Entity\Right\RightUserTest r
+            WHERE r.user = :user
+            AND r.target = t
+            AND (
+                r.canEdit = 1 OR
+                r.canManageSession = 1 OR
+                r.canManageTask = 1
+            )
+        ) AND t.language = :language";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('user', $user)
+                ->setParameter('language', $language);
+
+        return $query->getResult();
+    }
 }
