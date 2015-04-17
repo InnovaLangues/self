@@ -34,7 +34,7 @@ class AdminUserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if ($this->get("self.right.manager")->checkRight("right_listuser", $currentUser)) {
+        if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
             $entities = $em->getRepository('InnovaSelfBundle:User')->findAll();
         } else {
             $entities = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findAuthorized($currentUser);
@@ -216,11 +216,12 @@ class AdminUserController extends Controller
     public function toggleRight(User $user, Right $right)
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
-        if (!$this->get("self.right.manager")->checkRight("right_editrightsuser", $currentUser)) {
+        if (!$this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
             throw new AccessDeniedException();
         }
 
         $this->get("self.right.manager")->toggleRight($right, $user);
+        $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
 
         return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
     }

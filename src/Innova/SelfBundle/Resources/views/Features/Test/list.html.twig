@@ -2,7 +2,7 @@
 
 {% block body -%}
 
-{% if checkRight("right_createtest") %}                                                                               
+{% if checkRight("right.createtest") %}                                                                               
     <a class="btn btn-default btn-sm" href="{{ path('editor_test_create') }}">
         <span class="glyphicon glyphicon-plus"></span> {{ 'editor.test.create' | trans }}
     </a>
@@ -13,6 +13,11 @@
 {% if tests|length < 1 %}
     Il n'y a aucun test de créé actuellement.
 {% else %}
+
+    {% set canEditRights = false %} 
+    {% if checkRight("right.editrightstest") %}
+        {% set canEditRights = true %} 
+    {% endif %}
 
 <h3>{{ 'editor.test.list' | trans }}</h3>
 <table class="table table-striped">
@@ -47,20 +52,26 @@
             </td>
 
             <td class="text-right">
-                {% if checkRight("right_managesessiontest", test) %}
+                {% if canEditRights %}
+                <a class="btn btn-default btn-sm" href="{{ path('editor_test_rights', {'testId': test.id }) }}">
+                    <span class="glyphicon glyphicon-lock"></span> Permissions
+                </a>
+                {% endif %}
+
+                {% if checkRight("right.managesessiontest", test) %}
                     <a class="btn btn-default btn-sm " href="{{ path('editor_test_sessions', { 'testId': test.id } )}}">
                         <span class="glyphicon glyphicon-calendar"></span> {{ 'editor.session.manage' | trans }}
                     </a>
                 {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
-                    {% if checkRight("right_edittest", test) %}
+                    {% if checkRight("right.edittest", test) %}
                         <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit', { 'testId': test.id }) }}">
                             <span class="glyphicon glyphicon-cog"></span> {{ 'generic.edit' | trans }}
                         </a>
                     {% endif %}
 
-                    {% if checkRight("right_managetaskstest", test) %}
+                    {% if checkRight("right.managetaskstest", test) %}
                         <a class="btn btn-default btn-sm" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
                             <span class="glyphicon glyphicon-edit"></span> {{ 'editor.task.manage' | trans }}
                         </a>

@@ -6,25 +6,25 @@
 
 {% block body -%}
 
-{% if checkRight("right_listtest") %}
+{% if checkRight("right.listtest") %}
     <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
         <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
     </a>
 {% endif %}
 
-{% if checkRight("right_createtask", test) and checkRight("right_addtasktest", test) %}
+{% if checkRight("right.createtask", test) and checkRight("right.addtasktest", test) %}
     <a id="create-task" class="btn btn-default btn-sm" data-test-id = "{{ test.id }}">
         <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create_test' | trans }}
     </a>
 {% endif %}
 
-{% if checkRight("right_addtasktest", test) %}
+{% if checkRight("right.addtasktest", test) %}
     <a id="add-existing-task" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-task-modal">
         <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.add_existing' | trans }}
     </a>
 {% endif %}
 
-{% if checkRight("right_reordertasktest", test) %}
+{% if checkRight("right.reordertasktest", test) %}
     <a disabled="disabled" class="btn btn-default btn-sm" id="save-order">
         <span class="glyphicon glyphicon-floppy-disk"></span>
         {{ 'editor.task.save_order' | trans }}

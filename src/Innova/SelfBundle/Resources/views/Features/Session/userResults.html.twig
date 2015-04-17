@@ -6,13 +6,13 @@
     <span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
 </a>
 
-{% if checkRight("right_editsession", session) %}
+{% if checkRight("right.editsession", session) %}
 	<a class="btn btn-default btn-sm" href="{{ path('editor_test_edit_session', { 'testId': session.test.id, 'sessionId': session.id }) }}">
 		<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
 	</a>
 {% endif %}
 
-{% if checkRight("right_individualresultssession", session) %}
+{% if checkRight("right.individualresultssession", session) %}
 	<a class="btn btn-default btn-sm" href="{{ path('admin-pdf-export-session-user', { 'sessionId': session.id, 'userId': user.id }) }}">
 		<span class="glyphicon glyphicon-download-alt"></span> {{ 'editor.session.export' | trans }}
 	</a>

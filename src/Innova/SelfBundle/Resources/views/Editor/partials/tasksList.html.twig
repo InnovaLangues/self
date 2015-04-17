@@ -4,11 +4,11 @@
     {% set canEdit = false %}
     {% set canDelete = false %}
 
-    {% if checkRight("right_edittasktest", orders[0].test) %}
+    {% if checkRight("right.edittasktest", orders[0].test) %}
         {% set canEdit = true %}
     {% endif %}
 
-    {% if checkRight("right_deletetasktest", orders[0].test) %}
+    {% if checkRight("right.deletetasktest", orders[0].test) %}
         {% set canDelete = true %}
     {% endif %}
 

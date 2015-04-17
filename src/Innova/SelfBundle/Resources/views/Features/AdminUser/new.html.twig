@@ -8,7 +8,7 @@
 	        Revenir à la fiche
 	    </a>
 
-    	{% if checkRight("right_editrightsuser", user) %}
+    	{% if checkRight("right.editrightsuser", user) %}
     		<a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
 		        Editer les permissions
 	    	</a>

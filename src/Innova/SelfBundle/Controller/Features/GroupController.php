@@ -32,7 +32,7 @@ class GroupController extends Controller
         $em = $this->getDoctrine()->getManager();
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if ($this->get("self.right.manager")->checkRight("right_listgroup", $currentUser)) {
+        if ($this->get("self.right.manager")->checkRight("right.listgroup", $currentUser)) {
             $groups = $em->getRepository("InnovaSelfBundle:Group")->findAll();
         } else {
             $groups = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Group')->findAuthorized($currentUser);

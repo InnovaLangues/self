@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Form\Type\Right;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class RightUserSessionType extends AbstractType
+class RightUserGroupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -31,17 +31,10 @@ class RightUserSessionType extends AbstractType
                 'translation_domain' => 'messages',
             ));
 
-        $builder->add('canExportIndividual', 'choice', array(
+        $builder->add('canImportCsv', 'choice', array(
                 'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
-                'attr' => array('class' => 'form-control', 'data-field' => 'canExportIndividual'),
-                'label'  => 'canExportIndividual',
-                'translation_domain' => 'messages',
-            ));
-
-        $builder->add('canExportCollective', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
-                'attr' => array('class' => 'form-control', 'data-field' => 'canExportCollective'),
-                'label'  => 'canExportCollective',
+                'attr' => array('class' => 'form-control', 'data-field' => 'canImportCsv'),
+                'label'  => 'canImportCsv',
                 'translation_domain' => 'messages',
             ));
 
@@ -53,6 +46,6 @@ class RightUserSessionType extends AbstractType
 
     public function getName()
     {
-        return 'right_user_session';
+        return 'right_user_group';
     }
 }

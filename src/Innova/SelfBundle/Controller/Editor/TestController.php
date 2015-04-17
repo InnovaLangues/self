@@ -27,13 +27,13 @@ class TestController extends Controller
      *
      * @Route("/tests", name="editor_tests_show")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
+     * @Template("InnovaSelfBundle:Features:Test/list.html.twig")
      */
     public function listTestsAction()
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if ($this->get("self.right.manager")->checkRight("right_listtest", $currentUser)) {
+        if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
         } else {
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findAuthorized($currentUser);
@@ -47,13 +47,13 @@ class TestController extends Controller
      *
      * @Route("/tests/language/{languageId}", name="editor_tests_by_language_show")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
+     * @Template("InnovaSelfBundle:Features:Test/list.html.twig")
      */
     public function listTestsByLanguageAction(Language $language)
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if ($this->get("self.right.manager")->checkRight("right_listtest", $currentUser)) {
+        if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findBy(array("language" => $language, "archived" => false));
         } else {
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findAuthorizedByLanguage($currentUser, $language);
@@ -67,7 +67,7 @@ class TestController extends Controller
      *
      * @Route("/tests/archived", name="editor_tests_archived_show")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Editor:listTests.html.twig")
+     * @Template("InnovaSelfBundle:Features:Test/list.html.twig")
      */
     public function listArchivedTestsAction()
     {

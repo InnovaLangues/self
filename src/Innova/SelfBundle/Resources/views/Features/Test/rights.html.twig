@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a  href="{{ path('editor_test_rights_add', { 'testId': test.id }) }}" class="btn btn-default btn-sm">Ajouter</a>
+
+<hr/>
+
+<h3> Utilisateurs ayant des droits pour le test {{ test.name }}</h3>
+
+<ul class="list-group"> 
+{% for right in rights %}
+    <li class="list-group-item">
+        {{ right.user.username }}
+        <span class="pull-right">
+            <a href="{{ path('editor_test_rights_edit', { 'testId': test.id, 'rightId': right.id }) }}" class="btn btn-default btn-xs">Editer les droits
+            </a>
+        </span>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

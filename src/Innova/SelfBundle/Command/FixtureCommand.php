@@ -147,53 +147,55 @@ class FixtureCommand extends ContainerAwareCommand
         ));
 
         $rightGroupManager = $this->getContainer()->get("self.rightgroup.manager");
-        $rightGroupManager->createGroups(array("rightgroup_tasks", "rightgroup_tests", "rightgroup_sessions", "rightgroup_groups", "rightgroup_users"));
+        $rightGroupManager->createGroups(array("rightgroup.tasks", "rightgroup.tests", "rightgroup.sessions", "rightgroup.groups", "rightgroup.users"));
 
         $rightManager = $this->getContainer()->get("self.right.manager");
         $rightManager->createRights(array(
             // task
-            array("right_createtask", "rightgroup_tasks", null, "RightUserTask"),
-            array("right_deletetask", "rightgroup_tasks", "canDelete", "RightUserTask"),
-            array("right_edittask", "rightgroup_tasks", "canEdit", "RightUserTask"),
-            array("right_listtask", "rightgroup_tasks", null, "RightUserTask"),
+            array("right.createtask", "rightgroup.tasks", null, "RightUserTask"),
+            array("right.deletetask", "rightgroup.tasks", "canDelete", "RightUserTask"),
+            array("right.edittask", "rightgroup.tasks", "canEdit", "RightUserTask"),
+            array("right.listtask", "rightgroup.tasks", null, "RightUserTask"),
 
             // test (ok view)
-            array("right_createtest", "rightgroup_tests", null, "RightUserTest"),
-            array("right_deletetest", "rightgroup_tests", "canDelete", "RightUserTest"),
-            array("right_edittest", "rightgroup_tests", "canEdit", "RightUserTest"),
-            array("right_listtest", "rightgroup_tests", null, "RightUserTest"),
-            array("right_duplicatetest", "rightgroup_tests", "canDuplicate", "RightUserTest"),
-            array("right_managesessiontest", "rightgroup_tests", "canManageSession", "RightUserTest"),
-            array("right_managetaskstest", "rightgroup_tests", "canManageTask", "RightUserTest"),
-            array("right_addtasktest", "rightgroup_tests", "canAddTask", "RightUserTest"),
-            array("right_reordertasktest", "rightgroup_tests", "canReorderTasks", "RightUserTest"),
-            array("right_deletetasktest", "rightgroup_tests", "canDeleteTask", "RightUserTest"),
-            array("right_edittasktest", "rightgroup_tests", "canEditTask", "RightUserTest"),
+            array("right.createtest", "rightgroup.tests", null, "RightUserTest"),
+            array("right.deletetest", "rightgroup.tests", "canDelete", "RightUserTest"),
+            array("right.edittest", "rightgroup.tests", "canEdit", "RightUserTest"),
+            array("right.listtest", "rightgroup.tests", null, "RightUserTest"),
+            array("right.duplicatetest", "rightgroup.tests", "canDuplicate", "RightUserTest"),
+            array("right.managesessiontest", "rightgroup.tests", "canManageSession", "RightUserTest"),
+            array("right.managetaskstest", "rightgroup.tests", "canManageTask", "RightUserTest"),
+            array("right.addtasktest", "rightgroup.tests", "canAddTask", "RightUserTest"),
+            array("right.reordertasktest", "rightgroup.tests", "canReorderTasks", "RightUserTest"),
+            array("right.deletetasktest", "rightgroup.tests", "canDeleteTask", "RightUserTest"),
+            array("right.edittasktest", "rightgroup.tests", "canEditTask", "RightUserTest"),
+            array("right.editrightstest", "rightgroup.tests", null, "RightUserTest"),
 
             // user (ok view)
-            array("right_listuser", "rightgroup_users", null, "RightUserSomeone"),
-            array("right_createuser", "rightgroup_users", null, "RightUserSomeone"),
-            array("right_deleteuser", "rightgroup_users", "canDelete", "RightUserSomeone"),
-            array("right_edituser", "rightgroup_users", "canEdit", "RightUserSomeone"),
-            array("right_deletetraceuser", "rightgroup_users", "canDeleteTrace", "RightUserSomeone"),
-            array("right_editpassworduser", "rightgroup_users", "canEditPassword", "RightUserSomeone"),
-            array("right_editrightsuser", "rightgroup_users", 'canEditRights', "RightUserSomeone"),
+            array("right.listuser", "rightgroup.users", null, "RightUserSomeone"),
+            array("right.createuser", "rightgroup.users", null, "RightUserSomeone"),
+            array("right.deleteuser", "rightgroup.users", "canDelete", "RightUserSomeone"),
+            array("right.edituser", "rightgroup.users", "canEdit", "RightUserSomeone"),
+            array("right.deletetraceuser", "rightgroup.users", "canDeleteTrace", "RightUserSomeone"),
+            array("right.editpassworduser", "rightgroup.users", "canEditPassword", "RightUserSomeone"),
+            array("right.editrightsuser", "rightgroup.users", 'canEditRights', "RightUserSomeone"),
 
             // group (ok view)
-            array("right_listgroup", "rightgroup_groups", null, "RightUserGroup"),
-            array("right_editgroup", "rightgroup_groups", "canEdit", "RightUserGroup"),
-            array("right_creategroup", "rightgroup_groups", null, "RightUserGroup"),
-            array("right_deletegroup", "rightgroup_groups", "canDelete", "RightUserGroup"),
-            array("right_csvimportgroup", "rightgroup_groups", "canImportCsv", "RightUserGroup"),
+            array("right.listgroup", "rightgroup.groups", null, "RightUserGroup"),
+            array("right.editgroup", "rightgroup.groups", "canEdit", "RightUserGroup"),
+            array("right.creategroup", "rightgroup.groups", null, "RightUserGroup"),
+            array("right.deletegroup", "rightgroup.groups", "canDelete", "RightUserGroup"),
+            array("right.csvimportgroup", "rightgroup.groups", "canImportCsv", "RightUserGroup"),
+            array("right.editrightsgroup", "rightgroup.groups", null, "RightUserGroup"),
 
             // session (ok view)
-            array("right_deletesession", "rightgroup_sessions", "canDelete", "RightUserSession"),
-            array("right_listsession", "rightgroup_sessions", null, "RightUserSession"),
-            array("right_editsession", "rightgroup_sessions", "canEdit", "RightUserSession"),
-            array("right_createsession", "rightgroup_sessions", null, "RightUserSession"),
-            array("right_individualresultssession", "rightgroup_sessions", "canExportIndividual", "RightUserSession"),
-            array("right_exportresultssession", "rightgroup_sessions", "canExportCollective", "RightUserSession"),
-            array("right_editrightssession", "rightgroup_sessions", null, "RightUserSession"),
+            array("right.deletesession", "rightgroup.sessions", "canDelete", "RightUserSession"),
+            array("right.listsession", "rightgroup.sessions", null, "RightUserSession"),
+            array("right.editsession", "rightgroup.sessions", "canEdit", "RightUserSession"),
+            array("right.createsession", "rightgroup.sessions", null, "RightUserSession"),
+            array("right.individualresultssession", "rightgroup.sessions", "canExportIndividual", "RightUserSession"),
+            array("right.exportresultssession", "rightgroup.sessions", "canExportCollective", "RightUserSession"),
+            array("right.editrightssession", "rightgroup.sessions", null, "RightUserSession"),
         ));
 
         $now = time();

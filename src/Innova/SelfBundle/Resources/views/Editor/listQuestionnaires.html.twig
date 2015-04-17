@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body -%}
-{% if checkRight("right_createtask") %}
+{% if checkRight("right.createtask") %}
     <a id="create-task" class="btn btn-default btn-sm" data-test-id="0">
         <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
     </a>
@@ -20,11 +20,11 @@
     {% set canEdit = false %}
     {% set canDelete = false %}
 
-    {% if checkRight("right_edittask") %}
+    {% if checkRight("right.edittask") %}
         {% set canEdit = true %}
     {% endif %}
 
-    {% if checkRight("right_deletetask") %}
+    {% if checkRight("right.deletetask") %}
         {% set canDelete = true %}
     {% endif %}
 

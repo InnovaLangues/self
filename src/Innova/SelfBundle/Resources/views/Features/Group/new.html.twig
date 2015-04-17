@@ -2,13 +2,13 @@
 
 {% block body -%}
 
-{% if checkRight("right_listgroup") %}
+{% if checkRight("right.listgroup") %}
 	<a class="btn btn-default btn-sm" href="{{ path('editor_groups') }}">
 	    <span class="glyphicon glyphicon-calendar"></span> {{ 'group.list' | trans }}
 	</a>
 {% endif %}
 
-{% if group.id is not null and checkRight("right_csvimportgroup", group) %}
+{% if group.id is not null and checkRight("right.csvimportgroup", group) %}
 	<a class="btn btn-default btn-sm" href="{{ path('editor_group_import_user', { 'groupId': group.id }) }}">
 	    <span class="glyphicon glyphicon-import"></span> {{ 'group.import' | trans }}
 	</a>

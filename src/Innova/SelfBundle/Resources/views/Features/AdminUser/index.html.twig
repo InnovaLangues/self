@@ -2,7 +2,7 @@
 
 {% block body -%}
 
-    {% if checkRight("right_createuser") %}
+    {% if checkRight("right.createuser") %}
         <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
             <span class="glyphicon glyphicon-plus"></span>
             Créer un utilisateur

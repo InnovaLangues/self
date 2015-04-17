@@ -2,10 +2,15 @@
 
 {% block body -%}
 
-{% if checkRight("right_creategroup") %}
+{% if checkRight("right.creategroup") %}
     <a class="btn btn-default btn-sm" href="{{ path('editor_group_create') }}">
         <span class="glyphicon glyphicon-plus"></span> {{ 'group.create' | trans }}
     </a>
+{% endif %}
+
+{% set canEditRights = false %} 
+{% if checkRight("right.editrightsgroup") %}
+    {% set canEditRights = true %} 
 {% endif %}
 
 <hr/>
@@ -28,13 +33,20 @@
                     <a class="btn btn-default btn-sm" href="{{ path('editor_group_display', { 'groupId': group.id }) }}">
                         <span class="glyphicon glyphicon-play"></span> {{ 'group.display' | trans }}
                     </a>
-                    {% if checkRight("right_editgroup", group) %}
+
+                    {% if canEditRights %}
+                    <a class="btn btn-default btn-sm" href="{{ path('editor_group_rights', {'groupId': group.id }) }}">
+                        <span class="glyphicon glyphicon-lock"></span> Permissions
+                    </a>
+                    {% endif %}
+
+                    {% if checkRight("right.editgroup", group) %}
                         <a class="btn btn-default btn-sm" href="{{ path('editor_group_edit', { 'groupId': group.id }) }}">
                             <span class="glyphicon glyphicon-edit"></span> {{ 'group.edit' | trans }}
                         </a>
                     {% endif %}
 
-                    {% if checkRight("right_deletegroup", group) %}
+                    {% if checkRight("right.deletegroup", group) %}
                         <a class="btn btn-sm btn-danger rest" data-method="DELETE" href="{{ path('editor_group_delete', { 'groupId': group.id }) }}">
                             <span class="glyphicon glyphicon-trash"></span> {{ 'group.delete' | trans }}
                         </a>

@@ -11,7 +11,6 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Right\RightUserSession;
 use Innova\SelfBundle\Form\Type\SessionType;
-use Innova\SelfBundle\Form\Type\Right\RightUserSessionType;
 use Innova\SelfBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +36,7 @@ class SessionController extends Controller
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if ($this->get("self.right.manager")->checkRight("right_managesessiontest", $currentUser, $test)) {
+        if ($this->get("self.right.manager")->checkRight("right.listsession", $currentUser, $test)) {
             $sessions = $test->getSessions();
         } else {
             $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findAuthorized($test, $currentUser);
@@ -156,76 +155,6 @@ class SessionController extends Controller
     }
 
     /**
-     *
-     * @Route("/session/{sessionId}/rights", name="editor_session_rights")
-     * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Session/rights.html.twig")
-     */
-    public function handleRightsAction(Session $session)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserSession")->findByTarget($session);
-
-        return array("session" => $session, "rights" => $rights);
-    }
-
-    /**
-     *
-     * @Route("/session/{sessionId}/rights/add", name="editor_session_rights_add")
-     * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Session/rights_form.html.twig")
-     */
-    public function createRightsAction(Session $session, Request $request)
-    {
-        $right = new RightUserSession();
-
-        $form = $this->handleRightsForm($right, $session, $request);
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
-
-            return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
-        }
-
-        return array('form' => $form->createView(), 'session' => $session, 'right' => $right);
-    }
-
-    /**
-     *
-     * @Route("/session/{sessionId}/rights/{rightId}/edit", name="editor_session_rights_edit")
-     * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Session/rights_form.html.twig")
-     */
-    public function editRightsAction(Session $session, RightUserSession $rightUserSession, Request $request)
-    {
-        $form = $this->handleRightsForm($rightUserSession, $session, $request);
-
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
-
-            return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
-        }
-
-        return array('form' => $form->createView(), 'session' => $session, 'rightUserSession' => $rightUserSession );
-    }
-
-    /**
-     *
-     * @Route("/session/{sessionId}/right/{rightId}/delete", name="editor_session_rights_delete", options = {"expose"=true})
-     * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Session/list.html.twig")
-     */
-    public function deleteRightAction(Session $session, RightUserSession $rightUserSession)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($rightUserSession);
-        $em->flush();
-
-        $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
-
-        return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
-    }
-
-    /**
      * Handles session form
      */
     private function handleForm(Session $session, $request)
@@ -238,29 +167,6 @@ class SessionController extends Controller
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($session);
-                $em->flush();
-
-                return;
-            }
-        }
-
-        return $form;
-    }
-
-    /**
-     * Handles session form
-     */
-    private function handleRightsForm(RightUserSession $rightUserSession, Session $session, $request)
-    {
-        $form = $this->get('form.factory')->createBuilder(new RightUserSessionType(), $rightUserSession)->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $rightUserSession->setTarget($session);
-                $em->persist($rightUserSession);
                 $em->flush();
 
                 return;

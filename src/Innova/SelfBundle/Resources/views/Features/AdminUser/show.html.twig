@@ -1,40 +1,35 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    {% if checkRight("right_edituser", user) %}
+    {% if checkRight("right.edituser", user) %}
         <a href="{{ path('user_edit', {'userId': user.id } )}}" class="btn btn-sm btn-default">
-            <span class="glyphicon glyphicon-pencil"></span>
-            Editer l'utilisateur
+            <span class="glyphicon glyphicon-pencil"></span> Editer l'utilisateur
         </a>
     {% endif %}
 
-    {% if checkRight("right_editpassworduser", user) %}
+    {% if checkRight("right.editpassworduser", user) %}
         <a href="{{ path('passwd_edit', {'userId': user.id } )}}" class="btn btn-sm btn-default">
-            <span class="glyphicon glyphicon-lock"></span>
-            Modifier le mot de passe
+            <span class="glyphicon glyphicon-lock"></span> Modifier le mot de passe
         </a>
     {% endif %}
 
-    {% if checkRight("right_editrightsuser", user) %}
+    {% if checkRight("right.editrightsuser", user) %}
         <a class="btn btn-default btn-sm" href="{{ path('admin_user_rights', { 'userId': user.id }) }}">
-            Editer les permissions
+            <span class="glyphicon glyphicon-lock"></span> Permissions
         </a>
     {% endif %}
 
     {% if user != app.user %}
-        {% if checkRight("right_deleteuser", user) %}
+        {% if checkRight("right.deleteuser", user) %}
             <a class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#delete-modal">
-                <span class="glyphicon glyphicon-trash"></span>
-                Supprimer l'utilisateur
+                <span class="glyphicon glyphicon-trash"></span> Supprimer l'utilisateur
             </a>
         {% endif %}
     {% else %}
          <a href="{{ path('self_user_edit' )}}" class="btn btn-sm btn-default">
-            <span class="glyphicon glyphicon-pencil"></span>
-            Editer mes informations
+            <span class="glyphicon glyphicon-pencil"></span> Editer mes informations
         </a>
     {% endif %}
-
 
     <hr/>
     
@@ -67,7 +62,7 @@
                                     {{ test[0].name }} ({{ test[1] }})
                                 </a>
 
-                                {% if checkRight("right_deletetraceuser") %}
+                                {% if checkRight("right.deletetraceuser") %}
                                     <span class="buttons pull-right">
                                         <span data-method="DELETE" class="btn btn-danger btn-xs rest" href="{{ path('delete-test-trace', {'testId': test[0].id, 'userId': user.id } )}}">
                                          Supprimer les traces pour le test
@@ -82,7 +77,7 @@
                                 {% for questionnaire in test[2] %}
                                     <li class="list-group-item">
                                         {{questionnaire.theme}}
-                                        {% if checkRight("right_deletetraceuser") %}
+                                        {% if checkRight("right.deletetraceuser") %}
                                             <span class="buttons pull-right">
                                                 <span data-method="DELETE" class="btn btn-danger btn-xs rest" href="{{ path('delete-task-trace', {'testId': test[0].id, 'userId': user.id, 'questionnaireId': questionnaire.id} )}}">
                                                 Supprimer les traces pour cette tâche

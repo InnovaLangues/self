@@ -8,7 +8,7 @@
                     <ul class="nav navbar-nav">
                         {% if app.user is not null and is_granted('ROLE_ADMIN') %}
 
-                            {% if checkRight("right_listuser") %}
+                            {% if checkRight("right.listuser") %}
                                 <li>
                                     <a href="{{ path('admin_user') }}">
                                         <span class="glyphicon glyphicon-user"></span> {{ 'menu.users' | trans }}
@@ -16,7 +16,7 @@
                                 </li>
                             {% endif %}
 
-                            {% if checkRight("right_listgroup") or checkRight("right_creategroup") or hasRightsOnGroup("RightUserGroup") %}
+                            {% if checkRight("right.listgroup") or checkRight("right.creategroup") or hasRightsOnGroup("RightUserGroup") %}
                                 <li>
                                     <a href="{{ path('editor_groups') }}">
                                         <span class="glyphicon glyphicon-certificate"></span> {{ 'menu.groups' | trans }}
@@ -47,7 +47,7 @@
                                         <ul class="dropdown-menu">
 
 
-                                        {% if checkRight("right_listtest") or checkRight("right_createtest") or hasRightsOnGroup("RightUserTest") %}
+                                        {% if checkRight("right.listtest") or checkRight("right.createtest") or hasRightsOnGroup("RightUserTest") %}
                                             <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
                                             <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
                                             <li class="divider"></li>
@@ -57,7 +57,7 @@
                                             {% endfor %}
                                             <li class="divider"></li>
 
-                                            {% if checkRight("right_createtest") %}
+                                            {% if checkRight("right.createtest") %}
                                                 <li>
                                                     <a href="{{ path('editor_test_create') }}">
                                                         <span class="glyphicon glyphicon-plus"></span> {{ 'editor.test.create' | trans }}
@@ -83,7 +83,7 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#">{{ 'editor.task.tasks' | trans }}</a>
                                         <ul class="dropdown-menu">
-                                            {% if checkRight("right_listtask") or checkRight("right_createtask") or checkRight("right_edittask") or checkRight("right_deletetask")%}
+                                            {% if checkRight("right.listtask") or checkRight("right.createtask") or checkRight("right.edittask") or checkRight("right.deletetask")%}
                                                 <li><a href="{{path('editor_questionnaires_show')}}">{{ 'editor.task.all_tasks' | trans }}</a></li>
                                                 <li class="divider"></li>
                                                 {% set languages = get_languages() %}
