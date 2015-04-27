@@ -33,6 +33,8 @@ class SubquestionController
     protected $templating;
     protected $questionnaireRevisorsManager;
     protected $formFactory;
+    protected $securityContext;
+    protected $rightManager;
 
     public function __construct(
             $mediaManager,
@@ -43,13 +45,15 @@ class SubquestionController
             $questionnaireRevisorsManager,
             $formFactory
     ) {
-        $this->mediaManager = $mediaManager;
-        $this->propositionManager = $propositionManager;
-        $this->subquestionManager = $subquestionManager;
-        $this->entityManager = $entityManager;
-        $this->templating = $templating;
+        $this->mediaManager                 = $mediaManager;
+        $this->propositionManager           = $propositionManager;
+        $this->subquestionManager           = $subquestionManager;
+        $this->entityManager                = $entityManager;
+        $this->templating                   = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        $this->formFactory = $formFactory;
+        $this->formFactory                  = $formFactory;
+        $this->securityContext              = $securityContext;
+        $this->rightManager                 = $rightManager;
     }
 
     /**
@@ -59,21 +63,28 @@ class SubquestionController
      */
     public function createSubquestionAction(Questionnaire $questionnaire, Typology $typology)
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $question = $questionnaire->getQuestions()[0];
-        $subquestion = $this->subquestionManager->createSubquestion($typology, $question);
-        $this->propositionManager->createVfPropositions($questionnaire, $subquestion, $typology);
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $em = $this->entityManager;
 
-        $em->persist($subquestion);
+            $question = $questionnaire->getQuestions()[0];
+            $subquestion = $this->subquestionManager->createSubquestion($typology, $question);
+            $this->propositionManager->createVfPropositions($questionnaire, $subquestion, $typology);
 
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+            $em->persist($subquestion);
 
-        $em->flush();
-        $em->refresh($subquestion);
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-        return new Response($template);
+            $em->flush();
+            $em->refresh($subquestion);
+
+            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+
+            return new Response($template);
+        }
+
+        return;
     }
 
     /**
@@ -83,16 +94,22 @@ class SubquestionController
      */
     public function deleteSubquestionAction(Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-        $em->remove($subquestion);
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $em = $this->entityManager;
 
-        $em->flush();
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+            $em->remove($subquestion);
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+            $em->flush();
 
-        return new Response($template);
+            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+
+            return new Response($template);
+        }
+
+        return;
     }
 
     /**
@@ -102,17 +119,23 @@ class SubquestionController
      */
     public function displayIdentityFormAction(Subquestion $subquestion)
     {
-        $subquestionId = $subquestion->getId();
-        $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion-identity.html.twig',
-                                                                        array(
-                                                                                'form' => $form->createView(),
-                                                                                'subquestionId' => $subquestionId,
-                                                                            )
-                                                                );
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $subquestionId = $subquestion->getId();
+            $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
 
-        return new Response($template);
+            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestion-identity.html.twig',
+                                                                            array(
+                                                                                    'form' => $form->createView(),
+                                                                                    'subquestionId' => $subquestionId,
+                                                                                )
+                                                                    );
+
+            return new Response($template);
+        }
+
+        return;
     }
 
     /**
@@ -122,16 +145,22 @@ class SubquestionController
      */
     public function setIdentityFieldAction(Request $request, Subquestion $subquestion)
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
-        $form->bind($request);
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $em = $this->entityManager;
 
-        if ($form->isValid()) {
-            $em->persist($subquestion);
-            $em->flush();
+            $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $em->persist($subquestion);
+                $em->flush();
+            }
+
+            return new JsonResponse();
         }
 
-        return new JsonResponse();
+        return;
     }
 }

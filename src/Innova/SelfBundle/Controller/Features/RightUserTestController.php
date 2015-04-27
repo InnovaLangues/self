@@ -29,10 +29,18 @@ class RightUserTestController extends Controller
      */
     public function handleRightsAction(Test $test)
     {
-        $em = $this->getDoctrine()->getManager();
-        $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserTest")->findByTarget($test);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return array("test" => $test, "rights" => $rights);
+        if ($this->get("self.right.manager")->checkRight("right.editrightstest", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
+            $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserTest")->findByTarget($test);
+
+            return array("test" => $test, "rights" => $rights);
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_tests_show'));
+        }
     }
 
     /**
@@ -43,16 +51,24 @@ class RightUserTestController extends Controller
      */
     public function createRightsAction(Test $test, Request $request)
     {
-        $right = new RightUserTest();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $form = $this->handleRightsForm($right, $test, $request);
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
+        if ($this->get("self.right.manager")->checkRight("right.editrightstest", $currentUser)) {
+            $right = new RightUserTest();
 
-            return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
+            $form = $this->handleRightsForm($right, $test, $request);
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
+
+                return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
+            }
+
+            return array('form' => $form->createView(), 'test' => $test, 'right' => $right);
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
-
-        return array('form' => $form->createView(), 'test' => $test, 'right' => $right);
     }
 
     /**
@@ -63,15 +79,23 @@ class RightUserTestController extends Controller
      */
     public function editRightsAction(Test $test, RightUserTest $rightUserTest, Request $request)
     {
-        $form = $this->handleRightsForm($rightUserTest, $test, $request);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
+        if ($this->get("self.right.manager")->checkRight("right.editrightstest", $currentUser)) {
+            $form = $this->handleRightsForm($rightUserTest, $test, $request);
 
-            return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
+
+                return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
+            }
+
+            return array('form' => $form->createView(), 'test' => $test, 'rightUserTest' => $rightUserTest );
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
-
-        return array('form' => $form->createView(), 'test' => $test, 'rightUserTest' => $rightUserTest );
     }
 
     /**
@@ -82,13 +106,21 @@ class RightUserTestController extends Controller
      */
     public function deleteRightAction(Test $test, RightUsertest $rightUserTest)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($rightUserTest);
-        $em->flush();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
+        if ($this->get("self.right.manager")->checkRight("right.editrightstest", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($rightUserTest);
+            $em->flush();
 
-        return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
+            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
+
+            return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_tests_show'));
+        }
     }
 
     /**

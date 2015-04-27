@@ -32,6 +32,9 @@ class MediaController
     protected $questionnaireRevisorsManager;
     protected $templatingManager;
     protected $questionnaireManager;
+    protected $securityContext;
+    protected $rightManager;
+    protected $session;
 
     public function __construct(
             $mediaManager,
@@ -42,7 +45,10 @@ class MediaController
             $templating,
             $questionnaireRevisorsManager,
             $templatingManager,
-            $questionnaireManager
+            $questionnaireManager,
+            $securityContext,
+            $rightManager,
+            $session
     ) {
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
@@ -53,6 +59,9 @@ class MediaController
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
         $this->templatingManager = $templatingManager;
         $this->questionnaireManager = $questionnaireManager;
+        $this->securityContext              = $securityContext;
+        $this->rightManager                 = $rightManager;
+        $this->session                      = $session;
         $this->subqRepo = $this->entityManager->getRepository('InnovaSelfBundle:Subquestion');
         $this->propRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
     }
@@ -63,8 +72,12 @@ class MediaController
      */
     public function setListeningLimitAction(Questionnaire $questionnaire, Media $media, $limit)
     {
-        $this->mediaManager->updateMediaLimit($questionnaire, $media, $limit);
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
+
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $this->mediaManager->updateMediaLimit($questionnaire, $media, $limit);
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        }
 
         return new Response(null, 200);
     }
@@ -75,15 +88,21 @@ class MediaController
      */
     public function getMediaInfoAction(Media $media)
     {
-        return new JsonResponse(
-            array(
-                'url' => $media->getUrl(),
-                'name' => $media->getName(),
-                'description' => $media->getDescription(),
-                'mediaType' => $media->getMediaType()->getName(),
-                'id' => $media->getId(),
-            )
-        );
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
+
+        if ($this->rightManager->canEditTask($currentUser, $media->getQuestionnaire())) {
+            return new JsonResponse(
+                array(
+                    'url' => $media->getUrl(),
+                    'name' => $media->getName(),
+                    'description' => $media->getDescription(),
+                    'mediaType' => $media->getMediaType()->getName(),
+                    'id' => $media->getId(),
+                )
+            );
+        }
+
+        return;
     }
 
     /**
@@ -92,19 +111,24 @@ class MediaController
      */
     public function updateMediaAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
-        $case = $request->get('toBeReloaded');
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $this->mediaManager->updateMedia($media->getId(), $request->get('url'), $request->get('name'), $request->get('description'));
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $case = $request->get('toBeReloaded');
+            $this->mediaManager->updateMedia($media->getId(), $request->get('url'), $request->get('name'), $request->get('description'));
 
-        if ($case == 'comments') {
-            $this->commentManager->updateCommentDate($media);
+            if ($case == 'comments') {
+                $this->commentManager->updateCommentDate($media);
+            }
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
+            //$this->mediaManager->invalidateMediaAction($media, $case);
+            $view = $this->templatingManager->generateView($case, array('questionnaire' => $questionnaire));
+
+            return new Response($view);
         }
 
-        //$this->mediaManager->invalidateMediaAction($media, $case);
-        $view = $this->templatingManager->generateView($case, array('questionnaire' => $questionnaire));
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
-        return new Response($view);
+        return;
     }
 
     /**
@@ -113,61 +137,67 @@ class MediaController
      */
     public function createMediaAction(Request $request, Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $entityType = $request->get('entityType');
-        $entityId = $request->get('entityId');
-        $entityField = $request->get('entityField');
-        $name = $request->get('name');
-        $description = $request->get('description');
-        $type = $request->get('type');
-        $url = $request->get('url');
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $em = $this->entityManager;
 
-        $media = $this->mediaManager->createMedia($questionnaire, $type, $name, $description, $url, 0, $entityField);
+            $entityType = $request->get('entityType');
+            $entityId = $request->get('entityId');
+            $entityField = $request->get('entityField');
+            $name = $request->get('name');
+            $description = $request->get('description');
+            $type = $request->get('type');
+            $url = $request->get('url');
 
-        switch ($entityType) {
-            case "questionnaire":
-                $this->questionnaireManager->editQuestionnaireField($questionnaire, $entityField, $media);
-                $parameters = array('questionnaire' => $questionnaire);
+            $media = $this->mediaManager->createMedia($questionnaire, $type, $name, $description, $url, 0, $entityField);
 
-                break;
-            case "subquestion":
-                $entity = $this->subqRepo->findOneById($entityId);
-                if ($entityField == "amorce") {
-                    $entity->setMediaAmorce($media);
-                    $parameters = array('questionnaire' => $questionnaire, 'subquestion' => $entity);
-                } elseif ($entityField == "app-media") {
-                    $entity->setMedia($media);
+            switch ($entityType) {
+                case "questionnaire":
+                    $this->questionnaireManager->editQuestionnaireField($questionnaire, $entityField, $media);
                     $parameters = array('questionnaire' => $questionnaire);
-                }
 
-                $em->persist($entity);
-                break;
-            case "proposition":
-                if ($entityField == "app-answer") {
-                    $subquestion = $this->subqRepo->findOneById($entityId);
-                    $proposition = $this->propositionManager->createProposition($subquestion, $media, true);
-                    $this->appManager->createAppFakeAnswer($proposition);
-                    $parameters = array('questionnaire' => $questionnaire);
-                } elseif ($entityField == "app-distractor") {
-                    $subquestions = $questionnaire->getQuestions()[0]->getSubquestions();
-                    foreach ($subquestions as $subquestion) {
-                        $this->propositionManager->createProposition($subquestion, $media, false);
+                    break;
+                case "subquestion":
+                    $entity = $this->subqRepo->findOneById($entityId);
+                    if ($entityField == "amorce") {
+                        $entity->setMediaAmorce($media);
+                        $parameters = array('questionnaire' => $questionnaire, 'subquestion' => $entity);
+                    } elseif ($entityField == "app-media") {
+                        $entity->setMedia($media);
+                        $parameters = array('questionnaire' => $questionnaire);
                     }
-                    $parameters = array('questionnaire' => $questionnaire);
-                } else {
-                    $subquestion = $this->subqRepo->findOneById($entityId);
-                    $this->propositionManager->createProposition($subquestion, $media, false);
-                    $parameters = array('questionnaire' => $questionnaire, 'subquestion' => $subquestion);
-                }
-                break;
+
+                    $em->persist($entity);
+                    break;
+                case "proposition":
+                    if ($entityField == "app-answer") {
+                        $subquestion = $this->subqRepo->findOneById($entityId);
+                        $proposition = $this->propositionManager->createProposition($subquestion, $media, true);
+                        $this->appManager->createAppFakeAnswer($proposition);
+                        $parameters = array('questionnaire' => $questionnaire);
+                    } elseif ($entityField == "app-distractor") {
+                        $subquestions = $questionnaire->getQuestions()[0]->getSubquestions();
+                        foreach ($subquestions as $subquestion) {
+                            $this->propositionManager->createProposition($subquestion, $media, false);
+                        }
+                        $parameters = array('questionnaire' => $questionnaire);
+                    } else {
+                        $subquestion = $this->subqRepo->findOneById($entityId);
+                        $this->propositionManager->createProposition($subquestion, $media, false);
+                        $parameters = array('questionnaire' => $questionnaire, 'subquestion' => $subquestion);
+                    }
+                    break;
+            }
+
+            $em->flush();
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+            $template = $this->templatingManager->generateView($entityField, $parameters);
+
+            return new Response($template);
         }
 
-        $em->flush();
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-        $template = $this->templatingManager->generateView($entityField, $parameters);
-
-        return new Response($template);
+        return;
     }
 
     /**
@@ -178,55 +208,61 @@ class MediaController
      */
     public function unlinkMediaAction(Request $request, Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $entityType = $request->get('entityType');
-        $entityId = $request->get('entityId');
-        $entityField = $request->get('entityField');
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $em = $this->entityManager;
 
-        switch ($entityType) {
-            case "questionnaire":
-                $this->questionnaireManager->editQuestionnaireField($questionnaire, $entityField, null);
-                $parameters = array('questionnaire' => $questionnaire);
-                break;
-            case "subquestion":
-                $entity = $this->subqRepo->findOneById($entityId);
-                if ($entityField == "amorce") {
-                    $entity->setMediaAmorce(null);
-                    $em->persist($entity);
-                    $parameters = array('questionnaire' => $questionnaire, 'subquestion' => $entity);
-                } elseif ($entityField == "app-paire") {
-                    if ($rightProposition = $this->propRepo->findOneBy(array("subquestion" => $entity, "rightAnswer" => true))) {
-                        $mediaToSearch = $rightProposition->getMedia();
-                        $question = $entity->getQuestion();
-                        $this->appManager->appDeletePropositions($mediaToSearch, $question);
+            $entityType = $request->get('entityType');
+            $entityId = $request->get('entityId');
+            $entityField = $request->get('entityField');
+
+            switch ($entityType) {
+                case "questionnaire":
+                    $this->questionnaireManager->editQuestionnaireField($questionnaire, $entityField, null);
+                    $parameters = array('questionnaire' => $questionnaire);
+                    break;
+                case "subquestion":
+                    $entity = $this->subqRepo->findOneById($entityId);
+                    if ($entityField == "amorce") {
+                        $entity->setMediaAmorce(null);
+                        $em->persist($entity);
+                        $parameters = array('questionnaire' => $questionnaire, 'subquestion' => $entity);
+                    } elseif ($entityField == "app-paire") {
+                        if ($rightProposition = $this->propRepo->findOneBy(array("subquestion" => $entity, "rightAnswer" => true))) {
+                            $mediaToSearch = $rightProposition->getMedia();
+                            $question = $entity->getQuestion();
+                            $this->appManager->appDeletePropositions($mediaToSearch, $question);
+                        }
+                        $em->remove($entity);
+                        $em->refresh($questionnaire->getQuestions()[0]);
+                        $parameters = array('questionnaire' => $questionnaire);
                     }
-                    $em->remove($entity);
-                    $em->refresh($questionnaire->getQuestions()[0]);
-                    $parameters = array('questionnaire' => $questionnaire);
-                }
-                break;
-            case "proposition":
-                $proposition = $this->propRepo->findOneById($entityId);
-                $question = $questionnaire->getQuestions()[0];
+                    break;
+                case "proposition":
+                    $proposition = $this->propRepo->findOneById($entityId);
+                    $question = $questionnaire->getQuestions()[0];
 
-                if ($entityField == "app-distractor") {
-                    $this->appManager->appDeletePropositions($proposition->getMedia(), $question);
-                    $parameters = array('questionnaire' => $questionnaire);
-                } elseif ($entityField == "distractor") {
-                    $this->appManager->deleteDistractor($question, $proposition);
-                    $parameters = array('questionnaire' => $questionnaire);
-                } else {
-                    $em->remove($proposition);
-                    $parameters = array('questionnaire' => $questionnaire, 'proposition' => null);
-                }
-                break;
+                    if ($entityField == "app-distractor") {
+                        $this->appManager->appDeletePropositions($proposition->getMedia(), $question);
+                        $parameters = array('questionnaire' => $questionnaire);
+                    } elseif ($entityField == "distractor") {
+                        $this->appManager->deleteDistractor($question, $proposition);
+                        $parameters = array('questionnaire' => $questionnaire);
+                    } else {
+                        $em->remove($proposition);
+                        $parameters = array('questionnaire' => $questionnaire, 'proposition' => null);
+                    }
+                    break;
+            }
+
+            $em->flush();
+            $template = $this->templatingManager->generateView($entityField, $parameters);
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
+            return new Response($template);
         }
 
-        $em->flush();
-        $template = $this->templatingManager->generateView($entityField, $parameters);
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
-        return new Response($template);
+        return;
     }
 }

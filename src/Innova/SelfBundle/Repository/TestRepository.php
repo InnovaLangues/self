@@ -64,4 +64,25 @@ class TestRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findByTask($task)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Test t
+        WHERE EXISTS (
+            SELECT oqt FROM Innova\SelfBundle\Entity\OrderQuestionnaireTest oqt
+            WHERE oqt.test = t
+            AND oqt.questionnaire = :task
+        )
+        OR EXISTS (
+            SELECT oqc FROM Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent oqc
+            LEFT JOIN oqc.component c
+            WHERE c.test = t
+            AND oqc.questionnaire = :task
+        )";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('task', $task);
+
+        return $query->getResult();
+    }
 }

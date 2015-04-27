@@ -53,19 +53,27 @@ class SessionController extends Controller
      */
     public function newAction(Test $test, Request $request)
     {
-        $session = new Session();
-        $session->setName('Nouvelle session');
-        $session->setActif(false);
-        $session->setTest($test);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $form = $this->handleForm($session, $request);
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "La session a bien été créée");
+        if ($this->get("self.right.manager")->checkRight("right.createsession", $currentUser)) {
+            $session = new Session();
+            $session->setName('Nouvelle session');
+            $session->setActif(false);
+            $session->setTest($test);
+
+            $form = $this->handleForm($session, $request);
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "La session a bien été créée");
+
+                return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
+            }
+
+            return array('form' => $form->createView(), 'test' => $test);
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
 
             return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
         }
-
-        return array('form' => $form->createView(), 'test' => $test);
     }
 
     /**
@@ -76,12 +84,18 @@ class SessionController extends Controller
      */
     public function deleteAction(Session $session)
     {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
         $testId = $session->getTest()->getId();
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($session);
-        $em->flush();
 
-        $this->get("session")->getFlashBag()->set('info', "La session a bien été supprimée");
+        if ($this->get("self.right.manager")->checkRight("right.deletesession", $currentUser, $session)) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($session);
+            $em->flush();
+
+            $this->get("session")->getFlashBag()->set('info', "La session a bien été supprimée");
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+        }
 
         return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $testId)));
     }
@@ -94,15 +108,23 @@ class SessionController extends Controller
      */
     public function editAction(Test $test, Session $session, Request $request)
     {
-        $form = $this->handleForm($session, $request);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "La session a bien été modifiée");
+        if ($this->get("self.right.manager")->checkRight("right.editsession", $currentUser, $session)) {
+            $form = $this->handleForm($session, $request);
+
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "La session a bien été modifiée");
+
+                return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
+            }
+
+            return array('form' => $form->createView(), 'test' => $test);
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
 
             return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
         }
-
-        return array('form' => $form->createView(), 'test' => $test);
     }
 
     /**
@@ -139,19 +161,27 @@ class SessionController extends Controller
      */
     public function exportAction(Session $session)
     {
-        $filename = $this->get("self.export.manager")->exportSession($session);
-        $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $response = new Response();
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', mime_content_type($file));
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
-        $response->headers->set('Content-length', filesize($file));
-        $response->sendHeaders();
+        if ($this->get("self.right.manager")->checkRight("right.exportresultssession", $currentUser, $session)) {
+            $filename = $this->get("self.export.manager")->exportSession($session);
+            $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
 
-        $response->setContent(file_get_contents($file));
+            $response = new Response();
+            $response->headers->set('Cache-Control', 'private');
+            $response->headers->set('Content-type', mime_content_type($file));
+            $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
+            $response->headers->set('Content-length', filesize($file));
+            $response->sendHeaders();
 
-        return $response;
+            $response->setContent(file_get_contents($file));
+
+            return $response;
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
+        }
     }
 
     /**

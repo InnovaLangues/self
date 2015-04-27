@@ -33,9 +33,15 @@ class PhasedTestController extends Controller
      */
     public function generateComponentAction(Test $test, ComponentType $type)
     {
-        $this->get("self.phasedtest.manager")->generateComponent($test, $type);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return $this->redirect($this->generateUrl('editor_test_questionnaires_show', array('testId' => $test->getId())));
+        if ($this->get("self.right.manager")->checkRight("right.addtaskstest", $currentUser)) {
+            $this->get("self.phasedtest.manager")->generateComponent($test, $type);
+
+            return $this->redirect($this->generateUrl('editor_test_questionnaires_show', array('testId' => $test->getId())));
+        }
+
+        return;
     }
 
     /**
@@ -46,9 +52,15 @@ class PhasedTestController extends Controller
      */
     public function removeComponentAction(Test $test, Component $component)
     {
-        $this->get("self.phasedtest.manager")->removeComponent($test, $component);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return $this->redirect($this->generateUrl('editor_test_questionnaires_show', array('testId' => $test->getId())));
+        if ($this->get("self.right.manager")->checkRight("right.deletetaskstest", $currentUser)) {
+            $this->get("self.phasedtest.manager")->removeComponent($test, $component);
+
+            return $this->redirect($this->generateUrl('editor_test_questionnaires_show', array('testId' => $test->getId())));
+        }
+
+        return;
     }
 
     /**
@@ -59,10 +71,16 @@ class PhasedTestController extends Controller
      */
     public function saveOrderAction(Component $component)
     {
-        $newOrderArray = json_decode($this->get('request')->request->get('newOrder'));
-        $this->get("self.phasedtest.manager")->saveOrder($newOrderArray);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return new Response(null);
+        if ($this->get("self.right.manager")->checkRight("right.reordertasktest", $currentUser)) {
+            $newOrderArray = json_decode($this->get('request')->request->get('newOrder'));
+            $this->get("self.phasedtest.manager")->saveOrder($newOrderArray);
+
+            return new Response(null);
+        }
+
+        return;
     }
 
     /**
@@ -73,9 +91,15 @@ class PhasedTestController extends Controller
      */
     public function removeQuestionnaireFromComponentAction(OrderQuestionnaireComponent $orderQuestionnaireComponent)
     {
-        $this->get("self.phasedtest.manager")->removeQuestionnaireFromComponent($orderQuestionnaireComponent);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return new Response(null);
+        if ($this->get("self.right.manager")->checkRight("right.deletetasktest", $currentUser)) {
+            $this->get("self.phasedtest.manager")->removeQuestionnaireFromComponent($orderQuestionnaireComponent);
+
+            return new Response(null);
+        }
+
+        return;
     }
 
     /**
@@ -86,15 +110,21 @@ class PhasedTestController extends Controller
      */
     public function createQuestionnaireToComponentAction(Component $component)
     {
-        $questionnaire = $this->get("self.phasedtest.manager")->createQuestionnaireToComponent($component);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $qId = $questionnaire->getId();
+        if ($this->get("self.right.manager")->checkRight("right.addtasktest", $currentUser)) {
+            $questionnaire = $this->get("self.phasedtest.manager")->createQuestionnaireToComponent($component);
 
-        return $this->redirect($this->generateUrl(
-                'editor_questionnaire_show',
-                array('questionnaireId' => $qId, 'testId' => $component->getTest()->getId())
-            )
-        );
+            $qId = $questionnaire->getId();
+
+            return $this->redirect($this->generateUrl(
+                    'editor_questionnaire_show',
+                    array('questionnaireId' => $qId, 'testId' => $component->getTest()->getId())
+                )
+            );
+        }
+
+        return;
     }
 
      /**
@@ -119,10 +149,16 @@ class PhasedTestController extends Controller
      */
     public function addQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
-        $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($questionnaire, $component);
-        $template = $this->renderView('InnovaSelfBundle:Editor/phased:tasks.html.twig', array('component' => $component));
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return new Response($template);
+        if ($this->get("self.right.manager")->checkRight("right.addtasktest", $currentUser)) {
+            $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($questionnaire, $component);
+            $template = $this->renderView('InnovaSelfBundle:Editor/phased:tasks.html.twig', array('component' => $component));
+
+            return new Response($template);
+        }
+
+        return;
     }
 
     /**
@@ -133,10 +169,16 @@ class PhasedTestController extends Controller
      */
     public function duplicateQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
-        $newQuestionnaire = $this->get("self.questionnaire.manager")->duplicate($questionnaire);
-        $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($newQuestionnaire, $component);
-        $template = $this->renderView('InnovaSelfBundle:Editor/phased:tasks.html.twig', array('component' => $component));
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return new Response($template);
+        if ($this->get("self.right.manager")->checkRight("right.addtasktest", $currentUser)) {
+            $newQuestionnaire = $this->get("self.questionnaire.manager")->duplicate($questionnaire);
+            $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($newQuestionnaire, $component);
+            $template = $this->renderView('InnovaSelfBundle:Editor/phased:tasks.html.twig', array('component' => $component));
+
+            return new Response($template);
+        }
+
+        return;
     }
 }

@@ -29,10 +29,18 @@ class RightUserGroupController extends Controller
      */
     public function handleRightsAction(Group $group)
     {
-        $em = $this->getDoctrine()->getManager();
-        $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserGroup")->findByTarget($group);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return array("group" => $group, "rights" => $rights);
+        if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
+            $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserGroup")->findByTarget($group);
+
+            return array("group" => $group, "rights" => $rights);
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_groups'));
+        }
     }
 
     /**
@@ -43,16 +51,24 @@ class RightUserGroupController extends Controller
      */
     public function createRightsAction(Group $group, Request $request)
     {
-        $right = new RightUserGroup();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $form = $this->handleRightsForm($right, $group, $request);
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
+        if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
+            $right = new RightUserGroup();
 
-            return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
+            $form = $this->handleRightsForm($right, $group, $request);
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
+
+                return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
+            }
+
+            return array('form' => $form->createView(), 'group' => $group, 'right' => $right);
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_groups'));
         }
-
-        return array('form' => $form->createView(), 'group' => $group, 'right' => $right);
     }
 
     /**
@@ -63,15 +79,23 @@ class RightUserGroupController extends Controller
      */
     public function editRightsAction(Group $group, RightUserGroup $rightUserGroup, Request $request)
     {
-        $form = $this->handleRightsForm($rightUserGroup, $group, $request);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
+        if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
+            $form = $this->handleRightsForm($rightUserGroup, $group, $request);
 
-            return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
+
+                return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
+            }
+
+            return array('form' => $form->createView(), 'group' => $group, 'rightUserGroup' => $rightUserGroup );
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_groups'));
         }
-
-        return array('form' => $form->createView(), 'group' => $group, 'rightUserGroup' => $rightUserGroup );
     }
 
     /**
@@ -82,13 +106,21 @@ class RightUserGroupController extends Controller
      */
     public function deleteRightAction(Group $group, RightUserGroup $rightUserGroup)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($rightUserGroup);
-        $em->flush();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
+        if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($rightUserGroup);
+            $em->flush();
 
-        return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
+            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
+
+            return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_groups'));
+        }
     }
 
     /**

@@ -40,23 +40,27 @@ class RightManager
 
         $right = $em->getRepository("InnovaSelfBundle:Right\Right")->findOneByName($rightName);
 
-        if ($right->getUsers()->contains($user)) {
-            return true;
-        }
-
-        if ($entity &&  $right->getAttribute()) {
-            $attribute = $right->getAttribute();
-            $repoName = "InnovaSelfBundle:Right\\".$right->getClass();
-
-            if ($em->getRepository($repoName)->findOneBy(array(
-                "target" => $entity,
-                $attribute => true,
-            ))) {
+        if ($right) {
+            if ($right->getUsers()->contains($user)) {
                 return true;
             }
-        }
 
-        return false;
+            if ($entity &&  $right->getAttribute()) {
+                $attribute = $right->getAttribute();
+                $repoName = "InnovaSelfBundle:Right\\".$right->getClass();
+
+                if ($em->getRepository($repoName)->findOneBy(array(
+                    "target" => $entity,
+                    $attribute => true,
+                ))) {
+                    return true;
+                }
+            }
+
+            return false;
+        } else {
+            echo "probleme avec ".$rightName;
+        }
     }
 
     public function toggleRight(Right $right, User $user)
@@ -99,6 +103,26 @@ class RightManager
 
         if ($authorized) {
             return true;
+        }
+
+        return false;
+    }
+
+    public function canEditTask(User $user, $task)
+    {
+        $em = $this->entityManager;
+        // on vérifie d'abord que l'utilisateur à des droits globaux sur l'édition de tâche ou les droits sur la tâche en question
+        if ($this->checkRight("right.edittask", $user, $task)) {
+            return true;
+        } else {
+            // au besoin on vérifie que l'utlisateur à des droits d'édition sur les possibles tests liés à la tâche
+            if ($tests = $em->getRepository("InnovaSelfBundle:Test")->findByTask($task)) {
+                foreach ($tests as $test) {
+                    if ($this->checkRight("right.edittasktest", $user, $test)) {
+                        return true;
+                    }
+                }
+            };
         }
 
         return false;

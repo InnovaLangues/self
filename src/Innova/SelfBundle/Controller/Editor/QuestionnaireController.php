@@ -29,6 +29,8 @@ class QuestionnaireController
     protected $templating;
     protected $questionnaireRevisorsManager;
     protected $formFactory;
+    protected $securityContext;
+    protected $rightManager;
 
     public function __construct(
             $questionnaireManager,
@@ -36,14 +38,18 @@ class QuestionnaireController
             $entityManager,
             $templating,
             $questionnaireRevisorsManager,
-            $formFactory
+            $formFactory,
+            $securityContext,
+            $rightManager
     ) {
-        $this->questionnaireManager = $questionnaireManager;
+        $this->questionnaireManager         = $questionnaireManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
-        $this->entityManager = $entityManager;
-        $this->templating = $templating;
+        $this->entityManager                = $entityManager;
+        $this->templating                   = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        $this->formFactory = $formFactory;
+        $this->formFactory                  = $formFactory;
+        $this->securityContext              = $securityContext;
+        $this->rightManager                 = $rightManager;
     }
 
     /**
@@ -53,20 +59,26 @@ class QuestionnaireController
      */
     public function setTextTitleAction(Request $request, Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $title = $request->request->get('title');
-        $questionnaire->setTextTitle($title);
-        $em->persist($questionnaire);
-        $em->flush();
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $em = $this->entityManager;
 
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+            $title = $request->request->get('title');
+            $questionnaire->setTextTitle($title);
+            $em->persist($questionnaire);
+            $em->flush();
 
-        return new JsonResponse(
-            array(
-               'title' => $questionnaire->getTextTitle(),
-           )
-        );
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
+            return new JsonResponse(
+                array(
+                   'title' => $questionnaire->getTextTitle(),
+               )
+            );
+        }
+
+        return;
     }
 
     /**
@@ -76,16 +88,21 @@ class QuestionnaireController
      */
     public function setTextTypeAction(Request $request, Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $textType = $request->request->get('textType');
-        $questionnaire->setDialogue($textType);
-        $em->persist($questionnaire);
-        $em->flush();
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $em = $this->entityManager;
 
-        $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('questionnaire' => $questionnaire));
+            $textType = $request->request->get('textType');
+            $questionnaire->setDialogue($textType);
+            $em->persist($questionnaire);
+            $em->flush();
+            $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('questionnaire' => $questionnaire));
 
-        return new Response($template);
+            return new Response($template);
+        }
+
+        return;
     }
 
     /**
@@ -95,19 +112,25 @@ class QuestionnaireController
      */
     public function setIdentityFieldAction(Request $request, Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
-        $form->bind($request);
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $em = $this->entityManager;
 
-        if ($form->isValid()) {
-            $em->persist($questionnaire);
-            $em->flush();
+            $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
+            $form->bind($request);
 
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+            if ($form->isValid()) {
+                $em->persist($questionnaire);
+                $em->flush();
+
+                $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+            }
+
+            return new JsonResponse();
         }
 
-        return new JsonResponse();
+        return;
     }
 
      /**
@@ -117,11 +140,17 @@ class QuestionnaireController
     */
     public function setGeneralInfoFieldAction(Request $request, Questionnaire $questionnaire)
     {
-        $field = $request->request->get('field');
-        $value = $request->request->get('value');
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $response = $this->questionnaireManager->setIdentityField($questionnaire, $field, $value);
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $field = $request->request->get('field');
+            $value = $request->request->get('value');
 
-        return $response;
+            $response = $this->questionnaireManager->setIdentityField($questionnaire, $field, $value);
+
+            return $response;
+        }
+
+        return;
     }
 }
