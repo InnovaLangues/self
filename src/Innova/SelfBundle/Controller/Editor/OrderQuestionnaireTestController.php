@@ -27,17 +27,27 @@ class OrderQuestionnaireTestController
     protected $orderQuestionnaireTestManager;
     protected $questionnaireManager;
     protected $templating;
+    protected $securityContext;
+    protected $rightManager;
+    protected $session;
 
     public function __construct(
             $entityManager,
             $orderQuestionnaireTestManager,
             $questionnaireManager,
-            $templating
+            $templating,
+            $securityContext,
+            $rightManager,
+            $session
+
     ) {
         $this->entityManager = $entityManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
         $this->questionnaireManager = $questionnaireManager;
         $this->templating = $templating;
+        $this->securityContext              = $securityContext;
+        $this->rightManager                 = $rightManager;
+        $this->session                      = $session;
     }
 
     /**
@@ -46,9 +56,13 @@ class OrderQuestionnaireTestController
      */
     public function saveOrderAction(Request $request, Test $test)
     {
-        $newOrderArray = json_decode($request->get('newOrder'));
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $this->orderQuestionnaireTestManager->saveOrder($newOrderArray, $test);
+        if ($this->rightManager->checkRight("right.reordertasktest", $currentUser, $test)) {
+            $newOrderArray = json_decode($request->get('newOrder'));
+
+            $this->orderQuestionnaireTestManager->saveOrder($newOrderArray, $test);
+        }
 
         return new JsonResponse(null);
     }
@@ -59,7 +73,12 @@ class OrderQuestionnaireTestController
      */
     public function addTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
-        $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
+
+        if ($this->rightManager->checkRight("right.addtasktest", $currentUser, $test)) {
+            $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
+        }
+
         $orders = $test->getOrderQuestionnaireTests();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig', array('orders' => $orders));
@@ -73,9 +92,13 @@ class OrderQuestionnaireTestController
      */
     public function duplicateTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
-        $newQuestionnaire = $this->questionnaireManager->duplicate($questionnaire);
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $newQuestionnaire);
+        if ($this->rightManager->checkRight("right.addtasktest", $currentUser, $test)) {
+            $newQuestionnaire = $this->questionnaireManager->duplicate($questionnaire);
+            $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $newQuestionnaire);
+        }
+
         $orders = $test->getOrderQuestionnaireTests();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig', array('orders' => $orders));
@@ -89,13 +112,17 @@ class OrderQuestionnaireTestController
      */
     public function deleteTaskAction(Test $test, Questionnaire $questionnaire)
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $taskToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array('test' => $test, 'questionnaire' => $questionnaire));
-        $em->remove($taskToRemove);
-        $em->flush();
+        if ($this->rightManager->checkRight("right.deletetasktest", $currentUser, $test)) {
+            $em = $this->entityManager;
 
-        $this->orderQuestionnaireTestManager->recalculateOrder($test);
+            $taskToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array('test' => $test, 'questionnaire' => $questionnaire));
+            $em->remove($taskToRemove);
+            $em->flush();
+
+            $this->orderQuestionnaireTestManager->recalculateOrder($test);
+        }
 
         return new JsonResponse(null);
     }

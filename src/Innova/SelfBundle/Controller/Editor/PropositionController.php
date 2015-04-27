@@ -24,12 +24,23 @@ class PropositionController
     protected $propositionManager;
     protected $templating;
     protected $questionnaireRevisorsManager;
+    protected $securityContext;
+    protected $rightManager;
 
-    public function __construct($propositionManager, $templating, $questionnaireRevisorsManager)
-    {
+    public function __construct(
+        $propositionManager,
+        $templating,
+        $questionnaireRevisorsManager,
+        $securityContext,
+        $rightManager,
+        $securityContext,
+        $rightManager
+    ) {
         $this->propositionManager = $propositionManager;
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
+        $this->securityContext              = $securityContext;
+        $this->rightManager                 = $rightManager;
     }
 
     /**
@@ -39,8 +50,12 @@ class PropositionController
      */
     public function toggleRightAnswserAction(Questionnaire $questionnaire, Proposition $proposition)
     {
-        $proposition = $this->propositionManager->toggleRightAnswer($proposition);
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
+
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $proposition = $this->propositionManager->toggleRightAnswer($proposition);
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        }
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:proposition.html.twig', array('questionnaire' => $questionnaire, 'proposition' => $proposition));
 

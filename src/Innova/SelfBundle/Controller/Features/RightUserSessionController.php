@@ -29,10 +29,18 @@ class RightUserSessionController extends Controller
      */
     public function handleRightsAction(Session $session)
     {
-        $em = $this->getDoctrine()->getManager();
-        $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserSession")->findByTarget($session);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return array("session" => $session, "rights" => $rights);
+        if ($this->get("self.right.manager")->checkRight("right.editrightssession", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
+            $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserSession")->findByTarget($session);
+
+            return array("session" => $session, "rights" => $rights);
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
+        }
     }
 
     /**
@@ -43,16 +51,24 @@ class RightUserSessionController extends Controller
      */
     public function createRightsAction(Session $session, Request $request)
     {
-        $right = new RightUserSession();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $form = $this->handleRightsForm($right, $session, $request);
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
+        if ($this->get("self.right.manager")->checkRight("right.editrightssession", $currentUser)) {
+            $right = new RightUserSession();
 
-            return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
+            $form = $this->handleRightsForm($right, $session, $request);
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
+
+                return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
+            }
+
+            return array('form' => $form->createView(), 'session' => $session, 'right' => $right);
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
         }
-
-        return array('form' => $form->createView(), 'session' => $session, 'right' => $right);
     }
 
     /**
@@ -63,15 +79,23 @@ class RightUserSessionController extends Controller
      */
     public function editRightsAction(Session $session, RightUserSession $rightUserSession, Request $request)
     {
-        $form = $this->handleRightsForm($rightUserSession, $session, $request);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
+        if ($this->get("self.right.manager")->checkRight("right.editrightssession", $currentUser)) {
+            $form = $this->handleRightsForm($rightUserSession, $session, $request);
 
-            return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
+
+                return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
+            }
+
+            return array('form' => $form->createView(), 'session' => $session, 'rightUserSession' => $rightUserSession );
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
         }
-
-        return array('form' => $form->createView(), 'session' => $session, 'rightUserSession' => $rightUserSession );
     }
 
     /**
@@ -82,13 +106,21 @@ class RightUserSessionController extends Controller
      */
     public function deleteRightAction(Session $session, RightUserSession $rightUserSession)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($rightUserSession);
-        $em->flush();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
+        if ($this->get("self.right.manager")->checkRight("right.editrightssession", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($rightUserSession);
+            $em->flush();
 
-        return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
+            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
+
+            return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
+        }
     }
 
     /**

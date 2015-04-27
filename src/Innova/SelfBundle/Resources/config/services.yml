@@ -71,12 +71,14 @@ services:
     innova_editor_questionnaire:
         class: Innova\SelfBundle\Controller\Editor\QuestionnaireController
         arguments:
-            questionnaireManager:   @self.questionnaire.manager
-            orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
-            entityManager:      @doctrine.orm.entity_manager
-            templating:         @templating
-            questionnaireRevisorsManager: @self.questionnaire_revisors.manager
-            formFactory: @form.factory
+            questionnaireManager:           @self.questionnaire.manager
+            orderQuestionnaireTestManager:  @self.order_questionnaire_test.manager
+            entityManager:                  @doctrine.orm.entity_manager
+            templating:                     @templating
+            questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
+            formFactory:                    @form.factory
+            securityContext:                @security.context
+            rightManager:                   @self.right.manager
 
     innova_editor_task:
         class: Innova\SelfBundle\Controller\Editor\TaskController
@@ -87,6 +89,10 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
             formFactory:        @form.factory
+            securityContext:    @security.context
+            rightManager:       @self.right.manager
+            session:            @session
+            router:             @router
 
     innova_editor_media:
         class: Innova\SelfBundle\Controller\Editor\MediaController
@@ -100,6 +106,9 @@ services:
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
             templatingManager:  @self.templating.manager
             questionnaireManager:           @self.questionnaire.manager
+            securityContext:    @security.context
+            rightManager:       @self.right.manager
+            session:            @session
 
     innova_editor_subquestion:
         class: Innova\SelfBundle\Controller\Editor\SubquestionController
@@ -120,6 +129,9 @@ services:
             entityManager:          @doctrine.orm.entity_manager
             templating:             @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
+            securityContext:    @security.context
+            rightManager:       @self.right.manager
+            session:            @session
 
     innova_player_trace:
         class: Innova\SelfBundle\Controller\Player\TraceController
@@ -141,6 +153,9 @@ services:
             orderQuestionnaireTest: @self.order_questionnaire_test.manager
             questionnaireManager:   @self.questionnaire.manager
             templating:             @templating
+            securityContext:    @security.context
+            rightManager:       @self.right.manager
+            session:            @session
 
     innova_locale_controller:
         class: Innova\SelfBundle\Controller\Features\LocaleController
@@ -164,3 +179,5 @@ services:
             propositionManager:             @self.proposition.manager
             templating:                     @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
+            securityContext:    @security.context
+            rightManager:       @self.right.manager

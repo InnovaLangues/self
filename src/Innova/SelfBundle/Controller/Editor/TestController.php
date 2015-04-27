@@ -84,13 +84,18 @@ class TestController extends Controller
      */
     public function deleteTestAction(Test $test)
     {
-        $testName = $test->getName();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($test);
-        $em->flush();
+        if ($this->get("self.right.manager")->checkRight("right.deletetest", $currentUser, $test)) {
+            $testName = $test->getName();
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($test);
+            $em->flush();
 
-        $this->get('session')->getFlashBag()->set('success', 'Le test '.$testName.' a bien été supprimé.');
+            $this->get('session')->getFlashBag()->set('success', 'Le test '.$testName.' a bien été supprimé.');
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+        }
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
@@ -103,8 +108,14 @@ class TestController extends Controller
      */
     public function duplicateTestAction(Test $test)
     {
-        $this->get("self.test.manager")->duplicate($test);
-        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué.');
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.duplicatetest", $currentUser, $test)) {
+            $this->get("self.test.manager")->duplicate($test);
+            $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué.');
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+        }
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
     }
@@ -118,15 +129,23 @@ class TestController extends Controller
      */
     public function newAction(Request $request)
     {
-        $test = new Test();
-        $form = $this->handleForm($test, $request);
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()." a bien été créé.");
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.createtest", $currentUser)) {
+            $test = new Test();
+            $form = $this->handleForm($test, $request);
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()." a bien été créé.");
+
+                return $this->redirect($this->generateUrl('editor_tests_show'));
+            }
+
+            return array('form' => $form->createView());
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
 
             return $this->redirect($this->generateUrl('editor_tests_show'));
         }
-
-        return array('form' => $form->createView());
     }
 
     /**
@@ -138,15 +157,23 @@ class TestController extends Controller
      */
     public function editAction(Test $test, Request $request)
     {
-        $form = $this->handleForm($test, $request);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()."a bien été modifié.");
+        if ($this->get("self.right.manager")->checkRight("right.edittest", $currentUser, $test)) {
+            $form = $this->handleForm($test, $request);
+
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()."a bien été modifié.");
+
+                return $this->redirect($this->generateUrl('editor_tests_show'));
+            }
+
+            return array('form' => $form->createView(), 'test' => $test);
+        } else {
+            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
 
             return $this->redirect($this->generateUrl('editor_tests_show'));
         }
-
-        return array('form' => $form->createView(), 'test' => $test);
     }
 
     /**

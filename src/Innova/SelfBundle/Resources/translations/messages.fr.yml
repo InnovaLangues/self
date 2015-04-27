@@ -518,7 +518,7 @@ rightgroup:
 
 
 canDelete: Peut supprimer
-canEdit: Peut Editer
+canEdit: Peut éditer
 canDuplicate: Peut dupliquer
 canManageSession: Peut gérer les session
 canManageTask: Peut gérer les tâches
@@ -526,7 +526,7 @@ canAddTask: Peut ajouter des tâches
 canReorderTasks: Peut réordonner les tâches
 canDeleteTask: Peut supprimer les tâches
 canEditTask: Peut éditer les tâches
-canDeleteTrace: Peut Supprimer les traces
+canDeleteTrace: Peut supprimer les traces
 canEditPassword: Peut éditer le mot de passe
 canImportCsv: Peut importer via CSV
 canExportIndividual: Peut exporter individuellement
