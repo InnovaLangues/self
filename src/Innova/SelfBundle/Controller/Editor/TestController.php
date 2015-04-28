@@ -16,7 +16,7 @@ use Innova\SelfBundle\Entity\Language;
 /**
  * Test controller.
  *
- * @Route("admin/editor")
+ * @Route("editor")
  * @ParamConverter("test",      isOptional="true", class="InnovaSelfBundle:Test",       options={"id" = "testId"})
  * @ParamConverter("language",  isOptional="true", class="InnovaSelfBundle:Language",   options={"id" = "languageId"})
  */
@@ -71,9 +71,15 @@ class TestController extends Controller
      */
     public function listArchivedTestsAction()
     {
-        $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(true);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return array('tests' => $tests);
+        if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
+            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(true);
+
+            return array('tests' => $tests);
+        }
+
+        return;
     }
 
     /**
@@ -93,11 +99,11 @@ class TestController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->set('success', 'Le test '.$testName.' a bien été supprimé.');
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
 
-        return $this->redirect($this->generateUrl('editor_tests_show'));
+        return;
     }
 
     /**
@@ -113,11 +119,11 @@ class TestController extends Controller
         if ($this->get("self.right.manager")->checkRight("right.duplicatetest", $currentUser, $test)) {
             $this->get("self.test.manager")->duplicate($test);
             $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué.');
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
 
-        return $this->redirect($this->generateUrl('editor_tests_show'));
+        return;
     }
 
     /**
@@ -141,11 +147,9 @@ class TestController extends Controller
             }
 
             return array('form' => $form->createView());
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
+
+        return;
     }
 
     /**
@@ -169,11 +173,9 @@ class TestController extends Controller
             }
 
             return array('form' => $form->createView(), 'test' => $test);
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
+
+        return;
     }
 
     /**

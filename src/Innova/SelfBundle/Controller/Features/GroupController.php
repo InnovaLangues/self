@@ -60,17 +60,24 @@ class GroupController extends Controller
      */
     public function newAction(Request $request)
     {
-        $group = new Group();
-        $group->setName('Nouveau groupe');
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $form = $this->handleForm($group, $request);
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Le groupe a bien été créé");
+        if ($this->get("self.right.manager")->checkRight("right.creategroup", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
+            $group = new Group();
+            $group->setName('Nouveau groupe');
 
-            return $this->redirect($this->generateUrl('editor_groups', array()));
+            $form = $this->handleForm($group, $request);
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "Le groupe a bien été créé");
+
+                return $this->redirect($this->generateUrl('editor_groups', array()));
+            }
+
+            return array('form' => $form->createView(), 'group' => $group);
         }
 
-        return array('form' => $form->createView(), 'group' => $group);
+        return;
     }
 
     /**
@@ -81,13 +88,19 @@ class GroupController extends Controller
      */
     public function deleteAction(Group $group)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($group);
-        $em->flush();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $this->get("session")->getFlashBag()->set('info', "Le groupe a bien été supprimé");
+        if ($this->get("self.right.manager")->checkRight("right.deletegroup", $currentUser, $group)) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($group);
+            $em->flush();
 
-        return $this->redirect($this->generateUrl('editor_groups'));
+            $this->get("session")->getFlashBag()->set('info', "Le groupe a bien été supprimé");
+
+            return $this->redirect($this->generateUrl('editor_groups'));
+        }
+
+        return;
     }
 
     /**
@@ -98,15 +111,21 @@ class GroupController extends Controller
      */
     public function editAction(Group $group, Request $request)
     {
-        $form = $this->handleForm($group, $request);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Le groupe a bien été modifié");
+        if ($this->get("self.right.manager")->checkRight("right.editgroup", $currentUser, $group)) {
+            $form = $this->handleForm($group, $request);
 
-            return $this->redirect($this->generateUrl('editor_group_edit', array('groupId' => $group->getId())));
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "Le groupe a bien été modifié");
+
+                return $this->redirect($this->generateUrl('editor_group_edit', array('groupId' => $group->getId())));
+            }
+
+            return array('form' => $form->createView(), 'group' => $group);
         }
 
-        return array('form' => $form->createView(), 'group' => $group);
+        return;
     }
 
     /**
@@ -117,25 +136,31 @@ class GroupController extends Controller
      */
     public function importUserAction(Group $group, Request $request)
     {
-        $defaultData = array();
-        $form = $this->createFormBuilder($defaultData)
-                                        ->add('file', 'file')
-                                        ->add('submit', 'submit', array('label' => 'generic.save', 'attr' => array('class' => 'btn btn-default btn-primary')))
-                                        ->getForm();
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
-            $data = $form->getData();
-            $fileName = $data["file"]->getClientOriginalName();
-            $path = $this->get('kernel')->getRootDir()."/data/importCsv/";
-            $completePath = $path."/".$fileName;
-            $data["file"]->move($path, $fileName);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-            $this->get("self.user.manager")->importCsv($group, $completePath);
+        if ($this->get("self.right.manager")->checkRight("right.csvimportgroup", $currentUser, $group)) {
+            $defaultData = array();
+            $form = $this->createFormBuilder($defaultData)
+                                            ->add('file', 'file')
+                                            ->add('submit', 'submit', array('label' => 'generic.save', 'attr' => array('class' => 'btn btn-default btn-primary')))
+                                            ->getForm();
+            if ($request->isMethod('POST')) {
+                $form->bind($request);
+                $data = $form->getData();
+                $fileName = $data["file"]->getClientOriginalName();
+                $path = $this->get('kernel')->getRootDir()."/data/importCsv/";
+                $completePath = $path."/".$fileName;
+                $data["file"]->move($path, $fileName);
 
-            return $this->redirect($this->generateUrl('editor_group_edit', array('groupId' => $group->getId())));
+                $this->get("self.user.manager")->importCsv($group, $completePath);
+
+                return $this->redirect($this->generateUrl('editor_group_edit', array('groupId' => $group->getId())));
+            }
+
+            return array('group' => $group, 'form' => $form->createView());
         }
 
-        return array('group' => $group, 'form' => $form->createView());
+        return;
     }
 
     /**

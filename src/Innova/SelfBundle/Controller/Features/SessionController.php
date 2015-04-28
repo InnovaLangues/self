@@ -69,11 +69,9 @@ class SessionController extends Controller
             }
 
             return array('form' => $form->createView(), 'test' => $test);
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
         }
+
+        return;
     }
 
     /**
@@ -93,11 +91,11 @@ class SessionController extends Controller
             $em->flush();
 
             $this->get("session")->getFlashBag()->set('info', "La session a bien été supprimée");
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
+
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $testId)));
         }
 
-        return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $testId)));
+        return;
     }
 
     /**
@@ -120,11 +118,9 @@ class SessionController extends Controller
             }
 
             return array('form' => $form->createView(), 'test' => $test);
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
         }
+
+        return;
     }
 
     /**
@@ -135,10 +131,16 @@ class SessionController extends Controller
      */
     public function resultsAction(Session $session)
     {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository("InnovaSelfBundle:User")->findBySession($session);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return array('session' => $session, 'users' => $users);
+        if ($this->get("self.right.manager")->checkRight("right.individualresultssession", $currentUser, $session)) {
+            $em = $this->getDoctrine()->getManager();
+            $users = $em->getRepository("InnovaSelfBundle:User")->findBySession($session);
+
+            return array('session' => $session, 'users' => $users);
+        }
+
+        return;
     }
 
     /**
@@ -149,9 +151,15 @@ class SessionController extends Controller
      */
     public function userResultsAction(User $user, Session $session)
     {
-        $score = $this->get("self.score.manager")->calculateScoreByTest($session->getTest(), $session, $user);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        return array("score" => $score, "session" => $session, "user" => $user);
+        if ($this->get("self.right.manager")->checkRight("right.individualresultssession", $currentUser, $session)) {
+            $score = $this->get("self.score.manager")->calculateScoreByTest($session->getTest(), $session, $user);
+
+            return array("score" => $score, "session" => $session, "user" => $user);
+        }
+
+        return;
     }
 
     /**
@@ -177,11 +185,9 @@ class SessionController extends Controller
             $response->setContent(file_get_contents($file));
 
             return $response;
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
         }
+
+        return;
     }
 
     /**

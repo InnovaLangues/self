@@ -36,11 +36,9 @@ class RightUserSessionController extends Controller
             $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserSession")->findByTarget($session);
 
             return array("session" => $session, "rights" => $rights);
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
         }
+
+        return;
     }
 
     /**
@@ -64,11 +62,9 @@ class RightUserSessionController extends Controller
             }
 
             return array('form' => $form->createView(), 'session' => $session, 'right' => $right);
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
         }
+
+        return;
     }
 
     /**
@@ -90,12 +86,10 @@ class RightUserSessionController extends Controller
                 return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
             }
 
-            return array('form' => $form->createView(), 'session' => $session, 'rightUserSession' => $rightUserSession );
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
+            return array('form' => $form->createView(), 'session' => $session, 'rightUserSession' => $rightUserSession);
         }
+
+        return;
     }
 
     /**
@@ -116,11 +110,9 @@ class RightUserSessionController extends Controller
             $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
 
             return $this->redirect($this->generateUrl('editor_session_rights', array('sessionId' => $session->getId())));
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $session->getTest()->getId())));
         }
+
+        return;
     }
 
     /**

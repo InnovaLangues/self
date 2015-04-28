@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Right\Right;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Test controller.
@@ -30,8 +29,6 @@ class AdminUserController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $em = $this->getDoctrine()->getManager();
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
@@ -46,7 +43,7 @@ class AdminUserController extends Controller
     }
 
     /**
-     * Finds and displays a Admin User entity.
+     * Finds and displays a user entity.
      *
      * @Route("/{id}", name="admin_user_show")
      * @Method("GET")
@@ -54,25 +51,30 @@ class AdminUserController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+        if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
 
-        $testsWithTraces = array();
+            $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
+            $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+            $testsWithTraces = array();
 
-        foreach ($tests as $test) {
-            $count = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
-            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getQuestionnairesDoneYetByUserByTest($test->getId(), $user->getId());
-            if ($count > 0) {
-                $testsWithTraces[] = array($test, $count, $questionnaires);
+            foreach ($tests as $test) {
+                $count = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
+                $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getQuestionnairesDoneYetByUserByTest($test->getId(), $user->getId());
+                if ($count > 0) {
+                    $testsWithTraces[] = array($test, $count, $questionnaires);
+                }
             }
+
+            return array(
+                'tests'  => $testsWithTraces,
+                'user'   => $user,
+            );
         }
 
-        return array(
-            'tests'  => $testsWithTraces,
-            'user'   => $user,
-        );
+        return;
     }
 
     /**
@@ -83,16 +85,22 @@ class AdminUserController extends Controller
      */
     public function deleteTestTraceAction($userId, $testId)
     {
-        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        if ($this->get("self.right.manager")->checkRight("right.deletetraceuser", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
 
-        if ($this->get("self.trace.manager")->deleteTestTrace($user, $test)) {
-            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour le test '.$test->getName().' ont été supprimées');
+            $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
+            $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+
+            if ($this->get("self.trace.manager")->deleteTestTrace($user, $test)) {
+                $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour le test '.$test->getName().' ont été supprimées');
+            }
+
+            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
         }
 
-        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
+        return;
     }
 
     /**
@@ -103,17 +111,23 @@ class AdminUserController extends Controller
      */
     public function deleteTaskTraceAction($userId, $testId, $questionnaireId)
     {
-        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        if ($this->get("self.right.manager")->checkRight("right.deletetraceuser", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
 
-        if ($this->get("self.trace.manager")->deleteTaskTrace($user, $test, $questionnaire)) {
-            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la tâche '.$questionnaire->getTheme().' ont été supprimées');
+            $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
+            $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+            $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+
+            if ($this->get("self.trace.manager")->deleteTaskTrace($user, $test, $questionnaire)) {
+                $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la tâche '.$questionnaire->getTheme().' ont été supprimées');
+            }
+
+            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
         }
 
-        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
+        return;
     }
 
     /**
@@ -124,14 +138,20 @@ class AdminUserController extends Controller
      */
     public function deleteUserAction($userId)
     {
-        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-        if ($this->get("self.user.manager")->deleteUser($user)) {
-            $this->get('session')->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
+        if ($this->get("self.right.manager")->checkRight("right.deleteuser", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
+            if ($this->get("self.user.manager")->deleteUser($user)) {
+                $this->get('session')->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
+            }
+
+            return $this->redirect($this->generateUrl('admin_user'));
         }
 
-        return $this->redirect($this->generateUrl('admin_user'));
+        return;
     }
 
      /**
@@ -142,16 +162,22 @@ class AdminUserController extends Controller
      */
     public function newAction(Request $request)
     {
-        $user = new User();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $form = $this->get("self.user.manager")->handleForm($user, $request);
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été créée");
+        if ($this->get("self.right.manager")->checkRight("right.createuser", $currentUser)) {
+            $user = new User();
 
-            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+            $form = $this->get("self.user.manager")->handleForm($user, $request);
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été créée");
+
+                return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+            }
+
+            return array('form' => $form->createView());
         }
 
-        return array('form' => $form->createView());
+        return;
     }
 
     /**
@@ -162,15 +188,21 @@ class AdminUserController extends Controller
      */
     public function editAction(User $user, Request $request)
     {
-        $form = $this->get("self.user.manager")->handleForm($user, $request);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
+        if ($this->get("self.right.manager")->checkRight("right.edituser", $currentUser)) {
+            $form = $this->get("self.user.manager")->handleForm($user, $request);
 
-            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+            if (!$form) {
+                $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
+
+                return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+            }
+
+            return array('form' => $form->createView(), 'user' => $user);
         }
 
-        return array('form' => $form->createView(), 'user' => $user);
+        return;
     }
 
     /**
@@ -181,15 +213,21 @@ class AdminUserController extends Controller
      */
     public function editPasswordAction(User $user, Request $request)
     {
-        if ($request->isMethod('POST')) {
-            $password = $request->request->get('passwd');
-            $user->setPlainPassword($password);
-            $this->get("session")->getFlashBag()->set('info', "Le mot de passe a bien été modifié");
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+        if ($this->get("self.right.manager")->checkRight("right.editpassworduser", $currentUser)) {
+            if ($request->isMethod('POST')) {
+                $password = $request->request->get('passwd');
+                $user->setPlainPassword($password);
+                $this->get("session")->getFlashBag()->set('info', "Le mot de passe a bien été modifié");
+
+                return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+            }
+
+            return array('user' => $user);
         }
 
-        return array('user' => $user);
+        return;
     }
 
     /**
@@ -200,11 +238,17 @@ class AdminUserController extends Controller
      */
     public function displayRightsAction(User $user)
     {
-        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $groups = $em->getRepository('InnovaSelfBundle:Right\RightGroup')->findAll();
+        if ($this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
+            $em = $this->getDoctrine()->getManager();
 
-        return array('groups' => $groups, 'user' => $user);
+            $groups = $em->getRepository('InnovaSelfBundle:Right\RightGroup')->findAll();
+
+            return array('groups' => $groups, 'user' => $user);
+        }
+
+        return;
     }
 
     /**
@@ -216,13 +260,14 @@ class AdminUserController extends Controller
     public function toggleRight(User $user, Right $right)
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
-        if (!$this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
-            throw new AccessDeniedException();
+
+        if ($this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
+            $this->get("self.right.manager")->toggleRight($right, $user);
+            $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
+
+            return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
         }
 
-        $this->get("self.right.manager")->toggleRight($right, $user);
-        $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
-
-        return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
+        return;
     }
 }

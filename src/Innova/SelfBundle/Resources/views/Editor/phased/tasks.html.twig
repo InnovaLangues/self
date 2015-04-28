@@ -1,12 +1,25 @@
+{% set canDelete = false %}
+{% set canEdit = false %}
+{% if checkRight("right.deletetasktest", component.test) %}
+    {% set canDelete = true %}
+{% endif %}
+{% if checkRight("right.edittasktest", component.test) %}
+    {% set canEdit = true %}
+{% endif %}
+
 {% for orderQuestionnaireComponent in component.orderQuestionnaireComponents %}
     <li id="order{{ orderQuestionnaireComponent.id }}" class="list-group-item questionnaire" data-order-id="{{ orderQuestionnaireComponent.id }}">{{ orderQuestionnaireComponent.questionnaire.theme |truncate(15) }}
     	<span class="pull-right">
-    		<a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': orderQuestionnaireComponent.questionnaire.id, 'testId': orderQuestionnaireComponent.component.test.id }) }}" toggle="tooltip" data-original-title="{{ "generic.edit" | trans }}">
-    			<span class="glyphicon glyphicon-pencil"></span>
-    		</a>
-    		<span toggle="tooltip" data-original-title="Supprimer la tâche" class="btn btn-default btn-xs remove-questionnaire" data-order-questionnaire-id="{{ orderQuestionnaireComponent.id }}">
-    			<span class="glyphicon glyphicon-trash"></span>
-    		</span>
+            {% if canEdit %}
+        		<a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': orderQuestionnaireComponent.questionnaire.id, 'testId': component.test.id }) }}" toggle="tooltip" data-original-title="{{ "generic.edit" | trans }}">
+        			<span class="glyphicon glyphicon-pencil"></span>
+        		</a>
+            {% endif %}
+            {% if canDelete %}
+        		<span toggle="tooltip" data-original-title="Supprimer la tâche" class="btn btn-default btn-xs remove-questionnaire" data-order-questionnaire-id="{{ orderQuestionnaireComponent.id }}">
+        			<span class="glyphicon glyphicon-trash"></span>
+        		</span>
+            {% endif %}
     	</span>
     </li>
 {% endfor %}

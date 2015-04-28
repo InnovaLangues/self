@@ -27,10 +27,16 @@ class RightGroupController extends Controller
      */
     public function toggleAllForGroup(User $user, RightGroup $rightGroup)
     {
-        $this->get("self.rightgroup.manager")->toggleAll($user, $rightGroup);
+        $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
+        if ($this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
+            $this->get("self.rightgroup.manager")->toggleAll($user, $rightGroup);
 
-        return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
+            $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
+
+            return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
+        }
+
+        return;
     }
 }

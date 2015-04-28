@@ -36,11 +36,9 @@ class RightUserTestController extends Controller
             $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserTest")->findByTarget($test);
 
             return array("test" => $test, "rights" => $rights);
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
+
+        return;
     }
 
     /**
