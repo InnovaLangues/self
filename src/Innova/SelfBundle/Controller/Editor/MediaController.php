@@ -77,9 +77,11 @@ class MediaController
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->mediaManager->updateMediaLimit($questionnaire, $media, $limit);
             $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
+            return new Response(null, 200);
         }
 
-        return new Response(null, 200);
+        return;
     }
 
     /**

@@ -17,7 +17,7 @@ use Innova\SelfBundle\Entity\Language;
 /**
  * Class TaskController
  * @Route(
- *      "admin/editor",
+ *      "editor",
  *      name    = "",
  *      service = "innova_editor_task"
  * )
@@ -72,13 +72,17 @@ class TaskController
      */
     public function listQuestionnairesAction()
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+        if ($this->rightManager->checkRight("right.listtask", $currentUser, $test)) {
+            $em = $this->entityManager;
 
-        return array(
-            'questionnaires' => $questionnaires,
-        );
+            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+
+            return array('questionnaires' => $questionnaires);
+        }
+
+        return;
     }
 
     /**
@@ -90,12 +94,16 @@ class TaskController
      */
     public function listQuestionnairesByLanguageAction(Language $language)
     {
-        $em = $this->entityManager;
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($language);
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        return array(
-            'questionnaires' => $questionnaires,
-        );
+        if ($this->rightManager->checkRight("right.listtask", $currentUser, $test)) {
+            $em = $this->entityManager;
+            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($language);
+
+            return array('questionnaires' => $questionnaires);
+        }
+
+        return;
     }
 
     /**
@@ -135,13 +143,17 @@ class TaskController
      */
     public function listOrphansAction()
     {
-        $em = $this->entityManager;
+        $currentUser = $user = $this->securityContext->getToken()->getUser();
 
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findOrphans();
+        if ($this->rightManager->checkRight("right.managetaskstest", $currentUser, $test)) {
+            $em = $this->entityManager;
 
-        return array(
-            'questionnaires' => $questionnaires,
-        );
+            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findOrphans();
+
+            return array('questionnaires' => $questionnaires);
+        }
+
+        return;
     }
 
     /**

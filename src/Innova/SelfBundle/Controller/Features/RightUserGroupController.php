@@ -36,11 +36,9 @@ class RightUserGroupController extends Controller
             $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserGroup")->findByTarget($group);
 
             return array("group" => $group, "rights" => $rights);
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_groups'));
         }
+
+        return;
     }
 
     /**
@@ -64,11 +62,9 @@ class RightUserGroupController extends Controller
             }
 
             return array('form' => $form->createView(), 'group' => $group, 'right' => $right);
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_groups'));
         }
+
+        return;
     }
 
     /**
@@ -91,11 +87,9 @@ class RightUserGroupController extends Controller
             }
 
             return array('form' => $form->createView(), 'group' => $group, 'rightUserGroup' => $rightUserGroup );
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_groups'));
         }
+
+        return;
     }
 
     /**
@@ -116,11 +110,9 @@ class RightUserGroupController extends Controller
             $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
 
             return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_groups'));
         }
+
+        return;
     }
 
     /**
