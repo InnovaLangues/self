@@ -72,7 +72,7 @@ class TaskController
      */
     public function listQuestionnairesAction()
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.listtask", $currentUser, $test)) {
             $em = $this->entityManager;
@@ -94,7 +94,7 @@ class TaskController
      */
     public function listQuestionnairesByLanguageAction(Language $language)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.listtask", $currentUser, $test)) {
             $em = $this->entityManager;
@@ -115,7 +115,7 @@ class TaskController
      */
     public function listTestQuestionnairesAction(Test $test)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.managetaskstest", $currentUser, $test)) {
             $em = $this->entityManager;
@@ -143,7 +143,7 @@ class TaskController
      */
     public function listOrphansAction()
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.managetaskstest", $currentUser, $test)) {
             $em = $this->entityManager;
@@ -181,7 +181,7 @@ class TaskController
      */
     public function showAction(Questionnaire $questionnaire, $testId)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $em = $this->entityManager;
@@ -210,7 +210,7 @@ class TaskController
      */
     public function createQuestionnaireAction(Test $test = null)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.createtask", $currentUser)) {
             $questionnaire = $this->questionnaireManager->createQuestionnaire();
@@ -240,7 +240,7 @@ class TaskController
      */
     public function deleteTaskListAction(Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.deletetask", $currentUser)) {
             $em = $this->entityManager;

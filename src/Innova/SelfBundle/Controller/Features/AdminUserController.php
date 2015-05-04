@@ -257,7 +257,7 @@ class AdminUserController extends Controller
      * @Method({"GET"})
      * @Template("InnovaSelfBundle:Features:AdminUser/rights.html.twig")
      */
-    public function toggleRight(User $user, Right $right)
+    public function toggleRightAction(User $user, Right $right)
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
 

@@ -63,7 +63,7 @@ class SubquestionController
      */
     public function createSubquestionAction(Questionnaire $questionnaire, Typology $typology)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $em = $this->entityManager;
@@ -94,7 +94,7 @@ class SubquestionController
      */
     public function deleteSubquestionAction(Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $em = $this->entityManager;
@@ -119,7 +119,7 @@ class SubquestionController
      */
     public function displayIdentityFormAction(Subquestion $subquestion)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $subquestionId = $subquestion->getId();
@@ -145,7 +145,7 @@ class SubquestionController
      */
     public function setIdentityFieldAction(Request $request, Subquestion $subquestion)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $em = $this->entityManager;

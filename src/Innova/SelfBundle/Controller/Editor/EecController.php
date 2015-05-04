@@ -62,7 +62,7 @@ class EecController
      */
     public function createListeAction(Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->eecManager->createListe($questionnaire);
@@ -82,7 +82,7 @@ class EecController
      */
     public function createLacunesAction(Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->eecManager->createLacune($questionnaire);
@@ -102,7 +102,7 @@ class EecController
      */
     public function createClueAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->eecManager->createClue($questionnaire, $subquestion, $request->get('clue'));
@@ -122,7 +122,7 @@ class EecController
      */
     public function setClueTypeAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $clueId = $request->get('clueId');
@@ -144,7 +144,7 @@ class EecController
      */
     public function createSyllableAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->eecManager->createSyllabe($request->get('syllable'), $questionnaire, $subquestion);
@@ -163,7 +163,7 @@ class EecController
      */
     public function setDisplayAction(Subquestion $subquestion, $display)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->eecManager->setDisplayAction($subquestion, $display);
@@ -181,7 +181,7 @@ class EecController
      */
     public function addDistractorAction(Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->eecManager->addDistractor($questionnaire);
@@ -201,7 +201,7 @@ class EecController
      */
     public function addDistractorMultAction(Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->eecManager->addDistractorMult($questionnaire, $subquestion);
@@ -221,7 +221,7 @@ class EecController
      */
     public function editDistractorAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->eecManager->editDistractor($media, $request->get('text'));
@@ -240,7 +240,7 @@ class EecController
      */
     public function getAnswersAction(Subquestion $subquestion)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $answers = $this->eecManager->getAnswers($subquestion);
@@ -259,7 +259,7 @@ class EecController
      */
     public function toggleRightAnswerAction(Proposition $proposition)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $proposition = $this->propositionManager->toggleRightAnswer($proposition);
