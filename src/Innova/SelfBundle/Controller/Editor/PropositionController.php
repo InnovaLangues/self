@@ -50,7 +50,7 @@ class PropositionController
      */
     public function toggleRightAnswserAction(Questionnaire $questionnaire, Proposition $proposition)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $proposition = $this->propositionManager->toggleRightAnswer($proposition);

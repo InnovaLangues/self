@@ -72,7 +72,7 @@ class MediaController
      */
     public function setListeningLimitAction(Questionnaire $questionnaire, Media $media, $limit)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->mediaManager->updateMediaLimit($questionnaire, $media, $limit);
@@ -90,7 +90,7 @@ class MediaController
      */
     public function getMediaInfoAction(Media $media)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $media->getQuestionnaire())) {
             return new JsonResponse(
@@ -113,7 +113,7 @@ class MediaController
      */
     public function updateMediaAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $case = $request->get('toBeReloaded');
@@ -139,7 +139,7 @@ class MediaController
      */
     public function createMediaAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $em = $this->entityManager;
@@ -210,7 +210,7 @@ class MediaController
      */
     public function unlinkMediaAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $em = $this->entityManager;

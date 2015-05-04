@@ -56,7 +56,7 @@ class OrderQuestionnaireTestController
      */
     public function saveOrderAction(Request $request, Test $test)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.reordertasktest", $currentUser, $test)) {
             $newOrderArray = json_decode($request->get('newOrder'));
@@ -73,7 +73,7 @@ class OrderQuestionnaireTestController
      */
     public function addTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.addtasktest", $currentUser, $test)) {
             $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
@@ -92,7 +92,7 @@ class OrderQuestionnaireTestController
      */
     public function duplicateTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.addtasktest", $currentUser, $test)) {
             $newQuestionnaire = $this->questionnaireManager->duplicate($questionnaire);
@@ -112,7 +112,7 @@ class OrderQuestionnaireTestController
      */
     public function deleteTaskAction(Test $test, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.deletetasktest", $currentUser, $test)) {
             $em = $this->entityManager;

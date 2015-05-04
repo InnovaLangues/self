@@ -25,7 +25,7 @@ class RightGroupController extends Controller
      * @Method("GET")
      * @Template("InnovaSelfBundle:Features:Group/rights.html.twig")
      */
-    public function toggleAllForGroup(User $user, RightGroup $rightGroup)
+    public function toggleAllForGroupAction(User $user, RightGroup $rightGroup)
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
 

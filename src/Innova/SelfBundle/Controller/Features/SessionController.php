@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Session;
-use Innova\SelfBundle\Entity\Right\RightUserSession;
 use Innova\SelfBundle\Form\Type\SessionType;
 use Innova\SelfBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
- * @ParamConverter("rightUserSession", isOptional="true", class="InnovaSelfBundle:Right\RightUserSession", options={"id" = "rightId"})
  */
 class SessionController extends Controller
 {

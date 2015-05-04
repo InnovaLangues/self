@@ -59,7 +59,7 @@ class QuestionnaireController
      */
     public function setTextTitleAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $em = $this->entityManager;
@@ -88,7 +88,7 @@ class QuestionnaireController
      */
     public function setTextTypeAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $em = $this->entityManager;
@@ -112,7 +112,7 @@ class QuestionnaireController
      */
     public function setIdentityFieldAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $em = $this->entityManager;
@@ -140,7 +140,7 @@ class QuestionnaireController
     */
     public function setGeneralInfoFieldAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $user = $this->securityContext->getToken()->getUser();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $field = $request->request->get('field');
