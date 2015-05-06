@@ -74,7 +74,7 @@ class TaskController
     {
         $currentUser = $this->securityContext->getToken()->getUser();
 
-        if ($this->rightManager->checkRight("right.listtask", $currentUser, $test)) {
+        if ($this->rightManager->checkRight("right.listtask", $currentUser)) {
             $em = $this->entityManager;
 
             $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
@@ -96,7 +96,7 @@ class TaskController
     {
         $currentUser = $this->securityContext->getToken()->getUser();
 
-        if ($this->rightManager->checkRight("right.listtask", $currentUser, $test)) {
+        if ($this->rightManager->checkRight("right.listtask", $currentUser)) {
             $em = $this->entityManager;
             $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($language);
 
