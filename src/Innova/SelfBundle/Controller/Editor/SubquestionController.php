@@ -33,8 +33,8 @@ class SubquestionController
     protected $templating;
     protected $questionnaireRevisorsManager;
     protected $formFactory;
-    protected $securityContext;
     protected $rightManager;
+    protected $securityContext;
 
     public function __construct(
             $mediaManager,
@@ -43,7 +43,9 @@ class SubquestionController
             $entityManager,
             $templating,
             $questionnaireRevisorsManager,
-            $formFactory
+            $formFactory,
+            $rightManager,
+            $securityContext
     ) {
         $this->mediaManager                 = $mediaManager;
         $this->propositionManager           = $propositionManager;
@@ -52,8 +54,8 @@ class SubquestionController
         $this->templating                   = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
         $this->formFactory                  = $formFactory;
-        $this->securityContext              = $securityContext;
         $this->rightManager                 = $rightManager;
+        $this->securityContext              = $securityContext;
     }
 
     /**

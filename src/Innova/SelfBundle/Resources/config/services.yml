@@ -115,11 +115,13 @@ services:
         arguments:
             mediaManager:       @self.media.manager
             propositionManager: @self.proposition.manager
-            subquestionManager:     @self.subquestion.manager
+            subquestionManager: @self.subquestion.manager
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
-            formFactory: @form.factory
+            formFactory:        @form.factory
+            rightManager:       @self.right.manager
+            securityContext:    @security.context
 
     innova_editor_eec:
         class: Innova\SelfBundle\Controller\Editor\EecController
