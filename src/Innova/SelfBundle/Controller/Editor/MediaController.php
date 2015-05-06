@@ -90,21 +90,15 @@ class MediaController
      */
     public function getMediaInfoAction(Media $media)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
-
-        if ($this->rightManager->canEditTask($currentUser, $media->getQuestionnaire())) {
-            return new JsonResponse(
-                array(
-                    'url' => $media->getUrl(),
-                    'name' => $media->getName(),
-                    'description' => $media->getDescription(),
-                    'mediaType' => $media->getMediaType()->getName(),
-                    'id' => $media->getId(),
-                )
-            );
-        }
-
-        return;
+        return new JsonResponse(
+            array(
+                'url' => $media->getUrl(),
+                'name' => $media->getName(),
+                'description' => $media->getDescription(),
+                'mediaType' => $media->getMediaType()->getName(),
+                'id' => $media->getId(),
+            )
+        );
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Innova\SelfBundle\Manager\Identity;
 
+use Innova\SelfBundle\Entity\Skill;
+
 class SkillManager
 {
     protected $entityManager;
@@ -18,14 +20,18 @@ class SkillManager
         foreach ($array as $el) {
             $skillName = $el[0];
             $typoNames = $el[1];
-            if ($skill = $this->findByName($skillName)) {
-                foreach ($typoNames as $typoName) {
-                    $skillTypos = $skill->getTypologys();
-                    if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typoName)) {
-                        if (!$skillTypos->contains($typo)) {
-                            $skill->addTypology($typo);
-                            $em->persist($skill);
-                        }
+            if (!$skill = $this->findByName($skillName)) {
+                $skill = new Skill();
+                $skill->setName($skillName);
+                $em->persist($skill);
+            }
+
+            foreach ($typoNames as $typoName) {
+                $skillTypos = $skill->getTypologys();
+                if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typoName)) {
+                    if (!$skillTypos->contains($typo)) {
+                        $skill->addTypology($typo);
+                        $em->persist($skill);
                     }
                 }
             }
