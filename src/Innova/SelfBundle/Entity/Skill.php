@@ -43,7 +43,8 @@ class Skill
      */
     public function __construct()
     {
-        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questionnaires   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->typologys        = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
