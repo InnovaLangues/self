@@ -24,15 +24,15 @@ class SkillManager
                 $skill = new Skill();
                 $skill->setName($skillName);
                 $em->persist($skill);
+                $em->flush();
             }
 
             foreach ($typoNames as $typoName) {
                 $skillTypos = $skill->getTypologys();
-                if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typoName)) {
-                    if (!$skillTypos || !$skillTypos->contains($typo)) {
-                        $skill->addTypology($typo);
-                        $em->persist($skill);
-                    }
+                $typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typoName);
+                if (!$skillTypos || !$skillTypos->contains($typo)) {
+                    $skill->addTypology($typo);
+                    $em->persist($skill);
                 }
             }
         }
