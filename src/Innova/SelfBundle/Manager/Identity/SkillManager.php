@@ -29,7 +29,7 @@ class SkillManager
             foreach ($typoNames as $typoName) {
                 $skillTypos = $skill->getTypologys();
                 if ($typo = $em->getRepository('InnovaSelfBundle:Typology')->findOneByName($typoName)) {
-                    if (!$skillTypos->contains($typo)) {
+                    if (!$skillTypos || !$skillTypos->contains($typo)) {
                         $skill->addTypology($typo);
                         $em->persist($skill);
                     }
