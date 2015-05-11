@@ -81,7 +81,6 @@ class RightManager
     public function hasRightsOnGroup($groupClass, $user)
     {
         $em = $this->entityManager;
-        $repoName = "InnovaSelfBundle:Right\\".$groupClass;
 
         switch ($groupClass) {
             case 'RightUserTest':

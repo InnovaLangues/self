@@ -24,7 +24,6 @@ class SkillManager
                 $skill = new Skill();
                 $skill->setName($skillName);
                 $em->persist($skill);
-                $em->flush();
             }
 
             foreach ($typoNames as $typoName) {

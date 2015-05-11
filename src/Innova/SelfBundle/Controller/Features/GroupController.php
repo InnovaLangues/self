@@ -63,7 +63,6 @@ class GroupController extends Controller
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.creategroup", $currentUser)) {
-            $em = $this->getDoctrine()->getManager();
             $group = new Group();
             $group->setName('Nouveau groupe');
 

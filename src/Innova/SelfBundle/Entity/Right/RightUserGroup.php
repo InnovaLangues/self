@@ -244,20 +244,20 @@ class RightUserGroup
     /**
      * Set target
      *
-     * @param \Innova\SelfBundle\Entity\Group $target
+     * @param  \Innova\SelfBundle\Entity\Group $target
      * @return RightUserGroup
      */
     public function setTarget(\Innova\SelfBundle\Entity\Group $target = null)
     {
         $this->target = $target;
-    
+
         return $this;
     }
 
     /**
      * Get target
      *
-     * @return \Innova\SelfBundle\Entity\Group 
+     * @return \Innova\SelfBundle\Entity\Group
      */
     public function getTarget()
     {

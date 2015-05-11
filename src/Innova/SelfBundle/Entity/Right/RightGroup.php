@@ -38,11 +38,11 @@ class RightGroup
     {
         $this->rights = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -52,20 +52,20 @@ class RightGroup
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string     $name
      * @return RightGroup
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -75,13 +75,13 @@ class RightGroup
     /**
      * Add rights
      *
-     * @param \Innova\SelfBundle\Entity\Right\Right $rights
+     * @param  \Innova\SelfBundle\Entity\Right\Right $rights
      * @return RightGroup
      */
     public function addRight(\Innova\SelfBundle\Entity\Right\Right $rights)
     {
         $this->rights[] = $rights;
-    
+
         return $this;
     }
 
@@ -98,7 +98,7 @@ class RightGroup
     /**
      * Get rights
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRights()
     {
