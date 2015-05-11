@@ -13,7 +13,7 @@ use Innova\SelfBundle\Entity\Right\Right;
 /**
  * Test controller.
  *
- * @Route("/admin/users")
+ * @Route("/users")
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
  * @ParamConverter("right", isOptional="true", class="InnovaSelfBundle:Right\Right", options={"id" = "rightId"})
  */
