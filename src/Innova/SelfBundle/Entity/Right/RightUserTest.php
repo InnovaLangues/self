@@ -407,20 +407,20 @@ class RightUserTest
     /**
      * Set canDeleteTask
      *
-     * @param boolean $canDeleteTask
+     * @param  boolean       $canDeleteTask
      * @return RightUserTest
      */
     public function setCanDeleteTask($canDeleteTask)
     {
         $this->canDeleteTask = $canDeleteTask;
-    
+
         return $this;
     }
 
     /**
      * Get canDeleteTask
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanDeleteTask()
     {
@@ -430,20 +430,20 @@ class RightUserTest
     /**
      * Set canEditTask
      *
-     * @param boolean $canEditTask
+     * @param  boolean       $canEditTask
      * @return RightUserTest
      */
     public function setCanEditTask($canEditTask)
     {
         $this->canEditTask = $canEditTask;
-    
+
         return $this;
     }
 
     /**
      * Get canEditTask
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanEditTask()
     {

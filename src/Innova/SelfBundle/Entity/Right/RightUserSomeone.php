@@ -252,20 +252,20 @@ class RightUserSomeone
     /**
      * Set canEditRights
      *
-     * @param boolean $canEditRights
+     * @param  boolean          $canEditRights
      * @return RightUserSomeone
      */
     public function setCanEditRights($canEditRights)
     {
         $this->canEditRights = $canEditRights;
-    
+
         return $this;
     }
 
     /**
      * Get canEditRights
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCanEditRights()
     {
@@ -275,20 +275,20 @@ class RightUserSomeone
     /**
      * Set target
      *
-     * @param \Innova\SelfBundle\Entity\User $target
+     * @param  \Innova\SelfBundle\Entity\User $target
      * @return RightUserSomeone
      */
     public function setTarget(\Innova\SelfBundle\Entity\User $target = null)
     {
         $this->target = $target;
-    
+
         return $this;
     }
 
     /**
      * Get target
      *
-     * @return \Innova\SelfBundle\Entity\User 
+     * @return \Innova\SelfBundle\Entity\User
      */
     public function getTarget()
     {
