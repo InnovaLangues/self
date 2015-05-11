@@ -22,9 +22,17 @@ framework:
     default_locale:  "%locale%"
     trusted_proxies: ~
     session:
-        save_path: "%kernel.root_dir%/sessions"
-        name: "self"
+        handler_id:     session.handler.pdo
+        #save_path: "%kernel.root_dir%/sessions"
+        #name: "self"
     http_method_override: true
+
+parameters:
+    pdo.db_options:
+        db_table:        session_pdo
+        db_id_col:      session_id
+        db_data_col: session_value
+        db_time_col: session_time
 
 # Twig Configuration
 twig:
