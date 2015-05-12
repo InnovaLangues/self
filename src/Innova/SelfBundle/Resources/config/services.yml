@@ -187,7 +187,7 @@ services:
     pdo:
         class: PDO
         arguments:
-            dsn:      "mysql:dbname=%database_name%"
+            dsn:      "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
             user:     %database_user%
             password: %database_password%
         calls:
