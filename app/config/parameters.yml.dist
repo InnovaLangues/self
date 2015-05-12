@@ -12,5 +12,8 @@ parameters:
     mailer_password: null
     locale: fr
     secret: CeCiNe888VousRegarde124Pas
+    base_url: null
+    varnish_servers: null
+    cache_manager_enabled: false
     gitter_token: null
     gitter_room: null

@@ -129,10 +129,12 @@ knp_snappy:
         options:    []
 
 fos_http_cache:
+    cache_manager:
+        enabled: %cache_manager_enabled%
     proxy_client:
         varnish:
-            servers: 176.58.116.236
-            base_url: varnish.innovalangues.net
+            servers: %varnish_servers%
+            base_url: %base_url%
     user_context:
         enabled: true
         role_provider: true
