@@ -11,6 +11,8 @@ web/bundles/*
 web/upload/*
 !web/upload/.gitkeep
 web/media/*
+web/js/*
+!web/js/.gitkeep
 
 # Configuration files
 app/config/parameters.ini
