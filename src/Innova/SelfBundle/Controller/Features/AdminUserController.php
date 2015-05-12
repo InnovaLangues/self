@@ -135,6 +135,7 @@ class AdminUserController extends Controller
      *
      * @Route("/delete-user/{userId}", name="delete-user")
      * @Method("DELETE")
+     * @InvalidateRoute("admin_user")
      */
     public function deleteUserAction($userId)
     {
@@ -158,6 +159,7 @@ class AdminUserController extends Controller
      *
      * @Route("/user/create", name="user_create")
      * @Method({"GET", "POST"})
+     * @InvalidateRoute("admin_user")
      * @Template("InnovaSelfBundle:Features:AdminUser/new.html.twig")
      */
     public function newAction(Request $request)
@@ -184,6 +186,7 @@ class AdminUserController extends Controller
      *
      * @Route("/user/{userId}/edit", name="user_edit")
      * @Method({"GET", "POST"})
+     * @InvalidateRoute("admin_user")
      * @Template("InnovaSelfBundle:Features:AdminUser/new.html.twig")
      */
     public function editAction(User $user, Request $request)
