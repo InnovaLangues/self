@@ -10,13 +10,13 @@ class MediaManager
 {
     protected $entityManager;
     protected $questionnaireRevisorsManager;
-    //protected $cacheManager;
+    protected $cacheManager;
 
-    public function __construct($entityManager, $questionnaireRevisorsManager)
+    public function __construct($entityManager, $questionnaireRevisorsManager, $cacheManager)
     {
         $this->entityManager = $entityManager;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        //$this->cacheManager = $cacheManager;
+        $this->cacheManager = $cacheManager;
     }
 
     public function createMedia(Questionnaire $questionnaire = null, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
