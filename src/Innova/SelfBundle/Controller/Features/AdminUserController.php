@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Right\Right;
+use FOS\HttpCacheBundle\Configuration\InvalidateRoute;
 
 /**
  * Test controller.
