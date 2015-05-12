@@ -160,7 +160,6 @@ class AdminUserController extends Controller
      *
      * @Route("/user/create", name="user_create")
      * @Method({"GET", "POST"})
-     * @InvalidateRoute("admin_user")
      * @Template("InnovaSelfBundle:Features:AdminUser/new.html.twig")
      */
     public function newAction(Request $request)
@@ -173,7 +172,10 @@ class AdminUserController extends Controller
             $form = $this->get("self.user.manager")->handleForm($user, $request);
             if (!$form) {
                 $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été créée");
-
+                
+                $cacheManager = $container->get('fos_http_cache.cache_manager');
+                $cacheManager->invalidateRoute('admin_user');
+                
                 return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
             }
 
