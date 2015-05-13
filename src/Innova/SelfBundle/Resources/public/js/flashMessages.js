@@ -17,12 +17,10 @@ function showFlash()
 
     console.log(flashes);
 
-    console.log("Length");
-
-    console.log(flashes.info.length);
+    console.log("Length : " + flashes.info.length);
     
     for (var i = flashes.info.length - 1; i >= 0; i--) {
-        console.log(i);
+        console.log("i : " + i);
         console.log(flashes.info);
         $('.flash-messages').append('<div class="alert alert-info">' + flashes.info[i] + '</div>');
     };
