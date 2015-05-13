@@ -160,6 +160,5 @@ fos_http_cache:
                 headers:
                     cache_control:
                         public: true
-                        max_age: 3600
-                        s_maxage: 3600
-                    last_modified: "-1 hour"
+                        max_age: 0
+                        s_maxage: 0
