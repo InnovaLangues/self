@@ -34,7 +34,8 @@
                         SELF - Système d’Evaluation en Langues à visée Formative.
                         <span class="pull-right">
                             <span class="btn btn-default btn-xs change-locale">
-                                <span class="glyphicon glyphicon-globe"> </span> {{ 'menu.language_change' | trans }}</span>
+                                <span class="glyphicon glyphicon-globe"> </span> {{ 'menu.language_change' | trans }}
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -42,9 +43,7 @@
         </div>
 
         {% include 'InnovaSelfBundle::Main/helpModale.html.twig' %}
-
         {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
-
         {% include 'InnovaSelfBundle::Main/creditModale.html.twig' %}
 
         {% block javascripts %}
@@ -54,6 +53,7 @@
                 '@InnovaSelfBundle/Resources/public/js/lib/bootstrap-3.1.1.min.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery.restfulizer.js'
                 '@InnovaSelfBundle/Resources/public/js/main.js'
+                '@InnovaSelfBundle/Resources/public/js/flashMessages.js'
                 '@BazingaJsTranslationBundle/Resources/public/js/translator.min.js'
                 %}
             <script src="{{ asset_url }}"></script>
