@@ -144,3 +144,21 @@ fos_http_cache:
         path: /
         host: null
         secure: debug
+    cache_control :
+        rules:
+            -
+                match:
+                    path: ^/login
+                headers:
+                    cache_control:
+                        public: false
+                        max_age: 0
+                        s_maxage: 0
+            -
+                match:
+                    path: ^/
+                headers:
+                    cache_control:
+                        public: true
+                        max_age: 0
+                        s_maxage: 0
