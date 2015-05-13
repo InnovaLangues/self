@@ -23,8 +23,8 @@ function showFlash()
     
     for (var i = flashes.info.length - 1; i >= 0; i--) {
         console.log(i);
-        $('.flash-messages').append('<div class="alert alert-info">' + flashes[i][1] + '</div>');
-        console.log(flashes[i]);
+        console.log(flashes.info);
+        $('.flash-messages').append('<div class="alert alert-info">' + flashes.info[i] + '</div>');
     };
 
     console.log("End for");
