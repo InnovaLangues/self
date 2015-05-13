@@ -13,7 +13,7 @@ parameters:
     locale: fr
     secret: CeCiNe888VousRegarde124Pas
     base_url: null
-    varnish_servers: null
+    varnish_servers: localhost
     cache_manager_enabled: false
     gitter_token: null
     gitter_room: null
