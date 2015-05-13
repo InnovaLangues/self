@@ -173,7 +173,7 @@ class AdminUserController extends Controller
                 $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été créée");
                 
                 $cacheManager = $this->get('fos_http_cache.cache_manager');
-                $cacheManager->refreshRoute('admin_user');
+                $cacheManager->invalidateRoute('admin_user');
                 
                 return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
             }
