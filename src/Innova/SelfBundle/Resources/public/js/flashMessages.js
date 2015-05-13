@@ -1,11 +1,15 @@
 function showFlash()
 {
     //var cookie = getCookie("flashes"); // fos_http_cache.flash_message.name
+    console.log("Looking for cookies");
+
+    console.log($.cookie());
 
     var cookie = $.cookie("flashes");
 
     if (!cookie) {
         console.log("pas trouvé le cookie");
+        console.log(cookie);
         return;
     }
 
@@ -20,8 +24,9 @@ function showFlash()
     };
 
     document.cookie = "flashes=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-}
 
+    console.log("Cookie monster FTW!");
+}
 
 $(document).ready(function() {
     showFlash();
