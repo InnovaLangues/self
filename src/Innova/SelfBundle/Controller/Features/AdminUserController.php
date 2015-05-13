@@ -172,9 +172,6 @@ class AdminUserController extends Controller
             if (!$form) {
                 $this->get("session")->getFlashBag()->add('info', "L'utilisateur a bien été créée");
 
-                #test
-                $this->get("session")->getFlashBag()->add('info', "L'utilisateur a bien été créée -- test");
-                
                 $cacheManager = $this->get('fos_http_cache.cache_manager');
                 $cacheManager->invalidateRoute('admin_user');
                 
