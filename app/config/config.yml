@@ -142,7 +142,7 @@ fos_http_cache:
         enabled: true
         name: flashes
         path: /
-        host: null
+        host: %base_url%
         secure: debug
     cache_control :
         rules:
