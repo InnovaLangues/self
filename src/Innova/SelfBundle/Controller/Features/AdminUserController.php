@@ -147,6 +147,9 @@ class AdminUserController extends Controller
             $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
             if ($this->get("self.user.manager")->deleteUser($user)) {
                 $this->get('session')->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
+
+                $cacheManager = $this->get('fos_http_cache.cache_manager');
+                $cacheManager->invalidateRoute('admin_user');
             }
 
             return $this->redirect($this->generateUrl('admin_user'));
@@ -199,6 +202,9 @@ class AdminUserController extends Controller
 
             if (!$form) {
                 $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
+
+                $cacheManager = $this->get('fos_http_cache.cache_manager');
+                $cacheManager->invalidateRoute('admin_user');
 
                 return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
             }
