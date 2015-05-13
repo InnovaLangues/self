@@ -11,13 +11,15 @@ function showFlash()
         return;
     }
 
-    console.log("Not found");
+    console.log("Found");
 
     var flashes = JSON.parse(cookie);
 
-    console.log("Flashes");
-
     console.log(flashes);
+
+    console.log("Length");
+
+    console.log(flashes.length);
     
     for (var i = flashes.length - 1; i >= 0; i--) {
         console.log(i);
