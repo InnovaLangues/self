@@ -141,9 +141,6 @@ fos_http_cache:
     flash_message:
         enabled: true
         name: flashes
-        path: /
-        host: null
-        secure: debug
     cache_control :
         rules:
             -
