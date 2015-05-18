@@ -10,6 +10,11 @@
     <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
 </a>
 
+<a class="btn btn-default btn-sm" href="{{ path('editor_phased_params', { testId: test.id }) }}">
+    <span class="glyphicon glyphicon-wrench"></span> {{ 'phased.parameters' | trans }}
+</a>
+
+
 <img class="loader-img" style="display:none;" src="{{ asset('bundles/innovaself/images/loader.gif') }}"/>
 
 <hr />

@@ -127,11 +127,11 @@ class PlayerManager
                 $score = $this->scoreManager->calculateScoreByComponent($test, $session, $component);
                 // si c'est un mitest on est redirigé vers une des étapes
                 if ($componentTypeName == "minitest") {
-                    if ($score < 20) {
+                    if ($score < $test->getPhasedParams()->getStep2Threshold()) {
                         $nextComponentTypeName = "step1";
-                    } elseif ($score < 40) {
+                    } elseif ($score < $test->getPhasedParams()->getStep3Threshold()) {
                         $nextComponentTypeName = "step2";
-                    } elseif ($score < 80) {
+                    } elseif ($score < $test->getPhasedParams()->getStep4Threshold()) {
                         $nextComponentTypeName = "step3";
                     } else {
                         $nextComponentTypeName = "step4";

@@ -32,8 +32,6 @@ class PropositionController
         $templating,
         $questionnaireRevisorsManager,
         $securityContext,
-        $rightManager,
-        $securityContext,
         $rightManager
     ) {
         $this->propositionManager = $propositionManager;

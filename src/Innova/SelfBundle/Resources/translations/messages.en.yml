@@ -426,6 +426,10 @@ phased:
     step3: Step 3
     create_alternative: Create an alternative
     delete_alternative: Remove the alternative
+    parameters: Paramèters
+    step2Threshold: Seuil étape 2
+    step3Threshold: Seuil étape 3
+    step4Threshold: Seuil étape 4
 
 channel:
     phone: Téléphone

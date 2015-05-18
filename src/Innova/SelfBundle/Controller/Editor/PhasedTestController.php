@@ -4,14 +4,17 @@ namespace Innova\SelfBundle\Controller\Editor;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\PhasedTest\Component;
 use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
 use Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent;
+use Innova\SelfBundle\Form\Type\PhasedParamsType;
 
 /**
  * PhasedTest controller.
@@ -186,5 +189,29 @@ class PhasedTestController extends Controller
         }
 
         return;
+    }
+
+    /**
+     * Duplicate a questionnaire and add it to a component
+     *
+     * @Route("/test/{testId}/", name="editor_phased_params", options={"expose"=true})
+     * @Method({"GET", "POST"})
+     * @Template("InnovaSelfBundle:Editor:phased/editParams.html.twig")
+     */
+    public function editParams(Test $test, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('form.factory')->createBuilder(new PhasedParamsType(), $test->getPhasedParams())->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em->persist($test->getPhasedParams());
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Les paramètres ont bien été modifiés.');
+            }
+        }
+
+        return array('form' => $form->createView(), 'test' => $test);
     }
 }
