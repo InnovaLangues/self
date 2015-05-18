@@ -27,6 +27,7 @@ class RightUserTest
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test")
+    * @ORM\JoinColumn(onDelete="CASCADE")
     */
     protected $target;
 

@@ -27,6 +27,7 @@ class RightUserTask
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire")
+    * @ORM\JoinColumn(onDelete="CASCADE")
     */
     protected $target;
 
