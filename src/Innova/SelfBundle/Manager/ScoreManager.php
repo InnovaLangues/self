@@ -34,7 +34,9 @@ class ScoreManager
             $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
             foreach ($subquestions as $subquestion) {
                 $nbSubquestions++;
-                $score = ($this->subquestionCorrect($subquestion, $session, $component)) ? $score++ : $score;
+                if ($this->subquestionCorrect($subquestion, $session, $component)) {
+                    $score++;
+                }
             }
         }
 
