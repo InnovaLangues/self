@@ -120,8 +120,8 @@ class PlayerManager
             $componentTypeName = $componentType->getName();
             $componentTypeId = $componentType->getId();
 
-            // si on a déjà fait 3 composants -> stop
-            if (count($componentsDone) >= 3) {
+            // si on a déjà fait 2 composants -> stop
+            if (count($componentsDone) >= 2) {
                 return;
             } else {
                 $score = $this->scoreManager->calculateScoreByComponent($test, $session, $component);
@@ -135,15 +135,6 @@ class PlayerManager
                         $nextComponentTypeName = "step3";
                     } else {
                         $nextComponentTypeName = "step4";
-                    }
-                } else {
-                    // sinon, dépendamment du score on descend ou monte d'un niveau
-                    if ($score < 20 && $componentTypeName != "step1") {
-                        $nextComponentTypeName = $this->componentTypeRepo->findOneById($componentTypeId - 1)->getName();
-                    } elseif ($score > 80 && $componentTypeName != "step4") {
-                        $nextComponentTypeName = $this->componentTypeRepo->findOneById($componentTypeId + 1)->getName();
-                    } else {
-                        return;
                     }
                 }
             }
