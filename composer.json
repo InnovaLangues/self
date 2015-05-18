@@ -9,8 +9,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.5.11",
-        "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-bundle": "1.2.*",
+        "doctrine/orm": "2.5.0",
+        "doctrine/doctrine-bundle": "1.4.*",
         "twig/extensions": "1.0.*",
         "symfony/assetic-bundle": "2.3.*",
         "symfony/swiftmailer-bundle": "2.3.*",
