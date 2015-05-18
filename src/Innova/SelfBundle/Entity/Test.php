@@ -36,6 +36,11 @@ class Test
     private $phased;
 
     /**
+    * @ORM\OneToOne(targetEntity="Innova\SelfBundle\Entity\PhasedTest\PhasedParams", mappedBy="test", cascade={"remove"})
+    */
+    private $phasedParams;
+
+    /**
     * @ORM\OneToMany(targetEntity="Trace", mappedBy="test", cascade={"remove"})
     */
     private $traces;
