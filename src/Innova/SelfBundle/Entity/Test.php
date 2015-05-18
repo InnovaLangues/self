@@ -36,7 +36,7 @@ class Test
     private $phased;
 
     /**
-    * @ORM\OneToOne(targetEntity="Innova\SelfBundle\Entity\PhasedTest\PhasedParams", mappedBy="test", cascade={"remove"})
+    * @ORM\OneToOne(targetEntity="Innova\SelfBundle\Entity\PhasedTest\PhasedParams", cascade={"remove"})
     */
     private $phasedParams;
 
@@ -468,5 +468,53 @@ class Test
     public function getSessions()
     {
         return $this->sessions;
+    }
+
+    /**
+     * Set phasedParams
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\PhasedParams $phasedParams
+     *
+     * @return Test
+     */
+    public function setPhasedParams(\Innova\SelfBundle\Entity\PhasedTest\PhasedParams $phasedParams = null)
+    {
+        $this->phasedParams = $phasedParams;
+
+        return $this;
+    }
+
+    /**
+     * Get phasedParams
+     *
+     * @return \Innova\SelfBundle\Entity\PhasedTest\PhasedParams
+     */
+    public function getPhasedParams()
+    {
+        return $this->phasedParams;
+    }
+
+    /**
+     * Add copy
+     *
+     * @param \Innova\SelfBundle\Entity\Test $copy
+     *
+     * @return Test
+     */
+    public function addCopy(\Innova\SelfBundle\Entity\Test $copy)
+    {
+        $this->copies[] = $copy;
+
+        return $this;
+    }
+
+    /**
+     * Remove copy
+     *
+     * @param \Innova\SelfBundle\Entity\Test $copy
+     */
+    public function removeCopy(\Innova\SelfBundle\Entity\Test $copy)
+    {
+        $this->copies->removeElement($copy);
     }
 }

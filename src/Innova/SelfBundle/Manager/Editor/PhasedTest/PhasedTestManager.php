@@ -7,6 +7,7 @@ use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\PhasedTest\Component;
 use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
 use Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent;
+use Innova\SelfBundle\Entity\PhasedTest\PhasedParams;
 
 class PhasedTestManager
 {
@@ -167,5 +168,16 @@ class PhasedTestManager
             $i++;
         }
         $em->flush();
+    }
+
+    public function initializeParams(Test $test)
+    {
+        $em = $this->entityManager;
+
+        $params = new PhasedParams();
+        $em->persist($params);
+        $em->flush();
+
+        return $params;
     }
 }

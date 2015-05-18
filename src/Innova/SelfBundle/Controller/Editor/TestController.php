@@ -203,6 +203,8 @@ class TestController extends Controller
             if ($form->isValid()) {
                 if (!$test->getId() && $test->getPhased()) {
                     $test = $this->get("self.phasedtest.manager")->generateBaseComponents($test);
+                    $params = $this->get("self.phasedtest.manager")->initializeParams($test);
+                    $test->setPhasedParams($params);
                 }
 
                 $em->persist($test);
