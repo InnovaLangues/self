@@ -57,7 +57,7 @@ class PhasedTestController extends Controller
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
-        if ($this->get("self.right.manager")->checkRight("right.deletetaskstest", $currentUser, $test)) {
+        if ($this->get("self.right.manager")->checkRight("right.deletetasktest", $currentUser, $test)) {
             $this->get("self.phasedtest.manager")->removeComponent($test, $component);
 
             return $this->redirect($this->generateUrl('editor_test_questionnaires_show', array('testId' => $test->getId())));
