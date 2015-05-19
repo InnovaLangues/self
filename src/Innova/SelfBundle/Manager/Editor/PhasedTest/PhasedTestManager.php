@@ -174,7 +174,23 @@ class PhasedTestManager
     {
         $em = $this->entityManager;
 
+        $a1 = $em->getRepository('InnovaSelfBundle:Level')->findOneByName("A1");
+        $a2 = $em->getRepository('InnovaSelfBundle:Level')->findOneByName("A2");
+        $b1 = $em->getRepository('InnovaSelfBundle:Level')->findOneByName("B1");
+        $b2 = $em->getRepository('InnovaSelfBundle:Level')->findOneByName("B2");
+        $c1 = $em->getRepository('InnovaSelfBundle:Level')->findOneByName("C1");
+
         $params = new PhasedParams();
+
+        $params->setLowerPart1($a1);
+        $params->setUpperPart1($a2);
+        $params->setLowerPart2($a2);
+        $params->setUpperPart2($b1);
+        $params->setLowerPart3($b1);
+        $params->setUpperPart3($b2);
+        $params->setLowerPart4($b2);
+        $params->setUpperPart4($c1);
+
         $em->persist($params);
         $em->flush();
 
