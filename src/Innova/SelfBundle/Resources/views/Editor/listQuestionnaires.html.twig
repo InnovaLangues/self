@@ -90,6 +90,9 @@
                 </td>
                 {# Ajout d'un bouton "Supprimer" pour supprimer une tâche (si pas d'affectation à un test). EV. #}
                 {% set countTests = questionnaire.orderQuestionnaireTests|length %}
+                {% if countTests == 0 %}
+                    {% set countTests = questionnaire.orderQuestionnaireComponents|length %}
+                {% endif %}
                 <td>
                 {% set tooltip = "" %}
                 {{ countTests }}
