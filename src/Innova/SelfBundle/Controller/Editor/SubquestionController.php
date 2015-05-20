@@ -123,7 +123,7 @@ class SubquestionController
     {
         $currentUser = $this->securityContext->getToken()->getUser();
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+        if ($this->rightManager->canEditTask($currentUser, $subquestion->getQuestion()->getQuestionnaire())) {
             $subquestionId = $subquestion->getId();
             $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
 
@@ -149,7 +149,7 @@ class SubquestionController
     {
         $currentUser = $this->securityContext->getToken()->getUser();
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+        if ($this->rightManager->canEditTask($currentUser, $subquestion->getQuestion()->getQuestionnaire())) {
             $em = $this->entityManager;
 
             $form = $this->formFactory->createBuilder(new SubquestionType(), $subquestion)->getForm();
