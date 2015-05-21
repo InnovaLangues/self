@@ -35,12 +35,7 @@ $(document).ready(function() {
                     if (sound != "situation"){
                         playMedia(audio, $(this), mediaId);
                     } else {
-                        //var context = getSessionContextListenNumber();
-                        //if (context > 0 || questionnaireHasContext == false) {
-                            playMedia(audio, $(this), mediaId);
-                        //} else {
-                        //    $('#modal-listen-context').modal('show');
-                        //}
+                        playMedia(audio, $(this), mediaId);
                     }
                 }
             });
@@ -55,7 +50,6 @@ $(document).ready(function() {
     timestampIn = timestamp();
 
     $("form").submit(function(){
-        resetListenCount();
         totalTime = timestamp() - timestampIn;
         $("#totalTime").val(totalTime);
     });
@@ -121,14 +115,9 @@ $(document).ready(function() {
 
             checkMediaClicks(mediaId, function(isPlayable){
                 if(isPlayable && !play_in_progress) {
-                    //var context = getSessionContextListenNumber();
-                    //if (context > 0 || questionnaireHasContext == false) {
-                        playButton.attr("disabled", "disabled");
-                        playMedia(video, $(this), mediaId);
-                        $("#video").css("opacity","1");
-                    //} else {
-                    //    $('#modal-listen-context').modal('show');
-                    //}
+                    playButton.attr("disabled", "disabled");
+                    playMedia(video, $(this), mediaId);
+                    $("#video").css("opacity","1");
                 }
             });
         });
@@ -149,42 +138,7 @@ $(document).ready(function() {
 
         videoContainer.bind('contextmenu',function() { return false; });
     }
-
-    /* 
-    $("#contexte-icon").click(function(){
-        incrementeSessionContextListenNumber();
-    });
-    */
-
 });
-
-
-/*
-function getSessionContextListenNumber() {
-    var context = 0;
-    $.ajax({
-            url: Routing.generate('sessionContextListenNumber'),
-            async: false,
-            type: 'GET',
-            dataType: 'json'
-    })
-    .done(function(data) {
-        context = data.contextListenNumber;
-    });
-
-    return context;
-}
-
-function incrementeSessionContextListenNumber() {
-    $.ajax({
-        url: Routing.generate('incrementeSessionContextListenNumber'),
-        type: 'PUT',
-        dataType: 'json'
-    });
-
-     return true;
-}
-*/
 
 
 function playMedia(media, btn, mediaId){
@@ -297,19 +251,6 @@ function updateMediaClicks(mediaId){
         }
     });
 }
-
-/**************
-   AJAX REQUEST TO RESET LISTENING COUNT
-**************/
-function resetListenCount() {
-    $.ajax({
-         url: Routing.generate('resetSessionContextListenNumber'),
-         async: false,
-         type: 'PUT',
-         dataType: 'json'
-    });
-}
-
 
 /**************
     Timestamp function
