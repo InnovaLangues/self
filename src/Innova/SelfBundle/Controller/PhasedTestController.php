@@ -197,7 +197,7 @@ class PhasedTestController extends Controller
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Editor:phased/editParams.html.twig")
      */
-    public function editParams(Test $test, Request $request)
+    public function editParamsAction(Test $test, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->get('form.factory')->createBuilder(new PhasedParamsType(), $test->getPhasedParams())->getForm();

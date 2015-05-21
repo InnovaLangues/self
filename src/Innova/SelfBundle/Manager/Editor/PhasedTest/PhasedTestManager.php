@@ -170,7 +170,7 @@ class PhasedTestManager
         $em->flush();
     }
 
-    public function initializeParams(Test $test)
+    public function initializeParams()
     {
         $em = $this->entityManager;
 
