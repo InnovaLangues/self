@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Features;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Group controller.
  *
- * @Route("admin/editor/groups")
  * @ParamConverter("group", isOptional="true", class="InnovaSelfBundle:Group",  options={"id" = "groupId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
@@ -23,9 +22,9 @@ class GroupController extends Controller
 {
     /**
      *
-     * @Route("/", name="editor_groups")
+     * @Route("/groups", name="editor_groups")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Group/list.html.twig")
+     * @Template("InnovaSelfBundle:Group:list.html.twig")
      */
     public function listAction()
     {
@@ -43,9 +42,9 @@ class GroupController extends Controller
 
     /**
      *
-     * @Route("/{groupId}/display", name="editor_group_display")
+     * @Route("/group/{groupId}", name="editor_group_display", requirements={"groupId": "\d+"})
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Group/display.html.twig")
+     * @Template("InnovaSelfBundle:Group:display.html.twig")
      */
     public function displayAction(Group $group)
     {
@@ -54,9 +53,9 @@ class GroupController extends Controller
 
     /**
      *
-     * @Route("/create", name="editor_group_create")
+     * @Route("/group/create", name="editor_group_create")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Group/new.html.twig")
+     * @Template("InnovaSelfBundle:Group:new.html.twig")
      */
     public function newAction(Request $request)
     {
@@ -81,9 +80,9 @@ class GroupController extends Controller
 
     /**
      *
-     * @Route("/{groupId}/remove", name="editor_group_delete", options = {"expose"=true})
+     * @Route("/group/{groupId}/delete", name="editor_group_delete", options = {"expose"=true})
      * @Method("DELETE")
-     * @Template("InnovaSelfBundle:Features:Group/list.html.twig")
+     * @Template("InnovaSelfBundle:Group:list.html.twig")
      */
     public function deleteAction(Group $group)
     {
@@ -104,9 +103,9 @@ class GroupController extends Controller
 
     /**
      *
-     * @Route("/{groupId}/edit", name="editor_group_edit")
+     * @Route("/group/{groupId}/edit", name="editor_group_edit")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Group/new.html.twig")
+     * @Template("InnovaSelfBundle:Group:new.html.twig")
      */
     public function editAction(Group $group, Request $request)
     {
@@ -129,9 +128,9 @@ class GroupController extends Controller
 
     /**
      *
-     * @Route("/{groupId}/import", name="editor_group_import_user")
+     * @Route("/group/{groupId}/import", name="editor_group_import_user")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Group/import.html.twig")
+     * @Template("InnovaSelfBundle:Group:import.html.twig")
      */
     public function importUserAction(Group $group, Request $request)
     {

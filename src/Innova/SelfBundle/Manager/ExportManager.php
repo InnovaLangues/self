@@ -43,7 +43,7 @@ class ExportManager
 
         $this->knpSnappyPdf->generateFromHtml(
             $this->templating->render(
-                'InnovaSelfBundle:Features\Export:exportUserPdf.html.twig', array('score' => $score, 'session' => $session)),
+                'InnovaSelfBundle:Export:exportUserPdf.html.twig', array('score' => $score, 'session' => $session)),
                 $fileName
         );
 
@@ -58,7 +58,7 @@ class ExportManager
         // Appel de la vue et de la génération du PDF
         $this->knpSnappyPdf->generateFromHtml(
             $this->templating->render(
-                'InnovaSelfBundle:Features\Export:templatePdf.html.twig', array('test' => $test)),
+                'InnovaSelfBundle:Export:templatePdf.html.twig', array('test' => $test)),
                 $this->kernelRoot."/data/exportPdf/".$test->getId()."/".$pdfName
         );
 

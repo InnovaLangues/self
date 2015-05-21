@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Editor;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +16,6 @@ use Innova\SelfBundle\Entity\Language;
 /**
  * Test controller.
  *
- * @Route("editor")
  * @ParamConverter("test",      isOptional="true", class="InnovaSelfBundle:Test",       options={"id" = "testId"})
  * @ParamConverter("language",  isOptional="true", class="InnovaSelfBundle:Language",   options={"id" = "languageId"})
  */
@@ -27,7 +26,7 @@ class TestController extends Controller
      *
      * @Route("/tests", name="editor_tests_show")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Test/list.html.twig")
+     * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listTestsAction()
     {
@@ -47,7 +46,7 @@ class TestController extends Controller
      *
      * @Route("/tests/language/{languageId}", name="editor_tests_by_language_show")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Test/list.html.twig")
+     * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listTestsByLanguageAction(Language $language)
     {
@@ -67,7 +66,7 @@ class TestController extends Controller
      *
      * @Route("/tests/archived", name="editor_tests_archived_show")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Test/list.html.twig")
+     * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listArchivedTestsAction()
     {
@@ -129,9 +128,9 @@ class TestController extends Controller
     /**
      * Display form to create a new Questionnaire entity.
      *
-     * @Route("/test/newform", name="editor_test_create")
+     * @Route("/test/create", name="editor_test_create")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Editor:editTestForm.html.twig")
+     * @Template("InnovaSelfBundle:Test:form.html.twig")
      */
     public function newAction(Request $request)
     {
@@ -157,7 +156,7 @@ class TestController extends Controller
      *
      * @Route("/test/{testId}/edit", name="editor_test_edit")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Editor:editTestForm.html.twig")
+     * @Template("InnovaSelfBundle:Test:form.html.twig")
      */
     public function editAction(Test $test, Request $request)
     {
@@ -179,7 +178,7 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/favorite/toggle/{testId}", name="test_favorite_toggle" , options={"expose"=true}))
+     * @Route("/test/{testId}/favorite-toggle", name="test_favorite_toggle" , options={"expose"=true}))
      * @Method("GET")
      */
     public function toggleFavoriteAction(Test $test)

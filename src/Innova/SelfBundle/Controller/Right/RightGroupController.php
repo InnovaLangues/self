@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Features;
+namespace Innova\SelfBundle\Controller\Right;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

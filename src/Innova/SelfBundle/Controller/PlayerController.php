@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Player;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
  * Class PlayerController
  *
  * @Route(
- *      "",
  *      name = "innova_player",
  *      service = "innova_player"
  * )
@@ -60,7 +59,7 @@ class PlayerController
      * Try to pick a questionnaire entity for a given test and a given sessionr
      * and display it if possible.
      *
-     * @Route("student/test/start/{testId}/{sessionId}", name="test_start")
+     * @Route("test/{testId}/session/{sessionId}", name="test_start")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
@@ -108,7 +107,7 @@ class PlayerController
      /**
      * Gère la vue de fin de test
      *
-     * @Route("/test_end/{testId}/session/{sessionId}", name="test_end")
+     * @Route("/test/{testId}/session/{sessionId}/end", name="test_end")
      * @Template("InnovaSelfBundle:Player:common/end.html.twig")
      * @Method("GET")
      */
@@ -120,7 +119,7 @@ class PlayerController
     }
 
     /**
-     * @Route("/student/", name="show_tests")
+     * @Route("/opened-sessions/", name="show_tests")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:showTests.html.twig")
      */
@@ -167,7 +166,7 @@ class PlayerController
 
     /**
      * @Method("GET")
-     * @Route("/form/session/{sessionId}", name="session_log_form")
+     * @Route("/session/{sessionId}/passwd", name="session_log_form")
      * @Template("InnovaSelfBundle:Player:common/log.html.twig")
      */
     public function sessionLogFormAction(Session $session)
@@ -179,7 +178,7 @@ class PlayerController
 
      /**
      * @Method("POST")
-     * @Route("/log/session/{sessionId}", name="session_log")
+     * @Route("/session/{sessionId}/log", name="session_log")
      */
     public function sessionLogAction(Session $session, Request $request)
     {

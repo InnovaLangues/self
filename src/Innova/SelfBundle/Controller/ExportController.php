@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Features;
+namespace Innova\SelfBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -48,7 +48,7 @@ class ExportController
      *     options = {"expose"=true}
      * )
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features\Export:index.html.twig")
+     * @Template("InnovaSelfBundle:Export:index.html.twig")
      */
     public function indexAction()
     {
@@ -99,7 +99,7 @@ class ExportController
      * )
      *
      * @Method("PUT")
-     * @Template("InnovaSelfBundle:Features\Export:exportCsv.html.twig")
+     * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
     public function exportCsvAction(Test $test, Session $session, $tia)
     {
@@ -122,7 +122,7 @@ class ExportController
      * )
      *
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features\Export:exportCsv.html.twig")
+     * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
     public function showCsvAction(Test $test, $tia)
     {
@@ -143,7 +143,7 @@ class ExportController
      * )
      *
      * @Method("PUT")
-     * @Template("InnovaSelfBundle:Features\Export:exportPdf.html.twig")
+     * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
      */
     public function exportPdfAction(Test $test)
     {
@@ -168,7 +168,7 @@ class ExportController
      * )
      *
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features\Export:exportPdf.html.twig")
+     * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
      */
     public function showPdfAction(Test $test)
     {

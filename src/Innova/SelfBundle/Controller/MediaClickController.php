@@ -1,12 +1,12 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Player;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Innova\SelfBundle\Manager\MediaClickManager;
+use Innova\SelfBundle\Manager\Media\MediaClickManager;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Session;
@@ -17,7 +17,6 @@ use Innova\SelfBundle\Entity\PhasedTest\Component;
  * Class MediaClickController
  *
  * @Route(
- *      "",
  *      name = "innova_mediaclick",
  *      service = "innova_mediaclick"
  * )

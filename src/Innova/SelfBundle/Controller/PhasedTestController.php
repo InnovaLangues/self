@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Editor;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,6 @@ use Innova\SelfBundle\Form\Type\PhasedParamsType;
 /**
  * PhasedTest controller.
  *
- * @Route("admin/editor")
  * @ParamConverter("test",          isOptional="true", class="InnovaSelfBundle:Test",                     options={"id" = "testId"})
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",            options={"id" = "questionnaireId"})
  * @ParamConverter("component",     isOptional="true", class="InnovaSelfBundle:PhasedTest\Component",     options={"id" = "componentId"})
@@ -31,7 +30,7 @@ class PhasedTestController extends Controller
     /**
      * Generate a component for a test entity
      *
-     * @Route("/test/{testId}/add/component/{typeId}", name="editor_generate_component")
+     * @Route("/test/{testId}/component-type/{typeId}/add", name="editor_generate_component")
      * @Method("GET")
      */
     public function generateComponentAction(Test $test, ComponentType $type)
@@ -50,7 +49,7 @@ class PhasedTestController extends Controller
     /**
      * Remove a component from a test entity
      *
-     * @Route("/test/{testId}/remove/component/{componentId}", name="editor_remove_component", options={"expose"=true})
+     * @Route("/test/{testId}/component/{componentId}/remove", name="editor_remove_component", options={"expose"=true})
      * @Method("GET")
      */
     public function removeComponentAction(Test $test, Component $component)
@@ -69,7 +68,7 @@ class PhasedTestController extends Controller
     /**
      * Save questionnaire order for a component
      *
-     * @Route("/order/component/{componentId}", name="save-order-component-questionnaire", options={"expose"=true})
+     * @Route("/component/{componentId}/order", name="save-order-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
     public function saveOrderAction(Component $component)
@@ -89,7 +88,7 @@ class PhasedTestController extends Controller
     /**
      * Remove a questionnaire from a component
      *
-     * @Route("/remove/orderQuestionnaireComponent/{orderQuestionnaireComponentId}", name="remove-component-questionnaire", options={"expose"=true})
+     * @Route("/orderQuestionnaireComponent/{orderQuestionnaireComponentId}/remove", name="remove-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
     public function removeQuestionnaireFromComponentAction(OrderQuestionnaireComponent $orderQuestionnaireComponent)
@@ -108,7 +107,7 @@ class PhasedTestController extends Controller
     /**
      * Create a questionnaire and add it to a component
      *
-     * @Route("/component/{componentId}/add/orderQuestionnaireComponent", name="editor_create_task_component", options={"expose"=true})
+     * @Route("/component/{componentId}/create-task", name="editor_create_task_component", options={"expose"=true})
      * @Method("GET")
      */
     public function createQuestionnaireToComponentAction(Component $component)
@@ -133,7 +132,7 @@ class PhasedTestController extends Controller
      /**
      * Get potential questionnaires to a component
      *
-     * @Route("/potentials/{componentId}", name="get-component-potentials", options={"expose"=true})
+     * @Route("/component/{componentId}/potentials", name="get-component-potentials", options={"expose"=true})
      * @Method("POST")
      */
     public function getPotentialQuestionnairesAction(Component $component)
@@ -153,7 +152,7 @@ class PhasedTestController extends Controller
     /**
      * Add a questionnaire to a component
      *
-     * @Route("/add/component/{componentId}/questionnaire/{questionnaireId}", name="add-component-questionnaire", options={"expose"=true})
+     * @Route("/component/{componentId}/questionnaire/{questionnaireId}/add-task", name="add-component-questionnaire", options={"expose"=true})
      * @Method("POST")
      */
     public function addQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
@@ -194,7 +193,7 @@ class PhasedTestController extends Controller
     /**
      * Duplicate a questionnaire and add it to a component
      *
-     * @Route("/test/{testId}/", name="editor_phased_params", options={"expose"=true})
+     * @Route("/test/{testId}/edit-params", name="editor_phased_params", options={"expose"=true})
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Editor:phased/editParams.html.twig")
      */

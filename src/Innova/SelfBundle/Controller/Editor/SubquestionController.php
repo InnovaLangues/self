@@ -16,8 +16,6 @@ use Innova\SelfBundle\Entity\Typology;
 /**
  * Class MediaController
  * @Route(
- *      "admin/editor",
- *      name    = "",
  *      service = "innova_editor_subquestion"
  * )
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})

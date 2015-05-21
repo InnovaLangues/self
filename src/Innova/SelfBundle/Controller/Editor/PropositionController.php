@@ -12,8 +12,6 @@ use Innova\SelfBundle\Entity\Proposition;
 /**
  * Class PropositionController
  * @Route(
- *      "admin/editor",
- *      name    = "",
  *      service = "innova_editor_proposition"
  * )
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",       options={"id" = "questionnaireId"})

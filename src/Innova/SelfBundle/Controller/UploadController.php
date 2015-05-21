@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Features;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

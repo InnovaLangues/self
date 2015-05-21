@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Editor;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +17,6 @@ use Innova\SelfBundle\Entity\Language;
 /**
  * Class TaskController
  * @Route(
- *      "editor",
- *      name    = "",
  *      service = "innova_editor_task"
  * )
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
@@ -66,7 +64,7 @@ class TaskController
     /**
      * Lists all Questionnaire entities.
      *
-     * @Route("/questionnaires", name="editor_questionnaires_show")
+     * @Route("/tasks", name="editor_questionnaires_show")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
@@ -88,7 +86,7 @@ class TaskController
     /**
      * Lists all Questionnaire entities.
      *
-     * @Route("/questionnaires/language/{languageId}", name="editor_questionnaires_by_language_show")
+     * @Route("/tasks/language/{languageId}", name="editor_questionnaires_by_language_show")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
@@ -109,7 +107,7 @@ class TaskController
     /**
      * Lists all Questionnaire entities for a test (ordered)
      *
-     * @Route("/test/{testId}/questionnaires", name="editor_test_questionnaires_show", options={"expose"=true})
+     * @Route("/test/{testId}/tasks", name="editor_test_questionnaires_show", options={"expose"=true})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:listTestQuestionnaires.html.twig")
      */
@@ -137,7 +135,7 @@ class TaskController
     /**
      * Lists all Questionnaire entities.
      *
-     * @Route("/questionnaires/orphans", name="editor_questionnaires_orphan_show")
+     * @Route("/tasks/orphans", name="editor_questionnaires_orphan_show")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
@@ -145,7 +143,7 @@ class TaskController
     {
         $currentUser = $this->securityContext->getToken()->getUser();
 
-        if ($this->rightManager->checkRight("right.managetaskstest", $currentUser, $test)) {
+        if ($this->rightManager->checkRight("right.listtask", $currentUser)) {
             $em = $this->entityManager;
 
             $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findOrphans();

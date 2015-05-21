@@ -1,5 +1,5 @@
 <?php
-namespace Innova\SelfBundle\Controller\Features;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -161,7 +161,7 @@ class UserController extends Controller
      *
      * @Route("/user/create", name="user_create")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:User/new.html.twig")
+     * @Template("InnovaSelfBundle:User:new.html.twig")
      */
     public function newAction(Request $request)
     {
@@ -190,7 +190,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/edit", name="user_edit")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:User/new.html.twig")
+     * @Template("InnovaSelfBundle:User:new.html.twig")
      */
     public function editAction(User $user, Request $request)
     {
@@ -218,7 +218,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/change-passwd", name="passwd_edit")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:User/passwd.html.twig")
+     * @Template("InnovaSelfBundle:User:passwd.html.twig")
      */
     public function editPasswordAction(User $user, Request $request)
     {
@@ -243,7 +243,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/edit-rights", name="admin_user_rights")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:User/rights.html.twig")
+     * @Template("InnovaSelfBundle:User:rights.html.twig")
      */
     public function displayRightsAction(User $user)
     {
@@ -264,7 +264,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/right/{rightId}", name="admin_user_toggle_right")
      * @Method({"GET"})
-     * @Template("InnovaSelfBundle:Features:User/rights.html.twig")
+     * @Template("InnovaSelfBundle:User:rights.html.twig")
      */
     public function toggleRightAction(User $user, Right $right)
     {
@@ -283,11 +283,11 @@ class UserController extends Controller
     /**
      * @Route("/user/self_display", name="self_user_display")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:User/show.html.twig")
+     * @Template("InnovaSelfBundle:User:show.html.twig")
      */
     public function selfDisplayAction()
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
 
         return array(
             'user'   => $user,
@@ -297,11 +297,11 @@ class UserController extends Controller
     /**
      * @Route("/user/self-edit", name="self_user_edit")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:User/new.html.twig")
+     * @Template("InnovaSelfBundle:User:new.html.twig")
      */
     public function selfEditAction(Request $request)
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
         $form = $this->get("self.user.manager")->handleForm($user, $request);
 
         if (!$form) {

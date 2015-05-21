@@ -15,8 +15,6 @@ use Innova\SelfBundle\Entity\Media\Media;
 /**
  * Class EecController
  * @Route(
- *      "admin/editor",
- *      name    = "",
  *      service = "innova_editor_eec"
  * )
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})

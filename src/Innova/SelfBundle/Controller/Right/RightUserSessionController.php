@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Features;
+namespace Innova\SelfBundle\Controller\Right;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -25,7 +25,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/rights", name="editor_session_rights")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Session/rights.html.twig")
+     * @Template("InnovaSelfBundle:Session:rights.html.twig")
      */
     public function handleRightsAction(Session $session)
     {
@@ -45,7 +45,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/rights/add", name="editor_session_rights_add")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Session/rights_form.html.twig")
+     * @Template("InnovaSelfBundle:Session:rights_form.html.twig")
      */
     public function createRightsAction(Session $session, Request $request)
     {
@@ -71,7 +71,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/rights/{rightId}/edit", name="editor_session_rights_edit")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Session/rights_form.html.twig")
+     * @Template("InnovaSelfBundle:Session:rights_form.html.twig")
      */
     public function editRightsAction(Session $session, RightUserSession $rightUserSession, Request $request)
     {
@@ -96,7 +96,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/right/{rightId}/delete", name="editor_session_rights_delete", options = {"expose"=true})
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Session/list.html.twig")
+     * @Template("InnovaSelfBundle:Session:list.html.twig")
      */
     public function deleteRightAction(Session $session, RightUserSession $rightUserSession)
     {

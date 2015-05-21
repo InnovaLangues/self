@@ -46,7 +46,7 @@ services:
             - { name: form.type, alias: innova_selfbundle_user }
 
     innova_export:
-        class: Innova\SelfBundle\Controller\Features\ExportController
+        class: Innova\SelfBundle\Controller\ExportController
         arguments:
             kernelRoot:         %kernel.root_dir%
             entityManager:      @doctrine.orm.entity_manager
@@ -54,7 +54,7 @@ services:
             securityContext:    @security.context
 
     innova_player:
-        class: Innova\SelfBundle\Controller\Player\PlayerController
+        class: Innova\SelfBundle\Controller\PlayerController
         arguments:
             securityContext: @security.context
             entityManager: @doctrine.orm.entity_manager
@@ -64,7 +64,7 @@ services:
             scoreManager: @self.score.manager
 
     innova_editor_upload:
-        class: Innova\SelfBundle\Controller\Features\UploadController
+        class: Innova\SelfBundle\Controller\UploadController
         arguments:
             kernelRoot: %kernel.root_dir%
 
@@ -81,7 +81,7 @@ services:
             rightManager:                   @self.right.manager
 
     innova_editor_task:
-        class: Innova\SelfBundle\Controller\Editor\TaskController
+        class: Innova\SelfBundle\Controller\TaskController
         arguments:
             questionnaireManager:   @self.questionnaire.manager
             questionManager:        @self.question.manager
@@ -95,7 +95,7 @@ services:
             router:             @router
 
     innova_editor_media:
-        class: Innova\SelfBundle\Controller\Editor\MediaController
+        class: Innova\SelfBundle\Controller\MediaController
         arguments:
             mediaManager:       @self.media.manager
             propositionManager: @self.proposition.manager
@@ -136,7 +136,7 @@ services:
             session:            @session
 
     innova_player_trace:
-        class: Innova\SelfBundle\Controller\Player\TraceController
+        class: Innova\SelfBundle\Controller\TraceController
         arguments:
             mediaManager:       @self.media.manager
             propositionManager: @self.proposition.manager
@@ -160,12 +160,12 @@ services:
             session:            @session
 
     innova_locale_controller:
-        class: Innova\SelfBundle\Controller\Features\LocaleController
+        class: Innova\SelfBundle\Controller\LocaleController
         arguments:
             localeManager:          @self.locale.manager
 
     innova_mediaclick:
-        class: Innova\SelfBundle\Controller\Player\MediaClickController
+        class: Innova\SelfBundle\Controller\MediaClickController
         arguments:
             mediaClickManager: @self.mediaclick.manager
 

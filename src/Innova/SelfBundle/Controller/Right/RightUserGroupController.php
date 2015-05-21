@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Features;
+namespace Innova\SelfBundle\Controller\Right;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -25,7 +25,7 @@ class RightUserGroupController extends Controller
      *
      * @Route("/group/{groupId}/rights", name="editor_group_rights")
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Group/rights.html.twig")
+     * @Template("InnovaSelfBundle:Group:rights.html.twig")
      */
     public function handleRightsAction(Group $group)
     {
@@ -45,7 +45,7 @@ class RightUserGroupController extends Controller
      *
      * @Route("/group/{groupId}/rights/add", name="editor_group_rights_add")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Group/rights_form.html.twig")
+     * @Template("InnovaSelfBundle:Group:rights_form.html.twig")
      */
     public function createRightsAction(Group $group, Request $request)
     {
@@ -71,7 +71,7 @@ class RightUserGroupController extends Controller
      *
      * @Route("/group/{groupId}/rights/{rightId}/edit", name="editor_group_rights_edit")
      * @Method({"GET", "POST"})
-     * @Template("InnovaSelfBundle:Features:Group/rights_form.html.twig")
+     * @Template("InnovaSelfBundle:Group:rights_form.html.twig")
      */
     public function editRightsAction(Group $group, RightUserGroup $rightUserGroup, Request $request)
     {
@@ -96,7 +96,7 @@ class RightUserGroupController extends Controller
      *
      * @Route("/group/{groupId}/right/{rightId}/delete", name="editor_group_rights_delete", options = {"expose"=true})
      * @Method("GET")
-     * @Template("InnovaSelfBundle:Features:Group/list.html.twig")
+     * @Template("InnovaSelfBundle:Group:list.html.twig")
      */
     public function deleteRightAction(Group $group, RightUserGroup $rightUserGroup)
     {

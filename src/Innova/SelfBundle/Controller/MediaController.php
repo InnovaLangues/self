@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Editor;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +14,6 @@ use Innova\SelfBundle\Entity\Questionnaire;
 /**
  * Class MediaController
  * @Route(
- *      "admin/editor",
- *      name    = "",
  *      service = "innova_editor_media"
  * )
  * @ParamConverter("media", isOptional="true", class="InnovaSelfBundle:Media\Media", options={"id" = "mediaId"})

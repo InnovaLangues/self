@@ -1,6 +1,6 @@
 <?php
 
-namespace Innova\SelfBundle\Controller\Player;
+namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
