@@ -45,14 +45,14 @@ git pull
 php app/console cache:clear --env=prod --no-debug
 ```
 
-### Execute this command to add wkhtmltox tool to PDF export :
+### Download and install wkhtmltox tool  :
+[download from sourceforce](http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-wheezy-i386.deb?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fwkhtmltopdf%2Ffiles%2Farchive%2F0.12.1%2F&ts=1432210988&use_mirror=netcologne)
 ``` bash
-sudo dpkg -i wkhtmltox-0.12.1_linux-wheezy-amd64.deb
+sudo dpkg -i wkhtmltox-*_linux-wheezy-amd64.deb
 ```
 
-
+### Quality code services
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/InnovaLangues/self/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/InnovaLangues/self/?branch=master)
-
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/128adf45-d4c4-4397-be56-4e1a279f2a38/mini.png)](https://insight.sensiolabs.com/projects/128adf45-d4c4-4397-be56-4e1a279f2a38)
-
 [![Codacy Badge](https://www.codacy.com/project/badge/8121c45e21754233afcace1e6a998b9c)](https://www.codacy.com/app/arnaudbey_2541/self)
+[![Code Climate](https://codeclimate.com/github/InnovaLangues/self/badges/gpa.svg)](https://codeclimate.com/github/InnovaLangues/self)
