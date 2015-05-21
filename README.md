@@ -49,3 +49,10 @@ php app/console cache:clear --env=prod --no-debug
 ``` bash
 sudo dpkg -i wkhtmltox-0.12.1_linux-wheezy-amd64.deb
 ```
+
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/InnovaLangues/self/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/InnovaLangues/self/?branch=master)
+
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/128adf45-d4c4-4397-be56-4e1a279f2a38/mini.png)](https://insight.sensiolabs.com/projects/128adf45-d4c4-4397-be56-4e1a279f2a38)
+
+[![Codacy Badge](https://www.codacy.com/project/badge/8121c45e21754233afcace1e6a998b9c)](https://www.codacy.com/app/arnaudbey_2541/self)
