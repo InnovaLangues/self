@@ -221,7 +221,7 @@ class SessionController extends Controller
             $em->flush();
         }
 
-        return $test->getId();
+        return $this->redirect($this->generateUrl('csv-export-show', array('testId' => $test->getId(), 'tia' => 0)));
     }
 
     /**
