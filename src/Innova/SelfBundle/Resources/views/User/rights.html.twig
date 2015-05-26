@@ -20,7 +20,7 @@
 				   			{{ right.name | trans }}
 				   			<span class="pull-right">
 				   				<a href="{{ path('admin_user_toggle_right', { 'userId': user.id, 'rightId': right.id }) }}">
-					   				{% if checkRight(right.name) %}
+					   				{% if checkUserRight(user, right.name) %}
 					   					<span class="text-success glyphicon glyphicon-ok"></span>
 					   				{% else %}
 					   				    <span class="text-danger glyphicon glyphicon-remove"></span>
