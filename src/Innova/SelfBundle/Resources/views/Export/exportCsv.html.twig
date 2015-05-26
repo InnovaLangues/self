@@ -30,6 +30,7 @@
                         <h4 class="modal-title" id="myModalLabel">Selection d'une session à exporter</h4>
                     </div>
                     <div class="modal-body">
+                        {% if test.sessions is not empty %}
                         <ul class="list-group">
                         {% for session in test.sessions %}
                             <li class="list-group-item">
@@ -41,6 +42,10 @@
                             </li>
                         {% endfor %}
                         </ul>
+                        {% else %}
+                            <a href="{{ path('create_session_for_export', {'testId': test.id } )}}"  class="btn btn-default btn-xs">Créer une session à partir des traces déjà présentes.</a>
+                            
+                        {% endif %}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>

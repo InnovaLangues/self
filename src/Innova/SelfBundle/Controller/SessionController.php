@@ -189,6 +189,42 @@ class SessionController extends Controller
     }
 
     /**
+     *
+     * @Route("/test/{testId}/create-session", name="create_session_for_export")
+     * @Method("GET")
+     */
+    public function createSessionForExportAction(Test $test)
+    {
+        if ($test->getSessions()->isEmpty()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $session = new Session();
+            $session->setName('Session '.$test->getId());
+            $session->setActif(false);
+            $session->setTest($test);
+            $session->setPasswd("passwd");
+
+            $em->persist($session);
+            $em->flush();
+
+            $test->addSession($session);
+            $em->persist($test);
+            $em->flush();
+
+            $traces = $em->getRepository("InnovaSelfBundle:Trace")->findBy(array("session" => null, "test" => $test));
+
+            foreach ($traces as $trace) {
+                $trace->setSession($session);
+                $em->persist($trace);
+            }
+
+            $em->flush();
+        }
+
+        return $test->getId();
+    }
+
+    /**
      * Handles session form
      */
     private function handleForm(Session $session, $request)
