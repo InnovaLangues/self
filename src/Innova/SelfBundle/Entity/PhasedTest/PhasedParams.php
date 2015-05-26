@@ -24,46 +24,40 @@ class PhasedParams
     /**
      * @var integer
      *
-     * @ORM\Column(name="step2_threshold", type="integer")
+     * @ORM\Column(name="thresholdToStep2", type="integer")
      */
-    private $step2Threshold = 33;
+    private $thresholdToStep2 = 33;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="step3_threshold", type="integer")
+     * @ORM\Column(name="thresholdToStep2Leveled", type="integer")
      */
-    private $step3Threshold = 66;
+    private $thresholdToStep2Leveled = 50;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
     */
-    protected $lowerPart1;
+    protected $thresholdToStep2Level;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="thresholdToStep3", type="integer")
+     */
+    private $thresholdToStep3 = 66;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="thresholdToStep3Leveled", type="integer")
+     */
+    private $thresholdToStep3Leveled = 50;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
     */
-    protected $upperPart1;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
-    */
-    protected $lowerPart2;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
-    */
-    protected $upperPart2;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
-    */
-    protected $lowerPart3;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
-    */
-    protected $upperPart3;
+    protected $thresholdToStep3Level;
 
     /**
      * Get id
@@ -76,194 +70,146 @@ class PhasedParams
     }
 
     /**
-     * Set step2Threshold
+     * Set thresholdToStep2
      *
-     * @param integer $step2Threshold
+     * @param integer $thresholdToStep2
      *
      * @return PhasedParams
      */
-    public function setStep2Threshold($step2Threshold)
+    public function setThresholdToStep2($thresholdToStep2)
     {
-        $this->step2Threshold = $step2Threshold;
+        $this->thresholdToStep2 = $thresholdToStep2;
 
         return $this;
     }
 
     /**
-     * Get step2Threshold
+     * Get thresholdToStep2
      *
      * @return integer
      */
-    public function getStep2Threshold()
+    public function getThresholdToStep2()
     {
-        return $this->step2Threshold;
+        return $this->thresholdToStep2;
     }
 
     /**
-     * Set step3Threshold
+     * Set thresholdToStep2Leveled
      *
-     * @param integer $step3Threshold
+     * @param integer $thresholdToStep2Leveled
      *
      * @return PhasedParams
      */
-    public function setStep3Threshold($step3Threshold)
+    public function setThresholdToStep2Leveled($thresholdToStep2Leveled)
     {
-        $this->step3Threshold = $step3Threshold;
+        $this->thresholdToStep2Leveled = $thresholdToStep2Leveled;
 
         return $this;
     }
 
     /**
-     * Get step3Threshold
+     * Get thresholdToStep2Leveled
      *
      * @return integer
      */
-    public function getStep3Threshold()
+    public function getThresholdToStep2Leveled()
     {
-        return $this->step3Threshold;
+        return $this->thresholdToStep2Leveled;
     }
 
     /**
-     * Set lowerPart1
+     * Set thresholdToStep3
      *
-     * @param \Innova\SelfBundle\Entity\Level $lowerPart1
+     * @param integer $thresholdToStep3
      *
      * @return PhasedParams
      */
-    public function setLowerPart1(\Innova\SelfBundle\Entity\Level $lowerPart1 = null)
+    public function setThresholdToStep3($thresholdToStep3)
     {
-        $this->lowerPart1 = $lowerPart1;
+        $this->thresholdToStep3 = $thresholdToStep3;
 
         return $this;
     }
 
     /**
-     * Get lowerPart1
+     * Get thresholdToStep3
      *
-     * @return \Innova\SelfBundle\Entity\Level
+     * @return integer
      */
-    public function getLowerPart1()
+    public function getThresholdToStep3()
     {
-        return $this->lowerPart1;
+        return $this->thresholdToStep3;
     }
 
     /**
-     * Set upperPart1
+     * Set thresholdToStep3Leveled
      *
-     * @param \Innova\SelfBundle\Entity\Level $upperPart1
+     * @param integer $thresholdToStep3Leveled
      *
      * @return PhasedParams
      */
-    public function setUpperPart1(\Innova\SelfBundle\Entity\Level $upperPart1 = null)
+    public function setThresholdToStep3Leveled($thresholdToStep3Leveled)
     {
-        $this->upperPart1 = $upperPart1;
+        $this->thresholdToStep3Leveled = $thresholdToStep3Leveled;
 
         return $this;
     }
 
     /**
-     * Get upperPart1
+     * Get thresholdToStep3Leveled
      *
-     * @return \Innova\SelfBundle\Entity\Level
+     * @return integer
      */
-    public function getUpperPart1()
+    public function getThresholdToStep3Leveled()
     {
-        return $this->upperPart1;
+        return $this->thresholdToStep3Leveled;
     }
 
     /**
-     * Set lowerPart2
+     * Set thresholdToStep2Level
      *
-     * @param \Innova\SelfBundle\Entity\Level $lowerPart2
+     * @param \Innova\SelfBundle\Entity\Level $thresholdToStep2Level
      *
      * @return PhasedParams
      */
-    public function setLowerPart2(\Innova\SelfBundle\Entity\Level $lowerPart2 = null)
+    public function setThresholdToStep2Level(\Innova\SelfBundle\Entity\Level $thresholdToStep2Level = null)
     {
-        $this->lowerPart2 = $lowerPart2;
+        $this->thresholdToStep2Level = $thresholdToStep2Level;
 
         return $this;
     }
 
     /**
-     * Get lowerPart2
+     * Get thresholdToStep2Level
      *
      * @return \Innova\SelfBundle\Entity\Level
      */
-    public function getLowerPart2()
+    public function getThresholdToStep2Level()
     {
-        return $this->lowerPart2;
+        return $this->thresholdToStep2Level;
     }
 
     /**
-     * Set lowerPart3
+     * Set thresholdToStep3Level
      *
-     * @param \Innova\SelfBundle\Entity\Level $lowerPart3
+     * @param \Innova\SelfBundle\Entity\Level $thresholdToStep3Level
      *
      * @return PhasedParams
      */
-    public function setLowerPart3(\Innova\SelfBundle\Entity\Level $lowerPart3 = null)
+    public function setThresholdToStep3Level(\Innova\SelfBundle\Entity\Level $thresholdToStep3Level = null)
     {
-        $this->lowerPart3 = $lowerPart3;
+        $this->thresholdToStep3Level = $thresholdToStep3Level;
 
         return $this;
     }
 
     /**
-     * Get lowerPart3
+     * Get thresholdToStep3Level
      *
      * @return \Innova\SelfBundle\Entity\Level
      */
-    public function getLowerPart3()
+    public function getThresholdToStep3Level()
     {
-        return $this->lowerPart3;
-    }
-
-    /**
-     * Set upperPart3
-     *
-     * @param \Innova\SelfBundle\Entity\Level $upperPart3
-     *
-     * @return PhasedParams
-     */
-    public function setUpperPart3(\Innova\SelfBundle\Entity\Level $upperPart3 = null)
-    {
-        $this->upperPart3 = $upperPart3;
-
-        return $this;
-    }
-
-    /**
-     * Get upperPart3
-     *
-     * @return \Innova\SelfBundle\Entity\Level
-     */
-    public function getUpperPart3()
-    {
-        return $this->upperPart3;
-    }
-
-    /**
-     * Set upperPart2
-     *
-     * @param \Innova\SelfBundle\Entity\Level $upperPart2
-     *
-     * @return PhasedParams
-     */
-    public function setUpperPart2(\Innova\SelfBundle\Entity\Level $upperPart2 = null)
-    {
-        $this->upperPart2 = $upperPart2;
-
-        return $this;
-    }
-
-    /**
-     * Get upperPart2
-     *
-     * @return \Innova\SelfBundle\Entity\Level
-     */
-    public function getUpperPart2()
-    {
-        return $this->upperPart2;
+        return $this->thresholdToStep3Level;
     }
 }
