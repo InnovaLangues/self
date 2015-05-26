@@ -26,21 +26,14 @@ class PhasedParams
      *
      * @ORM\Column(name="step2_threshold", type="integer")
      */
-    private $step2Threshold = 25;
+    private $step2Threshold = 33;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="step3_threshold", type="integer")
      */
-    private $step3Threshold = 50;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="step4_threshold", type="integer")
-     */
-    private $step4Threshold = 75;
+    private $step3Threshold = 66;
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
@@ -71,16 +64,6 @@ class PhasedParams
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
     */
     protected $upperPart3;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
-    */
-    protected $lowerPart4;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
-    */
-    protected $upperPart4;
 
     /**
      * Get id
@@ -138,30 +121,6 @@ class PhasedParams
     public function getStep3Threshold()
     {
         return $this->step3Threshold;
-    }
-
-    /**
-     * Set step4Threshold
-     *
-     * @param integer $step4Threshold
-     *
-     * @return PhasedParams
-     */
-    public function setStep4Threshold($step4Threshold)
-    {
-        $this->step4Threshold = $step4Threshold;
-
-        return $this;
-    }
-
-    /**
-     * Get step4Threshold
-     *
-     * @return integer
-     */
-    public function getStep4Threshold()
-    {
-        return $this->step4Threshold;
     }
 
     /**
@@ -282,54 +241,6 @@ class PhasedParams
     public function getUpperPart3()
     {
         return $this->upperPart3;
-    }
-
-    /**
-     * Set lowerPart4
-     *
-     * @param \Innova\SelfBundle\Entity\Level $lowerPart4
-     *
-     * @return PhasedParams
-     */
-    public function setLowerPart4(\Innova\SelfBundle\Entity\Level $lowerPart4 = null)
-    {
-        $this->lowerPart4 = $lowerPart4;
-
-        return $this;
-    }
-
-    /**
-     * Get lowerPart4
-     *
-     * @return \Innova\SelfBundle\Entity\Level
-     */
-    public function getLowerPart4()
-    {
-        return $this->lowerPart4;
-    }
-
-    /**
-     * Set upperPart4
-     *
-     * @param \Innova\SelfBundle\Entity\Level $upperPart4
-     *
-     * @return PhasedParams
-     */
-    public function setUpperPart4(\Innova\SelfBundle\Entity\Level $upperPart4 = null)
-    {
-        $this->upperPart4 = $upperPart4;
-
-        return $this;
-    }
-
-    /**
-     * Get upperPart4
-     *
-     * @return \Innova\SelfBundle\Entity\Level
-     */
-    public function getUpperPart4()
-    {
-        return $this->upperPart4;
     }
 
     /**

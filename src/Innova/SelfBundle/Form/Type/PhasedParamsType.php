@@ -21,12 +21,6 @@ class PhasedParamsType extends AbstractType
             'translation_domain' => 'messages',
         ));
 
-        $builder->add('step4Threshold', 'integer', array(
-            'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.step4Threshold',
-            'translation_domain' => 'messages',
-        ));
-
         $builder->add('lowerPart1', 'entity', array(
             'class' => 'InnovaSelfBundle:Level',
             'property' => 'name',
@@ -78,24 +72,6 @@ class PhasedParamsType extends AbstractType
             'empty_value' => "-",
             'attr' => array('class' => 'form-control identity-select'),
             'label'  => 'phased.upperpart3',
-            'translation_domain' => 'messages',
-        ));
-
-        $builder->add('lowerPart4', 'entity', array(
-            'class' => 'InnovaSelfBundle:Level',
-            'property' => 'name',
-            'empty_value' => "-",
-            'attr' => array('class' => 'form-control identity-select'),
-            'label'  => 'phased.lowerpart4',
-            'translation_domain' => 'messages',
-        ));
-
-        $builder->add('upperPart4', 'entity', array(
-            'class' => 'InnovaSelfBundle:Level',
-            'property' => 'name',
-            'empty_value' => "-",
-            'attr' => array('class' => 'form-control identity-select'),
-            'label'  => 'phased.upperpart4',
             'translation_domain' => 'messages',
         ));
 

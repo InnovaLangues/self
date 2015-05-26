@@ -1,7 +1,7 @@
 {% import _self as macros %}
 
-{% set thresholds = [null, null, 0, test.phasedParams.step2Threshold, test.phasedParams.step3Threshold, test.phasedParams.step4Threshold, null ] %}
-{% set parts = [null, null, null, test.phasedParams.lowerPart1, test.phasedParams.upperPart1, test.phasedParams.lowerPart2, test.phasedParams.upperPart2, test.phasedParams.lowerPart3, test.phasedParams.upperPart3, test.phasedParams.lowerPart4, test.phasedParams.upperPart4 ] %}
+{% set thresholds = [null, null, 0, test.phasedParams.step2Threshold, test.phasedParams.step3Threshold, null ] %}
+{% set parts = [null, null, null, test.phasedParams.lowerPart1, test.phasedParams.upperPart1, test.phasedParams.lowerPart2, test.phasedParams.upperPart2, test.phasedParams.lowerPart3, test.phasedParams.upperPart3 ] %}
 
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -17,13 +17,12 @@
             {{ macros.panelComponentType(test, 2, "step1", thresholds, parts) }}
             {{ macros.panelComponentType(test, 3, "step2", thresholds, parts) }}
             {{ macros.panelComponentType(test, 4, "step3", thresholds, parts) }}
-            {{ macros.panelComponentType(test, 5, "step4", thresholds, parts) }}
         </div>
     </div>
 </div>
 
 {% macro panelComponentType(test, type, typeName, thresholds, parts) %}
-    <div class="col-md-3" {% if type == 1 %}style="float:none;margin: 0 auto;"{% endif %}>
+    <div class="col-md-4" {% if type == 1 %}style="float:none;margin: 0 auto;"{% endif %}>
         <div class="panel panel-info">
             <div class="panel-heading">
                 {% set nameTrans = "phased."~typeName %}

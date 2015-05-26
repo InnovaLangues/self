@@ -8,7 +8,7 @@
 {% endif %}
 
 {% for orderQuestionnaireComponent in component.orderQuestionnaireComponents %}
-    <li id="order{{ orderQuestionnaireComponent.id }}" class="list-group-item questionnaire" data-order-id="{{ orderQuestionnaireComponent.id }}">{{ orderQuestionnaireComponent.questionnaire.theme |truncate(15) }}
+    <li id="order{{ orderQuestionnaireComponent.id }}" class="list-group-item questionnaire" data-order-id="{{ orderQuestionnaireComponent.id }}">{{ orderQuestionnaireComponent.questionnaire.theme |truncate(25) }}
     	<span class="pull-right">
             {% if canEdit %}
         		<a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': orderQuestionnaireComponent.questionnaire.id, 'testId': component.test.id }) }}" toggle="tooltip" data-original-title="{{ "generic.edit" | trans }}">
