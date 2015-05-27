@@ -124,18 +124,8 @@ class PlayerManager
             if (count($componentsDone) >= 2) {
                 return;
             } else {
-                $score = $this->scoreManager->calculateScoreByComponent($test, $session, $component);
-                // si c'est un mitest on est redirigé vers une des étapes
                 if ($componentTypeName == "minitest") {
-                    if ($score < $test->getPhasedParams()->getStep2Threshold()) {
-                        $nextComponentTypeName = "step1";
-                    } elseif ($score < $test->getPhasedParams()->getStep3Threshold()) {
-                        $nextComponentTypeName = "step2";
-                    } elseif ($score < $test->getPhasedParams()->getStep4Threshold()) {
-                        $nextComponentTypeName = "step3";
-                    } else {
-                        $nextComponentTypeName = "step4";
-                    }
+                    $nextComponentTypeName = $this->scoreManager->orientateToStep($component, $this->user, $session);
                 }
             }
         } else {
