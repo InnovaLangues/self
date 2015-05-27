@@ -79,7 +79,7 @@ class ScoreManager
                 $skill = $questionnaire->getSkill()->getName();
                 $level = $questionnaire->getLevel()->getName();
 
-                if ($this->subquestionCorrect($subquestion, $session, $component, $user)) {
+                if ($this->subquestionCorrect($subquestion, $session, null, $user)) {
                     $scores[$skill][$level]["correct"]++;
                 }
                 $scores[$skill][$level]["count"]++;
@@ -112,7 +112,7 @@ class ScoreManager
         return $correctAnswers;
     }
 
-    private function subquestionCorrect(Subquestion $subquestion, Session $session, Component $component = null, $user)
+    private function subquestionCorrect(Subquestion $subquestion, Session $session, Component $component = null, User $user)
     {
         $correct = true;
         $rightProps = $this->propositionRepo->findBy(array("subquestion" => $subquestion, "rightAnswer" => true));
