@@ -27,6 +27,11 @@ class Subquestion
     protected $typology;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
+    */
+    protected $level;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
@@ -493,5 +498,53 @@ class Subquestion
     public function getCognitiveOpsSecondary()
     {
         return $this->cognitiveOpsSecondary;
+    }
+
+    /**
+     * Set level
+     *
+     * @param \Innova\SelfBundle\Entity\Level $level
+     *
+     * @return Subquestion
+     */
+    public function setLevel(\Innova\SelfBundle\Entity\Level $level = null)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return \Innova\SelfBundle\Entity\Level
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Add focus
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus
+     *
+     * @return Subquestion
+     */
+    public function addFocus(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus)
+    {
+        $this->focuses[] = $focus;
+
+        return $this;
+    }
+
+    /**
+     * Remove focus
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus
+     */
+    public function removeFocus(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus)
+    {
+        $this->focuses->removeElement($focus);
     }
 }

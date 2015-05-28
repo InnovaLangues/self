@@ -9,6 +9,15 @@ class SubquestionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('level', 'entity', array(
+            'class' => 'InnovaSelfBundle:Level',
+            'property' => 'name',
+            'empty_value' => "-",
+            'attr' => array('class' => 'form-control identity-select'),
+            'label'  => 'level',
+            'translation_domain' => 'messages',
+        ));
+
         $builder->add('focuses', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Focus',
                 'property' => 'name',

@@ -1,4 +1,8 @@
 <form id="subquestion-identity">
+    {{ form_label(form.level) }}
+    {{ form_widget(form.level) }}
+
+    <hr/>
 
     {{ form_label(form.focuses) }}
     {{ form_widget(form.focuses) }}
@@ -15,5 +19,4 @@
 
     <br/>
     {{ form_rest(form) }}
-
 </form>
