@@ -30,7 +30,7 @@ class ScoreManager
         $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session, 'component' => $component));
         $scores = $this->getScoresFromTraces($traces);
 
-        return $score;
+        return $scores;
     }
 
     public function calculateScoreByTest(Test $test, Session $session, User $user)
@@ -43,20 +43,21 @@ class ScoreManager
 
     public function orientateToStep(User $user, Session $session, Component $component)
     {
-        $scores = $this->getScoreBySkillByLevelForComponent($session->getTest(), $session, $component, $user);
+        $test = $session->getTest();
+        $scores = $this->getScoreBySkillByLevelForComponent($test, $session, $component, $user);
         $rightAnswers = $this->countCorrectAnswers($scores);
 
-        $thresholdToStep3 = $test->getPhasedParams->getThresholdToStep3();
-        $thresholdToStep3Leveled = $test->getPhasedParams->getThresholdToStep3Leveled();
-        $thresholdToStep3Level = $test->getPhasedParams->getThresholdToStep3Level();
+        $thresholdToStep3 = $test->getPhasedParams()->getThresholdToStep3();
+        $thresholdToStep3Leveled = $test->getPhasedParams()->getThresholdToStep3Leveled();
+        $thresholdToStep3Level = $test->getPhasedParams()->getThresholdToStep3Level();
         $rightAnswersStep3Level = $this->countCorrectAnswersByLevel($scores, $thresholdToStep3Level);
 
         if ($rightAnswers >= $thresholdToStep3 && $rightAnswersStep3Level >= $thresholdToStep3Leveled) {
             $nextComponentTypeName = "step3";
         } else {
-            $thresholdToStep2 = $test->getPhasedParams->getThresholdToStep2();
-            $thresholdToStep2Leveled = $test->getPhasedParams->getThresholdToStep2Leveled();
-            $thresholdToStep2Level = $test->getPhasedParams->getThresholdToStep2Level();
+            $thresholdToStep2 = $test->getPhasedParams()->getThresholdToStep2();
+            $thresholdToStep2Leveled = $test->getPhasedParams()->getThresholdToStep2Leveled();
+            $thresholdToStep2Level = $test->getPhasedParams()->getThresholdToStep2Level();
             $rightAnswersStep2Level = $this->countCorrectAnswersByLevel($scores, $thresholdToStep2Level);
             if ($rightAnswers >= $thresholdToStep2 && $rightAnswersStep2Level >= $thresholdToStep2Leveled) {
                 $nextComponentTypeName = "step2";
@@ -73,7 +74,10 @@ class ScoreManager
         $scores = $this->initializeScoreArray();
 
         foreach ($traces as $trace) {
+            $session = $trace->getSession();
             $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
+            $user = $trace->getUser();
+
             foreach ($subquestions as $subquestion) {
                 $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
                 $skill = $questionnaire->getSkill()->getName();
@@ -105,8 +109,9 @@ class ScoreManager
     {
         $levelName = $level->getName();
         $correctAnswers = 0;
+
         foreach ($scores as $skill => $levels) {
-            $correctAnswers += $skill[$levelName]["correct"];
+            $correctAnswers += $scores[$skill][$levelName]["correct"];
         }
 
         return $correctAnswers;

@@ -125,7 +125,7 @@ class PlayerManager
                 return;
             } else {
                 if ($componentTypeName == "minitest") {
-                    $nextComponentTypeName = $this->scoreManager->orientateToStep($component, $this->user, $session);
+                    $nextComponentTypeName = $this->scoreManager->orientateToStep($this->user, $session, $component);
                 }
             }
         } else {
