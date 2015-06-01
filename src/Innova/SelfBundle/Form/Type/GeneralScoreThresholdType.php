@@ -14,13 +14,13 @@ class GeneralScoreThresholdType extends AbstractType
             'class' => 'InnovaSelfBundle:PhasedTest\ComponentType',
             'property' => 'name',
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.componentType',
+            'label'  => 'phased.threshold.componentType',
             'translation_domain' => 'messages',
         ));
 
         $builder->add('rightAnswers', 'integer', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.rightAnswers',
+            'label'  => 'phased.threshold.rightAnswers',
             'translation_domain' => 'messages',
         ));
 
@@ -29,13 +29,13 @@ class GeneralScoreThresholdType extends AbstractType
             'property' => 'name',
             'empty_value' => "-",
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.level',
+            'label'  => 'phased.threshold.level',
             'translation_domain' => 'messages',
         ));
 
         $builder->add('description', 'text', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.description',
+            'label'  => 'phased.threshold.description',
             'translation_domain' => 'messages',
         ));
     }

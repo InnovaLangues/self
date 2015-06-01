@@ -113,9 +113,10 @@ class PlayerController
      */
     public function endAction(Test $test, Session $session)
     {
+        $levelFeedback = $this->scoreManager->getGlobalLevelFromThreshold($session, $this->user);
         $score = $this->scoreManager->calculateScoreByTest($test, $session, $this->user);
 
-        return array("score" => $score, "session" => $session);
+        return array("score" => $score, "session" => $session, "levelFeedback" => $levelFeedback);
     }
 
     /**

@@ -85,15 +85,17 @@
 		</div>
 		</div>
 	</div>
-
+	{{ form_widget(form._token) }}
 	{{ form_widget(form.save) }}
+
+	{{ form_errors(form) }}
 </div>
 {% endblock %}
 
 
 {% block javascripts %}
     {{ parent() }}
-   <script>
+   	<script>
 	$(document).ready(function() {
 		var collectionHolder = $('ul.thresholds');
 

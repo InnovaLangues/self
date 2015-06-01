@@ -442,13 +442,17 @@ phased:
     create_alternative: Créer une alternative
     delete_alternative: Supprimer l'alternative
     parameters: Paramètres
-    step2Threshold: Nombre de bonnes réponses requis
-    step3Threshold: Nombre de bonnes réponses requis
-    step2ThresholdLeveled: Nombre de bonnes réponses requis pour un niveau donné 
-    step3ThresholdLeveled: Nombre de bonnes réponses requis pour un niveau donné 
+    step2Threshold: Nombre de bonnes réponses requises
+    step3Threshold: Nombre de bonnes réponses requises
+    step2ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné 
+    step3ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné 
     thresholdToStep3Level: Niveau
     thresholdToStep2Level: Niveau
-
+    threshold:
+        componentType: Etape concernée
+        rightAnswers: Nombre de bonnes réponses nécessaires
+        description: Feedback pour l'étudiant
+        level: Niveau
 channel:
     phone: Téléphone
     videoconf: Visioconférence

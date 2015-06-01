@@ -40,10 +40,11 @@ class ExportManager
         $fs->mkdir($pdfPathExport, 0777);
 
         $score = $this->scoreManager->calculateScoreByTest($session->getTest(), $session, $user);
+        $levelFeedback = $this->scoreManager->getGlobalLevelFromThreshold($session, $user);
 
         $this->knpSnappyPdf->generateFromHtml(
             $this->templating->render(
-                'InnovaSelfBundle:Export:exportUserPdf.html.twig', array('score' => $score, 'session' => $session)),
+                'InnovaSelfBundle:Export:exportUserPdf.html.twig', array('score' => $score, 'session' => $session, 'levelFeedback' => $levelFeedback)),
                 $fileName
         );
 

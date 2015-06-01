@@ -60,7 +60,7 @@ class PhasedParams
     protected $thresholdToStep3Level;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold", mappedBy="phasedParam")
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold", mappedBy="phasedParam", cascade={"persist"})
     */
     protected $generalScoreThresholds;
 

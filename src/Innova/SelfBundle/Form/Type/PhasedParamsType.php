@@ -55,6 +55,7 @@ class PhasedParamsType extends AbstractType
             'type' => new GeneralScoreThresholdType(),
             'allow_add' => true,
             'allow_delete' => true,
+            'mapped' => true,
             'by_reference' => false,
         ));
 

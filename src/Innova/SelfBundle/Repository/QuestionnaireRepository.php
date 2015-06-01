@@ -218,7 +218,7 @@ class QuestionnaireRepository extends EntityRepository
             SELECT otq FROM Innova\SelfBundle\Entity\orderQuestionnaireTest otq
             WHERE otq.questionnaire = q
             AND otq.test = :test
-        ) AND (q.language = :language OR q.language.id is NULL)
+        ) AND (q.language = :language OR q.language is NULL)
         ";
 
         $query = $this->_em->createQuery($dql)

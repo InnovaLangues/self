@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Doctrine\Common\Collections\ArrayCollection;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\PhasedTest\Component;
@@ -200,14 +201,34 @@ class PhasedTestController extends Controller
     public function editParamsAction(Test $test, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->get('form.factory')->createBuilder(new PhasedParamsType(), $test->getPhasedParams())->getForm();
 
+        $params = $test->getPhasedParams();
+
+        $thresholds = new ArrayCollection();
+        foreach ($params->getGeneralScoreThresholds() as $threshold) {
+            $thresholds->add($threshold);
+        }
+
+        $form = $this->get('form.factory')->createBuilder(new PhasedParamsType(), $params)->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $em->persist($test->getPhasedParams());
+                // remove unused threshold
+                foreach ($thresholds as $threshold) {
+                    if ($params->getGeneralScoreThresholds()->contains($threshold) == false) {
+                        $em->remove($threshold);
+                    }
+                }
+
+                foreach ($params->getGeneralScoreThresholds() as $threshold) {
+                    $threshold->setPhasedParam($params);
+                }
+
+                $em->persist($params);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'Les paramètres ont bien été modifiés.');
+            } else {
+                $this->get('session')->getFlashBag()->add('warning', 'error.');
             }
         }
 

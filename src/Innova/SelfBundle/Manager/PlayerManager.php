@@ -26,6 +26,7 @@ class PlayerManager
         $this->componentTypeRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\ComponentType');
         $this->orderQCRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent');
         $this->propositionRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
+        $this->generalScoreRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\GeneralScoreThreshold');
     }
 
     /**
@@ -85,7 +86,6 @@ class PlayerManager
                     // on récupère le 1er élement du composant
                     $nextOrderQuestionnaire = $this->pickNextQuestionnaire($nextComponent);
                 } else {
-                    // si pas de composant, c'est la fin
                     return;
                 }
             }

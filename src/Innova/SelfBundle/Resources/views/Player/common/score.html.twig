@@ -25,3 +25,11 @@
         </div>
     </div>
 {% endfor %}
+
+{% if levelFeedback is not null %}
+<div class="panel panel-default">
+	<div class="panel-body">
+		{{ levelFeedback }}
+	</div>
+</div>
+{% endif %}

@@ -69,6 +69,32 @@ class ScoreManager
         return $nextComponentTypeName;
     }
 
+    public function getGlobalLevelFromThreshold($session, $user)
+    {
+        $test = $session->getTest();
+        if ($test->getPhased()) {
+            $params = $test->getPhasedParams();
+
+            if ($traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session))) {
+                $lastTrace = end($traces);
+                $component = $lastTrace->getComponent();
+                $componentType = $component->getComponentType();
+
+                $thresholds = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\GeneralScoreThreshold')->findBy(
+                    array("phasedParam" => $params, "componentType" => $componentType),
+                    array('rightAnswers' => 'DESC')
+                );
+
+                $score = 2;
+                foreach ($thresholds as $threshold) {
+                    if ($score >= $threshold->getRightAnswers()) {
+                        return $threshold->getDescription();
+                    }
+                }
+            }
+        }
+    }
+
     private function getScoresFromTraces($traces)
     {
         $scores = $this->initializeScoreArray();
