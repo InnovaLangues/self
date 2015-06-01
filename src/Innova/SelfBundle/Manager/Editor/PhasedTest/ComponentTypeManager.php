@@ -36,6 +36,10 @@ class ComponentTypeManager
 
         foreach ($array as $el) {
             if ($r = $this->findByName($el)) {
+                $existingComponents = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->findByComponentType($r);
+                foreach ($existingComponents as $existingComponent) {
+                    $em->remove($existingComponent);
+                }
                 $em->remove($r);
             }
         }

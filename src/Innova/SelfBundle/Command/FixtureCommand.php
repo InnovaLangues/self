@@ -53,7 +53,8 @@ class FixtureCommand extends ContainerAwareCommand
         ));
 
         $componentTypeManager = $this->getContainer()->get("self.componentType.manager");
-        $componentTypeManager->create(array("minitest", "step1", "step2", "step3", "step4"));
+        $componentTypeManager->create(array("minitest", "step1", "step2", "step3"));
+        $componentTypeManager->delete(array("step4"));
 
         $clueTypeManager = $this->getContainer()->get("self.clueType.manager");
         $clueTypeManager->create(array(
