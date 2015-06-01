@@ -64,11 +64,72 @@
 	</div>
 
 	<div class="col-md-12">
-	{{ form_rest(form) }}
+		<div class="panel panel-default " >
+		<div class="panel-heading">
+			Seuils
+			<div class="pull-right">
+				<span id="add-threshold" class="btn btn-default btn-xs">Ajouter seuil</span>
+			</div>
+		</div>
+		<div class="panel-body">
+			    <ul class="list-group thresholds" data-prototype="{{ form_widget(form.generalScoreThresholds.vars.prototype)|e }}">
+			        {% for generalScoreThreshold in form.generalScoreThresholds %}
+			        	<li class="list-group-item">
+			            {{ form_row(generalScoreThreshold.componentType) }}
+			     		{{ form_row(generalScoreThreshold.rightAnswers) }}
+			            {{ form_row(generalScoreThreshold.description) }}
+			            {{ form_row(generalScoreThreshold.level) }}
+			            </li>
+			        {% endfor %}
+			    </ul>
+		</div>
+		</div>
 	</div>
-</div>
 
-{{ form_end(form) }}
+	{{ form_widget(form.save) }}
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+   <script>
+	$(document).ready(function() {
+		var collectionHolder = $('ul.thresholds');
+
+		collectionHolder.find('li').each(function() {
+	        addTagFormDeleteLink($(this));
+	    });
+
+	    $("#add-threshold").on('click', function(e) {
+	        e.preventDefault();
+	        addTagForm(collectionHolder);
+	    });
+	});
+
+	function addTagForm(collectionHolder) {
+	    // Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
+	    var prototype = collectionHolder.attr('data-prototype');
+	    // Remplace '__name__' dans le HTML du prototype par un nombre basé sur
+	    // la longueur de la collection courante
+	    var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+	    var newFormLi = $('<li class="list-group-item"></div>').append(newForm);
+
+	    collectionHolder.append(newFormLi);
+	    addTagFormDeleteLink(newFormLi);
+	}
+
+	function addTagFormDeleteLink(tagFormLi) {
+	    var $removeFormA = $('<a href="#">Supprimer ce seuil</a>');
+	    tagFormLi.append($removeFormA);
+	    $removeFormA.on('click', function(e) {
+	        // empêche le lien de créer un « # » dans l'URL
+	        e.preventDefault();
+	        // supprime l'élément li pour le formulaire de tag
+	        tagFormLi.remove();
+	    });
+	}
+	</script>
 
 
 {% endblock %}

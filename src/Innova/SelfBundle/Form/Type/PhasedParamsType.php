@@ -51,6 +51,13 @@ class PhasedParamsType extends AbstractType
             'translation_domain' => 'messages',
         ));
 
+        $builder->add('generalScoreThresholds', 'collection', array(
+            'type' => new GeneralScoreThresholdType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+        ));
+
         $builder->add('save', 'submit', array(
             'attr' => array('class' => 'btn btn-default'),
             'label'  => 'generic.validate',

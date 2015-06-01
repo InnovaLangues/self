@@ -60,6 +60,11 @@ class PhasedParams
     protected $thresholdToStep3Level;
 
     /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold", mappedBy="phasedParam")
+    */
+    protected $generalScoreThresholds;
+
+    /**
      * Get id
      *
      * @return integer
@@ -211,5 +216,46 @@ class PhasedParams
     public function getThresholdToStep3Level()
     {
         return $this->thresholdToStep3Level;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->generalScoreThresholds = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add generalScoreThreshold
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold $generalScoreThreshold
+     *
+     * @return PhasedParams
+     */
+    public function addGeneralScoreThreshold(\Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold $generalScoreThreshold)
+    {
+        $this->generalScoreThresholds[] = $generalScoreThreshold;
+
+        return $this;
+    }
+
+    /**
+     * Remove generalScoreThreshold
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold $generalScoreThreshold
+     */
+    public function removeGeneralScoreThreshold(\Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold $generalScoreThreshold)
+    {
+        $this->generalScoreThresholds->removeElement($generalScoreThreshold);
+    }
+
+    /**
+     * Get generalScoreThresholds
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGeneralScoreThresholds()
+    {
+        return $this->generalScoreThresholds;
     }
 }
