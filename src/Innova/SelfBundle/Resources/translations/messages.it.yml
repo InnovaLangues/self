@@ -438,7 +438,6 @@ phased:
     parameters: Paramètres
     step2Threshold: Seuil étape 2
     step3Threshold: Seuil étape 3
-    step4Threshold: Seuil étape 4
     lowerpart1: Niveau bas de l'étape 1
     lowerpart2: Niveau bas de l'étape 2
     lowerpart3: Niveau bas de l'étape 3
@@ -446,7 +445,6 @@ phased:
     upperpart1: Niveau haut de l'étape 1
     upperpart2: Niveau haut de l'étape 2
     upperpart3: Niveau haut de l'étape 3
-    upperpart4: Niveau haut de l'étape 4
 
 channel:
     phone: Téléphone

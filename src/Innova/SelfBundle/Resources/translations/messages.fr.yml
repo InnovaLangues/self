@@ -438,7 +438,6 @@ phased:
     step1: Etape 1
     step2: Etape 2
     step3: Etape 3
-    step4: Etape 4
     create_alternative: Créer une alternative
     delete_alternative: Supprimer l'alternative
     parameters: Paramètres
