@@ -115,7 +115,7 @@ editor:
         back_to_list: Retour à la liste des tâches
         list: Liste des tâches pour le test <strong>%testName%</strong>
         list_global: Liste des tâches
-        manage: Gérer les tâches
+        manage: Tâches
         count: Nombre de tâches
         create: Créer une tâche
         create_test: Créer une tâche pour ce test
@@ -264,7 +264,7 @@ editor:
         active: Actif
         list: Liste des sessions
         create: Créer une nouvelle session
-        manage: Gérer les sessions
+        manage: Sessions
         list_test: Liste des session pour le test
         edit: Editer la session
         results: Résultats pour la session
