@@ -51,42 +51,60 @@
                 {% endif %}
             </td>
 
-            <td class="text-right">
-                {% if canEditRights %}
-                <a class="btn btn-default btn-sm" href="{{ path('editor_test_rights', {'testId': test.id }) }}">
-                    <span class="glyphicon glyphicon-lock"></span> Permissions
-                </a>
-                {% endif %}
+            <td>
 
-                {% if checkRight("right.managesessiontest", test) %}
-                    <a class="btn btn-default btn-sm " href="{{ path('editor_test_sessions', { 'testId': test.id } )}}">
-                        <span class="glyphicon glyphicon-calendar"></span> {{ 'editor.session.manage' | trans }}
-                    </a>
-                {% endif %}
 
-                {% if is_granted('ROLE_ADMIN') %}
-                    {% if checkRight("right.edittest", test) %}
-                        <a class="btn btn-default btn-sm" href="{{ path('editor_test_edit', { 'testId': test.id }) }}">
-                            <span class="glyphicon glyphicon-cog"></span> {{ 'generic.edit' | trans }}
-                        </a>
-                    {% endif %}
+                <div class="btn-group">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Options <span class="caret"></span>
+                    </button>
 
-                    {% if checkRight("right.managetaskstest", test) %}
-                        <a class="btn btn-default btn-sm" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
-                            <span class="glyphicon glyphicon-edit"></span> {{ 'editor.task.manage' | trans }}
-                        </a>
-                    {% endif %}
+                    <ul class="dropdown-menu" role="menu">
+                        {% if canEditRights %}
+                        <li>
+                            <a href="{{ path('editor_test_rights', {'testId': test.id }) }}">
+                                <span class="glyphicon glyphicon-lock"></span> Permissions
+                            </a>
+                        </li>
+                        {% endif %}
 
-                    {% if test in app.user.favoritesTests %}
-                         <a class="btn btn-default btn-sm toggle-favorite" data-original-title="{{ 'editor.test.remove_from_favorites' | trans }}" data-test-id="{{ test.id }}">
-                            <span class="glyphicon glyphicon-star"></span>
-                        </a>
-                    {% else %}
-                        <a class="btn btn-default btn-sm toggle-favorite" data-original-title="{{ 'editor.test.add_to_favorites' | trans }}" data-test-id="{{ test.id }}">
-                            <span class="glyphicon glyphicon-star-empty" ></span>
-                        </a>
-                    {% endif %}
-                {% endif %}
+                        {% if checkRight("right.managesessiontest", test) %}
+                        <li>
+                            <a href="{{ path('editor_test_sessions', { 'testId': test.id } )}}">
+                                <span class="glyphicon glyphicon-calendar"></span> {{ 'editor.session.manage' | trans }}
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if checkRight("right.edittest", test) %}
+                        <li>
+                            <a  href="{{ path('editor_test_edit', { 'testId': test.id }) }}">
+                                <span class="glyphicon glyphicon-cog"></span> {{ 'generic.edit' | trans }}
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if checkRight("right.managetaskstest", test) %}
+                        <li>
+                            <a href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
+                                <span class="glyphicon glyphicon-edit"></span> {{ 'editor.task.manage' | trans }}
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <li>
+                            <a class="toggle-favorite" data-test-id="{{ test.id }}" href="#">
+                                {% if test in app.user.favoritesTests %}
+                                        <span class="glyphicon glyphicon-star"></span> {{ 'editor.test.remove_from_favorites' | trans }}
+                                    
+                                {% else %}
+                                        <span class="glyphicon glyphicon-star-empty" ></span> {{ 'editor.test.add_to_favorites' | trans }}
+                                {% endif %}
+                            </a>
+                        </li>
+                     </ul>
+                </div>
+
             </td>
         </tr>
     {% endfor %}
