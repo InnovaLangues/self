@@ -97,7 +97,7 @@ class SessionController extends Controller
 
     /**
      *
-     * @Route("/test/{testId}/session/{sessionId}", name="editor_test_edit_session")
+     * @Route("/test/{testId}/session/{sessionId}/edit", name="editor_test_edit_session")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Session:new.html.twig")
      */
