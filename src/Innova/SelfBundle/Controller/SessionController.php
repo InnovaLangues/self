@@ -221,6 +221,8 @@ class SessionController extends Controller
             $em->flush();
         }
 
+        $this->get("session")->getFlashBag()->set('info', "La session a bien été créée à partir des traces");
+
         return $this->redirect($this->generateUrl('csv-export-show', array('testId' => $test->getId(), 'tia' => 0)));
     }
 
