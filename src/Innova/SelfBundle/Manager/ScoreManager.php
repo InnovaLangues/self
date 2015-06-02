@@ -72,6 +72,7 @@ class ScoreManager
     public function getGlobalLevelFromThreshold($session, $user)
     {
         $test = $session->getTest();
+
         if ($test->getPhased()) {
             $params = $test->getPhasedParams();
 
@@ -85,14 +86,19 @@ class ScoreManager
                     array('rightAnswers' => 'DESC')
                 );
 
-                $score = 2;
+                $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session, 'component' => $component));
+                $scoresLastComponent = $this->getScoresFromTraces($traces);
+                $correctAnswers = $this->countCorrectAnswers($scoresLastComponent);
+
                 foreach ($thresholds as $threshold) {
-                    if ($score >= $threshold->getRightAnswers()) {
+                    if ($correctAnswers >= $threshold->getRightAnswers()) {
                         return $threshold->getDescription();
                     }
                 }
             }
         }
+
+        return;
     }
 
     private function getScoresFromTraces($traces)
