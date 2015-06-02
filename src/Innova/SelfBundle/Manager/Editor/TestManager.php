@@ -75,6 +75,11 @@ class TestManager
             $newTest->addComponent($newComponent);
         }
 
+        if ($phased) {
+            $params = $this->phasedTestManager->initializeParams();
+            $newTest->setPhasedParams($params);
+        }
+
         $this->entityManager->persist($newTest);
         $this->entityManager->flush();
 
