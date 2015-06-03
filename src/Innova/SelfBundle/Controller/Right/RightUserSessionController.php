@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * RightUserSession controller.
  *
- * @Route("right-user-session-management")
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  * @ParamConverter("rightUserSession", isOptional="true", class="InnovaSelfBundle:Right\RightUserSession", options={"id" = "rightId"})
  */

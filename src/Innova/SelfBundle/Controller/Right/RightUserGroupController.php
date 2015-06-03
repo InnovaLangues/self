@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * RightUserGroup controller.
  *
- * @Route("right-user-group-management")
  * @ParamConverter("group", isOptional="true", class="InnovaSelfBundle:Group", options={"id" = "groupId"})
  * @ParamConverter("rightUserGroup", isOptional="true", class="InnovaSelfBundle:Right\RightUserGroup", options={"id" = "rightId"})
  */

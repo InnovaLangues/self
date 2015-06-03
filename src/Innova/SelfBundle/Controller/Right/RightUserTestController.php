@@ -15,7 +15,6 @@ use Innova\SelfBundle\Form\Type\Right\RightUserTestType;
 /**
  * RightUserTest controller.
  *
- * @Route("right-user-test-management")
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})
  * @ParamConverter("rightUserTest", isOptional="true", class="InnovaSelfBundle:Right\RightUserTest", options={"id" = "rightId"})
  */
