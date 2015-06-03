@@ -49,6 +49,7 @@
 
                                         {% if checkRight("right.listtest") or checkRight("right.createtest") or hasRightsOnGroup("RightUserTest") %}
                                             <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
+                                            <li><a href="{{path('editor_tests_my_favorites')}}">Tests favoris</a></li>
                                             <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
                                             <li class="divider"></li>
                                             {% set languages = get_languages() %}
@@ -64,17 +65,6 @@
                                                     </a>
                                                 </li>
                                             {% endif %}
-
-                                            <li class="dropdown-submenu">
-                                                <a tabindex="-1" href="#"><span class="glyphicon glyphicon-star"></span> Favoris</a>
-                                                {% if app.user.favoritesTests|length > 0 %}
-                                                <ul class="dropdown-menu" id="user-favorites">
-                                                    {% for favorite in app.user.favoritesTests %}
-                                                        <li data-favorite-id="{{ favorite.id }}"><a  href="{{ path('editor_test_questionnaires_show', { 'testId': favorite.id }) }}">{{ favorite.name }}</a></li>
-                                                    {% endfor %}
-                                                </ul>
-                                                {% endif %}
-                                            </li>
                                         {% else %}
                                             <li><a href="#"> Vous n'avez pas les droits </a></li>
                                         {% endif %}

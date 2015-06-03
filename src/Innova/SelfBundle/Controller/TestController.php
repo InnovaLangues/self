@@ -82,6 +82,26 @@ class TestController extends Controller
     }
 
     /**
+     * Lists favorites Test entities.
+     *
+     * @Route("/tests/favorites", name="editor_tests_my_favorites")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Test:list.html.twig")
+     */
+    public function listFavoritesAction()
+    {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
+            $tests = $currentUser->getFavoritesTests();
+
+            return array('tests' => $tests);
+        }
+
+        return;
+    }
+
+    /**
      * Edits a test entity.
      *
      * @Route("/test/{testId}/delete", name="editor_test_delete")
