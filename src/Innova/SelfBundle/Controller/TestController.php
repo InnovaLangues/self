@@ -38,7 +38,7 @@ class TestController extends Controller
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findAuthorized($currentUser);
         }
 
-        return array('tests' => $tests);
+        return array('tests' => $tests, 'subset' => "test.all");
     }
 
     /**
@@ -58,7 +58,7 @@ class TestController extends Controller
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findAuthorizedByLanguage($currentUser, $language);
         }
 
-        return array('tests' => $tests);
+        return array('tests' => $tests, 'subset' => $language->getName());
     }
 
     /**
@@ -75,7 +75,7 @@ class TestController extends Controller
         if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(true);
 
-            return array('tests' => $tests);
+            return array('tests' => $tests, 'subset' => "test.archived");
         }
 
         return;
@@ -95,7 +95,7 @@ class TestController extends Controller
         if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
             $tests = $currentUser->getFavoritesTests();
 
-            return array('tests' => $tests);
+            return array('tests' => $tests, 'subset' => "test.favorites");
         }
 
         return;

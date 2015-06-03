@@ -60,6 +60,9 @@ test:
     start: Inizia il test
     list: Lista dei test
     no_registered: Non risulti iscritto a nessun test
+    all: Tous
+    archived: Archivés
+    favorites: Favoris
 
 generic:
     index: Indice

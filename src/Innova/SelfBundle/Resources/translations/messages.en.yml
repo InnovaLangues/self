@@ -60,6 +60,9 @@ test:
     start: Start the test
     list: List of tests
     no_registered:  You are not signed up for any test.
+    all: All
+    archived: Archived
+    favorites: Favorites
 
 generic:
     index: List

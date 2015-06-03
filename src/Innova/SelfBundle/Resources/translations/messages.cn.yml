@@ -58,6 +58,9 @@ test:
     start: Démarrer le test
     list: Liste des tests
     no_registered: Vous êtes inscrit à aucun test.
+    all: Tous
+    archived: Archivés
+    favorites: Favoris
 
 generic:
     index: Lister
