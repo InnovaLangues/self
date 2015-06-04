@@ -59,7 +59,7 @@ class PlayerController
      * Try to pick a questionnaire entity for a given test and a given sessionr
      * and display it if possible.
      *
-     * @Route("test/{testId}/session/{sessionId}", name="test_start")
+     * @Route("test/{testId}/session/{sessionId}", name="test_start", requirements={"sessionId": "\d+"})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
