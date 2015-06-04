@@ -92,51 +92,56 @@ class QuestionnaireType extends AbstractType
         $builder->add('sourceTypes', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SourceType',
                 'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'sourceTypes',  'size' => 4),
+                'attr' => array('class' => '', 'data-field' => 'sourceTypes'),
                 'label'  => 'editor.identity.sourceType',
                 'translation_domain' => 'messages',
                 'multiple' => true,
                 'required' => false,
+                'expanded' => true,
             ));
 
         $builder->add('channels', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Channel',
                 'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'channels',  'size' => 4),
+                'attr' => array('class' => '', 'data-field' => 'channels',  'size' => 4),
                 'label'  => 'editor.identity.channel',
                 'translation_domain' => 'messages',
                 'multiple' => true,
                 'required' => false,
+                'expanded' => true,
             ));
 
         $builder->add('genres', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Genre',
                 'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'genres',  'size' => 4),
+                'attr' => array('class' => '', 'data-field' => 'genres',  'size' => 4),
                 'label'  => 'editor.identity.genre',
                 'translation_domain' => 'messages',
                 'multiple' => true,
                 'required' => false,
+                'expanded' => true,
             ));
 
         $builder->add('socialLocations', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SocialLocation',
                 'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'socialLocations',  'size' => 4),
+                'attr' => array('class' => '', 'data-field' => 'socialLocations',  'size' => 4),
                 'label'  => 'editor.identity.socialLocation',
                 'translation_domain' => 'messages',
                 'multiple' => true,
                 'required' => false,
+                'expanded' => true,
             ));
 
         $builder->add('varieties', 'entity', array(
                 'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Variety',
                 'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'varieties',  'size' => 4),
+                'attr' => array('class' => '', 'data-field' => 'varieties',  'size' => 4),
                 'label'  => 'editor.identity.variety',
                 'translation_domain' => 'messages',
                 'multiple' => true,
                 'required' => false,
+                'expanded' => true,
             ));
 
         $builder->add('sourceMore', 'textarea', array(
