@@ -42,7 +42,7 @@ class FixtureCommand extends ContainerAwareCommand
         $originStudentManager->create(array("LANSAD", "LLCE", "LEA", "UJF", "Formation continue", "Autres"));
 
         $languageManager = $this->getContainer()->get("self.language.manager");
-        $languageManager->create(array("English", "Italian", "Chinese", "Spanish"));
+        $languageManager->create(array("English", "Italian", "Chinese", "Spanish", "Japanese"));
 
         $levelLansadManager = $this->getContainer()->get("self.levelLansad.manager");
         $levelLansadManager->create(array(
