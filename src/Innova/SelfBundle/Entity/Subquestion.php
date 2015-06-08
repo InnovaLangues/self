@@ -94,14 +94,14 @@ class Subquestion
     /**
      * @var string
      *
-     * @ORM\Column(name="difficultyIndex", type="string", length=255)
+     * @ORM\Column(name="difficultyIndex", type="string", length=255, nullable=true)
      */
     private $difficultyIndex;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="discriminationIndex", type="string", length=255)
+     * @ORM\Column(name="discriminationIndex", type="string", length=255, nullable=true)
      */
     private $discriminationIndex;
 
