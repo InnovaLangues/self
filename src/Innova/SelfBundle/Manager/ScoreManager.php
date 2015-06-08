@@ -113,12 +113,19 @@ class ScoreManager
             foreach ($subquestions as $subquestion) {
                 $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
                 $skill = $questionnaire->getSkill()->getName();
-                $level = $questionnaire->getLevel()->getName();
 
-                if ($this->subquestionCorrect($subquestion, $session, null, $user)) {
-                    $scores[$skill][$level]["correct"]++;
+                if ($subquestion->getLevel()) {
+                    $level = $subquestion->getLevel()->getName();
+                } elseif ($questionnaire->getLevel()) {
+                    $level = $questionnaire->getLevel()->getName();
                 }
-                $scores[$skill][$level]["count"]++;
+
+                if ($level) {
+                    if ($this->subquestionCorrect($subquestion, $session, null, $user)) {
+                        $scores[$skill][$level]["correct"]++;
+                    }
+                    $scores[$skill][$level]["count"]++;
+                }
             }
         }
 
