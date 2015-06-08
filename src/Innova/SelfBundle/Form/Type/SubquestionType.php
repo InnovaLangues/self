@@ -52,12 +52,14 @@ class SubquestionType extends AbstractType
                 'attr' => array('class' => 'form-control subquestion-identity-field'),
                 'label'  => 'difficultyIndex',
                 'translation_domain' => 'messages',
+                'required' => false,
             ));
 
         $builder->add('discriminationIndex', 'text', array(
                 'attr' => array('class' => 'form-control subquestion-identity-field'),
                 'label'  => 'discriminationIndex',
                 'translation_domain' => 'messages',
+                'required' => false,
             ));
 
         $builder->add('id', 'hidden', array(
