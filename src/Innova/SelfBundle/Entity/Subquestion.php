@@ -92,6 +92,20 @@ class Subquestion
     protected $cognitiveOpsSecondary;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="difficultyIndex", type="string", length=255)
+     */
+    private $difficultyIndex;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="discriminationIndex", type="string", length=255)
+     */
+    private $discriminationIndex;
+
+    /**
      *
      * @ORM\Column(name="displayAnswer", type="boolean")
      */
@@ -546,5 +560,53 @@ class Subquestion
     public function removeFocus(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus)
     {
         $this->focuses->removeElement($focus);
+    }
+
+    /**
+     * Set difficultyIndex
+     *
+     * @param string $difficultyIndex
+     *
+     * @return Subquestion
+     */
+    public function setDifficultyIndex($difficultyIndex)
+    {
+        $this->difficultyIndex = $difficultyIndex;
+
+        return $this;
+    }
+
+    /**
+     * Get difficultyIndex
+     *
+     * @return string
+     */
+    public function getDifficultyIndex()
+    {
+        return $this->difficultyIndex;
+    }
+
+    /**
+     * Set discriminationIndex
+     *
+     * @param string $discriminationIndex
+     *
+     * @return Subquestion
+     */
+    public function setDiscriminationIndex($discriminationIndex)
+    {
+        $this->discriminationIndex = $discriminationIndex;
+
+        return $this;
+    }
+
+    /**
+     * Get discriminationIndex
+     *
+     * @return string
+     */
+    public function getDiscriminationIndex()
+    {
+        return $this->discriminationIndex;
     }
 }
