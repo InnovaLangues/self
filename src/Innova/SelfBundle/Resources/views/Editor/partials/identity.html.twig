@@ -58,25 +58,33 @@
                                         {{ form_widget(form.sourceTypes) }}
                                         </div>
 
+                                        {% if questionnaire.skill is defined and questionnaire.skill.name == "CO" %}
                                         <div class="form-group">
                                         {{ form_label(form.length) }}
                                         {{ form_widget(form.length) }}
                                         </div>
+                                        {% endif %}
 
+                                        {% if questionnaire.skill is defined and questionnaire.skill.name != "CO" %}
                                         <div class="form-group">
                                         {{ form_label(form.textLength) }}
                                         {{ form_widget(form.textLength) }}
                                         </div>
+                                        {% endif %}
 
+                                        {% if questionnaire.skill is defined and questionnaire.skill.name != "CO" %}
                                         <div class="form-group">
                                         {{ form_label(form.lisibility) }}
                                         {{ form_widget(form.lisibility) }}
                                         </div>
+                                        {% endif %}
 
+                                        {% if questionnaire.skill is defined and questionnaire.skill.name == "CO" %}
                                         <div class="form-group">
                                         {{ form_label(form.flow) }}
                                         {{ form_widget(form.flow) }}
                                         </div>
+                                        {% endif %}
 
                                         <div class="form-group">
                                         {{ form_label(form.speechType) }}
