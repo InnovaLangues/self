@@ -5,6 +5,7 @@ namespace Innova\SelfBundle\Controller\Right;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Right\RightGroup;
@@ -22,6 +23,7 @@ class RightGroupController extends Controller
      *
      * @Route("user/{userId}/group/{rightGroupId}/toggle", name="editor_group_rights_toggle")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Features:Group/rights.html.twig")
      */
     public function toggleAllForGroupAction(User $user, RightGroup $rightGroup)

@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Manager\Media\MediaClickManager;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
@@ -40,6 +41,7 @@ class MediaClickController
      *  "/get-remaining-listening/{mediaId}/{testId}/{sessionId}/{questionnaireId}/{componentId}",
      *  name="get-remaining-listening", options={"expose"=true})
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      */
     public function getRemainingListeningAction(Media $media, Test $test, Session $session, Questionnaire $questionnaire, Component $component = null)
     {
@@ -57,6 +59,7 @@ class MediaClickController
      *  "/increment-media-clicks/{mediaId}/{testId}/{sessionId}/{questionnaireId}/{componentId}",
      *  name="increment-media-clicks", options={"expose"=true})
      * @Method({"GET", "POST"})
+     * @Cache(sMaxAge=0)
      */
     public function incrementMediaClicksAction(Media $media, Test $test, Session $session, Questionnaire $questionnaire, Component $component = null)
     {
@@ -75,6 +78,7 @@ class MediaClickController
      *  "/is-media-playable/{mediaId}/{testId}/{sessionId}/{questionnaireId}/{componentId}",
      *  name="is-media-playable", options={"expose"=true})
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      */
     public function isMediaPlayableAction(Media $media, Test $test, Session $session, Questionnaire $questionnaire, Component $component = null)
     {

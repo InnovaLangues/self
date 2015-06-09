@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 /**
  * Main controller.
@@ -16,6 +17,7 @@ class AnonymousController extends Controller
      * @Route("/", name="show_start")
      * @Template()
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      */
     public function startAction()
     {

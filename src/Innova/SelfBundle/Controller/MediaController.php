@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Entity\Media\Media;
 use Innova\SelfBundle\Entity\Questionnaire;
 
@@ -67,6 +68,7 @@ class MediaController
     /**
      * @Route("/set-listening-limit/{questionnaireId}/{mediaId}/{limit}", name="set-listening-limit", options={"expose"=true})
      * @Method("PUT")
+     * @Cache(sMaxAge=0)
      */
     public function setListeningLimitAction(Questionnaire $questionnaire, Media $media, $limit)
     {
@@ -85,6 +87,7 @@ class MediaController
     /**
      * @Route("/get-media-info/{mediaId}", name="get-media-info", options={"expose"=true})
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      */
     public function getMediaInfoAction(Media $media)
     {
@@ -102,6 +105,7 @@ class MediaController
     /**
      * @Route("/editor_questionnaire_update-media/{questionnaireId}/{mediaId}", name="editor_questionnaire_update-media", options={"expose"=true})
      * @Method("PUT")
+     * @Cache(sMaxAge=0)
      */
     public function updateMediaAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
@@ -128,6 +132,7 @@ class MediaController
     /**
      * @Route("/questionnaires/create-media/{questionnaireId}", name="editor_questionnaire_create-media", options={"expose"=true})
      * @Method("PUT")
+     * @Cache(sMaxAge=0)
      */
     public function createMediaAction(Request $request, Questionnaire $questionnaire)
     {
@@ -199,6 +204,7 @@ class MediaController
      *
      * @Route("/questionnaires/unlink-media/{questionnaireId}", name="editor_questionnaire_unlink-media", options={"expose"=true})
      * @Method("DELETE")
+     * @Cache(sMaxAge=0)
      */
     public function unlinkMediaAction(Request $request, Questionnaire $questionnaire)
     {

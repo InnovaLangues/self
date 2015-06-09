@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Questionnaire;
@@ -61,6 +62,7 @@ class PlayerController
      *
      * @Route("test/{testId}/session/{sessionId}", name="test_start", requirements={"sessionId": "\d+"})
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
     public function startAction(Test $test, Session $session)
@@ -110,6 +112,7 @@ class PlayerController
      * @Route("/test/{testId}/session/{sessionId}/end", name="test_end")
      * @Template("InnovaSelfBundle:Player:common/end.html.twig")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      */
     public function endAction(Test $test, Session $session)
     {
@@ -122,6 +125,7 @@ class PlayerController
     /**
      * @Route("/opened-sessions/", name="show_tests")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Player:showTests.html.twig")
      */
     public function showTestsAction()
@@ -140,6 +144,7 @@ class PlayerController
      * )
      * @ParamConverter("questionnairePicked", class="InnovaSelfBundle:Questionnaire", options={"mapping": {"questionnaireId": "id"}})
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
     public function pickAQuestionnaireAction(Test $test, Session $session, Questionnaire $questionnairePicked)
@@ -168,6 +173,7 @@ class PlayerController
     /**
      * @Method("GET")
      * @Route("/session/{sessionId}/passwd", name="session_log_form")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Player:common/log.html.twig")
      */
     public function sessionLogFormAction(Session $session)
@@ -180,6 +186,7 @@ class PlayerController
      /**
      * @Method("POST")
      * @Route("/session/{sessionId}/log", name="session_log")
+     * @Cache(sMaxAge=0)
      */
     public function sessionLogAction(Session $session, Request $request)
     {
