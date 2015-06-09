@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Right\RightUserSession;
 use Innova\SelfBundle\Form\Type\Right\RightUserSessionType;
@@ -24,6 +25,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/rights", name="editor_session_rights")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Session:rights.html.twig")
      */
     public function handleRightsAction(Session $session)
@@ -44,6 +46,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/rights/add", name="editor_session_rights_add")
      * @Method({"GET", "POST"})
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Session:rights_form.html.twig")
      */
     public function createRightsAction(Session $session, Request $request)
@@ -70,6 +73,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/rights/{rightId}/edit", name="editor_session_rights_edit")
      * @Method({"GET", "POST"})
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Session:rights_form.html.twig")
      */
     public function editRightsAction(Session $session, RightUserSession $rightUserSession, Request $request)
@@ -95,6 +99,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/right/{rightId}/delete", name="editor_session_rights_delete", options = {"expose"=true})
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Session:list.html.twig")
      */
     public function deleteRightAction(Session $session, RightUserSession $rightUserSession)

@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Entity\Group;
 use Innova\SelfBundle\Form\Type\GroupType;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,7 @@ class GroupController extends Controller
      *
      * @Route("/groups", name="editor_groups")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Group:list.html.twig")
      */
     public function listAction()
@@ -44,6 +46,7 @@ class GroupController extends Controller
      *
      * @Route("/group/{groupId}", name="editor_group_display", requirements={"groupId": "\d+"})
      * @Method({"GET", "POST"})
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Group:display.html.twig")
      */
     public function displayAction(Group $group)
@@ -55,6 +58,7 @@ class GroupController extends Controller
      *
      * @Route("/group/create", name="editor_group_create")
      * @Method({"GET", "POST"})
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Group:new.html.twig")
      */
     public function newAction(Request $request)
@@ -82,6 +86,7 @@ class GroupController extends Controller
      *
      * @Route("/group/{groupId}/delete", name="editor_group_delete", options = {"expose"=true})
      * @Method("DELETE")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Group:list.html.twig")
      */
     public function deleteAction(Group $group)
@@ -105,6 +110,7 @@ class GroupController extends Controller
      *
      * @Route("/group/{groupId}/edit", name="editor_group_edit")
      * @Method({"GET", "POST"})
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Group:new.html.twig")
      */
     public function editAction(Group $group, Request $request)
@@ -130,6 +136,7 @@ class GroupController extends Controller
      *
      * @Route("/group/{groupId}/import", name="editor_group_import_user")
      * @Method({"GET", "POST"})
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Group:import.html.twig")
      */
     public function importUserAction(Group $group, Request $request)

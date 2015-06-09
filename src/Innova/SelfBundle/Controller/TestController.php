@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Form\Type\TestType;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Language;
@@ -26,6 +27,7 @@ class TestController extends Controller
      *
      * @Route("/tests", name="editor_tests_show")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listTestsAction()
@@ -46,6 +48,7 @@ class TestController extends Controller
      *
      * @Route("/tests/language/{languageId}", name="editor_tests_by_language_show")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listTestsByLanguageAction(Language $language)
@@ -66,6 +69,7 @@ class TestController extends Controller
      *
      * @Route("/tests/archived", name="editor_tests_archived_show")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listArchivedTestsAction()
@@ -86,6 +90,7 @@ class TestController extends Controller
      *
      * @Route("/tests/favorites", name="editor_tests_my_favorites")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listFavoritesAction()
@@ -106,6 +111,7 @@ class TestController extends Controller
      *
      * @Route("/test/{testId}/delete", name="editor_test_delete")
      * @Method("DELETE")
+     * @Cache(sMaxAge=0)
      */
     public function deleteTestAction(Test $test)
     {
@@ -130,6 +136,7 @@ class TestController extends Controller
      *
      * @Route("/test/{testId}/duplicate", name="editor_test_duplicate")
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      */
     public function duplicateTestAction(Test $test)
     {
@@ -150,6 +157,7 @@ class TestController extends Controller
      *
      * @Route("/test/create", name="editor_test_create")
      * @Method({"GET", "POST"})
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Test:form.html.twig")
      */
     public function newAction(Request $request)
@@ -176,6 +184,7 @@ class TestController extends Controller
      *
      * @Route("/test/{testId}/edit", name="editor_test_edit")
      * @Method({"GET", "POST"})
+     * @Cache(sMaxAge=0)
      * @Template("InnovaSelfBundle:Test:form.html.twig")
      */
     public function editAction(Test $test, Request $request)
@@ -200,6 +209,7 @@ class TestController extends Controller
     /**
      * @Route("/test/{testId}/favorite-toggle", name="test_favorite_toggle" , options={"expose"=true}))
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      */
     public function toggleFavoriteAction(Test $test)
     {

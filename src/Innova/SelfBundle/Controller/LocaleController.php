@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -29,6 +30,7 @@ class LocaleController
      *
      * @Route("/locale/change/{_locale}", name="locale_change", options = {"expose" = true})
      * @Method("GET")
+     * @Cache(sMaxAge=0)
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
