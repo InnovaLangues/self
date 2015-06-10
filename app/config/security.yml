@@ -24,8 +24,8 @@ security:
                 target:      /fr/
                 #http://foshttpcachebundle.readthedocs.org/en/latest/reference/configuration/user-context.html
                 invalidate_session: true
-                handlers:
-                   - fos_http_cache.user_context.logout_handler
+                #handlers:
+                #   - fos_http_cache.user_context.logout_handler
 
             anonymous:    true
 
