@@ -6,9 +6,13 @@
             <h4 class="modal-title">{{ 'menu.language_change' | trans }}</h4>
             </div>
             <div class="modal-body text-center">
-                {% for locale in ['en', 'fr', 'it'] %}
-                    <span class="btn btn-default locale-select">{{ locale | upper }}</span>
-                {% endfor %}
+
+            {% for locale in ['en', 'fr', 'it'] %}  
+
+                <a class="btn btn-default" href="{{ path(app.request.attributes.get("_route"), app.request.query.all|merge({"_locale": locale})) }}">{{ locale | upper }}</a>
+
+            {% endfor %}
+            
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
