@@ -3,8 +3,16 @@
     <link href="{{ asset("bundles/innovaself/css/registration.css") }}" rel="stylesheet" />
 {% endblock %}
 
-<br>
-<div class="well">
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>
+        <img height="24px" src="{{ asset("bundles/innovaself/images/innova_logo_web_390.png") }}"/> 
+        {{ 'anonymous.registration' | trans({}, 'messages') }} à SELF - Système d’Evaluation en Langues à visée Formative
+        </h4>
+    </div>
+    <div class="panel-body">
+
     <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
 
         {# Pour avoir le Wizard #}
@@ -20,10 +28,6 @@
 
             {# Onglet 1 #}
             <div class="tab-pane fade active in" id="step1">
-                <div id="legend">
-                    <legend class="">{{ 'anonymous.registration' | trans({}, 'messages') }}</legend>
-                </div>
-
                 <div class="legend">
                     <p class="text-danger text-left">
                         {{ 'registration.warning_required' | trans({}, 'messages') }}
@@ -219,4 +223,6 @@
             </div>
         </div>
     </form>
+
+  </div>
 </div>
