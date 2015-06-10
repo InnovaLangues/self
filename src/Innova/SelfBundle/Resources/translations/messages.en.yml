@@ -251,7 +251,7 @@ editor:
 
     session:
         name: Session name
-        passwd: Password
+        passwd: Code
         active: Actif
         list: Sessions list
         create: Create a session
