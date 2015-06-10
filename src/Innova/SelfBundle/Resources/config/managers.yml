@@ -53,12 +53,6 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
-    self.locale.manager:
-        class: Innova\SelfBundle\Manager\LocaleManager
-        arguments:
-            securityContext:    @security.context
-            userManager:        @self.user.manager
-
     self.user.manager:
         class: Innova\SelfBundle\Manager\UserManager
         arguments:

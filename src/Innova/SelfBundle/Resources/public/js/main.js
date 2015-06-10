@@ -83,14 +83,6 @@ $(document).ready(function() {
         $tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
     });
 
-
-    $('body').on('click', '.locale-select', function () {
-        $.ajax(Routing.generate('locale_change', {'_locale': $(this).html().toLowerCase()}))
-        .done(function () {
-            window.location.reload();
-        });
-    });
-
     $('body').on('click', '.change-locale', function () {
         $("#locale-modale").modal('show');
     });

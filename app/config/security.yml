@@ -17,13 +17,16 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
+                check_path: fos_user_security_check
+                login_path:  fos_user_security_login
             logout:
-                path:        /logout
-                target:      /
+                path:        fos_user_security_logout
+                target:      /fr/
                 #http://foshttpcachebundle.readthedocs.org/en/latest/reference/configuration/user-context.html
                 invalidate_session: true
                 handlers:
                    - fos_http_cache.user_context.logout_handler
+
             anonymous:    true
 
     access_control:
