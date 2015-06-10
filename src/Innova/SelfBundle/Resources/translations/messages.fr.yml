@@ -263,7 +263,7 @@ editor:
 
     session:
         name: Nom de la session
-        passwd: Mot de passe
+        passwd: Code
         active: Actif
         list: Liste des sessions
         create: Créer une nouvelle session
