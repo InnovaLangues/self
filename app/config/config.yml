@@ -129,6 +129,8 @@ knp_snappy:
         options:    []
 
 fos_http_cache:
+    debug:
+        enabled: true
     cache_manager:
         enabled: %cache_manager_enabled%
     proxy_client:
