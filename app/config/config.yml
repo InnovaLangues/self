@@ -164,4 +164,4 @@ fos_http_cache:
 jms_i18n_routing:
     default_locale: fr
     locales: [fr, en, it]
-    strategy: prefix
+    strategy: prefix_except_default
