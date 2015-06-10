@@ -45,7 +45,7 @@ class RightManager
                 return true;
             }
 
-            if ($entity &&  $right->getAttribute()) {
+            if ($entity && $right->getAttribute()) {
                 $attribute = $right->getAttribute();
                 $repoName = "InnovaSelfBundle:Right\\".$right->getClass();
 
@@ -59,7 +59,7 @@ class RightManager
 
             return false;
         } else {
-            echo "probleme avec ".$rightName;
+            echo "Le droit testé n'existe pas (".$rightName.")";
         }
     }
 

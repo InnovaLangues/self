@@ -148,7 +148,7 @@ class FixtureCommand extends ContainerAwareCommand
         ));
 
         $rightGroupManager = $this->getContainer()->get("self.rightgroup.manager");
-        $rightGroupManager->createGroups(array("rightgroup.tasks", "rightgroup.tests", "rightgroup.sessions", "rightgroup.groups", "rightgroup.users"));
+        $rightGroupManager->createGroups(array("rightgroup.tasks", "rightgroup.tests", "rightgroup.sessions", "rightgroup.groups", "rightgroup.users", "rightgroup.exports"));
 
         $rightManager = $this->getContainer()->get("self.right.manager");
         $rightManager->createRights(array(
@@ -158,7 +158,7 @@ class FixtureCommand extends ContainerAwareCommand
             array("right.edittask", "rightgroup.tasks", "canEdit", "RightUserTask"),
             array("right.listtask", "rightgroup.tasks", null, "RightUserTask"),
 
-            // test (ok view)
+            // test
             array("right.createtest", "rightgroup.tests", null, "RightUserTest"),
             array("right.deletetest", "rightgroup.tests", "canDelete", "RightUserTest"),
             array("right.edittest", "rightgroup.tests", "canEdit", "RightUserTest"),
@@ -172,7 +172,7 @@ class FixtureCommand extends ContainerAwareCommand
             array("right.edittasktest", "rightgroup.tests", "canEditTask", "RightUserTest"),
             array("right.editrightstest", "rightgroup.tests", null, "RightUserTest"),
 
-            // user (ok view)
+            // user
             array("right.listuser", "rightgroup.users", null, "RightUserSomeone"),
             array("right.createuser", "rightgroup.users", null, "RightUserSomeone"),
             array("right.deleteuser", "rightgroup.users", "canDelete", "RightUserSomeone"),
@@ -181,7 +181,7 @@ class FixtureCommand extends ContainerAwareCommand
             array("right.editpassworduser", "rightgroup.users", "canEditPassword", "RightUserSomeone"),
             array("right.editrightsuser", "rightgroup.users", 'canEditRights', "RightUserSomeone"),
 
-            // group (ok view)
+            // group
             array("right.listgroup", "rightgroup.groups", null, "RightUserGroup"),
             array("right.editgroup", "rightgroup.groups", "canEdit", "RightUserGroup"),
             array("right.creategroup", "rightgroup.groups", null, "RightUserGroup"),
@@ -189,7 +189,7 @@ class FixtureCommand extends ContainerAwareCommand
             array("right.csvimportgroup", "rightgroup.groups", "canImportCsv", "RightUserGroup"),
             array("right.editrightsgroup", "rightgroup.groups", null, "RightUserGroup"),
 
-            // session (ok view)
+            // session
             array("right.deletesession", "rightgroup.sessions", "canDelete", "RightUserSession"),
             array("right.listsession", "rightgroup.sessions", null, "RightUserSession"),
             array("right.editsession", "rightgroup.sessions", "canEdit", "RightUserSession"),
@@ -197,6 +197,9 @@ class FixtureCommand extends ContainerAwareCommand
             array("right.individualresultssession", "rightgroup.sessions", "canExportIndividual", "RightUserSession"),
             array("right.exportresultssession", "rightgroup.sessions", "canExportCollective", "RightUserSession"),
             array("right.editrightssession", "rightgroup.sessions", null, "RightUserSession"),
+
+            array("right.exportPDF", "rightgroup.exports", null, null),
+            array("right.exportCSV", "rightgroup.exports", null, null),
         ));
 
         $now = time();
