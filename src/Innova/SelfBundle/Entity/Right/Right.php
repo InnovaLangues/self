@@ -37,7 +37,7 @@ class Right
     /**
      * @var string
      *
-     * @ORM\Column(name="class", type="string", length=255)
+     * @ORM\Column(name="class", type="string", length=255, nullable=true)
      */
     private $class;
 

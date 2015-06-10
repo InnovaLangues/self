@@ -15,10 +15,18 @@
                 <tr>
                     <td>{{ test.name }}</td>
                     <td class="text-right">
+                    {% if checkRight("right.exportCSV") %}
                         <a href="{{ path('csv-export-show', {'testId': test.id, 'tia': 0 } )}}" class="btn btn-default btn-sm"><img rel="tooltip" data-original-title="Export CSV" src="{{ asset('bundles/innovaself/images/csv-export.gif') }}" /></a>
+                    {% else %}
+                        -
+                    {% endif %}
                     </td>
                     <td class="text-right">
+                    {% if checkRight("right.exportPDF") %}
                         <a href="{{ path('pdf-export-show', {'testId': test.id } )}}" class="btn btn-default btn-sm"><img rel="tooltip" data-original-title="Export PDF" src="{{ asset('bundles/innovaself/images/pdf-export.gif') }}" /></a>
+                    {% else %}
+                        -
+                    {% endif %}
                     </td>
                 </tr>
             {% endfor %}

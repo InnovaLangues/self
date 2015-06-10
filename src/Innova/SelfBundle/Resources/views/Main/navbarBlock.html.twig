@@ -24,12 +24,16 @@
                                 </li>
                             {% endif %}
 
+
+                           {% if checkRight("right.exportPDF") or checkRight("right.exportCSV") %}
                             <li>
                                 <a href="{{ path('export') }}">
                                     <span class="glyphicon glyphicon-export"></span>
                                     {{ 'menu.csv_export' | trans }}
                                 </a>
                             </li>
+                            {% endif %}
+
                             <li>
                                 <a href="{{ path('show_tests') }}">
                                     <span class="glyphicon glyphicon-play-circle"></span>

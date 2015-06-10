@@ -523,6 +523,8 @@ right:
     individualresultssession: Exporter PDF par utilisateur
     exportresultssession: Exporter collectivement CSV
     editrightssession: Editer les permissions d'une session
+    exportPDF: Export livret PDF
+    exportCSV: Export CSV classique et Tia+
 
 rightgroup:
     tasks: Permissions sur les tâches
@@ -530,6 +532,7 @@ rightgroup:
     sessions: Permissions sur les sessions
     groups: Permissions sur les groupes
     users: Permissions sur les utilisateurs
+    exports: Permissions sur les fonctions d'export
 
 
 canDelete: Peut supprimer

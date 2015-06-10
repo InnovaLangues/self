@@ -52,6 +52,7 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             exportManager:      @self.export.manager
             securityContext:    @security.context
+            rightManager:       @self.right.manager
 
     innova_player:
         class: Innova\SelfBundle\Controller\PlayerController

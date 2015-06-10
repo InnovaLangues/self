@@ -14,10 +14,7 @@ use Innova\SelfBundle\Entity\Session;
 
 /**
  * Class ExportController
- *
  * @Route(
- *      "",
- *      name = "",
  *      service = "innova_export"
  * )
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
@@ -30,13 +27,15 @@ class ExportController
     protected $entityManager;
     protected $exportManager;
     protected $securityContext;
+    protected $rightManager;
 
-    public function __construct($kernelRoot, $entityManager, $exportManager, $securityContext)
+    public function __construct($kernelRoot, $entityManager, $exportManager, $securityContext, $rightManager)
     {
-        $this->kernelRoot = $kernelRoot;
-        $this->entityManager = $entityManager;
-        $this->exportManager = $exportManager;
-        $this->securityContext = $securityContext;
+        $this->kernelRoot       = $kernelRoot;
+        $this->entityManager    = $entityManager;
+        $this->exportManager    = $exportManager;
+        $this->securityContext  = $securityContext;
+        $this->rightManager     = $rightManager;
         $this->user = $this->securityContext->getToken()->getUser();
     }
 
@@ -44,7 +43,7 @@ class ExportController
      * Lists all Test entities.
      *
      * @Route(
-     *     "/admin/export",
+     *     "/export",
      *     name = "export",
      *     options = {"expose"=true}
      * )
@@ -54,18 +53,22 @@ class ExportController
      */
     public function indexAction()
     {
-        $em = $this->entityManager;
+        if ($this->rightManager->checkRight("right.exportPDF", $this->user) or $this->rightManager->checkRight("right.exportCSV", $this->user)) {
+            $em = $this->entityManager;
 
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+            $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
 
-        return array(
-            'tests' => $tests,
-        );
+            return array(
+                'tests' => $tests,
+            );
+        }
+
+        return;
     }
 
     /**
      * @Route(
-     *     "/admin/test/{testId}/file/{filename}/{mode}",
+     *     "/export/test/{testId}/file/{filename}/{mode}",
      *     name = "get-file"
      * )
      *
@@ -74,30 +77,34 @@ class ExportController
      */
     public function getFileAction($testId, $filename, $mode)
     {
-        if ($mode == "pdf") {
-            $dir = "exportPdf";
-        } else {
-            $dir = "export";
+        if ($this->rightManager->checkRight("right.exportPDF", $this->user) or $this->rightManager->checkRight("right.exportCSV", $this->user)) {
+            if ($mode == "pdf") {
+                $dir = "exportPdf";
+            } else {
+                $dir = "export";
+            }
+
+            $file = $this->kernelRoot."/data/".$dir."/".$testId."/".$filename;
+
+            $response = new Response();
+            $response->headers->set('Cache-Control', 'private');
+            $response->headers->set('Content-type', mime_content_type($file));
+            $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
+            $response->headers->set('Content-length', filesize($file));
+            $response->sendHeaders();
+
+            $response->setContent(file_get_contents($file));
+
+            return $response;
         }
 
-        $file = $this->kernelRoot."/data/".$dir."/".$testId."/".$filename;
-
-        $response = new Response();
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', mime_content_type($file));
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
-        $response->headers->set('Content-length', filesize($file));
-        $response->sendHeaders();
-
-        $response->setContent(file_get_contents($file));
-
-        return $response;
+        return;
     }
 
     /**
      * exportCsvSQL function
      * @Route(
-     *     "/admin/csv-export/export/test/{testId}/{sessionId}/{tia}",
+     *     "/export/csv/test/{testId}/session/{sessionId}/mode/{tia}",
      *     name = "csv-export"
      * )
      *
@@ -107,21 +114,25 @@ class ExportController
      */
     public function exportCsvAction(Test $test, Session $session, $tia)
     {
-        $csvName = $this->exportManager->exportCsvAction($test, $session, $tia);
-        $fileList = $this->exportManager->getFileList($test, "csv");
+        if ($this->rightManager->checkRight("right.exportCSV", $this->user)) {
+            $csvName = $this->exportManager->exportCsvAction($test, $session, $tia);
+            $fileList = $this->exportManager->getFileList($test, "csv");
 
-        return array(
-            "csvName" => $csvName,
-            'test' => $test,
-            "fileList" => $fileList,
-            "tia" => $tia,
-        );
+            return array(
+                "csvName" => $csvName,
+                'test' => $test,
+                "fileList" => $fileList,
+                "tia" => $tia,
+            );
+        }
+
+        return;
     }
 
      /**
      * exportCsvSQL function
      * @Route(
-     *     "/admin/csv-export/show/test/{testId}/{tia}",
+     *     "/export/csv/filelist/test/{testId}/{tia}",
      *     name = "csv-export-show"
      * )
      *
@@ -131,19 +142,23 @@ class ExportController
      */
     public function showCsvAction(Test $test, $tia)
     {
-        $fileList = $this->exportManager->getFileList($test, "csv");
+        if ($this->rightManager->checkRight("right.exportCSV", $this->user)) {
+            $fileList = $this->exportManager->getFileList($test, "csv");
 
-        return array(
-            'test' => $test,
-            "fileList" => $fileList,
-            "tia" => $tia,
-        );
+            return array(
+                'test' => $test,
+                "fileList" => $fileList,
+                "tia" => $tia,
+            );
+        }
+
+        return;
     }
 
      /**
      * exportPdf function
      * @Route(
-     *     "/admin/pdf-export/test/{testId}",
+     *     "/export/pdf/test/{testId}",
      *     name = "pdf-export"
      * )
      *
@@ -153,23 +168,27 @@ class ExportController
      */
     public function exportPdfAction(Test $test)
     {
-        // Génération du nom du fichier exporté
-        $pdfName = $this->exportManager->exportPdfAction($test);
+        if ($this->rightManager->checkRight("right.exportPDF", $this->user)) {
+            // Génération du nom du fichier exporté
+            $pdfName = $this->exportManager->exportPdfAction($test);
 
-        // Appel de la vue et de la génération du PDF
-        $fileList = $this->exportManager->getFileList($test, "pdf");
+            // Appel de la vue et de la génération du PDF
+            $fileList = $this->exportManager->getFileList($test, "pdf");
 
-        return array(
-            "pdfName" => $pdfName,
-            "test" => $test,
-            "fileList" => $fileList,
-        );
+            return array(
+                "pdfName" => $pdfName,
+                "test" => $test,
+                "fileList" => $fileList,
+            );
+        }
+
+        return;
     }
 
     /**
      * exportPdf function
      * @Route(
-     *     "/admin/pdf-export/show/test/{testId}",
+     *     "/export/pdf/filelist/test/{testId}",
      *     name = "pdf-export-show"
      * )
      *
@@ -179,19 +198,23 @@ class ExportController
      */
     public function showPdfAction(Test $test)
     {
-        // Appel de la vue et de la génération du PDF
-        $fileList = $this->exportManager->getFileList($test, "pdf");
+        if ($this->rightManager->checkRight("right.exportPDF", $this->user)) {
+            // Appel de la vue et de la génération du PDF
+            $fileList = $this->exportManager->getFileList($test, "pdf");
 
-        return array(
-            "test" => $test,
-            "fileList" => $fileList,
-        );
+            return array(
+                "test" => $test,
+                "fileList" => $fileList,
+            );
+        }
+
+        return;
     }
 
     /**
      * exportPdf function
      * @Route(
-     *     "/student/pdf-export/session/{sessionId}",
+     *     "/self-export/pdf-export-session/session/{sessionId}",
      *     name = "pdf-export-session-user"
      * )
      *
@@ -217,7 +240,7 @@ class ExportController
     /**
      * exportPdf function
      * @Route(
-     *     "/admin/pdf-export/session/{sessionId}/user/{userId}",
+     *     "/export/pdf-export-session/session/{sessionId}/user/{userId}",
      *     name = "admin-pdf-export-session-user"
      * )
      *
