@@ -17,7 +17,6 @@ class AnonymousController extends Controller
      * @Route("/", name="show_start")
      * @Template()
      * @Method("GET")
-     * @Cache(sMaxAge=0)
      */
     public function startAction()
     {
