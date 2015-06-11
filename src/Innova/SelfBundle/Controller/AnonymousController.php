@@ -20,12 +20,6 @@ class AnonymousController extends Controller
      */
     public function startAction()
     {
-        $securityContext = $this->container->get('security.context');
-
-        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirect($this->generateUrl('show_tests'));
-        }
-
         return array();
     }
 }
