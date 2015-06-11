@@ -52,11 +52,19 @@
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery.cookie.min.js'
                 '@InnovaSelfBundle/Resources/public/js/main.js'
                 '@InnovaSelfBundle/Resources/public/js/flashMessages.js'
-                '@BazingaJsTranslationBundle/Resources/public/js/translator.min.js'
                 %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
-            <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'messages' }) }}"></script>
+
+
+            {% javascripts filter='yui_js' output='js/compiled/translations.js'
+                'bundles/bazingajstranslation/js/translator.min.js'
+                'js/translations/config.js'
+                'js/translations/*/*.js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
         {% endblock %}
