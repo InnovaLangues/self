@@ -23,7 +23,7 @@ class RightGroupController extends Controller
      *
      * @Route("user/{userId}/group/{rightGroupId}/toggle", name="editor_group_rights_toggle")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Features:Group/rights.html.twig")
      */
     public function toggleAllForGroupAction(User $user, RightGroup $rightGroup)

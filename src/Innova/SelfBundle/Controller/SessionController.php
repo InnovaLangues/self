@@ -28,7 +28,7 @@ class SessionController extends Controller
      *
      * @Route("/test/{testId}/sessions", name="editor_test_sessions")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:list.html.twig")
      */
     public function listAction(Test $test)
@@ -48,7 +48,7 @@ class SessionController extends Controller
      *
      * @Route("/test/{testId}/session/create", name="editor_test_create_session")
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:new.html.twig")
      */
     public function newAction(Test $test, Request $request)
@@ -78,7 +78,7 @@ class SessionController extends Controller
      *
      * @Route("/session/{sessionId}/remove", name="editor_test_delete_session", options = {"expose"=true})
      * @Method("DELETE")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:list.html.twig")
      */
     public function deleteAction(Session $session)
@@ -103,7 +103,7 @@ class SessionController extends Controller
      *
      * @Route("/test/{testId}/session/{sessionId}/edit", name="editor_test_edit_session")
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:new.html.twig")
      */
     public function editAction(Test $test, Session $session, Request $request)
@@ -129,7 +129,7 @@ class SessionController extends Controller
      *
      * @Route("/session/{sessionId}/results", name="editor_test_session_results")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:results.html.twig")
      */
     public function resultsAction(Session $session)
@@ -150,7 +150,7 @@ class SessionController extends Controller
      *
      * @Route("/user/{userId}/session/{sessionId}/results", name="editor_session_user_results")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:userResults.html.twig")
      */
     public function userResultsAction(User $user, Session $session)
@@ -170,7 +170,7 @@ class SessionController extends Controller
      *
      * @Route("/session/{sessionId}/export", name="editor_session_export_results")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function exportAction(Session $session)
     {
@@ -199,7 +199,7 @@ class SessionController extends Controller
      *
      * @Route("/test/{testId}/create-session", name="create_session_for_export")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function createSessionForExportAction(Test $test)
     {

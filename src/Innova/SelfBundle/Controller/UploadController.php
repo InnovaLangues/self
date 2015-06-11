@@ -30,7 +30,7 @@ class UploadController extends Controller
      *
      * @Route("/questionnaires/upload-file", name="editor_questionnaire_upload-file", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function uploadFileAction(Request $request)
     {
@@ -63,7 +63,7 @@ class UploadController extends Controller
      *
      * @Route("/editor/crop-image", name="editor_crop_image", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function cropImageAction(Request $request)
     {

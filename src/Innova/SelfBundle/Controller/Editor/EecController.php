@@ -58,7 +58,7 @@ class EecController
      *
      * @Route("/questionnaires/create-liste/{questionnaireId}", name="editor_questionnaire_create-liste", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function createListeAction(Questionnaire $questionnaire)
     {
@@ -79,7 +79,7 @@ class EecController
      *
      * @Route("/questionnaires/create-lacunes/{questionnaireId}", name="editor_questionnaire_create-lacunes", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function createLacunesAction(Questionnaire $questionnaire)
     {
@@ -100,7 +100,7 @@ class EecController
      *
      * @Route("/questionnaires/create-clue/{questionnaireId}/{subquestionId}", name="editor_questionnaire_create-clue", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function createClueAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
@@ -121,7 +121,7 @@ class EecController
      *
      * @Route("/questionnaires/set-clue-type/{questionnaireId}", name="editor_questionnaire_set-clue-type", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function setClueTypeAction(Request $request, Questionnaire $questionnaire)
     {
@@ -144,7 +144,7 @@ class EecController
      *
      * @Route("/questionnaires/create-syllable/{questionnaireId}/{subquestionId}", name="editor_questionnaire_create-syllable", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function createSyllableAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
@@ -164,7 +164,7 @@ class EecController
      *
      * @Route("/questionnaires/set-display/{subquestionId}/{display}/", name="editor_questionnaire_set-display", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function setDisplayAction(Subquestion $subquestion, $display)
     {
@@ -183,7 +183,7 @@ class EecController
      *
      * @Route("/questionnaires/add-distractor/{questionnaireId}", name="editor_questionnaire_add-distractor", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function addDistractorAction(Questionnaire $questionnaire)
     {
@@ -204,7 +204,7 @@ class EecController
      *
      * @Route("/questionnaires/add-distractor-mult/{questionnaireId}/{subquestionId}", name="editor_questionnaire_add-distractor-mult", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function addDistractorMultAction(Questionnaire $questionnaire, Subquestion $subquestion)
     {
@@ -225,7 +225,7 @@ class EecController
      *
      * @Route("/questionnaires/edit-distractor/{questionnaireId}/{mediaId}", name="editor_questionnaire_edit-distractor", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function editDistractorAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
@@ -245,7 +245,7 @@ class EecController
      *
      * @Route("/questionnaires/ecc_get_answer/{subquestionId}", name="editor_questionnaire_get_answers", options={"expose"=true})
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function getAnswersAction(Subquestion $subquestion)
     {
@@ -265,7 +265,7 @@ class EecController
      *
      * @Route("/questionnaires/ecc_toggle_answer/{propositionId}", name="ecc_toggle_answer", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function toggleRightAnswerAction(Proposition $proposition)
     {

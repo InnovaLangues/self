@@ -55,7 +55,7 @@ class QuestionnaireController
      *
      * @Route("/questionnaire/{questionnaireId}/set-text-title", name="editor_questionnaire_set-text-title", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function setTextTitleAction(Request $request, Questionnaire $questionnaire)
     {
@@ -85,7 +85,7 @@ class QuestionnaireController
      *
      * @Route("/questionnaire/{questionnaireId}/set-text-type", name="set-text-type", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function setTextTypeAction(Request $request, Questionnaire $questionnaire)
     {
@@ -110,7 +110,7 @@ class QuestionnaireController
      *
      * @Route("/questionnaire/{questionnaireId}/set-identity-field/", name="set-identity-field", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function setIdentityFieldAction(Request $request, Questionnaire $questionnaire)
     {
@@ -139,7 +139,7 @@ class QuestionnaireController
     *
     * @Route("/questionnaire/{questionnaireId}/set-general-info-field", name="set-general-info-field", options={"expose"=true})
     * @Method("POST")
-    * @Cache(sMaxAge=0)
+    * 
     */
     public function setGeneralInfoFieldAction(Request $request, Questionnaire $questionnaire)
     {

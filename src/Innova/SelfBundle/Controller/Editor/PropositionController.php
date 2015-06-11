@@ -44,7 +44,7 @@ class PropositionController
      *
      * @Route("/toggle_right_answer/{questionnaireId}/{propositionId}", name="editor_questionnaire_toggle_right_anwser", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function toggleRightAnswserAction(Questionnaire $questionnaire, Proposition $proposition)
     {

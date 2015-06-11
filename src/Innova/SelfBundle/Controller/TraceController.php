@@ -73,7 +73,7 @@ class TraceController
      *
      * @Route("trace_submit/{testId}/{sessionId}/{questionnaireId}", name="trace_submit")
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function saveTraceAction(Test $test, Session $session, Questionnaire $questionnaire, Request $request)
     {
@@ -173,7 +173,7 @@ class TraceController
      *
      * @Route("trace_difficulty/{sessionId}/{testId}/{traceId}", name="trace_difficulty_form")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
      */
     public function displayDifficultyAction(Test $test, Session $session, Trace $trace)
@@ -186,7 +186,7 @@ class TraceController
      *
      * @Route("trace_setDifficulty/{traceId}/{testId}/{sessionId}", name="trace_setDifficulty")
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function traceSetDifficultyAction(Request $request, Trace $trace, Test $test, Session $session)
     {
