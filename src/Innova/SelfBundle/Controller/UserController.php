@@ -25,7 +25,7 @@ class UserController extends Controller
      *
      * @Route("/users/", name="admin_user")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template()
      */
     public function indexAction()
@@ -49,7 +49,7 @@ class UserController extends Controller
      *
      * @Route("/user/{id}", name="admin_user_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template()
      */
     public function showAction($id)
@@ -85,7 +85,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/test/{testId}/delete-trace", name="delete-test-trace")
      * @Method("DELETE")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function deleteTestTraceAction($userId, $testId)
     {
@@ -112,7 +112,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/test/{testId}/questionnaire/{questionnaireId}/delete-trace", name="delete-task-trace")
      * @Method("DELETE")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function deleteTaskTraceAction($userId, $testId, $questionnaireId)
     {
@@ -140,7 +140,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/delete", name="delete-user")
      * @Method("DELETE")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function deleteUserAction($userId)
     {
@@ -167,7 +167,7 @@ class UserController extends Controller
      *
      * @Route("/user/create", name="user_create")
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:User:new.html.twig")
      */
     public function newAction(Request $request)
@@ -197,7 +197,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/edit", name="user_edit")
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:User:new.html.twig")
      */
     public function editAction(User $user, Request $request)
@@ -226,7 +226,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/change-passwd", name="passwd_edit")
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:User:passwd.html.twig")
      */
     public function editPasswordAction(User $user, Request $request)
@@ -252,7 +252,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/edit-rights", name="admin_user_rights")
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:User:rights.html.twig")
      */
     public function displayRightsAction(User $user)
@@ -274,7 +274,7 @@ class UserController extends Controller
      *
      * @Route("/user/{userId}/right/{rightId}", name="admin_user_toggle_right")
      * @Method({"GET"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:User:rights.html.twig")
      */
     public function toggleRightAction(User $user, Right $right)
@@ -294,7 +294,7 @@ class UserController extends Controller
     /**
      * @Route("/user/self_display", name="self_user_display")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:User:show.html.twig")
      */
     public function selfDisplayAction()
@@ -309,7 +309,7 @@ class UserController extends Controller
     /**
      * @Route("/user/self-edit", name="self_user_edit")
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:User:new.html.twig")
      */
     public function selfEditAction(Request $request)

@@ -52,7 +52,7 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/order-test-questionnaire/{testId}", name="save-order-test-questionnaire", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function saveOrderAction(Request $request, Test $test)
     {
@@ -70,7 +70,7 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/editor_add_task_to_test/{testId}/{questionnaireId}", name="editor_add_task_to_test", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function addTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
@@ -90,7 +90,7 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/editor_duplicate_task_to_test/{testId}/{questionnaireId}", name="editor_duplicate_task_to_test", options={"expose"=true})
      * @Method("PUT")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function duplicateTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
@@ -111,7 +111,7 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/delete-task/{testId}/{questionnaireId}", name="delete-task", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function deleteTaskAction(Test $test, Questionnaire $questionnaire)
     {

@@ -34,7 +34,7 @@ class PhasedTestController extends Controller
      *
      * @Route("/test/{testId}/component-type/{typeId}/add", name="editor_generate_component")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function generateComponentAction(Test $test, ComponentType $type)
     {
@@ -54,7 +54,7 @@ class PhasedTestController extends Controller
      *
      * @Route("/test/{testId}/component/{componentId}/remove", name="editor_remove_component", options={"expose"=true})
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function removeComponentAction(Test $test, Component $component)
     {
@@ -74,7 +74,7 @@ class PhasedTestController extends Controller
      *
      * @Route("/component/{componentId}/order", name="save-order-component-questionnaire", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function saveOrderAction(Component $component)
     {
@@ -95,7 +95,7 @@ class PhasedTestController extends Controller
      *
      * @Route("/orderQuestionnaireComponent/{orderQuestionnaireComponentId}/remove", name="remove-component-questionnaire", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function removeQuestionnaireFromComponentAction(OrderQuestionnaireComponent $orderQuestionnaireComponent)
     {
@@ -115,7 +115,7 @@ class PhasedTestController extends Controller
      *
      * @Route("/component/{componentId}/create-task", name="editor_create_task_component", options={"expose"=true})
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function createQuestionnaireToComponentAction(Component $component)
     {
@@ -141,7 +141,7 @@ class PhasedTestController extends Controller
      *
      * @Route("/component/{componentId}/potentials", name="get-component-potentials", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function getPotentialQuestionnairesAction(Component $component)
     {
@@ -162,7 +162,7 @@ class PhasedTestController extends Controller
      *
      * @Route("/component/{componentId}/questionnaire/{questionnaireId}/add-task", name="add-component-questionnaire", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function addQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
@@ -183,7 +183,7 @@ class PhasedTestController extends Controller
      *
      * @Route("/duplicate/component/{componentId}/questionnaire/{questionnaireId}", name="duplicate-component-questionnaire", options={"expose"=true})
      * @Method("POST")
-     * @Cache(sMaxAge=0)
+     * 
      */
     public function duplicateQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
@@ -205,7 +205,7 @@ class PhasedTestController extends Controller
      *
      * @Route("/test/{testId}/edit-params", name="editor_phased_params", options={"expose"=true})
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Editor:phased/editParams.html.twig")
      */
     public function editParamsAction(Test $test, Request $request)

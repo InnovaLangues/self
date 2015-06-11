@@ -25,7 +25,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/rights", name="editor_session_rights")
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:rights.html.twig")
      */
     public function handleRightsAction(Session $session)
@@ -46,7 +46,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/rights/add", name="editor_session_rights_add")
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:rights_form.html.twig")
      */
     public function createRightsAction(Session $session, Request $request)
@@ -73,7 +73,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/rights/{rightId}/edit", name="editor_session_rights_edit")
      * @Method({"GET", "POST"})
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:rights_form.html.twig")
      */
     public function editRightsAction(Session $session, RightUserSession $rightUserSession, Request $request)
@@ -99,7 +99,7 @@ class RightUserSessionController extends Controller
      *
      * @Route("/session/{sessionId}/right/{rightId}/delete", name="editor_session_rights_delete", options = {"expose"=true})
      * @Method("GET")
-     * @Cache(sMaxAge=0)
+     * 
      * @Template("InnovaSelfBundle:Session:list.html.twig")
      */
     public function deleteRightAction(Session $session, RightUserSession $rightUserSession)
