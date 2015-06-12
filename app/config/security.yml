@@ -21,7 +21,7 @@ security:
                 login_path:  fos_user_security_login
             logout:
                 path:        fos_user_security_logout
-                target:      /fr/
+                target:      /
                 #http://foshttpcachebundle.readthedocs.org/en/latest/reference/configuration/user-context.html
                 invalidate_session: true
                 #handlers:
