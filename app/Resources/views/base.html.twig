@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
+<html>
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}SELF{% endblock %}</title>
@@ -56,14 +56,12 @@
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
 
-
             {% javascripts filter='yui_js' output='js/compiled/translations.js'
                 'bundles/bazingajstranslation/js/translator.min.js'
                 'js/translations/config.js'
                 'js/translations/*/*.js' %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
-
 
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>

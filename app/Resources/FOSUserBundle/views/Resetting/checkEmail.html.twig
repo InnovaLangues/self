@@ -3,7 +3,18 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-<p class="alert alert-info">
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>
+        <a href="{{ path('show_start') }}"><img src="{{ asset("bundles/innovaself/images/innova_logo_web_24.png") }}"/></a>
+        Reset mot de passe SELF - Système d’Evaluation en Langues à visée Formative
+        </h4>
+    </div>
+    <div class="panel-body">
+
+		<p class="alert alert-info">
+		{{ 'resetting.check_email'|trans({'%email%': email}) }}
+		</p>
+	</div>
+</div>
 {% endblock %}

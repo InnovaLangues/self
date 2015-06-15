@@ -1,12 +1,22 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-<h1>
-    <img src="{{ asset('bundles/innovaself/images/oignon.png') }}"/> 404
-</h1>
-
-<h2>
-    <p>Désolé, cette page n'existe pas.</p>
-    <p>Pour revenir à l'accueil du site, cliquez <a href="{{ path('show_tests') }}">ici</a>.</p>
-</h2>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+    	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+ 	</head>
+    <body>
+    	<div id="body" class="container">
+            <div class="row">
+            	<br/>
+		    	<div class="well">
+				<h1>
+				    <img src="{{ asset('bundles/innovaself/images/oignon.png') }}"/> 404
+				</h1>
+				<h2>
+				    <p>Désolé, cette page n'existe pas.</p>
+				    <p>Pour revenir à l'accueil du site, cliquez <a href="{{ path('show_start') }}">ici</a>.</p>
+				</h2>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
