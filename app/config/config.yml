@@ -160,8 +160,8 @@ fos_http_cache:
                 headers:
                     cache_control:
                         public: true
-                        max_age: 60
-                        s_maxage: 60
+                        max_age: 120
+                        s_maxage: 120
 
 jms_i18n_routing:
     default_locale: fr
