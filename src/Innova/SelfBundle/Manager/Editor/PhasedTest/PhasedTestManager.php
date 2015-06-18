@@ -24,6 +24,7 @@ class PhasedTestManager
         $this->componentTypeRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\ComponentType');
         $this->orderQuestionnaireComponentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent');
         $this->questionnaireRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
+        $this->testRepo = $this->entityManager->getRepository('InnovaSelfBundle:Test');
     }
 
     public function generateBaseComponents(Test $test)
@@ -36,6 +37,13 @@ class PhasedTestManager
         }
 
         return $test;
+    }
+
+    public function checkLevel(Test $test)
+    {
+        $tasks = $this->questionnaireRepo->findByTestAndMissingLevel($test);
+
+        return $tasks;
     }
 
     public function generateComponent(Test $test, ComponentType $type)

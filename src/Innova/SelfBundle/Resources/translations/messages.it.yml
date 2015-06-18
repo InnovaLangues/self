@@ -433,6 +433,7 @@ variety:
         secondLang: Mandarin - Langue seconde
 
 phased:
+    checklevel: Vérifier niveaux manquants
     minitest: Minitest
     step1: Etape 1
     step2: Etape 2

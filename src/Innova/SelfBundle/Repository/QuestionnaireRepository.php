@@ -284,4 +284,23 @@ class QuestionnaireRepository extends EntityRepository
 
         return $builder->getQuery()->getResult();
     }
+
+    public function findByTestAndMissingLevel($test)
+    {
+        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        LEFT JOIN q.orderQuestionnaireTests qot
+        LEFT JOIN q.orderQuestionnaireComponents qoc
+        LEFT JOIN qoc.component c
+        LEFT JOIN q.questions qq
+        LEFT JOIN qq.subquestions qqs
+        WHERE (qot.test = :test OR c.test = :test)
+        AND qqs.level IS NULL
+        AND q.level IS NULL
+        ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test);
+
+        return $query->getResult();
+    }
 }

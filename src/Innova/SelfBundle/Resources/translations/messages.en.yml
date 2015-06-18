@@ -424,6 +424,7 @@ variety:
         otherVariant: Mandarin - Autres variantes
         secondLang: Mandarin - Langue seconde
 phased:
+    checklevel: Check missing levels
     minitest: Minitest
     step1: Step 1
     step2: Step 2

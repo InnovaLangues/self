@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -28,6 +29,30 @@ use Innova\SelfBundle\Form\Type\PhasedParamsType;
  */
 class PhasedTestController extends Controller
 {
+    /**
+     * Check level
+     *
+     * @Route("/test/{testId}/check-level", name="phased-check-level", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function checkLevelAction(Test $test)
+    {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.edittasktest", $currentUser, $test)) {
+            $tasks = $this->get("self.phasedtest.manager")->checkLevel($test);
+
+            $missingLevelTasks = array();
+            foreach ($tasks as $task) {
+                $missingLevelTasks[$task->getId()] = $task->getTheme();
+            }
+
+            return new JsonResponse($missingLevelTasks);
+        }
+
+        return;
+    }
+
     /**
      * Generate a component for a test entity
      *
