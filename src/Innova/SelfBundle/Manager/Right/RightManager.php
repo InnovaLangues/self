@@ -4,14 +4,17 @@ namespace Innova\SelfBundle\Manager\Right;
 
 use Innova\SelfBundle\Entity\Right\Right;
 use Innova\SelfBundle\Entity\User;
+use FOS\UserBundle\Util\UserManipulator;
 
 class RightManager
 {
     protected $entityManager;
+    protected $manipulator;
 
-    public function __construct($entityManager)
+    public function __construct($entityManager, UserManipulator $manipulator)
     {
         $this->entityManager = $entityManager;
+        $this->manipulator = $manipulator;
     }
 
     public function createRights($rights)
@@ -75,7 +78,22 @@ class RightManager
         $em->persist($right);
         $em->flush();
 
+        if ($this->hasAnyGlobalRight($user)) {
+            $this->manipulator->addRole($user->getUsername(), "ROLE_SUPER_ADMIN");
+        } else {
+            $this->manipulator->removeRole($user->getUsername(), "ROLE_SUPER_ADMIN");
+        }
+
         return $this;
+    }
+
+    public function hasAnyGlobalRight(User $user)
+    {
+        $em = $this->entityManager;
+
+        $hasAnyGlobalRight = $em->getRepository("InnovaSelfBundle:User")->hasAnyGlobalRight($user);
+
+        return $hasAnyGlobalRight;
     }
 
     public function hasRightsOnGroup($groupClass, $user)
