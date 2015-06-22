@@ -59,6 +59,14 @@ class PhasedParamsType extends AbstractType
             'by_reference' => false,
         ));
 
+        $builder->add('skillScoreThresholds', 'collection', array(
+            'type' => new SkillScoreThresholdType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+            'mapped' => true,
+            'by_reference' => false,
+        ));
+
         $builder->add('save', 'submit', array(
             'attr' => array('class' => 'btn btn-default'),
             'label'  => 'generic.validate',

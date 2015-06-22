@@ -8,6 +8,11 @@ $( "body" ).on( "click", '.save-order', function() {
     saveOrder(componentId);
 });
 
+$( "body" ).on( "click", '.check-level', function() {
+    var testId = $(this).data("test-id");
+    checkLevel(testId);
+});
+
 $( "body" ).on( "click", '.get-potentials', function() {
 	var componentId = $(this).attr("data-component-id");
     $("#potential-tasks").html("");
@@ -131,6 +136,22 @@ function saveOrder(componentId)
         data:{newOrder: newOrder}
     })
     .done(function(data) {
+        $(".loader-img").hide();
+    });
+}
+
+function checkLevel(testId)
+{
+    $(".loader-img").show();
+    $.ajax({
+        url: Routing.generate('phased-check-level', {'testId': testId }),
+        type: 'POST'
+    })
+    .done(function(data) {
+        console.log(data);
+        jQuery.each(data, function(i, val) {
+            $("li[data-questionnaire-id='"+i+"']").css("color","red");
+        });
         $(".loader-img").hide();
     });
 }

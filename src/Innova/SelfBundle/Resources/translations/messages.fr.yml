@@ -438,6 +438,7 @@ variety:
         secondLang: Mandarin - Langue seconde
 
 phased:
+    checklevel: Vérifier niveaux manquants
     minitest: Minitest
     step1: Etape 1
     step2: Etape 2
@@ -453,6 +454,7 @@ phased:
     thresholdToStep2Level: Niveau
     threshold:
         componentType: Etape concernée
+        skill: Compétence
         rightAnswers: Nombre de bonnes réponses nécessaires
         description: Feedback pour l'étudiant
         level: Niveau

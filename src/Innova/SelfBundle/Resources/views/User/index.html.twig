@@ -14,67 +14,52 @@
     {% if entities is not empty %}
     <h3>{{ 'user.list' | trans }}</h3>
     
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#admin-users" aria-expanded="true" aria-controls="admin-users">
-                    {{ 'user.admin_users' | trans }}
-                    </a>
-                </h4>
-            </div>
-            <div id="admin-users" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                    <ul class="list-group">
-                        {% for entity in entities if "ROLE_SUPER_ADMIN" in entity.roles %}
-                            <li class="list-group-item">
-                                <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#granted-users" role="tab" data-toggle="tab">
+                <span class="glyphicon glyphicon-file"></span> {{ 'user.admin_users' | trans }}
+            </a>
+        </li>
+        <li>
+            <a href="#all-users" role="tab" data-toggle="tab">
+                <span class="glyphicon glyphicon-list-alt"></span> {{ 'user.plural' | trans }}
+            </a>
+        </li>
+    </ul>
+
+    <br/>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="granted-users">
+            <ul class="list-group">
+                {% for entity in entities if "ROLE_SUPER_ADMIN" in entity.roles %}
+                    <li class="list-group-item">
+                        <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">
+                            {{ entity.username }}
+                            {% if entity.lastname and entity.firstname %}
+                            ({{ entity.lastname ~ " " ~ entity.firstname }})
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#session-users" aria-expanded="true" aria-controls="session-users">
-                    {{ 'user.session_managers' | trans }}
-                    </a>
-                </h4>
-            </div>
-            <div id="session-users" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                    <ul class="list-group">
-                        {% for entity in entities if "ROLE_SESSIONMANAGER" in entity.roles %}
-                            <li class="list-group-item">
-                                <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingTwo">
-                <h4 class="panel-title">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#classic-users" aria-expanded="false" aria-controls="classic-users">
-                    {{ 'user.plural' | trans }}
-                    </a>
-                </h4>
-            </div>
-            <div id="classic-users" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">
-                    <ul class="list-group">
-                        {% for entity in entities if "ROLE_SUPER_ADMIN" not in entity.roles and "ROLE_SESSIONMANAGER" not in entity.roles %}
-                            <li class="list-group-item">
-                                <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+        <div class="tab-pane" id="all-users">
+             <ul class="list-group">
+                {% for entity in entities if "ROLE_SUPER_ADMIN" not in entity.roles %}
+                    <li class="list-group-item">
+                        <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">
+                            {{ entity.username }}
+                            {% if entity.lastname and entity.firstname %}
+                            ({{ entity.lastname ~ " " ~ entity.firstname }})
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
+
     {% endif %}
 {% endblock %}

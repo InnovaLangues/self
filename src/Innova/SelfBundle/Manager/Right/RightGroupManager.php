@@ -8,10 +8,14 @@ use Innova\SelfBundle\Entity\User;
 class RightGroupManager
 {
     protected $entityManager;
+    protected $rightManager;
+    protected $manipulator;
 
-    public function __construct($entityManager)
+    public function __construct($entityManager, $rightManager, $manipulator)
     {
         $this->entityManager = $entityManager;
+        $this->rightManager = $rightManager;
+        $this->manipulator = $manipulator;
     }
 
     public function createGroups($groups)
@@ -52,5 +56,11 @@ class RightGroupManager
         }
 
         $em->flush();
+
+        if ($this->rightManager->hasAnyGlobalRight($user)) {
+            $this->manipulator->addRole($user->getUsername(), "ROLE_SUPER_ADMIN");
+        } else {
+            $this->manipulator->removeRole($user->getUsername(), "ROLE_SUPER_ADMIN");
+        }
     }
 }

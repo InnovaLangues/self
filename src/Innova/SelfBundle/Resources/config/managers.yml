@@ -297,8 +297,11 @@ services:
         class: Innova\SelfBundle\Manager\Right\RightManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            manipulator:        @fos_user.util.user_manipulator
 
     self.rightgroup.manager:
         class: Innova\SelfBundle\Manager\Right\RightGroupManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            rightManager:       @self.right.manager
+            manipulator:        @fos_user.util.user_manipulator
