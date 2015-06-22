@@ -146,9 +146,10 @@ fos_http_cache:
         rules:
             -
                 match:
-                    path: ^/login
+                    attributes:
+                        _route: fos_user_security_login
+                    #path: ^/login
                 headers:
-
                     cache_control:
                         public: false
                         max_age: 0
@@ -159,8 +160,8 @@ fos_http_cache:
                 headers:
                     cache_control:
                         public: true
-                        max_age: 60
-                        s_maxage: 60
+                        max_age: 120
+                        s_maxage: 120
 
 jms_i18n_routing:
     default_locale: fr
