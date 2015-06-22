@@ -65,6 +65,11 @@ class PhasedParams
     protected $generalScoreThresholds;
 
     /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold", mappedBy="phasedParam", cascade={"persist"})
+    */
+    protected $skillScoreThresholds;
+
+    /**
      * Get id
      *
      * @return integer
@@ -257,5 +262,39 @@ class PhasedParams
     public function getGeneralScoreThresholds()
     {
         return $this->generalScoreThresholds;
+    }
+
+    /**
+     * Add skillScoreThreshold
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold $skillScoreThreshold
+     *
+     * @return PhasedParams
+     */
+    public function addSkillScoreThreshold(\Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold $skillScoreThreshold)
+    {
+        $this->skillScoreThresholds[] = $skillScoreThreshold;
+
+        return $this;
+    }
+
+    /**
+     * Remove skillScoreThreshold
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold $skillScoreThreshold
+     */
+    public function removeSkillScoreThreshold(\Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold $skillScoreThreshold)
+    {
+        $this->skillScoreThresholds->removeElement($skillScoreThreshold);
+    }
+
+    /**
+     * Get skillScoreThresholds
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSkillScoreThresholds()
+    {
+        return $this->skillScoreThresholds;
     }
 }

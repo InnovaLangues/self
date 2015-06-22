@@ -63,7 +63,7 @@
 
 	</div>
 
-	<div class="col-md-12">
+	<div class="col-md-6">
 		<div class="panel panel-default " >
 		<div class="panel-heading">
 			Seuils score global
@@ -85,6 +85,36 @@
 		</div>
 		</div>
 	</div>
+
+	<div class="col-md-6">
+		<div class="panel panel-default " >
+		<div class="panel-heading">
+			Seuils score par compétence
+			<div class="pull-right">
+				<span id="add-skill-threshold" class="btn btn-default btn-xs">Ajouter seuil</span>
+			</div>
+		</div>
+		<div class="panel-body">
+			    <ul class="list-group skill-thresholds" data-prototype="{{ form_widget(form.skillScoreThresholds.vars.prototype)|e }}">
+			        {% for skillScoreThreshold in form.skillScoreThresholds %}
+			        	<li class="list-group-item">
+			            {{ form_row(skillScoreThreshold.skill) }}
+			     		{{ form_row(skillScoreThreshold.rightAnswers) }}
+			            {{ form_row(skillScoreThreshold.description) }}
+			            {{ form_row(skillScoreThreshold.level) }}
+			            </li>
+			        {% endfor %}
+			    </ul>
+		</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
 	{{ form_widget(form._token) }}
 	{{ form_widget(form.save) }}
 
@@ -98,9 +128,20 @@
    	<script>
 	$(document).ready(function() {
 		var collectionHolder = $('ul.thresholds');
+		var collectionHolderSkill = $('ul.skill-thresholds');
+
 
 		collectionHolder.find('li').each(function() {
 	        addTagFormDeleteLink($(this));
+	    });
+
+		collectionHolderSkill.find('li').each(function() {
+	        addTagFormDeleteLink($(this));
+	    });
+
+		 $("#add-skill-threshold").on('click', function(e) {
+	        e.preventDefault();
+	        addTagForm(collectionHolderSkill);
 	    });
 
 	    $("#add-threshold").on('click', function(e) {
