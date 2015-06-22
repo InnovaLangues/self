@@ -234,18 +234,33 @@ class PhasedTestController extends Controller
             $thresholds->add($threshold);
         }
 
+        $scoreThresholds = new ArrayCollection();
+        foreach ($params->getSkillScoreThresholds() as $threshold) {
+            $scoreThresholds->add($threshold);
+        }
+
         $form = $this->get('form.factory')->createBuilder(new PhasedParamsType(), $params)->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                // remove unused threshold
+                // remove unused thresholds
                 foreach ($thresholds as $threshold) {
                     if ($params->getGeneralScoreThresholds()->contains($threshold) == false) {
                         $em->remove($threshold);
                     }
                 }
+                foreach ($scoreThresholds as $threshold) {
+                    if ($params->getSkillScoreThresholds()->contains($threshold) == false) {
+                        $em->remove($threshold);
+                    }
+                }
 
+                // link thresholds to params
                 foreach ($params->getGeneralScoreThresholds() as $threshold) {
+                    $threshold->setPhasedParam($params);
+                }
+
+                foreach ($params->getSkillScoreThresholds() as $threshold) {
                     $threshold->setPhasedParam($params);
                 }
 

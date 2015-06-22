@@ -454,6 +454,7 @@ phased:
     thresholdToStep2Level: Niveau
     threshold:
         componentType: Etape concernée
+        skill: Compétence
         rightAnswers: Nombre de bonnes réponses nécessaires
         description: Feedback pour l'étudiant
         level: Niveau
