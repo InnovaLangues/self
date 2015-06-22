@@ -146,9 +146,7 @@ fos_http_cache:
         rules:
             -
                 match:
-                    attributes:
-                        _route: fos_user_security_login
-                    #path: ^/login
+                    path: ^/login
                 headers:
                     cache_control:
                         public: false
