@@ -143,11 +143,14 @@ fos_http_cache:
         enabled: true
         name: flashes
     cache_control :
+        defaults:
+            overwrite: false
         rules:
             -
                 match:
-                    path: ^/login
+                    path: ^/login|logout
                 headers:
+                    overwrite: true
                     cache_control:
                         public: false
                         max_age: 0
