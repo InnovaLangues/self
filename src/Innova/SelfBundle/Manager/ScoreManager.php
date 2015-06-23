@@ -101,6 +101,33 @@ class ScoreManager
         return;
     }
 
+    public function getSkillLevelFromThreshold($session, $user, $skillName)
+    {
+        $test = $session->getTest();
+
+        if ($test->getPhased()) {
+            $params = $test->getPhasedParams();
+            $skill = $this->entityManager->getRepository('InnovaSelfBundle:Skill')->findByName($skillName);
+            if ($traces = $this->traceRepo->getByUserBySessionBySkill($user, $session, $skill)) {
+                $thresholds = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\SkillScoreThreshold')->findBy(
+                    array("phasedParam" => $params, "skill" => $skill),
+                    array('rightAnswers' => 'DESC')
+                );
+
+                $scores = $this->getScoresFromTraces($traces);
+                $correctAnswers = $this->countCorrectAnswers($scores);
+
+                foreach ($thresholds as $threshold) {
+                    if ($correctAnswers >= $threshold->getRightAnswers()) {
+                        return $threshold->getDescription();
+                    }
+                }
+            }
+        }
+
+        return;
+    }
+
     private function getScoresFromTraces($traces)
     {
         $scores = $this->initializeScoreArray();

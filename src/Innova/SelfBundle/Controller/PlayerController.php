@@ -114,9 +114,14 @@ class PlayerController
     public function endAction(Test $test, Session $session)
     {
         $levelFeedback = $this->scoreManager->getGlobalLevelFromThreshold($session, $this->user);
+        $coFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $this->user, "CO");
+        $ceFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $this->user, "CE");
+        $eecFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $this->user, "EEC");
         $score = $this->scoreManager->calculateScoreByTest($test, $session, $this->user);
 
-        return array("score" => $score, "session" => $session, "levelFeedback" => $levelFeedback);
+        return array(
+            "score" => $score, "session" => $session, "levelFeedback" => $levelFeedback, "coFeedback" => $coFeedback, "ceFeedback" => $ceFeedback, "eecFeedback" => $eecFeedback,
+        );
     }
 
     /**
