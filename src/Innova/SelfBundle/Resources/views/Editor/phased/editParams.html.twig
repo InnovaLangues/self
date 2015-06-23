@@ -9,18 +9,35 @@
 
 {{ form_start(form) }}
 
-<div class="row">
-	<div class="col-md-6">
-		<div class="panel panel-default " >
-			<div class="panel-heading">Minitest > Etape 2</div>
-			<div class="panel-body">
-				<h4>Etape 2</h4>
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+        <a href="#progress" role="tab" data-toggle="tab">
+        	Passage Minitest -> Etapes
+        </a>
+    </li>
+    <li>
+        <a href="#global-score" role="tab" data-toggle="tab">
+            Score global
+        </a>
+    </li>
+    <li>
+        <a href="#skill-score" role="tab" data-toggle="tab">
+            Score par compétence
+        </a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="progress">
+        <div class="row">
+        	<br/>
+			<div class="col-md-6">
+				<h4>Minitest > Etape 2</h4>
 				<div class="form-group">
 				{{ form_label(form.thresholdToStep2) }}
 				{{ form_widget(form.thresholdToStep2) }}
 				</div>
-
-				<hr/>
 
 				<div class="form-group">
 				{{ form_label(form.thresholdToStep2Leveled) }}
@@ -33,21 +50,13 @@
 				</div>
 
 			</div>
-		</div>
-	</div>
 
-	<div class="col-md-6">
-		<div class="panel panel-default " >
-			<div class="panel-heading">Minitest > Etape 3</div>
-			<div class="panel-body">
-				
-				<h4>Etape 3</h4>
+			<div class="col-md-6">
+				<h4>Minitest > Etape 3</h4>
 				<div class="form-group">
 				{{ form_label(form.thresholdToStep3) }}
 				{{ form_widget(form.thresholdToStep3) }}
 				</div>
-
-				<hr/>
 
 				<div class="form-group">
 				{{ form_label(form.thresholdToStep3Leveled) }}
@@ -59,19 +68,13 @@
 				{{ form_widget(form.thresholdToStep3Level) }}
 				</div>
 			</div>
-		</div>
+    	</div>
+    </div>
 
-	</div>
-
-	<div class="col-md-6">
-		<div class="panel panel-default " >
-		<div class="panel-heading">
-			Seuils score global
-			<div class="pull-right">
-				<span id="add-threshold" class="btn btn-default btn-xs">Ajouter seuil</span>
-			</div>
-		</div>
-		<div class="panel-body">
+    <div class="tab-pane" id="global-score">
+    	<div class="row">
+    		<div class="col-md-12">
+		    	<br/><span id="add-threshold" class="btn btn-default">Ajouter seuil</span><br/><br/>
 			    <ul class="list-group thresholds" data-prototype="{{ form_widget(form.generalScoreThresholds.vars.prototype)|e }}">
 			        {% for generalScoreThreshold in form.generalScoreThresholds %}
 			        	<li class="list-group-item col-md-6">
@@ -82,45 +85,36 @@
 			            </li>
 			        {% endfor %}
 			    </ul>
-		</div>
-		</div>
-	</div>
+		    </div>
+	    </div>
+    </div>
 
-	<div class="col-md-6">
-		<div class="panel panel-default " >
-		<div class="panel-heading">
-			Seuils score par compétence
-			<div class="pull-right">
-				<span id="add-skill-threshold" class="btn btn-default btn-xs">Ajouter seuil</span>
+    <div class="tab-pane " id="skill-score">
+    	<div class="row">
+    		<div class="col-md-12">
+				<br/><span id="add-skill-threshold" class="btn btn-default">Ajouter seuil</span><br/><br/>
+			    <ul class="list-group skill-thresholds" data-prototype="{{ form_widget(form.skillScoreThresholds.vars.prototype)|e }}">
+			        {% for skillScoreThreshold in form.skillScoreThresholds %}
+			        	<li class="list-group-item col-md-6" >
+				            {{ form_row(skillScoreThreshold.skill) }}
+				     		{{ form_row(skillScoreThreshold.rightAnswers) }}
+					     	
+				            {{ form_row(skillScoreThreshold.description) }}
+				            {{ form_row(skillScoreThreshold.level) }}
+			            </li>
+			        {% endfor %}
+			    </ul>
 			</div>
 		</div>
-		<div class="panel-body">
-		    <ul class="list-group skill-thresholds" data-prototype="{{ form_widget(form.skillScoreThresholds.vars.prototype)|e }}">
-		        {% for skillScoreThreshold in form.skillScoreThresholds %}
-		        	<li class="list-group-item col-md-6" >
-			            {{ form_row(skillScoreThreshold.skill) }}
-			     		{{ form_row(skillScoreThreshold.rightAnswers) }}
-				     	
-			            {{ form_row(skillScoreThreshold.description) }}
-			            {{ form_row(skillScoreThreshold.level) }}
-		            </li>
-		        {% endfor %}
-		    </ul>
-		</div>
-		</div>
-	</div>
-
-
-
-
-
-
-
-	{{ form_widget(form._token) }}
-	{{ form_widget(form.save) }}
-
-	{{ form_errors(form) }}
+    </div>
 </div>
+
+<hr/>
+{{ form_widget(form._token) }}
+{{ form_widget(form.save) }}
+
+{{ form_errors(form) }}
+
 {% endblock %}
 
 
