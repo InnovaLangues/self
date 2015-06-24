@@ -138,7 +138,8 @@ fos_http_cache:
             servers: %varnish_servers%
             base_url: %base_url%
     user_context:
-        role_provider: false
+        enabled: false
+        role_provider: true
     flash_message:
         enabled: true
         name: flashes
