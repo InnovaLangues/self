@@ -187,8 +187,8 @@ class ScoreManager
     {
         $correct = true;
         $rightProps = $this->propositionRepo->findBy(array("subquestion" => $subquestion, "rightAnswer" => true));
-
         $choices = $this->propositionRepo->getByUserTraceAndSubquestion($subquestion, $user, $component, $session);
+        $typology = $subquestion->getQuestion()->getTypology()->getName();
 
         // Teste si les choix de l'étudiant sont présents dans les bonnes réponses.
         foreach ($choices as $choice) {
@@ -198,7 +198,7 @@ class ScoreManager
         }
 
         // Teste si le nombre de réponses équivaut au nombre de réponses attendues.
-        if (count($rightProps) !== count($choices)) {
+        if ($typology === "TQRM" && count($rightProps) !== count($choices)) {
             $correct = false;
         }
 

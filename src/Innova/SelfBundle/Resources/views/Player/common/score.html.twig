@@ -1,3 +1,4 @@
+{#
 {% for skill, levels in score %}
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -25,35 +26,56 @@
         </div>
     </div>
 {% endfor %}
+#}
 
-{% if levelFeedback is not null %}
-<div class="panel panel-default">
-	<div class="panel-body">
-		{{ levelFeedback }}
+<div class="col-md-12">
+	<div class="panel panel-default">
+	  <div class="panel-body text-center">
+	    <h4><span class="glyphicon glyphicon-thumbs-up"></span> Score agregé</h4>
+
+	    {% if levelFeedback is not null %}
+	    	{{ levelFeedback }}
+	    {% else %}
+	        -
+	    {% endif %}
+	  </div>
 	</div>
 </div>
-{% endif %}
 
-{% if coFeedback is not null %}
-<div class="panel panel-default">
-	<div class="panel-body">
-		{{ coFeedback }}
+<div class="col-md-4">
+	<div class="panel panel-default">
+		<div class="panel-body text-center">
+		 	<h4><span class=" glyphicon glyphicon-headphones"></span> Compréhension orale</h4>
+			{% if coFeedback is not null %}
+	    	{{ coFeedback }}
+		    {% else %}
+		        -
+		    {% endif %}
+		</div>
 	</div>
 </div>
-{% endif %}
 
-{% if ceFeedback is not null %}
-<div class="panel panel-default">
-	<div class="panel-body">
-		{{ ceFeedback }}
+<div class="col-md-4">
+	<div class="panel panel-default">
+		<div class="panel-body text-center">
+		 	<h4><span class="glyphicon glyphicon-book"></span> Compréhension écrite</h4>
+			{% if ceFeedback is not null %}
+	    	{{ ceFeedback }}
+		    {% else %}
+		        -
+		    {% endif %}
+		</div>
 	</div>
 </div>
-{% endif %}
-
-{% if eecFeedback is not null %}
-<div class="panel panel-default">
-	<div class="panel-body">
-		{{ eecFeedback }}
+<div class="col-md-4">
+	<div class="panel panel-default">
+		<div class="panel-body text-center">
+		 	<h4><span class="glyphicon glyphicon-pencil"></span> Expression écrite courte</h4>
+			{% if eecFeedback is not null %}
+	    	{{ eecFeedback }}
+		    {% else %}
+		        -
+		    {% endif %}
+		</div>
 	</div>
 </div>
-{% endif %}

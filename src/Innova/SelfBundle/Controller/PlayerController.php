@@ -120,7 +120,12 @@ class PlayerController
         $score = $this->scoreManager->calculateScoreByTest($test, $session, $this->user);
 
         return array(
-            "score" => $score, "session" => $session, "levelFeedback" => $levelFeedback, "coFeedback" => $coFeedback, "ceFeedback" => $ceFeedback, "eecFeedback" => $eecFeedback,
+            "score" => $score,
+            "session" => $session,
+            "levelFeedback" => $levelFeedback,
+            "coFeedback" => $coFeedback,
+            "ceFeedback" => $ceFeedback,
+            "eecFeedback" => $eecFeedback,
         );
     }
 

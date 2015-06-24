@@ -41,10 +41,17 @@ class ExportManager
 
         $score = $this->scoreManager->calculateScoreByTest($session->getTest(), $session, $user);
         $levelFeedback = $this->scoreManager->getGlobalLevelFromThreshold($session, $user);
+        $coFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CO");
+        $ceFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CE");
+        $eecFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "EEC");
 
         $this->knpSnappyPdf->generateFromHtml(
             $this->templating->render(
-                'InnovaSelfBundle:Export:exportUserPdf.html.twig', array('score' => $score, 'session' => $session, 'levelFeedback' => $levelFeedback)),
+                'InnovaSelfBundle:Export:exportUserPdf.html.twig',
+                array(
+                    'score' => $score, 'session' => $session, 'levelFeedback' => $levelFeedback,
+                    "coFeedback" => $coFeedback, "ceFeedback" => $ceFeedback, "eecFeedback" => $eecFeedback,
+                )),
                 $fileName
         );
 
