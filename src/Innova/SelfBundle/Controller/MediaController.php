@@ -153,7 +153,11 @@ class MediaController
 
             switch ($entityType) {
                 case "questionnaire":
-                    $this->questionnaireManager->editQuestionnaireField($questionnaire, $entityField, $media);
+                    if ($entityField !== "comment") {
+                        $this->questionnaireManager->editQuestionnaireField($questionnaire, $entityField, $media);
+                    } else {
+                        $this->commentManager->createComment($questionnaire, $media);
+                    }
                     $parameters = array('questionnaire' => $questionnaire);
 
                     break;

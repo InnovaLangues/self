@@ -46,4 +46,20 @@ class TraceRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function getByUserBySessionBySkill($user, $session, $skill)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        LEFT JOIN t.questionnaire q
+        WHERE t.user = :user
+        AND t.session = :session
+        AND q.skill = :skill";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('user', $user)
+                ->setParameter('session', $session)
+                ->setParameter('skill', $skill);
+
+        return $query->getResult();
+    }
 }

@@ -101,6 +101,33 @@ class ScoreManager
         return;
     }
 
+    public function getSkillLevelFromThreshold($session, $user, $skillName)
+    {
+        $test = $session->getTest();
+
+        if ($test->getPhased()) {
+            $params = $test->getPhasedParams();
+            $skill = $this->entityManager->getRepository('InnovaSelfBundle:Skill')->findByName($skillName);
+            if ($traces = $this->traceRepo->getByUserBySessionBySkill($user, $session, $skill)) {
+                $thresholds = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\SkillScoreThreshold')->findBy(
+                    array("phasedParam" => $params, "skill" => $skill),
+                    array('rightAnswers' => 'DESC')
+                );
+
+                $scores = $this->getScoresFromTraces($traces);
+                $correctAnswers = $this->countCorrectAnswers($scores);
+
+                foreach ($thresholds as $threshold) {
+                    if ($correctAnswers >= $threshold->getRightAnswers()) {
+                        return $threshold->getDescription();
+                    }
+                }
+            }
+        }
+
+        return;
+    }
+
     private function getScoresFromTraces($traces)
     {
         $scores = $this->initializeScoreArray();
@@ -160,8 +187,8 @@ class ScoreManager
     {
         $correct = true;
         $rightProps = $this->propositionRepo->findBy(array("subquestion" => $subquestion, "rightAnswer" => true));
-
         $choices = $this->propositionRepo->getByUserTraceAndSubquestion($subquestion, $user, $component, $session);
+        $typology = $subquestion->getQuestion()->getTypology()->getName();
 
         // Teste si les choix de l'étudiant sont présents dans les bonnes réponses.
         foreach ($choices as $choice) {
@@ -171,7 +198,7 @@ class ScoreManager
         }
 
         // Teste si le nombre de réponses équivaut au nombre de réponses attendues.
-        if (count($rightProps) !== count($choices)) {
+        if ($typology === "TQRM" && count($rightProps) !== count($choices)) {
             $correct = false;
         }
 
