@@ -34,6 +34,11 @@ class SkillScoreThreshold
     protected $skill;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\PhasedTest\ComponentType")
+    */
+    protected $componentType;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
     */
     protected $level;
@@ -178,5 +183,29 @@ class SkillScoreThreshold
     public function getLevel()
     {
         return $this->level;
+    }
+
+    /**
+     * Set componentType
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\ComponentType $componentType
+     *
+     * @return SkillScoreThreshold
+     */
+    public function setComponentType(\Innova\SelfBundle\Entity\PhasedTest\ComponentType $componentType = null)
+    {
+        $this->componentType = $componentType;
+
+        return $this;
+    }
+
+    /**
+     * Get componentType
+     *
+     * @return \Innova\SelfBundle\Entity\PhasedTest\ComponentType
+     */
+    public function getComponentType()
+    {
+        return $this->componentType;
     }
 }

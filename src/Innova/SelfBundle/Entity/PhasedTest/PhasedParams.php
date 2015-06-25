@@ -66,7 +66,7 @@ class PhasedParams
 
     /**
     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold", mappedBy="phasedParam", cascade={"persist"})
-    * @ORM\OrderBy({"skill" = "ASC", "level" = "ASC"})
+    * @ORM\OrderBy({"componentType" = "ASC", "skill" = "ASC", "level" = "ASC"})
     */
     protected $skillScoreThresholds;
 

@@ -109,8 +109,11 @@ class ScoreManager
             $params = $test->getPhasedParams();
             $skill = $this->entityManager->getRepository('InnovaSelfBundle:Skill')->findByName($skillName);
             if ($traces = $this->traceRepo->getByUserBySessionBySkill($user, $session, $skill)) {
+                $lastTrace = end($traces);
+                $componentType = $lastTrace->getComponent()->getComponentType();
+
                 $thresholds = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\SkillScoreThreshold')->findBy(
-                    array("phasedParam" => $params, "skill" => $skill),
+                    array("phasedParam" => $params, "skill" => $skill, "componentType" => $componentType),
                     array('rightAnswers' => 'DESC')
                 );
 
