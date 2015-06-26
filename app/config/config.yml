@@ -128,6 +128,10 @@ knp_snappy:
         binary:     /usr/local/bin/wkhtmltopdf
         options:    []
 
+bazinga_js_translation:
+    locale_fallback:      fr
+    default_domain:       messages
+
 fos_http_cache:
     cache_manager:
         enabled: %cache_manager_enabled%
