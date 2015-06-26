@@ -1,24 +1,28 @@
 {% extends '::base.html.twig' %}
 {% block body -%}
-    <form action="{{ path('trace_setDifficulty', { 'traceId': trace.id, 'testId': test.id, 'sessionId': session.id }) }}" method="post">
-        {{ 'trace.action.evaluate' | trans }}
-        <label class="radio">
-            <input type="radio" name="difficulty" value=1 required> {{ 'trace.field.difficulty.veryEasy' | trans }}
-        </label>
-        <label class="radio">
-            <input type="radio" name="difficulty" value=2 required> {{ 'trace.field.difficulty.easy' | trans }}
-        </label>
-        <label class="radio">
-            <input type="radio" name="difficulty" value=3 required> {{ 'trace.field.difficulty.normal' | trans }}
-        </label>
-        <label class="radio">
-            <input type="radio" name="difficulty" value=4 required> {{ 'trace.field.difficulty.difficult' | trans }}
-        </label>
-        <label class="radio">
-            <input type="radio" name="difficulty" value=5 required> {{ 'trace.field.difficulty.veryDifficult' | trans }}
-        </label>
+    {% if not test.getPhased  %}
+        <form action="{{ path('trace_setDifficulty', { 'traceId': trace.id, 'testId': test.id, 'sessionId': session.id }) }}" method="post">
+            {{ 'trace.action.evaluate' | trans }}
+            <label class="radio">
+                <input type="radio" name="difficulty" value=1 required> {{ 'trace.field.difficulty.veryEasy' | trans }}
+            </label>
+            <label class="radio">
+                <input type="radio" name="difficulty" value=2 required> {{ 'trace.field.difficulty.easy' | trans }}
+            </label>
+            <label class="radio">
+                <input type="radio" name="difficulty" value=3 required> {{ 'trace.field.difficulty.normal' | trans }}
+            </label>
+            <label class="radio">
+                <input type="radio" name="difficulty" value=4 required> {{ 'trace.field.difficulty.difficult' | trans }}
+            </label>
+            <label class="radio">
+                <input type="radio" name="difficulty" value=5 required> {{ 'trace.field.difficulty.veryDifficult' | trans }}
+            </label>
 
-        <input type="hidden" name="traceId" value="{{ trace.id }}"/>
-        <input type="submit" class="btn btn-primary" value="{{ 'generic.validate' | trans }}"/>
-    </form>
+            <input type="hidden" name="traceId" value="{{ trace.id }}"/>
+            <input type="submit" class="btn btn-primary" value="{{ 'generic.validate' | trans }}"/>
+        </form>
+    {% else %}
+        <a class="btn btn-default btn-primary" href="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id }) }}">Passez à la tâche suivante</a>
+    {% endif %}
 {% endblock %}
