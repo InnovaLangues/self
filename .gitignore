@@ -1,6 +1,9 @@
 # Bootstrap
 app/bootstrap*
 
+# Maintenance lockfile
+app/lock
+
 # Vendors
 /vendor/
 
