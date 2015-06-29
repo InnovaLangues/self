@@ -18,6 +18,14 @@ class SkillScoreThresholdType extends AbstractType
             'translation_domain' => 'messages',
         ));
 
+        $builder->add('componentType', 'entity', array(
+            'class' => 'InnovaSelfBundle:PhasedTest\ComponentType',
+            'property' => 'name',
+            'attr' => array('class' => 'form-control'),
+            'label'  => 'phased.threshold.componentType',
+            'translation_domain' => 'messages',
+        ));
+
         $builder->add('rightAnswers', 'integer', array(
             'attr' => array('class' => 'form-control'),
             'label'  => 'phased.threshold.rightAnswers',

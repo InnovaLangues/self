@@ -97,6 +97,7 @@
 			        {% for skillScoreThreshold in form.skillScoreThresholds %}
 			        	<li class="list-group-item col-md-6" >
 				            {{ form_row(skillScoreThreshold.skill) }}
+				            {{ form_row(skillScoreThreshold.componentType) }}
 				     		{{ form_row(skillScoreThreshold.rightAnswers) }}
 					     	
 				            {{ form_row(skillScoreThreshold.description) }}

@@ -109,23 +109,34 @@ class ScoreManager
             $params = $test->getPhasedParams();
             $skill = $this->entityManager->getRepository('InnovaSelfBundle:Skill')->findByName($skillName);
             if ($traces = $this->traceRepo->getByUserBySessionBySkill($user, $session, $skill)) {
+                $globalTraces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
+                $lastTrace = end($globalTraces);
+                $componentType = $lastTrace->getComponent()->getComponentType();
+
+                $componentType = $lastTrace->getComponent()->getComponentType();
+
                 $thresholds = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\SkillScoreThreshold')->findBy(
-                    array("phasedParam" => $params, "skill" => $skill),
+                    array("phasedParam" => $params, "skill" => $skill, "componentType" => $componentType),
                     array('rightAnswers' => 'DESC')
                 );
 
+                $nbThresholds = count($thresholds);
+                $nbMissedThresholds = 0;
+
                 $scores = $this->getScoresFromTraces($traces);
                 $correctAnswers = $this->countCorrectAnswers($scores);
+                $percent = 0;
 
                 foreach ($thresholds as $threshold) {
                     if ($correctAnswers >= $threshold->getRightAnswers()) {
-                        return $threshold->getDescription();
+                        $percent = ($nbThresholds - $nbMissedThresholds) / $nbThresholds * 100;
+
+                        return array("feedback" => $threshold->getDescription(),"percent" => $percent);
                     }
+                    $nbMissedThresholds += 1;
                 }
             }
         }
-
-        return;
     }
 
     private function getScoresFromTraces($traces)

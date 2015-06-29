@@ -13,13 +13,15 @@ class PlayerManager
     protected $entityManager;
     protected $securityContext;
     protected $scoreManager;
+    protected $session;
     protected $user;
 
-    public function __construct($entityManager, $securityContext, $scoreManager)
+    public function __construct($entityManager, $securityContext, $scoreManager, $session)
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
         $this->scoreManager = $scoreManager;
+        $this->session = $session;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->traceRepo = $this->entityManager->getRepository('InnovaSelfBundle:Trace');
         $this->componentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component');
@@ -27,6 +29,42 @@ class PlayerManager
         $this->orderQCRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent');
         $this->propositionRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
         $this->generalScoreRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\GeneralScoreThreshold');
+        $this->questionnaireRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
+    }
+
+    public function needToLog(Session $session)
+    {
+        $sessionLogged = $this->session->get('sessionLogged-'.$session->getId());
+        $isUserInAuthorizedGroup = $this->entityManager->getRepository('InnovaSelfBundle:User')->groupWithUserAndSession($this->user, $session);
+
+        if ($sessionLogged != 1 && !$isUserInAuthorizedGroup) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function countQuestionnaireDone(Component $component = null, Session $session)
+    {
+        $test = $session->getTest();
+        if ($component) {
+            $count = $this->questionnaireRepo->countDoneYetByUserByTestByComponent($test, $this->user, $session, $component);
+        } else {
+            $count = $this->questionnaireRepo->countDoneYetByUserByTestBySession($test->getId(), $this->user->getId(), $session->getId());
+        }
+
+        return $count;
+    }
+
+    public function countQuestionnaireTotal(Component $component = null, $questionnaires)
+    {
+        if ($component) {
+            $count = count($component->getOrderQuestionnaireComponents());
+        } else {
+            $count = count($questionnaires);
+        }
+
+        return $count;
     }
 
     /**
