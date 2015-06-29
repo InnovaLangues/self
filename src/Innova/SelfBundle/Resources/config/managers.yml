@@ -97,6 +97,7 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.context
             scoreManager:       @self.score.manager
+            session:            @session
 
     self.export.manager:
         class: Innova\SelfBundle\Manager\ExportManager

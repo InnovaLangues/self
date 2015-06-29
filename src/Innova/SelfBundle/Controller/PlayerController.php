@@ -45,14 +45,14 @@ class PlayerController
         PlayerManager $playerManager,
         $scoreManager
     ) {
-        $this->securityContext = $securityContext;
-        $this->entityManager = $entityManager;
-        $this->session = $session;
-        $this->router = $router;
-        $this->user = $this->securityContext->getToken()->getUser();
-        $this->playerManager = $playerManager;
-        $this->scoreManager = $scoreManager;
-        $this->questionnaireRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
+        $this->securityContext      = $securityContext;
+        $this->entityManager        = $entityManager;
+        $this->session              = $session;
+        $this->router               = $router;
+        $this->user                 = $this->securityContext->getToken()->getUser();
+        $this->playerManager        = $playerManager;
+        $this->scoreManager         = $scoreManager;
+        $this->questionnaireRepo    = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
     }
 
     /**
@@ -65,33 +65,25 @@ class PlayerController
      */
     public function startAction(Test $test, Session $session)
     {
-        $sessionLogged = $this->session->get('sessionLogged-'.$session->getId());
-        $isUserInAuthorizedGroup = $this->entityManager->getRepository('InnovaSelfBundle:User')->groupWithUserAndSession($this->user, $session);
-
-        if ($sessionLogged != 1 && !$isUserInAuthorizedGroup) {
+        // cas où l'utilisateur doit se connecter. On le redirige vers le formulaire de connexion à la session.
+        if ($this->playerManager->needToLog($session)) {
             $url = $this->router->generate('session_log_form', array('sessionId' => $session->getId()));
 
             return new RedirectResponse($url);
         }
 
-        $orderQuestionnaire = $this->playerManager->pickQuestionnaire($test, $session);
-
-        if (is_null($orderQuestionnaire)) {
+        // cas où il n'y a plus de tâche candidate. L'utilisateur est redirigé vers la page de fin de test.
+        if (!$orderQuestionnaire = $this->playerManager->pickQuestionnaire($test, $session)) {
             $url = $this->router->generate('test_end', array("testId" => $test->getId(), 'sessionId' => $session->getId()));
 
             return new RedirectResponse($url);
         }
-        $questionnaire = $orderQuestionnaire->getQuestionnaire();
-        $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
 
+        $questionnaire = $orderQuestionnaire->getQuestionnaire();
         $questionnaires = $this->questionnaireRepo->getByTest($test);
-        if ($component) {
-            $countQuestionnaireTotal = count($component->getOrderQuestionnaireComponents());
-            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTestByComponent($test, $this->user, $session, $component);
-        } else {
-            $countQuestionnaireTotal = count($questionnaires);
-            $countQuestionnaireDone = $this->questionnaireRepo->countDoneYetByUserByTestBySession($test->getId(), $this->user->getId(), $session->getId());
-        }
+        $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
+        $countQuestionnaireDone = $this->playerManager->countQuestionnaireDone($component, $session);
+        $countQuestionnaireTotal = $this->playerManager->countQuestionnaireTotal($component, $questionnaires);
 
         return array(
                 'test' => $test,
