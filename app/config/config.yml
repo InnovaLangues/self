@@ -163,3 +163,9 @@ fos_http_cache:
                         public: true
                         max_age: 0
                         s_maxage: 0
+
+
+lexik_maintenance:
+   driver: 
+        class: '\Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver'                # class for file driver 
+        options: {file_path: %kernel.root_dir%/cache/lock}                         # file_path is the complete path for create the file

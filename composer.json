@@ -28,7 +28,8 @@
         "knplabs/knp-snappy-bundle": "dev-master#c023573e1b0b",
         "willdurand/js-translation-bundle": "@stable",
         "friendsofsymfony/http-cache-bundle": "~1.0",
-        "innova/gitter-bundle": "v1.0"
+        "innova/gitter-bundle": "v1.0",
+        "lexik/maintenance-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

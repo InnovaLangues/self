@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7f7088efe56b3372dd81933e78c2583a",
+    "hash": "dce81fc5f6cd0db8b3678868b8dfca42",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -545,7 +545,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineCacheBundle/zipball/9c5a4ebedb583b882062fb8b276b8af5ca9063ac",
+                "url": "https://api.github.com/repos/doctrine/DoctrineCacheBundle/zipball/30f0ed4b5681842a2a78b861f54136782fbea963",
                 "reference": "9c5a4ebedb583b882062fb8b276b8af5ca9063ac",
                 "shasum": ""
             },
@@ -1827,6 +1827,64 @@
             "time": "2014-12-12 05:37:00"
         },
         {
+            "name": "lexik/maintenance-bundle",
+            "version": "dev-master",
+            "target-dir": "Lexik/Bundle/MaintenanceBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lexik/LexikMaintenanceBundle.git",
+                "reference": "db730c0109cd1c7601815e354a5eba10f74f3fa8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lexik/LexikMaintenanceBundle/zipball/db730c0109cd1c7601815e354a5eba10f74f3fa8",
+                "reference": "db730c0109cd1c7601815e354a5eba10f74f3fa8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/dependency-injection": "~2.1",
+                "symfony/framework-bundle": "~2.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Lexik\\Bundle\\MaintenanceBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dev Lexik",
+                    "email": "dev@lexik.fr"
+                },
+                {
+                    "name": "Gilles Gauthier",
+                    "email": "g.gauthier@lexik.fr"
+                },
+                {
+                    "name": "Djuri Baars",
+                    "email": "info@djurict.nl"
+                }
+            ],
+            "description": "This bundle allows you to place your website in maintenance mode by calling two commands from your console.",
+            "homepage": "https://github.com/lexik/LexikMaintenanceBundle",
+            "keywords": [
+                "Symfony2",
+                "bundle",
+                "maintenance"
+            ],
+            "time": "2015-06-22 11:54:37"
+        },
+        {
             "name": "monolog/monolog",
             "version": "dev-master",
             "source": {
@@ -2161,7 +2219,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/21b7eb31c51d98e9da0543527a0242875f3d92b9",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0a6e9031371dcb384d395b1fa7bd5139a7847a60",
                 "reference": "21b7eb31c51d98e9da0543527a0242875f3d92b9",
                 "shasum": ""
             },
@@ -2556,7 +2614,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e22fb8728b395b306a06785a3ae9b12f3fbc0294",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/12bf70d9addf613260056f9840aee23b151073f7",
                 "reference": "e22fb8728b395b306a06785a3ae9b12f3fbc0294",
                 "shasum": ""
             },
@@ -2710,7 +2768,8 @@
         "doctrine/doctrine-migrations-bundle": 20,
         "stfalcon/tinymce-bundle": 20,
         "knplabs/knp-snappy-bundle": 20,
-        "willdurand/js-translation-bundle": 0
+        "willdurand/js-translation-bundle": 0,
+        "lexik/maintenance-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

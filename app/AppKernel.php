@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new FOS\HttpCacheBundle\FOSHttpCacheBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Innova\GitterBundle\InnovaGitterBundle(),
+            new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
