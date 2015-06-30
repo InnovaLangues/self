@@ -107,9 +107,12 @@ class RightUserGroupController extends Controller
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
+            $user = $rightUserGroup->getUser();
             $em = $this->getDoctrine()->getManager();
             $em->remove($rightUserGroup);
             $em->flush();
+
+            $this->get("self.right.manager")->adminToggle($user);
 
             $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
 
@@ -134,6 +137,8 @@ class RightUserGroupController extends Controller
                 $rightUserGroup->setTarget($group);
                 $em->persist($rightUserGroup);
                 $em->flush();
+
+                $this->get("self.right.manager")->adminToggle($rightUserGroup->getUser());
 
                 return;
             }

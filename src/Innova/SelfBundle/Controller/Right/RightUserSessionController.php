@@ -107,9 +107,12 @@ class RightUserSessionController extends Controller
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightssession", $currentUser)) {
+            $user = $rightUserSession->getUser();
             $em = $this->getDoctrine()->getManager();
             $em->remove($rightUserSession);
             $em->flush();
+
+            $this->get("self.right.manager")->adminToggle($user);
 
             $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
 
@@ -134,6 +137,8 @@ class RightUserSessionController extends Controller
                 $rightUserSession->setTarget($session);
                 $em->persist($rightUserSession);
                 $em->flush();
+
+                $this->get("self.right.manager")->adminToggle($rightUserSession->getUser());
 
                 return;
             }

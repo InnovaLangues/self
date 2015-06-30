@@ -57,10 +57,6 @@ class RightGroupManager
 
         $em->flush();
 
-        if ($this->rightManager->hasAnyGlobalRight($user)) {
-            $this->manipulator->addRole($user->getUsername(), "ROLE_SUPER_ADMIN");
-        } else {
-            $this->manipulator->removeRole($user->getUsername(), "ROLE_SUPER_ADMIN");
-        }
+        $this->rightManager->adminToggle($user);
     }
 }
