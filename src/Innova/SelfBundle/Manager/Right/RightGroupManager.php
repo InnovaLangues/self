@@ -41,7 +41,6 @@ class RightGroupManager
 
         $rights = $rightGroup->getRights();
         $toggle = ($rights[0]->getUsers()->contains($user)) ? false : true;
-        $rm = ;
 
         foreach ($rights as $right) {
             if ($toggle) {
@@ -58,6 +57,6 @@ class RightGroupManager
 
         $em->flush();
 
-        $this->rightManager->adminToggle($user)
+        $this->rightManager->adminToggle($user);
     }
 }
