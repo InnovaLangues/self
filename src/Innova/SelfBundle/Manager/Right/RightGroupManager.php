@@ -58,5 +58,7 @@ class RightGroupManager
         $em->flush();
 
         $this->rightManager->adminToggle($user);
+
+        return $toggle;
     }
 }
