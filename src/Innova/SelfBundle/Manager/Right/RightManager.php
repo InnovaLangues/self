@@ -78,13 +78,27 @@ class RightManager
         $em->persist($right);
         $em->flush();
 
-        if ($this->hasAnyGlobalRight($user)) {
+        $this->adminToggle($user);
+
+        return $this;
+    }
+
+    public function hasAnyRight(User $user)
+    {
+        if ($this->hasAnyGlobalRight($user) || $this->hasAnyLimitedRight($user)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function adminToggle(User $user)
+    {
+        if ($this->hasAnyRight($user)) {
             $this->manipulator->addRole($user->getUsername(), "ROLE_SUPER_ADMIN");
         } else {
             $this->manipulator->removeRole($user->getUsername(), "ROLE_SUPER_ADMIN");
         }
-
-        return $this;
     }
 
     public function hasAnyGlobalRight(User $user)
@@ -94,6 +108,25 @@ class RightManager
         $hasAnyGlobalRight = $em->getRepository("InnovaSelfBundle:User")->hasAnyGlobalRight($user);
 
         return $hasAnyGlobalRight;
+    }
+
+    public function hasAnyLimitedRight(User $user)
+    {
+        $em = $this->entityManager;
+
+        if (count($em->getRepository("InnovaSelfBundle:Right\RightUserSession")->findByUser($user)) > 0) {
+            return true;
+        };
+
+        if (count($em->getRepository("InnovaSelfBundle:Right\RightUserTest")->findByUser($user)) > 0) {
+            return true;
+        };
+
+        if (count($em->getRepository("InnovaSelfBundle:Right\RightUserGroup")->findByUser($user)) > 0) {
+            return true;
+        };
+
+        return false;
     }
 
     public function hasRightsOnGroup($groupClass, $user)

@@ -61,11 +61,9 @@ class RightUserTestController extends Controller
             }
 
             return array('form' => $form->createView(), 'test' => $test, 'right' => $right);
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
+
+        return;
     }
 
     /**
@@ -88,11 +86,9 @@ class RightUserTestController extends Controller
             }
 
             return array('form' => $form->createView(), 'test' => $test, 'rightUserTest' => $rightUserTest );
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
+
+        return;
     }
 
     /**
@@ -106,18 +102,19 @@ class RightUserTestController extends Controller
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightstest", $currentUser)) {
+            $user = $rightUserTest->getUser();
             $em = $this->getDoctrine()->getManager();
             $em->remove($rightUserTest);
             $em->flush();
 
+            $this->get("self.right.manager")->adminToggle($user);
+
             $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
 
             return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
-        } else {
-            $this->get('session')->getFlashBag()->set('danger', 'Permissions insuffisantes.');
-
-            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
+
+        return;
     }
 
     /**
@@ -135,6 +132,8 @@ class RightUserTestController extends Controller
                 $rightUserTest->setTarget($test);
                 $em->persist($rightUserTest);
                 $em->flush();
+
+                $this->get("self.right.manager")->adminToggle($rightUserTest->getUser());
 
                 return;
             }
