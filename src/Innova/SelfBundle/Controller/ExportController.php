@@ -42,7 +42,7 @@ class ExportController
      * Lists all Test entities.
      *
      * @Route(
-     *     "/export",
+     *     "admin/export",
      *     name = "export",
      *     options = {"expose"=true}
      * )
@@ -66,7 +66,7 @@ class ExportController
 
     /**
      * @Route(
-     *     "/export/test/{testId}/file/{filename}/{mode}",
+     *     "admin/export/test/{testId}/file/{filename}/{mode}",
      *     name = "get-file"
      * )
      *
@@ -101,7 +101,7 @@ class ExportController
     /**
      * exportCsvSQL function
      * @Route(
-     *     "/export/csv/test/{testId}/session/{sessionId}/mode/{tia}",
+     *     "admin/export/csv/test/{testId}/session/{sessionId}/mode/{tia}",
      *     name = "csv-export"
      * )
      *
@@ -128,7 +128,7 @@ class ExportController
      /**
      * exportCsvSQL function
      * @Route(
-     *     "/export/csv/filelist/test/{testId}/{tia}",
+     *     "admin/export/csv/filelist/test/{testId}/{tia}",
      *     name = "csv-export-show"
      * )
      *
@@ -153,7 +153,7 @@ class ExportController
      /**
      * exportPdf function
      * @Route(
-     *     "/export/pdf/test/{testId}",
+     *     "admin/export/pdf/test/{testId}",
      *     name = "pdf-export"
      * )
      *
@@ -182,7 +182,7 @@ class ExportController
     /**
      * exportPdf function
      * @Route(
-     *     "/export/pdf/filelist/test/{testId}",
+     *     "admin/export/pdf/filelist/test/{testId}",
      *     name = "pdf-export-show"
      * )
      *
@@ -232,7 +232,7 @@ class ExportController
     /**
      * exportPdf function
      * @Route(
-     *     "/export/pdf-export-session/session/{sessionId}/user/{userId}",
+     *     "admin/export/pdf-export-session/session/{sessionId}/user/{userId}",
      *     name = "admin-pdf-export-session-user"
      * )
      *

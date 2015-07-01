@@ -14,6 +14,7 @@ use Innova\SelfBundle\Entity\Questionnaire;
 /**
  * Class OrderQuestionnaireTestController
  * @Route(
+ *      "/admin",
  *      service = "innova_editor_orderquestionnaire"
  * )
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})

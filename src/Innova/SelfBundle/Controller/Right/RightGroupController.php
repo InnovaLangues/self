@@ -13,6 +13,7 @@ use Innova\SelfBundle\Entity\User;
 /**
  * RightGroup controller.
  *
+ * @Route("/admin")
  * @ParamConverter("rightGroup", isOptional="true", class="InnovaSelfBundle:Right\RightGroup", options={"id" = "rightGroupId"})
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
  */
@@ -20,7 +21,7 @@ class RightGroupController extends Controller
 {
     /**
      *
-     * @Route("user/{userId}/group/{rightGroupId}/toggle", name="editor_group_rights_toggle")
+     * @Route("admin/user/{userId}/group/{rightGroupId}/toggle", name="editor_group_rights_toggle")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Features:Group/rights.html.twig")
      */

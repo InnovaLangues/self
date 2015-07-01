@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
  * Class ExportTiaController
  *
  * @Route(
- *      "",
  *      name = "",
  *      service = "innova_locale_controller"
  * )

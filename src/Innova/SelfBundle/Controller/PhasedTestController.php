@@ -20,7 +20,7 @@ use Innova\SelfBundle\Form\Type\PhasedParamsType;
 
 /**
  * PhasedTest controller.
- *
+ * @Route("/admin")
  * @ParamConverter("test",          isOptional="true", class="InnovaSelfBundle:Test",                     options={"id" = "testId"})
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",            options={"id" = "questionnaireId"})
  * @ParamConverter("component",     isOptional="true", class="InnovaSelfBundle:PhasedTest\Component",     options={"id" = "componentId"})

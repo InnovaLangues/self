@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Session controller.
  *
+ * @Route("/admin")
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})

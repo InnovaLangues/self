@@ -22,7 +22,7 @@ class UserController extends Controller
     /**
      * Lists all users
      *
-     * @Route("/users/", name="admin_user")
+     * @Route("/admin/users/", name="admin_user")
      * @Method("GET")
      * @Template()
      */
@@ -45,7 +45,7 @@ class UserController extends Controller
     /**
      * Displays a user entity.
      *
-     * @Route("/user/{id}", name="admin_user_show", requirements={"id": "\d+"})
+     * @Route("/admin/user/{id}", name="admin_user_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Template()
      */
@@ -80,7 +80,7 @@ class UserController extends Controller
     /**
      * Delete trace for a given user and a given test
      *
-     * @Route("/user/{userId}/test/{testId}/delete-trace", name="delete-test-trace")
+     * @Route("/admin/user/{userId}/test/{testId}/delete-trace", name="delete-test-trace")
      * @Method("DELETE")
      */
     public function deleteTestTraceAction($userId, $testId)
@@ -106,7 +106,7 @@ class UserController extends Controller
     /**
      * Delete trace for a given user and a given test
      *
-     * @Route("/user/{userId}/test/{testId}/questionnaire/{questionnaireId}/delete-trace", name="delete-task-trace")
+     * @Route("/admin/user/{userId}/test/{testId}/questionnaire/{questionnaireId}/delete-trace", name="delete-task-trace")
      * @Method("DELETE")
      */
     public function deleteTaskTraceAction($userId, $testId, $questionnaireId)
@@ -133,7 +133,7 @@ class UserController extends Controller
     /**
      * Delete trace for a given user and a given test
      *
-     * @Route("/user/{userId}/delete", name="delete-user")
+     * @Route("/admin/user/{userId}/delete", name="delete-user")
      * @Method("DELETE")
      */
     public function deleteUserAction($userId)
@@ -159,7 +159,7 @@ class UserController extends Controller
 
      /**
      *
-     * @Route("/user/create", name="user_create")
+     * @Route("/admin/user/create", name="user_create")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:User:new.html.twig")
      */
@@ -188,7 +188,7 @@ class UserController extends Controller
 
     /**
      *
-     * @Route("/user/{userId}/edit", name="user_edit")
+     * @Route("/admin/user/{userId}/edit", name="user_edit")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:User:new.html.twig")
      */
@@ -216,7 +216,7 @@ class UserController extends Controller
 
     /**
      *
-     * @Route("/user/{userId}/change-passwd", name="passwd_edit")
+     * @Route("/admin/user/{userId}/change-passwd", name="passwd_edit")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:User:passwd.html.twig")
      */
@@ -241,7 +241,7 @@ class UserController extends Controller
 
     /**
      *
-     * @Route("/user/{userId}/edit-rights", name="admin_user_rights")
+     * @Route("/admin/user/{userId}/edit-rights", name="admin_user_rights")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:User:rights.html.twig")
      */
@@ -262,7 +262,7 @@ class UserController extends Controller
 
     /**
      *
-     * @Route("/user/{userId}/right/{rightId}", name="admin_user_toggle_right")
+     * @Route("/admin/user/{userId}/right/{rightId}", name="admin_user_toggle_right")
      * @Method({"GET"})
      * @Template("InnovaSelfBundle:User:rights.html.twig")
      */
