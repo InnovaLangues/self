@@ -7,6 +7,7 @@ use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\PhasedTest\Component;
+use Innova\SelfBundle\Entity\Level;
 
 class ScoreManager
 {
@@ -69,7 +70,7 @@ class ScoreManager
         return $nextComponentTypeName;
     }
 
-    public function getGlobalLevelFromThreshold($session, $user)
+    public function getGlobalLevelFromThreshold(Session $session, User $user)
     {
         $test = $session->getTest();
 
@@ -101,7 +102,7 @@ class ScoreManager
         return;
     }
 
-    public function getSkillLevelFromThreshold($session, $user, $skillName)
+    public function getSkillLevelFromThreshold(Session $session, User $user, $skillName)
     {
         $test = $session->getTest();
 
@@ -182,7 +183,7 @@ class ScoreManager
         return $correctAnswers;
     }
 
-    private function countCorrectAnswersByLevel($scores, $level)
+    private function countCorrectAnswersByLevel($scores, Level $level)
     {
         $levelName = $level->getName();
         $correctAnswers = 0;
