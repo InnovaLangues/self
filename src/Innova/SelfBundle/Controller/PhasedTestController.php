@@ -245,12 +245,12 @@ class PhasedTestController extends Controller
             if ($form->isValid()) {
                 // remove unused thresholds
                 foreach ($thresholds as $threshold) {
-                    if ($params->getGeneralScoreThresholds()->contains($threshold) == false) {
+                    if ($params->getGeneralScoreThresholds()->contains($threshold) === false) {
                         $em->remove($threshold);
                     }
                 }
                 foreach ($scoreThresholds as $threshold) {
-                    if ($params->getSkillScoreThresholds()->contains($threshold) == false) {
+                    if ($params->getSkillScoreThresholds()->contains($threshold) === false) {
                         $em->remove($threshold);
                     }
                 }
