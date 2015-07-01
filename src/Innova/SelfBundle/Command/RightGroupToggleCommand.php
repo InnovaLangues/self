@@ -29,8 +29,10 @@ class RightGroupToggleCommand extends ContainerAwareCommand
         $user = $em->getRepository('InnovaSelfBundle:User')->findOneByUsername($username);
         $rightGroup = $em->getRepository("InnovaSelfBundle:Right\RightGroup")->findOneByName($rightGroupName);
 
-        $this->getContainer()->get("self.rightgroup.manager")->toggleAll($user, $rightGroup);
-
-        $output->writeln("Toggle !");
+        if ($this->getContainer()->get("self.rightgroup.manager")->toggleAll($user, $rightGroup)) {
+            $output->writeln("Des droits on été ajoutés !");
+        } else {
+            $output->writeln("Des droits on été retirés !");
+        }
     }
 }

@@ -18,6 +18,7 @@ use Innova\SelfBundle\Entity\Language;
 /**
  * Class TaskController
  * @Route(
+ *      "/admin",
  *      service = "innova_editor_task"
  * )
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})

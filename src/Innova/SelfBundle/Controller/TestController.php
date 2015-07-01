@@ -17,6 +17,7 @@ use Innova\SelfBundle\Entity\Language;
 /**
  * Test controller.
  *
+ * @Route("/admin")
  * @ParamConverter("test",      isOptional="true", class="InnovaSelfBundle:Test",       options={"id" = "testId"})
  * @ParamConverter("language",  isOptional="true", class="InnovaSelfBundle:Language",   options={"id" = "languageId"})
  */

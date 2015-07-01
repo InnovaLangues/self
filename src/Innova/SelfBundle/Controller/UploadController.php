@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 /**
  * Class UploadController
  * @Route(
- *      "admin/editor",
+ *      "/admin",
  *      name    = "",
  *      service = "innova_editor_upload"
  * )
@@ -28,7 +28,7 @@ class UploadController extends Controller
 
     /**
      *
-     * @Route("/questionnaires/upload-file", name="editor_questionnaire_upload-file", options={"expose"=true})
+     * @Route("/upload-file", name="editor_questionnaire_upload-file", options={"expose"=true})
      * @Method("POST")
      * 
      */
@@ -61,7 +61,7 @@ class UploadController extends Controller
 
     /**
      *
-     * @Route("/editor/crop-image", name="editor_crop_image", options={"expose"=true})
+     * @Route("/crop-image", name="editor_crop_image", options={"expose"=true})
      * @Method("PUT")
      * 
      */

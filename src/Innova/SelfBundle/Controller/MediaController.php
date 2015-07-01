@@ -15,6 +15,7 @@ use Innova\SelfBundle\Entity\Questionnaire;
 /**
  * Class MediaController
  * @Route(
+ *      "/admin",
  *      service = "innova_editor_media"
  * )
  * @ParamConverter("media", isOptional="true", class="InnovaSelfBundle:Media\Media", options={"id" = "mediaId"})

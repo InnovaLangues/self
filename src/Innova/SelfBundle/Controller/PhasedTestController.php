@@ -21,7 +21,7 @@ use Innova\SelfBundle\Form\Type\PhasedParamsType;
 
 /**
  * PhasedTest controller.
- *
+ * @Route("/admin")
  * @ParamConverter("test",          isOptional="true", class="InnovaSelfBundle:Test",                     options={"id" = "testId"})
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",            options={"id" = "questionnaireId"})
  * @ParamConverter("component",     isOptional="true", class="InnovaSelfBundle:PhasedTest\Component",     options={"id" = "componentId"})
@@ -255,12 +255,12 @@ class PhasedTestController extends Controller
             if ($form->isValid()) {
                 // remove unused thresholds
                 foreach ($thresholds as $threshold) {
-                    if ($params->getGeneralScoreThresholds()->contains($threshold) == false) {
+                    if ($params->getGeneralScoreThresholds()->contains($threshold) === false) {
                         $em->remove($threshold);
                     }
                 }
                 foreach ($scoreThresholds as $threshold) {
-                    if ($params->getSkillScoreThresholds()->contains($threshold) == false) {
+                    if ($params->getSkillScoreThresholds()->contains($threshold) === false) {
                         $em->remove($threshold);
                     }
                 }
