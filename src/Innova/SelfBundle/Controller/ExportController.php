@@ -51,7 +51,7 @@ class ExportController
      */
     public function indexAction()
     {
-        if ($this->rightManager->checkRight("right.exportPDF", $this->user) or $this->rightManager->checkRight("right.exportCSV", $this->user)) {
+        if ($this->rightManager->checkRight("right.exportPDF", $this->user) || $this->rightManager->checkRight("right.exportCSV", $this->user)) {
             $em = $this->entityManager;
 
             $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
@@ -74,7 +74,7 @@ class ExportController
      */
     public function getFileAction($testId, $filename, $mode)
     {
-        if ($this->rightManager->checkRight("right.exportPDF", $this->user) or $this->rightManager->checkRight("right.exportCSV", $this->user)) {
+        if ($this->rightManager->checkRight("right.exportPDF", $this->user) || $this->rightManager->checkRight("right.exportCSV", $this->user)) {
             if ($mode == "pdf") {
                 $dir = "exportPdf";
             } else {
