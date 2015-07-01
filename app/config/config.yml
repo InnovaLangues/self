@@ -149,7 +149,7 @@ fos_http_cache:
         rules:
             -
                 match:
-                    path: ^/login|logout
+                    path: ^/login|logout|admin
                 headers:
                     overwrite: true
                     cache_control:
@@ -164,14 +164,6 @@ fos_http_cache:
                         public: true
                         max_age: 120
                         s_maxage: 120
-            -
-                match:
-                    path: ^/admin
-                headers:
-                    cache_control:
-                        public: false
-                        max_age: 0
-                        s_maxage: 0
 
 jms_i18n_routing:
     default_locale: fr
