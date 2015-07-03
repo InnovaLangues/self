@@ -110,7 +110,7 @@ editor:
         unarchive: Désarchiver
         archived: Tests archivés
         phased: Test à étapes
-
+        difficulty: Afficher le formulaire de perception de difficulté
     task:
         task: Tâche
         tasks: Tâches

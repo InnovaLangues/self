@@ -31,6 +31,13 @@ class Test
     /**
      * @var string
      *
+     * @ORM\Column(name="difficulty", type="boolean")
+     */
+    private $difficulty  = 1;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="phased", type="boolean")
      */
     private $phased;
@@ -516,5 +523,29 @@ class Test
     public function removeCopy(\Innova\SelfBundle\Entity\Test $copy)
     {
         $this->copies->removeElement($copy);
+    }
+
+    /**
+     * Set difficulty
+     *
+     * @param boolean $difficulty
+     *
+     * @return Test
+     */
+    public function setDifficulty($difficulty)
+    {
+        $this->difficulty = $difficulty;
+
+        return $this;
+    }
+
+    /**
+     * Get difficulty
+     *
+     * @return boolean
+     */
+    public function getDifficulty()
+    {
+        return $this->difficulty;
     }
 }

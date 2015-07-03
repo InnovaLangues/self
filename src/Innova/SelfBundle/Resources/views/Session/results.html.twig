@@ -2,7 +2,7 @@
 
 {% block body -%}
 
-{% if checkRight("right.managesessiontest", test) %}
+{% if checkRight("right.managesessiontest", session.test) %}
 <a class="btn btn-default btn-sm " href="{{ path('editor_test_sessions', { 'testId': session.test.id } )}}">
     <span class="glyphicon glyphicon-calendar"></span> {{ 'editor.session.manage' | trans }}
 </a>

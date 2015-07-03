@@ -101,6 +101,7 @@ editor:
         archive: Archiver
         unarchive: Désarchiver
         archived: Tests archivés
+        difficulty: Afficher le formulaire de perception de difficulté
     task:
         task: Tâche
         tasks: Tâches

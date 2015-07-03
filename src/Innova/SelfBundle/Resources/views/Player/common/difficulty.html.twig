@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 {% block body -%}
-    {% if not test.getPhased  %}
+    {% if test.difficulty  %}
         <form action="{{ path('trace_setDifficulty', { 'traceId': trace.id, 'testId': test.id, 'sessionId': session.id }) }}" method="post">
             {{ 'trace.action.evaluate' | trans }}
             <label class="radio">
