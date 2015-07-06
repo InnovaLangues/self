@@ -44,6 +44,12 @@ class SkillScoreThreshold
     protected $level;
 
     /**
+    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\Level")
+    * @ORM\JoinTable(name="scoreThresholds_ignoredLevels")
+    */
+    protected $ignoredLevels;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -207,5 +213,46 @@ class SkillScoreThreshold
     public function getComponentType()
     {
         return $this->componentType;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ignoredLevels = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ignoredLevel
+     *
+     * @param \Innova\SelfBundle\Entity\Level $ignoredLevel
+     *
+     * @return SkillScoreThreshold
+     */
+    public function addIgnoredLevel(\Innova\SelfBundle\Entity\Level $ignoredLevel)
+    {
+        $this->ignoredLevels[] = $ignoredLevel;
+
+        return $this;
+    }
+
+    /**
+     * Remove ignoredLevel
+     *
+     * @param \Innova\SelfBundle\Entity\Level $ignoredLevel
+     */
+    public function removeIgnoredLevel(\Innova\SelfBundle\Entity\Level $ignoredLevel)
+    {
+        $this->ignoredLevels->removeElement($ignoredLevel);
+    }
+
+    /**
+     * Get ignoredLevels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIgnoredLevels()
+    {
+        return $this->ignoredLevels;
     }
 }

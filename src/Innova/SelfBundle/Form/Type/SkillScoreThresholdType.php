@@ -46,6 +46,16 @@ class SkillScoreThresholdType extends AbstractType
             'label'  => 'phased.threshold.description',
             'translation_domain' => 'messages',
         ));
+
+        $builder->add('ignoredLevels', 'entity', array(
+            'class' => 'InnovaSelfBundle:Level',
+            'property' => 'name',
+            'label'  => 'phased.ignoredLevels',
+            'translation_domain' => 'messages',
+            'multiple' => true,
+            'required' => false,
+            'expanded' => true,
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
