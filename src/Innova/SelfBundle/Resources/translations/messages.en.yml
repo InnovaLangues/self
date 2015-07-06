@@ -265,6 +265,8 @@ editor:
         available: Sessions disponibles
         no-available: Aucune session disponible
         test: Voir dans le player
+        globalScoreShow: Afficher le score agrégé
+        globalScoreWording: Intitulé du score agrégé
 
 player:
     listening_remaining: "{0} No remaining listening |{1} Only 1 listening remaining|]1,Inf] %count% listenings remaining"

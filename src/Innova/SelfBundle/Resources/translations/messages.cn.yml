@@ -258,6 +258,8 @@ editor:
         available: Sessions disponibles
         no-available: Aucune session disponible
         test: Voir dans le player
+        globalScoreShow: Afficher le score agrégé
+        globalScoreWording: Intitulé du score agrégé
 
 player:
     listening_remaining: "{0} Plus d'écoute possible |{1} 1 seule écoute restante|]1,Inf] %count% écoutes restantes"
