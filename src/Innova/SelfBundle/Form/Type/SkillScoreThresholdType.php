@@ -22,7 +22,7 @@ class SkillScoreThresholdType extends AbstractType
             'class' => 'InnovaSelfBundle:PhasedTest\ComponentType',
             'property' => 'name',
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.threshold.componentType',
+            'label'  => 'phased.threshold.componentTypeIncludingMinitest',
             'translation_domain' => 'messages',
         ));
 

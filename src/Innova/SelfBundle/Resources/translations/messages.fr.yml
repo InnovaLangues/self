@@ -263,7 +263,7 @@ editor:
 
     session:
         name: Nom de la session
-        passwd: Code
+        passwd: Code de session
         active: Actif
         list: Liste des sessions
         create: Créer une nouvelle session
@@ -448,14 +448,15 @@ phased:
     parameters: Paramètres
     step2Threshold: Nombre de bonnes réponses requises
     step3Threshold: Nombre de bonnes réponses requises
-    step2ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné 
-    step3ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné 
+    step2ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné (2ème facteur)
+    step3ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné (2ème facteur)
     thresholdToStep3Level: Niveau
     thresholdToStep2Level: Niveau
     threshold:
         componentType: Etape concernée
+        componentTypeIncludingMinitest: Etape concernée (+ minitest)
         skill: Compétence
-        rightAnswers: Nombre de bonnes réponses nécessaires
+        rightAnswers: Nombre de bonnes réponses requises
         description: Feedback pour l'étudiant
         level: Niveau
 channel:

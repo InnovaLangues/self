@@ -252,7 +252,7 @@ editor:
 
     session:
         name: Session name
-        passwd: Code
+        passwd: Code de session
         active: Actif
         list: Sessions list
         create: Create a session
@@ -442,7 +442,8 @@ phased:
     threshold:
         skill: Compétence
         componentType: Etape concernée
-        rightAnswers: Nombre de bonnes réponses nécessaires
+        componentTypeIncludingMinitest: Etape concernée (+ minitest)
+        rightAnswers: Nombre de bonnes réponses requises
         description: Feedback pour l'étudiant
         level: Niveau
 
