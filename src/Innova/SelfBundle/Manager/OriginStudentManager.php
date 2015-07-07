@@ -45,6 +45,24 @@ class OriginStudentManager
         return true;
     }
 
+    public function update($array)
+    {
+        $em = $this->entityManager;
+
+        foreach ($array as $el => $value) {
+            if ($r = $this->findByName($el)) {
+                echo "toto";
+                $r->setName($value);
+                $em->persist($r);
+                $em->flush();
+            } elseif (!$this->findOneByName($value)) {
+                $this->create(array($value));
+            }
+        }
+
+        return true;
+    }
+
     private function findByName($name)
     {
         $em = $this->entityManager;
