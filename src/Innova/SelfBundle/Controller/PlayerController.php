@@ -16,6 +16,7 @@ use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Manager\PlayerManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class PlayerController
@@ -36,6 +37,7 @@ class PlayerController
     protected $user;
     protected $playerManager;
     protected $scoreManager;
+    protected $templating;
 
     public function __construct(
         SecurityContextInterface $securityContext,
@@ -43,7 +45,8 @@ class PlayerController
         SessionInterface $session,
         RouterInterface $router,
         PlayerManager $playerManager,
-        $scoreManager
+        $scoreManager,
+        $templating
     ) {
         $this->securityContext      = $securityContext;
         $this->entityManager        = $entityManager;
@@ -52,6 +55,7 @@ class PlayerController
         $this->user                 = $this->securityContext->getToken()->getUser();
         $this->playerManager        = $playerManager;
         $this->scoreManager         = $scoreManager;
+        $this->templating           = $templating;
         $this->questionnaireRepo    = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
     }
 
@@ -67,7 +71,7 @@ class PlayerController
     {
         // cas où l'utilisateur doit se connecter. On le redirige vers le formulaire de connexion à la session.
         if ($this->playerManager->needToLog($session)) {
-            $url = $this->router->generate('session_log_form', array('sessionId' => $session->getId()));
+            $url = $this->router->generate('session_connect', array('sessionId' => $session->getId()));
 
             return new RedirectResponse($url);
         }
@@ -169,30 +173,37 @@ class PlayerController
 
     /**
      * @Method("GET")
-     * @Route("/session/{sessionId}/passwd", name="session_log_form")
+     * @Route("/session/connect", name="session_connect")
      * @Template("InnovaSelfBundle:Player:common/log.html.twig")
      */
-    public function sessionLogFormAction(Session $session)
+    public function sessionConnectAction()
     {
-        return array(
-            'session' => $session,
-        );
+        return array();
     }
 
      /**
      * @Method("POST")
-     * @Route("/session/{sessionId}/log", name="session_log")
+     * @Route("/session/log", name="session_log")
      */
-    public function sessionLogAction(Session $session, Request $request)
+    public function sessionLogAction(Request $request)
     {
         $post = $request->request->all();
+        $password = $post["passwd"];
+        $sessions = $this->entityManager->getRepository('InnovaSelfBundle:Session')->findBy(array("passwd" => $password, "actif" => true));
 
-        if ($post["passwd"] == $session->getPasswd()) {
-            $this->session->set('sessionLogged-'.$session->getId(), 1);
-            $url = $this->router->generate('test_start', array("testId" => $session->getTest()->getId(), "sessionId" => $session->getId()));
+        if (count($sessions) >= 1) {
+            $this->playerManager->considerAsLogged($sessions);
+            if (count($sessions) == 1) {
+                $session = $sessions[0];
+                $url = $this->router->generate('test_start', array("testId" => $session->getTest()->getId(), "sessionId" => $session->getId()));
+            } else {
+                $template = $this->templating->render('InnovaSelfBundle:Player:common/log.html.twig', array("sessions" => $sessions));
+
+                return new Response($template);
+            }
         } else {
             $this->session->getFlashBag()->set('warning', 'wrong passwd');
-            $url = $this->router->generate('session_log_form', array("sessionId" => $session->getId()));
+            $url = $this->router->generate('session_connect');
         }
 
         return new RedirectResponse($url);

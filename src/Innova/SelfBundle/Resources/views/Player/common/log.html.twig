@@ -2,16 +2,25 @@
 
 {% block body -%}
 
-<h3>Authentification session <b>{{ session.name }}</b></h3>
+<h3>Authentification session</h3>
 
 <hr/>
 
-<form class="col-md-6" action="{{ path('session_log', { 'sessionId': session.id }) }}" method="post" autocomplete="off">
-    <div class="form-group">
-        <label for="passwd">Code de la session</label>
-        <input id="passwd" class="form-control" type="password" name="passwd"/>
-    </div>
-    <button type="submit" class="btn btn-default">Valider</button>
-</form>
+{% if sessions is defined %}
+	<h4>Plusieurs sessions actives répondent à ce mot de passe</h4>
+	{% for session in sessions %}
+	<p>
+		<a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id } )}}">{{ session.name }}</a>
+	</p>
+	{% endfor %}
+{% else %}
+	<form class="col-md-6" action="{{ path('session_log') }}" method="post" autocomplete="off">
+	    <div class="form-group">
+	        <label for="passwd">Code de la session</label>
+	        <input id="passwd" class="form-control" type="password" name="passwd"/>
+	    </div>
+	    <button type="submit" class="btn btn-default">Valider</button>
+	</form>
+{% endif %}
 
 {% endblock %}
