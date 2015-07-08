@@ -67,8 +67,16 @@ class PhasedParamsType extends AbstractType
             'by_reference' => false,
         ));
 
+        $builder->add('ignoredLevels', 'collection', array(
+            'type' => new IgnoredLevelType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+            'mapped' => true,
+            'by_reference' => false,
+        ));
+
         $builder->add('save', 'submit', array(
-            'attr' => array('class' => 'btn btn-default'),
+            'attr' => array('class' => 'btn btn-default btn-primary'),
             'label'  => 'generic.validate',
             'translation_domain' => 'messages',
         ));

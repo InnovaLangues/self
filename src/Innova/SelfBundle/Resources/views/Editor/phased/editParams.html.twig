@@ -26,6 +26,11 @@
             Score par compétence
         </a>
     </li>
+    <li>
+        <a href="#ignored-levels" role="tab" data-toggle="tab">
+            Niveaux ignorés
+        </a>
+    </li>
 </ul>
 
 <div class="tab-content">
@@ -102,13 +107,35 @@
 					     	
 				            {{ form_row(skillScoreThreshold.description) }}
 				            {{ form_row(skillScoreThreshold.level) }}
-				            {{ form_row(skillScoreThreshold.ignoredLevels) }}
 			            </li>
 			        {% endfor %}
 			    </ul>
 			</div>
 		</div>
     </div>
+
+
+    <div class="tab-pane " id="ignored-levels">
+    	<div class="row">
+    		<div class="col-md-12">
+    			<br/><span id="add-ignored" class="btn btn-default">Ajouter niveau ignoré</span><br/><br/>
+			    <ul class="list-group ignored" data-prototype="{{ form_widget(form.ignoredLevels.vars.prototype)|e }}">
+				{% for ignoredLevel in form.ignoredLevels %}
+		        	<li class="list-group-item col-md-6" >
+			            {{ form_row(ignoredLevel.skill) }}
+			            {{ form_row(ignoredLevel.componentType) }}
+			            {{ form_row(ignoredLevel.levels) }}
+		            </li>
+		        {% endfor %}
+		       	</ul>
+			</div>
+
+		</div>
+    </div>
+
+
+
+
 </div>
 
 <hr/>
@@ -126,13 +153,17 @@
 	$(document).ready(function() {
 		var collectionHolder = $('ul.thresholds');
 		var collectionHolderSkill = $('ul.skill-thresholds');
-
+		var collectionHolderIgnored = $('ul.ignored');
 
 		collectionHolder.find('li').each(function() {
 	        addTagFormDeleteLink($(this));
 	    });
 
 		collectionHolderSkill.find('li').each(function() {
+	        addTagFormDeleteLink($(this));
+	    });
+
+	    collectionHolderIgnored.find('li').each(function() {
 	        addTagFormDeleteLink($(this));
 	    });
 
@@ -145,11 +176,17 @@
 	        e.preventDefault();
 	        addTagForm(collectionHolder);
 	    });
+
+	    $("#add-ignored").on('click', function(e) {
+	        e.preventDefault();
+	        addTagForm(collectionHolderIgnored);
+	    });
 	});
 
 	function addTagForm(collectionHolder) {
 	    // Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
 	    var prototype = collectionHolder.attr('data-prototype');
+	    console.log(prototype);
 	    // Remplace '__name__' dans le HTML du prototype par un nombre basé sur
 	    // la longueur de la collection courante
 	    var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
@@ -160,7 +197,7 @@
 	}
 
 	function addTagFormDeleteLink(tagFormLi) {
-	    var $removeFormA = $('<a href="#">Supprimer ce seuil</a>');
+	    var $removeFormA = $('<a href="#">Supprimer</a>');
 	    tagFormLi.append($removeFormA);
 	    $removeFormA.on('click', function(e) {
 	        // empêche le lien de créer un « # » dans l'URL
