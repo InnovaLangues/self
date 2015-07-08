@@ -2,25 +2,44 @@
 
 {% block body -%}
 
-<h3>Authentification session</h3>
+<div class="row">
+	<div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Connexion</div>
+            <div class="panel-body">
+				{% if sessions is defined %}
+					<p>Plusieurs sessions actives répondent à ce code :</p>
+					<ul class="list-group">
+					{% for session in sessions %}
+						<li class="list-group-item">
+							<a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id } )}}">{{ session.test.name }} - {{ session.name }}</a>
+						</li>
+					{% endfor %}
+					</ul>
+				{% else %}
+					<form class="col-md-6" action="{{ path('session_log') }}" method="post" autocomplete="off">
+						<div class="form-group">
+							<label for="passwd">Code de la session</label>
+							<input id="passwd" class="form-control" type="password" name="passwd"/>
+						</div>
+						<button type="submit" class="btn btn-default btn-primary">Se connecter à une session</button>
+					</form>
+				{% endif %}
 
-<hr/>
+           	</div>
+        </div>
+    </div>
+    <div id="video-help"  class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Vidéo d'aide</div>
+            <div class="panel-body text-center">
+                {% include 'InnovaSelfBundle::Main/help.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>
 
-{% if sessions is defined %}
-	<h4>Plusieurs sessions actives répondent à ce mot de passe</h4>
-	{% for session in sessions %}
-	<p>
-		<a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id } )}}">{{ session.name }}</a>
-	</p>
-	{% endfor %}
-{% else %}
-	<form class="col-md-6" action="{{ path('session_log') }}" method="post" autocomplete="off">
-	    <div class="form-group">
-	        <label for="passwd">Code de la session</label>
-	        <input id="passwd" class="form-control" type="password" name="passwd"/>
-	    </div>
-	    <button type="submit" class="btn btn-default">Valider</button>
-	</form>
-{% endif %}
+
+
 
 {% endblock %}

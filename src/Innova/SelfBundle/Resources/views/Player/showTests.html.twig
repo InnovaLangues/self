@@ -7,16 +7,22 @@
 {% block body -%}
 
 <div class="row">
-    <div id="video-help"  class="col-md-4">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Connexion à une session</div>
+            <div class="panel-body">
+                <p>Cliquez sur le bouton ci-dessous pour vous connecter à une session de test. Il vous sera demander d'entrer le code de session.</p>
+                <a href="{{ path('session_connect') }}" class="btn btn-default btn-primary">Se connecter à une session</a>
+            </div>
+        </div>
+    </div>
+    <div id="video-help"  class="col-md-8">
         <div class="panel panel-default">
             <div class="panel-heading">Vidéo d'aide</div>
             <div class="panel-body text-center">
                 {% include 'InnovaSelfBundle::Main/help.html.twig' %}
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-            <a href="{{ path('session_connect') }}" class="btn btn-default btn-primary">Se connecter à une session</a>
     </div>
 </div>
 
