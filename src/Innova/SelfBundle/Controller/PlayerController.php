@@ -126,7 +126,7 @@ class PlayerController
     }
 
     /**
-     * @Route("/opened-sessions/", name="show_tests")
+     * @Route("/home", name="show_tests")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:showTests.html.twig")
      */
