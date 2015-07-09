@@ -15,9 +15,7 @@ app/lock
 
 # Web directories
 web/bundles/*
-web/upload/*
-!web/upload/.gitkeep
-web/media/*
+web/upload/
 web/js/*
 !web/js/.gitkeep
 
