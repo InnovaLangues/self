@@ -131,7 +131,8 @@ class ScoreManager
                     if ($correctAnswers >= $threshold->getRightAnswers()) {
                         $percent = ($nbThresholds - $nbMissedThresholds) / $nbThresholds * 100;
 
-                        return array("feedback" => $threshold->getDescription(),"percent" => $percent);
+                        //return array("feedback" => $threshold->getDescription(),"percent" => $percent);
+                        return $threshold->getDescription();
                     }
                     $nbMissedThresholds += 1;
                 }
