@@ -17,6 +17,9 @@ class CheckSessionsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $table = $this->getHelperSet()->get('table');
+        $table->setHeaders(array('#', 'User', 'Admin'));
+
         $threshold = 300; // Maximum seconds for last activity
         $limit = time() - $threshold;
 
@@ -31,6 +34,7 @@ class CheckSessionsCommand extends ContainerAwareCommand
 
         $total_active_count = count($sessions); // Total active users
         $total_active_auth_count = 0;           // Total active logged in users
+        //$active_users = array();
 
         foreach ($sessions as $session) {
             $data = base64_decode($session->getSessionValue());
@@ -48,10 +52,23 @@ class CheckSessionsCommand extends ContainerAwareCommand
             // Grab security data
             $data = $data['_security_main'];
             $data = unserialize($data);
+            //$active_users[] = $data->getUser()->getUsername();
+            $username = $data->getUser()->getUsername();
+
+            $admin = "";
+            foreach ($data->getRoles() as $role) {
+                if ($role->getRole() == "ROLE_SUPER_ADMIN") {
+                    $admin = "X";
+                }
+            }
+
+            $table->addRow(array($total_active_auth_count, $username, $admin));
         }
 
+        $table->render($output);
+
         $output->writeln(sprintf(
-            '<info><error>%s</error> user(s) were active in the last %s seconds, and <error>%s</error> of them was/were logged in.</info>',
+            '<info>%s user(s) were active in the last %s seconds, and %s of them was/were logged in.',
             $total_active_count,
             $threshold,
             $total_active_auth_count
