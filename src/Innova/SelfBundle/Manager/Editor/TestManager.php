@@ -52,6 +52,7 @@ class TestManager
     {
         $name = $test->getName();
         $language = $test->getLanguage();
+        $difficulty = $test->getDifficulty();
         $orderedTasks = $test->getOrderQuestionnaireTests();
         $components = $test->getComponents();
         $phased = $test->getPhased();
@@ -62,6 +63,7 @@ class TestManager
         $newTest->setPhased($phased);
         $newTest->setArchived(false);
         $newTest->setTestOrigin($test);
+        $newTest->setDifficulty($difficulty);
 
         foreach ($orderedTasks as $orderedTask) {
             $task = $orderedTask->getQuestionnaire();

@@ -44,6 +44,15 @@ class PlayerManager
         return false;
     }
 
+    public function considerAsLogged($sessions)
+    {
+        foreach ($sessions as $session) {
+            $this->session->set('sessionLogged-'.$session->getId(), 1);
+        }
+
+        return;
+    }
+
     public function countQuestionnaireDone(Component $component = null, Session $session)
     {
         $test = $session->getTest();

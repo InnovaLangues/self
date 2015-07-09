@@ -71,6 +71,11 @@ class PhasedParams
     protected $skillScoreThresholds;
 
     /**
+    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel", mappedBy="phasedParam", cascade={"persist"})
+    */
+    protected $ignoredLevels;
+
+    /**
      * Get id
      *
      * @return integer
@@ -297,5 +302,141 @@ class PhasedParams
     public function getSkillScoreThresholds()
     {
         return $this->skillScoreThresholds;
+    }
+
+    /**
+     * Add ignoredCO
+     *
+     * @param \Innova\SelfBundle\Entity\Level $ignoredCO
+     *
+     * @return PhasedParams
+     */
+    public function addIgnoredCO(\Innova\SelfBundle\Entity\Level $ignoredCO)
+    {
+        $this->ignoredCO[] = $ignoredCO;
+
+        return $this;
+    }
+
+    /**
+     * Remove ignoredCO
+     *
+     * @param \Innova\SelfBundle\Entity\Level $ignoredCO
+     */
+    public function removeIgnoredCO(\Innova\SelfBundle\Entity\Level $ignoredCO)
+    {
+        $this->ignoredCO->removeElement($ignoredCO);
+    }
+
+    /**
+     * Get ignoredCO
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIgnoredCO()
+    {
+        return $this->ignoredCO;
+    }
+
+    /**
+     * Add ignoredCE
+     *
+     * @param \Innova\SelfBundle\Entity\Level $ignoredCE
+     *
+     * @return PhasedParams
+     */
+    public function addIgnoredCE(\Innova\SelfBundle\Entity\Level $ignoredCE)
+    {
+        $this->ignoredCE[] = $ignoredCE;
+
+        return $this;
+    }
+
+    /**
+     * Remove ignoredCE
+     *
+     * @param \Innova\SelfBundle\Entity\Level $ignoredCE
+     */
+    public function removeIgnoredCE(\Innova\SelfBundle\Entity\Level $ignoredCE)
+    {
+        $this->ignoredCE->removeElement($ignoredCE);
+    }
+
+    /**
+     * Get ignoredCE
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIgnoredCE()
+    {
+        return $this->ignoredCE;
+    }
+
+    /**
+     * Add ignoredEEC
+     *
+     * @param \Innova\SelfBundle\Entity\Level $ignoredEEC
+     *
+     * @return PhasedParams
+     */
+    public function addIgnoredEEC(\Innova\SelfBundle\Entity\Level $ignoredEEC)
+    {
+        $this->ignoredEEC[] = $ignoredEEC;
+
+        return $this;
+    }
+
+    /**
+     * Remove ignoredEEC
+     *
+     * @param \Innova\SelfBundle\Entity\Level $ignoredEEC
+     */
+    public function removeIgnoredEEC(\Innova\SelfBundle\Entity\Level $ignoredEEC)
+    {
+        $this->ignoredEEC->removeElement($ignoredEEC);
+    }
+
+    /**
+     * Get ignoredEEC
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIgnoredEEC()
+    {
+        return $this->ignoredEEC;
+    }
+
+    /**
+     * Add ignoredLevel
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel $ignoredLevel
+     *
+     * @return PhasedParams
+     */
+    public function addIgnoredLevel(\Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel $ignoredLevel)
+    {
+        $this->ignoredLevels[] = $ignoredLevel;
+
+        return $this;
+    }
+
+    /**
+     * Remove ignoredLevel
+     *
+     * @param \Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel $ignoredLevel
+     */
+    public function removeIgnoredLevel(\Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel $ignoredLevel)
+    {
+        $this->ignoredLevels->removeElement($ignoredLevel);
+    }
+
+    /**
+     * Get ignoredLevels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIgnoredLevels()
+    {
+        return $this->ignoredLevels;
     }
 }

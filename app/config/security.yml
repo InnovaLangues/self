@@ -18,7 +18,7 @@ security:
                 csrf_provider:  form.csrf_provider
                 check_path:     fos_user_security_check
                 login_path:     /login
-                default_target_path: /opened-sessions
+                default_target_path: /home
                 always_use_default_target_path: true
                 use_referer:                    false
 

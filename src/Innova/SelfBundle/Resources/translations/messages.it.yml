@@ -107,6 +107,7 @@ editor:
         archive: Archiviare
         unarchive: Disarchiviare
         archived: Test archiviati
+        difficulty: Afficher le formulaire de perception de difficulté
     task:
         task: Task
         tasks: Task
@@ -259,7 +260,7 @@ editor:
 
     session:
         name: Nom de la session
-        passwd: Code
+        passwd: Code de session
         active: Actif
         list: Liste des sessions
         create: Créer une nouvelle session
@@ -272,6 +273,8 @@ editor:
         available: Sessions disponibles
         no-available: Aucune session disponible
         test: Voir dans le player
+        globalScoreShow: Afficher le score agrégé
+        globalScoreWording: Intitulé du score agrégé
 
 player:
     listening_remaining: "{0} No ascolto possibilo |{1} 1 solo ascolto|]1,Inf] %count% ascolti possibili"
@@ -448,11 +451,18 @@ phased:
     thresholdToStep3Level: Niveau
     thresholdToStep2Level: Niveau
     threshold:
-        skill: Compétence
         componentType: Etape concernée
-        rightAnswers: Nombre de bonnes réponses nécessaires
+        componentTypeIncludingMinitest: Etape concernée (+ minitest)
+        skill: Compétence
+        rightAnswers: Nombre de bonnes réponses requises
         description: Feedback pour l'étudiant
         level: Niveau
+    ignoredLevels: Niveaux ignorés
+    componentTypeOut: Etape de sortie
+minitest: Minitest
+step1: Etape 1
+step2: Etape 2
+step3: Etape 3
 
 channel:
     phone: Téléphone

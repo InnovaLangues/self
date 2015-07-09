@@ -10,7 +10,38 @@
 
 <hr/>
 
-{{ form(form) }}
+<form method="post">
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
 
+    <div class="form-group">
+        {{ form_label(form.passwd) }}
+        {{ form_widget(form.passwd) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.actif) }}
+        {{ form_widget(form.actif) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.globalScoreShow) }}
+        {{ form_widget(form.globalScoreShow) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.globalScoreWording) }}
+        {{ form_widget(form.globalScoreWording) }}
+    </div>
+
+    <div class="form-group text-right">
+        {{ form_label(form.save) }}
+        {{ form_widget(form.save) }}
+    </div>
+
+    {{ form_widget(form._token) }}
+</form>
 
 {% endblock %}

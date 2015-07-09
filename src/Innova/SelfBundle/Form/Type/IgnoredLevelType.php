@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class SkillScoreThresholdType extends AbstractType
+class IgnoredLevelType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -26,41 +26,30 @@ class SkillScoreThresholdType extends AbstractType
             },
             'property' => 'name',
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.threshold.componentTypeIncludingMinitest',
+            'label'  => 'phased.componentTypeOut',
             'translation_domain' => 'messages',
         ));
 
-        $builder->add('rightAnswers', 'integer', array(
-            'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.threshold.rightAnswers',
-            'translation_domain' => 'messages',
-        ));
-
-        $builder->add('level', 'entity', array(
+        $builder->add('levels', 'entity', array(
             'class' => 'InnovaSelfBundle:Level',
             'property' => 'name',
-            'empty_value' => "-",
-            'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.threshold.level',
+            'label'  => 'phased.ignoredLevels',
             'translation_domain' => 'messages',
-        ));
-
-        $builder->add('description', 'text', array(
-            'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.threshold.description',
-            'translation_domain' => 'messages',
+            'multiple' => true,
+            'required' => false,
+            'expanded' => true,
         ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold',
+            'data_class' => 'Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel',
         ));
     }
 
     public function getName()
     {
-        return 'skillScoreThreshold';
+        return 'ignoredLevel';
     }
 }

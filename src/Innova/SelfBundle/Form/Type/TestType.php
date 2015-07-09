@@ -30,6 +30,13 @@ class TestType extends AbstractType
                 'translation_domain' => 'messages',
             ));
 
+        $builder->add('difficulty', 'choice', array(
+                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'attr' => array('class' => 'form-control', 'data-field' => 'phased'),
+                'label'  => 'editor.test.difficulty',
+                'translation_domain' => 'messages',
+            ));
+
         $builder->add('archived', 'choice', array(
                 'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'archived'),

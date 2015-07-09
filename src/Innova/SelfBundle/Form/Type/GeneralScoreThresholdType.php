@@ -5,6 +5,7 @@ namespace Innova\SelfBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class GeneralScoreThresholdType extends AbstractType
 {
@@ -12,6 +13,9 @@ class GeneralScoreThresholdType extends AbstractType
     {
         $builder->add('componentType', 'entity', array(
             'class' => 'InnovaSelfBundle:PhasedTest\ComponentType',
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('c')->where('c.name != \'minitest\'')->orderBy('c.name', 'ASC');
+            },
             'property' => 'name',
             'attr' => array('class' => 'form-control'),
             'label'  => 'phased.threshold.componentType',

@@ -49,6 +49,20 @@ class Session
     private $actif;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="globalScoreWording", type="string", length=255)
+     */
+    private $globalScoreWording = "Groupe cible conseillé";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="globalScoreShow", type="boolean")
+     */
+    private $globalScoreShow;
+
+    /**
     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="session", cascade={"remove"})
     */
     protected $traces;
@@ -193,5 +207,53 @@ class Session
     public function getPasswd()
     {
         return $this->passwd;
+    }
+
+    /**
+     * Set globalScoreWording
+     *
+     * @param string $globalScoreWording
+     *
+     * @return Session
+     */
+    public function setGlobalScoreWording($globalScoreWording)
+    {
+        $this->globalScoreWording = $globalScoreWording;
+
+        return $this;
+    }
+
+    /**
+     * Get globalScoreWording
+     *
+     * @return string
+     */
+    public function getGlobalScoreWording()
+    {
+        return $this->globalScoreWording;
+    }
+
+    /**
+     * Set globalScoreShow
+     *
+     * @param boolean $globalScoreShow
+     *
+     * @return Session
+     */
+    public function setGlobalScoreShow($globalScoreShow)
+    {
+        $this->globalScoreShow = $globalScoreShow;
+
+        return $this;
+    }
+
+    /**
+     * Get globalScoreShow
+     *
+     * @return boolean
+     */
+    public function getGlobalScoreShow()
+    {
+        return $this->globalScoreShow;
     }
 }

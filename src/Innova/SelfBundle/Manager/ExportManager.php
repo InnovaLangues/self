@@ -595,33 +595,34 @@ class ExportManager
         $em = $this->entityManager;
 
         $users = $em->getRepository('InnovaSelfBundle:User')->findBySession($session);
-        $levels = $em->getRepository('InnovaSelfBundle:Level')->findBy(array(), array('name' => 'ASC'));
-        $skills = $em->getRepository('InnovaSelfBundle:Skill')->findAll();
 
-        $csv .= $this->addColumn("-");
-
-        foreach ($skills as $skill) {
-            foreach ($levels as $level) {
-                $csv .= $this->addColumn($level->getName()." (".$skill->getName().")");
-            }
-        }
+        $csv .= $this->addColumn("Nom d'utilisateur");
+        $csv .= $this->addColumn("Prénom");
+        $csv .= $this->addColumn("Nom");
+        $csv .= $this->addColumn("Email");
+        $csv .= $this->addColumn("Score agrégé");
+        $csv .= $this->addColumn("Score CO");
+        $csv .= $this->addColumn("Score CE");
+        $csv .= $this->addColumn("Score EEC");
 
         $csv .= "\n";
 
         foreach ($users as $user) {
             $csv .= $this->addColumn($user->getUsername());
-            $scores = $this->scoreManager->calculateScoreByTest($session->getTest(), $session, $user);
+            $csv .= $this->addColumn($user->getFirstName());
+            $csv .= $this->addColumn($user->getLastName());
+            $csv .= $this->addColumn($user->getEmail());
 
-            foreach ($skills as $skill) {
-                foreach ($levels as $level) {
-                    $correct = $scores[$skill->getName()][$level->getName()]["correct"];
-                    $total = $scores[$skill->getName()][$level->getName()]["count"];
+            $scoreGlobal = $this->scoreManager->getGlobalLevelFromThreshold($session, $user);
+            $scoreCO = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CO");
+            $scoreCE = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CE");
+            $scoreEEC = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "EEC");
 
-                    $display = ($total == 0) ? "-" : $correct."/".$total;
+            $csv .= $this->addColumn($scoreGlobal);
+            $csv .= $this->addColumn($scoreCO);
+            $csv .= $this->addColumn($scoreCE);
+            $csv .= $this->addColumn($scoreEEC);
 
-                    $csv .= $this->addColumn($display);
-                }
-            }
             $csv .= "\n";
         }
 

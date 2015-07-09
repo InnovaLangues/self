@@ -7,7 +7,16 @@
 {% block body -%}
 
 <div class="row">
-    <div id="video-help"  class="col-md-4">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Connexion à une session</div>
+            <div class="panel-body">
+                <p>Cliquez sur le bouton ci-dessous pour vous connecter à une session de test. Il vous sera demander d'entrer le code de session.</p>
+                <a href="{{ path('session_connect') }}" class="btn btn-default btn-primary">Se connecter à une session</a>
+            </div>
+        </div>
+    </div>
+    <div id="video-help"  class="col-md-8">
         <div class="panel panel-default">
             <div class="panel-heading">Vidéo d'aide</div>
             <div class="panel-body text-center">
@@ -16,53 +25,5 @@
         </div>
     </div>
 </div>
-
-{% if tests is not empty %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ 'editor.session.available' | trans }}</h3>
-        </div>
-        <div class="panel-body">
-            {% for i, test in tests %}
-            <div class='row pull-left col-md-3 test-available'>
-                <div class="panel panel-default">
-                    <div class="panel-heading">{{ test.name }}</div>
-                    <div class="panel-body">
-                        <div> 
-                            {% for session in test.sessions if session.actif == 1 %}
-                                <p>
-                                     <a href="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id } )}}">{{ session.name }}</a>
-                                </p>
-                            {% endfor %}
-                        {#
-                            Affichage de la liste des tests en fonction de l'avancement
-                            {% if testsProgress[i] != 100 %}
-                                <a href="{{ path('test_start', { 'testId': test.id, 'sessionId': test.id } )}}">{{ test.name }}</a>
-                            {% else %}
-                                {{ test.name }}
-                            {% endif %}
-                        </div>
-                        <div>
-                            <div class="progress" rel="tooltip" data-original-title="Progression : {{ testsProgress[i] }}%">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ testsProgress[i] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ testsProgress[i] }}%;">
-                                <span class="sr-only">{{ testsProgress[i] }}% Complete</span>
-                                </div>
-                            </div>
-                        </div>
-                        #}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-{% else %}
-    <div class="panel panel-default ">
-        <div class="panel-body">
-            <p class="alert alert-danger">{{ 'editor.session.no-available' | trans }}</p>
-        </div>
-    </div>
-{% endif %}
 
 {% endblock %}

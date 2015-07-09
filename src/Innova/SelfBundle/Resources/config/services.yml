@@ -57,12 +57,13 @@ services:
     innova_player:
         class: Innova\SelfBundle\Controller\PlayerController
         arguments:
-            securityContext: @security.context
-            entityManager: @doctrine.orm.entity_manager
-            session: @session
-            router: @router
-            playerManager: @self.player.manager
-            scoreManager: @self.score.manager
+            securityContext:    @security.context
+            entityManager:      @doctrine.orm.entity_manager
+            session:            @session
+            router:             @router
+            playerManager:      @self.player.manager
+            scoreManager:       @self.score.manager
+            templating:         @templating
 
     innova_editor_upload:
         class: Innova\SelfBundle\Controller\UploadController

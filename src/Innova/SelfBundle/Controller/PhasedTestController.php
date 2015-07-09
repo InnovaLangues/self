@@ -244,6 +244,11 @@ class PhasedTestController extends Controller
             $thresholds->add($threshold);
         }
 
+        $ignoredLevels = new ArrayCollection();
+        foreach ($params->getIgnoredLevels() as $ignoredLevel) {
+            $ignoredLevels->add($ignoredLevel);
+        }
+
         $scoreThresholds = new ArrayCollection();
         foreach ($params->getSkillScoreThresholds() as $threshold) {
             $scoreThresholds->add($threshold);
@@ -264,6 +269,11 @@ class PhasedTestController extends Controller
                         $em->remove($threshold);
                     }
                 }
+                foreach ($ignoredLevels as $ignoredLevel) {
+                    if ($params->getIgnoredLevels()->contains($ignoredLevel) === false) {
+                        $em->remove($ignoredLevel);
+                    }
+                }
 
                 // link thresholds to params
                 foreach ($params->getGeneralScoreThresholds() as $threshold) {
@@ -272,6 +282,9 @@ class PhasedTestController extends Controller
 
                 foreach ($params->getSkillScoreThresholds() as $threshold) {
                     $threshold->setPhasedParam($params);
+                }
+                foreach ($params->getIgnoredLevels() as $ignoredLevel) {
+                    $ignoredLevel->setPhasedParam($params);
                 }
 
                 $em->persist($params);

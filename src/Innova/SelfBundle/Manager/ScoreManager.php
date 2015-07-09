@@ -24,6 +24,7 @@ class ScoreManager
         $this->propositionRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
         $this->skillRepo = $this->entityManager->getRepository('InnovaSelfBundle:Skill');
         $this->levelRepo = $this->entityManager->getRepository('InnovaSelfBundle:Level');
+        $this->ignoreLevelRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\IgnoredLevel');
     }
 
     public function getScoreBySkillByLevelForComponent(Test $test, Session $session, Component $component, User $user)
@@ -114,8 +115,6 @@ class ScoreManager
                 $lastTrace = end($globalTraces);
                 $componentType = $lastTrace->getComponent()->getComponentType();
 
-                $componentType = $lastTrace->getComponent()->getComponentType();
-
                 $thresholds = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\SkillScoreThreshold')->findBy(
                     array("phasedParam" => $params, "skill" => $skill, "componentType" => $componentType),
                     array('rightAnswers' => 'DESC')
@@ -132,12 +131,27 @@ class ScoreManager
                     if ($correctAnswers >= $threshold->getRightAnswers()) {
                         $percent = ($nbThresholds - $nbMissedThresholds) / $nbThresholds * 100;
 
-                        return array("feedback" => $threshold->getDescription(),"percent" => $percent);
+                        //return array("feedback" => $threshold->getDescription(),"percent" => $percent);
+                        return $threshold->getDescription();
                     }
                     $nbMissedThresholds += 1;
                 }
             }
         }
+    }
+
+    private function getIgnoredLevels($params, $skill, $componentType)
+    {
+        $ignoredLevels = array();
+        if ($ignoredLevelEntities = $this->ignoreLevelRepo->findBy(array("phasedParam" => $params, "skill" => $skill, "componentType" => $componentType))) {
+            foreach ($ignoredLevelEntities as $ignoredLevelEntity) {
+                foreach ($ignoredLevelEntity->getLevels() as $level) {
+                    $ignoredLevels[] = $level;
+                }
+            }
+        }
+
+        return $ignoredLevels;
     }
 
     private function getScoresFromTraces($traces)
@@ -148,6 +162,10 @@ class ScoreManager
             $session = $trace->getSession();
             $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
             $user = $trace->getUser();
+            $componentType = $trace->getComponent()->getComponentType();
+            $params = $session->getTest()->getPhasedParams();
+            $skill = $trace->getQuestionnaire()->getSkill();
+            $levelsToIgnore = $this->getIgnoredLevels($params, $skill, $componentType);
 
             foreach ($subquestions as $subquestion) {
                 $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
@@ -159,7 +177,7 @@ class ScoreManager
                     $level = $questionnaire->getLevel()->getName();
                 }
 
-                if ($level) {
+                if ($level && !in_array($level, $levelsToIgnore)) {
                     if ($this->subquestionCorrect($subquestion, $session, null, $user)) {
                         $scores[$skill][$level]["correct"]++;
                     }
