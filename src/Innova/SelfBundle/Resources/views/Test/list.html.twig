@@ -54,14 +54,14 @@
             <td>
                 <div class="btn-group dropup">
                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                    Options <span class="caret"></span>
+                    {{ 'generic.options' | trans }} <span class="caret"></span>
                     </button>
 
                     <ul class="dropdown-menu" role="menu">
                         {% if canEditRights %}
                         <li>
                             <a href="{{ path('editor_test_rights', {'testId': test.id }) }}">
-                                <span class="glyphicon glyphicon-lock"></span> Permissions
+                                <span class="glyphicon glyphicon-lock"></span> {{ 'right.rights' | trans }}
                             </a>
                         </li>
                         {% endif %}

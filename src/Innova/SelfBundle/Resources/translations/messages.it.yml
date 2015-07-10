@@ -15,7 +15,7 @@ menu:
     credit : Credits
     logout: Esci
     language_change: Modifica la lingua
-    groups: Groupes
+    groups: Gruppi
 
 export:
     file_generated: Il file è stato generato
@@ -27,7 +27,7 @@ export:
     tests_list: Test esportati
 
 user:
-    edit: Modifica la lista degli utenti
+    edit: Modifica
     back_to_list: Ritorno alla lista degli utenti
     list: LLista degli utenti
     create: Aggiungi un utente
@@ -62,7 +62,7 @@ test:
     no_registered: Non risulti iscritto a nessun test
     all: Tous
     archived: Archivés
-    favorites: Favoris
+    favorites: Testi preferiti
 
 generic:
     index: Indice
@@ -86,6 +86,7 @@ generic:
     no: No
     filter: Filtro
     player: Player
+    options: Opzioni
 
 editor:
     test:
@@ -107,7 +108,8 @@ editor:
         archive: Archiviare
         unarchive: Disarchiviare
         archived: Test archiviati
-        difficulty: Afficher le formulaire de perception de difficulté
+        phased: Test a tappe
+        difficulty: Visualizzare il questionario di percezione della difficoltà
     task:
         task: Task
         tasks: Task
@@ -196,7 +198,7 @@ editor:
         source: Source
         source.operation: Opération sur la source
         source.more: Informations complémentaires sur la source
-        domain: Domaine
+        domain: Dominio
         register: Registre
         reception: Type de réception
         length: Durée
@@ -259,22 +261,25 @@ editor:
         identity: fiche d'identité
 
     session:
-        name: Nom de la session
-        passwd: Code de session
-        active: Actif
-        list: Liste des sessions
-        create: Créer une nouvelle session
-        manage: Sessions
-        list_test: Liste des session pour le test
+        name: Nome della sessione
+        passwd: Codice della sessione
+        active: Attivo
+        list: Lista delle sessioni
+        create: Creare una nuova sessione
+        manage: Sessioni
+        list_test: Lista delle sessioni per il test
         edit: Editer la session
         results: Résultats pour la session
         results_user: Résultats pour l'utilisateur
         export: Exporter les résultats
-        available: Sessions disponibles
+        available: Sessioni disponibili
         no-available: Aucune session disponible
         test: Voir dans le player
         globalScoreShow: Afficher le score agrégé
         globalScoreWording: Intitulé du score agrégé
+        connect: Connettersi alla sessione
+        connexion: Connettersi alla sessione
+        helptext: Cliccare sull’icona in basso per connettersi ad una sessione del test. Verrà richiesto di inserire il codice della sessione.
 
 player:
     listening_remaining: "{0} No ascolto possibilo |{1} 1 solo ascolto|]1,Inf] %count% ascolti possibili"
@@ -306,7 +311,7 @@ English: Inglese
 Italian: Italiano
 Chinese: Cinese
 Spanish: Spagnolo
-Japanese: Japonais
+Japanese: Giapponese
 
 author_right:
     not_needed: Pas besoin
@@ -315,10 +320,10 @@ author_right:
     to_ask: A demander
 
 domain:
-    personal: Personnel
-    public: Public
-    profesional: Profesionnel
-    educational: Educationnel
+    personal: Personale
+    public: Pubblico
+    profesional: Professionale
+    educational: Educativo
 
 register:
     formal_elevated: Formel soutenu
@@ -481,9 +486,9 @@ channel:
     notice: Panneau / affiche
 
 group:
-    create: Créer un groupe
-    list: Liste des groupes
-    name: Nom du groupe
+    create: Crea un gruppo
+    list: Lista dei gruppi
+    name: Nome del gruppo
     edit: Editer le groupe
     delete: Supprimer le groupe
     sessions: Sessions liées au groupe
@@ -493,3 +498,59 @@ group:
     import: Import d'utilisateurs
     back: Revenir au groupe
     display: Détails du groupe
+
+right:
+    rights: Autorizzazioni
+    createtask: Créer une tâche
+    deletetask: Supprimer une tâche
+    edittask: Editer une tâche
+    listtask: Lister les tâches
+    createtest: Créer un test
+    deletetest: Supprimer un test
+    edittest: Editer un test
+    listtest: Lister les tests
+    duplicatetest: Dupliquer un test 
+    managesessiontest: Gérer les session
+    managetaskstest: Gérer les tâches
+    addtasktest: Ajouter une tâche
+    reordertasktest: Réordonner les tâches
+    deletetasktest: Supprimer une tâche d'un test
+    edittasktest: Editer une tâche d'un test
+    editrightstest: Editer les permissions des tests
+    listuser: Lister les utilisateurs
+    createuser: Créer un utilisateur
+    deleteuser: Supprimer un utilisateur
+    edituser: Editer un utilisateur
+    deletetraceuser: Supprimer les traces d'un utilisateur
+    editpassworduser: Changer le mot de passe d'un utiliszteur
+    editrightsuser: Editer les permissions des utilisateurs
+    listgroup: Lister les groupes
+    editgroup: Editer un groupe
+    creategroup: Créer un groupe
+    deletegroup: Supprimer un groupe
+    csvimportgroup: Importer des utilisateurs via fichier CSV
+    editrightsgroup: Editer les permissions des groupes
+    deletesession: Supprimer une session
+    listsession: Lister les sessions
+    editsession: Editer les sessions
+    createsession: Créer une session
+    individualresultssession: Exporter PDF par utilisateur
+    exportresultssession: Exporter collectivement CSV
+    editrightssession: Editer les permissions d'une session
+    exportPDF: Export livret PDF
+    exportCSV: Export CSV classique et Tia+
+
+canDelete: Può eliminare
+canEdit: Può modificare
+canDuplicate: Può duplicare
+canManageSession: Può gestire le sessioni
+canManageTask: Può gestire i task
+canAddTask: Può aggiungere dei task
+canReorderTasks: Può riordinare i task
+canDeleteTask: Può eliminare i task
+canEditTask: Può modificare i task
+canDeleteTrace: Peut supprimer les traces
+canEditPassword: Peut éditer le mot de passe
+canImportCsv: Peut importer via CSV
+canExportIndividual: Peut exporter individuellement
+canExportCollective: Peut exporter collectivement

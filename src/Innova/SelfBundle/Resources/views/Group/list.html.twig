@@ -36,7 +36,7 @@
 
                     {% if canEditRights %}
                     <a class="btn btn-default btn-sm" href="{{ path('editor_group_rights', {'groupId': group.id }) }}">
-                        <span class="glyphicon glyphicon-lock"></span> Permissions
+                        <span class="glyphicon glyphicon-lock"></span> {{ 'right.rights' | trans }}
                     </a>
                     {% endif %}
 

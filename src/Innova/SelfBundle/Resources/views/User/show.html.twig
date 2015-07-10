@@ -3,7 +3,7 @@
 {% block body -%}
     {% if checkRight("right.edituser", user) %}
         <a href="{{ path('user_edit', {'userId': user.id } )}}" class="btn btn-sm btn-default">
-            <span class="glyphicon glyphicon-pencil"></span> Editer l'utilisateur
+            <span class="glyphicon glyphicon-pencil"></span> {{ 'user.edit' | trans }}
         </a>
     {% endif %}
 
@@ -15,7 +15,7 @@
 
     {% if checkRight("right.editrightsuser", user) %}
         <a class="btn btn-default btn-sm" href="{{ path('admin_user_rights', { 'userId': user.id }) }}">
-            <span class="glyphicon glyphicon-lock"></span> Permissions
+            <span class="glyphicon glyphicon-lock"></span> {{ 'right.rights' | trans }}
         </a>
     {% endif %}
 

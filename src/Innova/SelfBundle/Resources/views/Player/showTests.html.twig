@@ -9,10 +9,10 @@
 <div class="row">
     <div class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Connexion à une session</div>
+            <div class="panel-heading">{{ 'editor.session.connexion' | trans }}</div>
             <div class="panel-body">
-                <p>Cliquez sur le bouton ci-dessous pour vous connecter à une session de test. Il vous sera demander d'entrer le code de session.</p>
-                <a href="{{ path('session_connect') }}" class="btn btn-default btn-primary">Se connecter à une session</a>
+                <p>{{ 'editor.session.helptext' | trans }}</p>
+                <a href="{{ path('session_connect') }}" class="btn btn-default btn-primary">{{ 'editor.session.connect' | trans }}</a>
             </div>
         </div>
     </div>
