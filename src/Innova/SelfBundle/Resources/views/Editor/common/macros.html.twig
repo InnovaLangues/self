@@ -14,7 +14,7 @@
         </video>
         {{ macros.listeningLimit(questionnaire, media) }}
     {% elseif mediaType == "audio" %}
-        <audio controls preload="none" class="vertical-middle">
+        <audio controls preload="auto" class="vertical-middle">
             <source src="{{ asset('upload/media/') ~ media.url }}" type="audio/mp3">
             Votre navigateur est trop ancien.
         </audio>
