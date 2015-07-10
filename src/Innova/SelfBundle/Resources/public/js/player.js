@@ -304,3 +304,12 @@ $(".special-char").click(function(){
         var specialChar = $(this).text();
        input.val(input.val() + specialChar);
 });
+
+
+/*****************
+    TOOLTIP
+*****************/
+$("#main_form").on('show.bs.tooltip', function() {
+    // Only one tooltip should ever be open at a time
+    $('.tooltip').not(this).hide();
+});
