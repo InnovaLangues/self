@@ -9,6 +9,13 @@
         </a>
     {% endif %}
 
+    {% if checkRight("right.listuser") %}
+        <a href="{{ path('admin_users_connected') }}" class="btn btn-sm btn-default">
+            <span class=" glyphicon glyphicon-eye-open"></span>
+            Voir les utilisateurs en ligne
+        </a>
+    {% endif %}
+
     <hr/>
 
     {% if entities is not empty %}

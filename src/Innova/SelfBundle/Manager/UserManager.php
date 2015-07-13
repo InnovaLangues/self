@@ -140,4 +140,48 @@ class UserManager
 
         return;
     }
+
+    public function getConnected()
+    {
+        $threshold = 300;
+        $limit = time() - $threshold;
+        $connectedUsers = array();
+
+        $em = $this->entityManager;
+
+        $dql = 'select s from InnovaSelfBundle:PDOSession s
+            where s.session_time >= ?1
+            order by s.session_time desc';
+        $query = $em->createQuery($dql);
+        $query->setParameter(1, $limit);
+        $sessions = $query->getResult();
+
+        foreach ($sessions as $session) {
+            $data = base64_decode($session->getSessionValue());
+            $data = str_replace('_sf2_attributes|', '', $data);
+            $data = unserialize($data);
+
+            // If this is a session belonging to an anonymous user, do nothing
+            if (!array_key_exists('_security_main', $data)) {
+                continue;
+            }
+
+            // Grab security data
+            $data = $data['_security_main'];
+            $data = unserialize($data);
+            $username = $data->getUser()->getUsername();
+
+            $admin = "X";
+            foreach ($data->getRoles() as $role) {
+                if ($role == "ROLE_SUPER_ADMIN") {
+                    $admin = "X";
+                    break;
+                }
+            }
+
+            $connectedUsers[] = array($username, $admin);
+        }
+
+        return $connectedUsers;
+    }
 }
