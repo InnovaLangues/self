@@ -26,11 +26,32 @@ class SessionController extends Controller
 {
     /**
      *
+     * @Route("/sessions/active/{isActive}", name="editor_sessions_active")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Session:list.html.twig")
+     */
+    public function listByActivityAction($isActive)
+    {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.listsession", $currentUser)) {
+            $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findByActif($isActive);
+        } else {
+            $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findAllAuthorizedByActivity($currentUser, $isActive);
+        }
+
+        $subset = (!$isActive) ? "editor.session.inactives" : "editor.session.actives";
+
+        return array("sessions" => $sessions, "subset" => $subset);
+    }
+
+    /**
+     *
      * @Route("/test/{testId}/sessions", name="editor_test_sessions")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Session:list.html.twig")
      */
-    public function listAction(Test $test)
+    public function listByTestAction(Test $test)
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
