@@ -283,7 +283,7 @@ editor:
         globalScoreWording: Intitulé du score agrégé
         connect: Se connecter à une session
         connexion: Connexion à une session
-        helptext: Cliquez sur le bouton ci-dessous pour vous connecter à une session de test. Il vous sera demander d'entrer le code de session.
+        helptext: Cliquez sur le bouton ci-dessous pour vous connecter à une session de test. Il vous sera demandé d'entrer le code de session.
 
 player:
     listening_remaining: "{0} Reste 0 écoute |{1} Reste 1 écoute|]1,Inf] Reste %count% écoutes"
