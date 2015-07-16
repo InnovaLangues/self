@@ -8,7 +8,7 @@
             <div class="panel-heading">{{ 'editor.session.connexion' | trans }}</div>
             <div class="panel-body">
 				{% if sessions is defined %}
-					<p>Plusieurs sessions actives répondent à ce code :</p>
+					<p>{{ 'editor.session.availableForCode'|transchoice(sessions|length) }}</p>
 					<ul class="list-group">
 					{% for session in sessions %}
 						<li class="list-group-item">

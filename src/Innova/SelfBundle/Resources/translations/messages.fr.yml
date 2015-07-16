@@ -284,6 +284,8 @@ editor:
         connect: Se connecter à une session
         connexion: Connexion à une session
         helptext: Cliquez sur le bouton ci-dessous pour vous connecter à une session de test. Il vous sera demandé d'entrer le code de session.
+        availableForCode: "1 session répond à ce code:|Plusieurs sessions répondent à ce code:"
+
 
 player:
     listening_remaining: "{0} Reste 0 écoute |{1} Reste 1 écoute|]1,Inf] Reste %count% écoutes"
