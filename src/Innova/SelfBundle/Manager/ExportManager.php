@@ -596,10 +596,17 @@ class ExportManager
 
         $users = $em->getRepository('InnovaSelfBundle:User')->findBySession($session);
 
+        $csv .= $this->addColumn($session->getTest()->getName());
+        $csv .= $this->addColumn($session->getName());
+
+        $csv .= "\n";
+
         $csv .= $this->addColumn("Nom d'utilisateur");
         $csv .= $this->addColumn("Prénom");
         $csv .= $this->addColumn("Nom");
         $csv .= $this->addColumn("Email");
+        $csv .= $this->addColumn("Filière");
+        $csv .= $this->addColumn("Début");
         $csv .= $this->addColumn("Durée approx.");
         $csv .= $this->addColumn("Score agrégé");
         $csv .= $this->addColumn("Score CO");
@@ -614,6 +621,7 @@ class ExportManager
             $csv .= $this->addColumn($user->getLastName());
             $csv .= $this->addColumn($user->getEmail());
 
+            $origin = ($user->getOriginStudent()) ? $user->getOriginStudent()->getName() : "";
             $scoreGlobal = $this->scoreManager->getGlobalLevelFromThreshold($session, $user);
             $scoreCO = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CO");
             $scoreCE = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CE");
@@ -622,6 +630,8 @@ class ExportManager
             $lastTrace = end($traces)->getDate();
             $firstTrace = reset($traces)->getDate();
 
+            $csv .= $this->addColumn($origin);
+            $csv .= $this->addColumn($firstTrace->format('d-m-Y H:i:s'));
             $csv .= $this->addColumn($this->diff($firstTrace, $lastTrace));
             $csv .= $this->addColumn($scoreGlobal);
             $csv .= $this->addColumn($scoreCO);
