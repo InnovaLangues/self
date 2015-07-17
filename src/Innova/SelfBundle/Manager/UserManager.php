@@ -171,7 +171,7 @@ class UserManager
             $data = unserialize($data);
             $username = $data->getUser()->getUsername();
 
-            $admin = "X";
+            $admin = "";
             foreach ($data->getRoles() as $role) {
                 if ($role == "ROLE_SUPER_ADMIN") {
                     $admin = "X";
