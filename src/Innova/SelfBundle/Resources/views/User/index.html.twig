@@ -5,7 +5,14 @@
     {% if checkRight("right.createuser") %}
         <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
             <span class="glyphicon glyphicon-plus"></span>
-            Créer un utilisateur
+            {{ 'user.create' | trans }}
+        </a>
+    {% endif %}
+
+    {% if checkRight("right.listuser") %}
+        <a href="{{ path('admin_users_connected') }}" class="btn btn-sm btn-default">
+            <span class=" glyphicon glyphicon-eye-open"></span>
+            Voir les utilisateurs en ligne
         </a>
     {% endif %}
 
@@ -13,7 +20,6 @@
 
     {% if entities is not empty %}
     <h3>{{ 'user.list' | trans }}</h3>
-    
 
     <ul class="nav nav-tabs" role="tablist">
         <li class="active">

@@ -193,14 +193,9 @@ class PlayerController
 
         if (count($sessions) >= 1) {
             $this->playerManager->considerAsLogged($sessions);
-            if (count($sessions) == 1) {
-                $session = $sessions[0];
-                $url = $this->router->generate('test_start', array("testId" => $session->getTest()->getId(), "sessionId" => $session->getId()));
-            } else {
-                $template = $this->templating->render('InnovaSelfBundle:Player:common/log.html.twig', array("sessions" => $sessions));
+            $template = $this->templating->render('InnovaSelfBundle:Player:common/log.html.twig', array("sessions" => $sessions));
 
-                return new Response($template);
-            }
+            return new Response($template);
         } else {
             $this->session->getFlashBag()->set('warning', 'wrong passwd');
             $url = $this->router->generate('session_connect');

@@ -88,6 +88,7 @@ generic:
     no: Non
     filter: Filtre
     player: Voir dans le player
+    options: Options
 
 editor:
     test:
@@ -265,6 +266,8 @@ editor:
         name: Nom de la session
         passwd: Code de session
         active: Actif
+        actives: actives
+        inactives: inactives
         list: Liste des sessions
         create: Créer une nouvelle session
         manage: Sessions
@@ -278,6 +281,11 @@ editor:
         test: Voir dans le player
         globalScoreShow: Afficher le score agrégé
         globalScoreWording: Intitulé du score agrégé
+        connect: Se connecter à une session
+        connexion: Connexion à une session
+        helptext: Cliquez sur le bouton ci-dessous pour vous connecter à une session de test. Il vous sera demandé d'entrer le code de session.
+        availableForCode: "1 session répond à ce code:|Plusieurs sessions répondent à ce code:"
+
 
 player:
     listening_remaining: "{0} Reste 0 écoute |{1} Reste 1 écoute|]1,Inf] Reste %count% écoutes"
@@ -499,6 +507,7 @@ group:
     display: Détails du groupe
 
 right:
+    rights: Permissions
     createtask: Créer une tâche
     deletetask: Supprimer une tâche
     edittask: Editer une tâche

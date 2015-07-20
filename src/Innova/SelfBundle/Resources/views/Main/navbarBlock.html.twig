@@ -8,6 +8,8 @@
                     <ul class="nav navbar-nav">
                         {% if app.user is not null and is_granted('ROLE_ADMIN') %}
 
+
+                            {# USERS #}
                             {% if checkRight("right.listuser") %}
                                 <li>
                                     <a href="{{ path('admin_user') }}">
@@ -16,6 +18,30 @@
                                 </li>
                             {% endif %}
 
+                            {# SESSIONS #}
+                            {% if checkRight("right.listsession") or checkRight("right.createsession") or hasRightsOnGroup("RightUserSession") %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        Sessions <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                       
+                                        <li>
+                                            <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">
+                                                Sessions actives
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('editor_sessions_active', { 'isActive': 0 }) }}">
+                                               Sessions inactives
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {# GROUPES #}
                             {% if checkRight("right.listgroup") or checkRight("right.creategroup") or hasRightsOnGroup("RightUserGroup") %}
                                 <li>
                                     <a href="{{ path('editor_groups') }}">
@@ -24,8 +50,8 @@
                                 </li>
                             {% endif %}
 
-
-                           {% if checkRight("right.exportPDF") or checkRight("right.exportCSV") %}
+                            {# EXPORTS #}
+                            {% if checkRight("right.exportPDF") or checkRight("right.exportCSV") %}
                             <li>
                                 <a href="{{ path('export') }}">
                                     <span class="glyphicon glyphicon-export"></span>
@@ -34,75 +60,81 @@
                             </li>
                             {% endif %}
 
-                            <li>
-                                <a href="{{ path('show_tests') }}">
-                                    <span class="glyphicon glyphicon-play-circle"></span>
-                                    {{ 'menu.tests' | trans }}
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                    {{ 'menu.editor' | trans }} <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-submenu">
-                                        <a tabindex="-1" href="#">Tests</a>
-                                        <ul class="dropdown-menu">
 
+                            {# TASKS AND TESTS #}
+                            {% if checkRight("right.listtest") or checkRight("right.createtest") or hasRightsOnGroup("RightUserTest") %}
+                                {% set canPlayWithTests = true %}
+                            {% else %}
+                                {% set canPlayWithTests = false %}
+                            {% endif %}
 
-                                        {% if checkRight("right.listtest") or checkRight("right.createtest") or hasRightsOnGroup("RightUserTest") %}
-                                            <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
-                                            <li><a href="{{path('editor_tests_my_favorites')}}">Tests favoris</a></li>
-                                            <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
-                                            <li class="divider"></li>
-                                            {% set languages = get_languages() %}
-                                            {% for language in languages %}
-                                                <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{language.name | trans }}</a></li>
-                                            {% endfor %}
-                                            <li class="divider"></li>
-
-                                            {% if checkRight("right.createtest") %}
-                                                <li>
-                                                    <a href="{{ path('editor_test_create') }}">
-                                                        <span class="glyphicon glyphicon-plus"></span> {{ 'editor.test.create' | trans }}
-                                                    </a>
-                                                </li>
-                                            {% endif %}
-                                        {% else %}
-                                            <li><a href="#"> Vous n'avez pas les droits </a></li>
-                                        {% endif %}
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a tabindex="-1" href="#">{{ 'editor.task.tasks' | trans }}</a>
-                                        <ul class="dropdown-menu">
-                                            {% if checkRight("right.listtask") or checkRight("right.createtask") or checkRight("right.edittask") or checkRight("right.deletetask")%}
-                                                <li><a href="{{path('editor_questionnaires_show')}}">{{ 'editor.task.all_tasks' | trans }}</a></li>
+                            {% if checkRight("right.listtask") or checkRight("right.createtask") or checkRight("right.edittask") or checkRight("right.deletetask")%}
+                                {% set canPlayWithTasks = true %}
+                            {% else %}
+                                {% set canPlayWithTasks = false %}
+                            {% endif %}
+                            
+                            {% if canPlayWithTests == true or canPlayWithTasks == true %}
+                                {% set languages = get_languages() %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                        {{ 'menu.editor' | trans }} <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-submenu">
+                                            <a tabindex="-1" href="#">Tests</a>
+                                            <ul class="dropdown-menu">
+                                            {% if canPlayWithTests == true %}
+                                                <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
+                                                <li><a href="{{path('editor_tests_my_favorites')}}">Tests favoris</a></li>
+                                                <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
                                                 <li class="divider"></li>
-                                                {% set languages = get_languages() %}
+                                                
                                                 {% for language in languages %}
-                                                    <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{ language.name | trans }}</a></li>
+                                                    <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{language.name | trans }}</a></li>
                                                 {% endfor %}
-                                                <li class="divider"></li>
-                                                <li><a href="{{path('editor_questionnaires_orphan_show')}}">{{ 'editor.task.orphan' | trans }}</a></li>
                                             {% else %}
-                                                <li><a href="#">Vous n'avez pas les droits</a></li>
+                                                <li><a href="#"> Vous n'avez pas les droits </a></li>
                                             {% endif %}
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a tabindex="-1" href="#">{{ 'editor.task.tasks' | trans }}</a>
+                                            <ul class="dropdown-menu">
+                                                {% if canPlayWithTasks == true %}
+                                                    <li><a href="{{path('editor_questionnaires_show')}}">{{ 'editor.task.all_tasks' | trans }}</a></li>
+                                                    <li class="divider"></li>
+                                                    {% for language in languages %}
+                                                        <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{ language.name | trans }}</a></li>
+                                                    {% endfor %}
+                                                    <li class="divider"></li>
+                                                    <li><a href="{{path('editor_questionnaires_orphan_show')}}">{{ 'editor.task.orphan' | trans }}</a></li>
+                                                {% else %}
+                                                    <li><a href="#">Vous n'avez pas les droits</a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
                         {% endif %}
 
+                        {# HOME #}
+                        <li>
+                            <a href="{{ path('show_tests') }}">
+                                <span class="glyphicon glyphicon-play-circle"></span>
+                                {{ 'menu.tests' | trans }}
+                            </a>
+                        </li>
+
+                        {# HELP #}
                         <li>
                             <a data-toggle="modal" href="#helpModal">
                                 <span class="glyphicon glyphicon-question-sign"></span>
                                 {{ 'menu.help' | trans }}
                             </a>
                         </li>
-                        {# Cette page n'est pas prête pour le pilote 3. #}
-                        {# <li><a data-toggle="modal" href="#creditModal">{{ 'menu.credit' | trans }}</a></li> #}
                     </ul>
                     <ul class="nav navbar-nav pull-right">
                         <li>

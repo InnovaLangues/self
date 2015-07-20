@@ -5,10 +5,10 @@
 <div class="row">
 	<div class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Connexion à une session</div>
+            <div class="panel-heading">{{ 'editor.session.connexion' | trans }}</div>
             <div class="panel-body">
 				{% if sessions is defined %}
-					<p>Plusieurs sessions actives répondent à ce code :</p>
+					<p>{{ 'editor.session.availableForCode'|transchoice(sessions|length) }}</p>
 					<ul class="list-group">
 					{% for session in sessions %}
 						<li class="list-group-item">
@@ -17,12 +17,12 @@
 					{% endfor %}
 					</ul>
 				{% else %}
-					<form class="col-md-6" action="{{ path('session_log') }}" method="post" autocomplete="off">
+					<form class="form-inline" action="{{ path('session_log') }}" method="post" autocomplete="off">
+						<p>Code de la session :</p>
 						<div class="form-group">
-							<label for="passwd">Code de la session</label>
-							<input id="passwd" class="form-control" type="password" name="passwd"/>
+							<input id="passwd" class="form-control" type="password" name="passwd">
 						</div>
-						<button type="submit" class="btn btn-default btn-primary">Se connecter à une session</button>
+						<button type="submit" class="btn btn-default btn-primary">OK</button>
 					</form>
 				{% endif %}
 
@@ -38,8 +38,5 @@
         </div>
     </div>
 </div>
-
-
-
-
 {% endblock %}
+

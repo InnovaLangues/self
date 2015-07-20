@@ -2,10 +2,11 @@
 
 {% block body -%}
 
-{% if checkRight("right.createsession") %}
+{% if test is defined and checkRight("right.createsession") %}
     <a class="btn btn-default btn-sm" href="{{ path('editor_test_create_session', { 'testId': test.id }) }}">
         <span class="glyphicon glyphicon-plus"></span> {{ 'editor.session.create' | trans }}
     </a>
+    <hr/>
 {% endif %}
 
 {% set canEditRights = false %} 
@@ -13,9 +14,12 @@
     {% set canEditRights = true %} 
 {% endif %}
 
-<hr/>
-<h3>{{ 'editor.session.list_test' | trans }} <b>{{ test.name }}</b> </h3>
 
+{% if test is defined and checkRight("right.createsession") %}
+    <h3>{{ 'editor.session.list_test' | trans }} <b>{{ test.name }}</b> </h3>
+{% else %}
+    <h3>{{ 'editor.session.list' | trans }} {{ subset | trans }} </h3>
+{% endif %}
 
 <table class="table table-striped">
     <thead>
@@ -28,17 +32,17 @@
 		{% for session in sessions %}
 			<tr>
 				<td>
-					{{ session.name }}
+					{{ session.name }} {% if test is not defined %} <span class="text-muted">{{ session.test.name }}</span> {% endif %}
 				</td>
 				<td class="text-right">
                     <div class="btn-group dropup">
                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                    Options <span class="caret"></span>
+                    {{ 'generic.options' | trans }} <span class="caret"></span>
                     </button>
 
                     <ul class="dropdown-menu text-left" role="menu" >
                         <li>
-                        <a href="{{ path('test_start', { 'testId': test.id, 'sessionId': session.id }) }}">
+                        <a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id }) }}">
                             <span class="glyphicon glyphicon-play"></span> {{ 'editor.session.test' | trans }}
                         </a>
                         </li>
@@ -46,14 +50,14 @@
                         {% if canEditRights %}
                         <li>
                         <a href="{{ path('editor_session_rights', {'sessionId': session.id }) }}">
-                            <span class="glyphicon glyphicon-lock"></span> Permissions
+                            <span class="glyphicon glyphicon-lock"></span> {{ 'right.rights' | trans }}
                         </a>
                         </li>
                         {% endif %}
 
                         {% if checkRight("right.editsession", session) %}
                         <li>
-    					<a href="{{ path('editor_test_edit_session', { 'testId': test.id, 'sessionId': session.id }) }}">
+    					<a href="{{ path('editor_test_edit_session', { 'testId': session.test.id, 'sessionId': session.id }) }}">
     						<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
     					</a>
                         </li>

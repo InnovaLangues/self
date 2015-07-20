@@ -27,12 +27,33 @@ class SessionController extends Controller
 {
     /**
      *
+     * @Route("/sessions/active/{isActive}", name="editor_sessions_active")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Session:list.html.twig")
+     */
+    public function listByActivityAction($isActive)
+    {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.listsession", $currentUser)) {
+            $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findByActif($isActive);
+        } else {
+            $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findAllAuthorizedByActivity($currentUser, $isActive);
+        }
+
+        $subset = (!$isActive) ? "editor.session.inactives" : "editor.session.actives";
+
+        return array("sessions" => $sessions, "subset" => $subset);
+    }
+
+    /**
+     *
      * @Route("/test/{testId}/sessions", name="editor_test_sessions")
      * @Method("GET")
      * 
      * @Template("InnovaSelfBundle:Session:list.html.twig")
      */
-    public function listAction(Test $test)
+    public function listByTestAction(Test $test)
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
@@ -157,11 +178,23 @@ class SessionController extends Controller
     public function userResultsAction(User $user, Session $session)
     {
         $currentUser = $this->get('security.context')->getToken()->getUser();
-
+        $sm = $this->get("self.score.manager");
         if ($this->get("self.right.manager")->checkRight("right.individualresultssession", $currentUser, $session)) {
-            $score = $this->get("self.score.manager")->calculateScoreByTest($session->getTest(), $session, $user);
+            $levelFeedback = $sm->getGlobalLevelFromThreshold($session, $user);
+            $eecFeedback = $sm->getSkillLevelFromThreshold($session, $user, "EEC");
+            $coFeedback = $sm->getSkillLevelFromThreshold($session, $user, "CO");
+            $ceFeedback = $sm->getSkillLevelFromThreshold($session, $user, "CE");
+            $score = $sm->calculateScoreByTest($session->getTest(), $session, $user);
 
-            return array("score" => $score, "session" => $session, "user" => $user);
+            return array(
+                "score" => $score,
+                "session" => $session,
+                "levelFeedback" => $levelFeedback,
+                "coFeedback" => $coFeedback,
+                "ceFeedback" => $ceFeedback,
+                "eecFeedback" => $eecFeedback,
+                "user" => $user,
+            );
         }
 
         return;

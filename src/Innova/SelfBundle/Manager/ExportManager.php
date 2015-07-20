@@ -596,10 +596,18 @@ class ExportManager
 
         $users = $em->getRepository('InnovaSelfBundle:User')->findBySession($session);
 
+        $csv .= $this->addColumn($session->getTest()->getName());
+        $csv .= $this->addColumn($session->getName());
+
+        $csv .= "\n";
+
         $csv .= $this->addColumn("Nom d'utilisateur");
         $csv .= $this->addColumn("Prénom");
         $csv .= $this->addColumn("Nom");
         $csv .= $this->addColumn("Email");
+        $csv .= $this->addColumn("Filière");
+        $csv .= $this->addColumn("Début");
+        $csv .= $this->addColumn("Durée approx.");
         $csv .= $this->addColumn("Score agrégé");
         $csv .= $this->addColumn("Score CO");
         $csv .= $this->addColumn("Score CE");
@@ -613,11 +621,18 @@ class ExportManager
             $csv .= $this->addColumn($user->getLastName());
             $csv .= $this->addColumn($user->getEmail());
 
+            $origin = ($user->getOriginStudent()) ? $user->getOriginStudent()->getName() : "";
             $scoreGlobal = $this->scoreManager->getGlobalLevelFromThreshold($session, $user);
             $scoreCO = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CO");
             $scoreCE = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CE");
             $scoreEEC = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "EEC");
+            $traces = $this->entityManager->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $session->getTest(), 'session' => $session));
+            $lastTrace = end($traces)->getDate();
+            $firstTrace = reset($traces)->getDate();
 
+            $csv .= $this->addColumn($origin);
+            $csv .= $this->addColumn($firstTrace->format('d-m-Y H:i:s'));
+            $csv .= $this->addColumn($this->diff($firstTrace, $lastTrace));
             $csv .= $this->addColumn($scoreGlobal);
             $csv .= $this->addColumn($scoreCO);
             $csv .= $this->addColumn($scoreCE);
@@ -629,5 +644,28 @@ class ExportManager
         $csv .= "\n";
 
         return $csv;
+    }
+
+    private function diff($datetime1, $datetime2)
+    {
+        $interval = $datetime1->diff($datetime2);
+
+        if ($v = $interval->y >= 1) {
+            return $interval->y.'année(s)';
+        }
+        if ($v = $interval->m >= 1) {
+            return $interval->m.'mois';
+        }
+        if ($v = $interval->d >= 1) {
+            return $interval->d.'jour(s)';
+        }
+        if ($v = $interval->h >= 1) {
+            return $interval->h.'h';
+        }
+        if ($v = $interval->i >= 1) {
+            return $interval->i.'mn';
+        }
+
+        return $interval->s.'sec';
     }
 }

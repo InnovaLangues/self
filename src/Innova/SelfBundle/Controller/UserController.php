@@ -45,6 +45,27 @@ class UserController extends Controller
     }
 
     /**
+     * Lists all users
+     *
+     * @Route("/admin/users/connected", name="admin_users_connected")
+     * @Method("GET")
+     * @Template()
+     */
+    public function connectedAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
+            $connectedUsers = $this->get('self.user.manager')->getConnected();
+        }
+
+        return array(
+            'connectedUsers' => $connectedUsers,
+        );
+    }
+
+    /**
      * Displays a user entity.
      *
      * @Route("/admin/user/{id}", name="admin_user_show", requirements={"id": "\d+"})

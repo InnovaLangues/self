@@ -96,7 +96,9 @@ class TraceController
             $this->parsePost($post, $trace);
         }
 
-        $url = $this->router->generate('trace_difficulty_form', array('testId' => $test->getId(), 'sessionId' => $session->getId(), 'traceId' => $trace->getId() ));
+        $url = ($test->getDifficulty())
+                ? $this->router->generate('trace_difficulty_form', array('testId' => $test->getId(), 'sessionId' => $session->getId(), 'traceId' => $trace->getId() ))
+                : $this->router->generate('test_start', array('testId' => $test->getId(), 'sessionId' => $session->getId()));
 
         return new RedirectResponse($url);
     }
@@ -107,7 +109,7 @@ class TraceController
     private function parsePost($post, Trace $trace)
     {
         $em = $this->entityManager;
-        $this->session->getFlashBag()->set('success', $this->translator->trans("trace.answer_saved", array(), "messages"));
+        //$this->session->getFlashBag()->set('success', $this->translator->trans("trace.answer_saved", array(), "messages"));
 
         foreach ($post as $subquestionId => $postVar) {
             $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);

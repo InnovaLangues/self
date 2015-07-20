@@ -147,7 +147,7 @@ class RightManager
                 break;
 
             case 'RightUserSession':
-                $authorized = $em->getRepository("InnovaSelfBundle:Session")->findAuthorized($user);
+                $authorized = $em->getRepository("InnovaSelfBundle:Session")->findAllAuthorized($user);
                 break;
         }
 

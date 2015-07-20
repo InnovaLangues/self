@@ -17,44 +17,27 @@ class CheckSessionsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $table = $this->getHelperSet()->get('table');
+        $table->setHeaders(array('#', 'User', 'Admin'));
+
         $threshold = 300; // Maximum seconds for last activity
         $limit = time() - $threshold;
+        $total_active_auth_count = 0;
 
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        $dql = 'select s from InnovaSelfBundle:PDOSession s
-            where s.session_time >= ?1
-            order by s.session_time desc';
-        $query = $em->createQuery($dql);
-        $query->setParameter(1, $limit);
-        $sessions = $query->getResult();
-
-        $total_active_count = count($sessions); // Total active users
-        $total_active_auth_count = 0;           // Total active logged in users
-
-        foreach ($sessions as $session) {
-            $data = base64_decode($session->getSessionValue());
-            $data = str_replace('_sf2_attributes|', '', $data);
-            $data = unserialize($data);
-
-            // If this is a session belonging to an anonymous user, do nothing
-            if (!array_key_exists('_security_main', $data)) {
-                continue;
-            }
-
-            // User is logged in, increment counter
+        $connectedUsers = $this->getContainer()->get('self.user.manager')->getConnected();
+        foreach ($connectedUsers as $connectedUser) {
+            $admin = "";
             $total_active_auth_count++;
 
-            // Grab security data
-            $data = $data['_security_main'];
-            $data = unserialize($data);
+            $table->addRow(array($total_active_auth_count, $connectedUser[0], $connectedUser[1]));
         }
 
+        $table->render($output);
+
         $output->writeln(sprintf(
-            '<info><error>%s</error> user(s) were active in the last %s seconds, and <error>%s</error> of them was/were logged in.</info>',
-            $total_active_count,
-            $threshold,
-            $total_active_auth_count
+            '<info>%s logged in user(s) in the lasts %s seconds.',
+            $total_active_auth_count,
+            $threshold
         ));
     }
 }
