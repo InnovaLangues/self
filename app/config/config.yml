@@ -162,6 +162,7 @@ fos_http_cache:
                 match:
                     attributes: { _controller: ^Innova\\SelfBundle\\Controller\\PlayerController::.* }
                 headers:
+                    overwrite: true
                     cache_control:
                         public: false
                         max_age: 0
