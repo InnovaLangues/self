@@ -55,7 +55,7 @@ class OriginStudentManager
                 $r->setName($value);
                 $em->persist($r);
                 $em->flush();
-            } elseif (!$this->findOneByName($value)) {
+            } elseif (!$this->findByName($value)) {
                 $this->create(array($value));
             }
         }
