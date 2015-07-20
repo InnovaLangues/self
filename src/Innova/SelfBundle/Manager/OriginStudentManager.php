@@ -51,7 +51,6 @@ class OriginStudentManager
 
         foreach ($array as $el => $value) {
             if ($r = $this->findByName($el)) {
-                echo "toto";
                 $r->setName($value);
                 $em->persist($r);
                 $em->flush();
