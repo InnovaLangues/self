@@ -165,7 +165,7 @@ fos_http_cache:
                         s_maxage: 0
             -
                 match:
-                attributes: { _controller: ^Innova\\SelfBundle\\Controller\\PlayerController::.* }
+                    attributes: { _controller: ^Innova\\SelfBundle\\Controller\\PlayerController::.* }
                 headers:
                     cache_control:
                         public: false
