@@ -173,7 +173,7 @@ class UserManager
 
             $admin = "";
             foreach ($data->getRoles() as $role) {
-                if ($role == "ROLE_SUPER_ADMIN") {
+                if ($role->getRole() == "ROLE_SUPER_ADMIN") {
                     $admin = "X";
                     break;
                 }
