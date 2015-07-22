@@ -16,6 +16,11 @@ services:
         tags:
             - { name: twig.extension }
 
+    twig.extension.get_hostname:
+        class: Innova\SelfBundle\Twig\HostnameExtension
+        tags:
+            - { name: twig.extension }
+
     twig.extension.get_typologies:
         class: Innova\SelfBundle\Twig\TypologyExtension
         arguments:
