@@ -16,40 +16,60 @@ vi app/config/parameters.yml
 ``` bash
 composer update
 php app/console doctrine:schema:drop --force
-php app/console doctrine:schema:update --force
+php app/console doctrine:schema:update --force (or php app/console doctrine:migrations:migrate)
 php app/console self:fixtures:load
-php app/console assetic:dump --env=prod
 php app/console assets:install --symlink -env=prod
+php app/console fos:js-routing:dump
+php app/console bazinga:js-translation:dump
+php app/console assetic:dump --env=prod
 php app/console cache:clear --no-debug --env=prod
 ```
 
 ### Create needed dirs and Set up rights 
 ``` bash
-sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/sessions app/data/export app/data/exportPdf app/data/session
-sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/sessions app/data/export app/data/exportPdf app/data/session
+sudo mkdir -p web/upload/ app/data/export app/data/exportPdf app/data/session app/data/importCsv
+sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/data/
+sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/data/
 ```
 
-### Create a new admin user :
+### Download and install wkhtmltox tool  :
+Need at least the 0.12.1 release...
+[download from official site](http://wkhtmltopdf.org/downloads.html)
 ``` bash
-php app/console fos:user:create admin --super-admin
+sudo dpkg -i wkhtmltox-*_linux-wheezy-amd64.deb
 ```
 
-### Change password or role or something else :
+
+### Users :
+Create an user
 ``` bash
-https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/Resources/doc/command_line_tools.md
+php app/console fos:user:create username
+```
+Give some rights to user
+``` bash
+php app/console self:rightGroup:toggle username rightgroupname
+```
+See online users
+``` bash
+php app/console self:sessions:check
 ```
 
 # Basic update 
 ``` bash
-git pull
+php app/console lexik:maintenance:lock -n
+git fetch
+git checkout ...
+php app/console doctrine:schema:update --force (or php app/console doctrine:migrations:migrate)
+php app/console self:fixtures:load
+php app/console assets:install --symlink -env=prod
+php app/console fos:js-routing:dump
+php app/console bazinga:js-translation:dump
+php app/console assetic:dump --env=prod
 php app/console cache:clear --env=prod --no-debug
+php app/console lexik:maintenance:unlock -n
 ```
 
-### Download and install wkhtmltox tool  :
-[download from sourceforce](http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-wheezy-i386.deb?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fwkhtmltopdf%2Ffiles%2Farchive%2F0.12.1%2F&ts=1432210988&use_mirror=netcologne)
-``` bash
-sudo dpkg -i wkhtmltox-*_linux-wheezy-amd64.deb
-```
+
 
 ### Quality code services
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/InnovaLangues/self/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/InnovaLangues/self/?branch=master)
