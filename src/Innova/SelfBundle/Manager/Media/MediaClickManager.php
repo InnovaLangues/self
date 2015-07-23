@@ -25,6 +25,7 @@ class MediaClickManager
     public function getRemainingListening(Media $media, Questionnaire $questionnaire, Test $test, Session $session, Component $component = null)
     {
         $nbClick = $this->getMediaClickCount($media, $test, $questionnaire, $session, $component);
+
         $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array(
                                                                                     'media' => $media,
                                                                                     'questionnaire' => $questionnaire,
