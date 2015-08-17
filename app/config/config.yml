@@ -151,7 +151,7 @@ fos_http_cache:
         rules:
             -
                 match:
-                    path: ^/login|logout|admin
+                    path: ^/login|logout|admin|register
                 headers:
                     overwrite: true
                     cache_control:
