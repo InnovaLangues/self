@@ -38,6 +38,7 @@ class UserType extends BaseType
                         return $this->om->getRepository('InnovaSelfBundle:OriginStudent')->createQueryBuilder('o')->orderBy('o.name', 'ASC');
                     },
                     'required' => true,
+                    'empty_value' => 'Choisissez une option',
                 ))
             ->add('levelLansad', 'entity',
                 array(
