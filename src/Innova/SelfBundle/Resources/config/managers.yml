@@ -306,3 +306,9 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             rightManager:       @self.right.manager
             manipulator:        @fos_user.util.user_manipulator
+
+    self.righttest.manager:
+        class: Innova\SelfBundle\Manager\Right\RightTestManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            rightManager:       @self.right.manager
