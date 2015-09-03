@@ -256,8 +256,6 @@ class UserController extends Controller
         if ($this->get("self.right.manager")->checkRight("right.editpassworduser", $currentUser)) {
             if ($request->isMethod('POST')) {
                 $um = $this->get('fos_user.user_manager');
-                $em = $this->getDoctrine()->getManager();
-
                 $user->setPlainPassword($request->request->get('passwd'));
                 $um->updateUser($user, true);
 
