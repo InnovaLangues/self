@@ -171,17 +171,30 @@ class UserManager
             $data = unserialize($data);
             $username = $data->getUser()->getUsername();
 
-            $admin = "";
-            foreach ($data->getRoles() as $role) {
-                if ($role->getRole() == "ROLE_SUPER_ADMIN") {
-                    $admin = "X";
-                    break;
+            if (!$this->in_array_r($username, $connectedUsers)) {
+                $admin = "";
+                foreach ($data->getRoles() as $role) {
+                    if ($role->getRole() == "ROLE_SUPER_ADMIN") {
+                        $admin = "X";
+                        break;
+                    }
                 }
-            }
 
-            $connectedUsers[] = array($username, $admin);
+                $connectedUsers[] = array($username, $admin);
+            }
         }
 
         return $connectedUsers;
+    }
+
+    private function in_array_r($needle, $haystack, $strict = false)
+    {
+        foreach ($haystack as $item) {
+            if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->in_array_r($needle, $item, $strict))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
