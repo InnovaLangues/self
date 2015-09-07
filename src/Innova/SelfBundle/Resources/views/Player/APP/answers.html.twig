@@ -1,17 +1,14 @@
 {% if proposition.media is not null %}
     {% set mediaType = proposition.media.mediaType.name %}
-
     <div class="col-md-{{ propWidth }}">
         <div dropzoneId="subquestion{{ proposition.id }}" id="droppable-{{ proposition.id }}" class="dropzone source">
             <div class="draggable proposition-APP"  propositionId="{{ proposition.id }}">
-                 <!-- <span class="glyphicon glyphicon-move touch-me"></span> -->
                 {% if mediaType == "texte" %}
-                        <div class="answer-APP-text">{{ proposition.media.description | raw }}</div>
+                    <div class="answer-APP-text">{{ proposition.media.description | raw }}</div>
                 {% elseif mediaType == "audio" %}
-                        <!-- fix #508 -->
-                        {{ macros.audio(proposition.id, proposition.media, "audio"~(i+1)~".png", 100, 0, "") }}
+                    {{ macros.audio(proposition.id, proposition.media, "audio"~(i+1)~".png", 100, 0, "") }}
                 {% elseif mediaType == "image" %}
-                        {{ macros.imageAPP(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans, "app"~question.subquestions |length ) }}
+                    {{ macros.imageAPP(proposition.media.id, proposition.media, 'player.tooltip.enlarge' | trans, "app"~question.subquestions |length ) }}
                 {% endif %}
             </div>
             {% if mediaType == "image" %}
