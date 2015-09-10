@@ -253,9 +253,27 @@ class EecController
 
         if ($this->rightManager->canEditTask($currentUser, $subquestion->getQuestion()->getQuestionnaire())) {
             $answers = $this->eecManager->getAnswers($subquestion);
-            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers));
+            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers, 'subquestion' => $subquestion));
 
             return new Response($template);
+        }
+
+        return;
+    }
+
+    /**
+     *
+     * @Route("/questionnaires/ecc_add_answer/{subquestionId}", name="editor_questionnaire_add-eec-answer", options={"expose"=true})
+     * @Method("POST")
+     *
+     */
+    public function addAnswersAction(Request $request, Subquestion $subquestion)
+    {
+        $currentUser = $this->securityContext->getToken()->getUser();
+        $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
+
+        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+            $this->eecManager->addAnswer($subquestion, $request->get('answer'));
         }
 
         return;
@@ -270,6 +288,7 @@ class EecController
     public function toggleRightAnswerAction(Proposition $proposition)
     {
         $currentUser = $this->securityContext->getToken()->getUser();
+        $questionnaire = $proposition->getSubquestion()->getQuestion()->getQuestionnaire();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $proposition = $this->propositionManager->toggleRightAnswer($proposition);

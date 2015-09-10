@@ -166,6 +166,10 @@ $(document).ready(function() {
         createListes();
     });
 
+    $( "body" ).on( "click", '#eec-add-answer-btn', function() {
+        addEECAnswer();
+    });
+
     $('body').on('blur', '.clue',function(e){
         var clue = $(this).val();
         var subquestionId = $(this).data("subquestion-id");
@@ -819,6 +823,29 @@ function addDistractor(){
         $("#subquestion-container").replaceWith(data.responseText);
         afterAjax();
     });
+}
+
+
+function addEECAnswer(){
+    var subquestionId = $("#eec-add-answer-btn").data("subquestion-id");
+    var answer = $("#eec-add-answer").val();
+
+    if (answer != ""){
+        beforeAjax();
+        $.ajax({
+            url: Routing.generate('editor_questionnaire_add-eec-answer',
+                {
+                    'subquestionId': subquestionId,
+                }),
+            type: 'POST',
+            data: {
+                'answer': answer
+            }
+        })
+        .complete(function(data) {
+            getAnswers(subquestionId);
+        });
+    } 
 }
 
 function addDistractorMult(subquestionId){

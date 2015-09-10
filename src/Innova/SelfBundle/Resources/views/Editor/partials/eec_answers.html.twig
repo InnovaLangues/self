@@ -1,3 +1,12 @@
+<p>
+	<div class="input-group">
+	  <input value="" type="text" class="form-control" id="eec-add-answer" placeholder="réponse" aria-describedby="eec-add-answer-btn">
+	  <span class="input-group-addon" id="eec-add-answer-btn" data-subquestion-id="{{ subquestion.id }}">
+	  	<span class="glyphicon glyphicon-plus-sign"></span> Ajouter
+	  </span>
+	</div>
+</p>
+
 <ul class="list-group">
     {% for answer in answers %}
         <li id="answer-{{ answer.id }}" class="list-group-item" data-proposition-id="{{ answer.id }}">
