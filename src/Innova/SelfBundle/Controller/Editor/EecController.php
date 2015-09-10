@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
@@ -59,7 +58,7 @@ class EecController
      *
      * @Route("/questionnaires/create-liste/{questionnaireId}", name="editor_questionnaire_create-liste", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function createListeAction(Questionnaire $questionnaire)
     {
@@ -80,7 +79,7 @@ class EecController
      *
      * @Route("/questionnaires/create-lacunes/{questionnaireId}", name="editor_questionnaire_create-lacunes", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function createLacunesAction(Questionnaire $questionnaire)
     {
@@ -101,7 +100,7 @@ class EecController
      *
      * @Route("/questionnaires/create-clue/{questionnaireId}/{subquestionId}", name="editor_questionnaire_create-clue", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function createClueAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
@@ -122,7 +121,7 @@ class EecController
      *
      * @Route("/questionnaires/set-clue-type/{questionnaireId}", name="editor_questionnaire_set-clue-type", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function setClueTypeAction(Request $request, Questionnaire $questionnaire)
     {
@@ -145,7 +144,7 @@ class EecController
      *
      * @Route("/questionnaires/create-syllable/{questionnaireId}/{subquestionId}", name="editor_questionnaire_create-syllable", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function createSyllableAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
@@ -165,7 +164,7 @@ class EecController
      *
      * @Route("/questionnaires/set-display/{subquestionId}/{display}/", name="editor_questionnaire_set-display", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function setDisplayAction(Subquestion $subquestion, $display)
     {
@@ -184,7 +183,7 @@ class EecController
      *
      * @Route("/questionnaires/add-distractor/{questionnaireId}", name="editor_questionnaire_add-distractor", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function addDistractorAction(Questionnaire $questionnaire)
     {
@@ -205,7 +204,7 @@ class EecController
      *
      * @Route("/questionnaires/add-distractor-mult/{questionnaireId}/{subquestionId}", name="editor_questionnaire_add-distractor-mult", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function addDistractorMultAction(Questionnaire $questionnaire, Subquestion $subquestion)
     {
@@ -226,7 +225,7 @@ class EecController
      *
      * @Route("/questionnaires/edit-distractor/{questionnaireId}/{mediaId}", name="editor_questionnaire_edit-distractor", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function editDistractorAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
@@ -246,13 +245,13 @@ class EecController
      *
      * @Route("/questionnaires/ecc_get_answer/{subquestionId}", name="editor_questionnaire_get_answers", options={"expose"=true})
      * @Method("GET")
-     * 
+     *
      */
     public function getAnswersAction(Subquestion $subquestion)
     {
         $currentUser = $this->securityContext->getToken()->getUser();
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+        if ($this->rightManager->canEditTask($currentUser, $subquestion->getQuestion()->getQuestionnaire())) {
             $answers = $this->eecManager->getAnswers($subquestion);
             $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers));
 
@@ -266,7 +265,7 @@ class EecController
      *
      * @Route("/questionnaires/ecc_toggle_answer/{propositionId}", name="ecc_toggle_answer", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function toggleRightAnswerAction(Proposition $proposition)
     {
