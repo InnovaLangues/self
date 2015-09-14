@@ -21,6 +21,12 @@
     {% if entities is not empty %}
     <h3>{{ 'user.list' | trans }}</h3>
 
+    <div class="input-group">
+        <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
+        <input type="text" id="search" class="form-control" value="">
+    </div>
+    <br/>
+
     <ul class="nav nav-tabs" role="tablist">
         <li class="active">
             <a href="#granted-users" role="tab" data-toggle="tab">
@@ -65,4 +71,11 @@
     </div>
 
     {% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-user-list.js") }}"></script>
 {% endblock %}
