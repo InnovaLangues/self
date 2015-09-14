@@ -1,3 +1,7 @@
+$(function() {
+    $('input#search').quicksearch('#sessions-table tbody tr');
+});
+
 $( "body" ).on( "click", '.delete-session', function() {
     var sessionId = $(this).data("session-id");
     var url = Routing.generate('editor_test_delete_session', {sessionId: sessionId });
@@ -5,3 +9,4 @@ $( "body" ).on( "click", '.delete-session', function() {
     $('#delete-session-modal').modal('show');
     $("#session-delete-confirmation").restfulizer();
 });
+

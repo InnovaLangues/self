@@ -21,7 +21,13 @@
     <h3>{{ 'editor.session.list' | trans }} {{ subset | trans }} </h3>
 {% endif %}
 
-<table class="table table-striped">
+<div class="input-group">
+    <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
+    <input type="text" id="search" class="form-control" value="">
+</div>
+<br/>
+
+<table id="sessions-table" class="table table-striped">
     <thead>
         <tr>
             <th>{{ 'editor.session.name' | trans }}</th>
@@ -119,5 +125,6 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-session.js") }}"></script>
 {% endblock %}
