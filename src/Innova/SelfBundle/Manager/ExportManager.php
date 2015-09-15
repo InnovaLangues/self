@@ -103,8 +103,9 @@ class ExportManager
     {
         $fs = new Filesystem();
         $sessionId = $session->getId();
+        $sessionName = preg_replace("#[^a-zàâçéèêëîïôûùüÿñæœ0-9]#i", "_", $session->getname());
 
-        $filename = "self_export-session".$sessionId."-".date("d-m-Y_H:i:s").'.csv';
+        $filename = "self_export-session".$sessionName."-".date("d-m-Y_H:i:s").'.csv';
         $sessionPathExport = $this->kernelRoot."/data/session/".$sessionId."/";
         $fs->mkdir($sessionPathExport, 0777);
         $csvh = fopen($sessionPathExport."/".$filename, 'w+');
@@ -602,8 +603,8 @@ class ExportManager
         $csv .= "\n";
 
         $csv .= $this->addColumn("Nom d'utilisateur");
-        $csv .= $this->addColumn("Prénom");
         $csv .= $this->addColumn("Nom");
+        $csv .= $this->addColumn("Prénom");
         $csv .= $this->addColumn("Email");
         $csv .= $this->addColumn("Filière");
         $csv .= $this->addColumn("Début");
@@ -617,8 +618,8 @@ class ExportManager
 
         foreach ($users as $user) {
             $csv .= $this->addColumn($user->getUsername());
-            $csv .= $this->addColumn($user->getFirstName());
             $csv .= $this->addColumn($user->getLastName());
+            $csv .= $this->addColumn($user->getFirstName());
             $csv .= $this->addColumn($user->getEmail());
 
             $origin = ($user->getOriginStudent()) ? $user->getOriginStudent()->getName() : "";
