@@ -1,3 +1,7 @@
+$(function() {
+    $('input#search').quicksearch('#tests-table tbody tr');
+});
+
 $( "body" ).on( "click", '.toggle-favorite', function() {
     var btn = $(this);
     var testId = btn.data("test-id");
