@@ -187,26 +187,41 @@ class ExportManager
                 $typologyName = $typology[$questionnaireId];
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
 
-                foreach ($traces as $trace) {
-                    $csv .= $this->addColumn($theme[$questionnaireId]);
-                    $csv .= $this->addColumn($typologyName);
-                    $csv .= $this->addColumn($trace->getDifficulty());
-                    $csv .= $this->addColumn($trace->getTotalTime());
+                if ($traces) {
+                    foreach ($traces as $trace) {
+                        $csv .= $this->addColumn($theme[$questionnaireId]);
+                        $csv .= $this->addColumn($typologyName);
+                        $csv .= $this->addColumn($trace->getDifficulty());
+                        $csv .= $this->addColumn($trace->getTotalTime());
 
-                    // création tableau de correspondance subquestion -> propositions choisies
-                    $answersArray = array();
-                    $answers = $trace->getAnswers();
-                    foreach ($answers as $answer) {
-                        $subquestionId = $answer->getSubquestion()->getId();
-                        $answersArray[$subquestionId][] = $answer->getProposition();
+                        // création tableau de correspondance subquestion -> propositions choisies
+                        $answersArray = array();
+                        $answers = $trace->getAnswers();
+                        foreach ($answers as $answer) {
+                            $subquestionId = $answer->getSubquestion()->getId();
+                            $answersArray[$subquestionId][] = $answer->getProposition();
+                        }
+
+                        // comparaison du tableau créé plus tôt avec le tableau de bonnes propositions
+                        $subquestions = $questions[0]->getSubquestions();
+                        foreach ($subquestions as $subquestion) {
+                            $subquestionId = $subquestion->getId();
+                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps["sub".$subquestionId], $typologyName);
+                            $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
+                        }
                     }
+                } else {
+                    if (count($questions) > 0) {
+                        $csv .= $this->addColumn("");
+                        $csv .= $this->addColumn("");
+                        $csv .= $this->addColumn("");
+                        $csv .= $this->addColumn("");
 
-                    // comparaison du tableau créé plus tôt avec le tableau de bonnes propositions
-                    $subquestions = $questions[0]->getSubquestions();
-                    foreach ($subquestions as $subquestion) {
-                        $subquestionId = $subquestion->getId();
-                        $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps["sub".$subquestionId], $typologyName);
-                        $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
+                        $subquestions = $questions[0]->getSubquestions();
+                        foreach ($subquestions as $subquestion) {
+                            $csv .= $this->addColumn("");
+                            $csv .= $this->addColumn("");
+                        }
                     }
                 }
             }
@@ -337,22 +352,33 @@ class ExportManager
 
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $questions[0]->getTypology()->getName();
-                foreach ($traces as $trace) {
-                    $answers = $trace->getAnswers();
-                    $answersArray = array();
-                    // création tableau de correspondance Answer --> Subquestion
-                    foreach ($answers as $answer) {
-                        if (!isset($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                        }
-                        $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
-                    }
 
-                    $subquestions = $questions[0]->getSubQuestions();
-                    foreach ($subquestions as $subquestion) {
-                        $subquestionId = $subquestion->getId();
-                        $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps["sub".$subquestionId], $typologyName);
-                        $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
+                if ($traces) {
+                    foreach ($traces as $trace) {
+                        $answers = $trace->getAnswers();
+                        $answersArray = array();
+                        // création tableau de correspondance Answer --> Subquestion
+                        foreach ($answers as $answer) {
+                            if (!isset($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
+                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                            }
+                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition();
+                        }
+
+                        $subquestions = $questions[0]->getSubQuestions();
+                        foreach ($subquestions as $subquestion) {
+                            $subquestionId = $subquestion->getId();
+                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps["sub".$subquestionId], $typologyName);
+                            $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
+                        }
+                    }
+                } else {
+                    if ($questions->count() > 0) {
+                        $subquestions = $questions[0]->getSubquestions();
+                        foreach ($subquestions as $subquestion) {
+                            $csv .= $this->addColumn("");
+                            $csv .= $this->addColumn("");
+                        }
                     }
                 }
             }
@@ -534,7 +560,7 @@ class ExportManager
             $typology[$questionnaireId] = $questions[0]->getTypology()->getName();
 
             if ($mode == "csv") {
-                $csv .= $this->addColumn("T".$cpt_questionnaire." - NOM de ma TACHE");
+                $csv .= $this->addColumn("T".$cpt_questionnaire." - NOM de la TACHE");
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - Protocole d'interaction");
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - difficulté");
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - TEMPS");
