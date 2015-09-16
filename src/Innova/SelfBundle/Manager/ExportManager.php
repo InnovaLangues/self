@@ -99,7 +99,7 @@ class ExportManager
         return $csvName;
     }
 
-    public function exportSession(Session $session)
+    public function exportSession(Session $session, $startDate = null, $endDate = null)
     {
         $fs = new Filesystem();
         $sessionId = $session->getId();
@@ -110,7 +110,7 @@ class ExportManager
         $fs->mkdir($sessionPathExport, 0777);
         $csvh = fopen($sessionPathExport."/".$filename, 'w+');
 
-        $fileContent = $this->getCsvSessionContent($session);
+        $fileContent = $this->getCsvSessionContent($session, $startDate, $endDate);
 
         fwrite($csvh, $fileContent);
         fclose($csvh);
@@ -590,12 +590,25 @@ class ExportManager
         return array($propLetters, $rightProps, $result, $csv, $typology, $theme);
     }
 
-    private function getCsvSessionContent(Session $session)
+    private function getCsvSessionContent(Session $session, $startDate, $endDate)
     {
+        $format = 'Y-m-d H:i:s';
         $csv = "";
         $em = $this->entityManager;
 
-        $users = $em->getRepository('InnovaSelfBundle:User')->findBySession($session);
+        if ($startDate == null) {
+            $startDate =  date_create_from_format($format, '1970-01-01 00:00:00');
+        } else {
+            $startDate =  date_create_from_format($format, $startDate);
+        }
+
+        if ($endDate == null) {
+            $endDate = date($format);
+        } else {
+            $endDate = date_create_from_format($format, $endDate);
+        }
+
+        $users = $em->getRepository('InnovaSelfBundle:User')->findBySessionAndDates($session, $startDate, $endDate);
 
         $csv .= $this->addColumn($session->getTest()->getName());
         $csv .= $this->addColumn($session->getName());

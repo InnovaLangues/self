@@ -45,6 +45,24 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findBySessionAndDates($session, $startDate, $endDate)
+    {
+        $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
+        WHERE EXISTS (
+            SELECT t FROM Innova\SelfBundle\Entity\Trace t
+            WHERE t.user = u
+            AND t.session = :session
+            AND (t.date >= :startDate AND t.date <= :endDate)
+        )";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('session', $session)
+                ->setParameter('startDate', $startDate)
+                ->setParameter('endDate', $endDate);
+
+        return $query->getResult();
+    }
+
     public function findAnotherByEmail($user)
     {
         $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u

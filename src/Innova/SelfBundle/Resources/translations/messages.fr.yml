@@ -276,6 +276,7 @@ editor:
         results: Résultats pour la session
         results_user: Résultats pour l'utilisateur
         export: Exporter les résultats
+        export_date: Exporter par dates
         available: Sessions disponibles
         no-available: Aucune session disponible
         test: Voir dans le player

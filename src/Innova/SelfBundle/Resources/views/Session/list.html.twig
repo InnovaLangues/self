@@ -1,5 +1,9 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+    <link href="{{ asset('bundles/innovaself/css/bootstrap-datetimepicker.css') }}" rel="stylesheet"/>
+{% endblock %}
+
 {% block body -%}
 
 {% if test is defined and checkRight("right.createsession") %}
@@ -83,11 +87,16 @@
                             <span class="glyphicon glyphicon-download-alt"></span> {{ 'editor.session.export' | trans }}
                         </a>
                         </li>
+                        <li>
+                        <a class="export-session-by-date" data-session-id="{{ session.id }}">
+                            <span class="glyphicon glyphicon-download-alt"></span> {{ 'editor.session.export_date' | trans }}
+                        </a>
+                        </li>
                         {% endif %}
 
                         {% if checkRight("right.deletesession", session) %}
                         <li>
-    					<a href="#"class="delete-session" data-session-id="{{ session.id }}">
+    					<a href="#" class="delete-session" data-session-id="{{ session.id }}">
     						<span class="glyphicon glyphicon-trash"></span> Supprimer la session
     					</a>
                         </li>
@@ -121,10 +130,54 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="export-session-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form id="export-session-by-dates" method="POST" action="">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Export de la session - Sélection d'un intervalle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                        <div class="col-md-12">
+                            Date de début
+                            <div class='input-group date' id='datetimepicker6'>
+                                <input type='text' class="form-control" name="startDate" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            Date de fin
+                            <div class='input-group date' id='datetimepicker7'>
+                                <input type='text' class="form-control" name="endDate"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+                <button type="submit" id="session-export-confirmation" class="btn btn-default btn-primary">
+                    Exporter
+                </button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/moment-with-locales.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/bootstrap-datetimepicker.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-session.js") }}"></script>
 {% endblock %}

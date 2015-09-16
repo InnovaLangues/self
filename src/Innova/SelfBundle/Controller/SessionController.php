@@ -231,6 +231,36 @@ class SessionController extends Controller
 
     /**
      *
+     * @Route("/session/{sessionId}/export", name="editor_session_export_results_dates", options = {"expose"=true})
+     * @Method("POST")
+     *
+     */
+    public function exportByDatesAction(Request $request, Session $session)
+    {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        if ($this->get("self.right.manager")->checkRight("right.exportresultssession", $currentUser, $session)) {
+            $startDate = $request->get('startDate');
+            $endDate = $request->get('endDate');
+            $filename = $this->get("self.export.manager")->exportSession($session, $startDate, $endDate);
+            $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
+            $response = new Response();
+            $response->headers->set('Cache-Control', 'private');
+            $response->headers->set('Content-type', mime_content_type($file));
+            $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
+            $response->headers->set('Content-length', filesize($file));
+            $response->sendHeaders();
+
+            $response->setContent(file_get_contents($file));
+
+            return $response;
+        }
+
+        return;
+    }
+
+    /**
+     *
      * @Route("/test/{testId}/create-session", name="create_session_for_export")
      * @Method("GET")
      *
