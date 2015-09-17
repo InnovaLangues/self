@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Form\Type\QuestionnaireType;
 use Innova\SelfBundle\Entity\Questionnaire;
 
@@ -56,7 +55,7 @@ class QuestionnaireController
      *
      * @Route("/questionnaire/{questionnaireId}/set-text-title", name="editor_questionnaire_set-text-title", options={"expose"=true})
      * @Method("POST")
-     * 
+     *
      */
     public function setTextTitleAction(Request $request, Questionnaire $questionnaire)
     {
@@ -86,7 +85,7 @@ class QuestionnaireController
      *
      * @Route("/questionnaire/{questionnaireId}/set-text-type", name="set-text-type", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function setTextTypeAction(Request $request, Questionnaire $questionnaire)
     {
@@ -111,7 +110,7 @@ class QuestionnaireController
      *
      * @Route("/questionnaire/{questionnaireId}/set-identity-field/", name="set-identity-field", options={"expose"=true})
      * @Method("POST")
-     * 
+     *
      */
     public function setIdentityFieldAction(Request $request, Questionnaire $questionnaire)
     {
@@ -140,7 +139,7 @@ class QuestionnaireController
     *
     * @Route("/questionnaire/{questionnaireId}/set-general-info-field", name="set-general-info-field", options={"expose"=true})
     * @Method("POST")
-    * 
+    *
     */
     public function setGeneralInfoFieldAction(Request $request, Questionnaire $questionnaire)
     {

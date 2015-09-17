@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Form\Type\QuestionnaireType;
 use Innova\SelfBundle\Form\Type\TaskInfosType;
 use Innova\SelfBundle\Entity\Questionnaire;
@@ -68,7 +67,7 @@ class TaskController
      *
      * @Route("/tasks", name="editor_questionnaires_show")
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
     public function listQuestionnairesAction()
@@ -91,7 +90,7 @@ class TaskController
      *
      * @Route("/tasks/language/{languageId}", name="editor_questionnaires_by_language_show")
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
     public function listQuestionnairesByLanguageAction(Language $language)
@@ -113,7 +112,7 @@ class TaskController
      *
      * @Route("/test/{testId}/tasks", name="editor_test_questionnaires_show", options={"expose"=true})
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Editor:listTestQuestionnaires.html.twig")
      */
     public function listTestQuestionnairesAction(Test $test)
@@ -142,7 +141,7 @@ class TaskController
      *
      * @Route("/tasks/orphans", name="editor_questionnaires_orphan_show")
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
     public function listOrphansAction()
@@ -165,7 +164,7 @@ class TaskController
      *
      * @Route("/test/{testId}/potentials", name="editor_test_questionnaires_potentials", options={"expose"=true})
      * @Method("GET")
-     * 
+     *
      */
     public function getPotentialQuestionnairesAction(Test $test)
     {
@@ -182,7 +181,7 @@ class TaskController
      *
      * @Route("/questionnaire/{questionnaireId}/{testId}", name="editor_questionnaire_show", options={"expose"=true} , defaults={"testId" = null})
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Editor:index.html.twig")
      */
     public function showAction(Questionnaire $questionnaire, $testId)
@@ -213,7 +212,7 @@ class TaskController
      *
      * @Route("/questionnaire/create/{testId}", name="editor_questionnaire_create", options={"expose"=true})
      * @Method("POST")
-     * 
+     *
      */
     public function createQuestionnaireAction(Test $test = null)
     {
@@ -244,7 +243,7 @@ class TaskController
      /**
      * @Route("/delete-task-list/{questionnaireId}", name="delete-task-list", options={"expose"=true})
      * @Method("DELETE")
-     * 
+     *
      */
     public function deleteTaskListAction(Questionnaire $questionnaire)
     {

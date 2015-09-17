@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Proposition;
 
@@ -45,7 +44,7 @@ class PropositionController
      *
      * @Route("/toggle_right_answer/{questionnaireId}/{propositionId}", name="editor_questionnaire_toggle_right_anwser", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function toggleRightAnswserAction(Questionnaire $questionnaire, Proposition $proposition)
     {

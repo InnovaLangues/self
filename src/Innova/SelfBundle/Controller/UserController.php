@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Right\Right;
-use FOS\HttpCacheBundle\Configuration\InvalidateRoute;
 
 /**
  * User controller.
@@ -52,7 +51,6 @@ class UserController extends Controller
      */
     public function connectedAction()
     {
-        $em = $this->getDoctrine()->getManager();
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
@@ -172,9 +170,6 @@ class UserController extends Controller
             $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
             if ($this->get("self.user.manager")->deleteUser($user)) {
                 $this->get('session')->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
-
-                $cacheManager = $this->get('fos_http_cache.cache_manager');
-                $cacheManager->invalidateRoute('admin_user');
             }
 
             return $this->redirect($this->generateUrl('admin_user'));
@@ -201,9 +196,6 @@ class UserController extends Controller
             if (!$form) {
                 $this->get("session")->getFlashBag()->add('info', "L'utilisateur a bien été créée");
 
-                $cacheManager = $this->get('fos_http_cache.cache_manager');
-                $cacheManager->invalidateRoute('admin_user');
-
                 return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
             }
 
@@ -229,9 +221,6 @@ class UserController extends Controller
 
             if (!$form) {
                 $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
-
-                $cacheManager = $this->get('fos_http_cache.cache_manager');
-                $cacheManager->invalidateRoute('admin_user');
 
                 return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
             }

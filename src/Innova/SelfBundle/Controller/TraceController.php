@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Session;
@@ -73,7 +72,7 @@ class TraceController
      *
      * @Route("trace_submit/{testId}/{sessionId}/{questionnaireId}", name="trace_submit")
      * @Method("POST")
-     * 
+     *
      */
     public function saveTraceAction(Test $test, Session $session, Questionnaire $questionnaire, Request $request)
     {
@@ -175,7 +174,7 @@ class TraceController
      *
      * @Route("trace_difficulty/{sessionId}/{testId}/{traceId}", name="trace_difficulty_form")
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Player:common/difficulty.html.twig")
      */
     public function displayDifficultyAction(Test $test, Session $session, Trace $trace)
@@ -188,7 +187,7 @@ class TraceController
      *
      * @Route("trace_setDifficulty/{traceId}/{testId}/{sessionId}", name="trace_setDifficulty")
      * @Method("POST")
-     * 
+     *
      */
     public function traceSetDifficultyAction(Request $request, Trace $trace, Test $test, Session $session)
     {

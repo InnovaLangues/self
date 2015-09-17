@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 /**
  * Class UploadController
@@ -30,7 +29,7 @@ class UploadController extends Controller
      *
      * @Route("/upload-file", name="editor_questionnaire_upload-file", options={"expose"=true})
      * @Method("POST")
-     * 
+     *
      */
     public function uploadFileAction(Request $request)
     {
@@ -63,7 +62,7 @@ class UploadController extends Controller
      *
      * @Route("/crop-image", name="editor_crop_image", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function cropImageAction(Request $request)
     {

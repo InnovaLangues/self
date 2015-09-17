@@ -165,7 +165,6 @@ class PlayerManager
             $componentsDone = $this->componentRepo->findDoneByUserByTestBySession($this->user, $test, $session);
             $componentType = $component->getComponentType();
             $componentTypeName = $componentType->getName();
-            $componentTypeId = $componentType->getId();
 
             // si on a déjà fait 2 composants -> stop
             if (count($componentsDone) >= 2) {

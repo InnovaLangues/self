@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 
@@ -53,7 +52,7 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/order-test-questionnaire/{testId}", name="save-order-test-questionnaire", options={"expose"=true})
      * @Method("POST")
-     * 
+     *
      */
     public function saveOrderAction(Request $request, Test $test)
     {
@@ -71,7 +70,7 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/editor_add_task_to_test/{testId}/{questionnaireId}", name="editor_add_task_to_test", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function addTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
@@ -91,7 +90,7 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/editor_duplicate_task_to_test/{testId}/{questionnaireId}", name="editor_duplicate_task_to_test", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function duplicateTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
@@ -112,7 +111,7 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/delete-task/{testId}/{questionnaireId}", name="delete-task", options={"expose"=true})
      * @Method("POST")
-     * 
+     *
      */
     public function deleteTaskAction(Test $test, Questionnaire $questionnaire)
     {

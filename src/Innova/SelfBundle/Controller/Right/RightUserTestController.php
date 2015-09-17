@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Right\RightUserTest;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +25,7 @@ class RightUserTestController extends Controller
      *
      * @Route("/test/{testId}/rights", name="editor_test_rights")
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Test:rights.html.twig")
      */
     public function handleRightsAction(Test $test)
@@ -47,7 +46,7 @@ class RightUserTestController extends Controller
      *
      * @Route("/test/{testId}/rights/add", name="editor_test_rights_add")
      * @Method({"GET", "POST"})
-     * 
+     *
      * @Template("InnovaSelfBundle:Test:rights_form.html.twig")
      */
     public function createRightsAction(Test $test, Request $request)
@@ -74,7 +73,7 @@ class RightUserTestController extends Controller
      *
      * @Route("/test/{testId}/rights/{rightId}/edit", name="editor_test_rights_edit")
      * @Method({"GET", "POST"})
-     * 
+     *
      * @Template("InnovaSelfBundle:Test:rights_form.html.twig")
      */
     public function editRightsAction(Test $test, RightUserTest $rightUserTest, Request $request)
@@ -100,7 +99,7 @@ class RightUserTestController extends Controller
      *
      * @Route("/test/{testId}/right/{rightId}/delete", name="editor_test_rights_delete", options = {"expose"=true})
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function deleteRightAction(Test $test, RightUsertest $rightUserTest)

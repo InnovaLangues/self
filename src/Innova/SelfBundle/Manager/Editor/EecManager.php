@@ -259,7 +259,7 @@ class EecManager
         $em->flush();
     }
 
-    public function addAnswer($subquestion, $answer)
+    public function addAnswer(Subquestion $subquestion, $answer)
     {
         $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
         $media = $this->mediaManager->createMedia($questionnaire, "texte", $answer, $answer, null, 0, "reponse");

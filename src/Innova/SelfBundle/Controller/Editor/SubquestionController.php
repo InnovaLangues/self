@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Innova\SelfBundle\Form\Type\SubquestionType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Innova\SelfBundle\Entity\Questionnaire;
@@ -62,7 +61,7 @@ class SubquestionController
      *
      * @Route("/questionnaire/create-subquestion/{questionnaireId}/{typologyId}", name="editor_questionnaire_create-subquestion", options={"expose"=true})
      * @Method("PUT")
-     * 
+     *
      */
     public function createSubquestionAction(Questionnaire $questionnaire, Typology $typology)
     {
@@ -94,7 +93,7 @@ class SubquestionController
      *
      * @Route("/questionnaire/{questionnaireId}/delete-subquestion/{subquestionId}", name="editor_questionnaire_delete_subquestion", options={"expose"=true})
      * @Method("DELETE")
-     * 
+     *
      */
     public function deleteSubquestionAction(Questionnaire $questionnaire, Subquestion $subquestion)
     {
@@ -120,7 +119,7 @@ class SubquestionController
      *
      * @Route("/subquestion/{subquestionId}/display-identity-form", name="editor_subquestion-identity-form", options={"expose"=true})
      * @Method("GET")
-     * 
+     *
      */
     public function displayIdentityFormAction(Subquestion $subquestion)
     {
@@ -147,7 +146,7 @@ class SubquestionController
      *
      * @Route("/subquestion/{subquestionId}/set-identity-field/", name="set-subquestion-identity-field", options={"expose"=true})
      * @Method("POST")
-     * 
+     *
      */
     public function setIdentityFieldAction(Request $request, Subquestion $subquestion)
     {

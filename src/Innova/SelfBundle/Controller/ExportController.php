@@ -6,7 +6,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\Response;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
@@ -48,7 +47,7 @@ class ExportController
      *     options = {"expose"=true}
      * )
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Export:index.html.twig")
      */
     public function indexAction()
@@ -73,7 +72,7 @@ class ExportController
      * )
      *
      * @Method("GET")
-     * 
+     *
      */
     public function getFileAction($testId, $filename, $mode)
     {
@@ -109,7 +108,7 @@ class ExportController
      * )
      *
      * @Method("PUT")
-     * 
+     *
      * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
     public function exportCsvAction(Test $test, Session $session, $tia)
@@ -137,7 +136,7 @@ class ExportController
      * )
      *
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
     public function showCsvAction(Test $test, $tia)
@@ -163,7 +162,7 @@ class ExportController
      * )
      *
      * @Method("PUT")
-     * 
+     *
      * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
      */
     public function exportPdfAction(Test $test)
@@ -193,7 +192,7 @@ class ExportController
      * )
      *
      * @Method("GET")
-     * 
+     *
      * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
      */
     public function showPdfAction(Test $test)
@@ -219,7 +218,7 @@ class ExportController
      * )
      *
      * @Method("GET")
-     * 
+     *
      */
     public function exportSessionUserPdfAction(Session $session)
     {
@@ -245,7 +244,7 @@ class ExportController
      * )
      *
      * @Method("GET")
-     * 
+     *
      */
     public function exportSessionUserPdfAdminAction(Session $session, User $user)
     {
