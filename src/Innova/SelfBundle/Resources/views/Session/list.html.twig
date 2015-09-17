@@ -35,6 +35,9 @@
     <thead>
         <tr>
             <th>{{ 'editor.session.name' | trans }}</th>
+            {% if test is not defined %}
+                <th>{{ 'editor.session.test' | trans }}</th>
+            {% endif %}
             <th></th>
         </tr>
     </thead>
@@ -42,8 +45,14 @@
 		{% for session in sessions %}
 			<tr>
 				<td>
-					{{ session.name }} {% if test is not defined %} <span class="text-muted">{{ session.test.name }}</span> {% endif %}
+					{{ session.name }} 
 				</td>
+                {% if test is not defined %}
+                <td>
+                     <span class="text-muted">{{ session.test.name }}</span>
+                </td>
+                {% endif %}
+
 				<td class="text-right">
                     <div class="btn-group dropup">
                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
