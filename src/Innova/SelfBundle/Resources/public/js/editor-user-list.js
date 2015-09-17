@@ -1,3 +1,3 @@
 $(function() {
-    $('input#search').quicksearch('.tab-pane ul li');
+    $('input#search').quicksearch('.users-table tbody tr');
 });
