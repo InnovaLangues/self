@@ -52,43 +52,43 @@
 
                     <ul class="dropdown-menu text-left" role="menu" >
                         <li>
-                        <a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id }) }}">
-                            <span class="glyphicon glyphicon-play"></span> {{ 'editor.session.test' | trans }}
-                        </a>
+                            <a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id }) }}">
+                                <span class="glyphicon glyphicon-play"></span> {{ 'editor.session.test' | trans }}
+                            </a>
                         </li>
 
                         {% if canEditRights %}
                         <li>
-                        <a href="{{ path('editor_session_rights', {'sessionId': session.id }) }}">
-                            <span class="glyphicon glyphicon-lock"></span> {{ 'right.rights' | trans }}
-                        </a>
+                            <a href="{{ path('editor_session_rights', {'sessionId': session.id }) }}">
+                                <span class="glyphicon glyphicon-lock"></span> {{ 'right.rights' | trans }}
+                            </a>
                         </li>
                         {% endif %}
 
                         {% if checkRight("right.editsession", session) %}
                         <li>
-    					<a href="{{ path('editor_test_edit_session', { 'testId': session.test.id, 'sessionId': session.id }) }}">
-    						<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
-    					</a>
+        					<a href="{{ path('editor_test_edit_session', { 'testId': session.test.id, 'sessionId': session.id }) }}">
+        						<span class="glyphicon glyphicon-edit"></span> {{ 'editor.session.edit' | trans }}
+        					</a>
                         </li>
                         {% endif %}
 
                         {% if checkRight("right.individualresultssession", session) %}
     					<li>
-                        <a href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
-    						<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
-    					</a>
+                            <a href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
+        						<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
+        					</a>
                         </li>
                         {% endif %}
 
                         {% if checkRight("right.exportresultssession", session) %}
                         <li>
-                        <a href="{{ path('editor_session_export_results', {'sessionId': session.id }) }}">
-                            <span class="glyphicon glyphicon-download-alt"></span> {{ 'editor.session.export' | trans }}
-                        </a>
+                            <a href="{{ path('editor_session_export_results', {'sessionId': session.id }) }}">
+                                <span class="glyphicon glyphicon-download-alt"></span> {{ 'editor.session.export' | trans }}
+                            </a>
                         </li>
                         <li>
-                        <a class="export-session-by-date" data-session-id="{{ session.id }}">
+                        <a href="#" class="export-session-by-date" data-session-id="{{ session.id }}">
                             <span class="glyphicon glyphicon-download-alt"></span> {{ 'editor.session.export_date' | trans }}
                         </a>
                         </li>
@@ -96,9 +96,9 @@
 
                         {% if checkRight("right.deletesession", session) %}
                         <li>
-    					<a href="#" class="delete-session" data-session-id="{{ session.id }}">
-    						<span class="glyphicon glyphicon-trash"></span> Supprimer la session
-    					</a>
+        					<a href="#" class="delete-session" data-session-id="{{ session.id }}">
+        						<span class="glyphicon glyphicon-trash"></span> Supprimer la session
+        					</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -141,30 +141,35 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                        <div class="col-md-12">
-                            Date de début
-                            <div class='input-group date' id='datetimepicker6'>
-                                <input type='text' class="form-control" name="startDate" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
+                    <div class="col-md-12">
+                        <p>
+                        Définissez un intervalle de temps pour votre export CSV. Les dates sont au format <strong>AAAA-MM-JJ HH:MM:SS</strong>.
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        Date de début
+                        <div class='input-group date' id='datetimepicker6'>
+                            <input type='text' class="form-control" name="startDate" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
                         </div>
-                        <div class="col-md-12">
-                            Date de fin
-                            <div class='input-group date' id='datetimepicker7'>
-                                <input type='text' class="form-control" name="endDate"/>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
+                    </div>
+                    <div class="col-md-12">
+                        Date de fin
+                        <div class='input-group date' id='datetimepicker7'>
+                            <input type='text' class="form-control" name="endDate"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
                         </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
                 <button type="submit" id="session-export-confirmation" class="btn btn-default btn-primary">
-                    Exporter
+                    {{ 'editor.session.export' | trans }}
                 </button>
             </div>
         </form>

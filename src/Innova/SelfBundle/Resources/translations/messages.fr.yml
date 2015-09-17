@@ -263,6 +263,7 @@ editor:
         identity: fiche d'identité
 
     session:
+        export: Exporter
         name: Nom de la session
         passwd: Code de session
         active: Actif
