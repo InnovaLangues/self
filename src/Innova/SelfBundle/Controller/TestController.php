@@ -95,6 +95,7 @@ class TestController extends Controller
      */
     public function listFavoritesAction()
     {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
         $tests = $currentUser->getFavoritesTests();
 
         return array('tests' => $tests, 'subset' => "test.favorites");
