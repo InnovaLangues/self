@@ -3,228 +3,224 @@
     <link href="{{ asset("bundles/innovaself/css/registration.css") }}" rel="stylesheet" />
 {% endblock %}
 
-
 <div class="panel panel-default">
     <div class="panel-heading">
         <h4>
-        <a href="{{ path('show_start') }}"><img src="{{ asset("bundles/innovaself/images/innova_logo_web_24.png") }}"/></a>
-        {{ 'anonymous.registration' | trans({}, 'messages') }} à SELF - Système d’Evaluation en Langues à visée Formative
+            <a href="{{ path('show_start') }}"><img src="{{ asset("bundles/innovaself/images/innova_logo_web_24.png") }}"/></a>
+            {{ 'anonymous.registration' | trans({}, 'messages') }} à SELF - Système d’Evaluation en Langues à visée Formative
         </h4>
     </div>
     <div class="panel-body">
+        <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
 
-    <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
+            {# Pour avoir le Wizard #}
+            {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
+            <ul class='nav nav-wizard' id="register-form-tabs">
+               <li class='active'><a href='#step1' data-toggle="tab">Etape 1</a></li>
+               <li><a href='#step2' data-toggle="tab">Etape 2</a></li>
+            </ul>
 
-        {# Pour avoir le Wizard #}
-        {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
-        <ul class='nav nav-wizard' id="register-form-tabs">
-           <li class='active'><a href='#step1' data-toggle="tab">Etape 1</a></li>
-           <li><a href='#step2' data-toggle="tab">Etape 2</a></li>
-        </ul>
+            <hr/>
 
-        <hr/>
-
-        <div id="myTabContent" class="tab-content">
-
-            {# Onglet 1 #}
-            <div class="tab-pane fade active in" id="step1">
-                <div class="legend">
-                    <p class="text-danger text-left">
-                        {{ 'registration.warning_required' | trans({}, 'messages') }}
-                    </p>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-3 control-label required" for="fos_user_registration_form_lastName">
-                        {{ 'user.name' | trans({}, 'messages') }}
-                    </label>
-                    <div class="col-md-4">
-                        <input value="{{ form.vars.value.lastName }}" class="form-control" id="fos_user_registration_form_lastName" type="text"  required="required" name="fos_user_registration_form[lastName]">
-                    </div>
-                    <div class="col-md-offset-5">
-                        {{ form_errors(form.lastName) }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label required" for="fos_user_registration_form_firstName">
-                        {{ 'user.firstname' | trans({}, 'messages') }}
-                    </label>
-                    <div class="col-md-4">
-                        <input value="{{ form.vars.value.firstName }}" class="form-control" id="fos_user_registration_form_firstName" type="text" required="required" name="fos_user_registration_form[firstName]">
-                    </div>
-                    <div class="col-md-offset-5">
-                        {{ form_errors(form.firstName) }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {{ form_errors(form.email) }}
-                    <label class="col-md-3 control-label required" for="fos_user_registration_form_email">
-                        {{ 'user.email' | trans({}, 'messages') }}
-                    </label>
-                    <div class="col-md-4">
-                        <input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
-                    </div>
-                    <div class="col-md-offset-5">
-                    </div>
-                </div>
-                <div class="form-group">
-                    {{ form_errors(form.username) }}
-                    <label class="col-md-3 control-label required" for="fos_user_registration_form_username">
-                        {{ 'registration.username' | trans({}, 'messages') }}
-                    </label>
-                    <div class="col-md-4">
-                        <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
-                    </div>
-                    <div class="col-md-offset-5">
-                    </div>
-                </div>
-                <div class="form-group">
-                    {{ form_errors(form.plainPassword.first) }}
-                    <label class="col-md-3 control-label required" for="fos_user_registration_form_plainPassword_first">
-                        {{ 'registration.password' | trans({}, 'messages') }}
-                    </label>
-                    <div class="col-md-4">
-                        <input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
-                    </div>
-                    <div class="col-md-offset-5">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label required" for="fos_user_registration_form_plainPassword_second">
-                        {{ 'registration.password_confirmation' | trans({}, 'messages') }}
-                    </label>
-                    <div class="col-md-4">
-                        <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
-                    </div>
-                    <div class="col-md-offset-5">
-                    </div>
-                </div>
-                <div class="form-group">
-                    {{ form_widget(form._token) }}
-                    <div class="col-md-offset-3 col-md-9">
-                        {# Call nexttab JS in main.js #130 #}
-                        <a href='#step2' data-toggle="tab" class="btn btn-primary nexttab">
-                            {{ 'registration.next_step' | trans({}, 'messages') }}
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            {# Onglet 2 #}
-            <div class="tab-pane fade" id="step2">
-                <fieldset>
-                    <legend>{{ 'registration.pathway' | trans({}, 'messages') }}</legend>
-
+            <div id="myTabContent" class="tab-content">
+                {# Onglet 1 #}
+                <div class="tab-pane fade active in" id="step1">
                     <div class="legend">
                         <p class="text-danger text-left">
-                        {{ 'registration.warning_required' | trans({}, 'messages') }}
+                            {{ 'registration.warning_required' | trans({}, 'messages') }}
                         </p>
                     </div>
 
-                    {# originStudent, user entity "Dans la langue testée, êtes-vous un étudiant ?"#}
                     <div class="form-group">
-                        {{ form_errors(form.originStudent) }}
-                        <label class="col-md-4 control-label required" for="fos_user_registration_form_originStudent">
-                            {{ 'registration.pathway_question' | trans({}, 'messages') }}
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_lastName">
+                            {{ 'user.name' | trans({}, 'messages') }}
                         </label>
-                        <div class="col-md-3">
-                            {# <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]"> #}
-                            {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
+                        <div class="col-md-4">
+                            <input value="{{ form.vars.value.lastName }}" class="form-control" id="fos_user_registration_form_lastName" type="text"  required="required" name="fos_user_registration_form[lastName]">
+                        </div>
+                        <div class="col-md-offset-5">
+                            {{ form_errors(form.lastName) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_firstName">
+                            {{ 'user.firstname' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            <input value="{{ form.vars.value.firstName }}" class="form-control" id="fos_user_registration_form_firstName" type="text" required="required" name="fos_user_registration_form[firstName]">
+                        </div>
+                        <div class="col-md-offset-5">
+                            {{ form_errors(form.firstName) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_errors(form.email) }}
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_email">
+                            {{ 'user.email' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            <input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
                         </div>
                         <div class="col-md-offset-5">
                         </div>
                     </div>
-
-                    {# lastLevel, user entity #}
-                    {# display by language. So, I use an "optgroup" #}
                     <div class="form-group">
-                        {{ form_errors(form.levelLansad) }}
-                        <label class="col-md-4 control-label" for="fos_user_registration_form_levelLansad">
-                            {{ 'registration.last_lansad' | trans({}, 'messages') }}
+                        {{ form_errors(form.username) }}
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_username">
+                            {{ 'registration.username' | trans({}, 'messages') }}
                         </label>
-                        <div class="col-md-3">
-                            {{ form_widget(form.levelLansad, { 'attr': {'class': 'form-control'} }) }}
+                        <div class="col-md-4">
+                            <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
                         </div>
                         <div class="col-md-offset-5">
                         </div>
                     </div>
-                </fieldset>
-
-                <fieldset>
-                    <legend>{{ 'registration.dialang' | trans({}, 'messages') }}</legend>
-
-                    {# test_dialang: Avez-vous déjà passé un test Dialang ? #}
-                    {# voir le formulaire UserType.php #}
                     <div class="form-group">
-                        {{ form_errors(form.testDialang) }}
-                        <label class="col-md-4 control-label" for="fos_user_registration_form_testDialang">
-                            {{ 'registration.test_dialang' | trans({}, 'messages') }}
+                        {{ form_errors(form.plainPassword.first) }}
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_plainPassword_first">
+                            {{ 'registration.password' | trans({}, 'messages') }}
                         </label>
-                        <div class="col-md-3">
-                            <select id="fos_user_registration_form_testDialang" name="fos_user_registration_form[testDialang]"    class="form-control">
-                                {# Traductions #}
-                                <option value="Oui">{{ 'generic.yes' | trans({}, 'messages') }}</option>
-                                <option value="Non">{{ 'generic.no' | trans({}, 'messages') }}</option>
-                            </select>
-                            {# {{ form_widget(form.testDialang, { 'attr': {'class': 'form-control'} }) }}#}
+                        <div class="col-md-4">
+                            <input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
                         </div>
                         <div class="col-md-offset-5">
                         </div>
                     </div>
-
-                    {# coLevel, user entity #}
                     <div class="form-group">
-                        {{ form_errors(form.coLevel) }}
-                        <label class="col-md-4 control-label" for="fos_user_registration_form_coLevel">
-                            {{ 'registration.CO_level' | trans({}, 'messages') }}
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_plainPassword_second">
+                            {{ 'registration.password_confirmation' | trans({}, 'messages') }}
                         </label>
-                        <div class="col-md-3">
-                            {{ form_widget(form.coLevel, { 'attr': {'class': 'form-control'} }) }}
+                        <div class="col-md-4">
+                            <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
                         </div>
                         <div class="col-md-offset-5">
                         </div>
                     </div>
-
-                    {# ceLevel, user entity #}
                     <div class="form-group">
-                        {{ form_errors(form.coLevel) }}
-                        <label class="col-md-4 control-label" for="fos_user_registration_form_ceLevel">
-                            {{ 'registration.CE_level' | trans({}, 'messages') }}
-                        </label>
-                        <div class="col-md-3">
-                            {{ form_widget(form.ceLevel, { 'attr': {'class': 'form-control'} }) }}
+                        {{ form_widget(form._token) }}
+                        <div class="col-md-offset-3 col-md-9">
+                            {# Call nexttab JS in main.js #130 #}
+                            <a href='#step2' data-toggle="tab" class="btn btn-primary nexttab">
+                                {{ 'registration.next_step' | trans({}, 'messages') }}
+                            </a>
                         </div>
-                        <div class="col-md-offset-5">
-                        </div>
+                    </div>
 
-                    </div>
-                    {# eeLevel, user entity #}
-                    <div class="form-group">
-                        {{ form_errors(form.eeLevel) }}
-                        <label class="col-md-4 control-label" for="fos_user_registration_form_eeLevel">
-                            {{ 'registration.EE_level' | trans({}, 'messages') }}
-                        </label>
-                        <div class="col-md-3">
-                            {{ form_widget(form.eeLevel, { 'attr': {'class': 'form-control'} }) }}
-                        </div>
-                        <div class="col-md-offset-5">
-                        </div>
-                    </div>
-                </fieldset>
-
-                <div class="form-group">
-                    {{ form_widget(form._token) }}
-                    <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" id="_submit" name="_submit" value="{{ 'generic.validate' | trans({}, 'messages') }}" class="btn btn-primary"/>
-                    </div>
                 </div>
 
-            </div>
-        </div>
-    </form>
+                {# Onglet 2 #}
+                <div class="tab-pane fade" id="step2">
+                    <fieldset>
+                        <legend>{{ 'registration.pathway' | trans({}, 'messages') }}</legend>
 
-  </div>
+                        <div class="legend">
+                            <p class="text-danger text-left">
+                            {{ 'registration.warning_required' | trans({}, 'messages') }}
+                            </p>
+                        </div>
+
+                        {# originStudent, user entity "Dans la langue testée, êtes-vous un étudiant ?"#}
+                        <div class="form-group">
+                            {{ form_errors(form.originStudent) }}
+                            <label class="col-md-4 control-label required" for="fos_user_registration_form_originStudent">
+                                {{ 'registration.pathway_question' | trans({}, 'messages') }}
+                            </label>
+                            <div class="col-md-3">
+                                {# <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]"> #}
+                                {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="col-md-offset-5">
+                            </div>
+                        </div>
+
+                        {# lastLevel, user entity #}
+                        {# display by language. So, I use an "optgroup" #}
+                        <div class="form-group">
+                            {{ form_errors(form.levelLansad) }}
+                            <label class="col-md-4 control-label" for="fos_user_registration_form_levelLansad">
+                                {{ 'registration.last_lansad' | trans({}, 'messages') }}
+                            </label>
+                            <div class="col-md-3">
+                                {{ form_widget(form.levelLansad, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="col-md-offset-5">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>{{ 'registration.dialang' | trans({}, 'messages') }}</legend>
+
+                        {# test_dialang: Avez-vous déjà passé un test Dialang ? #}
+                        {# voir le formulaire UserType.php #}
+                        <div class="form-group">
+                            {{ form_errors(form.testDialang) }}
+                            <label class="col-md-4 control-label" for="fos_user_registration_form_testDialang">
+                                {{ 'registration.test_dialang' | trans({}, 'messages') }}
+                            </label>
+                            <div class="col-md-3">
+                                <select id="fos_user_registration_form_testDialang" name="fos_user_registration_form[testDialang]"    class="form-control">
+                                    {# Traductions #}
+                                    <option value="Oui">{{ 'generic.yes' | trans({}, 'messages') }}</option>
+                                    <option value="Non">{{ 'generic.no' | trans({}, 'messages') }}</option>
+                                </select>
+                                {# {{ form_widget(form.testDialang, { 'attr': {'class': 'form-control'} }) }}#}
+                            </div>
+                            <div class="col-md-offset-5">
+                            </div>
+                        </div>
+
+                        {# coLevel, user entity #}
+                        <div class="form-group">
+                            {{ form_errors(form.coLevel) }}
+                            <label class="col-md-4 control-label" for="fos_user_registration_form_coLevel">
+                                {{ 'registration.CO_level' | trans({}, 'messages') }}
+                            </label>
+                            <div class="col-md-3">
+                                {{ form_widget(form.coLevel, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="col-md-offset-5">
+                            </div>
+                        </div>
+
+                        {# ceLevel, user entity #}
+                        <div class="form-group">
+                            {{ form_errors(form.coLevel) }}
+                            <label class="col-md-4 control-label" for="fos_user_registration_form_ceLevel">
+                                {{ 'registration.CE_level' | trans({}, 'messages') }}
+                            </label>
+                            <div class="col-md-3">
+                                {{ form_widget(form.ceLevel, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="col-md-offset-5">
+                            </div>
+
+                        </div>
+                        {# eeLevel, user entity #}
+                        <div class="form-group">
+                            {{ form_errors(form.eeLevel) }}
+                            <label class="col-md-4 control-label" for="fos_user_registration_form_eeLevel">
+                                {{ 'registration.EE_level' | trans({}, 'messages') }}
+                            </label>
+                            <div class="col-md-3">
+                                {{ form_widget(form.eeLevel, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="col-md-offset-5">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group">
+                        {{ form_widget(form._token) }}
+                        <div class="col-md-offset-4 col-md-8">
+                            <input type="submit" id="_submit" name="_submit" value="{{ 'generic.validate' | trans({}, 'messages') }}" class="btn btn-primary"/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 {% block javascripts %}

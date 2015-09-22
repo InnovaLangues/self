@@ -114,3 +114,77 @@ $( "body" ).on( "change", '#fos_user_registration_form_firstName, #fos_user_regi
 
    $("#fos_user_registration_form_username").val(un);
 });
+
+$(document).ready(function() {
+    var $tabs = $('#register-form-tabs li');
+
+    hidelevelLansad();
+    hideLevels();
+
+    /*Login form validation*/
+    $('.fos_user_registration_register #_submit').click(function(event) {
+
+        $('.fos_user_registration_register .help-block').remove();
+        $('.fos_user_registration_register .has-error').removeClass('has-error');
+
+        $('#register-form-tabs a:first').tab('show');
+
+        $('.fos_user_registration_register').find('input').each(function(){
+            if($(this).prop('required') && !$(this).val()){
+                event.preventDefault();
+                var div = $(this).parent().parent();
+                div.addClass('has-error');
+                if ($(this).prop('type') === 'email') {
+                    div.append('<div class="col-md-offset-2 col-md-10"><span class="help-block">Ce champ doit obligatoirement être un email valide</span></div>');
+                } else {
+                    div.append('<div class="col-md-offset-2 col-md-10"><span class="help-block">Ce champ est obligatoire</span></div>');
+                };
+            }
+        });
+
+    });
+
+    $('#fos_user_registration_form_originStudent').change(function(event) {
+        var choice = $("#fos_user_registration_form_originStudent option:selected").text().toLowerCase();
+        if(choice.match(/lansad/)){
+            $('#fos_user_registration_form_levelLansad').parent().parent().show();
+        } else {
+            hidelevelLansad();
+        }
+    });
+
+
+    $('#fos_user_registration_form_testDialang').val("Non");
+    $('#fos_user_registration_form_testDialang').change(function(event) {
+        var choice = $("#fos_user_registration_form_testDialang option:selected").text().toLowerCase();
+        if (choice == 'oui'){
+            $('#fos_user_registration_form_coLevel').parent().parent().show();
+            $('#fos_user_registration_form_ceLevel').parent().parent().show();
+            $('#fos_user_registration_form_eeLevel').parent().parent().show();
+        } else {
+            hideLevels();
+        }
+    });
+
+    $('.nexttab').on('click', function() {
+        $tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
+    });
+
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+    function hidelevelLansad()
+    {
+        $('#fos_user_registration_form_levelLansad').parent().parent().hide();
+    }
+
+    function hideLevels(){
+        $('#fos_user_registration_form_coLevel').parent().parent().hide();
+        $('#fos_user_registration_form_ceLevel').parent().parent().hide();
+        $('#fos_user_registration_form_eeLevel').parent().parent().hide();
+    }
+});
