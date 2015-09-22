@@ -22,15 +22,16 @@
 
             <hr/>
 
+            <div class="legend">
+                <p class="text-danger text-left">
+                    {{ 'registration.warning_required' | trans({}, 'messages') }}
+                </p>
+            </div>
+
+
             <div id="myTabContent" class="tab-content">
                 {# Onglet 1 #}
                 <div class="tab-pane fade active in" id="step1">
-                    <div class="legend">
-                        <p class="text-danger text-left">
-                            {{ 'registration.warning_required' | trans({}, 'messages') }}
-                        </p>
-                    </div>
-
                     <div class="form-group">
                         <label class="col-md-3 control-label required" for="fos_user_registration_form_lastName">
                             {{ 'user.name' | trans({}, 'messages') }}
@@ -113,12 +114,6 @@
                     <fieldset>
                         <legend>{{ 'registration.pathway' | trans({}, 'messages') }}</legend>
 
-                        <div class="legend">
-                            <p class="text-danger text-left">
-                            {{ 'registration.warning_required' | trans({}, 'messages') }}
-                            </p>
-                        </div>
-
                         {# originStudent, user entity "Dans la langue testée, êtes-vous un étudiant ?"#}
                         <div class="form-group">
                             {{ form_errors(form.originStudent) }}
@@ -126,7 +121,6 @@
                                 {{ 'registration.pathway_question' | trans({}, 'messages') }}
                             </label>
                             <div class="col-md-3">
-                                {# <input class="form-control" id="fos_user_registration_form_studentType" required="required" name="fos_user_registration_form[studentType]"> #}
                                 {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
                             </div>
                             <div class="col-md-offset-5">
