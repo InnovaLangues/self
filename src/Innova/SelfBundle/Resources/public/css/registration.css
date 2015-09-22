@@ -2,3 +2,7 @@
     content: " *";
     color:red;
 }
+
+.warning, .form-error{
+	color:red;
+}
