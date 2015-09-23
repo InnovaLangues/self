@@ -120,7 +120,6 @@ class MediaController
             }
             $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-            $this->mediaManager->invalidateMediaAction($media, $case);
             $view = $this->templatingManager->generateView($case, array('questionnaire' => $questionnaire));
 
             return new Response($view);
