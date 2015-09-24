@@ -1,0 +1,5 @@
+fos_user:
+    username:
+        already_used: Le nom d'utilisateur est déjà utilisé. Si vous avez déjà un compte, merci d'utiliser la fonction de récupération de mot de passe. Sinon, s'il s'agit d'un homonyme, merci de choisir un autre nom d'utilisateur.
+    email:
+        already_used: L'adresse mail est déjà utilisée. Merci d'utiliser la fonction de réinitialisation de mot de passe.
