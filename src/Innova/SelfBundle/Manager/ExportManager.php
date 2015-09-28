@@ -49,7 +49,7 @@ class ExportManager
             $this->templating->render(
                 'InnovaSelfBundle:Export:exportUserPdf.html.twig',
                 array(
-                    'score' => $score, 'session' => $session, 'levelFeedback' => $levelFeedback,
+                    'user' => $user, 'score' => $score, 'session' => $session, 'levelFeedback' => $levelFeedback,
                     "coFeedback" => $coFeedback, "ceFeedback" => $ceFeedback, "eecFeedback" => $eecFeedback,
                 )),
                 $fileName

@@ -17,10 +17,10 @@
         <div class="container">
             <div class="row">
                 <h1>
-                    {% if app.user.firstname is defined and app.user.lastname is defined %}
-                        {{ app.user.lastname }} {{ app.user.firstname }}
+                    {% if user.firstname is defined and user.lastname is defined %}
+                        {{ user.lastname }} {{ user.firstname }}
                     {% else %} 
-                        {{ app.user.username }}
+                        {{ user.username }}
                     {% endif %}
                 </h1>
                 <h1>
