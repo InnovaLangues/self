@@ -41,7 +41,8 @@
                                 </li>
                             {% endif %}
 
-                            {# GROUPES #}
+
+                            {# GROUPES
                             {% if checkRight("right.listgroup") or checkRight("right.creategroup") or hasRightsOnGroup("RightUserGroup") %}
                                 <li>
                                     <a href="{{ path('editor_groups') }}">
@@ -49,6 +50,7 @@
                                     </a>
                                 </li>
                             {% endif %}
+                            #}
 
                             {# EXPORTS #}
                             {% if checkRight("right.exportPDF") or checkRight("right.exportCSV") %}
