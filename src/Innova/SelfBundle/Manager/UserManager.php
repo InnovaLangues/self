@@ -157,7 +157,8 @@ class UserManager
         $sessions = $query->getResult();
 
         foreach ($sessions as $session) {
-            $data = base64_decode($session->getSessionValue());
+            $data = stream_get_contents($session->getSessionValue());
+
             $data = str_replace('_sf2_attributes|', '', $data);
             $data = unserialize($data);
 

@@ -20,7 +20,7 @@ class PDOSession
 
     /**
      *
-     * @ORM\Column(name="session_value", type="text")
+     * @ORM\Column(name="session_value", type="blob")
      */
     private $session_value;
 
@@ -29,6 +29,12 @@ class PDOSession
      * @ORM\Column(name="session_time", type="integer")
      */
     private $session_time;
+
+    /**
+     *
+     * @ORM\Column(name="sess_lifetime", type="integer")
+     */
+    private $sess_lifetime;
 
     /**
      * Set sessionId
