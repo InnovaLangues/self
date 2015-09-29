@@ -37,10 +37,14 @@ class ScoreManager
 
     public function calculateScoreByTest(Test $test, Session $session, User $user)
     {
-        $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
-        $scores = $this->getScoresFromTraces($traces);
+        if ($test->getPhased()) {
+            $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
+            $scores = $this->getScoresFromTraces($traces);
 
-        return $scores;
+            return $scores;
+        }
+
+        return;
     }
 
     public function orientateToStep(User $user, Session $session, Component $component)
