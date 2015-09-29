@@ -3,7 +3,7 @@ services:
         class: Innova\SelfBundle\Manager\Editor\QuestionnaireManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
             templating:         @templating
             formFactory:        @form.factory
@@ -65,31 +65,32 @@ services:
         class: Innova\SelfBundle\Manager\CommentManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
 
     self.questionnaire_revisors.manager:
         class: Innova\SelfBundle\Manager\Editor\QuestionnaireRevisorsManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
 
     self.answer.manager:
         class: Innova\SelfBundle\Manager\AnswerManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
 
     self.mediaclick.manager:
         class: Innova\SelfBundle\Manager\Media\MediaClickManager
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
+            entityManager:          @doctrine.orm.entity_manager
+            securityContext:        @security.token_storage
+            securityAuthorization:  @security.authorization_checker
 
     self.player.manager:
         class: Innova\SelfBundle\Manager\PlayerManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             scoreManager:       @self.score.manager
             session:            @session
 
@@ -98,7 +99,7 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             scoreManager:       @self.score.manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             kernelRoot:         %kernel.root_dir%
             knpSnappyPdf:       @knp_snappy.pdf
             templating:         @templating
@@ -107,7 +108,7 @@ services:
         class: Innova\SelfBundle\Manager\Editor\TestManager
         arguments:
             entityManager:                  @doctrine.orm.entity_manager
-            securityContext:                @security.context
+            securityContext:                @security.token_storage
             questionnaireManager:           @self.questionnaire.manager
             orderQuestionnaireTestManager:  @self.order_questionnaire_test.manager
             phasedTestManager:              @self.phasedtest.manager
@@ -134,7 +135,7 @@ services:
         class: Innova\SelfBundle\Manager\ScoreManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
 
     self.component.manager:
         class: Innova\SelfBundle\Manager\Editor\PhasedTest\ComponentManager

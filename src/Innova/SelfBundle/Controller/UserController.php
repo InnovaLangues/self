@@ -29,7 +29,7 @@ class UserController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
             $entities = $em->getRepository('InnovaSelfBundle:User')->findAll();
@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function connectedAction()
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
             $connectedUsers = $this->get('self.user.manager')->getConnected();
@@ -72,7 +72,7 @@ class UserController extends Controller
      */
     public function showAction($id)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
             $em = $this->getDoctrine()->getManager();
@@ -107,7 +107,7 @@ class UserController extends Controller
      */
     public function deleteTestTraceAction($userId, $testId)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.deletetraceuser", $currentUser)) {
             $em = $this->getDoctrine()->getManager();
@@ -134,7 +134,7 @@ class UserController extends Controller
      */
     public function deleteTaskTraceAction($userId, $testId, $questionnaireId)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.deletetraceuser", $currentUser)) {
             $em = $this->getDoctrine()->getManager();
@@ -162,7 +162,7 @@ class UserController extends Controller
      */
     public function deleteUserAction($userId)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.deleteuser", $currentUser)) {
             $em = $this->getDoctrine()->getManager();
@@ -187,7 +187,7 @@ class UserController extends Controller
      */
     public function newAction(Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.createuser", $currentUser)) {
             $user = new User();
@@ -214,7 +214,7 @@ class UserController extends Controller
      */
     public function editAction(User $user, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.edituser", $currentUser)) {
             $form = $this->get("self.user.manager")->handleForm($user, $request);
@@ -240,7 +240,7 @@ class UserController extends Controller
      */
     public function editPasswordAction(User $user, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editpassworduser", $currentUser)) {
             if ($request->isMethod('POST')) {
@@ -268,7 +268,7 @@ class UserController extends Controller
      */
     public function displayRightsAction(User $user)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
             $em = $this->getDoctrine()->getManager();
@@ -290,7 +290,7 @@ class UserController extends Controller
      */
     public function toggleRightAction(User $user, Right $right)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
             $this->get("self.right.manager")->toggleRight($right, $user);
@@ -310,7 +310,7 @@ class UserController extends Controller
      */
     public function selfDisplayAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         return array(
             'user'   => $user,
@@ -325,7 +325,7 @@ class UserController extends Controller
      */
     public function selfEditAction(Request $request)
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $form = $this->get("self.user.manager")->handleForm($user, $request);
 
         if (!$form) {

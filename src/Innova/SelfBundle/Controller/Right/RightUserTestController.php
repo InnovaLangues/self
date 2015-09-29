@@ -30,7 +30,7 @@ class RightUserTestController extends Controller
      */
     public function handleRightsAction(Test $test)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightstest", $currentUser)) {
             $em = $this->getDoctrine()->getManager();
@@ -51,7 +51,7 @@ class RightUserTestController extends Controller
      */
     public function createRightsAction(Test $test, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightstest", $currentUser)) {
             $right = new RightUserTest();
@@ -78,7 +78,7 @@ class RightUserTestController extends Controller
      */
     public function editRightsAction(Test $test, RightUserTest $rightUserTest, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightstest", $currentUser)) {
             $form = $this->handleRightsForm($rightUserTest, $test, $request);
@@ -104,7 +104,7 @@ class RightUserTestController extends Controller
      */
     public function deleteRightAction(Test $test, RightUsertest $rightUserTest)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightstest", $currentUser)) {
             $user = $rightUserTest->getUser();

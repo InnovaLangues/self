@@ -13,13 +13,15 @@ class MediaClickManager
 {
     protected $entityManager;
     protected $securityContext;
+    protected $securityAuthorization;
     protected $user;
 
-    public function __construct($entityManager, $securityContext)
+    public function __construct($entityManager, $securityContext, $securityAuthorization)
     {
-        $this->entityManager = $entityManager;
-        $this->securityContext = $securityContext;
-        $this->user = $this->securityContext->getToken()->getUser();
+        $this->entityManager            = $entityManager;
+        $this->securityContext          = $securityContext;
+        $this->securityAuthorization    = $securityAuthorization;
+        $this->user                     = $this->securityContext->getToken()->getUser();
     }
 
     public function getRemainingListening(Media $media, Questionnaire $questionnaire, Test $test, Session $session, Component $component = null)
@@ -41,7 +43,7 @@ class MediaClickManager
 
     public function createMediaClick(Media $media, Questionnaire $questionnaire, Test $test, Session $session, Component $component = null)
     {
-        if (!$this->securityContext->isGranted('ROLE_ADMIN')) {
+        if (!$this->securityAuthorization->isGranted('ROLE_ADMIN')) {
             $mediaClick = new MediaClick();
             $mediaClick->setMedia($media);
             $mediaClick->setUser($this->user);
@@ -62,7 +64,7 @@ class MediaClickManager
         $nbClick = $this->getMediaClickCount($media, $test, $questionnaire, $session, $component);
         $mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array('media' => $media, 'questionnaire' => $questionnaire));
 
-        if (is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 || $this->securityContext->isGranted('ROLE_ADMIN')) {
+        if (is_null($mediaLimit) || $mediaLimit->getListeningLimit() > $nbClick || $mediaLimit->getListeningLimit() === 0 || $this->securityAuthorization->isGranted('ROLE_ADMIN')) {
             return true;
         } else {
             return false;

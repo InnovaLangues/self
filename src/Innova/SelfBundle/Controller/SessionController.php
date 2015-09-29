@@ -32,7 +32,7 @@ class SessionController extends Controller
      */
     public function listByActivityAction($isActive)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listsession", $currentUser)) {
             $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findBy(array("actif" => $isActive), array("name" => "ASC"));
@@ -54,7 +54,7 @@ class SessionController extends Controller
      */
     public function listByTestAction(Test $test)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listsession", $currentUser, $test)) {
             $sessions = $test->getSessions();
@@ -74,7 +74,7 @@ class SessionController extends Controller
      */
     public function newAction(Test $test, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.createsession", $currentUser)) {
             $session = new Session();
@@ -104,7 +104,7 @@ class SessionController extends Controller
      */
     public function deleteAction(Session $session)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         $testId = $session->getTest()->getId();
 
         if ($this->get("self.right.manager")->checkRight("right.deletesession", $currentUser, $session)) {
@@ -129,7 +129,7 @@ class SessionController extends Controller
      */
     public function editAction(Test $test, Session $session, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editsession", $currentUser, $session)) {
             $form = $this->handleForm($session, $request);
@@ -155,7 +155,7 @@ class SessionController extends Controller
      */
     public function resultsAction(Session $session)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.individualresultssession", $currentUser, $session)) {
             $em = $this->getDoctrine()->getManager();
@@ -176,7 +176,7 @@ class SessionController extends Controller
      */
     public function userResultsAction(User $user, Session $session)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         $sm = $this->get("self.score.manager");
         if ($this->get("self.right.manager")->checkRight("right.individualresultssession", $currentUser, $session)) {
             $levelFeedback = $sm->getGlobalLevelFromThreshold($session, $user);
@@ -207,7 +207,7 @@ class SessionController extends Controller
      */
     public function exportAction(Session $session)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.exportresultssession", $currentUser, $session)) {
             $filename = $this->get("self.export.manager")->exportSession($session);
@@ -236,7 +236,7 @@ class SessionController extends Controller
      */
     public function exportByDatesAction(Request $request, Session $session)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.exportresultssession", $currentUser, $session)) {
             $startDate = $request->get('startDate');

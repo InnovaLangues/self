@@ -3,7 +3,7 @@
 namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Doctrine\ORM\EntityManager;
@@ -41,7 +41,7 @@ class PlayerController
     protected $templating;
 
     public function __construct(
-        SecurityContextInterface $securityContext,
+        TokenStorage $securityContext,
         EntityManager $entityManager,
         SessionInterface $session,
         RouterInterface $router,

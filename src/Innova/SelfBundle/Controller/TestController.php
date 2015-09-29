@@ -32,7 +32,7 @@ class TestController extends Controller
      */
     public function listTestsAction()
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
@@ -53,7 +53,7 @@ class TestController extends Controller
      */
     public function listTestsByLanguageAction(Language $language)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findBy(array("language" => $language, "archived" => false));
@@ -74,7 +74,7 @@ class TestController extends Controller
      */
     public function listArchivedTestsAction()
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
             $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(true);
@@ -95,7 +95,7 @@ class TestController extends Controller
      */
     public function listFavoritesAction()
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         $tests = $currentUser->getFavoritesTests();
 
         return array('tests' => $tests, 'subset' => "test.favorites");
@@ -110,7 +110,7 @@ class TestController extends Controller
      */
     public function deleteTestAction(Test $test)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.deletetest", $currentUser, $test)) {
             $testName = $test->getName();
@@ -135,7 +135,7 @@ class TestController extends Controller
      */
     public function duplicateTestAction(Test $test)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.duplicatetest", $currentUser, $test)) {
             $this->get("self.test.manager")->duplicate($test);
@@ -157,7 +157,7 @@ class TestController extends Controller
      */
     public function newAction(Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.createtest", $currentUser)) {
             $test = new Test();
@@ -184,7 +184,7 @@ class TestController extends Controller
      */
     public function editAction(Test $test, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.edittest", $currentUser, $test)) {
             $form = $this->handleForm($test, $request);

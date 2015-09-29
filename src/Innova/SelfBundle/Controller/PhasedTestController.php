@@ -37,7 +37,7 @@ class PhasedTestController extends Controller
      */
     public function checkLevelAction(Test $test)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.edittasktest", $currentUser, $test)) {
             $tasks = $this->get("self.phasedtest.manager")->checkLevel($test);
@@ -62,7 +62,7 @@ class PhasedTestController extends Controller
      */
     public function generateComponentAction(Test $test, ComponentType $type)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.addtasktest", $currentUser, $test)) {
             $this->get("self.phasedtest.manager")->generateComponent($test, $type);
@@ -82,7 +82,7 @@ class PhasedTestController extends Controller
      */
     public function removeComponentAction(Test $test, Component $component)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.deletetasktest", $currentUser, $test)) {
             $this->get("self.phasedtest.manager")->removeComponent($test, $component);
@@ -102,7 +102,7 @@ class PhasedTestController extends Controller
      */
     public function saveOrderAction(Component $component)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.reordertasktest", $currentUser, $component->getTest())) {
             $newOrderArray = json_decode($this->get('request')->request->get('newOrder'));
@@ -123,7 +123,7 @@ class PhasedTestController extends Controller
      */
     public function removeQuestionnaireFromComponentAction(OrderQuestionnaireComponent $orderQuestionnaireComponent)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.deletetasktest", $currentUser, $orderQuestionnaireComponent->getComponent()->getTest())) {
             $this->get("self.phasedtest.manager")->removeQuestionnaireFromComponent($orderQuestionnaireComponent);
@@ -143,7 +143,7 @@ class PhasedTestController extends Controller
      */
     public function createQuestionnaireToComponentAction(Component $component)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.addtasktest", $currentUser, $component->getTest())) {
             $questionnaire = $this->get("self.phasedtest.manager")->createQuestionnaireToComponent($component);
@@ -169,7 +169,7 @@ class PhasedTestController extends Controller
      */
     public function getPotentialQuestionnairesAction(Component $component)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.addtasktest", $currentUser, $component->getTest())) {
             $questionnaires = $this->get("self.phasedtest.manager")->getPotentialQuestionnaires($component);
@@ -190,7 +190,7 @@ class PhasedTestController extends Controller
      */
     public function addQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.addtasktest", $currentUser, $component->getTest())) {
             $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($questionnaire, $component);
@@ -211,7 +211,7 @@ class PhasedTestController extends Controller
      */
     public function duplicateQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.addtasktest", $currentUser, $component->getTest())) {
             $newQuestionnaire = $this->get("self.questionnaire.manager")->duplicate($questionnaire);

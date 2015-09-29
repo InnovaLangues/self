@@ -31,7 +31,7 @@ class GroupController extends Controller
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listgroup", $currentUser)) {
             $groups = $em->getRepository("InnovaSelfBundle:Group")->findAll();
@@ -63,7 +63,7 @@ class GroupController extends Controller
      */
     public function newAction(Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.creategroup", $currentUser)) {
             $group = new Group();
@@ -91,7 +91,7 @@ class GroupController extends Controller
      */
     public function deleteAction(Group $group)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.deletegroup", $currentUser, $group)) {
             $em = $this->getDoctrine()->getManager();
@@ -115,7 +115,7 @@ class GroupController extends Controller
      */
     public function editAction(Group $group, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editgroup", $currentUser, $group)) {
             $form = $this->handleForm($group, $request);
@@ -141,7 +141,7 @@ class GroupController extends Controller
      */
     public function importUserAction(Group $group, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.csvimportgroup", $currentUser, $group)) {
             $defaultData = array();

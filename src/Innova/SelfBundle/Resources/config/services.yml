@@ -37,7 +37,7 @@ services:
         class: Innova\SelfBundle\Twig\RightExtension
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             rightManager:       @self.right.manager
         tags:
             - { name: twig.extension }
@@ -56,13 +56,13 @@ services:
             kernelRoot:         %kernel.root_dir%
             entityManager:      @doctrine.orm.entity_manager
             exportManager:      @self.export.manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             rightManager:       @self.right.manager
 
     innova_player:
         class: Innova\SelfBundle\Controller\PlayerController
         arguments:
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             entityManager:      @doctrine.orm.entity_manager
             session:            @session
             router:             @router
@@ -84,7 +84,7 @@ services:
             templating:                     @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
             formFactory:                    @form.factory
-            securityContext:                @security.context
+            securityContext:                @security.token_storage
             rightManager:                   @self.right.manager
 
     innova_editor_task:
@@ -96,7 +96,7 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
             formFactory:        @form.factory
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             rightManager:       @self.right.manager
             session:            @session
             router:             @router
@@ -113,7 +113,7 @@ services:
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
             templatingManager:  @self.templating.manager
             questionnaireManager:           @self.questionnaire.manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             rightManager:       @self.right.manager
             session:            @session
 
@@ -128,7 +128,7 @@ services:
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
             formFactory:        @form.factory
             rightManager:       @self.right.manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
 
     innova_editor_eec:
         class: Innova\SelfBundle\Controller\Editor\EecController
@@ -138,7 +138,7 @@ services:
             entityManager:          @doctrine.orm.entity_manager
             templating:             @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             rightManager:       @self.right.manager
             session:            @session
 
@@ -152,7 +152,7 @@ services:
             entityManager:      @doctrine.orm.entity_manager
             session:            @session
             router:             @router
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             translator:         @translator
 
     innova_editor_orderquestionnaire:
@@ -162,7 +162,7 @@ services:
             orderQuestionnaireTest: @self.order_questionnaire_test.manager
             questionnaireManager:   @self.questionnaire.manager
             templating:             @templating
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             rightManager:       @self.right.manager
             session:            @session
 
@@ -183,7 +183,7 @@ services:
             propositionManager:             @self.proposition.manager
             templating:                     @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
-            securityContext:    @security.context
+            securityContext:    @security.token_storage
             rightManager:       @self.right.manager
 
     pdo:

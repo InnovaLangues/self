@@ -30,7 +30,7 @@ class RightUserGroupController extends Controller
      */
     public function handleRightsAction(Group $group)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
             $em = $this->getDoctrine()->getManager();
@@ -51,7 +51,7 @@ class RightUserGroupController extends Controller
      */
     public function createRightsAction(Group $group, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
             $right = new RightUserGroup();
@@ -78,7 +78,7 @@ class RightUserGroupController extends Controller
      */
     public function editRightsAction(Group $group, RightUserGroup $rightUserGroup, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
             $form = $this->handleRightsForm($rightUserGroup, $group, $request);
@@ -104,7 +104,7 @@ class RightUserGroupController extends Controller
      */
     public function deleteRightAction(Group $group, RightUserGroup $rightUserGroup)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
             $user = $rightUserGroup->getUser();

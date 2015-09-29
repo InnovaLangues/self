@@ -30,7 +30,7 @@ class RightUserSessionController extends Controller
      */
     public function handleRightsAction(Session $session)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightssession", $currentUser)) {
             $em = $this->getDoctrine()->getManager();
@@ -51,7 +51,7 @@ class RightUserSessionController extends Controller
      */
     public function createRightsAction(Session $session, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightssession", $currentUser)) {
             $right = new RightUserSession();
@@ -78,7 +78,7 @@ class RightUserSessionController extends Controller
      */
     public function editRightsAction(Session $session, RightUserSession $rightUserSession, Request $request)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightssession", $currentUser)) {
             $form = $this->handleRightsForm($rightUserSession, $session, $request);
@@ -104,7 +104,7 @@ class RightUserSessionController extends Controller
      */
     public function deleteRightAction(Session $session, RightUserSession $rightUserSession)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightssession", $currentUser)) {
             $user = $rightUserSession->getUser();

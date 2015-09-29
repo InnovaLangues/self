@@ -28,7 +28,7 @@ class RightGroupController extends Controller
      */
     public function toggleAllForGroupAction(User $user, RightGroup $rightGroup)
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
             $this->get("self.rightgroup.manager")->toggleAll($user, $rightGroup);
