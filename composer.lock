@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d0f9d6eecc30c0584a8aef21d7635736",
+    "hash": "d8818c671eabf573ce6cb2c15c480762",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -2576,12 +2576,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/swiftmailer-bundle.git",
-                "reference": "456395511e37ecdbfc5777fb78ae6d69ee07ef98"
+                "reference": "82ea12ea63842d751273a869a08c22aa33695261"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/456395511e37ecdbfc5777fb78ae6d69ee07ef98",
-                "reference": "456395511e37ecdbfc5777fb78ae6d69ee07ef98",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/82ea12ea63842d751273a869a08c22aa33695261",
+                "reference": "82ea12ea63842d751273a869a08c22aa33695261",
                 "shasum": ""
             },
             "require": {
@@ -2625,20 +2625,20 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2015-09-22 15:47:37"
+            "time": "2015-09-28 13:44:51"
         },
         {
             "name": "symfony/symfony",
-            "version": "2.7.x-dev",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "03a63dbc14761c4774d93f4cc220372409cee4dd"
+                "reference": "619528a274647cffc1792063c3ea04c4fa8266a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/03a63dbc14761c4774d93f4cc220372409cee4dd",
-                "reference": "03a63dbc14761c4774d93f4cc220372409cee4dd",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/619528a274647cffc1792063c3ea04c4fa8266a0",
+                "reference": "619528a274647cffc1792063c3ea04c4fa8266a0",
                 "shasum": ""
             },
             "require": {
@@ -2747,7 +2747,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-09-28 12:41:55"
+            "time": "2015-09-25 11:16:52"
         },
         {
             "name": "twig/extensions",
