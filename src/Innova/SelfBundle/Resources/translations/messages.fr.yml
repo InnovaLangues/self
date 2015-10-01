@@ -112,6 +112,8 @@ editor:
         archived: Tests archivés
         phased: Test à étapes
         difficulty: Afficher le formulaire de perception de difficulté
+        exportpdf: Export livret PDF
+        exportcsv: Export CSV
     task:
         task: Tâche
         tasks: Tâches
