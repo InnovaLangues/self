@@ -154,62 +154,6 @@ class ExportController
         return;
     }
 
-     /**
-     * exportPdf function
-     * @Route(
-     *     "admin/export/pdf/test/{testId}",
-     *     name = "pdf-export"
-     * )
-     *
-     * @Method("PUT")
-     *
-     * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
-     */
-    public function exportPdfAction(Test $test)
-    {
-        if ($this->rightManager->checkRight("right.exportPDF", $this->user)) {
-            // Génération du nom du fichier exporté
-            $pdfName = $this->exportManager->exportPdfAction($test);
-
-            // Appel de la vue et de la génération du PDF
-            $fileList = $this->exportManager->getFileList($test, "pdf");
-
-            return array(
-                "pdfName" => $pdfName,
-                "test" => $test,
-                "fileList" => $fileList,
-            );
-        }
-
-        return;
-    }
-
-    /**
-     * exportPdf function
-     * @Route(
-     *     "admin/export/pdf/filelist/test/{testId}",
-     *     name = "pdf-export-show"
-     * )
-     *
-     * @Method("GET")
-     *
-     * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
-     */
-    public function showPdfAction(Test $test)
-    {
-        if ($this->rightManager->checkRight("right.exportPDF", $this->user)) {
-            // Appel de la vue et de la génération du PDF
-            $fileList = $this->exportManager->getFileList($test, "pdf");
-
-            return array(
-                "test" => $test,
-                "fileList" => $fileList,
-            );
-        }
-
-        return;
-    }
-
     /**
      * exportPdf function
      * @Route(

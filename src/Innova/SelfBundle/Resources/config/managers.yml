@@ -104,6 +104,14 @@ services:
             knpSnappyPdf:       @knp_snappy.pdf
             templating:         @templating
 
+    self.testexport.manager:
+        class: Innova\SelfBundle\Manager\ExportTestManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            kernelRoot:         %kernel.root_dir%
+            knpSnappyPdf:       @knp_snappy.pdf
+            templating:         @templating
+
     self.test.manager:
         class: Innova\SelfBundle\Manager\Editor\TestManager
         arguments:

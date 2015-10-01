@@ -18,6 +18,16 @@
         {% set canEditRights = true %} 
     {% endif %}
 
+    {% set canExportCSV = false %} 
+    {% if checkRight("right.exportCSV") %}
+        {% set canExportCSV = true %} 
+    {% endif %}
+
+    {% set canExportPDF = false %} 
+    {% if checkRight("right.exportPDF") %}
+        {% set canExportPDF = true %} 
+    {% endif %}
+
 <div class="input-group">
     <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
     <input type="text" id="search" class="form-control" value="">
@@ -29,6 +39,7 @@
     <thead>
         <tr>
             <th>{{ 'editor.test.name' | trans }}</th>
+            <th>{{ 'editor.test.language' | trans }}</th>
             <th class="text-center">{{ 'editor.task.count' | trans }}</th>
             <th class="text-center">{{ 'editor.test.phased' | trans }}</th>
             <th></th>
@@ -40,22 +51,15 @@
             <td>
                 {{ test.name }}
             </td>
-            <td class="text-center">
-                {% if not test.phased %}
-                    {{ test.orderQuestionnaireTests|length }}
-                {% else %}
-                    -
-                {% endif %}
+             <td>
+                {{ test.language.name | trans }}
             </td>
-            
             <td class="text-center">
-                {% if test.phased %}
-                    {{ 'generic.yes' | trans }}
-                {% else %}
-                    {{ 'generic.no' | trans }}
-                {% endif %}
+                {{ test.phased ? '-' : test.orderQuestionnaireTests|length }}
             </td>
-
+            <td class="text-center">
+                {{ test.phased ? 'generic.yes'|trans : 'generic.no'|trans }}
+            </td>
             <td>
                 <div class="btn-group dropup">
                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -95,13 +99,37 @@
                         </li>
                         {% endif %}
 
+                        <li class="divider"></li>
+
+                        {% if canExportCSV %}
+                        <li>
+                            <a href="{{ path('csv-export-show', { 'testId': test.id, 'tia': 0 }) }}">
+                                <span class="glyphicon glyphicon-export"></span> {{ 'editor.test.exportscsv' | trans }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('test-export-csv', { 'testId': test.id }) }}">
+                                <span class="glyphicon glyphicon-export"></span> {{ 'editor.test.exportcsv' | trans }}
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if canExportPDF %}
+                        <li>
+                            <a href="{{ path('pdf-export-show', { 'testId': test.id }) }}">
+                                <span class="glyphicon glyphicon-export"></span> {{ 'editor.test.exportpdf' | trans }}
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        {% endif %}
+
                         <li>
                             <a class="toggle-favorite" data-test-id="{{ test.id }}" href="#">
                                 {% if test in app.user.favoritesTests %}
-                                        <span class="glyphicon glyphicon-star"></span> {{ 'editor.test.remove_from_favorites' | trans }}
-                                    
+                                    <span class="glyphicon glyphicon-star"></span> {{ 'editor.test.remove_from_favorites' | trans }}
                                 {% else %}
-                                        <span class="glyphicon glyphicon-star-empty" ></span> {{ 'editor.test.add_to_favorites' | trans }}
+                                    <span class="glyphicon glyphicon-star-empty" ></span> {{ 'editor.test.add_to_favorites' | trans }}
                                 {% endif %}
                             </a>
                         </li>
