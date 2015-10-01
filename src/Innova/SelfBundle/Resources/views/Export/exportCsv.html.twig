@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-        <a class="btn btn-default btn-sm" href="{{ path('export') }}">
+        <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
         <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
         </a>
         <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#export-session-modal">Selection d'une session à exporter</a>
@@ -44,7 +44,6 @@
                         </ul>
                         {% else %}
                             <a href="{{ path('create_session_for_export', {'testId': test.id } )}}"  class="btn btn-default btn-xs">Créer une session à partir des traces déjà présentes.</a>
-                            
                         {% endif %}
                     </div>
                     <div class="modal-footer">

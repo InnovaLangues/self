@@ -99,7 +99,15 @@
                         </li>
                         {% endif %}
 
+                        <li class="divider"></li>
+
                         {% if canExportCSV %}
+                        <li>
+                            <a href="{{ path('csv-export-show', { 'testId': test.id, 'tia': 0 }) }}">
+                                <span class="glyphicon glyphicon-export"></span> {{ 'editor.test.exportscsv' | trans }}
+                            </a>
+                        </li>
+
                         <li>
                             <a href="{{ path('test-export-csv', { 'testId': test.id }) }}">
                                 <span class="glyphicon glyphicon-export"></span> {{ 'editor.test.exportcsv' | trans }}
@@ -113,6 +121,7 @@
                                 <span class="glyphicon glyphicon-export"></span> {{ 'editor.test.exportpdf' | trans }}
                             </a>
                         </li>
+                        <li class="divider"></li>
                         {% endif %}
 
                         <li>
