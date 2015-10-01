@@ -142,10 +142,11 @@
                         {% endif %}
 
                         {% set k = 0 %}
-                        {% for proposition in item.propositions if proposition.media.mediaPurpose.name != "reponse" %}
-                            {% if k == 0 %}
-                                <strong>Proposition(s)</strong> :<br/>
-                            {% endif %}
+                        {% for proposition in item.propositions %} 
+                            {% if proposition.media.mediaPurpose is null or (proposition.media.mediaPurpose is not null and proposition.media.mediaPurpose.name != "reponse") %}
+                                {% if k == 0 %}
+                                    <strong>Proposition(s)</strong> :<br/>
+                                {% endif %}
                                 <div class="col-xs-3 panel panel-default">
                                     <div class="panel-body">
                                     {{ k+1 }}
@@ -157,7 +158,8 @@
                                     {{ macros.displayMedia(proposition.media) }}
                                     </div>
                                 </div>
-                            {% set k = k+1 %}
+                                {% set k = k+1 %}
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
