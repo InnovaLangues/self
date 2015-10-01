@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Manager;
 use Innova\SelfBundle\Entity\Test;
 use Symfony\Component\Filesystem\Filesystem;
 
-class TestExportManager
+class ExportTestManager
 {
     protected $entityManager;
     protected $kernelRoot;
@@ -59,26 +59,33 @@ class TestExportManager
         $taskCount  = 0;
         $itemCount  = 0;
 
+        $this->addColumn($test->getName());
+        $csv .= $this->addLine();
+        $csv .= $this->addColumn("n° tâche");
+        $csv .= $this->addColumn("n° item");
+        $csv .= $this->addColumn("clés");
+        $csv .= $this->addColumn("nb options");
+
         $em = $this->entityManager;
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-
         foreach ($questionnaires as $questionnaire) {
             $taskCount++;
             $subquestions = $questionnaire->getQuestions()[0]->getSubquestions();
             foreach ($subquestions as $subq) {
                 $itemCount++;
+                $propsInfos = $this->getPropsInfos($subq);
                 $csv .= $this->addLine();
                 $csv .= $this->addColumn($taskCount);
                 $csv .= $this->addColumn($itemCount);
-                $csv .= $this->addColumn($this->getRightProps($subq));
-                $csv .= $this->addColumn($subq->getTypology()->getName());
+                $csv .= $this->addColumn($propsInfos[0]);
+                $csv .= $this->addColumn($propsInfos[1]);
             }
         }
 
         return $csv;
     }
 
-    private function getRightProps($subquestion)
+    private function getPropsInfos($subquestion)
     {
         $keys = "";
         $propCount  = 0;
@@ -91,7 +98,7 @@ class TestExportManager
             }
         }
 
-        return $keys;
+        return array($keys, count($propositions));
     }
 
     private function addColumn($text)
@@ -111,7 +118,7 @@ class TestExportManager
     private function intToLetter($int)
     {
         $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F",
-        7 => "G", 8 => "H", 9 => "I", 10 => "J", 11 => "K", 12 => "L", );
+        7 => "G", 8 => "H", 9 => "I", 10 => "J", 11 => "K", 12 => "L", 13 => "M", );
 
         return $arr[$int];
     }
