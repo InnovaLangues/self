@@ -101,15 +101,17 @@ stfalcon_tinymce:
         simple:
             forced_root_block: false
             plugins:
-                "charmap advlist autolink link image charmap hr searchreplace  visualchars paste selfemoticon "
-            toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | charmap selfemoticon selfsharp"
+                "charmap advlist autolink link image charmap hr searchreplace visualchars paste selfemoticon"
+            toolbar1: "undo redo | styleselect fontselect | bold italic | alignleft aligncenter alignright alignjustify | charmap selfemoticon selfsharp"
             paste_auto_cleanup_on_paste : true
             paste_remove_styles: true
             paste_remove_styles_if_webkit: true
             paste_text_sticky: true
             paste_text_sticky_default: true
             paste_strip_class_attributes: true
-            relative_urls : false
+            relative_urls: false
+            font_formats: "kaiti=kaiti"
+
 
 avalanche_imagine:
     source_root:  %kernel.root_dir%/../web/upload/media
