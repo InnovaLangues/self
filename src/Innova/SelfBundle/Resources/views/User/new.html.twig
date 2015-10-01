@@ -42,6 +42,9 @@
 	    {{ form_label(form.originStudent) }}
 	    {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
 
+	    {{ form_label(form.preferedLanguage) }}
+	    {{ form_widget(form.preferedLanguage, { 'attr': {'class': 'form-control'} }) }}
+
 	    {{ form_label(form.username) }}
 	    {% if user is defined %}
             {{ form_widget(form.username, { 'attr': { 'class': 'form-control', 'readonly': 'readonly' } }) }}

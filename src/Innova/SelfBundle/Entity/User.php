@@ -84,6 +84,11 @@ class User extends BaseUser
     protected $eeLevel;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Language", inversedBy="users")
+    */
+    protected $preferedLanguage;
+
+    /**
     * @ORM\ManyToOne(targetEntity="LevelLansad", inversedBy="levelLansads")
     */
     protected $levelLansad;
@@ -623,5 +628,29 @@ class User extends BaseUser
     public function getFavoritesTests()
     {
         return $this->favoritesTests;
+    }
+
+    /**
+     * Set preferedLanguage
+     *
+     * @param \Innova\SelfBundle\Entity\Language $preferedLanguage
+     *
+     * @return User
+     */
+    public function setPreferedLanguage(\Innova\SelfBundle\Entity\Language $preferedLanguage = null)
+    {
+        $this->preferedLanguage = $preferedLanguage;
+
+        return $this;
+    }
+
+    /**
+     * Get preferedLanguage
+     *
+     * @return \Innova\SelfBundle\Entity\Language
+     */
+    public function getPreferedLanguage()
+    {
+        return $this->preferedLanguage;
     }
 }

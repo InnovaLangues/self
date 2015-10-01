@@ -75,4 +75,19 @@ class SessionRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findByLanguageByActivity($language, $active)
+    {
+        $dql = "SELECT s FROM Innova\SelfBundle\Entity\Session s
+        LEFT JOIN s.test t
+        WHERE s.actif = :active
+        AND t.language = :language
+         ";
+
+        $query = $this->_em->createQuery($dql)
+                                ->setParameter('active', $active)
+                                ->setParameter('language', $language);
+
+        return $query->getResult();
+    }
 }

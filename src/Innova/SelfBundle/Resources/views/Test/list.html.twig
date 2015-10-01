@@ -34,7 +34,10 @@
 </div>
 <br/>
 
-<h3>{{ 'editor.test.list' | trans }} ({{ subset | trans}})</h3>
+<h3>
+    {{ 'editor.test.list' | trans }} 
+    ({{ subset | trans}}{{ app.user.preferedLanguage ? " - "~app.user.preferedLanguage.name|trans }})
+</h3>
 <table id="tests-table" class="table table-striped">
     <thead>
         <tr>

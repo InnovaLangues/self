@@ -33,9 +33,14 @@ class SessionController extends Controller
     public function listByActivityAction($isActive)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $sessionRepository = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session');
 
         if ($this->get("self.right.manager")->checkRight("right.listsession", $currentUser)) {
-            $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findBy(array("actif" => $isActive), array("name" => "ASC"));
+            if ($currentUser->getPreferedLanguage()) {
+                $sessions = $sessionRepository->findByLanguageByActivity($currentUser->getPreferedLanguage(), $isActive);
+            } else {
+                $sessions = $sessionRepository->findBy(array("actif" => $isActive), array("name" => "ASC"));
+            }
         } else {
             $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findAllAuthorizedByActivity($currentUser, $isActive);
         }

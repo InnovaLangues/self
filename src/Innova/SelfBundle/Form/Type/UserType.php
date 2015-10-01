@@ -11,13 +11,13 @@ class UserType extends AbstractType
     {
         $builder->add('lastname', 'text', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'lastname',
+            'label'  => 'user.name',
             'translation_domain' => 'messages',
         ));
 
         $builder->add('firstname', 'text', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'firstname',
+            'label'  => 'user.firstname',
             'translation_domain' => 'messages',
         ));
 
@@ -25,6 +25,13 @@ class UserType extends AbstractType
             'class'   => 'InnovaSelfBundle:originStudent',
             'label'  => 'origin',
             'required' => true,
+        ));
+
+        $builder->add('preferedLanguage', 'entity', array(
+            'class'   => 'InnovaSelfBundle:Language',
+            'label'  => 'user.preferedLanguage',
+            'empty_value' => "-",
+            'required' => false,
         ));
 
         $builder->add('save', 'submit', array(

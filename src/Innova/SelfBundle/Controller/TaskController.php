@@ -73,11 +73,14 @@ class TaskController
     public function listQuestionnairesAction()
     {
         $currentUser = $this->securityContext->getToken()->getUser();
+        $em = $this->entityManager;
 
         if ($this->rightManager->checkRight("right.listtask", $currentUser)) {
-            $em = $this->entityManager;
-
-            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+            if ($currentUser->getPreferedLanguage()) {
+                $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($currentUser->getPreferedLanguage());
+            } else {
+                $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
+            }
 
             return array('questionnaires' => $questionnaires);
         }

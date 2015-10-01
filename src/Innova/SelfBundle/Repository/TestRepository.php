@@ -65,6 +65,19 @@ class TestRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findByArchivedByLanguage($archived, $language)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Test t
+        WHERE t.archived = :archived
+        AND t.language = :language";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('archived', $archived)
+                ->setParameter('language', $language);
+
+        return $query->getResult();
+    }
+
     public function findByTask($task)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Test t

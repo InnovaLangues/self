@@ -18,12 +18,15 @@
     {% set canEditRights = true %} 
 {% endif %}
 
-
+<h3>
 {% if test is defined and checkRight("right.createsession") %}
-    <h3>{{ 'editor.session.list_test' | trans }} <b>{{ test.name }}</b> </h3>
+    {{ 'editor.session.list_test' | trans }} <b>{{ test.name }}</b>
 {% else %}
-    <h3>{{ 'editor.session.list' | trans }} {{ subset | trans }} </h3>
+    {{ 'editor.session.list' | trans }} {{ subset | trans }}
 {% endif %}
+{{ app.user.preferedLanguage ? "- "~app.user.preferedLanguage.name|trans }}
+</h3>
+
 
 <div class="input-group">
     <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
@@ -37,6 +40,7 @@
             <th>{{ 'editor.session.name' | trans }}</th>
             {% if test is not defined %}
                 <th>{{ 'editor.session.test' | trans }}</th>
+                <th>{{ 'editor.test.language' | trans }}</th>
             {% endif %}
             <th></th>
         </tr>
@@ -50,6 +54,9 @@
                 {% if test is not defined %}
                 <td>
                      <span class="text-muted">{{ session.test.name }}</span>
+                </td>
+                <td>
+                     <span class="text-muted">{{ session.test.language.name|trans }}</span>
                 </td>
                 {% endif %}
 

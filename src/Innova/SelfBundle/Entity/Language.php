@@ -45,6 +45,11 @@ class Language
     */
     protected $tests;
 
+    /**
+    * @ORM\OneToMany(targetEntity="User", mappedBy="preferedLanguage")
+    */
+    protected $users;
+
      /**
     * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="language")
     */

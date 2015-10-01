@@ -40,6 +40,7 @@ user:
     admin_users: Administrateurs
     session_managers: Gestionnaires de sessions
     rights: Permissions de l'utilisateur
+    preferedLanguage: Langue
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires

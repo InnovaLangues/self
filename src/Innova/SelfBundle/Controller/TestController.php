@@ -33,11 +33,16 @@ class TestController extends Controller
     public function listTestsAction()
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $testRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test');
 
         if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
-            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(false);
+            if ($currentUser->getPreferedLanguage()) {
+                $tests = $testRepo->findByArchivedByLanguage(0, $currentUser->getPreferedLanguage());
+            } else {
+                $tests = $testRepo->findByArchived(false);
+            }
         } else {
-            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findAuthorized($currentUser);
+            $tests = $testRepo->findAuthorized($currentUser);
         }
 
         return array('tests' => $tests, 'subset' => "test.all");
@@ -75,14 +80,19 @@ class TestController extends Controller
     public function listArchivedTestsAction()
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $testRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test');
 
         if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
-            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findByArchived(true);
-
-            return array('tests' => $tests, 'subset' => "test.archived");
+            if ($currentUser->getPreferedLanguage()) {
+                $tests = $testRepo->findByArchivedByLanguage(1, $currentUser->getPreferedLanguage());
+            } else {
+                $tests = $testRepo->findByArchived(1);
+            }
+        } else {
+            $tests = $testRepo->findAuthorized($currentUser);
         }
 
-        return;
+        return array('tests' => $tests, 'subset' => "test.archived");
     }
 
     /**
