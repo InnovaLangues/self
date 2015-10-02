@@ -203,6 +203,9 @@ class FixtureCommand extends ContainerAwareCommand
             array("right.exportCSV", "rightgroup.exports", null, null),
         ));
 
+        $generalParamsManager = $this->getContainer()->get("self.generalparams.manager");
+        $generalParamsManager->initialize();
+
         $now = time();
         $duration = $now - $start;
 

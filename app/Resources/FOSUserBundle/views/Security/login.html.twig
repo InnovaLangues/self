@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
                         <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-primary"/>
-                        <a class="btn btn-default" href="{{ path('fos_user_registration_register') }}">Créer un compte</a></li>
+                        <a class="btn btn-default" {{ not isSelfRegistrationEnabled() ? 'disabled="disabled"' }} href="{{ path('fos_user_registration_register') }}">Créer un compte</a></li>
                         <a class="btn btn-default" href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a>
                     </div>
                 </div>

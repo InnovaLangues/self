@@ -33,6 +33,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    twig.extension.parameters:
+        class: Innova\SelfBundle\Twig\GeneralParametersExtension
+        arguments:
+            entityManager: @doctrine.orm.entity_manager
+        tags:
+            - { name: twig.extension }
+
     twig.extension.check_right:
         class: Innova\SelfBundle\Twig\RightExtension
         arguments:

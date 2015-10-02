@@ -140,6 +140,14 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav pull-right">
+                        {% if isMaintenanceEnabled() %}
+                        <li>
+                            <a href="#">
+                                <span class='alert alert-danger'><span class="glyphicon glyphicon-info-sign"></span> Maintenance en cours</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
                         <li>
                             <a href="{{ path('self_user_display') }}">
                                 <span class="glyphicon glyphicon-user"></span> {{ app.user.username }}

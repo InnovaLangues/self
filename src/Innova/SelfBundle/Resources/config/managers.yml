@@ -321,3 +321,8 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             rightManager:       @self.right.manager
+
+    self.generalparams.manager:
+        class: Innova\SelfBundle\Manager\GeneralParametersManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
