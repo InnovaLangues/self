@@ -149,7 +149,7 @@ class FixtureCommand extends ContainerAwareCommand
         ));
 
         $rightGroupManager = $this->getContainer()->get("self.rightgroup.manager");
-        $rightGroupManager->createGroups(array("rightgroup.tasks", "rightgroup.tests", "rightgroup.sessions", "rightgroup.groups", "rightgroup.users", "rightgroup.exports"));
+        $rightGroupManager->createGroups(array("rightgroup.tasks", "rightgroup.tests", "rightgroup.sessions", "rightgroup.groups", "rightgroup.users", "rightgroup.exports", "rightgroup.generalParameters"));
 
         $rightManager = $this->getContainer()->get("self.right.manager");
         $rightManager->createRights(array(
@@ -201,6 +201,8 @@ class FixtureCommand extends ContainerAwareCommand
 
             array("right.exportPDF", "rightgroup.exports", null, null),
             array("right.exportCSV", "rightgroup.exports", null, null),
+
+            array("right.generalParameters", "rightgroup.generalParameters", null, null),
         ));
 
         $generalParamsManager = $this->getContainer()->get("self.generalparams.manager");

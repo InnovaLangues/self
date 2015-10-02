@@ -143,7 +143,7 @@
                         {% if isMaintenanceEnabled() %}
                         <li>
                             <a href="#">
-                                <span class='alert alert-danger'><span class="glyphicon glyphicon-info-sign"></span> Maintenance en cours</span>
+                                <span class='alert alert-danger'><span class="glyphicon glyphicon-info-sign"></span> {{ 'params.maintenanceEnabled' | trans }}</span>
                             </a>
                         </li>
                         {% endif %}
@@ -153,6 +153,15 @@
                                 <span class="glyphicon glyphicon-user"></span> {{ app.user.username }}
                             </a>
                         </li>
+
+                        {% if checkRight("right.generalParameters") %}
+                            <li>
+                                <a href="{{ path('parameters') }}">
+                                    <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
+                                </a>
+                            </li>
+                        {% endif %}
+
                          <li>
                             <a href="{{ path('fos_user_security_logout') }}">
                                 <span class="glyphicon glyphicon-log-out"></span> {{ 'menu.logout' | trans }}

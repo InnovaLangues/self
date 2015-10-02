@@ -16,6 +16,12 @@ menu:
     logout: Déconnexion
     language_change: Changez la langue
     groups: Groupes
+    generalparams: Paramètres
+
+params:
+    maintenance: Mode maintenance
+    selfRegistration: Autoriser l'auto-inscription
+    maintenanceEnabled: Maintenance en cours
 
 export:
     file_generated: Le fichier a été généré
@@ -553,6 +559,7 @@ right:
     editrightssession: Editer les permissions d'une session
     exportPDF: Export livret PDF
     exportCSV: Export CSV classique et Tia+
+    generalParameters: MOdifier les paramètres généraux
 
 rightgroup:
     tasks: Permissions sur les tâches
@@ -561,6 +568,7 @@ rightgroup:
     groups: Permissions sur les groupes
     users: Permissions sur les utilisateurs
     exports: Permissions sur les fonctions d'export
+    generalParameters: Permission sur les paramètres généraux
 
 
 canDelete: Peut supprimer
