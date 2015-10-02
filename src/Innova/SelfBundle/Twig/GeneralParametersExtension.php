@@ -37,11 +37,21 @@ class GeneralParametersExtension extends \Twig_Extension
         return $selfRegistrationEnabled;
     }
 
+    public function getMaintenanceText()
+    {
+        $em = $this->entityManager;
+
+        $maintenanceText = $em->getRepository('InnovaSelfBundle:GeneralParameters')->getMaintenanceText();
+
+        return $maintenanceText;
+    }
+
     public function getFunctions()
     {
         return array(
             'isMaintenanceEnabled' => new \Twig_Function_Method($this, 'isMaintenanceEnabled'),
             'isSelfRegistrationEnabled' => new \Twig_Function_Method($this, 'isSelfRegistrationEnabled'),
+            'getMaintenanceText' => new \Twig_Function_Method($this, 'getMaintenanceText'),
             );
     }
 

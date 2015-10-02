@@ -22,6 +22,7 @@ params:
     maintenance: Mode maintenance
     selfRegistration: Autoriser l'auto-inscription
     maintenanceEnabled: Maintenance en cours
+    maintenanceText: Texte maintenance
 
 export:
     file_generated: Le fichier a été généré

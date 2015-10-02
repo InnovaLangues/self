@@ -36,6 +36,13 @@ class GeneralParameters
     private $selfRegistration;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="maintenance_text", type="text", nullable=true)
+     */
+    private $maintenanceText;
+
+    /**
      * Set maintenance
      *
      * @param boolean $maintenance
@@ -91,5 +98,29 @@ class GeneralParameters
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set maintenanceText
+     *
+     * @param string $maintenanceText
+     *
+     * @return GeneralParameters
+     */
+    public function setMaintenanceText($maintenanceText)
+    {
+        $this->maintenanceText = $maintenanceText;
+
+        return $this;
+    }
+
+    /**
+     * Get maintenanceText
+     *
+     * @return string
+     */
+    public function getMaintenanceText()
+    {
+        return $this->maintenanceText;
     }
 }

@@ -21,6 +21,7 @@ class GeneralParametersManager
             $params = new GeneralParameters();
             $params->setMaintenance(false);
             $params->setSelfRegistration(true);
+            $params->setMaintenanceText("");
             $em->persist($params);
             $em->flush();
         }

@@ -6,7 +6,7 @@
             <h4 class="modal-title">{{ 'params.maintenanceEnabled' | trans }}</h4>
             </div>
             <div class="modal-body text-center">
-                Une maintenance est en cours. Il se peut que cela occasionne des dysfonctionnements.
+                {{ getMaintenanceText() }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'generic.close' | trans }}</button>

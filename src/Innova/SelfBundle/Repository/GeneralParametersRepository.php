@@ -20,4 +20,9 @@ class GeneralParametersRepository extends EntityRepository
     {
         return $this->get()->getSelfRegistration();
     }
+
+    public function getMaintenanceText()
+    {
+        return $this->get()->getMaintenanceText();
+    }
 }

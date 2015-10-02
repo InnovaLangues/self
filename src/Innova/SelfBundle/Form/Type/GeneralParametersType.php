@@ -23,6 +23,12 @@ class GeneralParametersType extends AbstractType
                 'translation_domain' => 'messages',
             ));
 
+        $builder->add('maintenanceText', 'text', array(
+            'attr' => array('class' => 'form-control'),
+            'label'  => 'params.maintenanceText',
+            'translation_domain' => 'messages',
+        ));
+
         $builder->add('save', 'submit', array(
                 'label' => 'generic.save',
                 'attr' => array('class' => 'btn btn-default btn-primary'),
