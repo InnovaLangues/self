@@ -65,6 +65,9 @@ class ExportTestManager
         $csv .= $this->addColumn("n° item");
         $csv .= $this->addColumn("clés");
         $csv .= $this->addColumn("nb options");
+        $csv .= $this->addColumn("");
+        $csv .= $this->addColumn("typologie");
+        $csv .= $this->addColumn("nom de l'item");
 
         $em = $this->entityManager;
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
@@ -79,6 +82,9 @@ class ExportTestManager
                 $csv .= $this->addColumn($itemCount);
                 $csv .= $this->addColumn($propsInfos[0]);
                 $csv .= $this->addColumn($propsInfos[1]);
+                $csv .= $this->addColumn("");
+                $csv .= $this->addColumn($propsInfos[2]);
+                $csv .= $this->addColumn($propsInfos[3]);
             }
         }
 
@@ -98,7 +104,17 @@ class ExportTestManager
             }
         }
 
-        return array($keys, count($propositions));
+        $optionCount = count($propositions);
+
+        $typo = $subquestion->getTypology()->getName();
+        if ($typo == "TLQROC") {
+            $optionCount = 1;
+            $keys = "A";
+        }
+
+        $item = $subquestion->getQuestion()->getQuestionnaire()->getTheme();
+
+        return array($keys, $optionCount, $typo, $item);
     }
 
     private function addColumn($text)
