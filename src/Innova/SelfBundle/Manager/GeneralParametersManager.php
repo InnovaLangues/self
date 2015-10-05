@@ -7,10 +7,12 @@ use Innova\SelfBundle\Entity\GeneralParameters;
 class GeneralParametersManager
 {
     protected $entityManager;
+    protected $messageManager;
 
-    public function __construct($entityManager)
+    public function __construct($entityManager, $messageManager)
     {
         $this->entityManager = $entityManager;
+        $this->messageManager = $messageManager;
     }
 
     public function initialize()
@@ -27,14 +29,19 @@ class GeneralParametersManager
         }
     }
 
-    public function setMaintenance($enabled)
+    public function setMaintenance($enabled, $message)
     {
         $em = $this->entityManager;
         $params = $em->getRepository('InnovaSelfBundle:GeneralParameters')->get();
 
         $params->setMaintenance($enabled);
+        $params->setMaintenanceText($message);
         $em->persist($params);
         $em->flush();
+
+        if ($enabled) {
+            $this->messageManager->sendMessage($message, "all");
+        }
 
         return $enabled;
     }
