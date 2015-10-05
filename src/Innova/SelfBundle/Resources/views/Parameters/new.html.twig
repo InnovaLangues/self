@@ -1,5 +1,32 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-{{ form(form) }}
+
+ <h3>{{ 'menu.generalparams' | trans }}</h3>
+
+<form method="post">
+    <div class="form-group">
+        {{ form_label(form.maintenance) }}
+        {{ form_widget(form.maintenance) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.maintenanceText) }}
+        {{ form_widget(form.maintenanceText) }}
+    </div>
+
+    
+    <div class="form-group">
+        {{ form_label(form.selfRegistration) }}
+        {{ form_widget(form.selfRegistration) }}
+    </div>
+
+    <div class="form-group text-right">
+        {{ form_label(form.save) }}
+        {{ form_widget(form.save) }}
+    </div>
+
+    {{ form_widget(form._token) }}
+</form>
+
 {% endblock %}
