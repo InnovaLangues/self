@@ -17,7 +17,7 @@ env:
         - deps=no
 
 before_install:
-	- if [ "$deps" != "skip" ]; then composer self-update; fi;
+    - if [ "$deps" != "skip" ]; then composer self-update; fi;
 
 install:
     - if [ "$deps" = "no" ]; then composer --prefer-source install; fi;
