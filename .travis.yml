@@ -12,7 +12,7 @@ install:
     - composer --prefer-source install
 
 script:
-    - phpunit .
+    - phpunit -c app
 
 notifications:
   webhooks:
