@@ -124,9 +124,6 @@ class ScoreManager
                     array('rightAnswers' => 'DESC')
                 );
 
-                $nbThresholds = count($thresholds);
-                $nbMissedThresholds = 0;
-
                 $scores = $this->getScoresFromTraces($traces);
                 $correctAnswers = $this->countCorrectAnswers($scores);
 
@@ -135,7 +132,6 @@ class ScoreManager
 
                         return $threshold->getDescription();
                     }
-                    $nbMissedThresholds += 1;
                 }
             }
         }
