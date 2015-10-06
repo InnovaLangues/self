@@ -1,3 +1,6 @@
+# Requirements 
+php >= 5.4
+
 # Installation
 
 ### clone the project, create needed dir
@@ -38,7 +41,6 @@ Need at least the 0.12.1 release...
 ``` bash
 sudo dpkg -i wkhtmltox-*_linux-wheezy-amd64.deb
 ```
-
 
 ### Users :
 Create an user
