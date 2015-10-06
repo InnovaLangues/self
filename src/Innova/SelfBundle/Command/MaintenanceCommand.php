@@ -20,8 +20,6 @@ class MaintenanceCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $em = $this->getContainer()->get('doctrine')->getManager('default');
-
         $enabled = $input->getArgument('enabled');
 
         if ($this->getContainer()->get("self.generalparams.manager")->setMaintenance($enabled)) {
