@@ -196,7 +196,7 @@ class Component
     /**
      * Get traces
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Innova\SelfBundle\Entity\Trace[]
      */
     public function getTraces()
     {

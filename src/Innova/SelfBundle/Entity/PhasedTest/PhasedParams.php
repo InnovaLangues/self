@@ -297,7 +297,7 @@ class PhasedParams
     /**
      * Get skillScoreThresholds
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return @return SkillScoreThreshold[]
      */
     public function getSkillScoreThresholds()
     {
@@ -433,7 +433,7 @@ class PhasedParams
     /**
      * Get ignoredLevels
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return IgnoredLevel[]
      */
     public function getIgnoredLevels()
     {

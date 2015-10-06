@@ -206,7 +206,7 @@ class Typology
     /**
      * Get skills
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Skill[]
      */
     public function getSkills()
     {

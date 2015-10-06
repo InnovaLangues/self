@@ -99,8 +99,8 @@ class QuestionnaireRepository extends EntityRepository
 
     /**
      * countDoneYetByUserByTestByComponent count traces for test, session, and component
-     * @param id $testId
-     * @param id $userId
+     * @param id $test
+     * @param id $user
      *
      * @return int number of traces for the test and the user
      */
@@ -145,9 +145,9 @@ class QuestionnaireRepository extends EntityRepository
 
     /**
      * countTraceByUserByTestByQuestionnaire Count Trace By user/test/questionnaire
-     * @param id $testId
-     * @param id $questionnaireId
-     * @param id $userId
+     * @param id $test
+     * @param id $questionnaire
+     * @param id $user
      *
      * @return int number of traces for the test and the questionnaire and the user
      */

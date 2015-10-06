@@ -125,7 +125,7 @@ class Test
      * Set name
      *
      * @param  string  $name
-     * @return Session
+     * @return Test
      */
     public function setName($name)
     {
@@ -203,7 +203,7 @@ class Test
     /**
      * Get traces
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Trace[]
      */
     public function getTraces()
     {
@@ -259,7 +259,7 @@ class Test
     /**
      * Get mediaClicks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Media\MediaClick[]
      */
     public function getMediaClicks()
     {
@@ -292,7 +292,7 @@ class Test
     /**
      * Get orderQuestionnaireTests
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return OrderQuestionnaireTest[]
      */
     public function getOrderQuestionnaireTests()
     {
@@ -348,7 +348,7 @@ class Test
     /**
      * Get copies
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Test[]
      */
     public function getCopies()
     {
@@ -394,7 +394,7 @@ class Test
     /**
      * Get phased
      *
-     * @return boolean
+     * @return string
      */
     public function getPhased()
     {
@@ -437,7 +437,7 @@ class Test
     /**
      * Get components
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return PhasedTest\Component[]
      */
     public function getComponents()
     {
@@ -470,7 +470,7 @@ class Test
     /**
      * Get sessions
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Session[]
      */
     public function getSessions()
     {
@@ -542,7 +542,7 @@ class Test
     /**
      * Get difficulty
      *
-     * @return boolean
+     * @return string
      */
     public function getDifficulty()
     {

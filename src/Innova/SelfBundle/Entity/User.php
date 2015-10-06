@@ -320,7 +320,7 @@ class User extends BaseUser
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Questionnaire[]
      */
     public function getQuestionnaires()
     {
@@ -491,7 +491,7 @@ class User extends BaseUser
     /**
      * Get mediaClicks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Media\MediaClick[]
      */
     public function getMediaClicks()
     {
@@ -524,7 +524,7 @@ class User extends BaseUser
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Comment[]
      */
     public function getComments()
     {
@@ -557,7 +557,7 @@ class User extends BaseUser
     /**
      * Get revisedQuestionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Questionnaire[]
      */
     public function getRevisedQuestionnaires()
     {
@@ -590,7 +590,7 @@ class User extends BaseUser
     /**
      * Get editorLogs
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return EditorLog\EditorLog[]
      */
     public function getEditorLogs()
     {

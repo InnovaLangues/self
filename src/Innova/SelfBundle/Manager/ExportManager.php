@@ -395,6 +395,9 @@ class ExportManager
         return $csv;
     }
 
+    /**
+     * @param integer $int
+     */
     private function intToLetter($int)
     {
         $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F",
@@ -402,32 +405,33 @@ class ExportManager
 
         return $arr[$int];
     }
+
     /**
      * calculateScore function
      *
      */
-  private function calculateScore(User $user, Session $session, $rightProps)
-  {
-      $em = $this->entityManager;
-      $score = 0;
-      $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSession($user->getId(), $session->getId());
+    private function calculateScore(User $user, Session $session, $rightProps)
+    {
+        $em = $this->entityManager;
+        $score = 0;
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSession($user->getId(), $session->getId());
 
-      foreach ($traces as $trace) {
-          if ($answers = $trace->getAnswers()) {
-              if (isset($answers[0])) {
-                  $answersArray = array();
-                  $typology = $answers[0]->getSubquestion()->getTypology()->getName();
+        foreach ($traces as $trace) {
+            if ($answers = $trace->getAnswers()) {
+                if (isset($answers[0])) {
+                    $answersArray = array();
+                    $typology = $answers[0]->getSubquestion()->getTypology()->getName();
 
-                  switch ($typology) {
-                    case 'TLCMLDM':
-                    case 'TLCMLMULT':
-                    case 'TLQROC':
-                        foreach ($answers as $answer) {
-                            $subquestionId = $answer->getSubquestion()->getId();
-                            if (!isset($answersArray[$subquestionId])) {
-                                $answersArray[$subquestionId] = array();
-                            }
-                            $answersArray[$subquestionId][] = $answer->getProposition()->getId();
+                    switch ($typology) {
+                        case 'TLCMLDM':
+                        case 'TLCMLMULT':
+                        case 'TLQROC':
+                            foreach ($answers as $answer) {
+                                $subquestionId = $answer->getSubquestion()->getId();
+                                if (!isset($answersArray[$subquestionId])) {
+                                    $answersArray[$subquestionId] = array();
+                                }
+                                $answersArray[$subquestionId][] = $answer->getProposition()->getId();
                         }
 
                         foreach ($answersArray as $subquestionId => $answers) {
@@ -515,16 +519,18 @@ class ExportManager
                             }
                         }
                         break;
-                }
-              }
-          }
-      }
+                    }
+                } 
+            }
+        }
 
-      return $score;
-  }
+        return $score;
+    }
 
      /**
      * Précalcule pas mal de choses pour éviter les requêtes redondantes plus tard
+     * @param integer $sessionId
+     * @param string $mode
      */
     private function preprocessTest($sessionId, $questionnaires, $mode)
     {

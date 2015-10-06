@@ -304,6 +304,7 @@ class SessionController extends Controller
 
     /**
      * Handles session form
+     * @param Request $request
      */
     private function handleForm(Session $session, $request)
     {
