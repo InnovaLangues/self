@@ -129,13 +129,10 @@ class ScoreManager
 
                 $scores = $this->getScoresFromTraces($traces);
                 $correctAnswers = $this->countCorrectAnswers($scores);
-                $percent = 0;
 
                 foreach ($thresholds as $threshold) {
                     if ($correctAnswers >= $threshold->getRightAnswers()) {
-                        $percent = ($nbThresholds - $nbMissedThresholds) / $nbThresholds * 100;
 
-                        //return array("feedback" => $threshold->getDescription(),"percent" => $percent);
                         return $threshold->getDescription();
                     }
                     $nbMissedThresholds += 1;
