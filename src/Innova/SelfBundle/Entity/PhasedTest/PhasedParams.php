@@ -297,7 +297,7 @@ class PhasedParams
     /**
      * Get skillScoreThresholds
      *
-     * @return @return SkillScoreThreshold[]
+     * @return SkillScoreThreshold[]
      */
     public function getSkillScoreThresholds()
     {
