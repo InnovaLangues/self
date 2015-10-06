@@ -886,7 +886,7 @@ class Questionnaire
     /**
      * Set levelProof
      *
-     * @param  string        $levelProof
+     * @param  text        $levelProof
      * @return Questionnaire
      */
     public function setLevelProof($levelProof)
@@ -909,7 +909,7 @@ class Questionnaire
     /**
      * Set authorRightMore
      *
-     * @param  string        $authorRightMore
+     * @param  text        $authorRightMore
      * @return Questionnaire
      */
     public function setAuthorRightMore($authorRightMore)
@@ -932,7 +932,7 @@ class Questionnaire
     /**
      * Set sourceMore
      *
-     * @param  string        $sourceMore
+     * @param  text        $sourceMore
      * @return Questionnaire
      */
     public function setSourceMore($sourceMore)
