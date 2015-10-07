@@ -17,3 +17,4 @@ parameters:
     cache_manager_enabled: false
     gitter_token: null
     gitter_room: null
+    acme_demo.faye.endpoint:      'http://localhost:3000/'

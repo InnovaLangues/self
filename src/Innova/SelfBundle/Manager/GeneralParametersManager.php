@@ -29,7 +29,7 @@ class GeneralParametersManager
         }
     }
 
-    public function setMaintenance($enabled, $message)
+    public function setMaintenance($enabled, $message = "")
     {
         $em = $this->entityManager;
         $params = $em->getRepository('InnovaSelfBundle:GeneralParameters')->get();
@@ -43,7 +43,7 @@ class GeneralParametersManager
         $em->flush();
 
         if ($enabled) {
-            $this->messageManager->sendMessage($message, "all");
+            $this->messageManager->sendMessage($params->getMaintenanceText(), "all");
         }
 
         return $enabled;

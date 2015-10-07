@@ -1,3 +1,7 @@
+parameters:
+    acme_demo.faye.adapter.class: Nc\FayeClient\Adapter\CurlAdapter
+    acme_demo.faye.client.class: Nc\FayeClient\Client
+
 services:
     twig.extension.text:
        class: Twig_Extensions_Extension_Text
