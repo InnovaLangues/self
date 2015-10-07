@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a0e3a356a5295b276eef9dbc2ae9b415",
+    "hash": "37d5b1f672b696c57b0dab7af1d33e0a",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -918,12 +918,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "6c527d8ccbccec5257bb2c92bca973653b1e3976"
+                "reference": "d196ddc229f50c66c5a015c158adb78a2dfb4351"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/migrations/zipball/d196ddc229f50c66c5a015c158adb78a2dfb4351",
-                "reference": "6c527d8ccbccec5257bb2c92bca973653b1e3976",
+                "reference": "d196ddc229f50c66c5a015c158adb78a2dfb4351",
                 "shasum": ""
             },
             "require": {
@@ -949,7 +949,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "v1.0.x-dev"
+                    "dev-master": "v1.1.x-dev"
                 }
             },
             "autoload": {
@@ -977,20 +977,20 @@
                 "database",
                 "migrations"
             ],
-            "time": "2015-09-21 09:51:07"
+            "time": "2015-09-29 11:13:06"
         },
         {
             "name": "doctrine/orm",
-            "version": "v2.5.0",
+            "version": "2.5.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "aa80c7d2c55a372f5f9f825f5c66dbda53a6e3fe"
+                "reference": "2d1bc787498db7a4dad3925e8e3baf8b02ef79b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/aa80c7d2c55a372f5f9f825f5c66dbda53a6e3fe",
-                "reference": "aa80c7d2c55a372f5f9f825f5c66dbda53a6e3fe",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2d1bc787498db7a4dad3925e8e3baf8b02ef79b0",
+                "reference": "2d1bc787498db7a4dad3925e8e3baf8b02ef79b0",
                 "shasum": ""
             },
             "require": {
@@ -1054,7 +1054,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2015-04-02 20:40:18"
+            "time": "2015-09-19 08:45:24"
         },
         {
             "name": "friendsofsymfony/http-cache",
@@ -1134,12 +1134,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle.git",
-                "reference": "aa20b2a5e87612fae153ac3d34444cd1524950ab"
+                "reference": "a28853add01d8af5011fe9b9055da5175f99cd5c"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/a28853add01d8af5011fe9b9055da5175f99cd5c",
-                "reference": "aa20b2a5e87612fae153ac3d34444cd1524950ab",
+                "reference": "a28853add01d8af5011fe9b9055da5175f99cd5c",
                 "shasum": ""
             },
             "require": {
@@ -1203,7 +1203,7 @@
                 "purge",
                 "varnish"
             ],
-            "time": "2015-08-20 07:02:00"
+            "time": "2015-09-30 06:39:09"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -1974,12 +1974,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lexik/LexikMaintenanceBundle.git",
-                "reference": "2a833b3c408ac69cb615db196974fb77595b4b36"
+                "reference": "4967701a108aa8262fc92790414e3113d7d32d93"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/lexik/LexikMaintenanceBundle/zipball/4967701a108aa8262fc92790414e3113d7d32d93",
-                "reference": "2a833b3c408ac69cb615db196974fb77595b4b36",
+                "reference": "4967701a108aa8262fc92790414e3113d7d32d93",
                 "shasum": ""
             },
             "require": {
@@ -2023,7 +2023,7 @@
                 "bundle",
                 "maintenance"
             ],
-            "time": "2015-09-07 07:03:57"
+            "time": "2015-10-01 13:15:01"
         },
         {
             "name": "monolog/monolog",
@@ -2103,7 +2103,7 @@
         },
         {
             "name": "nc/faye-client",
-            "version": "dev-master",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nchaulet/faye-client.git",
@@ -2623,12 +2623,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/swiftmailer-bundle.git",
-                "reference": "82ea12ea63842d751273a869a08c22aa33695261"
+                "reference": "6febf558532ee6f25edd2699f74072c56def3f4a"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/6febf558532ee6f25edd2699f74072c56def3f4a",
-                "reference": "82ea12ea63842d751273a869a08c22aa33695261",
+                "reference": "6febf558532ee6f25edd2699f74072c56def3f4a",
                 "shasum": ""
             },
             "require": {
@@ -2672,7 +2672,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2015-09-28 13:44:51"
+            "time": "2015-09-30 17:01:01"
         },
         {
             "name": "symfony/symfony",
@@ -2854,12 +2854,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "604e94883bc1691071d9a30ff522808dc476394c"
+                "reference": "efaf5036e6857616379b78648ffdb5fdafb92c87"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/twigphp/Twig/zipball/efaf5036e6857616379b78648ffdb5fdafb92c87",
-                "reference": "604e94883bc1691071d9a30ff522808dc476394c",
+                "reference": "efaf5036e6857616379b78648ffdb5fdafb92c87",
                 "shasum": ""
             },
             "require": {
@@ -2907,21 +2907,21 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-09-24 14:39:22"
+            "time": "2015-10-04 08:38:04"
         },
         {
             "name": "willdurand/js-translation-bundle",
-            "version": "v2.2.2",
+            "version": "v2.3.0",
             "target-dir": "Bazinga/Bundle/JsTranslationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaJsTranslationBundle.git",
-                "reference": "2f9ee8b087af3c2998b6091168c31da13ca0cfcd"
+                "reference": "0b7a9b5034ff1a7f9879e4dc42e6c37bf8426863"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/2f9ee8b087af3c2998b6091168c31da13ca0cfcd",
-                "reference": "2f9ee8b087af3c2998b6091168c31da13ca0cfcd",
+                "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/0b7a9b5034ff1a7f9879e4dc42e6c37bf8426863",
+                "reference": "0b7a9b5034ff1a7f9879e4dc42e6c37bf8426863",
                 "shasum": ""
             },
             "require": {
@@ -2931,7 +2931,7 @@
                 "symfony/intl": "~2.3"
             },
             "replace": {
-                "willdurand/expose-translation-bundle": "2.2.*"
+                "willdurand/expose-translation-bundle": "2.3.*"
             },
             "require-dev": {
                 "symfony/browser-kit": "~2.3",
@@ -2941,7 +2941,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -2956,7 +2956,7 @@
             "authors": [
                 {
                     "name": "William Durand",
-                    "email": "william.durand1@gmail.com"
+                    "email": "will+git@drnd.me"
                 }
             ],
             "description": "A pretty nice way to expose your translation messages to your JavaScript.",
@@ -2965,7 +2965,7 @@
                 "symfony",
                 "translation"
             ],
-            "time": "2015-05-21 21:59:34"
+            "time": "2015-09-30 07:13:59"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -3012,13 +3012,12 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "friendsofsymfony/user-bundle": 20,
         "doctrine/doctrine-migrations-bundle": 20,
+        "friendsofsymfony/user-bundle": 20,
         "stfalcon/tinymce-bundle": 20,
         "knplabs/knp-snappy-bundle": 20,
         "willdurand/js-translation-bundle": 0,
-        "lexik/maintenance-bundle": 20,
-        "nc/faye-client": 20
+        "lexik/maintenance-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
