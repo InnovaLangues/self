@@ -15,7 +15,7 @@ class MaintenanceCommand extends ContainerAwareCommand
             ->setName('self:maintenance')
             ->setDescription('Active ou désactive le mode maintenance')
             ->addArgument('enabled', InputArgument::REQUIRED, '0 or 1, depending if you wanna enable or disable it')
-            ->addArgument('message', InputArgument::REQUIRED, 'message you want to be displayed')
+            ->addArgument('message', InputArgument::OPTIONAL, 'message you want to be displayed')
            ;
     }
 

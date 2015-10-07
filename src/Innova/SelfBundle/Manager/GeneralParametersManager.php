@@ -35,7 +35,10 @@ class GeneralParametersManager
         $params = $em->getRepository('InnovaSelfBundle:GeneralParameters')->get();
 
         $params->setMaintenance($enabled);
-        $params->setMaintenanceText($message);
+        if ($message) {
+            $params->setMaintenanceText($message);
+        }
+
         $em->persist($params);
         $em->flush();
 
