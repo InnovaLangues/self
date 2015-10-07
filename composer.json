@@ -13,7 +13,7 @@
         "symfony/swiftmailer-bundle": "2.3.*",
         "symfony/monolog-bundle": "2.3.*",
         "doctrine/orm": "2.5.*",
-        "doctrine/doctrine-bundle": "1.4.*",
+        "doctrine/doctrine-bundle": "1.5.*",
         "doctrine/doctrine-fixtures-bundle" : "2.2.0",
         "doctrine/doctrine-migrations-bundle": "dev-master#6a1bd731dbdd4a",
         "twig/extensions": "1.3",
