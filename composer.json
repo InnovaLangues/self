@@ -30,7 +30,8 @@
         "friendsofsymfony/http-cache-bundle": "~1.0",
         "innova/gitter-bundle": "v1.0",
         "jms/i18n-routing-bundle": "~1.1",
-        "lexik/maintenance-bundle": "dev-master"
+        "lexik/maintenance-bundle": "dev-master",
+        "nc/faye-client": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

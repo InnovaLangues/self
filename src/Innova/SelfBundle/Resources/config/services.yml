@@ -205,3 +205,13 @@ services:
     session.handler.pdo:
         class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
         arguments: [@pdo, %pdo.db_options%]
+
+
+    acme_demo.faye.adapter:
+        class:     %acme_demo.faye.adapter.class%
+
+    acme_demo.faye.client:
+        class:     %acme_demo.faye.client.class%
+        arguments: 
+            - @acme_demo.faye.adapter
+            - %acme_demo.faye.endpoint%

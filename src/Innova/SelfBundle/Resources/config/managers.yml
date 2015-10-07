@@ -326,3 +326,9 @@ services:
         class: Innova\SelfBundle\Manager\GeneralParametersManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            messageManager:     @self.message.manager
+
+    self.message.manager:
+        class: Innova\SelfBundle\Manager\MessageManager
+        arguments:
+            fayeClient:      @acme_demo.faye.client

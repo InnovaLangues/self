@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6d681038499dc5b254d22c5c2aaf394b",
+    "hash": "a0e3a356a5295b276eef9dbc2ae9b415",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -689,7 +689,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/238aaa5fa04b5755a9957715e269d542cd0f8e39",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/93ec729e3f2f1bb882904cce9d2c1dde6f139ec8",
                 "reference": "6a1bd731dbdd4a",
                 "shasum": ""
             },
@@ -922,7 +922,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/6c527d8ccbccec5257bb2c92bca973653b1e3976",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/d196ddc229f50c66c5a015c158adb78a2dfb4351",
                 "reference": "6c527d8ccbccec5257bb2c92bca973653b1e3976",
                 "shasum": ""
             },
@@ -1138,7 +1138,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/aa20b2a5e87612fae153ac3d34444cd1524950ab",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/a28853add01d8af5011fe9b9055da5175f99cd5c",
                 "reference": "aa20b2a5e87612fae153ac3d34444cd1524950ab",
                 "shasum": ""
             },
@@ -1978,7 +1978,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikMaintenanceBundle/zipball/2a833b3c408ac69cb615db196974fb77595b4b36",
+                "url": "https://api.github.com/repos/lexik/LexikMaintenanceBundle/zipball/4967701a108aa8262fc92790414e3113d7d32d93",
                 "reference": "2a833b3c408ac69cb615db196974fb77595b4b36",
                 "shasum": ""
             },
@@ -2100,6 +2100,53 @@
                 "psr-3"
             ],
             "time": "2015-08-31 09:17:37"
+        },
+        {
+            "name": "nc/faye-client",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nchaulet/faye-client.git",
+                "reference": "96859ea7717435e8f454e918726b15c98f41ba5d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nchaulet/faye-client/zipball/96859ea7717435e8f454e918726b15c98f41ba5d",
+                "reference": "96859ea7717435e8f454e918726b15c98f41ba5d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "atoum/atoum": "dev-master",
+                "guzzle/guzzle": "~3.0"
+            },
+            "suggest": {
+                "guzzle/guzzle": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Nc\\FayeClient": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "nchaulet",
+                    "email": "n.chaulet@gmail.com"
+                }
+            ],
+            "description": "Php client for interacting with faye server",
+            "keywords": [
+                "faye",
+                "websocket"
+            ],
+            "time": "2014-06-10 06:11:09"
         },
         {
             "name": "nikic/php-parser",
@@ -2580,7 +2627,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/c7c15cab65f2c36090e9a1533adcefe1381bc6f6",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/6febf558532ee6f25edd2699f74072c56def3f4a",
                 "reference": "82ea12ea63842d751273a869a08c22aa33695261",
                 "shasum": ""
             },
@@ -2811,7 +2858,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/604e94883bc1691071d9a30ff522808dc476394c",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/efaf5036e6857616379b78648ffdb5fdafb92c87",
                 "reference": "604e94883bc1691071d9a30ff522808dc476394c",
                 "shasum": ""
             },
@@ -2970,7 +3017,8 @@
         "stfalcon/tinymce-bundle": 20,
         "knplabs/knp-snappy-bundle": 20,
         "willdurand/js-translation-bundle": 0,
-        "lexik/maintenance-bundle": 20
+        "lexik/maintenance-bundle": 20,
+        "nc/faye-client": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
