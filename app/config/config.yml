@@ -95,8 +95,8 @@ stfalcon_tinymce:
             url: "asset[bundles/innovaself/plugins/selfemoticon/plugin.min.js]"
         selfsharp:
             url: "asset[bundles/innovaself/plugins/selfsharp/plugin.min.js]"
-        selffuriganaAdd:
-            url: "asset[bundles/innovaself/plugins/selffuriganaAdd/plugin.min.js]"
+        selffurigana:
+            url: "asset[bundles/innovaself/plugins/selffurigana/plugin.min.js]"
     theme:
         # Simple theme: same as default theme
         # Advanced theme with almost all enabled plugins
@@ -104,7 +104,7 @@ stfalcon_tinymce:
             forced_root_block: false
             plugins:
                 "charmap advlist autolink link image charmap hr searchreplace visualchars paste selfemoticon"
-            toolbar1: "undo redo | styleselect fontselect | bold italic | alignleft aligncenter alignright alignjustify | charmap selfemoticon selfsharp selffuriganaAdd"
+            toolbar1: "undo redo | styleselect fontselect | bold italic | alignleft aligncenter alignright alignjustify | charmap selfemoticon selfsharp selffurigana"
             paste_auto_cleanup_on_paste : true
             paste_remove_styles: true
             paste_remove_styles_if_webkit: true
