@@ -231,7 +231,7 @@ class ExportManager
         return $csv;
     }
 
-    private function addColumn($text)
+    public function addColumn($text)
     {
         $column = "\"".$text."\"".";";
 
@@ -398,7 +398,7 @@ class ExportManager
     /**
      * @param integer $int
      */
-    private function intToLetter($int)
+    public function intToLetter($int)
     {
         $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F",
         7 => "G", 8 => "H", 9 => "I", 10 => "J", 11 => "K", 12 => "L", );
@@ -432,7 +432,7 @@ class ExportManager
                                     $answersArray[$subquestionId] = array();
                                 }
                                 $answersArray[$subquestionId][] = $answer->getProposition()->getId();
-                        }
+                            }
 
                         foreach ($answersArray as $subquestionId => $answers) {
                             $rightPropositions = array();
@@ -520,7 +520,7 @@ class ExportManager
                         }
                         break;
                     }
-                } 
+                }
             }
         }
 
@@ -530,7 +530,7 @@ class ExportManager
      /**
      * Précalcule pas mal de choses pour éviter les requêtes redondantes plus tard
      * @param integer $sessionId
-     * @param string $mode
+     * @param string  $mode
      */
     private function preprocessTest($sessionId, $questionnaires, $mode)
     {

@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
 use Symfony\Component\Filesystem\Filesystem;
+use Innova\SelfBundle\Entity\Subquestion;
 
 class ExportTestManager
 {
@@ -11,13 +12,15 @@ class ExportTestManager
     protected $kernelRoot;
     protected $knpSnappyPdf;
     protected $templating;
+    protected $exportManager;
 
-    public function __construct($entityManager, $kernelRoot, $knpSnappyPdf, $templating)
+    public function __construct($entityManager, $kernelRoot, $knpSnappyPdf, $templating, $exportManager)
     {
-        $this->entityManager = $entityManager;
-        $this->kernelRoot = $kernelRoot;
-        $this->knpSnappyPdf = $knpSnappyPdf;
-        $this->templating = $templating;
+        $this->entityManager    = $entityManager;
+        $this->kernelRoot       = $kernelRoot;
+        $this->knpSnappyPdf     = $knpSnappyPdf;
+        $this->templating       = $templating;
+        $this->exportManager    = $exportManager;
     }
 
     public function exportPdfAction(Test $test)
@@ -59,15 +62,15 @@ class ExportTestManager
         $taskCount  = 0;
         $itemCount  = 0;
 
-        $this->addColumn($test->getName());
+        $this->exportManager->addColumn($test->getName());
         $csv .= $this->addLine();
-        $csv .= $this->addColumn("n° tâche");
-        $csv .= $this->addColumn("n° item");
-        $csv .= $this->addColumn("clés");
-        $csv .= $this->addColumn("nb options");
-        $csv .= $this->addColumn("");
-        $csv .= $this->addColumn("typologie");
-        $csv .= $this->addColumn("nom de l'item");
+        $csv .= $this->exportManager->addColumn("n° tâche");
+        $csv .= $this->exportManager->addColumn("n° item");
+        $csv .= $this->exportManager->addColumn("clés");
+        $csv .= $this->exportManager->addColumn("nb options");
+        $csv .= $this->exportManager->addColumn("");
+        $csv .= $this->exportManager->addColumn("typologie");
+        $csv .= $this->exportManager->addColumn("nom de l'item");
 
         $em = $this->entityManager;
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
@@ -78,20 +81,20 @@ class ExportTestManager
                 $itemCount++;
                 $propsInfos = $this->getPropsInfos($subq);
                 $csv .= $this->addLine();
-                $csv .= $this->addColumn($taskCount);
-                $csv .= $this->addColumn($itemCount);
-                $csv .= $this->addColumn($propsInfos[0]);
-                $csv .= $this->addColumn($propsInfos[1]);
-                $csv .= $this->addColumn("");
-                $csv .= $this->addColumn($propsInfos[2]);
-                $csv .= $this->addColumn($propsInfos[3]);
+                $csv .= $this->exportManager->addColumn($taskCount);
+                $csv .= $this->exportManager->addColumn($itemCount);
+                $csv .= $this->exportManager->addColumn($propsInfos[0]);
+                $csv .= $this->exportManager->addColumn($propsInfos[1]);
+                $csv .= $this->exportManager->addColumn("");
+                $csv .= $this->exportManager->addColumn($propsInfos[2]);
+                $csv .= $this->exportManager->addColumn($propsInfos[3]);
             }
         }
 
         return $csv;
     }
 
-    private function getPropsInfos($subquestion)
+    private function getPropsInfos(Subquestion $subquestion)
     {
         $keys = "";
         $propCount  = 0;
@@ -100,7 +103,7 @@ class ExportTestManager
         foreach ($propositions as $prop) {
             $propCount++;
             if ($prop->getRightAnswer()) {
-                $keys .= $this->intToLetter($propCount);
+                $keys .= $this->exportManager->intToLetter($propCount);
             }
         }
 
@@ -117,41 +120,10 @@ class ExportTestManager
         return array($keys, $optionCount, $typo, $item);
     }
 
-    private function addColumn($text)
-    {
-        $column = "\"".$text."\"".";";
-
-        return $column;
-    }
-
     private function addLine()
     {
         $newLine = "\n";
 
         return $newLine;
-    }
-
-    /**
-     * @param integer $int
-     */
-    private function intToLetter($int)
-    {
-        $arr = array(
-            1  => "A", 
-            2  => "B", 
-            3  => "C", 
-            4  => "D", 
-            5  => "E", 
-            6  => "F",
-            7  => "G", 
-            8  => "H", 
-            9  => "I", 
-            10 => "J", 
-            11 => "K", 
-            12 => "L", 
-            13 => "M", 
-        );
-
-        return $arr[$int];
     }
 }

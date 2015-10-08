@@ -111,6 +111,7 @@ services:
             kernelRoot:         %kernel.root_dir%
             knpSnappyPdf:       @knp_snappy.pdf
             templating:         @templating
+            exportManager:      @self.export.manager
 
     self.test.manager:
         class: Innova\SelfBundle\Manager\Editor\TestManager
