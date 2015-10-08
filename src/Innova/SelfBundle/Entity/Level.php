@@ -158,7 +158,7 @@ class Level
     /**
      * Get coLevels
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return User[]
      */
     public function getCoLevels()
     {
@@ -191,7 +191,7 @@ class Level
     /**
      * Get ceLevels
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return User[]
      */
     public function getCeLevels()
     {
@@ -224,7 +224,7 @@ class Level
     /**
      * Get eeLevels
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return User[]
      */
     public function getEeLevels()
     {

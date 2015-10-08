@@ -18,7 +18,9 @@ class PropositionManager
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
     }
-
+    /**
+     * @param boolean $rightAnswer
+     */
     public function createProposition(Subquestion $subquestion, Media $media, $rightAnswer)
     {
         $em = $this->entityManager;

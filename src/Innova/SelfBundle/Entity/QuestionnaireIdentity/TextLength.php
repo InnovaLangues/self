@@ -54,7 +54,7 @@ class TextLength
      * Set name
      *
      * @param  string $name
-     * @return Length
+     * @return TextLength
      */
     public function setName($name)
     {
@@ -84,7 +84,7 @@ class TextLength
      * Add questionnaires
      *
      * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
-     * @return Length
+     * @return TextLength
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
     {
@@ -117,7 +117,7 @@ class TextLength
      * Set description
      *
      * @param  string $description
-     * @return Length
+     * @return TextLength
      */
     public function setDescription($description)
     {

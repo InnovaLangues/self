@@ -131,10 +131,26 @@ class ExportTestManager
         return $newLine;
     }
 
+    /**
+     * @param integer $int
+     */
     private function intToLetter($int)
     {
-        $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F",
-        7 => "G", 8 => "H", 9 => "I", 10 => "J", 11 => "K", 12 => "L", 13 => "M", );
+        $arr = array(
+            1  => "A", 
+            2  => "B", 
+            3  => "C", 
+            4  => "D", 
+            5  => "E", 
+            6  => "F",
+            7  => "G", 
+            8  => "H", 
+            9  => "I", 
+            10 => "J", 
+            11 => "K", 
+            12 => "L", 
+            13 => "M", 
+        );
 
         return $arr[$int];
     }

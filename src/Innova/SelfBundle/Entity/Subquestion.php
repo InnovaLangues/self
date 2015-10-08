@@ -303,7 +303,7 @@ class Subquestion
     /**
      * Get answers
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Answer[]
      */
     public function getAnswers()
     {
@@ -394,6 +394,7 @@ class Subquestion
 
     /**
      * Add focuses collection
+     * @param QuestionnaireIdentity\Focus[] $focuses
      */
     public function addFocuses($focuses)
     {
@@ -417,7 +418,7 @@ class Subquestion
     /**
      * Get focuses
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return QuestionnaireIdentity\Focus[]
      */
     public function getFocuses()
     {
@@ -439,6 +440,7 @@ class Subquestion
 
     /**
      * Add cognitiveOpsMain collection
+     * @param QuestionnaireIdentity\CognitiveOperation[] $cognitiveOpsMain
      */
     public function addCognitiveOpsMains($cognitiveOpsMain)
     {
@@ -462,7 +464,7 @@ class Subquestion
     /**
      * Get cognitiveOpsMain
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return QuestionnaireIdentity\CognitiveOperation[]
      */
     public function getCognitiveOpsMain()
     {
@@ -484,6 +486,7 @@ class Subquestion
 
     /**
      * Add cognitiveOpsSecondary collection
+     * @param QuestionnaireIdentity\CognitiveOperation[] $cognitiveOpsSecondary
      */
     public function addCognitiveOpsSecondarys($cognitiveOpsSecondary)
     {
@@ -507,7 +510,7 @@ class Subquestion
     /**
      * Get cognitiveOpsSecondary
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return QuestionnaireIdentity\CognitiveOperation[]
      */
     public function getCognitiveOpsSecondary()
     {

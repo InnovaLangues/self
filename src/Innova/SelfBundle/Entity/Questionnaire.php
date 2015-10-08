@@ -1439,7 +1439,7 @@ class Questionnaire
     /**
      * Get orderQuestionnaireComponents
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return PhasedTest\OrderQuestionnaireComponent[]
      */
     public function getOrderQuestionnaireComponents()
     {
@@ -1495,7 +1495,7 @@ class Questionnaire
     /**
      * Get socialLocations
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return QuestionnaireIdentity\SocialLocation[]
      */
     public function getSocialLocations()
     {

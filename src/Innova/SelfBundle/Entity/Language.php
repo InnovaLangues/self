@@ -221,7 +221,7 @@ class Language
     /**
      * Get questionnaires
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Questionnaire[]
      */
     public function getQuestionnaires()
     {

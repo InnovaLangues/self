@@ -37,6 +37,9 @@ class RightManager
         return $this;
     }
 
+    /**  
+     * @param string $rightName
+     */
     public function checkRight($rightName, User $user, $entity = null)
     {
         $em = $this->entityManager;

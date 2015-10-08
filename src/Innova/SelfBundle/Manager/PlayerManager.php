@@ -157,6 +157,7 @@ class PlayerManager
 
     /**
      * Picks next component for a given test / session, depending of a possible previous one
+     * @return Component
      */
     private function pickNextComponent(Test $test, Session $session, Component $component = null)
     {

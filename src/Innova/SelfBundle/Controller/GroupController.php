@@ -170,6 +170,7 @@ class GroupController extends Controller
 
     /**
      * Handles session form
+     * @param Request $request
      */
     private function handleForm(Group $group, $request)
     {

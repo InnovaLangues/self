@@ -179,7 +179,7 @@ class Session
     /**
      * Get actif
      *
-     * @return boolean
+     * @return string
      */
     public function getActif()
     {
@@ -250,7 +250,7 @@ class Session
     /**
      * Get globalScoreShow
      *
-     * @return boolean
+     * @return string
      */
     public function getGlobalScoreShow()
     {
