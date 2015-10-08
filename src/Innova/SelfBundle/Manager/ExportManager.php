@@ -696,19 +696,19 @@ class ExportManager
     {
         $interval = $datetime1->diff($datetime2);
 
-        if ($v = $interval->y >= 1) {
+        if ($interval->y >= 1) {
             return $interval->y.'année(s)';
         }
-        if ($v = $interval->m >= 1) {
+        if ($interval->m >= 1) {
             return $interval->m.'mois';
         }
-        if ($v = $interval->d >= 1) {
+        if ($interval->d >= 1) {
             return $interval->d.'jour(s)';
         }
-        if ($v = $interval->h >= 1) {
+        if ($interval->h >= 1) {
             return $interval->h.'h';
         }
-        if ($v = $interval->i >= 1) {
+        if ($interval->i >= 1) {
             return $interval->i.'mn';
         }
 
