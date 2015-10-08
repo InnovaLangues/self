@@ -53,11 +53,12 @@ class OriginStudentManager
             if ($r = $this->findByName($el)) {
                 $r->setName($value);
                 $em->persist($r);
-                $em->flush();
             } elseif (!$this->findByName($value)) {
                 $this->create(array($value));
             }
         }
+
+        $em->flush();
 
         return true;
     }
