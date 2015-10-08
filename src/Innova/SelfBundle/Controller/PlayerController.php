@@ -39,6 +39,7 @@ class PlayerController
     protected $playerManager;
     protected $scoreManager;
     protected $templating;
+    protected $questionnaireRepo;
 
     public function __construct(
         TokenStorage $securityContext,

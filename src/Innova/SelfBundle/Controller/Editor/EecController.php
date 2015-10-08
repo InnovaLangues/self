@@ -169,6 +169,7 @@ class EecController
     public function setDisplayAction(Subquestion $subquestion, $display)
     {
         $currentUser = $this->securityContext->getToken()->getUser();
+        $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
 
         if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
             $this->eecManager->setDisplayAction($subquestion, $display);

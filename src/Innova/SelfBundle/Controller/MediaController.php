@@ -34,6 +34,8 @@ class MediaController
     protected $securityContext;
     protected $rightManager;
     protected $session;
+    protected $subqRepo;
+    protected $propRepo;
 
     public function __construct(
             $mediaManager,

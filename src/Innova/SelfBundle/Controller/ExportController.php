@@ -27,6 +27,7 @@ class ExportController
     protected $exportManager;
     protected $securityContext;
     protected $rightManager;
+    protected $user;
 
     public function __construct($kernelRoot, $entityManager, $exportManager, $securityContext, $rightManager)
     {
