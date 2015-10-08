@@ -13,7 +13,7 @@ before_script:
   - composer install --prefer-source
   - php app/console doctrine:database:create --env=test
   - php app/console doctrine:schema:create --env=test
-  - php app/console doctrine:fixtures:load -n --env=test
+  - php app/console self:fixtures:load -n --env=test
 
 script:
     - phpunit -c app
