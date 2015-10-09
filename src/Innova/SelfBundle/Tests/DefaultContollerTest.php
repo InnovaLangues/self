@@ -10,28 +10,28 @@ class DefaultContollerTest extends WebTestCase
 	{
 		$client = static::createClient();
 
-		$crawler = $client->request('GET', '/');
+		$client->request('GET', '/');
 
 		$this->assertEquals(
 		    200,
 		    $client->getResponse()->getStatusCode()
 		);
 
-		$crawler = $client->request('GET', '/qsdkjsghqdjh');
+		$client->request('GET', '/qsdkjsghqdjh');
 
 		$this->assertEquals(
 		    404,
 		    $client->getResponse()->getStatusCode()
 		);
 
-		$crawler = $client->request('GET', '/login');
+		$client->request('GET', '/login');
 
 		$this->assertEquals(
 		    200,
 		    $client->getResponse()->getStatusCode()
 		);
 
-		$crawler = $client->request('GET', '/register/');
+		$client->request('GET', '/register/');
 
 		$this->assertEquals(
 		    200,
