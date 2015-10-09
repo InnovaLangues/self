@@ -1,6 +1,18 @@
 imports:
     - { resource: config_dev.yml }
 
+parameters:
+    test.client.class: Innova\SelfBundle\Library\Testing\TransactionalTestClient
+
+doctrine:
+    dbal:
+        driver:   %test_database_driver%
+        host:     %test_database_host%
+        port:     %test_database_port%
+        dbname:   %test_database_name%
+        user:     %test_database_user%
+        password: %test_database_password%
+
 framework:
     test: ~
     session:

@@ -1,4 +1,13 @@
 parameters:
-    database_user: travis
-    database_password: ~
-    # Other parameters
+    test_database_driver: pdo_mysql
+    test_database_host: localhost
+    test_database_port: null
+    test_database_name: myapp_test
+    test_database_user: root
+    test_database_password: null
+    mailer_transport: smtp
+    mailer_host: localhost
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: SetThis!
