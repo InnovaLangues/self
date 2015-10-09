@@ -5,12 +5,13 @@ parameters:
     test.client.class: Innova\SelfBundle\Library\Testing\TransactionalTestClient
 
 doctrine:
-    # ...
     dbal:
-        host:     localhost
-        dbname:   self_testdb
-        user:     self_testdb
-        password: self_testdb
+        driver:   %test_database_driver%
+        host:     %test_database_host%
+        port:     %test_database_port%
+        dbname:   %test_database_name%
+        user:     %test_database_user%
+        password: %test_database_password%
 
 framework:
     test: ~
