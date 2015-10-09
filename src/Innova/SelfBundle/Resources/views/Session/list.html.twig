@@ -197,8 +197,14 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/moment-with-locales.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/bootstrap-datetimepicker.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-session.js") }}"></script>
+
+    {% javascripts filter='yui_js' output='js/compiled/session.js'
+        '@InnovaSelfBundle/Resources/public/js/lib/jquery.quicksearch.js'
+        '@InnovaSelfBundle/Resources/public/js/lib/moment-with-locales.min.js'
+        '@InnovaSelfBundle/Resources/public/js/lib/bootstrap-datetimepicker.js'
+        '@InnovaSelfBundle/Resources/public/js/editor-session.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
 {% endblock %}
