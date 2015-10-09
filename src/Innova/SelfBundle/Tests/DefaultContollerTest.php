@@ -31,7 +31,7 @@ class DefaultContollerTest extends WebTestCase
 		    $client->getResponse()->getStatusCode()
 		);
 
-		$crawler = $client->request('GET', '/register');
+		$crawler = $client->request('GET', '/register/');
 
 		$this->assertEquals(
 		    200,
