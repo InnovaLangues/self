@@ -692,9 +692,9 @@ class ExportManager
         return $csv;
     }
 
-    private function diff($datetime1, $datetime2)
+    private function diff(\DateTime $startTime, \DateTime $endTime)
     {
-        $interval = $datetime1->diff($datetime2);
+        $interval = $startTime->diff($endTime);
 
         if ($interval->y >= 1) {
             return $interval->y.'année(s)';
