@@ -172,7 +172,7 @@ class UserManager
             $data = unserialize($data);
             $username = $data->getUser()->getUsername();
 
-            if (!$this->in_array_r($username, $connectedUsers)) {
+            if (!$this->inArrayRecursiv($username, $connectedUsers)) {
                 $admin = "";
                 foreach ($data->getRoles() as $role) {
                     if ($role->getRole() == "ROLE_SUPER_ADMIN") {
@@ -188,10 +188,10 @@ class UserManager
         return $connectedUsers;
     }
 
-    private function in_array_r($needle, $haystack, $strict = false)
+    private function inArrayRecursiv($needle, $haystack, $strict = false)
     {
         foreach ($haystack as $item) {
-            if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->in_array_r($needle, $item, $strict))) {
+            if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->inArrayRecursiv($needle, $item, $strict))) {
                 return true;
             }
         }
