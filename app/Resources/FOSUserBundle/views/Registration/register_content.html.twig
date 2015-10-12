@@ -12,7 +12,7 @@
     </div>
     <div class="panel-body">
         {% if isSelfRegistrationEnabled() %}
-            <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register">
+            <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register" autocomplete="off">
 
                 {# Pour avoir le Wizard #}
                 {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
