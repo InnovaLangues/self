@@ -6,8 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 abstract class TransactionalTestCase extends WebTestCase
 {
-    /** 
-     * @var TransactionalTestClient 
+    /**
+     * @var TransactionalTestClient
      */
     protected $client;
 

@@ -7,11 +7,11 @@ use Innova\SelfBundle\Manager\Identity\GenreManager;
 use Innova\SelfBundle\Library\Testing\TransactionalTestCase;
 
 class GenreManagerTest extends TransactionalTestCase
-{ 
+{
     public function setUp()
     {
         parent::setUp();
-        
+
         $container = $this->client->getContainer();
         $this->entityManager = $container->get('doctrine.orm.entity_manager');
         $this->genreManager = new GenreManager($this->entityManager);
@@ -32,7 +32,7 @@ class GenreManagerTest extends TransactionalTestCase
             $this->genreManager->create(
                 array(
                     "thisisatestname",
-                    "thisisanothertestname"
+                    "thisisanothertestname",
                 )
             )
         );
@@ -67,7 +67,7 @@ class GenreManagerTest extends TransactionalTestCase
         $this->assertTrue(
             $this->genreManager->delete(
                 array(
-                    "thisisatestname"
+                    "thisisatestname",
                 )
             )
         );
