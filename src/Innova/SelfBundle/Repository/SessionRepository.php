@@ -21,6 +21,7 @@ class SessionRepository extends EntityRepository
                 r.canExportCollective = 1
                 )
             )
+        ORDER BY s.name ASC
         ";
 
         $query = $this->_em->createQuery($dql)
@@ -44,6 +45,7 @@ class SessionRepository extends EntityRepository
                 r.canExportCollective = 1
                 )
             )
+        ORDER BY s.name ASC
         ";
 
         $query = $this->_em->createQuery($dql)
@@ -67,6 +69,7 @@ class SessionRepository extends EntityRepository
                 r.canExportCollective = 1
                 )
             )
+        ORDER BY s.name ASC
         ";
 
         $query = $this->_em->createQuery($dql)
@@ -82,6 +85,7 @@ class SessionRepository extends EntityRepository
         LEFT JOIN s.test t
         WHERE s.actif = :active
         AND t.language = :language
+        ORDER BY s.name ASC
          ";
 
         $query = $this->_em->createQuery($dql)
