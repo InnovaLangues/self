@@ -98,7 +98,7 @@ class RightUserTestController extends Controller
     /**
      *
      * @Route("/test/{testId}/right/{rightId}/delete", name="editor_test_rights_delete", options = {"expose"=true})
-     * @Method("GET")
+     * @Method("DELETE")
      *
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */

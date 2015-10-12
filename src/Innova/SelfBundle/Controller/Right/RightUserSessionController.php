@@ -98,7 +98,7 @@ class RightUserSessionController extends Controller
     /**
      *
      * @Route("/session/{sessionId}/right/{rightId}/delete", name="editor_session_rights_delete", options = {"expose"=true})
-     * @Method("GET")
+     * @Method("DELETE")
      *
      * @Template("InnovaSelfBundle:Session:list.html.twig")
      */

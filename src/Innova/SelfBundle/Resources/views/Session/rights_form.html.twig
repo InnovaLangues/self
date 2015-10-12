@@ -3,7 +3,7 @@
 {% block body -%}
 
 {% if rightUserSession.id is defined %}
-	<a href="{{ path('editor_session_rights_delete', {'sessionId': session.id, 'rightId': rightUserSession.id }) }}" class="btn btn-danger"> 
+	<a data-method="DELETE" href="{{ path('editor_session_rights_delete', {'sessionId': session.id, 'rightId': rightUserSession.id }) }}" class="btn btn-danger rest"> 
 		Supprimer
    	</a>
 {% endif %}

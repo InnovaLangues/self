@@ -266,7 +266,7 @@ class SessionController extends Controller
     /**
      *
      * @Route("/test/{testId}/create-session", name="create_session_for_export")
-     * @Method("GET")
+     * @Method("POST")
      *
      */
     public function createSessionForExportAction(Test $test)

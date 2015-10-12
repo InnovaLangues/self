@@ -62,7 +62,7 @@ function getPotentials(componentId)
     $(".loader-img").show();
 	$.ajax({
         url: Routing.generate('get-component-potentials', {'componentId': componentId }),
-        type: 'POST'
+        type: 'GET'
     })
     .done(function(data) {
         $("#potential-tasks").html(data);
@@ -102,7 +102,7 @@ function removeQuestionnaire(orderQuestionnaireComponentId)
     $(".loader-img").show();
     $.ajax({
         url: Routing.generate('remove-component-questionnaire', {'orderQuestionnaireComponentId': orderQuestionnaireComponentId }),
-        type: 'POST'
+        type: 'DELETE'
     })
     .done(function(data) {
         $("#order"+orderQuestionnaireComponentId).remove();
@@ -132,7 +132,7 @@ function saveOrder(componentId)
 
     $.ajax({
         url: Routing.generate('save-order-component-questionnaire', {'componentId': componentId }),
-        type: 'POST',
+        type: 'PUT',
         data:{newOrder: newOrder}
     })
     .done(function(data) {
@@ -145,7 +145,7 @@ function checkLevel(testId)
     $(".loader-img").show();
     $.ajax({
         url: Routing.generate('phased-check-level', {'testId': testId }),
-        type: 'POST'
+        type: 'GET'
     })
     .done(function(data) {
         console.log(data);

@@ -98,7 +98,7 @@ class RightUserGroupController extends Controller
     /**
      *
      * @Route("/group/{groupId}/right/{rightId}/delete", name="editor_group_rights_delete", options = {"expose"=true})
-     * @Method("GET")
+     * @Method("DELETE")
      *
      * @Template("InnovaSelfBundle:Group:list.html.twig")
      */
