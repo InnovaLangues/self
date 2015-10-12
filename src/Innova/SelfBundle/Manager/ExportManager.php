@@ -628,13 +628,13 @@ class ExportManager
         $csv = "";
         $em = $this->entityManager;
 
-        if ($startDate == null) {
+        if ($startDate === null) {
             $startDate =  date_create_from_format($format, '1970-01-01 00:00:00');
         } else {
             $startDate =  date_create_from_format($format, $startDate);
         }
 
-        if ($endDate == null) {
+        if ($endDate === null) {
             $endDate = date($format);
         } else {
             $endDate = date_create_from_format($format, $endDate);
