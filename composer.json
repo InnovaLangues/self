@@ -31,7 +31,7 @@
         "willdurand/js-translation-bundle": "@stable",
         "innova/gitter-bundle": "v1.0",
         "jms/i18n-routing-bundle": "~1.1",
-        "lexik/maintenance-bundle": "dev-master",
+        "lexik/maintenance-bundle": "dev-master#4967701a108aa8262f",
         "nc/faye-client": "v1.1.1"
     },
     "scripts": {

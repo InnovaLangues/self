@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "306211f034fe299360b0bd077afdbdaa",
+    "hash": "408b1737491195b05585d5f4149e2517",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -1914,12 +1914,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lexik/LexikMaintenanceBundle.git",
-                "reference": "4967701a108aa8262fc92790414e3113d7d32d93"
+                "reference": "4967701a108aa8262f"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/lexik/LexikMaintenanceBundle/zipball/4967701a108aa8262fc92790414e3113d7d32d93",
-                "reference": "4967701a108aa8262fc92790414e3113d7d32d93",
+                "reference": "4967701a108aa8262f",
                 "shasum": ""
             },
             "require": {
