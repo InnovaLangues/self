@@ -153,6 +153,16 @@ services:
             rightManager:       @self.right.manager
             session:            @session
 
+
+    innova_editor_answer:
+        class: Innova\SelfBundle\Controller\Editor\AnswerController
+        arguments:
+            eecManager:                 @self.eec.manager
+            propositionManager:     @self.proposition.manager
+            templating:             @templating
+            securityContext:    @security.token_storage
+            rightManager:       @self.right.manager
+
     innova_player_trace:
         class: Innova\SelfBundle\Controller\TraceController
         arguments:
