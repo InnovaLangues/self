@@ -108,7 +108,6 @@ class TraceController
     private function parsePost($post, Trace $trace)
     {
         $em = $this->entityManager;
-        //$this->session->getFlashBag()->set('success', $this->translator->trans("trace.answer_saved", array(), "messages"));
 
         foreach ($post as $subquestionId => $postVar) {
             $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->find($subquestionId);
