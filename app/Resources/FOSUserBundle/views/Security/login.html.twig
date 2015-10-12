@@ -14,7 +14,7 @@
     </div>
     <div class="panel-body">
 
-        <form action="{{ path('fos_user_security_check') }}" class="form-horizontal" method="post">
+        <form action="{{ path('fos_user_security_check') }}" class="form-horizontal" method="post" autocomplete="off">
             <fieldset>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
