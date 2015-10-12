@@ -145,7 +145,6 @@ services:
         class: Innova\SelfBundle\Controller\Editor\EecController
         arguments:
             eecManager:                 @self.eec.manager
-            propositionManager:     @self.proposition.manager
             entityManager:          @doctrine.orm.entity_manager
             templating:             @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager

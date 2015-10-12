@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Subquestion;
-use Innova\SelfBundle\Entity\Proposition;
 use Innova\SelfBundle\Entity\Media\Media;
 
 /**
@@ -20,13 +19,11 @@ use Innova\SelfBundle\Entity\Media\Media;
  * )
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
  * @ParamConverter("subquestion", isOptional="true", class="InnovaSelfBundle:Subquestion", options={"id" = "subquestionId"})
- * @ParamConverter("proposition", isOptional="true", class="InnovaSelfBundle:Proposition", options={"id" = "propositionId"})
  * @ParamConverter("media", isOptional="true", class="InnovaSelfBundle:Media\Media", options={"id" = "mediaId"})
  */
 class EecController
 {
     protected $eecManager;
-    protected $propositionManager;
     protected $entityManager;
     protected $templating;
     protected $questionnaireRevisorsManager;
@@ -36,7 +33,6 @@ class EecController
 
     public function __construct(
         $eecManager,
-        $propositionManager,
         $entityManager,
         $templating,
         $questionnaireRevisorsManager,
@@ -44,10 +40,9 @@ class EecController
         $rightManager,
         $session
     ) {
-        $this->eecManager = $eecManager;
-        $this->propositionManager = $propositionManager;
-        $this->entityManager = $entityManager;
-        $this->templating = $templating;
+        $this->eecManager                   = $eecManager;
+        $this->entityManager                = $entityManager;
+        $this->templating                   = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
         $this->securityContext              = $securityContext;
         $this->rightManager                 = $rightManager;

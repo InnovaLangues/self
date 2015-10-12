@@ -7,10 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
-use Innova\SelfBundle\Entity\Media\Media;
 
 /**
  * Class AnswerController
@@ -18,10 +16,8 @@ use Innova\SelfBundle\Entity\Media\Media;
  *      "/admin",
  *      service = "innova_editor_answer"
  * )
- * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
  * @ParamConverter("subquestion", isOptional="true", class="InnovaSelfBundle:Subquestion", options={"id" = "subquestionId"})
  * @ParamConverter("proposition", isOptional="true", class="InnovaSelfBundle:Proposition", options={"id" = "propositionId"})
- * @ParamConverter("media", isOptional="true", class="InnovaSelfBundle:Media\Media", options={"id" = "mediaId"})
  */
 class AnswerController
 {
