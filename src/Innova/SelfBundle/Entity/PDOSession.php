@@ -107,4 +107,27 @@ class PDOSession
     {
         return $this->session_time;
     }
+
+    /**
+     * Set sess_lifetime
+     *
+     * @param integer $sessLifetime
+     * @return PDOSession
+     */
+    public function setSessLifetime($sessLifetime)
+    {
+        $this->sess_lifetime = $sessLifetime;
+
+        return $this;
+    }
+
+    /**
+     * Get sess_lifetime
+     *
+     * @return integer 
+     */
+    public function getSessLifetime()
+    {
+        return $this->sess_lifetime;
+    }
 }
