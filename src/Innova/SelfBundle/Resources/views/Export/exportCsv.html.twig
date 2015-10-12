@@ -43,7 +43,7 @@
                         {% endfor %}
                         </ul>
                         {% else %}
-                            <a href="{{ path('create_session_for_export', {'testId': test.id } )}}"  class="btn btn-default btn-xs">Créer une session à partir des traces déjà présentes.</a>
+                            <a data-method="POST" href="{{ path('create_session_for_export', {'testId': test.id } )}}"  class="btn btn-default btn-xs rest">Créer une session à partir des traces déjà présentes.</a>
                         {% endif %}
                     </div>
                     <div class="modal-footer">

@@ -33,7 +33,7 @@ class PhasedTestController extends Controller
      * Check level
      *
      * @Route("/test/{testId}/check-level", name="phased-check-level", options={"expose"=true})
-     * @Method("POST")
+     * @Method("GET")
      */
     public function checkLevelAction(Test $test)
     {
@@ -97,7 +97,7 @@ class PhasedTestController extends Controller
      * Save questionnaire order for a component
      *
      * @Route("/component/{componentId}/order", name="save-order-component-questionnaire", options={"expose"=true})
-     * @Method("POST")
+     * @Method("PUT")
      *
      */
     public function saveOrderAction(Component $component)
@@ -118,7 +118,7 @@ class PhasedTestController extends Controller
      * Remove a questionnaire from a component
      *
      * @Route("/orderQuestionnaireComponent/{orderQuestionnaireComponentId}/remove", name="remove-component-questionnaire", options={"expose"=true})
-     * @Method("POST")
+     * @Method("DELETE")
      *
      */
     public function removeQuestionnaireFromComponentAction(OrderQuestionnaireComponent $orderQuestionnaireComponent)
@@ -164,7 +164,7 @@ class PhasedTestController extends Controller
      * Get potential questionnaires to a component
      *
      * @Route("/component/{componentId}/potentials", name="get-component-potentials", options={"expose"=true})
-     * @Method("POST")
+     * @Method("GET")
      *
      */
     public function getPotentialQuestionnairesAction(Component $component)
