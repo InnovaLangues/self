@@ -17,6 +17,12 @@ menu:
     language_change: Changez la langue
     groups: Groupes
     generalparams: Paramètres
+    message: Message
+
+message:
+    content: Contenu du message
+    channel: Destinataire
+    send: Envoyer un message
 
 params:
     maintenance: Mode maintenance
@@ -560,7 +566,8 @@ right:
     editrightssession: Editer les permissions d'une session
     exportPDF: Export livret PDF
     exportCSV: Export CSV classique et Tia+
-    generalParameters: MOdifier les paramètres généraux
+    generalParameters: Modifier les paramètres généraux
+    message: Envoyer des messages
 
 rightgroup:
     tasks: Permissions sur les tâches

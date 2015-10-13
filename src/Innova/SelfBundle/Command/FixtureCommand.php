@@ -202,6 +202,7 @@ class FixtureCommand extends ContainerAwareCommand
             array("right.exportCSV", "rightgroup.exports", null, null),
 
             array("right.generalParameters", "rightgroup.generalParameters", null, null),
+            array("right.message", "rightgroup.generalParameters", null, null),
         ));
 
         $generalParamsManager = $this->getContainer()->get("self.generalparams.manager");

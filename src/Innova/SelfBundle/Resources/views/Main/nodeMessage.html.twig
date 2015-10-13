@@ -1,0 +1,13 @@
+<script>
+	var client = new Faye.Client("{{ faye_server }}");
+	client.subscribe('/all', function (message) {
+	    if (!$("#alert-maintenance").length) {
+	        $(".flash-messages").append('<div class="alert alert-warning">' + message.text + '</div>');
+	    };
+	});
+	{% if app.user is not null and is_granted('ROLE_ADMIN') %}
+	client.subscribe('/admin', function (message) {
+	    $(".flash-messages").append('<div class="alert alert-warning">' + message.text + '</div>');
+	});
+	{% endif %}
+</script>
