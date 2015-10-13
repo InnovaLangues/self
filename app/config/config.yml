@@ -36,6 +36,8 @@ parameters:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        faye_server: %faye_server.endpoint%
 
 # Assetic Configuration
 assetic:

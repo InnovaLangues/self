@@ -70,8 +70,17 @@
 
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-            <script type="text/javascript" src="http://localhost:3000/client.js"></script>
-            <script type="text/javascript" src="{{ asset('bundles/innovaself/js/messages.js') }}"></script>
+            <script type="text/javascript" src="{{ faye_server }}/client.js"></script>
+
+            <script>
+            var client = new Faye.Client("{{ faye_server }}");
+            client.subscribe('/all', function (message) {
+                if (!$("#alert-maintenance").length) {
+                    $(".flash-messages").append('<div class="alert alert-warning">' + message.text + '</div>');
+                };
+            });
+            </script>
+
         {% endblock %}
     </body>
 </html>

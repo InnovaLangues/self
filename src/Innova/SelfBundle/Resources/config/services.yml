@@ -1,6 +1,6 @@
 parameters:
-    acme_demo.faye.adapter.class: Nc\FayeClient\Adapter\CurlAdapter
-    acme_demo.faye.client.class: Nc\FayeClient\Client
+    faye_server.adapter.class:  Nc\FayeClient\Adapter\CurlAdapter
+    faye_server.client.class:   Nc\FayeClient\Client
 
 services:
     twig.extension.text:
@@ -220,11 +220,11 @@ services:
         arguments: [@pdo, %pdo.db_options%]
 
 
-    acme_demo.faye.adapter:
-        class:     %acme_demo.faye.adapter.class%
+    faye_server.adapter:
+        class:     %faye_server.adapter.class%
 
-    acme_demo.faye.client:
-        class:     %acme_demo.faye.client.class%
+    faye_server.client:
+        class:     %faye_server.client.class%
         arguments: 
-            - @acme_demo.faye.adapter
-            - %acme_demo.faye.endpoint%
+            - @faye_server.adapter
+            - %faye_server.endpoint%
