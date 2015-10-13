@@ -30,7 +30,7 @@ php app/console cache:clear --no-debug --env=prod
 
 ### Create needed dirs and Set up rights 
 ``` bash
-sudo mkdir -p web/upload/ app/data/export app/data/exportPdf app/data/session app/data/importCsv
+sudo mkdir -p web/upload/ app/data/export app/data/exportPdf app/data/session app/data/importCsv app/data/user
 sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/data/
 sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/data/
 ```
@@ -76,7 +76,7 @@ php app/console lexik:maintenance:unlock -n
 npm install faye-server
 node server.js
 ```
-if you wanna install node server on another server, you have to edit parameters.yml ('acme_demo.faye.endpoint' entry)
+if you wanna install node server on another server, you have to edit parameters.yml (the 'faye_server.endpoint' entry)
 
 ### Quality code services
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/InnovaLangues/self/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/InnovaLangues/self/?branch=master)

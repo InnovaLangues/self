@@ -35,3 +35,5 @@ build.xml
 *.orig
 composer.phar
 
+# uploaded and generated datas.
+app/data/*
