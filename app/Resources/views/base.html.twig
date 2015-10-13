@@ -72,14 +72,7 @@
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             <script type="text/javascript" src="{{ faye_server }}/client.js"></script>
 
-            <script>
-            var client = new Faye.Client("{{ faye_server }}");
-            client.subscribe('/all', function (message) {
-                if (!$("#alert-maintenance").length) {
-                    $(".flash-messages").append('<div class="alert alert-warning">' + message.text + '</div>');
-                };
-            });
-            </script>
+            {% include 'InnovaSelfBundle::Main/nodeMessage.html.twig' %}
 
         {% endblock %}
     </body>
