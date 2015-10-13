@@ -332,4 +332,4 @@ services:
     self.message.manager:
         class: Innova\SelfBundle\Manager\MessageManager
         arguments:
-            fayeClient:      @acme_demo.faye.client
+            fayeClient:      @faye_server.client
