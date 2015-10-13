@@ -70,12 +70,6 @@ class Questionnaire
     private $comments;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\EditorLog\EditorLog", mappedBy="questionnaire", cascade={"persist", "remove"})
-    * @ORM\OrderBy({"date" = "DESC"})
-    */
-    private $editorLogs;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="theme", type="string", length=255)
@@ -782,39 +776,6 @@ class Questionnaire
     }
 
     /**
-     * Add editorLogs
-     *
-     * @param  \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
-     * @return Questionnaire
-     */
-    public function addEditorLog(\Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs)
-    {
-        $this->editorLogs[] = $editorLogs;
-
-        return $this;
-    }
-
-    /**
-     * Remove editorLogs
-     *
-     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
-     */
-    public function removeEditorLog(\Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs)
-    {
-        $this->editorLogs->removeElement($editorLogs);
-    }
-
-    /**
-     * Get editorLogs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEditorLogs()
-    {
-        return $this->editorLogs;
-    }
-
-    /**
      * Set mediaBlankText
      *
      * @param  \Innova\SelfBundle\Entity\Media\Media $mediaBlankText
@@ -1403,7 +1364,6 @@ class Questionnaire
         $this->mediaLimits              = new \Doctrine\Common\Collections\ArrayCollection();
         $this->mediaClicks              = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments                 = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->editorLogs               = new \Doctrine\Common\Collections\ArrayCollection();
         $this->questions                = new \Doctrine\Common\Collections\ArrayCollection();
         $this->traces                   = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderQuestionnaireTests  = new \Doctrine\Common\Collections\ArrayCollection();
