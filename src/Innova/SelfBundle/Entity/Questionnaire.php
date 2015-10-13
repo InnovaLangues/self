@@ -886,7 +886,7 @@ class Questionnaire
     /**
      * Set levelProof
      *
-     * @param  text        $levelProof
+     * @param  text          $levelProof
      * @return Questionnaire
      */
     public function setLevelProof($levelProof)
@@ -909,7 +909,7 @@ class Questionnaire
     /**
      * Set authorRightMore
      *
-     * @param  text        $authorRightMore
+     * @param  text          $authorRightMore
      * @return Questionnaire
      */
     public function setAuthorRightMore($authorRightMore)
@@ -932,7 +932,7 @@ class Questionnaire
     /**
      * Set sourceMore
      *
-     * @param  text        $sourceMore
+     * @param  text          $sourceMore
      * @return Questionnaire
      */
     public function setSourceMore($sourceMore)
@@ -1399,18 +1399,20 @@ class Questionnaire
      */
     public function __construct()
     {
-        $this->revisors = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mediaLimits = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mediaClicks = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->editorLogs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->orderQuestionnaireTests = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->sourceTypes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->channels = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->varieties = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->revisors                 = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mediaLimits              = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mediaClicks              = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments                 = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->editorLogs               = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questions                = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->traces                   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orderQuestionnaireTests  = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sourceTypes              = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->channels                 = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genres                   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->varieties                = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->socialLocations          = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orderQuestionnaireComponents = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1528,7 +1530,7 @@ class Questionnaire
     /**
      * Set speechType
      *
-     * @param  string        $speechType
+     * @param  text          $speechType
      * @return Questionnaire
      */
     public function setSpeechType($speechType)
