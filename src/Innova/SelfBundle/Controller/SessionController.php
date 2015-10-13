@@ -77,7 +77,7 @@ class SessionController extends Controller
      *
      * @Template("InnovaSelfBundle:Session:new.html.twig")
      */
-    public function newAction(Test $test, Request $request)
+    public function createSessionAction(Test $test, Request $request)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -107,7 +107,7 @@ class SessionController extends Controller
      *
      * @Template("InnovaSelfBundle:Session:list.html.twig")
      */
-    public function deleteAction(Session $session)
+    public function deleteSessionAction(Session $session)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         $testId = $session->getTest()->getId();
@@ -132,7 +132,7 @@ class SessionController extends Controller
      *
      * @Template("InnovaSelfBundle:Session:new.html.twig")
      */
-    public function editAction(Test $test, Session $session, Request $request)
+    public function editSessionAction(Test $test, Session $session, Request $request)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -158,7 +158,7 @@ class SessionController extends Controller
      *
      * @Template("InnovaSelfBundle:Session:results.html.twig")
      */
-    public function resultsAction(Session $session)
+    public function getSessionResultsAction(Session $session)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -179,7 +179,7 @@ class SessionController extends Controller
      *
      * @Template("InnovaSelfBundle:Session:userResults.html.twig")
      */
-    public function userResultsAction(User $user, Session $session)
+    public function getUserResultsAction(User $user, Session $session)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         $sm = $this->get("self.score.manager");

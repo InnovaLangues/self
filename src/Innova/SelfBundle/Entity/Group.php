@@ -45,7 +45,7 @@ class Group
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->session = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sessions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -122,7 +122,7 @@ class Group
      */
     public function addSession(\Innova\SelfBundle\Entity\Session $session)
     {
-        $this->session[] = $session;
+        $this->sessions[] = $session;
 
         return $this;
     }
@@ -134,17 +134,7 @@ class Group
      */
     public function removeSession(\Innova\SelfBundle\Entity\Session $session)
     {
-        $this->session->removeElement($session);
-    }
-
-    /**
-     * Get session
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSession()
-    {
-        return $this->session;
+        $this->sessions->removeElement($session);
     }
 
     /**

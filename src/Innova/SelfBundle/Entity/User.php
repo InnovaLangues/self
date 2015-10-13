@@ -103,11 +103,6 @@ class User extends BaseUser
     */
     private $comments;
 
-     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\EditorLog\EditorLog", mappedBy="user", cascade={"remove"})
-    */
-    private $editorLogs;
-
     /**
     * @ORM\ManyToMany(targetEntity="Test")
     * @ORM\JoinTable(name="user_test_favorites")
@@ -120,10 +115,10 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->favoritesTests = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->locale = "fr";
+        $this->traces           = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tests            = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->favoritesTests   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->locale           = "fr";
     }
 
     /**
@@ -562,39 +557,6 @@ class User extends BaseUser
     public function getRevisedQuestionnaires()
     {
         return $this->revisedQuestionnaires;
-    }
-
-    /**
-     * Add editorLogs
-     *
-     * @param  \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
-     * @return User
-     */
-    public function addEditorLog(\Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs)
-    {
-        $this->editorLogs[] = $editorLogs;
-
-        return $this;
-    }
-
-    /**
-     * Remove editorLogs
-     *
-     * @param \Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs
-     */
-    public function removeEditorLog(\Innova\SelfBundle\Entity\EditorLog\EditorLog $editorLogs)
-    {
-        $this->editorLogs->removeElement($editorLogs);
-    }
-
-    /**
-     * Get editorLogs
-     *
-     * @return EditorLog\EditorLog[]
-     */
-    public function getEditorLogs()
-    {
-        return $this->editorLogs;
     }
 
     /**

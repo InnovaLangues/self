@@ -56,6 +56,7 @@ class Component
     public function __construct()
     {
         $this->orderQuestionnaireComponents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->traces                       = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

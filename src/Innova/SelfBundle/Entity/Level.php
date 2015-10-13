@@ -54,7 +54,10 @@ class Level
      */
     public function __construct()
     {
-        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questionnaires   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->coLevels         = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ceLevels         = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eeLevels         = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
