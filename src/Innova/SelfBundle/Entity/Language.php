@@ -60,8 +60,9 @@ class Language
      */
     public function __construct()
     {
-        $this->levelLansads = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->levelLansads     = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tests            = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questionnaires   = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
