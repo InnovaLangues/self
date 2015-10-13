@@ -32,7 +32,7 @@ class MessageController extends Controller
         if ($this->get("self.right.manager")->checkRight("right.message", $currentUser)) {
             $message = new Message();
 
-            $form = $this->handleForm($message, $request);
+            $form = $this->handleMessageForm($message, $request);
             if (!$form) {
                 $this->get("session")->getFlashBag()->set('info', "Le message a bien été envoyé");
 
