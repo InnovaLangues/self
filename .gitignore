@@ -35,6 +35,3 @@ build.xml
 *.orig
 composer.phar
 
-# Session
-app/sessions/*
-!app/sessions/.gitkeep
