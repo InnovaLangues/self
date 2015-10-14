@@ -1,4 +1,4 @@
-function showFlash()
+function showFlashes()
 { 
     var cookie = $.cookie("flashes");
 
@@ -11,13 +11,17 @@ function showFlash()
     $.each(flashes, function( index, value ) {
         var msgs = flashes[index];
         for (var i = msgs.length - 1; i >= 0; i--) {
-            $('.flash-messages').append('<div class="alert alert-'+index+'">' + msgs[i] + '</div>');
+            showFlash(index, msgs[i]);
         };
     });
 
     $.removeCookie('flashes', { path: '/' });
 }
 
+function showFlash(index, text){
+    $('.flash-messages').append('<div class="alert alert-'+index+'"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + text + '</div>');
+}
+
 $(document).ready(function() {
-    showFlash();
+    showFlashes();
 });
