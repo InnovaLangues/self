@@ -1,19 +1,18 @@
+{% if app.user is not null %}
 <script>
 	{% if isMaintenanceEnabled() %}
     showFlash("warning", "{{ getMaintenanceText() }}");
     {% endif %}
 
-	var client = new Faye.Client("{{ faye_server }}");
-	client.subscribe('/all', function (message) {
-	    if (!$("#alert-maintenance").length) {
-	    	showFlash("warning", message.text);
-	    };
-	});
-	{% if app.user is not null and is_granted('ROLE_ADMIN') %}
-	client.subscribe('/admin', function (message) {
-	    showFlash("warning", message.text);
-	});
-	{% endif %}
+	if (client = new Faye.Client("{{ faye_server }}")){
+		var channels = ["/all", "/user{{ app.user.id}}"];
+		{% if app.user is not null and is_granted('ROLE_ADMIN') %}
+		channels.push("/admin"),
+		{% endif %}
+		client.subscribe(channels, function (message) {
+		    showFlash("warning", message.text);
+		});
+	}
 </script>
-
+{% endif %}
 

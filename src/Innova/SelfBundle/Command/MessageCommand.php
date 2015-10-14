@@ -16,6 +16,7 @@ class MessageCommand extends ContainerAwareCommand
             ->setDescription('Envoie un message')
             ->addArgument('channel', InputArgument::REQUIRED, 'all or admin')
             ->addArgument('message', InputArgument::REQUIRED, 'message you want to send')
+            ->addArgument('username', InputArgument::OPTIONAL, 'if channel is user, specify username')
            ;
     }
 
@@ -23,9 +24,12 @@ class MessageCommand extends ContainerAwareCommand
     {
         $channel = $input->getArgument('channel');
         $message = $input->getArgument('message');
+        $username = $input->getArgument('username');
 
-        if ($this->getContainer()->get("self.message.manager")->sendMessage($message, $channel)) {
+        if ($this->getContainer()->get("self.message.manager")->sendMessage($message, $channel, $username)) {
             $output->writeln("Le message a bien été envoyé");
-        };
+        } else {
+            $output->writeln("Erreur à l'envoi du message");
+        }
     }
 }
