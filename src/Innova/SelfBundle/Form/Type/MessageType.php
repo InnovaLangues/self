@@ -16,9 +16,15 @@ class MessageType extends AbstractType
         ));
 
         $builder->add('channel', 'choice', array(
-            'choices'   => array('all' => 'A tous', 'admin' => 'Aux admins uniquement'),
+            'choices'   => array('all' => 'A tous', 'admin' => 'Aux admins uniquement', 'user' => 'A un utilisateur'),
             'label'  => 'message.channel',
             'attr' => array('class' => 'form-control'),
+            'translation_domain' => 'messages',
+        ));
+
+        $builder->add('user', 'text', array(
+            'attr' => array('class' => 'form-control'),
+            'label'  => 'message.user',
             'translation_domain' => 'messages',
         ));
 

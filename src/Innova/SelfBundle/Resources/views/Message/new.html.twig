@@ -10,6 +10,11 @@
         {{ form_widget(form.channel) }}
     </div>
 
+    <div id="message-user-group" class="form-group" style="display:none">
+        {{ form_label(form.user) }}
+        {{ form_widget(form.user) }}
+    </div>
+
     <div class="form-group">
         {{ form_label(form.message) }}
         {{ form_widget(form.message) }}
@@ -23,4 +28,21 @@
     {{ form_widget(form._token) }}
 </form>
 
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $(document).ready(function() {
+        $('#message_channel').change(function(event) {
+            var choice = $("#message_channel option:selected").val();
+            if(choice == "user"){
+                $('#message-user-group').show();
+            } else {
+                $('#message-user-group').hide();
+            }
+        });
+    });
+</script>
 {% endblock %}

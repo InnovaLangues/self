@@ -56,9 +56,11 @@ class MessageController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $message = htmlentities($msg->getMessage());
-                $channel = $msg->getChannel();
-                $this->get("self.message.manager")->sendMessage($message, $channel);
+                $message    = htmlentities($msg->getMessage());
+                $channel    = $msg->getChannel();
+                $user       = $msg->getUser();
+
+                $this->get("self.message.manager")->sendMessage($message, $channel, $user);
 
                 return;
             }

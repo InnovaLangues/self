@@ -333,3 +333,4 @@ services:
         class: Innova\SelfBundle\Manager\MessageManager
         arguments:
             fayeClient:      @faye_server.client
+            entityManager:      @doctrine.orm.entity_manager

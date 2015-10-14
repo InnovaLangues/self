@@ -17,6 +17,12 @@ class Message
     private $message;
 
     /**
+     * @var string
+     *
+     */
+    private $user;
+
+    /**
      * Set channel
      *
      * @param  string  $channel
@@ -60,5 +66,28 @@ class Message
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Set user
+     *
+     * @param  string $user
+     * @return user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
