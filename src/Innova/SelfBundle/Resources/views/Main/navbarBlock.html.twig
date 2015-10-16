@@ -42,16 +42,6 @@
                             {% endif %}
 
 
-                            {# GROUPES
-                            {% if checkRight("right.listgroup") or checkRight("right.creategroup") or hasRightsOnGroup("RightUserGroup") %}
-                                <li>
-                                    <a href="{{ path('editor_groups') }}">
-                                        <span class="glyphicon glyphicon-certificate"></span> {{ 'menu.groups' | trans }}
-                                    </a>
-                                </li>
-                            {% endif %}
-                            #}
-
                             {# EXPORTS 
                             {% if checkRight("right.exportPDF") or checkRight("right.exportCSV") %}
                             <li>

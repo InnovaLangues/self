@@ -145,10 +145,6 @@ class RightManager
                 $authorized = $em->getRepository("InnovaSelfBundle:User")->findAuthorized($user);
                 break;
 
-            case 'RightUserGroup':
-                $authorized = $em->getRepository("InnovaSelfBundle:Group")->findAuthorized($user);
-                break;
-
             case 'RightUserSession':
                 $authorized = $em->getRepository("InnovaSelfBundle:Session")->findAllAuthorized($user);
                 break;
