@@ -27,11 +27,9 @@ class MessageController extends Controller
     public function newMessageAction(Request $request)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
 
         if ($this->get("self.right.manager")->checkRight("right.message", $currentUser)) {
             $message = new Message();
-
             $form = $this->handleMessageForm($message, $request);
             if (!$form) {
                 $this->get("session")->getFlashBag()->set('info', "Le message a bien été envoyé");
