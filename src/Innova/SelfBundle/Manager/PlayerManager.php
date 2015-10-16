@@ -35,9 +35,8 @@ class PlayerManager
     public function needToLog(Session $session)
     {
         $sessionLogged = $this->session->get('sessionLogged-'.$session->getId());
-        $isUserInAuthorizedGroup = $this->entityManager->getRepository('InnovaSelfBundle:User')->groupWithUserAndSession($this->user, $session);
 
-        if ($sessionLogged != 1 && !$isUserInAuthorizedGroup) {
+        if ($sessionLogged != 1) {
             return true;
         }
 
