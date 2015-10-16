@@ -13,9 +13,9 @@ use Innova\SelfBundle\Entity\Session;
 
 /**
  * Class ExportController
- * @Route(
- *      service = "innova_export"
- * )
+ *
+ * @Route(service = "innova_export")
+ *
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session",  options={"id" = "sessionId"})
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User",  options={"id" = "userId"})
@@ -23,77 +23,30 @@ use Innova\SelfBundle\Entity\Session;
 class ExportController
 {
     protected $kernelRoot;
-    protected $entityManager;
     protected $exportManager;
     protected $securityContext;
     protected $rightManager;
     protected $user;
 
-    public function __construct($kernelRoot, $entityManager, $exportManager, $securityContext, $rightManager)
+    public function __construct($kernelRoot, $exportManager, $securityContext, $rightManager)
     {
         $this->kernelRoot       = $kernelRoot;
-        $this->entityManager    = $entityManager;
         $this->exportManager    = $exportManager;
         $this->securityContext  = $securityContext;
         $this->rightManager     = $rightManager;
-        $this->user = $this->securityContext->getToken()->getUser();
+        $this->user             = $this->securityContext->getToken()->getUser();
     }
 
     /**
-     * Lists all Test entities.
-     *
-     * @Route(
-     *     "admin/export",
-     *     name = "export",
-     *     options = {"expose"=true}
-     * )
+     * @Route("admin/export/test/{testId}/file/{filename}/{mode}", name = "get-file")
      * @Method("GET")
-     *
-     * @Template("InnovaSelfBundle:Export:index.html.twig")
-     */
-    public function indexAction()
-    {
-        if ($this->rightManager->checkRight("right.exportPDF", $this->user) || $this->rightManager->checkRight("right.exportCSV", $this->user)) {
-            $em = $this->entityManager;
-
-            $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-
-            return array(
-                'tests' => $tests,
-            );
-        }
-
-        return;
-    }
-
-    /**
-     * @Route(
-     *     "admin/export/test/{testId}/file/{filename}/{mode}",
-     *     name = "get-file"
-     * )
-     *
-     * @Method("GET")
-     *
      */
     public function getFileAction($testId, $filename, $mode)
     {
         if ($this->rightManager->checkRight("right.exportPDF", $this->user) || $this->rightManager->checkRight("right.exportCSV", $this->user)) {
-            if ($mode == "pdf") {
-                $dir = "exportPdf";
-            } else {
-                $dir = "export";
-            }
-
+            $dir = ($mode == "pdf") ? "exportPdf" : "export";
             $file = $this->kernelRoot."/data/".$dir."/".$testId."/".$filename;
-
-            $response = new Response();
-            $response->headers->set('Cache-Control', 'private');
-            $response->headers->set('Content-type', mime_content_type($file));
-            $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
-            $response->headers->set('Content-length', filesize($file));
-            $response->sendHeaders();
-
-            $response->setContent(file_get_contents($file));
+            $response = $this->exportManager->generateResponse($file);
 
             return $response;
         }
@@ -103,19 +56,15 @@ class ExportController
 
     /**
      * exportCsvSQL function
-     * @Route(
-     *     "admin/export/csv/test/{testId}/session/{sessionId}/mode/{tia}",
-     *     name = "csv-export"
-     * )
      *
+     * @Route("admin/export/csv/test/{testId}/session/{sessionId}/mode/{tia}", name = "csv-export")
      * @Method("PUT")
-     *
      * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
     public function exportCsvAction(Test $test, Session $session, $tia)
     {
         if ($this->rightManager->checkRight("right.exportCSV", $this->user)) {
-            $csvName = $this->exportManager->exportCsvAction($test, $session, $tia);
+            $csvName = $this->exportManager->generateCsv($test, $session, $tia);
             $fileList = $this->exportManager->getFileList($test, "csv");
 
             return array(
@@ -130,14 +79,10 @@ class ExportController
     }
 
      /**
-     * exportCsvSQL function
-     * @Route(
-     *     "admin/export/csv/filelist/test/{testId}/{tia}",
-     *     name = "csv-export-show"
-     * )
+     * List CSV export files for a given test
      *
+     * @Route("admin/export/csv/filelist/test/{testId}/{tia}", name = "csv-export-show")
      * @Method("GET")
-     *
      * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
     public function showCsvAction(Test $test, $tia)
@@ -156,53 +101,29 @@ class ExportController
     }
 
     /**
-     * exportPdf function
-     * @Route(
-     *     "/self-export/pdf-export-session/session/{sessionId}",
-     *     name = "pdf-export-session-user"
-     * )
+     * Export result session PDF for current user
      *
+     * @Route("/self-export/pdf-export-session/session/{sessionId}", name = "pdf-export-session-user")
      * @Method("GET")
      *
      */
     public function exportSessionUserPdfAction(Session $session)
     {
-        $pdf = $this->exportManager->exportSessionUserPdfAction($session, $this->user);
-
-        $response = new Response();
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', mime_content_type($pdf));
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($pdf).'";');
-        $response->headers->set('Content-length', filesize($pdf));
-        $response->sendHeaders();
-
-        $response->setContent(file_get_contents($pdf));
+        $response = $this->exportManager->exportSessionUserPdfAction($session, $this->user);
 
         return $response;
     }
 
     /**
-     * exportPdf function
-     * @Route(
-     *     "admin/export/pdf-export-session/session/{sessionId}/user/{userId}",
-     *     name = "admin-pdf-export-session-user"
-     * )
+     * Export result session PDF for a given user
      *
+     * @Route("admin/export/pdf-export-session/session/{sessionId}/user/{userId}", name = "admin-pdf-export-session-user")
      * @Method("GET")
      *
      */
     public function exportSessionUserPdfAdminAction(Session $session, User $user)
     {
-        $pdf = $this->exportManager->exportSessionUserPdfAction($session, $user);
-
-        $response = new Response();
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', mime_content_type($pdf));
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($pdf).'";');
-        $response->headers->set('Content-length', filesize($pdf));
-        $response->sendHeaders();
-
-        $response->setContent(file_get_contents($pdf));
+        $response = $this->exportManager->exportSessionUserPdfAction($session, $user);
 
         return $response;
     }

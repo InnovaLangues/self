@@ -6,6 +6,7 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExportManager
 {
@@ -26,6 +27,20 @@ class ExportManager
         $this->knpSnappyPdf = $knpSnappyPdf;
         $this->templating = $templating;
         $this->user = $this->securityContext->getToken()->getUser();
+    }
+
+    public function generateResponse($file)
+    {
+        $response = new Response();
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($file));
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
+        $response->headers->set('Content-length', filesize($file));
+        $response->sendHeaders();
+
+        $response->setContent(file_get_contents($file));
+
+        return $response;
     }
 
     public function exportSessionUserPdfAction(Session $session, User $user)
@@ -55,7 +70,9 @@ class ExportManager
                 $fileName
         );
 
-        return $fileName;
+        $response = $this->generateResponse($fileName);
+
+        return $response;
     }
 
     public function exportPdfAction(Test $test)
@@ -73,7 +90,7 @@ class ExportManager
         return $pdfName;
     }
 
-    public function exportCsvAction(Test $test, Session $session, $tia)
+    public function generateCsv(Test $test, Session $session, $tia)
     {
         $fs = new Filesystem();
         $testId = $test->getId();

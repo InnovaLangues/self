@@ -38,7 +38,7 @@ class ExportTestManager
         return $pdfName;
     }
 
-    public function exportCsvAction(Test $test)
+    public function generateCsv(Test $test)
     {
         $fs = new Filesystem();
         $testId = $test->getId();
@@ -53,7 +53,10 @@ class ExportTestManager
         fwrite($csvh, $csvContent);
         fclose($csvh);
 
-        return $csvName;
+        $file = $this->kernelRoot."/data/export/".$test->getId()."/".$csvName;
+        $response = $this->exportManager->generateResponse($file);
+
+        return $response;
     }
 
     private function getCsvContent(Test $test)
