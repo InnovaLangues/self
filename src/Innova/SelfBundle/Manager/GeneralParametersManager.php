@@ -3,16 +3,22 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\GeneralParameters;
+use Innova\SelfBundle\Form\Type\GeneralParametersType;
+use Symfony\Component\HttpFoundation\Request;
 
 class GeneralParametersManager
 {
     protected $entityManager;
     protected $messageManager;
+    protected $formFactory;
+    protected $session;
 
-    public function __construct($entityManager, $messageManager)
+    public function __construct($entityManager, $messageManager, $formFactory, $session)
     {
-        $this->entityManager = $entityManager;
-        $this->messageManager = $messageManager;
+        $this->entityManager    = $entityManager;
+        $this->messageManager   = $messageManager;
+        $this->formFactory      = $formFactory;
+        $this->session          = $session;
     }
 
     public function initialize()
@@ -59,5 +65,29 @@ class GeneralParametersManager
         $em->flush();
 
         return $enabled;
+    }
+
+    /**
+     * Handles parameters form
+     */
+    public function handleForm(GeneralParameters $parameters, Request $request)
+    {
+        $form = $this->formFactory->createBuilder(new GeneralParametersType(), $parameters)->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->entityManager;
+                $em->persist($parameters);
+                $em->flush();
+
+                $this->session->getFlashBag()->set('info', "Les paramètres ont bien été modifiés");
+
+                return;
+            }
+        }
+
+        return $form;
     }
 }

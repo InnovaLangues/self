@@ -2,68 +2,58 @@
 
 namespace Innova\SelfBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
-use Innova\SelfBundle\Entity\GeneralParameters;
-use Innova\SelfBundle\Form\Type\GeneralParametersType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Test controller.
+ * General Parameters controller.
  *
- * @Route("/admin")
+ * @Route("/admin", service="innova_general_parameters")
  */
-class GeneralParametersController extends Controller
+class GeneralParametersController
 {
+    protected $entityManager;
+    protected $securityContext;
+    protected $rightManager;
+    protected $generalParamsManager;
+    protected $router;
+
+
+    public function __construct($entityManager, $securityContext, $rightManager, $generalParamsManager, $router)
+    {
+        $this->entityManager            = $entityManager;
+        $this->securityContext          = $securityContext;
+        $this->rightManager             = $rightManager;
+        $this->generalParamsManager     = $generalParamsManager;
+        $this->router                   = $router;
+    }
+
+
     /**
+     * Edit general parameters
      *
      * @Route("/parameters", name="parameters")
      * @Method({"GET", "POST"})
-     *
      * @Template("InnovaSelfBundle:Parameters:new.html.twig")
      */
     public function editAction(Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->securityContext->getToken()->getUser();
 
-        if ($this->get("self.right.manager")->checkRight("right.generalParameters", $currentUser)) {
-            $parameters = $em->getRepository('InnovaSelfBundle:GeneralParameters')->get();
-
-            $form = $this->handleForm($parameters, $request);
+        if ($this->rightManager->checkRight("right.generalParameters", $currentUser)) {
+            $parameters = $this->entityManager->getRepository('InnovaSelfBundle:GeneralParameters')->get();
+            $form = $this->generalParamsManager->handleForm($parameters, $request);
             if (!$form) {
-                $this->get("session")->getFlashBag()->set('info', "Les paramètres ont bien été modifiés");
 
-                return $this->redirect($this->generateUrl('parameters', array()));
+                return new RedirectResponse($this->router->generate('parameters', array()));
             }
 
             return array('form' => $form->createView(), 'parameters' => $parameters);
         }
 
         return;
-    }
-
-    /**
-     * Handles parameters form
-     */
-    private function handleForm(GeneralParameters $parameters, $request)
-    {
-        $form = $this->get('form.factory')->createBuilder(new GeneralParametersType(), $parameters)->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($parameters);
-                $em->flush();
-
-                return;
-            }
-        }
-
-        return $form;
     }
 }
