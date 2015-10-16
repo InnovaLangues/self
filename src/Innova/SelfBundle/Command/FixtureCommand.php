@@ -185,14 +185,6 @@ class FixtureCommand extends ContainerAwareCommand
             array("right.editpassworduser", "rightgroup.users", "canEditPassword", "RightUserSomeone"),
             array("right.editrightsuser", "rightgroup.users", 'canEditRights', "RightUserSomeone"),
 
-            // group
-            array("right.listgroup", "rightgroup.groups", null, "RightUserGroup"),
-            array("right.editgroup", "rightgroup.groups", "canEdit", "RightUserGroup"),
-            array("right.creategroup", "rightgroup.groups", null, "RightUserGroup"),
-            array("right.deletegroup", "rightgroup.groups", "canDelete", "RightUserGroup"),
-            array("right.csvimportgroup", "rightgroup.groups", "canImportCsv", "RightUserGroup"),
-            array("right.editrightsgroup", "rightgroup.groups", null, "RightUserGroup"),
-
             // session
             array("right.deletesession", "rightgroup.sessions", "canDelete", "RightUserSession"),
             array("right.listsession", "rightgroup.sessions", null, "RightUserSession"),
