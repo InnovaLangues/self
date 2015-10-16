@@ -2,19 +2,17 @@
 
 namespace Innova\SelfBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-/**
- * Main controller.
- */
-class AnonymousController extends Controller
+class AnonymousController
 {
     /**
+     * Display anonymous page
+     * 
      * @Route("/", name="show_start")
-     * @Template()
+     * @Template("InnovaSelfBundle:Anonymous:start.html.twig")
      * @Method("GET")
      */
     public function startAction()

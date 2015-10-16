@@ -65,7 +65,6 @@ services:
         class: Innova\SelfBundle\Controller\ExportController
         arguments:
             kernelRoot:         %kernel.root_dir%
-            entityManager:      @doctrine.orm.entity_manager
             exportManager:      @self.export.manager
             securityContext:    @security.token_storage
             rightManager:       @self.right.manager

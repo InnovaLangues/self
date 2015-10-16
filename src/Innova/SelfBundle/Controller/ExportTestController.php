@@ -16,6 +16,8 @@ use Innova\SelfBundle\Entity\Test;
 class ExportTestController extends Controller
 {
     /**
+     * Export CSV basic infos for a given test 
+     *
      * @Route("admin/export/csv/test/{testId}", name = "test-export-csv")
      * @Method("GET")
      */
@@ -23,17 +25,7 @@ class ExportTestController extends Controller
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         if ($this->get("self.right.manager")->checkRight("right.exportCSV", $currentUser)) {
-            $fileName    = $this->get("self.testexport.manager")->exportCsvAction($test);
-            $file        = $this->get('kernel')->getRootDir()."/data/export/".$test->getId()."/".$fileName;
-
-            $response = new Response();
-            $response->headers->set('Cache-Control', 'private');
-            $response->headers->set('Content-type', mime_content_type($file));
-            $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
-            $response->headers->set('Content-length', filesize($file));
-            $response->sendHeaders();
-
-            $response->setContent(file_get_contents($file));
+            $response = $this->get("self.testexport.manager")->generateCsv($test);
 
             return $response;
         }
@@ -42,6 +34,8 @@ class ExportTestController extends Controller
     }
 
     /**
+     * Export Livret PDF for a given test
+     *
      * @Route("admin/export/pdf/test/{testId}", name = "pdf-export")
      * @Method({"GET", "PUT"})
      * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
@@ -65,6 +59,7 @@ class ExportTestController extends Controller
     }
 
     /**
+     * List PDF export files for a given test
      * @Route("admin/export/pdf/filelist/test/{testId}",name = "pdf-export-show")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
