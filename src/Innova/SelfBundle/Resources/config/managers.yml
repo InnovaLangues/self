@@ -328,6 +328,8 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             messageManager:     @self.message.manager
+            formFactory:        @form.factory
+            session:            @session
 
     self.message.manager:
         class: Innova\SelfBundle\Manager\MessageManager

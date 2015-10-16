@@ -205,6 +205,15 @@ services:
             securityContext:    @security.token_storage
             rightManager:       @self.right.manager
 
+    innova_general_parameters:
+        class: Innova\SelfBundle\Controller\GeneralParametersController
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.token_storage
+            rightManager:       @self.right.manager
+            generalParamsManager: @self.generalparams.manager
+            router:             @router
+
     pdo:
         class: PDO
         arguments:
