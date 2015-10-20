@@ -18,11 +18,19 @@ menu:
     groups: Groupes
     generalparams: Paramètres
     message: Message
+    institutions: Institutions 
 
 message:
     content: Contenu du message
     channel: Destinataire
     send: Envoyer un message
+
+institution:
+    name: Nom de l'institution
+    create: Création d'une institution
+    addcourse: Ajouter une filère
+    courses: Filières de l'institution
+    edit: Edition de l'institution
 
 params:
     maintenance: Mode maintenance
@@ -70,6 +78,8 @@ registration:
     next_step: Etape suivante
     test_dialang: Avez-vous déjà passé un test Dialang ?
     forgotten_paswd: Mot de passe oublié ?
+    institution: Institution
+    course: Filière
 
 test:
     available: Tests disponibles

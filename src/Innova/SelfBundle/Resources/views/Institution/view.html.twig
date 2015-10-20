@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a href="{{ path('institution_edit', { 'institutionId': institution.id }) }}" class="btn btn-default btn-sm">
+    <span class="glyphicon glyphicon-pencil"></span> Editer l'institution
+</a>
+
+<a href="{{ path('institution_delete', { 'institutionId': institution.id }) }}" class="btn btn-danger btn-sm rest" data-method="DELETE">
+    <span class="glyphicon glyphicon-trash"></span> Supprimer l'institution
+</a>
+
+<hr/>
+
+<h3>
+{{ institution.name }}
+</h3>
+
+<ul class="list-group">
+{% for course in institution.courses %}
+    <li class="list-group-item">{{ course.name }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

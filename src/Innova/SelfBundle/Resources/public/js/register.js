@@ -116,18 +116,11 @@ $( "body" ).on( "change", '#fos_user_registration_form_firstName, #fos_user_regi
 });
 
 $(document).ready(function() {
-    var $tabs = $('#register-form-tabs li');
-
-    hidelevelLansad();
-    hideLevels();
-
     /*Login form validation*/
     $('.fos_user_registration_register #_submit').click(function(event) {
 
         $('.fos_user_registration_register .help-block').remove();
         $('.fos_user_registration_register .has-error').removeClass('has-error');
-
-        $('#register-form-tabs a:first').tab('show');
 
         $('.fos_user_registration_register').find('input').each(function(){
             if($(this).prop('required') && !$(this).val()){
@@ -144,32 +137,6 @@ $(document).ready(function() {
 
     });
 
-    $('#fos_user_registration_form_originStudent').change(function(event) {
-        var choice = $("#fos_user_registration_form_originStudent option:selected").text().toLowerCase();
-        if(choice.match(/lansad/)){
-            $('#fos_user_registration_form_levelLansad').parent().parent().show();
-        } else {
-            hidelevelLansad();
-        }
-    });
-
-
-    $('#fos_user_registration_form_testDialang').val("Non");
-    $('#fos_user_registration_form_testDialang').change(function(event) {
-        var choice = $("#fos_user_registration_form_testDialang option:selected").text().toLowerCase();
-        if (choice == 'oui'){
-            $('#fos_user_registration_form_coLevel').parent().parent().show();
-            $('#fos_user_registration_form_ceLevel').parent().parent().show();
-            $('#fos_user_registration_form_eeLevel').parent().parent().show();
-        } else {
-            hideLevels();
-        }
-    });
-
-    $('.nexttab').on('click', function() {
-        $tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
-    });
-
     $(window).keydown(function(event){
         if(event.keyCode == 13) {
             event.preventDefault();
@@ -177,14 +144,23 @@ $(document).ready(function() {
         }
     });
 
-    function hidelevelLansad()
-    {
-        $('#fos_user_registration_form_levelLansad').parent().parent().hide();
-    }
-
-    function hideLevels(){
-        $('#fos_user_registration_form_coLevel').parent().parent().hide();
-        $('#fos_user_registration_form_ceLevel').parent().parent().hide();
-        $('#fos_user_registration_form_eeLevel').parent().parent().hide();
-    }
+    $("#fos_user_registration_form_institution").change(function(){
+        $('#fos_user_registration_form_course').attr("disabled", "disabled");
+        $.ajax({
+            type: 'POST',
+            url: Routing.generate('select-courses',
+            {
+                'institutionId': $(this).val()
+            }),
+            success: function(data) {
+                var $course_selector = $('#fos_user_registration_form_course');
+                $course_selector.html('<option value="">Choisissez une option</option>');
+     
+                for (var i=0, total = data.length; i < total; i++) {
+                    $course_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                }
+                $('#fos_user_registration_form_course').attr("disabled", false);
+            }
+        });
+    });
 });

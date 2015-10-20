@@ -57,7 +57,26 @@ class UserType extends BaseType
             ->add('coLevel')
             ->add('ceLevel')
             ->add('eeLevel')
-         ;
+
+            ->add('institution', 'entity', array(
+                    'class'   => 'InnovaSelfBundle:Institution\Institution',
+                    'query_builder' => function () {
+                        return $this->om->getRepository('InnovaSelfBundle:Institution\Institution')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
+                    },
+                    'required' => true,
+                    'empty_value' => 'Choisissez une option'
+                ))
+
+            ->add('course', 'entity', array(
+                    'class'   => 'InnovaSelfBundle:Institution\Course',
+                    'required' => true,
+                    'empty_value' => 'Choisissez une option',
+                    'query_builder' => function () {
+                        return $this->om->getRepository('InnovaSelfBundle:Institution\Course')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
+                    },
+                    'attr' => array("disabled" => "disabled")
+                ))
+        ;
     }
 
     /**

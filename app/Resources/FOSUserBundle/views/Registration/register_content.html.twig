@@ -14,24 +14,16 @@
         {% if isSelfRegistrationEnabled() %}
             <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register" autocomplete="off">
 
-                {# Pour avoir le Wizard #}
-                {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
-                <ul class='nav nav-wizard' id="register-form-tabs">
-                   <li class='active'><a href='#step1' data-toggle="tab">Etape 1</a></li>
-                   <li><a href='#step2' data-toggle="tab">Etape 2</a></li>
-                </ul>
-
-                <hr/>
-
-                <div class="legend">
-                    <p class="warning text-left">
-                        {{ 'registration.warning_required' | trans({}, 'messages') }}
-                    </p>
-                </div>
 
 
-                <div id="myTabContent" class="tab-content">
-                    {# Onglet 1 #}
+                    <div class="legend">
+                        <p class="warning text-left">
+                            {{ 'registration.warning_required' | trans({}, 'messages') }}
+                        </p>
+                    </div>
+
+
+
                     <div class="tab-pane fade active in" id="step1">
                         <div class="form-group">
                             <label class="col-md-3 control-label required" for="fos_user_registration_form_lastName">
@@ -66,6 +58,32 @@
                             <div class="col-md-offset-5">
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <span class="form-error">{{ form_errors(form.institution) }}</span>
+                            <label class="col-md-3 control-label required" for="fos_user_registration_form_institution">
+                                {{ 'registration.institution' | trans({}, 'messages') }}
+                            </label>
+                            <div class="col-md-4">
+                                {{ form_widget(form.institution, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="col-md-offset-5">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_errors(form.course) }}
+                            <label class="col-md-3 control-label required" for="fos_user_registration_form_course">
+                                {{ 'registration.course' | trans({}, 'messages') }}
+                            </label>
+                            <div class="col-md-4">
+                                {{ form_widget(form.course, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <div class="col-md-offset-5">
+                            </div>
+                        </div>
+
+
                         <div class="form-group">
                             <span class="form-error">{{ form_errors(form.username) }}</span>
                             <label class="col-md-3 control-label required" for="fos_user_registration_form_username">
@@ -98,27 +116,15 @@
                             <div class="col-md-offset-5">
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ form_widget(form._token) }}
-                            <div class="col-md-offset-3 col-md-9">
-                                {# Call nexttab JS in main.js #130 #}
-                                <a href='#step2' data-toggle="tab" class="btn btn-primary nexttab">
-                                    {{ 'registration.next_step' | trans({}, 'messages') }}
-                                </a>
-                            </div>
-                        </div>
 
-                    </div>
-
-                    {# Onglet 2 #}
-                    <div class="tab-pane fade" id="step2">
+                        <!--
                         <fieldset>
                             <legend>{{ 'registration.pathway' | trans({}, 'messages') }}</legend>
 
                             {# originStudent, user entity "Dans la langue testée, êtes-vous un étudiant ?"#}
                             <div class="form-group">
                                 {{ form_errors(form.originStudent) }}
-                                <label class="col-md-4 control-label required" for="fos_user_registration_form_originStudent">
+                                <label class="col-md-4 control-label" for="fos_user_registration_form_originStudent">
                                     {{ 'registration.pathway_question' | trans({}, 'messages') }}
                                 </label>
                                 <div class="col-md-3">
@@ -204,7 +210,7 @@
                                 </div>
                             </div>
                         </fieldset>
-
+                        -->
                         <div class="form-group">
                             {{ form_widget(form._token) }}
                             <div class="col-md-offset-4 col-md-8">
@@ -212,7 +218,7 @@
                             </div>
                         </div>
 
-                    </div>
+                   
             </div>
         </form>
         {% else %}
@@ -226,8 +232,8 @@
 </div>
 
 {% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery-1.11.2.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/register.js") }}"></script>
 {% endblock %}
-
-

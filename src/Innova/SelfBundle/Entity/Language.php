@@ -228,4 +228,37 @@ class Language
     {
         return $this->questionnaires;
     }
+
+    /**
+     * Add users
+     *
+     * @param \Innova\SelfBundle\Entity\User $users
+     * @return Language
+     */
+    public function addUser(\Innova\SelfBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Innova\SelfBundle\Entity\User $users
+     */
+    public function removeUser(\Innova\SelfBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }

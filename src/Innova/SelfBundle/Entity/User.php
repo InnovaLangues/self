@@ -69,6 +69,18 @@ class User extends BaseUser
     private $originStudent;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Institution\Institution")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $institution;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Institution\Course")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $course;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Level", inversedBy="coLevels")
     */
     protected $coLevel;
@@ -614,5 +626,51 @@ class User extends BaseUser
     public function getPreferedLanguage()
     {
         return $this->preferedLanguage;
+    }
+
+    /**
+     * Set institution
+     *
+     * @param \Innova\SelfBundle\Entity\Institution\Institution $institution
+     * @return User
+     */
+    public function setInstitution(\Innova\SelfBundle\Entity\Institution\Institution $institution = null)
+    {
+        $this->institution = $institution;
+
+        return $this;
+    }
+
+    /**
+     * Get institution
+     *
+     * @return \Innova\SelfBundle\Entity\Institution\Institution 
+     */
+    public function getInstitution()
+    {
+        return $this->institution;
+    }
+
+    /**
+     * Set course
+     *
+     * @param \Innova\SelfBundle\Entity\Institution\Course $course
+     * @return User
+     */
+    public function setCourse(\Innova\SelfBundle\Entity\Institution\Course $course = null)
+    {
+        $this->course = $course;
+
+        return $this;
+    }
+
+    /**
+     * Get course
+     *
+     * @return \Innova\SelfBundle\Entity\Institution\Course 
+     */
+    public function getCourse()
+    {
+        return $this->course;
     }
 }
