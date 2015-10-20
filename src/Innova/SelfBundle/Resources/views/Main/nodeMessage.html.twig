@@ -4,7 +4,8 @@
     showFlash("warning", "{{ getMaintenanceText() }}");
     {% endif %}
 
-	if (client = new Faye.Client("{{ faye_server }}")){
+	if (typeof Faye !== 'undefined'){
+		client = new Faye.Client("{{ faye_server }}");
 		var channels = ["/all", "/user{{ app.user.id}}"];
 		{% if app.user is not null and is_granted('ROLE_ADMIN') %}
 		channels.push("/admin"),
