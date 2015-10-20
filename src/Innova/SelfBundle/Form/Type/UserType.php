@@ -21,12 +21,6 @@ class UserType extends AbstractType
             'translation_domain' => 'messages',
         ));
 
-        $builder->add('originStudent', 'entity', array(
-            'class'   => 'InnovaSelfBundle:originStudent',
-            'label'  => 'origin',
-            'required' => true,
-        ));
-
         $builder->add('preferedLanguage', 'entity', array(
             'class'   => 'InnovaSelfBundle:Language',
             'label'  => 'user.preferedLanguage',

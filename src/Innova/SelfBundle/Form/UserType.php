@@ -32,32 +32,6 @@ class UserType extends BaseType
             ->add('email', 'email')
             ->add('lastName')
             ->add('firstName')
-            ->add('originStudent', 'entity', array(
-                    'class'   => 'InnovaSelfBundle:OriginStudent',
-                    'query_builder' => function () {
-                        return $this->om->getRepository('InnovaSelfBundle:OriginStudent')->createQueryBuilder('o')->orderBy('o.name', 'ASC');
-                    },
-                    'required' => true,
-                    'empty_value' => 'Choisissez une option',
-                ))
-            ->add('levelLansad', 'entity',
-                array(
-                    'label'   => 'Category',
-                    'class'   => 'InnovaSelfBundle:LevelLansad',
-                    'choices' => $this->getArrayOfLevelLansad(),
-                )
-            )
-            ->add('testDialang', 'choice',
-                    array(
-                    'choices' => array('Oui' => 'Oui', 'Non' => 'Non'),
-                    'required' => true,
-                    'multiple' => false,
-                    'mapped' => false,
-                ))
-            ->add('coLevel')
-            ->add('ceLevel')
-            ->add('eeLevel')
-
             ->add('institution', 'entity', array(
                     'class'   => 'InnovaSelfBundle:Institution\Institution',
                     'query_builder' => function () {
@@ -95,30 +69,5 @@ class UserType extends BaseType
     public function getName()
     {
         return 'innova_selfbundle_user';
-    }
-
-    /**
-     * @return array
-     *               Request to have all skills for all languages
-     */
-    private function getArrayOfLevelLansad()
-    {
-        // Tab declaration
-        $list = array();
-
-        // To have all Language
-        $languages = $this->om->getRepository('InnovaSelfBundle:Language')->findAll();
-
-        foreach ($languages as $language) {
-            $levelLansads = $language->getLevelLansads();
-            if (count($levelLansads)>0) {
-                $list[$language->getName()] = array();
-                foreach ($levelLansads as $levelLansad) {
-                    $list[$language->getName()][$levelLansad->getName()] = $levelLansad;
-                }
-            }
-        }
-
-        return $list;
     }
 }
