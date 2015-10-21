@@ -18,6 +18,15 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findAllLight()
+    {
+        $dql = "SELECT u.id, u.username, u.lastName, u.firstName, u.email, u.roles FROM Innova\SelfBundle\Entity\User u";
+
+        $query = $this->_em->createQuery($dql);
+
+        return $query->getResult();
+    }
+
     public function getByTraceOnSession($sessionId)
     {
         $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u

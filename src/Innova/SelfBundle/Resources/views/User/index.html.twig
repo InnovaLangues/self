@@ -61,14 +61,10 @@
                             {{ entity.email }}
                         </td>
                         <td>
-                            {% if entity.firstname %}
-                                {{ entity.firstname }}
-                            {% endif %}
+                            {{ entity.firstName ? entity.firstName }}
                         </td>
                         <td>
-                            {% if entity.lastname %}
-                                {{ entity.lastname }}
-                            {% endif %}
+                            {{ entity.lastName ? entity.lastName }}
                         </td>
                         <td>
                             <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">
@@ -103,14 +99,10 @@
                             {{ entity.email }}
                         </td>
                         <td>
-                            {% if entity.firstname %}
-                                {{ entity.firstname }}
-                            {% endif %}
+                            {{ entity.firstName ? entity.firstName }}
                         </td>
                         <td>
-                            {% if entity.lastname %}
-                                {{ entity.lastname }}
-                            {% endif %}
+                           {{ entity.lastName ? entity.lastName }}
                         </td>
                         <td>
                             <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">

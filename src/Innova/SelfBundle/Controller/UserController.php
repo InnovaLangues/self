@@ -31,7 +31,7 @@ class UserController extends Controller
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
-            $entities = $em->getRepository('InnovaSelfBundle:User')->findAll();
+            $entities = $em->getRepository('InnovaSelfBundle:User')->findAllLight();
         } else {
             $entities = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findAuthorized($currentUser);
         }
