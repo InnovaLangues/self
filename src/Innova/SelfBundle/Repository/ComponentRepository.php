@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Questionnaire;
 
 class ComponentRepository extends EntityRepository
 {
@@ -63,5 +65,21 @@ class ComponentRepository extends EntityRepository
                 ->setParameter('user', $user);
 
         return $query->getResult();
+    }
+
+    public function getByTestAndQuestionnaire(Test $test, Questionnaire $questionnaire)
+    {
+        $dql = "SELECT c FROM Innova\SelfBundle\Entity\PhasedTest\Component c
+                LEFT JOIN c.orderQuestionnaireComponents o
+                WHERE o.questionnaire = :questionnaire
+                AND c.test = :test
+            ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test)
+                ->setParameter('questionnaire', $questionnaire);
+
+        return $query->getOneOrNullResult();
+
     }
 }
