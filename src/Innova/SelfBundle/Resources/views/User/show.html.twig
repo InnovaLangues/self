@@ -38,12 +38,28 @@
     <table class="record_properties table">
         <tbody>
             <tr>
-                <th>{{ 'user.name' | trans }} {{ 'user.firstname' | trans }}</th>
-                <td>{{ user.firstname }} {{ user.lastName }}</td>
+                <th>{{ 'user.name' | trans }}</th>
+                <td>{{ user.lastName }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'user.firstname' | trans }}</th>
+                <td>{{ user.firstname }}</td>
             </tr>
             <tr>
                 <th>{{ 'user.email' | trans }}</th>
                 <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'registration.institution' | trans }}</th>
+                <td>{{ user.institution ? user.institution.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'registration.course' | trans }}</th>
+                <td>{{ user.course ? user.course.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'registration.year' | trans }}</th>
+                <td>{{ user.year ? user.year.name }}</td>
             </tr>
         </tbody>
     </table>
