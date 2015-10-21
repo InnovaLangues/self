@@ -11,14 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use Innova\SelfBundle\Form\Type\InstitutionType;
 use Innova\SelfBundle\Entity\Institution\Institution;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 
 /**
  * Institution controller.
  *
- * @Route("", service="innova_institution")
+ * @Route("/admin", service="innova_institution")
  * @ParamConverter("institution", isOptional="true", class="InnovaSelfBundle:Institution\Institution", options={"id" = "institutionId"})
  */
 class InstitutionController
@@ -44,7 +43,7 @@ class InstitutionController
     /**
      * List institutions
      *
-     * @Route("/admin/institutions", name="institutions")
+     * @Route("/institutions", name="institutions")
      * @Method({"GET"})
      * @Template("InnovaSelfBundle:Institution:list.html.twig")
      */
@@ -53,7 +52,7 @@ class InstitutionController
         $currentUser = $this->securityContext->getToken()->getUser();
 
         if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-            $institutions = $this->entityManager->getRepository('InnovaSelfBundle:Institution\Institution')->findAll();
+            $institutions = $this->entityManager->getRepository('InnovaSelfBundle:Institution\Institution')->findBy(array(), array('name'=>'asc'));
           
             return array('institutions' => $institutions);
         }
@@ -64,7 +63,7 @@ class InstitutionController
     /**
      * List institutions
      *
-     * @Route("/admin/institution/new", name="institution_create")
+     * @Route("/institution/new", name="institution_create")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Institution:create.html.twig")
      */
@@ -90,7 +89,7 @@ class InstitutionController
     /**
      * List institutions
      *
-     * @Route("/admin/institution/{institutionId}", name="institution_view")
+     * @Route("/institution/{institutionId}", name="institution_view")
      * @Method({"GET"})
      * @Template("InnovaSelfBundle:Institution:view.html.twig")
      */
@@ -109,7 +108,7 @@ class InstitutionController
     /**
      * Delete institutions
      *
-     * @Route("/admin/institution/{institutionId}/delete", name="institution_delete")
+     * @Route("/institution/{institutionId}/delete", name="institution_delete")
      * @Method("DELETE")
      */
     public function deleteInstitutionAction(Institution $institution)
@@ -132,7 +131,7 @@ class InstitutionController
     /**
      * List institutions
      *
-     * @Route("/admin/institution/{institutionId}/edit", name="institution_edit")
+     * @Route("/institution/{institutionId}/edit", name="institution_edit")
      * @Method({"GET", "POST"})
      * @Template("InnovaSelfBundle:Institution:create.html.twig")
      */
@@ -153,22 +152,6 @@ class InstitutionController
 
         return;
     }
-
-
-    /**
-     * List courses for an institution
-     *
-     * @Route("/anonymous/institution/{{institutionId}}/courses", name="select-courses", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function selectCoursesAction(Institution $institution)
-    {
-        $em = $this->entityManager;
-        $courses = $em->getRepository('InnovaSelfBundle:Institution\Course')->findByInstitution($institution);
-
-        return new JsonResponse($courses);
-    }
-
 
     /**
      * Handles institution form

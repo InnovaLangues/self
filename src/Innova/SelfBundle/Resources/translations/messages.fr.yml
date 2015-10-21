@@ -27,10 +27,18 @@ message:
 
 institution:
     name: Nom de l'institution
-    create: Création d'une institution
+    create: Créer une institution
     addcourse: Ajouter une filère
     courses: Filières de l'institution
-    edit: Edition de l'institution
+    edit: Editer l'institution
+    manage: Gérer les institutions 
+
+year:
+    name: Nom de l'année
+    edit: Editer l'année
+    create: Créér une année
+    delete: Supprimer l'année
+    manage: Gérer les années
 
 params:
     maintenance: Mode maintenance
@@ -80,6 +88,7 @@ registration:
     forgotten_paswd: Mot de passe oublié ?
     institution: Institution
     course: Filière
+    year: Année
 
 test:
     available: Tests disponibles

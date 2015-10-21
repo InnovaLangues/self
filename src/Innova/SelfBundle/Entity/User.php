@@ -81,6 +81,12 @@ class User extends BaseUser
     private $course;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Institution\Year")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $year;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Level", inversedBy="coLevels")
     */
     protected $coLevel;
@@ -672,5 +678,28 @@ class User extends BaseUser
     public function getCourse()
     {
         return $this->course;
+    }
+
+    /**
+     * Set year
+     *
+     * @param \Innova\SelfBundle\Entity\Institution\Year $year
+     * @return User
+     */
+    public function setYear(\Innova\SelfBundle\Entity\Institution\Year $year = null)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return \Innova\SelfBundle\Entity\Institution\Year 
+     */
+    public function getYear()
+    {
+        return $this->year;
     }
 }

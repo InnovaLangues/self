@@ -148,7 +148,7 @@ $(document).ready(function() {
         $('#fos_user_registration_form_course').attr("disabled", "disabled");
         $.ajax({
             type: 'POST',
-            url: Routing.generate('select-courses',
+            url: Routing.generate('findCoursesByInstitution',
             {
                 'institutionId': $(this).val()
             }),

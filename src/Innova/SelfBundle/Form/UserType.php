@@ -40,7 +40,6 @@ class UserType extends BaseType
                     'required' => true,
                     'empty_value' => 'Choisissez une option'
                 ))
-
             ->add('course', 'entity', array(
                     'class'   => 'InnovaSelfBundle:Institution\Course',
                     'required' => true,
@@ -49,6 +48,15 @@ class UserType extends BaseType
                         return $this->om->getRepository('InnovaSelfBundle:Institution\Course')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
                     },
                     'attr' => array("disabled" => "disabled")
+                ))
+            ->add('year', 'entity', array(
+                    'class'   => 'InnovaSelfBundle:Institution\Year',
+                    'query_builder' => function () {
+                        return $this->om->getRepository('InnovaSelfBundle:Institution\Year')->createQueryBuilder('y')->orderBy('y.name', 'ASC');
+                    },
+                    'property' => 'name',
+                    'required' => true,
+                    'empty_value' => 'Choisissez une option'
                 ))
         ;
     }

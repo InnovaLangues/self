@@ -2,17 +2,17 @@
 
 {% block body -%}
 
-<a href="{{ path('institution_create') }}" class="btn btn-default">
-    <span class="glyphicon glyphicon-plus"></span> {{ 'institution.create' | trans }}
+<a href="{{ path('year_create') }}" class="btn btn-default">
+    <span class="glyphicon glyphicon-plus"></span> {{'year.create' | trans }}
 </a>
 
-<a href="{{ path('years') }}" class="btn btn-default">
-    <span class="glyphicon glyphicon-calendar"></span> {{ 'year.manage' | trans }}
+<a href="{{ path('institutions') }}" class="btn btn-default">
+    <span class="glyphicon glyphicon-leaf"></span> {{'institution.manage' | trans }}
 </a>
 
 <hr/>
 
-<h3>Institutions</h3>
+<h3>Années</h3>
 
 <div class="input-group">
     <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
@@ -20,7 +20,7 @@
 </div>
 <br/>
 
-<table id="institutions-table" class="table table-striped">
+<table id="years-table" class="table table-striped">
     <thead>
         <tr>
             <th>Nom</th>
@@ -28,15 +28,16 @@
         </tr>
     </thead>
     <tbody>
-		{% for institution in institutions %}
+		{% for year in years %}
 			<tr>
 				<td>
-					{{ institution.name }} 
+					{{ year.name }} 
 				</td>
                 <td class="text-right">
-                    <a class="btn btn-default btn-sm" href="{{ path('institution_view', { 'institutionId': institution.id }) }}">
+                    <a class="btn btn-default btn-sm" href="{{ path('year_view', { 'yearId': year.id }) }}">
                         <span class="glyphicon glyphicon-zoom-in"></span>
                     </a>
+                    
                 </td>
 			</tr>
 		{% endfor %}
@@ -48,5 +49,5 @@
 {% block javascripts %}
     {{ parent() }} 
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/institutions-list.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/year-list.js") }}"></script>
 {% endblock %}
