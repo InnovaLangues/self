@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
 use Symfony\Component\Filesystem\Filesystem;
@@ -33,14 +34,27 @@ class ExportManager
     {
         $response = new Response();
         $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', mime_content_type($file));
+        $response->headers->set('Content-Encoding', 'UTF-8');
+        $response->headers->set('Content-type', mime_content_type($file).";charset=UTF-8");
         $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
         $response->headers->set('Content-length', filesize($file));
         $response->sendHeaders();
-
-        $response->setContent(file_get_contents($file));
+        $response->setContent("\xEF\xBB\xBF".file_get_contents($file));
 
         return $response;
+    }
+
+    public function getTaskPosition(Test $test, Questionnaire $questionnaire)
+    {
+        $em = $this->entityManager;
+        if ($test->getPhased()){
+            $component = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->getByTestAndQuestionnaire($test, $questionnaire);
+            if ($component) {
+                return $componentTypeName = $component->getComponentType()->getName();
+            } 
+        }
+
+        return "-";
     }
 
     public function exportSessionUserPdfAction(Session $session, User $user)
@@ -203,13 +217,14 @@ class ExportManager
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $typology[$questionnaireId];
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
-
+                $position = $this->getTaskPosition($test, $questionnaire);
                 if ($traces) {
                     foreach ($traces as $trace) {
                         $csv .= $this->addColumn($theme[$questionnaireId]);
                         $csv .= $this->addColumn($typologyName);
                         $csv .= $this->addColumn($trace->getDifficulty());
                         $csv .= $this->addColumn($trace->getTotalTime());
+                        $csv .= $this->addColumn($position);
 
                         // création tableau de correspondance subquestion -> propositions choisies
                         $answersArray = array();
@@ -364,6 +379,8 @@ class ExportManager
             $userId = $user->getId();
 
             foreach ($questionnaires as $questionnaire) {
+                $position = $this->getTaskPosition($test, $questionnaire);
+                $csv .= $this->addColumn($position);
                 $questionnaireId = $questionnaire->getId();
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
 
@@ -588,6 +605,8 @@ class ExportManager
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - difficulté");
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - TEMPS");
             }
+
+            $csv .= $this->addColumn("Position");
 
             if (count($questions) > 0) {
                 $subquestions = $questions[0]->getSubquestions();
