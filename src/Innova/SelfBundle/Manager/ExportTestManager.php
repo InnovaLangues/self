@@ -2,9 +2,11 @@
 
 namespace Innova\SelfBundle\Manager;
 
-use Innova\SelfBundle\Entity\Test;
 use Symfony\Component\Filesystem\Filesystem;
+use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Subquestion;
+use Innova\SelfBundle\Entity\Questionnaire;
+
 
 class ExportTestManager
 {
@@ -69,6 +71,7 @@ class ExportTestManager
         $csv .= $this->addLine();
         $csv .= $this->exportManager->addColumn("n° tâche");
         $csv .= $this->exportManager->addColumn("n° item");
+        $csv .= $this->exportManager->addColumn("position");
         $csv .= $this->exportManager->addColumn("clés");
         $csv .= $this->exportManager->addColumn("nb options");
         $csv .= $this->exportManager->addColumn("");
@@ -80,12 +83,14 @@ class ExportTestManager
         foreach ($questionnaires as $questionnaire) {
             $taskCount++;
             $subquestions = $questionnaire->getQuestions()[0]->getSubquestions();
+            $taskPosition = $this->exportManager->getTaskPosition($test, $questionnaire);
             foreach ($subquestions as $subq) {
                 $itemCount++;
                 $propsInfos = $this->getPropsInfos($subq);
                 $csv .= $this->addLine();
                 $csv .= $this->exportManager->addColumn($taskCount);
                 $csv .= $this->exportManager->addColumn($itemCount);
+                $csv .= $this->exportManager->addColumn($taskPosition);
                 $csv .= $this->exportManager->addColumn($propsInfos[0]);
                 $csv .= $this->exportManager->addColumn($propsInfos[1]);
                 $csv .= $this->exportManager->addColumn("");
