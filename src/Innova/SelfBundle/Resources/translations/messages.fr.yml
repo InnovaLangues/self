@@ -88,9 +88,9 @@ registration:
     next_step: Etape suivante
     test_dialang: Avez-vous déjà passé un test Dialang ?
     forgotten_paswd: Mot de passe oublié ?
-    institution: Institution
-    course: Filière
-    year: Année
+    institution: Établissement (Université ou Institut)
+    course: Filière (UFR, spécialité ou composante)
+    year: Année d'étude
 
 test:
     available: Tests disponibles
