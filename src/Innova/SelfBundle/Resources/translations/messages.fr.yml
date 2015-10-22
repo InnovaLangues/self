@@ -70,6 +70,8 @@ user:
     session_managers: Gestionnaires de sessions
     rights: Permissions de l'utilisateur
     preferedLanguage: Langue
+    all: Tous
+    connected: Connectés
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires

@@ -38,15 +38,16 @@ class UserController extends Controller
 
         return array(
             'entities' => $entities,
+            'subset' => "user.all",
         );
     }
 
     /**
-     * Lists all users
+     * Lists connected users
      *
      * @Route("/admin/users/connected", name="admin_users_connected")
      * @Method("GET")
-     * @Template()
+     * @Template("InnovaSelfBundle:User:index.html.twig")
      */
     public function connectedAction()
     {
@@ -57,7 +58,8 @@ class UserController extends Controller
         }
 
         return array(
-            'connectedUsers' => $connectedUsers,
+            'entities' => $connectedUsers,
+            'subset' => "user.connected",
         );
     }
 

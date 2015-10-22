@@ -129,17 +129,10 @@ class UserManager
             $data = $data['_security_main'];
             $data = unserialize($data);
             $username = $data->getUser()->getUsername();
+            $user = $this->entityManager->getRepository('InnovaSelfBundle:User')->findOneByUsername($username);
 
-            if (!$this->inArrayRecursiv($username, $connectedUsers)) {
-                $admin = "";
-                foreach ($data->getRoles() as $role) {
-                    if ($role->getRole() == "ROLE_SUPER_ADMIN") {
-                        $admin = "X";
-                        break;
-                    }
-                }
-
-                $connectedUsers[] = array($username, $admin);
+            if (!in_array($user, $connectedUsers)) {
+                $connectedUsers[] = $user;
             }
         }
 
