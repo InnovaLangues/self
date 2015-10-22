@@ -32,32 +32,33 @@ class UserType extends BaseType
             ->add('email', 'email')
             ->add('lastName')
             ->add('firstName')
-            ->add('originStudent', 'entity', array(
-                    'class'   => 'InnovaSelfBundle:OriginStudent',
+            ->add('institution', 'entity', array(
+                    'class'   => 'InnovaSelfBundle:Institution\Institution',
                     'query_builder' => function () {
-                        return $this->om->getRepository('InnovaSelfBundle:OriginStudent')->createQueryBuilder('o')->orderBy('o.name', 'ASC');
+                        return $this->om->getRepository('InnovaSelfBundle:Institution\Institution')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
                     },
                     'required' => true,
-                    'empty_value' => 'Choisissez une option',
+                    'empty_value' => 'Choisissez une option'
                 ))
-            ->add('levelLansad', 'entity',
-                array(
-                    'label'   => 'Category',
-                    'class'   => 'InnovaSelfBundle:LevelLansad',
-                    'choices' => $this->getArrayOfLevelLansad(),
-                )
-            )
-            ->add('testDialang', 'choice',
-                    array(
-                    'choices' => array('Oui' => 'Oui', 'Non' => 'Non'),
+            ->add('course', 'entity', array(
+                    'class'   => 'InnovaSelfBundle:Institution\Course',
                     'required' => true,
-                    'multiple' => false,
-                    'mapped' => false,
+                    'empty_value' => 'Choisissez une option',
+                    'query_builder' => function () {
+                        return $this->om->getRepository('InnovaSelfBundle:Institution\Course')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
+                    },
+                    'attr' => array("disabled" => "disabled")
                 ))
-            ->add('coLevel')
-            ->add('ceLevel')
-            ->add('eeLevel')
-         ;
+            ->add('year', 'entity', array(
+                    'class'   => 'InnovaSelfBundle:Institution\Year',
+                    'query_builder' => function () {
+                        return $this->om->getRepository('InnovaSelfBundle:Institution\Year')->createQueryBuilder('y')->orderBy('y.name', 'ASC');
+                    },
+                    'property' => 'name',
+                    'required' => true,
+                    'empty_value' => 'Choisissez une option'
+                ))
+        ;
     }
 
     /**
@@ -76,30 +77,5 @@ class UserType extends BaseType
     public function getName()
     {
         return 'innova_selfbundle_user';
-    }
-
-    /**
-     * @return array
-     *               Request to have all skills for all languages
-     */
-    private function getArrayOfLevelLansad()
-    {
-        // Tab declaration
-        $list = array();
-
-        // To have all Language
-        $languages = $this->om->getRepository('InnovaSelfBundle:Language')->findAll();
-
-        foreach ($languages as $language) {
-            $levelLansads = $language->getLevelLansads();
-            if (count($levelLansads)>0) {
-                $list[$language->getName()] = array();
-                foreach ($levelLansads as $levelLansad) {
-                    $list[$language->getName()][$levelLansad->getName()] = $levelLansad;
-                }
-            }
-        }
-
-        return $list;
     }
 }

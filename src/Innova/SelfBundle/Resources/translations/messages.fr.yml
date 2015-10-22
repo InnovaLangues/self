@@ -18,11 +18,27 @@ menu:
     groups: Groupes
     generalparams: Paramètres
     message: Message
+    institutions: Institutions 
 
 message:
     content: Contenu du message
     channel: Destinataire
     send: Envoyer un message
+
+institution:
+    name: Nom de l'institution
+    create: Créer une institution
+    addcourse: Ajouter une filère
+    courses: Filières de l'institution
+    edit: Editer l'institution
+    manage: Gérer les institutions 
+
+year:
+    name: Nom de l'année
+    edit: Editer l'année
+    create: Créér une année
+    delete: Supprimer l'année
+    manage: Gérer les années
 
 params:
     maintenance: Mode maintenance
@@ -54,6 +70,8 @@ user:
     session_managers: Gestionnaires de sessions
     rights: Permissions de l'utilisateur
     preferedLanguage: Langue
+    all: Tous
+    connected: Connectés
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires
@@ -70,6 +88,9 @@ registration:
     next_step: Etape suivante
     test_dialang: Avez-vous déjà passé un test Dialang ?
     forgotten_paswd: Mot de passe oublié ?
+    institution: Établissement (Université ou Institut)
+    course: Filière (UFR, spécialité ou composante)
+    year: Année d'étude
 
 test:
     available: Tests disponibles

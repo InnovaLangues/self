@@ -18,14 +18,15 @@ class CheckSessionsCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $table = $this->getHelperSet()->get('table');
-        $table->setHeaders(array('#', 'User', 'Admin'));
+        $table->setHeaders(array('#', 'User', 'Mail', 'Admin'));
 
         $total_active_auth_count = 0;
 
         $connectedUsers = $this->getContainer()->get('self.user.manager')->getConnected();
-        foreach ($connectedUsers as $connectedUser) {
+        foreach ($connectedUsers as $user) {
             $total_active_auth_count++;
-            $table->addRow(array($total_active_auth_count, $connectedUser[0], $connectedUser[1]));
+            $admin = in_array("ROLE_SUPER_ADMIN", $user->getRoles()) ? "X": "";
+            $table->addRow(array($total_active_auth_count, $user->getUsername(), $user->getEmail(), $admin));
         }
 
         $table->render($output);

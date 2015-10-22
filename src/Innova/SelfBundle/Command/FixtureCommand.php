@@ -194,11 +194,14 @@ class FixtureCommand extends ContainerAwareCommand
             array("right.exportresultssession", "rightgroup.sessions", "canExportCollective", "RightUserSession"),
             array("right.editrightssession", "rightgroup.sessions", null, "RightUserSession"),
 
+            // export
             array("right.exportPDF", "rightgroup.exports", null, null),
             array("right.exportCSV", "rightgroup.exports", null, null),
 
+            // paramètres généraux
             array("right.generalParameters", "rightgroup.generalParameters", null, null),
             array("right.message", "rightgroup.generalParameters", null, null),
+            array("right.institution", "rightgroup.generalParameters", null, null),
         ));
 
         $generalParamsManager = $this->getContainer()->get("self.generalparams.manager");

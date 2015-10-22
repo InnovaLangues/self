@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<h3>
+{{ year.id ? 'year.edit' | trans : 'year.create' | trans }}
+</h3>
+
+<form method="post">
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.save) }}
+        {{ form_widget(form.save) }}
+    </div>
+
+    {{ form_widget(form._token) }}
+</form>
+
+{% endblock %}

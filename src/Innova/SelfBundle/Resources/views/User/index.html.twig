@@ -1,7 +1,6 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-
     {% if checkRight("right.createuser") %}
         <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
             <span class="glyphicon glyphicon-plus"></span>
@@ -10,122 +9,59 @@
     {% endif %}
 
     {% if checkRight("right.listuser") %}
-        <a href="{{ path('admin_users_connected') }}" class="btn btn-sm btn-default">
-            <span class=" glyphicon glyphicon-eye-open"></span>
-            Voir les utilisateurs en ligne
-        </a>
+        {% if subset == "user.all" %}
+            <a href="{{ path('admin_users_connected') }}" class="btn btn-sm btn-default">
+                <span class=" glyphicon glyphicon-eye-open"></span>
+                Voir les utilisateurs connectés
+            </a>
+        {% else %}
+            <a href="{{ path('admin_user') }}" class="btn btn-sm btn-default">
+                <span class=" glyphicon glyphicon-eye-open"></span>
+                Voir tous les utilisateurs
+            </a>
+        {% endif %}  
     {% endif %}
 
     <hr/>
 
     {% if entities is not empty %}
-    <h3>{{ 'user.list' | trans }}</h3>
+    <h3>{{ 'user.list' | trans }} ({{ subset|trans }})</h3>
 
     <div class="input-group">
         <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
         <input type="text" id="search" class="form-control" value="">
     </div>
     <br/>
-
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#granted-users" role="tab" data-toggle="tab">
-                <span class="glyphicon glyphicon-file"></span> {{ 'user.admin_users' | trans }}
-            </a>
-        </li>
-        <li>
-            <a href="#all-users" role="tab" data-toggle="tab">
-                <span class="glyphicon glyphicon-list-alt"></span> {{ 'user.plural' | trans }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="granted-users">
-            <table class="users-table table table-striped">
-                <thead>
-                    <tr>
-                        <th>Login</th>
-                        <th>Email</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entity in entities if "ROLE_SUPER_ADMIN" in entity.roles %}
-                    <tr>
-                        <td>
-                            {{ entity.username }}
-                        </td>
-                        <td>
-                            {{ entity.email }}
-                        </td>
-                        <td>
-                            {% if entity.firstname %}
-                                {{ entity.firstname }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if entity.lastname %}
-                                {{ entity.lastname }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">
-                                <span class="btn btn-default">
-                                    <span class="glyphicon glyphicon-zoom-in"></span>
-                                </span>
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="tab-pane" id="all-users">
-            <table class="users-table table table-striped">
-                <thead>
-                    <tr>
-                        <th>Login</th>
-                        <th>Email</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entity in entities if "ROLE_SUPER_ADMIN" not in entity.roles %}
-                    <tr>
-                         <td>
-                            {{ entity.username }}
-                        </td>
-                        <td>
-                            {{ entity.email }}
-                        </td>
-                        <td>
-                            {% if entity.firstname %}
-                                {{ entity.firstname }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if entity.lastname %}
-                                {{ entity.lastname }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">
-                                <span class="btn btn-default">
-                                    <span class="glyphicon glyphicon-zoom-in"></span>
-                                </span>
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-
+    <table class="users-table table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Login</th>
+                <th>Email</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ "ROLE_SUPER_ADMIN" in entity.roles ? '<span class="label label-default">Admin</span>'}}</td>
+                <td>{{ entity.username }}</td>
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.firstName ? entity.firstName }} </td>
+                <td>{{ entity.lastName ? entity.lastName }}</td>
+                <td>
+                    <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">
+                        <span class="btn btn-default">
+                            <span class="glyphicon glyphicon-zoom-in"></span>
+                        </span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     {% endif %}
 {% endblock %}
 

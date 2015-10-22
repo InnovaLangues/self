@@ -1,0 +1,66 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<h3>
+{{ institution.id ? 'institution.edit' | trans : 'institution.create' | trans }}
+</h3>
+
+<form method="post">
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
+
+    {{ form_label(form.courses) }} 
+    <span class="btn btn-default btn-xs" id="add-course">{{ 'institution.addcourse' | trans }}</span>
+    <div id="courses" data-prototype="{{ form_widget(form.courses.vars.prototype)|e }}">
+        {% for course in form.courses %}
+        	<div class="course">{{ form_widget(course.name) }}</div>
+        {% endfor %}
+    </div>
+    <br/>
+    <div class="form-group">
+        {{ form_label(form.save) }}
+        {{ form_widget(form.save) }}
+    </div>
+
+    {{ form_widget(form._token) }}
+</form>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+   	<script>
+	$(document).ready(function() {
+		var courses = $('div#courses');
+		courses.find('div.course').each(function() {
+	        addTagFormDeleteLink($(this));
+	    });
+	    $("#add-course").on('click', function(e) {
+	        e.preventDefault();
+	        addCourseForm(courses);
+	    });
+	});
+
+	function addCourseForm(courses) {
+	    // Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
+	    var prototype = courses.attr('data-prototype');
+	    var newForm = prototype.replace(/__name__/g, courses.children().length);
+	    var newFormLi = $('<div class="course"></div>').append(newForm);
+
+	    courses.append(newFormLi);
+	    addTagFormDeleteLink(newFormLi);
+	}
+
+	function addTagFormDeleteLink(tagFormLi) {
+	    var $removeFormA = $('<a class="pull-right btn btn-danger btn-xs" href="#">x</a>');
+	    tagFormLi.append($removeFormA);
+	    $removeFormA.on('click', function(e) {
+	        e.preventDefault();
+	        tagFormLi.remove();
+	    });
+	}
+	</script>
+{% endblock %}

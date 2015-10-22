@@ -41,19 +41,6 @@
                                 </li>
                             {% endif %}
 
-
-                            {# EXPORTS 
-                            {% if checkRight("right.exportPDF") or checkRight("right.exportCSV") %}
-                            <li>
-                                <a href="{{ path('export') }}">
-                                    <span class="glyphicon glyphicon-export"></span>
-                                    {{ 'menu.csv_export' | trans }}
-                                </a>
-                            </li>
-                            {% endif %}
-                            #}
-
-
                             {# TASKS AND TESTS #}
                             {% if checkRight("right.listtest") or checkRight("right.createtest") or hasRightsOnGroup("RightUserTest") %}
                                 {% set canPlayWithTests = true %}
@@ -148,6 +135,14 @@
                             <li>
                                 <a href="{{ path('parameters') }}">
                                     <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if checkRight("right.institution") %}
+                            <li>
+                                <a href="{{ path('institutions') }}">
+                                    <span class="glyphicon glyphicon-leaf"></span> {{ 'menu.institutions' | trans }}
                                 </a>
                             </li>
                         {% endif %}

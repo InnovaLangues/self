@@ -13,208 +13,125 @@
     <div class="panel-body">
         {% if isSelfRegistrationEnabled() %}
             <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register" autocomplete="off">
-
-                {# Pour avoir le Wizard #}
-                {# Voir : http://leaddyno.github.io/bootstrap-nav-wizard/ #}
-                <ul class='nav nav-wizard' id="register-form-tabs">
-                   <li class='active'><a href='#step1' data-toggle="tab">Etape 1</a></li>
-                   <li><a href='#step2' data-toggle="tab">Etape 2</a></li>
-                </ul>
-
-                <hr/>
-
                 <div class="legend">
                     <p class="warning text-left">
                         {{ 'registration.warning_required' | trans({}, 'messages') }}
                     </p>
                 </div>
 
-
-                <div id="myTabContent" class="tab-content">
-                    {# Onglet 1 #}
-                    <div class="tab-pane fade active in" id="step1">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label required" for="fos_user_registration_form_lastName">
-                                {{ 'user.name' | trans({}, 'messages') }}
-                            </label>
-                            <div class="col-md-4">
-                                <input value="{{ form.vars.value.lastName }}" class="form-control" id="fos_user_registration_form_lastName" type="text"  required="required" name="fos_user_registration_form[lastName]">
-                            </div>
-                            <div class="col-md-offset-5">
-                                {{ form_errors(form.lastName) }}
-                            </div>
+                <div class="tab-pane fade active in" id="step1">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_lastName">
+                            {{ 'user.name' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            <input value="{{ form.vars.value.lastName }}" class="form-control" id="fos_user_registration_form_lastName" type="text"  required="required" name="fos_user_registration_form[lastName]">
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label required" for="fos_user_registration_form_firstName">
-                                {{ 'user.firstname' | trans({}, 'messages') }}
-                            </label>
-                            <div class="col-md-4">
-                                <input value="{{ form.vars.value.firstName }}" class="form-control" id="fos_user_registration_form_firstName" type="text" required="required" name="fos_user_registration_form[firstName]">
-                            </div>
-                            <div class="col-md-offset-5">
-                                {{ form_errors(form.firstName) }}
-                            </div>
+                        <div class="col-md-offset-5">
+                            {{ form_errors(form.lastName) }}
                         </div>
-                        <div class="form-group">
-                            <span class="form-error">{{ form_errors(form.email) }}</span>
-                            <label class="col-md-3 control-label required" for="fos_user_registration_form_email">
-                                {{ 'user.email' | trans({}, 'messages') }}
-                            </label>
-                            <div class="col-md-4">
-                                <input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
-                            </div>
-                            <div class="col-md-offset-5">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_firstName">
+                            {{ 'user.firstname' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            <input value="{{ form.vars.value.firstName }}" class="form-control" id="fos_user_registration_form_firstName" type="text" required="required" name="fos_user_registration_form[firstName]">
                         </div>
-                        <div class="form-group">
-                            <span class="form-error">{{ form_errors(form.username) }}</span>
-                            <label class="col-md-3 control-label required" for="fos_user_registration_form_username">
-                                {{ 'registration.username' | trans({}, 'messages') }}
-                            </label>
-                            <div class="col-md-4">
-                                <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
-                            </div>
-                            <div class="col-md-offset-5">
-                            </div>
+                        <div class="col-md-offset-5">
+                            {{ form_errors(form.firstName) }}
                         </div>
-                        <div class="form-group">
-                            <span class="form-error">{{ form_errors(form.plainPassword.first) }}</span>
-                            <label class="col-md-3 control-label required" for="fos_user_registration_form_plainPassword_first">
-                                {{ 'registration.password' | trans({}, 'messages') }}
-                            </label>
-                            <div class="col-md-4">
-                                <input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
-                            </div>
-                            <div class="col-md-offset-5">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="form-error">{{ form_errors(form.email) }}</span>
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_email">
+                            {{ 'user.email' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            <input value="{{ form.vars.value.email }}" class="form-control" id="fos_user_registration_form_email" type="email" required="required" name="fos_user_registration_form[email]">
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label required" for="fos_user_registration_form_plainPassword_second">
-                                {{ 'registration.password_confirmation' | trans({}, 'messages') }}
-                            </label>
-                            <div class="col-md-4">
-                                <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
-                            </div>
-                            <div class="col-md-offset-5">
-                            </div>
+                        <div class="col-md-offset-5">
                         </div>
-                        <div class="form-group">
-                            {{ form_widget(form._token) }}
-                            <div class="col-md-offset-3 col-md-9">
-                                {# Call nexttab JS in main.js #130 #}
-                                <a href='#step2' data-toggle="tab" class="btn btn-primary nexttab">
-                                    {{ 'registration.next_step' | trans({}, 'messages') }}
-                                </a>
-                            </div>
-                        </div>
-
                     </div>
 
-                    {# Onglet 2 #}
-                    <div class="tab-pane fade" id="step2">
-                        <fieldset>
-                            <legend>{{ 'registration.pathway' | trans({}, 'messages') }}</legend>
-
-                            {# originStudent, user entity "Dans la langue testée, êtes-vous un étudiant ?"#}
-                            <div class="form-group">
-                                {{ form_errors(form.originStudent) }}
-                                <label class="col-md-4 control-label required" for="fos_user_registration_form_originStudent">
-                                    {{ 'registration.pathway_question' | trans({}, 'messages') }}
-                                </label>
-                                <div class="col-md-3">
-                                    {{ form_widget(form.originStudent, { 'attr': {'class': 'form-control'} }) }}
-                                </div>
-                                <div class="col-md-offset-5">
-                                </div>
-                            </div>
-
-                            {# lastLevel, user entity #}
-                            {# display by language. So, I use an "optgroup" #}
-                            <div class="form-group">
-                                {{ form_errors(form.levelLansad) }}
-                                <label class="col-md-4 control-label" for="fos_user_registration_form_levelLansad">
-                                    {{ 'registration.last_lansad' | trans({}, 'messages') }}
-                                </label>
-                                <div class="col-md-3">
-                                    {{ form_widget(form.levelLansad, { 'attr': {'class': 'form-control'} }) }}
-                                </div>
-                                <div class="col-md-offset-5">
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>{{ 'registration.dialang' | trans({}, 'messages') }}</legend>
-
-                            {# test_dialang: Avez-vous déjà passé un test Dialang ? #}
-                            {# voir le formulaire UserType.php #}
-                            <div class="form-group">
-                                {{ form_errors(form.testDialang) }}
-                                <label class="col-md-4 control-label" for="fos_user_registration_form_testDialang">
-                                    {{ 'registration.test_dialang' | trans({}, 'messages') }}
-                                </label>
-                                <div class="col-md-3">
-                                    <select id="fos_user_registration_form_testDialang" name="fos_user_registration_form[testDialang]"    class="form-control">
-                                        {# Traductions #}
-                                        <option value="Oui">{{ 'generic.yes' | trans({}, 'messages') }}</option>
-                                        <option value="Non">{{ 'generic.no' | trans({}, 'messages') }}</option>
-                                    </select>
-                                    {# {{ form_widget(form.testDialang, { 'attr': {'class': 'form-control'} }) }}#}
-                                </div>
-                                <div class="col-md-offset-5">
-                                </div>
-                            </div>
-
-                            {# coLevel, user entity #}
-                            <div class="form-group">
-                                {{ form_errors(form.coLevel) }}
-                                <label class="col-md-4 control-label" for="fos_user_registration_form_coLevel">
-                                    {{ 'registration.CO_level' | trans({}, 'messages') }}
-                                </label>
-                                <div class="col-md-3">
-                                    {{ form_widget(form.coLevel, { 'attr': {'class': 'form-control'} }) }}
-                                </div>
-                                <div class="col-md-offset-5">
-                                </div>
-                            </div>
-
-                            {# ceLevel, user entity #}
-                            <div class="form-group">
-                                {{ form_errors(form.coLevel) }}
-                                <label class="col-md-4 control-label" for="fos_user_registration_form_ceLevel">
-                                    {{ 'registration.CE_level' | trans({}, 'messages') }}
-                                </label>
-                                <div class="col-md-3">
-                                    {{ form_widget(form.ceLevel, { 'attr': {'class': 'form-control'} }) }}
-                                </div>
-                                <div class="col-md-offset-5">
-                                </div>
-
-                            </div>
-                            {# eeLevel, user entity #}
-                            <div class="form-group">
-                                {{ form_errors(form.eeLevel) }}
-                                <label class="col-md-4 control-label" for="fos_user_registration_form_eeLevel">
-                                    {{ 'registration.EE_level' | trans({}, 'messages') }}
-                                </label>
-                                <div class="col-md-3">
-                                    {{ form_widget(form.eeLevel, { 'attr': {'class': 'form-control'} }) }}
-                                </div>
-                                <div class="col-md-offset-5">
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <div class="form-group">
-                            {{ form_widget(form._token) }}
-                            <div class="col-md-offset-4 col-md-8">
-                                <input type="submit" id="_submit" name="_submit" value="{{ 'generic.validate' | trans({}, 'messages') }}" class="btn btn-primary"/>
-                            </div>
+                    <div class="form-group">
+                        <span class="form-error">{{ form_errors(form.institution) }}</span>
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_institution">
+                            {{ 'registration.institution' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            {{ form_widget(form.institution, { 'attr': {'class': 'form-control'} }) }}
                         </div>
-
+                        <div class="col-md-offset-5">
+                        </div>
                     </div>
-            </div>
-        </form>
+
+                    <div class="form-group">
+                        {{ form_errors(form.course) }}
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_course">
+                            {{ 'registration.course' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            {{ form_widget(form.course, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-md-offset-5">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_errors(form.year) }}
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_year">
+                            {{ 'registration.year' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            {{ form_widget(form.year, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-md-offset-5">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="form-error">{{ form_errors(form.username) }}</span>
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_username">
+                            {{ 'registration.username' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            <input value="{{ form.vars.value.username }}" class="form-control" id="fos_user_registration_form_username" type="text" maxlength="255" required="required" name="fos_user_registration_form[username]">
+                        </div>
+                        <div class="col-md-offset-5">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="form-error">{{ form_errors(form.plainPassword.first) }}</span>
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_plainPassword_first">
+                            {{ 'registration.password' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            <input class="form-control" id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]">
+                        </div>
+                        <div class="col-md-offset-5">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label required" for="fos_user_registration_form_plainPassword_second">
+                            {{ 'registration.password_confirmation' | trans({}, 'messages') }}
+                        </label>
+                        <div class="col-md-4">
+                            <input class="form-control" id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]">
+                        </div>
+                        <div class="col-md-offset-5">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_widget(form._token) }}
+                        <div class="col-md-offset-4 col-md-8">
+                            <input type="submit" id="_submit" name="_submit" value="{{ 'generic.validate' | trans({}, 'messages') }}" class="btn btn-primary"/>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
         {% else %}
             <div class="alert alert-danger" role="alert">
                 <span class="glyphicon glyphicon-info-sign"></span> Auto-inscription désactivée.
@@ -226,8 +143,8 @@
 </div>
 
 {% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery-1.11.2.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/register.js") }}"></script>
 {% endblock %}
-
-

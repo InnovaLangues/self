@@ -1532,4 +1532,27 @@ class Questionnaire
     {
         return $this->productionType;
     }
+
+    /**
+     * Add varieties
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
+     * @return Questionnaire
+     */
+    public function addVariety(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
+    {
+        $this->varieties[] = $varieties;
+
+        return $this;
+    }
+
+    /**
+     * Remove varieties
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
+     */
+    public function removeVariety(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
+    {
+        $this->varieties->removeElement($varieties);
+    }
 }

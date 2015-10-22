@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a href="{{ path('year_edit', { 'yearId': year.id }) }}" class="btn btn-default btn-sm">
+    <span class="glyphicon glyphicon-pencil"></span> {{'year.edit' | trans }}
+</a>
+
+<a href="{{ path('year_delete', { 'yearId': year.id }) }}" class="btn btn-danger btn-sm rest" data-method="DELETE">
+    <span class="glyphicon glyphicon-trash"></span> {{'year.delete' | trans }}
+</a>
+
+<hr/>
+
+<h3>
+{{ year.name }}
+</h3>
+
+{% endblock %}

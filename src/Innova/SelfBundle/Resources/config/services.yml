@@ -214,6 +214,31 @@ services:
             generalParamsManager: @self.generalparams.manager
             router:             @router
 
+    innova_institution:
+        class: Innova\SelfBundle\Controller\Institution\InstitutionController
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.token_storage
+            rightManager:       @self.right.manager
+            router:             @router
+            formFactory:        @form.factory
+            session:            @session
+
+    innova_course:
+        class: Innova\SelfBundle\Controller\Institution\CourseController
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+
+    innova_year:
+        class: Innova\SelfBundle\Controller\Institution\YearController
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.token_storage
+            rightManager:       @self.right.manager
+            router:             @router
+            formFactory:        @form.factory
+            session:            @session
+
     pdo:
         class: PDO
         arguments:

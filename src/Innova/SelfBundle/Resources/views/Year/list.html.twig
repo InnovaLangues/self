@@ -1,0 +1,53 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a href="{{ path('year_create') }}" class="btn btn-default">
+    <span class="glyphicon glyphicon-plus"></span> {{'year.create' | trans }}
+</a>
+
+<a href="{{ path('institutions') }}" class="btn btn-default">
+    <span class="glyphicon glyphicon-leaf"></span> {{'institution.manage' | trans }}
+</a>
+
+<hr/>
+
+<h3>Années</h3>
+
+<div class="input-group">
+    <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
+    <input type="text" id="search" class="form-control" value="">
+</div>
+<br/>
+
+<table id="years-table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+		{% for year in years %}
+			<tr>
+				<td>
+					{{ year.name }} 
+				</td>
+                <td class="text-right">
+                    <a class="btn btn-default btn-sm" href="{{ path('year_view', { 'yearId': year.id }) }}">
+                        <span class="glyphicon glyphicon-zoom-in"></span>
+                    </a>
+                    
+                </td>
+			</tr>
+		{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }} 
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/year-list.js") }}"></script>
+{% endblock %}
