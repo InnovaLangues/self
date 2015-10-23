@@ -50,7 +50,19 @@ class ExportManager
         if ($test->getPhased()){
             $component = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->getByTestAndQuestionnaire($test, $questionnaire);
             if ($component) {
-                return $componentTypeName = $component->getComponentType()->getName();
+                return $component->getComponentType()->getName();
+            } 
+        }
+
+        return "-";
+    }
+
+    public function getUserSecondStep(Session $session, User $user)
+    {
+        $em = $this->entityManager;
+        if ($session->getTest()->getPhased()){
+            if ($trace = $em->getRepository('InnovaSelfBundle:Trace')->getFirstForSecondStep($session, $user)) {
+                return $trace->getComponent()->getComponentType()->getName();
             } 
         }
 
@@ -201,6 +213,7 @@ class ExportManager
         foreach ($users as $user) {
             $userId = $user->getId();
             $score = $this->calculateScore($user, $session, $rightProps);
+            $secondStep = $this->getUserSecondStep($session, $user);
 
             $csv .= $this->addColumn($user->getUserName());
             $csv .= $this->addColumn($user->getFirstName());
@@ -211,20 +224,20 @@ class ExportManager
             $csv .= $this->addColumn($user->getEeLevel());
             $csv .= $this->addColumn($user->getlevelLansad());
             $csv .= $this->addColumn($score);
+            $csv .= $this->addColumn($secondStep);
 
             foreach ($questionnaires as $questionnaire) {
                 $questionnaireId = $questionnaire->getId();
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $typology[$questionnaireId];
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
-                $position = $this->getTaskPosition($test, $questionnaire);
+                
                 if ($traces) {
                     foreach ($traces as $trace) {
                         $csv .= $this->addColumn($theme[$questionnaireId]);
                         $csv .= $this->addColumn($typologyName);
                         $csv .= $this->addColumn($trace->getDifficulty());
                         $csv .= $this->addColumn($trace->getTotalTime());
-                        $csv .= $this->addColumn($position);
 
                         // création tableau de correspondance subquestion -> propositions choisies
                         $answersArray = array();
@@ -377,10 +390,11 @@ class ExportManager
         foreach ($users as $user) {
             $csv .= $user->getUserName()." ".$user->getFirstName().";";
             $userId = $user->getId();
+            $secondStep = $this->getUserSecondStep($session, $user);
+            $csv .= $this->addColumn($secondStep);
 
             foreach ($questionnaires as $questionnaire) {
-                $position = $this->getTaskPosition($test, $questionnaire);
-                $csv .= $this->addColumn($position);
+                
                 $questionnaireId = $questionnaire->getId();
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
 
@@ -587,8 +601,10 @@ class ExportManager
             $csv .= $this->addColumn("Niveau Dialang EEC");
             $csv .= $this->addColumn("Niveau Lansad acquis");
             $csv .= $this->addColumn("Score total obtenu dans le test (formule du total)");
+            $csv .= $this->addColumn("Etape de sortie");
         } else {
             $csv .= $this->addColumn("Etudiant");
+            $csv .= $this->addColumn("Etape de sortie");
         }
 
         foreach ($questionnaires as $questionnaire) {
@@ -605,8 +621,6 @@ class ExportManager
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - difficulté");
                 $csv .= $this->addColumn("T".$cpt_questionnaire." - TEMPS");
             }
-
-            $csv .= $this->addColumn("Position");
 
             if (count($questions) > 0) {
                 $subquestions = $questions[0]->getSubquestions();
