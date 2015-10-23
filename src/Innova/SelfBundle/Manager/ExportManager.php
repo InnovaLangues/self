@@ -601,7 +601,7 @@ class ExportManager
             $csv .= $this->addColumn("Niveau Dialang EEC");
             $csv .= $this->addColumn("Niveau Lansad acquis");
             $csv .= $this->addColumn("Score total obtenu dans le test (formule du total)");
-            $csv .= $this->addColumn("Edtape de sortie");
+            $csv .= $this->addColumn("Etape de sortie");
         } else {
             $csv .= $this->addColumn("Etudiant");
             $csv .= $this->addColumn("Etape de sortie");
