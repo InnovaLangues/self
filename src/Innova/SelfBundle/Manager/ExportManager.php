@@ -701,7 +701,10 @@ class ExportManager
         $csv .= $this->addColumn("Nom");
         $csv .= $this->addColumn("Prénom");
         $csv .= $this->addColumn("Email");
+        $csv .= $this->addColumn("Filière (ancien champ)");
+        $csv .= $this->addColumn("Etablissement");
         $csv .= $this->addColumn("Filière");
+        $csv .= $this->addColumn("Année");
         $csv .= $this->addColumn("Début");
         $csv .= $this->addColumn("Durée approx.");
         $csv .= $this->addColumn("Score agrégé");
@@ -718,6 +721,9 @@ class ExportManager
             $csv .= $this->addColumn($user->getEmail());
 
             $origin = ($user->getOriginStudent()) ? $user->getOriginStudent()->getName() : "";
+            $institution = ($user->getInstitution()) ? $user->getInstitution()->getName() : "";
+            $course = ($user->getCourse()) ? $user->getCourse()->getName() : "";
+            $year = ($user->getYear()) ? $user->getYear()->getName() : "";
             $scoreGlobal = $this->scoreManager->getGlobalLevelFromThreshold($session, $user);
             $scoreCO = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CO");
             $scoreCE = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CE");
@@ -727,6 +733,9 @@ class ExportManager
             $firstTrace = reset($traces)->getDate();
 
             $csv .= $this->addColumn($origin);
+            $csv .= $this->addColumn($institution);
+            $csv .= $this->addColumn($course);
+            $csv .= $this->addColumn($year);
             $csv .= $this->addColumn($firstTrace->format('d-m-Y H:i:s'));
             $csv .= $this->addColumn($this->diff($firstTrace, $lastTrace));
             $csv .= $this->addColumn($scoreGlobal);
