@@ -47,6 +47,25 @@ class TraceRepository extends EntityRepository
         return $query->getResult();
     }
 
+
+    public function getFirstForSecondStep($session, $user)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        LEFT JOIN t.component c
+        LEFT JOIN c.componentType ct
+        WHERE t.user = :user
+        AND t.session = :session
+        AND ct.name != 'minitest'";
+
+        $query = $this->_em->createQuery($dql)
+                ->setMaxResults(1)
+                ->setParameter('user', $user)
+                ->setParameter('session', $session);
+
+        return $query->getOneOrNullResult();
+    }
+
+
     public function getByUserBySessionBySkill($user, $session, $skill)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t

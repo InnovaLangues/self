@@ -5,8 +5,6 @@ namespace Innova\SelfBundle\Manager;
 use Symfony\Component\Filesystem\Filesystem;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Subquestion;
-use Innova\SelfBundle\Entity\Questionnaire;
-
 
 class ExportTestManager
 {
