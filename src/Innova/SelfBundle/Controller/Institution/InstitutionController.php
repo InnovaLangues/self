@@ -23,17 +23,15 @@ use Innova\SelfBundle\Entity\Institution\Institution;
 class InstitutionController
 {
     protected $entityManager;
-    protected $securityContext;
-    protected $rightManager;
+    protected $voter;
     protected $router;
     protected $formFactory;
     protected $session;
 
-    public function __construct($entityManager, $securityContext, $rightManager, $router, $formFactory, $session)
+    public function __construct($entityManager, $voter, $router, $formFactory, $session)
     {
         $this->entityManager            = $entityManager;
-        $this->securityContext          = $securityContext;
-        $this->rightManager             = $rightManager;
+        $this->voter                    = $voter;
         $this->router                   = $router;
         $this->formFactory              = $formFactory;
         $this->session                  = $session;
@@ -49,15 +47,11 @@ class InstitutionController
      */
     public function listInstitutionAction()
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
-
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-            $institutions = $this->entityManager->getRepository('InnovaSelfBundle:Institution\Institution')->findBy(array(), array('name'=>'asc'));
+        $this->voter->isAllowed("right.institution");
+        
+        $institutions = $this->entityManager->getRepository('InnovaSelfBundle:Institution\Institution')->findBy(array(), array('name'=>'asc'));
           
-            return array('institutions' => $institutions);
-        }
-
-        return;
+        return array('institutions' => $institutions);
     }
 
     /**
@@ -69,21 +63,17 @@ class InstitutionController
      */
     public function createInstitutionAction(Request $request)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.institution");
 
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-            $institution = new Institution();
-            $form = $this->handleForm($institution, $request);
-            if (!$form) {
-                $this->session->getFlashBag()->set('info', "L'institution a bien été créée");
+        $institution = new Institution();
+        $form = $this->handleForm($institution, $request);
+        if (!$form) {
+            $this->session->getFlashBag()->set('info', "L'institution a bien été créée");
 
-                return new RedirectResponse($this->router->generate('institutions'));
-            }
-
-            return array('form' => $form->createView(), 'institution' => $institution);
+            return new RedirectResponse($this->router->generate('institutions'));
         }
 
-        return;
+        return array('form' => $form->createView(), 'institution' => $institution);
     }
 
     /**
@@ -95,14 +85,9 @@ class InstitutionController
      */
     public function viewInstitutionAction(Institution $institution)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
-
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
+        $this->voter->isAllowed("right.institution");
            
-            return array('institution' => $institution);
-        }
-
-        return;
+        return array('institution' => $institution);
     }
 
     /**
@@ -113,18 +98,14 @@ class InstitutionController
      */
     public function deleteInstitutionAction(Institution $institution)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.institution");
 
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-            $em = $this->entityManager;
-            $em->remove($institution);
-            $em->flush();
-            $this->session->getFlashBag()->set('info', "L'institution a bien été supprimée");
+        $em = $this->entityManager;
+        $em->remove($institution);
+        $em->flush();
+        $this->session->getFlashBag()->set('info', "L'institution a bien été supprimée");
 
-            return new RedirectResponse($this->router->generate('institutions'));
-        }
-
-        return;
+        return new RedirectResponse($this->router->generate('institutions'));
     }
 
 
@@ -137,20 +118,16 @@ class InstitutionController
      */
     public function editInstitutionAction(Institution $institution, Request $request)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.institution");
 
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-            $form = $this->handleForm($institution, $request);
-            if (!$form) {
-                $this->session->getFlashBag()->set('info', "L'institution a bien été modifiée");
+        $form = $this->handleForm($institution, $request);
+        if (!$form) {
+            $this->session->getFlashBag()->set('info', "L'institution a bien été modifiée");
 
-                return new RedirectResponse($this->router->generate('institutions'));
-            }
-
-            return array('form' => $form->createView(), 'institution' => $institution);
+            return new RedirectResponse($this->router->generate('institutions'));
         }
 
-        return;
+        return array('form' => $form->createView(), 'institution' => $institution);
     }
 
     /**
@@ -160,7 +137,6 @@ class InstitutionController
     private function handleForm(Institution $institution, Request $request)
     {
         $form = $this->formFactory->createBuilder(new InstitutionType(), $institution)->getForm();
-
 
         $courses = new ArrayCollection();
         foreach ($institution->getCourses() as $course) {

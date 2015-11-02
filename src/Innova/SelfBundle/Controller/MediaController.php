@@ -51,20 +51,20 @@ class MediaController
             $rightManager,
             $session
     ) {
-        $this->mediaManager = $mediaManager;
-        $this->propositionManager = $propositionManager;
-        $this->appManager = $appManager;
-        $this->commentManager = $commentManager;
-        $this->entityManager = $entityManager;
-        $this->templating = $templating;
+        $this->mediaManager                 = $mediaManager;
+        $this->propositionManager           = $propositionManager;
+        $this->appManager                   = $appManager;
+        $this->commentManager               = $commentManager;
+        $this->entityManager                = $entityManager;
+        $this->templating                   = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        $this->templatingManager = $templatingManager;
-        $this->questionnaireManager = $questionnaireManager;
+        $this->templatingManager            = $templatingManager;
+        $this->questionnaireManager         = $questionnaireManager;
         $this->securityContext              = $securityContext;
         $this->rightManager                 = $rightManager;
         $this->session                      = $session;
-        $this->subqRepo = $this->entityManager->getRepository('InnovaSelfBundle:Subquestion');
-        $this->propRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
+        $this->subqRepo                     = $this->entityManager->getRepository('InnovaSelfBundle:Subquestion');
+        $this->propRepo                     = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
     }
 
     /**

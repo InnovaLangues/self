@@ -26,8 +26,7 @@ class OrderQuestionnaireTestController
     protected $orderQuestionnaireTestManager;
     protected $questionnaireManager;
     protected $templating;
-    protected $securityContext;
-    protected $rightManager;
+    protected $voter;
     protected $session;
 
     public function __construct(
@@ -35,18 +34,16 @@ class OrderQuestionnaireTestController
             $orderQuestionnaireTestManager,
             $questionnaireManager,
             $templating,
-            $securityContext,
-            $rightManager,
+            $voter,
             $session
 
     ) {
-        $this->entityManager = $entityManager;
-        $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
-        $this->questionnaireManager = $questionnaireManager;
-        $this->templating = $templating;
-        $this->securityContext              = $securityContext;
-        $this->rightManager                 = $rightManager;
-        $this->session                      = $session;
+        $this->entityManager                    = $entityManager;
+        $this->orderQuestionnaireTestManager    = $orderQuestionnaireTestManager;
+        $this->questionnaireManager             = $questionnaireManager;
+        $this->templating                       = $templating;
+        $this->voter                            = $voter;
+        $this->session                          = $session;
     }
 
     /**
@@ -56,13 +53,10 @@ class OrderQuestionnaireTestController
      */
     public function saveOrderAction(Request $request, Test $test)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.reordertasktest", $test);
 
-        if ($this->rightManager->checkRight("right.reordertasktest", $currentUser, $test)) {
-            $newOrderArray = json_decode($request->get('newOrder'));
-
-            $this->orderQuestionnaireTestManager->saveOrder($newOrderArray, $test);
-        }
+        $newOrderArray = json_decode($request->get('newOrder'));
+        $this->orderQuestionnaireTestManager->saveOrder($newOrderArray, $test);
 
         return new JsonResponse(null);
     }
@@ -74,12 +68,9 @@ class OrderQuestionnaireTestController
      */
     public function addTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.addtasktest", $test);
 
-        if ($this->rightManager->checkRight("right.addtasktest", $currentUser, $test)) {
-            $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
-        }
-
+        $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
         $orders = $test->getOrderQuestionnaireTests();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig', array('orders' => $orders));
@@ -94,13 +85,10 @@ class OrderQuestionnaireTestController
      */
     public function duplicateTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.addtasktest", $test);
 
-        if ($this->rightManager->checkRight("right.addtasktest", $currentUser, $test)) {
-            $newQuestionnaire = $this->questionnaireManager->duplicate($questionnaire);
-            $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $newQuestionnaire);
-        }
-
+        $newQuestionnaire = $this->questionnaireManager->duplicate($questionnaire);
+        $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $newQuestionnaire);
         $orders = $test->getOrderQuestionnaireTests();
 
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:tasksList.html.twig', array('orders' => $orders));
@@ -115,17 +103,14 @@ class OrderQuestionnaireTestController
      */
     public function deleteTaskAction(Test $test, Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.deletetasktest", $test);
 
-        if ($this->rightManager->checkRight("right.deletetasktest", $currentUser, $test)) {
-            $em = $this->entityManager;
+        $em = $this->entityManager;
+        $taskToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array('test' => $test, 'questionnaire' => $questionnaire));
+        $em->remove($taskToRemove);
+        $em->flush();
 
-            $taskToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array('test' => $test, 'questionnaire' => $questionnaire));
-            $em->remove($taskToRemove);
-            $em->flush();
-
-            $this->orderQuestionnaireTestManager->recalculateOrder($test);
-        }
+        $this->orderQuestionnaireTestManager->recalculateOrder($test);
 
         return new JsonResponse(null);
     }

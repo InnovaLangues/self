@@ -66,6 +66,8 @@ class RightManager
             return false;
         } else {
             echo "Le droit testé n'existe pas (".$rightName.")";
+            
+            return false;
         }
     }
 

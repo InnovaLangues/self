@@ -30,16 +30,12 @@ class RightUserGroupController extends Controller
      */
     public function handleRightsAction(Group $group)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.editrightsgroup");
 
-        if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
-            $em = $this->getDoctrine()->getManager();
-            $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserGroup")->findByTarget($group);
+        $em = $this->getDoctrine()->getManager();
+        $rights = $em->getRepository("InnovaSelfBundle:Right\RightUserGroup")->findByTarget($group);
 
-            return array("group" => $group, "rights" => $rights);
-        }
-
-        return;
+        return array("group" => $group, "rights" => $rights);
     }
 
     /**
@@ -51,22 +47,18 @@ class RightUserGroupController extends Controller
      */
     public function createRightsAction(Group $group, Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.editrightsgroup");
 
-        if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
-            $right = new RightUserGroup();
+        $right = new RightUserGroup();
 
-            $form = $this->handleRightsForm($right, $group, $request);
-            if (!$form) {
-                $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
+        $form = $this->handleRightsForm($right, $group, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
 
-                return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
-            }
-
-            return array('form' => $form->createView(), 'group' => $group, 'right' => $right);
+            return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
         }
 
-        return;
+        return array('form' => $form->createView(), 'group' => $group, 'right' => $right);
     }
 
     /**
@@ -78,21 +70,16 @@ class RightUserGroupController extends Controller
      */
     public function editRightsAction(Group $group, RightUserGroup $rightUserGroup, Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.editrightsgroup");
 
-        if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
-            $form = $this->handleRightsForm($rightUserGroup, $group, $request);
+        $form = $this->handleRightsForm($rightUserGroup, $group, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
 
-            if (!$form) {
-                $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
-
-                return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
-            }
-
-            return array('form' => $form->createView(), 'group' => $group, 'rightUserGroup' => $rightUserGroup );
+            return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
         }
 
-        return;
+        return array('form' => $form->createView(), 'group' => $group, 'rightUserGroup' => $rightUserGroup );
     }
 
     /**
@@ -104,22 +91,18 @@ class RightUserGroupController extends Controller
      */
     public function deleteRightAction(Group $group, RightUserGroup $rightUserGroup)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.editrightsgroup");
+        
+        $user = $rightUserGroup->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($rightUserGroup);
+        $em->flush();
 
-        if ($this->get("self.right.manager")->checkRight("right.editrightsgroup", $currentUser)) {
-            $user = $rightUserGroup->getUser();
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($rightUserGroup);
-            $em->flush();
+        $this->get("self.right.manager")->adminToggle($user);
 
-            $this->get("self.right.manager")->adminToggle($user);
+        $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
 
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
-
-            return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
-        }
-
-        return;
+        return $this->redirect($this->generateUrl('editor_group_rights', array('groupId' => $group->getId())));
     }
 
     /**

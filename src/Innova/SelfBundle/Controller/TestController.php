@@ -120,20 +120,17 @@ class TestController extends Controller
      */
     public function deleteTestAction(Test $test)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.deletetest", $test);
 
-        if ($this->get("self.right.manager")->checkRight("right.deletetest", $currentUser, $test)) {
-            $testName = $test->getName();
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($test);
-            $em->flush();
+        $testName = $test->getName();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($test);
+        $em->flush();
 
-            $this->get('session')->getFlashBag()->set('success', 'Le test '.$testName.' a bien été supprimé.');
+        $this->get('session')->getFlashBag()->set('success', 'Le test '.$testName.' a bien été supprimé.');
 
-            return $this->redirect($this->generateUrl('editor_tests_show'));
-        }
-
-        return;
+        return $this->redirect($this->generateUrl('editor_tests_show'));
+      
     }
 
     /**
@@ -145,16 +142,13 @@ class TestController extends Controller
      */
     public function duplicateTestAction(Test $test)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.duplicatetest", $test);
 
-        if ($this->get("self.right.manager")->checkRight("right.duplicatetest", $currentUser, $test)) {
-            $this->get("self.test.manager")->duplicate($test);
-            $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué.');
+        $this->get("self.test.manager")->duplicate($test);
+        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué.');
 
-            return $this->redirect($this->generateUrl('editor_tests_show'));
-        }
-
-        return;
+        return $this->redirect($this->generateUrl('editor_tests_show'));
+       
     }
 
     /**
@@ -167,21 +161,18 @@ class TestController extends Controller
      */
     public function newAction(Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.createtest");
 
-        if ($this->get("self.right.manager")->checkRight("right.createtest", $currentUser)) {
-            $test = new Test();
-            $form = $this->handleForm($test, $request);
-            if (!$form) {
-                $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()." a bien été créé.");
+        $test = new Test();
+        $form = $this->handleForm($test, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()." a bien été créé.");
 
-                return $this->redirect($this->generateUrl('editor_tests_show'));
-            }
-
-            return array('form' => $form->createView());
+            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
 
-        return;
+        return array('form' => $form->createView());
+       
     }
 
     /**
@@ -194,21 +185,16 @@ class TestController extends Controller
      */
     public function editAction(Test $test, Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.edittest", $test);
 
-        if ($this->get("self.right.manager")->checkRight("right.edittest", $currentUser, $test)) {
-            $form = $this->handleForm($test, $request);
+        $form = $this->handleForm($test, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()."a bien été modifié.");
 
-            if (!$form) {
-                $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()."a bien été modifié.");
-
-                return $this->redirect($this->generateUrl('editor_tests_show'));
-            }
-
-            return array('form' => $form->createView(), 'test' => $test);
+            return $this->redirect($this->generateUrl('editor_tests_show'));
         }
 
-        return;
+        return array('form' => $form->createView(), 'test' => $test);
     }
 
     /**

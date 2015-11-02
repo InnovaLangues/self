@@ -25,14 +25,16 @@ class ExportController
     protected $exportManager;
     protected $securityContext;
     protected $rightManager;
+    protected $voter;
     protected $user;
 
-    public function __construct($kernelRoot, $exportManager, $securityContext, $rightManager)
+    public function __construct($kernelRoot, $exportManager, $securityContext, $rightManager, $voter)
     {
         $this->kernelRoot       = $kernelRoot;
         $this->exportManager    = $exportManager;
         $this->securityContext  = $securityContext;
         $this->rightManager     = $rightManager;
+        $this->voter            = $voter;
         $this->user             = $this->securityContext->getToken()->getUser();
     }
 
@@ -62,20 +64,18 @@ class ExportController
      */
     public function exportCsvAction(Test $test, Session $session, $tia)
     {
-        if ($this->rightManager->checkRight("right.exportCSV", $this->user)) {
-            $csvName = $this->exportManager->generateCsv($test, $session, $tia);
-            $fileList = $this->exportManager->getFileList($test, "csv");
+        $this->voter->isAllowed("right.exportCSV");
 
-            return array(
-                "csvName" => $csvName,
-                'test' => $test,
-                "fileList" => $fileList,
-                "tia" => $tia,
-            );
-        }
+        $csvName = $this->exportManager->generateCsv($test, $session, $tia);
+        $fileList = $this->exportManager->getFileList($test, "csv");
 
-        return;
-    }
+        return array(
+            "csvName" => $csvName,
+            'test' => $test,
+            "fileList" => $fileList,
+            "tia" => $tia,
+        );
+}
 
      /**
      * List CSV export files for a given test
@@ -86,17 +86,15 @@ class ExportController
      */
     public function showCsvAction(Test $test, $tia)
     {
-        if ($this->rightManager->checkRight("right.exportCSV", $this->user)) {
-            $fileList = $this->exportManager->getFileList($test, "csv");
+        $this->voter->isAllowed("right.exportCSV");
 
-            return array(
-                'test' => $test,
-                "fileList" => $fileList,
-                "tia" => $tia,
-            );
-        }
+        $fileList = $this->exportManager->getFileList($test, "csv");
 
-        return;
+        return array(
+            'test' => $test,
+            "fileList" => $fileList,
+            "tia" => $tia,
+        );
     }
 
     /**
@@ -122,6 +120,8 @@ class ExportController
      */
     public function exportSessionUserPdfAdminAction(Session $session, User $user)
     {
+        $this->voter->isAllowed("right.individualresultssession", $session);
+
         $response = $this->exportManager->exportSessionUserPdfAction($session, $user);
 
         return $response;

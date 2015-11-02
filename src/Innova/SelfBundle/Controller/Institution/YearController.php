@@ -21,17 +21,15 @@ use Innova\SelfBundle\Form\Type\YearType;
 class YearController
 {
     protected $entityManager;
-    protected $securityContext;
-    protected $rightManager;
+    protected $voter;
     protected $router;
     protected $formFactory;
     protected $session;
 
-    public function __construct($entityManager, $securityContext, $rightManager, $router, $formFactory, $session)
+    public function __construct($entityManager, $voter, $router, $formFactory, $session)
     {
         $this->entityManager            = $entityManager;
-        $this->securityContext          = $securityContext;
-        $this->rightManager             = $rightManager;
+        $this->voter                    = $voter;
         $this->router                   = $router;
         $this->formFactory              = $formFactory;
         $this->session                  = $session;
@@ -47,15 +45,11 @@ class YearController
      */
     public function listYearAction()
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.institution");
 
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-            $years = $this->entityManager->getRepository('InnovaSelfBundle:Institution\Year')->findBy(array(), array('name'=>'asc'));
+        $years = $this->entityManager->getRepository('InnovaSelfBundle:Institution\Year')->findBy(array(), array('name'=>'asc'));
           
-            return array('years' => $years);
-        }
-
-        return;
+        return array('years' => $years);
     }
 
     /**
@@ -67,21 +61,17 @@ class YearController
      */
     public function createYearAction(Request $request)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.institution");
 
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-            $year = new Year();
-            $form = $this->handleForm($year, $request);
-            if (!$form) {
-                $this->session->getFlashBag()->set('info', "L'année a bien été créée");
+        $year = new Year();
+        $form = $this->handleForm($year, $request);
+        if (!$form) {
+            $this->session->getFlashBag()->set('info', "L'année a bien été créée");
 
-                return new RedirectResponse($this->router->generate('years'));
-            }
-
-            return array('form' => $form->createView(), 'year' => $year);
+            return new RedirectResponse($this->router->generate('years'));
         }
 
-        return;
+        return array('form' => $form->createView(), 'year' => $year);
     }
 
     /**
@@ -93,14 +83,9 @@ class YearController
      */
     public function viewYearAction(Year $year)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
-
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-           
-            return array('year' => $year);
-        }
-
-        return;
+        $this->voter->isAllowed("right.institution");
+ 
+        return array('year' => $year);
     }
 
     /**
@@ -111,18 +96,14 @@ class YearController
      */
     public function deleteYearAction(year $year)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.institution");
 
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-            $em = $this->entityManager;
-            $em->remove($year);
-            $em->flush();
-            $this->session->getFlashBag()->set('info', "L'année a bien été supprimée");
+        $em = $this->entityManager;
+        $em->remove($year);
+        $em->flush();
+        $this->session->getFlashBag()->set('info', "L'année a bien été supprimée");
 
-            return new RedirectResponse($this->router->generate('years'));
-        }
-
-        return;
+        return new RedirectResponse($this->router->generate('years'));
     }
 
 
@@ -135,20 +116,16 @@ class YearController
      */
     public function editYearAction(Year $year, Request $request)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.institution");
 
-        if ($this->rightManager->checkRight("right.institution", $currentUser)) {
-            $form = $this->handleForm($year, $request);
-            if (!$form) {
-                $this->session->getFlashBag()->set('info', "L'année a bien été modifiée");
+        $form = $this->handleForm($year, $request);
+        if (!$form) {
+            $this->session->getFlashBag()->set('info', "L'année a bien été modifiée");
 
-                return new RedirectResponse($this->router->generate('years'));
-            }
-
-            return array('form' => $form->createView(), 'year' => $year);
+            return new RedirectResponse($this->router->generate('years'));
         }
 
-        return;
+        return array('form' => $form->createView(), 'year' => $year);
     }
 
 

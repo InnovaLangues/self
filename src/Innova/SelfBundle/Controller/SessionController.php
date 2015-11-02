@@ -79,25 +79,21 @@ class SessionController extends Controller
      */
     public function createSessionAction(Test $test, Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.createsession");
 
-        if ($this->get("self.right.manager")->checkRight("right.createsession", $currentUser)) {
-            $session = new Session();
-            $session->setName('Nouvelle session');
-            $session->setActif(false);
-            $session->setTest($test);
+        $session = new Session();
+        $session->setName('Nouvelle session');
+        $session->setActif(false);
+        $session->setTest($test);
 
-            $form = $this->handleForm($session, $request);
-            if (!$form) {
-                $this->get("session")->getFlashBag()->set('info', "La session a bien été créée");
+        $form = $this->handleForm($session, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "La session a bien été créée");
 
-                return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
-            }
-
-            return array('form' => $form->createView(), 'test' => $test);
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
         }
 
-        return;
+        return array('form' => $form->createView(), 'test' => $test);
     }
 
     /**
@@ -109,20 +105,17 @@ class SessionController extends Controller
      */
     public function deleteSessionAction(Session $session)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.deletesession", $session);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($session);
+        $em->flush();
+
+        $this->get("session")->getFlashBag()->set('info', "La session a bien été supprimée");
         $testId = $session->getTest()->getId();
 
-        if ($this->get("self.right.manager")->checkRight("right.deletesession", $currentUser, $session)) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($session);
-            $em->flush();
+        return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $testId)));
 
-            $this->get("session")->getFlashBag()->set('info', "La session a bien été supprimée");
-
-            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $testId)));
-        }
-
-        return;
     }
 
     /**
@@ -134,21 +127,16 @@ class SessionController extends Controller
      */
     public function editSessionAction(Test $test, Session $session, Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.editsession", $session);
 
-        if ($this->get("self.right.manager")->checkRight("right.editsession", $currentUser, $session)) {
-            $form = $this->handleForm($session, $request);
+        $form = $this->handleForm($session, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "La session a bien été modifiée");
 
-            if (!$form) {
-                $this->get("session")->getFlashBag()->set('info', "La session a bien été modifiée");
-
-                return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
-            }
-
-            return array('form' => $form->createView(), 'test' => $test);
+            return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
         }
 
-        return;
+        return array('form' => $form->createView(), 'test' => $test);
     }
 
     /**
@@ -160,16 +148,11 @@ class SessionController extends Controller
      */
     public function getSessionResultsAction(Session $session)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.individualresultssession", $session);
 
-        if ($this->get("self.right.manager")->checkRight("right.individualresultssession", $currentUser, $session)) {
-            $em = $this->getDoctrine()->getManager();
-            $users = $em->getRepository("InnovaSelfBundle:User")->findBySession($session);
+        $users = $this->getDoctrine()->getManager()->getRepository("InnovaSelfBundle:User")->findBySession($session);
 
-            return array('session' => $session, 'users' => $users);
-        }
-
-        return;
+        return array('session' => $session, 'users' => $users);
     }
 
     /**
@@ -181,27 +164,25 @@ class SessionController extends Controller
      */
     public function getUserResultsAction(User $user, Session $session)
     {
+        $this->get("innova_voter")->isAllowed("right.individualresultssession", $session);
+
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         $sm = $this->get("self.score.manager");
-        if ($this->get("self.right.manager")->checkRight("right.individualresultssession", $currentUser, $session)) {
-            $levelFeedback = $sm->getGlobalLevelFromThreshold($session, $user);
-            $eecFeedback = $sm->getSkillLevelFromThreshold($session, $user, "EEC");
-            $coFeedback = $sm->getSkillLevelFromThreshold($session, $user, "CO");
-            $ceFeedback = $sm->getSkillLevelFromThreshold($session, $user, "CE");
-            $score = $sm->calculateScoreByTest($session->getTest(), $session, $user);
+        $levelFeedback = $sm->getGlobalLevelFromThreshold($session, $user);
+        $eecFeedback = $sm->getSkillLevelFromThreshold($session, $user, "EEC");
+        $coFeedback = $sm->getSkillLevelFromThreshold($session, $user, "CO");
+        $ceFeedback = $sm->getSkillLevelFromThreshold($session, $user, "CE");
+        $score = $sm->calculateScoreByTest($session->getTest(), $session, $user);
 
-            return array(
-                "score" => $score,
-                "session" => $session,
-                "levelFeedback" => $levelFeedback,
-                "coFeedback" => $coFeedback,
-                "ceFeedback" => $ceFeedback,
-                "eecFeedback" => $eecFeedback,
-                "user" => $user,
-            );
-        }
-
-        return;
+        return array(
+            "score"         => $score,
+            "session"       => $session,
+            "levelFeedback" => $levelFeedback,
+            "coFeedback"    => $coFeedback,
+            "ceFeedback"    => $ceFeedback,
+            "eecFeedback"   => $eecFeedback,
+            "user"          => $user,
+        );
     }
 
     /**
@@ -212,25 +193,21 @@ class SessionController extends Controller
      */
     public function exportAction(Session $session)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.exportresultssession", $session);
 
-        if ($this->get("self.right.manager")->checkRight("right.exportresultssession", $currentUser, $session)) {
-            $filename = $this->get("self.export.manager")->exportSession($session);
-            $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
+        $filename = $this->get("self.export.manager")->exportSession($session);
+        $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
 
-            $response = new Response();
-            $response->headers->set('Cache-Control', 'private');
-            $response->headers->set('Content-type', mime_content_type($file));
-            $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
-            $response->headers->set('Content-length', filesize($file));
-            $response->sendHeaders();
+        $response = new Response();
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($file));
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
+        $response->headers->set('Content-length', filesize($file));
+        $response->sendHeaders();
 
-            $response->setContent(file_get_contents($file));
+        $response->setContent(file_get_contents($file));
 
-            return $response;
-        }
-
-        return;
+        return $response;
     }
 
     /**
@@ -241,26 +218,22 @@ class SessionController extends Controller
      */
     public function exportByDatesAction(Request $request, Session $session)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.exportresultssession", $session);
 
-        if ($this->get("self.right.manager")->checkRight("right.exportresultssession", $currentUser, $session)) {
-            $startDate = $request->get('startDate');
-            $endDate = $request->get('endDate');
-            $filename = $this->get("self.export.manager")->exportSession($session, $startDate, $endDate);
-            $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
-            $response = new Response();
-            $response->headers->set('Cache-Control', 'private');
-            $response->headers->set('Content-type', mime_content_type($file));
-            $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
-            $response->headers->set('Content-length', filesize($file));
-            $response->sendHeaders();
+        $startDate = $request->get('startDate');
+        $endDate = $request->get('endDate');
+        $filename = $this->get("self.export.manager")->exportSession($session, $startDate, $endDate);
+        $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
+        $response = new Response();
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($file));
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
+        $response->headers->set('Content-length', filesize($file));
+        $response->sendHeaders();
 
-            $response->setContent(file_get_contents($file));
+        $response->setContent(file_get_contents($file));
 
-            return $response;
-        }
-
-        return;
+        return $response;
     }
 
     /**
