@@ -44,7 +44,7 @@ class ExportTestController extends Controller
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($this->get("self.right.manager")->checkRight("right.exportPDF", $currentUser)) {
-            $pdfName    = $this->get("self.testexport.manager")->exportPdfAction($test);
+            $pdfName    = $this->get("self.testexport.manager")->exportPdf($test);
             $fileList   = $this->get("self.export.manager")->getFileList($test, "pdf");
 
             return array(

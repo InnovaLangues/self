@@ -55,8 +55,7 @@
 
         <div class="page-breaker"></div>
 
-        {% for i, orderQuestionnaireTest in test.orderQuestionnaireTests %}
-            {% set q = orderQuestionnaireTest.questionnaire %}.
+        {% for i, q in questionnaires %}
             {% set question = q.questions[0] %}
             {% set items = question.subquestions %}
 
