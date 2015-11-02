@@ -3,13 +3,13 @@
 namespace Innova\SelfBundle\Voter;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Innova\SelfBundle\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * Class Voter
  *
  * @Route(
- *      name = "innova_voter",
+ *      name    = "innova_voter",
  *      service = "innova_voter"
  * )
  */

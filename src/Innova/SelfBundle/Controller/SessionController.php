@@ -166,7 +166,6 @@ class SessionController extends Controller
     {
         $this->get("innova_voter")->isAllowed("right.individualresultssession", $session);
 
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         $sm = $this->get("self.score.manager");
         $levelFeedback = $sm->getGlobalLevelFromThreshold($session, $user);
         $eecFeedback = $sm->getSkillLevelFromThreshold($session, $user, "EEC");
