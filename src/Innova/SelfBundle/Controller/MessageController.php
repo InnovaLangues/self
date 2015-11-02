@@ -26,21 +26,17 @@ class MessageController extends Controller
      */
     public function newMessageAction(Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.message");
 
-        if ($this->get("self.right.manager")->checkRight("right.message", $currentUser)) {
-            $message = new Message();
-            $form = $this->handleMessageForm($message, $request);
-            if (!$form) {
-                $this->get("session")->getFlashBag()->set('info', "Le message a bien été envoyé");
+        $message = new Message();
+        $form = $this->handleMessageForm($message, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "Le message a bien été envoyé");
 
-                return $this->redirect($this->generateUrl('send_message', array()));
-            }
-
-            return array('form' => $form->createView(), 'message' => $message);
+            return $this->redirect($this->generateUrl('send_message', array()));
         }
 
-        return;
+        return array('form' => $form->createView(), 'message' => $message);
     }
 
     /**

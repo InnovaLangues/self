@@ -22,14 +22,11 @@ class ExportTestController extends Controller
      */
     public function exportCsvAction(Test $test)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-        if ($this->get("self.right.manager")->checkRight("right.exportCSV", $currentUser)) {
-            $response = $this->get("self.testexport.manager")->generateCsv($test);
+        $this->get("innova_voter")->isAllowed("right.exportCSV");
 
-            return $response;
-        }
+        $response = $this->get("self.testexport.manager")->generateCsv($test);
 
-        return;
+        return $response;
     }
 
     /**
@@ -41,20 +38,16 @@ class ExportTestController extends Controller
      */
     public function exportPdfAction(Test $test)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.exportPDF");
 
-        if ($this->get("self.right.manager")->checkRight("right.exportPDF", $currentUser)) {
-            $pdfName    = $this->get("self.testexport.manager")->exportPdf($test);
-            $fileList   = $this->get("self.export.manager")->getFileList($test, "pdf");
+        $pdfName    = $this->get("self.testexport.manager")->exportPdf($test);
+        $fileList   = $this->get("self.export.manager")->getFileList($test, "pdf");
 
-            return array(
-                "pdfName"   => $pdfName,
-                "test"      => $test,
-                "fileList"  => $fileList,
-            );
-        }
-
-        return;
+        return array(
+            "pdfName"   => $pdfName,
+            "test"      => $test,
+            "fileList"  => $fileList,
+        );
     }
 
     /**
@@ -65,16 +58,13 @@ class ExportTestController extends Controller
      */
     public function showPdfAction(Test $test)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-        if ($this->get("self.right.manager")->checkRight("right.exportPDF", $currentUser)) {
-            $fileList = $this->get("self.export.manager")->getFileList($test, "pdf");
+        $this->get("innova_voter")->isAllowed("right.exportPDF");
 
-            return array(
-                "test"        => $test,
-                "fileList"    => $fileList,
-            );
-        }
+        $fileList = $this->get("self.export.manager")->getFileList($test, "pdf");
 
-        return;
+        return array(
+            "test"        => $test,
+            "fileList"    => $fileList,
+        );
     }
 }

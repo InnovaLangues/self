@@ -73,30 +73,26 @@ class UserController extends Controller
      */
     public function showAction($id)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.listuser");
 
-        if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-            $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
-            $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-            $testsWithTraces = array();
+        $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
+        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
+        $testsWithTraces = array();
 
-            foreach ($tests as $test) {
-                $count = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
-                $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getQuestionnairesDoneYetByUserByTest($test->getId(), $user->getId());
-                if ($count > 0) {
-                    $testsWithTraces[] = array($test, $count, $questionnaires);
-                }
+        foreach ($tests as $test) {
+            $count = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
+            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getQuestionnairesDoneYetByUserByTest($test->getId(), $user->getId());
+            if ($count > 0) {
+                $testsWithTraces[] = array($test, $count, $questionnaires);
             }
-
-            return array(
-                'tests'  => $testsWithTraces,
-                'user'   => $user,
-            );
         }
 
-        return;
+        return array(
+            'tests'  => $testsWithTraces,
+            'user'   => $user,
+        );
     }
 
     /**
@@ -108,22 +104,17 @@ class UserController extends Controller
      */
     public function deleteTestTraceAction($userId, $testId)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.deletetraceuser");
 
-        if ($this->get("self.right.manager")->checkRight("right.deletetraceuser", $currentUser)) {
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
-            $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-            $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-
-            if ($this->get("self.trace.manager")->deleteTestTrace($user, $test)) {
-                $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour le test '.$test->getName().' ont été supprimées');
-            }
-
-            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
+        if ($this->get("self.trace.manager")->deleteTestTrace($user, $test)) {
+            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour le test '.$test->getName().' ont été supprimées');
         }
 
-        return;
+        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
     }
 
     /**
@@ -135,23 +126,19 @@ class UserController extends Controller
      */
     public function deleteTaskTraceAction($userId, $testId, $questionnaireId)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.deletetraceuser");
 
-        if ($this->get("self.right.manager")->checkRight("right.deletetraceuser", $currentUser)) {
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-            $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-            $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-            $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
+        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
+        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
+        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
-            if ($this->get("self.trace.manager")->deleteTaskTrace($user, $test, $questionnaire)) {
-                $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la tâche '.$questionnaire->getTheme().' ont été supprimées');
-            }
-
-            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
+        if ($this->get("self.trace.manager")->deleteTaskTrace($user, $test, $questionnaire)) {
+            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la tâche '.$questionnaire->getTheme().' ont été supprimées');
         }
 
-        return;
+        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
     }
 
     /**
@@ -163,20 +150,15 @@ class UserController extends Controller
      */
     public function deleteUserAction($userId)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.deleteuser");
 
-        if ($this->get("self.right.manager")->checkRight("right.deleteuser", $currentUser)) {
-            $em = $this->getDoctrine()->getManager();
-
-            $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-            if ($this->get("self.user.manager")->deleteUser($user)) {
-                $this->get('session')->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
-            }
-
-            return $this->redirect($this->generateUrl('admin_user'));
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
+        if ($this->get("self.user.manager")->deleteUser($user)) {
+            $this->get('session')->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
         }
 
-        return;
+        return $this->redirect($this->generateUrl('admin_user'));
     }
 
      /**
@@ -188,22 +170,17 @@ class UserController extends Controller
      */
     public function newAction(Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.createuser");
 
-        if ($this->get("self.right.manager")->checkRight("right.createuser", $currentUser)) {
-            $user = new User();
+        $user = new User();
+        $form = $this->get("self.user.manager")->handleForm($user, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->add('info', "L'utilisateur a bien été créée");
 
-            $form = $this->get("self.user.manager")->handleForm($user, $request);
-            if (!$form) {
-                $this->get("session")->getFlashBag()->add('info', "L'utilisateur a bien été créée");
-
-                return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
-            }
-
-            return array('form' => $form->createView());
+            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
         }
 
-        return;
+        return array('form' => $form->createView());
     }
 
     /**
@@ -215,21 +192,16 @@ class UserController extends Controller
      */
     public function editAction(User $user, Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.edituser");
 
-        if ($this->get("self.right.manager")->checkRight("right.edituser", $currentUser)) {
-            $form = $this->get("self.user.manager")->handleForm($user, $request);
+        $form = $this->get("self.user.manager")->handleForm($user, $request);
+        if (!$form) {
+            $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
 
-            if (!$form) {
-                $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
-
-                return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
-            }
-
-            return array('form' => $form->createView(), 'user' => $user);
+            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
         }
 
-        return;
+        return array('form' => $form->createView(), 'user' => $user);
     }
 
     /**
@@ -241,23 +213,19 @@ class UserController extends Controller
      */
     public function editPasswordAction(User $user, Request $request)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.editpassworduser");
 
-        if ($this->get("self.right.manager")->checkRight("right.editpassworduser", $currentUser)) {
-            if ($request->isMethod('POST')) {
-                $um = $this->get('fos_user.user_manager');
-                $user->setPlainPassword($request->request->get('passwd'));
-                $um->updateUser($user, true);
+        if ($request->isMethod('POST')) {
+            $um = $this->get('fos_user.user_manager');
+            $user->setPlainPassword($request->request->get('passwd'));
+            $um->updateUser($user, true);
 
-                $this->get("session")->getFlashBag()->set('info', "Le mot de passe a bien été modifié");
+            $this->get("session")->getFlashBag()->set('info', "Le mot de passe a bien été modifié");
 
-                return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
-            }
-
-            return array('user' => $user);
+            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
         }
 
-        return;
+        return array('user' => $user);
     }
 
     /**

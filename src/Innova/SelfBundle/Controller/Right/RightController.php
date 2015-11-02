@@ -27,17 +27,11 @@ class RightController extends Controller
      */
     public function displayRightsAction(User $user)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.editrightsuser");
 
-        if ($this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
-            $em = $this->getDoctrine()->getManager();
+        $groups = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Right\RightGroup')->findAll();
 
-            $groups = $em->getRepository('InnovaSelfBundle:Right\RightGroup')->findAll();
-
-            return array('groups' => $groups, 'user' => $user);
-        }
-
-        return;
+        return array('groups' => $groups, 'user' => $user);
     }
 
     /**
@@ -49,15 +43,11 @@ class RightController extends Controller
      */
     public function toggleRightAction(User $user, Right $right)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get("innova_voter")->isAllowed("right.editrightsuser");
 
-        if ($this->get("self.right.manager")->checkRight("right.editrightsuser", $currentUser)) {
-            $this->get("self.right.manager")->toggleRight($right, $user);
-            $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
+        $this->get("self.right.manager")->toggleRight($right, $user);
+        $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
 
-            return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
-        }
-
-        return;
+        return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
     }
 }

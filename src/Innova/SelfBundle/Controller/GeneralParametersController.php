@@ -16,17 +16,15 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class GeneralParametersController
 {
     protected $entityManager;
-    protected $securityContext;
-    protected $rightManager;
+    protected $voter;
     protected $generalParamsManager;
     protected $router;
 
 
-    public function __construct($entityManager, $securityContext, $rightManager, $generalParamsManager, $router)
+    public function __construct($entityManager, $voter, $generalParamsManager, $router)
     {
         $this->entityManager            = $entityManager;
-        $this->securityContext          = $securityContext;
-        $this->rightManager             = $rightManager;
+        $this->voter                    = $voter;
         $this->generalParamsManager     = $generalParamsManager;
         $this->router                   = $router;
     }
@@ -41,19 +39,14 @@ class GeneralParametersController
      */
     public function editAction(Request $request)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->isAllowed("right.generalParameters");
 
-        if ($this->rightManager->checkRight("right.generalParameters", $currentUser)) {
-            $parameters = $this->entityManager->getRepository('InnovaSelfBundle:GeneralParameters')->get();
-            $form = $this->generalParamsManager->handleForm($parameters, $request);
-            if (!$form) {
-
-                return new RedirectResponse($this->router->generate('parameters', array()));
-            }
-
-            return array('form' => $form->createView(), 'parameters' => $parameters);
+        $parameters = $this->entityManager->getRepository('InnovaSelfBundle:GeneralParameters')->get();
+        $form = $this->generalParamsManager->handleForm($parameters, $request);
+        if (!$form) {
+            return new RedirectResponse($this->router->generate('parameters', array()));
         }
 
-        return;
+        return array('form' => $form->createView(), 'parameters' => $parameters);
     }
 }

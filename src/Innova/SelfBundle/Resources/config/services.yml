@@ -53,6 +53,12 @@ services:
         tags:
             - { name: twig.extension }
 
+    innova_voter:
+        class: Innova\SelfBundle\Voter\Voter
+        arguments:
+            securityContext:    @security.token_storage
+            rightManager:       @self.right.manager
+
     innova_user.registration.form.type:
         class: Innova\SelfBundle\Form\UserType
         arguments:
@@ -68,6 +74,7 @@ services:
             exportManager:      @self.export.manager
             securityContext:    @security.token_storage
             rightManager:       @self.right.manager
+            voter:              @innova_voter
 
     innova_player:
         class: Innova\SelfBundle\Controller\PlayerController
@@ -107,25 +114,25 @@ services:
             templating:         @templating
             formFactory:        @form.factory
             securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
+            rightManager:       @innova_voter
             session:            @session
             router:             @router
 
     innova_editor_media:
         class: Innova\SelfBundle\Controller\MediaController
         arguments:
-            mediaManager:       @self.media.manager
-            propositionManager: @self.proposition.manager
-            appManager:         @self.app.manager
-            commentManager:     @self.comment.manager
-            entityManager:      @doctrine.orm.entity_manager
-            templating:         @templating
+            mediaManager:               @self.media.manager
+            propositionManager:         @self.proposition.manager
+            appManager:                 @self.app.manager
+            commentManager:             @self.comment.manager
+            entityManager:              @doctrine.orm.entity_manager
+            templating:                 @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
-            templatingManager:  @self.templating.manager
-            questionnaireManager:           @self.questionnaire.manager
-            securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
-            session:            @session
+            templatingManager:          @self.templating.manager
+            questionnaireManager:       @self.questionnaire.manager
+            securityContext:            @security.token_storage
+            rightManager:               @self.right.manager
+            session:                    @session
 
     innova_editor_subquestion:
         class: Innova\SelfBundle\Controller\Editor\SubquestionController
@@ -143,23 +150,23 @@ services:
     innova_editor_eec:
         class: Innova\SelfBundle\Controller\Editor\EecController
         arguments:
-            eecManager:                 @self.eec.manager
-            entityManager:          @doctrine.orm.entity_manager
-            templating:             @templating
-            questionnaireRevisorsManager: @self.questionnaire_revisors.manager
-            securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
-            session:            @session
+            eecManager:                     @self.eec.manager
+            entityManager:                  @doctrine.orm.entity_manager
+            templating:                     @templating
+            questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
+            securityContext:                @security.token_storage
+            rightManager:                   @self.right.manager
+            session:                        @session
 
 
     innova_editor_answer:
         class: Innova\SelfBundle\Controller\Editor\AnswerController
         arguments:
-            eecManager:                 @self.eec.manager
+            eecManager:             @self.eec.manager
             propositionManager:     @self.proposition.manager
             templating:             @templating
-            securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
+            securityContext:        @security.token_storage
+            rightManager:           @self.right.manager
 
     innova_player_trace:
         class: Innova\SelfBundle\Controller\TraceController
@@ -181,9 +188,8 @@ services:
             orderQuestionnaireTest: @self.order_questionnaire_test.manager
             questionnaireManager:   @self.questionnaire.manager
             templating:             @templating
-            securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
-            session:            @session
+            voter:                  @innova_voter
+            session:                @session
 
     innova_mediaclick:
         class: Innova\SelfBundle\Controller\MediaClickController
@@ -194,7 +200,7 @@ services:
         class: Innova\SelfBundle\Controller\TestController
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            testManager:    @self.test.manager
+            testManager:        @self.test.manager
 
     innova_editor_proposition:
         class: Innova\SelfBundle\Controller\Editor\PropositionController
@@ -202,24 +208,22 @@ services:
             propositionManager:             @self.proposition.manager
             templating:                     @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
-            securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
+            securityContext:                @security.token_storage
+            rightManager:                   @self.right.manager
 
     innova_general_parameters:
         class: Innova\SelfBundle\Controller\GeneralParametersController
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
-            generalParamsManager: @self.generalparams.manager
-            router:             @router
+            entityManager:          @doctrine.orm.entity_manager
+            voter:                  @innova_voter
+            generalParamsManager:   @self.generalparams.manager
+            router:                 @router
 
     innova_institution:
         class: Innova\SelfBundle\Controller\Institution\InstitutionController
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
+            voter:              @innova_voter
             router:             @router
             formFactory:        @form.factory
             session:            @session
@@ -233,8 +237,7 @@ services:
         class: Innova\SelfBundle\Controller\Institution\YearController
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
+            voter:              @innova_voter
             router:             @router
             formFactory:        @form.factory
             session:            @session
