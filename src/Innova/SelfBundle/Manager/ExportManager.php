@@ -101,21 +101,6 @@ class ExportManager
         return $response;
     }
 
-    public function exportPdfAction(Test $test)
-    {
-        $testId = $test->getId();
-        $pdfName = "self_export-pdf-test_".$testId."-".date("d-m-Y_H:i:s").'.pdf';
-
-        // Appel de la vue et de la génération du PDF
-        $this->knpSnappyPdf->generateFromHtml(
-            $this->templating->render(
-                'InnovaSelfBundle:Export:templatePdf.html.twig', array('test' => $test)),
-                $this->kernelRoot."/data/exportPdf/".$test->getId()."/".$pdfName
-        );
-
-        return $pdfName;
-    }
-
     public function generateCsv(Test $test, Session $session, $tia)
     {
         $fs = new Filesystem();

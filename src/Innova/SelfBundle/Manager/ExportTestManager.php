@@ -23,15 +23,16 @@ class ExportTestManager
         $this->exportManager    = $exportManager;
     }
 
-    public function exportPdfAction(Test $test)
+    public function exportPdf(Test $test)
     {
-        $testId = $test->getId();
-        $pdfName = "self_export-pdf-test_".$testId."-".date("d-m-Y_H:i:s").'.pdf';
+        $em = $this->entityManager;
+        $pdfName = "self_export-pdf-test_".$test->getId()."-".date("d-m-Y_H:i:s").'.pdf';
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
         // Appel de la vue et de la génération du PDF
         $this->knpSnappyPdf->generateFromHtml(
             $this->templating->render(
-                'InnovaSelfBundle:Export:templatePdf.html.twig', array('test' => $test)),
+                'InnovaSelfBundle:Export:templatePdf.html.twig', array('test' => $test, 'questionnaires' => $questionnaires)),
                 $this->kernelRoot."/data/exportPdf/".$test->getId()."/".$pdfName
         );
 
