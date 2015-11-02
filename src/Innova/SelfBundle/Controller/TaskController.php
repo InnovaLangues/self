@@ -35,6 +35,7 @@ class TaskController
     protected $formFactory;
     protected $securityContext;
     protected $voter;
+    protected $rightManager;
     protected $session;
     protected $router;
 
@@ -47,6 +48,7 @@ class TaskController
             $formFactory,
             $securityContext,
             $voter,
+            $rightManager,
             $session,
             $router
     ) {
@@ -58,6 +60,7 @@ class TaskController
         $this->formFactory                  = $formFactory;
         $this->securityContext              = $securityContext;
         $this->voter                        = $voter;
+        $this->rightManager                 = $rightManager;
         $this->session                      = $session;
         $this->router                       = $router;
     }
