@@ -1,58 +1,7 @@
 parameters:
     faye_server.adapter.class:  Nc\FayeClient\Adapter\CurlAdapter
     faye_server.client.class:   Nc\FayeClient\Client
-
 services:
-    twig.extension.text:
-       class: Twig_Extensions_Extension_Text
-       tags:
-           - { name: twig.extension }
-
-    twig.extension.array:
-        class: Twig_Extensions_Extension_Array
-        tags:
-            - { name: twig.extension }
-
-    twig.extension.get_languages:
-        class: Innova\SelfBundle\Twig\LanguageExtension
-        arguments:
-            entityManager: @doctrine.orm.entity_manager
-        tags:
-            - { name: twig.extension }
-
-    twig.extension.get_hostname:
-        class: Innova\SelfBundle\Twig\HostnameExtension
-        tags:
-            - { name: twig.extension }
-
-    twig.extension.get_typologies:
-        class: Innova\SelfBundle\Twig\TypologyExtension
-        arguments:
-            entityManager: @doctrine.orm.entity_manager
-        tags:
-            - { name: twig.extension }
-
-    twig.extension.disambiguate:
-        class: Innova\SelfBundle\Twig\DisambiguateExtension
-        tags:
-            - { name: twig.extension }
-
-    twig.extension.parameters:
-        class: Innova\SelfBundle\Twig\GeneralParametersExtension
-        arguments:
-            entityManager: @doctrine.orm.entity_manager
-        tags:
-            - { name: twig.extension }
-
-    twig.extension.check_right:
-        class: Innova\SelfBundle\Twig\RightExtension
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.token_storage
-            rightManager:       @self.right.manager
-        tags:
-            - { name: twig.extension }
-
     innova_voter:
         class: Innova\SelfBundle\Voter\Voter
         arguments:
@@ -101,8 +50,7 @@ services:
             templating:                     @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
             formFactory:                    @form.factory
-            securityContext:                @security.token_storage
-            rightManager:                   @self.right.manager
+            voter:                          @innova_voter
 
     innova_editor_task:
         class: Innova\SelfBundle\Controller\TaskController
@@ -145,8 +93,7 @@ services:
             templating:         @templating
             questionnaireRevisorsManager: @self.questionnaire_revisors.manager
             formFactory:        @form.factory
-            rightManager:       @self.right.manager
-            securityContext:    @security.token_storage
+            voter:              @innova_voter
 
     innova_editor_eec:
         class: Innova\SelfBundle\Controller\Editor\EecController
@@ -155,10 +102,8 @@ services:
             entityManager:                  @doctrine.orm.entity_manager
             templating:                     @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
-            securityContext:                @security.token_storage
-            rightManager:                   @self.right.manager
+            voter:                          @innova_voter
             session:                        @session
-
 
     innova_editor_answer:
         class: Innova\SelfBundle\Controller\Editor\AnswerController
@@ -166,8 +111,7 @@ services:
             eecManager:             @self.eec.manager
             propositionManager:     @self.proposition.manager
             templating:             @templating
-            securityContext:        @security.token_storage
-            rightManager:           @self.right.manager
+            voter:                  @innova_voter
 
     innova_player_trace:
         class: Innova\SelfBundle\Controller\TraceController
@@ -209,8 +153,7 @@ services:
             propositionManager:             @self.proposition.manager
             templating:                     @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
-            securityContext:                @security.token_storage
-            rightManager:                   @self.right.manager
+            voter:                          @innova_voter
 
     innova_general_parameters:
         class: Innova\SelfBundle\Controller\GeneralParametersController

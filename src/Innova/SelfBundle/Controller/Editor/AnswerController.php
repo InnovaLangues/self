@@ -24,21 +24,18 @@ class AnswerController
     protected $eecManager;
     protected $propositionManager;
     protected $templating;
-    protected $securityContext;
-    protected $rightManager;
+    protected $voter;
 
     public function __construct(
         $eecManager,
         $propositionManager,
         $templating,
-        $securityContext,
-        $rightManager
+        $voter
     ) {
         $this->eecManager           = $eecManager;
         $this->propositionManager   = $propositionManager;
         $this->templating           = $templating;
-        $this->securityContext      = $securityContext;
-        $this->rightManager         = $rightManager;
+        $this->voter                = $voter;
     }
 
     /**
@@ -49,16 +46,12 @@ class AnswerController
      */
     public function getAnswersAction(Subquestion $subquestion)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($subquestion->getQuestion()->getQuestionnaire());
 
-        if ($this->rightManager->canEditTask($currentUser, $subquestion->getQuestion()->getQuestionnaire())) {
-            $answers = $this->eecManager->getAnswers($subquestion);
-            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers, 'subquestion' => $subquestion));
+        $answers = $this->eecManager->getAnswers($subquestion);
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answers.html.twig', array('answers' => $answers, 'subquestion' => $subquestion));
 
-            return new Response($template);
-        }
-
-        return;
+        return new Response($template);
     }
 
     /**
@@ -69,14 +62,11 @@ class AnswerController
      */
     public function addAnswersAction(Request $request, Subquestion $subquestion)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
-        $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
+        $this->voter->canEditTask($subquestion->getQuestion()->getQuestionnaire());
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $this->eecManager->addAnswer($subquestion, $request->get('answer'));
-        }
+        $this->eecManager->addAnswer($subquestion, $request->get('answer'));
 
-        return;
+        return new Response();
     }
 
     /**
@@ -87,16 +77,11 @@ class AnswerController
      */
     public function toggleRightAnswerAction(Proposition $proposition)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
-        $questionnaire = $proposition->getSubquestion()->getQuestion()->getQuestionnaire();
+        $this->voter->canEditTask($proposition->getSubquestion()->getQuestion()->getQuestionnaire());
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $proposition = $this->propositionManager->toggleRightAnswer($proposition);
-            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answer.html.twig', array('answer' => $proposition));
+        $proposition = $this->propositionManager->toggleRightAnswer($proposition);
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:eec_answer.html.twig', array('answer' => $proposition));
 
-            return new Response($template);
-        }
-
-        return;
+        return new Response($template);
     }
 }

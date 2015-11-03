@@ -28,8 +28,7 @@ class QuestionnaireController
     protected $templating;
     protected $questionnaireRevisorsManager;
     protected $formFactory;
-    protected $securityContext;
-    protected $rightManager;
+    protected $voter;
 
     public function __construct(
             $questionnaireManager,
@@ -38,17 +37,15 @@ class QuestionnaireController
             $templating,
             $questionnaireRevisorsManager,
             $formFactory,
-            $securityContext,
-            $rightManager
+            $voter
     ) {
-        $this->questionnaireManager         = $questionnaireManager;
+        $this->questionnaireManager          = $questionnaireManager;
         $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
-        $this->entityManager                = $entityManager;
-        $this->templating                   = $templating;
-        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        $this->formFactory                  = $formFactory;
-        $this->securityContext              = $securityContext;
-        $this->rightManager                 = $rightManager;
+        $this->entityManager                 = $entityManager;
+        $this->templating                    = $templating;
+        $this->questionnaireRevisorsManager  = $questionnaireRevisorsManager;
+        $this->formFactory                   = $formFactory;
+        $this->voter                         = $voter;
     }
 
     /**
@@ -59,26 +56,21 @@ class QuestionnaireController
      */
     public function setTextTitleAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $em = $this->entityManager;
+        $em = $this->entityManager;
+        $title = $request->request->get('title');
+        $questionnaire->setTextTitle($title);
+        $em->persist($questionnaire);
+        $em->flush();
 
-            $title = $request->request->get('title');
-            $questionnaire->setTextTitle($title);
-            $em->persist($questionnaire);
-            $em->flush();
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
-            return new JsonResponse(
-                array(
-                   'title' => $questionnaire->getTextTitle(),
-               )
-            );
-        }
-
-        return;
+        return new JsonResponse(
+            array(
+               'title' => $questionnaire->getTextTitle(),
+           )
+        );
     }
 
     /**
@@ -89,21 +81,16 @@ class QuestionnaireController
      */
     public function setTextTypeAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $em = $this->entityManager;
+        $em = $this->entityManager;
+        $textType = $request->request->get('textType');
+        $questionnaire->setDialogue($textType);
+        $em->persist($questionnaire);
+        $em->flush();
+        $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('questionnaire' => $questionnaire));
 
-            $textType = $request->request->get('textType');
-            $questionnaire->setDialogue($textType);
-            $em->persist($questionnaire);
-            $em->flush();
-            $template =  $this->templating->render('InnovaSelfBundle:Editor/partials:texte.html.twig', array('questionnaire' => $questionnaire));
-
-            return new Response($template);
-        }
-
-        return;
+        return new Response($template);
     }
 
     /**
@@ -114,28 +101,22 @@ class QuestionnaireController
      */
     public function setIdentityFieldAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $em = $this->entityManager;
+        $em = $this->entityManager;
+        $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
+        $form->bind($request);
+        if ($form->isValid()) {
+            $em->persist($questionnaire);
+            $em->flush();
 
-            $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                $em->persist($questionnaire);
-                $em->flush();
-
-                $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-            }
-
-            return new JsonResponse();
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
         }
 
-        return;
+        return new JsonResponse();
     }
 
-     /**
+    /**
     *
     * @Route("/questionnaire/{questionnaireId}/set-general-info-field", name="set-general-info-field", options={"expose"=true})
     * @Method("POST")
@@ -143,17 +124,12 @@ class QuestionnaireController
     */
     public function setGeneralInfoFieldAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $field = $request->request->get('field');
-            $value = $request->request->get('value');
+        $field = $request->request->get('field');
+        $value = $request->request->get('value');
+        $response = $this->questionnaireManager->setIdentityField($questionnaire, $field, $value);
 
-            $response = $this->questionnaireManager->setIdentityField($questionnaire, $field, $value);
-
-            return $response;
-        }
-
-        return;
+        return $response;
     }
 }

@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Institution\Institution;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
 /**
  * Course controller.
  *

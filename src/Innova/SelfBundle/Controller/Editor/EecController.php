@@ -27,8 +27,7 @@ class EecController
     protected $entityManager;
     protected $templating;
     protected $questionnaireRevisorsManager;
-    protected $securityContext;
-    protected $rightManager;
+    protected $voter;
     protected $session;
 
     public function __construct(
@@ -36,16 +35,14 @@ class EecController
         $entityManager,
         $templating,
         $questionnaireRevisorsManager,
-        $securityContext,
-        $rightManager,
+        $voter,
         $session
     ) {
         $this->eecManager                   = $eecManager;
         $this->entityManager                = $entityManager;
         $this->templating                   = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        $this->securityContext              = $securityContext;
-        $this->rightManager                 = $rightManager;
+        $this->voter                        = $voter;
         $this->session                      = $session;
     }
 
@@ -57,17 +54,13 @@ class EecController
      */
     public function createListeAction(Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $this->eecManager->createListe($questionnaire);
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+        $this->eecManager->createListe($questionnaire);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
-            return new Response($template);
-        }
-
-        return;
+        return new Response($template);
     }
 
     /**
@@ -78,17 +71,13 @@ class EecController
      */
     public function createLacunesAction(Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $this->eecManager->createLacune($questionnaire);
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+        $this->eecManager->createLacune($questionnaire);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
-            return new Response($template);
-        }
-
-        return;
+        return new Response($template);
     }
 
     /**
@@ -99,17 +88,13 @@ class EecController
      */
     public function createClueAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
+        
+        $this->eecManager->createClue($questionnaire, $subquestion, $request->get('clue'));
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $this->eecManager->createClue($questionnaire, $subquestion, $request->get('clue'));
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
-
-            return new Response($template);
-        }
-
-        return;
+        return new Response($template);
     }
 
     /**
@@ -120,19 +105,12 @@ class EecController
      */
     public function setClueTypeAction(Request $request, Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $clueId = $request->get('clueId');
-            $clueTypeName = $request->get('clueType');
+        $this->eecManager->setClueType($request->get('clueId'), $request->get('clueType'));
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-            $this->eecManager->setClueType($clueId, $clueTypeName);
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
-            return new Response(null, 200);
-        }
-
-        return;
+        return new Response(null, 200);
     }
 
     /**
@@ -143,16 +121,12 @@ class EecController
      */
     public function createSyllableAction(Request $request, Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
+        
+        $this->eecManager->createSyllabe($request->get('syllable'), $questionnaire, $subquestion);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $this->eecManager->createSyllabe($request->get('syllable'), $questionnaire, $subquestion);
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-
-            return new Response(null, 200);
-        }
-
-        return;
+        return new Response(null, 200);
     }
 
     /**
@@ -163,16 +137,11 @@ class EecController
      */
     public function setDisplayAction(Subquestion $subquestion, $display)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
-        $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
+        $this->voter->canEditTask($subquestion->getQuestion()->getQuestionnaire());
+        
+        $this->eecManager->setDisplayAction($subquestion, $display);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $this->eecManager->setDisplayAction($subquestion, $display);
-
-            return new Response(null, 200);
-        }
-
-        return;
+        return new Response(null, 200);
     }
 
     /**
@@ -183,17 +152,13 @@ class EecController
      */
     public function addDistractorAction(Questionnaire $questionnaire)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $this->eecManager->addDistractor($questionnaire);
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+        $this->eecManager->addDistractor($questionnaire);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
-            return new Response($template);
-        }
-
-        return;
+        return new Response($template);
     }
 
     /**
@@ -204,17 +169,13 @@ class EecController
      */
     public function addDistractorMultAction(Questionnaire $questionnaire, Subquestion $subquestion)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $this->eecManager->addDistractorMult($questionnaire, $subquestion);
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
-            $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+        $this->eecManager->addDistractorMult($questionnaire, $subquestion);
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
 
-            return new Response($template);
-        }
-
-        return;
+        return new Response($template);
     }
 
     /**
@@ -225,15 +186,11 @@ class EecController
      */
     public function editDistractorAction(Request $request, Questionnaire $questionnaire, Media $media)
     {
-        $currentUser = $this->securityContext->getToken()->getUser();
+        $this->voter->canEditTask($questionnaire);
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
-            $this->eecManager->editDistractor($media, $request->get('text'));
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        $this->eecManager->editDistractor($media, $request->get('text'));
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
 
-            return new Response(null, 200);
-        }
-
-        return;
+        return new Response(null, 200);
     }
 }

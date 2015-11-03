@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Innova\SelfBundle\Entity\Institution\Year;
 use Innova\SelfBundle\Form\Type\YearType;
 
-
 /**
  * Year controller.
  *
