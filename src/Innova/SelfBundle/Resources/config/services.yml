@@ -114,7 +114,8 @@ services:
             templating:         @templating
             formFactory:        @form.factory
             securityContext:    @security.token_storage
-            rightManager:       @innova_voter
+            voter:              @innova_voter
+            rightManager:       @self.right.manager
             session:            @session
             router:             @router
 
