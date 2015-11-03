@@ -2,6 +2,10 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+services:
+    doctrine_dbal_platform:
+        class: Doctrine\DBAL\Platforms\MySqlPlatform
+
 framework:
     # http://blog.eleven-labs.com/symfony-2-cache-http-esi/
     fragments:       { path: /_proxy }
@@ -27,8 +31,8 @@ framework:
 
 parameters:
     pdo.db_options:
-        db_table:        session_pdo
-        db_id_col:      session_id
+        db_table:    session_pdo
+        db_id_col:   session_id
         db_data_col: session_value
         db_time_col: session_time
 
@@ -62,6 +66,7 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
+        platform_service: doctrine_dbal_platform
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: %kernel.root_dir%/data/data.db3
         # path:     %database_path%
