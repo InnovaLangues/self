@@ -24,7 +24,6 @@ use Innova\SelfBundle\Entity\Language;
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})
  * @ParamConverter("language", isOptional="true", class="InnovaSelfBundle:Language", options={"id" = "languageId"})
  */
-
 class TaskController
 {
     protected $questionnaireManager;

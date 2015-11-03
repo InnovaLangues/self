@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Voter;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Innova\SelfBundle\Entity\Questionnaire;
 
 /**
  * Class Voter
@@ -30,7 +31,16 @@ class Voter
     public function isAllowed($rightName, $entity = null)
     {
        if (true !== $this->rightManager->checkRight($rightName, $this->currentUser, $entity)) {
-            throw new AccessDeniedException();   
+            throw new AccessDeniedException();
+       }
+
+       return;
+    }
+
+    public function canEditTask(Questionnaire $task)
+    {
+       if (true !== $this->rightManager->canEditTask($this->currentUser, $task)) {
+            throw new AccessDeniedException();
        }
 
        return;

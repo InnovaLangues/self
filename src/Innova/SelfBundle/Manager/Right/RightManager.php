@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Manager\Right;
 
 use Innova\SelfBundle\Entity\Right\Right;
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\Questionnaire;
 use FOS\UserBundle\Util\UserManipulator;
 
 class RightManager
@@ -159,7 +160,7 @@ class RightManager
         return false;
     }
 
-    public function canEditTask(User $user, $task)
+    public function canEditTask(User $user, Questionnaire $task)
     {
         $em = $this->entityManager;
         // on vérifie d'abord que l'utilisateur à des droits globaux sur l'édition de tâche ou les droits sur la tâche en question

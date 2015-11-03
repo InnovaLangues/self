@@ -27,7 +27,6 @@ use Innova\SelfBundle\Entity\Trace;
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
  * @ParamConverter("trace", isOptional="true", class="InnovaSelfBundle:Trace", options={"id" = "traceId"})
  */
-
 class TraceController
 {
     protected $mediaManager;
@@ -41,9 +40,6 @@ class TraceController
     protected $user;
     protected $translator;
 
-    /**
-     * Class constructor
-     */
     public function __construct(
         $mediaManager,
         $propositionManager,

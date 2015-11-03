@@ -12,8 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Innova\SelfBundle\Form\Type\InstitutionType;
 use Innova\SelfBundle\Entity\Institution\Institution;
 
-
-
 /**
  * Institution controller.
  *

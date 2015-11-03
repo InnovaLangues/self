@@ -1,0 +1,50 @@
+services:
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }
+
+    twig.extension.array:
+        class: Twig_Extensions_Extension_Array
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.get_languages:
+        class: Innova\SelfBundle\Twig\LanguageExtension
+        arguments:
+            entityManager: @doctrine.orm.entity_manager
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.get_hostname:
+        class: Innova\SelfBundle\Twig\HostnameExtension
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.get_typologies:
+        class: Innova\SelfBundle\Twig\TypologyExtension
+        arguments:
+            entityManager: @doctrine.orm.entity_manager
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.disambiguate:
+        class: Innova\SelfBundle\Twig\DisambiguateExtension
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.parameters:
+        class: Innova\SelfBundle\Twig\GeneralParametersExtension
+        arguments:
+            entityManager: @doctrine.orm.entity_manager
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.check_right:
+        class: Innova\SelfBundle\Twig\RightExtension
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
+            securityContext:    @security.token_storage
+            rightManager:       @self.right.manager
+        tags:
+            - { name: twig.extension }
