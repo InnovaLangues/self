@@ -59,7 +59,7 @@ class TemplatingManager
                 $template = 'InnovaSelfBundle:Editor/partials:subquestions.html.twig';
                 break;
             case 'distractor':
-                $template = 'InnovaSelfBundle:Editor/partials:subquestion.html.twig';
+                $template = 'InnovaSelfBundle:Editor/partials:subquestions.html.twig';
                 break;
             case 'proposition':
                 $template = 'InnovaSelfBundle:Editor/partials:subquestion.html.twig';
