@@ -19,9 +19,12 @@ services:
     self.subquestion.manager:
         class: Innova\SelfBundle\Manager\Editor\SubquestionManager
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
-            mediaManager:       @self.media.manager
-            propositionManager:    @self.proposition.manager
+            entityManager:          @doctrine.orm.entity_manager
+            mediaManager:           @self.media.manager
+            propositionManager:     @self.proposition.manager
+            revisorManager:         @self.questionnaire_revisors.manager
+            formFactory:            @form.factory
+            templating:             @templating
 
     self.order_questionnaire_test.manager:
         class: Innova\SelfBundle\Manager\Editor\OrderQuestionnaireTestManager
@@ -52,6 +55,10 @@ services:
         class: Innova\SelfBundle\Manager\TraceManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            mediaManager:       @self.media.manager
+            propositionManager: @self.proposition.manager
+            answerManager:      @self.answer.manager
+            securityContext:    @security.token_storage
 
     self.user.manager:
         class: Innova\SelfBundle\Manager\UserManager

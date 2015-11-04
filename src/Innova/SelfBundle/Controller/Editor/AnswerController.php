@@ -11,7 +11,8 @@ use Innova\SelfBundle\Entity\Subquestion;
 use Innova\SelfBundle\Entity\Proposition;
 
 /**
- * Class AnswerController
+ * Class AnswerController.
+ *
  * @Route(
  *      "/admin",
  *      service = "innova_editor_answer"
@@ -26,23 +27,17 @@ class AnswerController
     protected $templating;
     protected $voter;
 
-    public function __construct(
-        $eecManager,
-        $propositionManager,
-        $templating,
-        $voter
-    ) {
-        $this->eecManager           = $eecManager;
-        $this->propositionManager   = $propositionManager;
-        $this->templating           = $templating;
-        $this->voter                = $voter;
+    public function __construct($eecManager, $propositionManager, $templating, $voter)
+    {
+        $this->eecManager = $eecManager;
+        $this->propositionManager = $propositionManager;
+        $this->templating = $templating;
+        $this->voter = $voter;
     }
 
     /**
-     *
      * @Route("/questionnaires/ecc_get_answer/{subquestionId}", name="editor_questionnaire_get_answers", options={"expose"=true})
      * @Method("GET")
-     *
      */
     public function getAnswersAction(Subquestion $subquestion)
     {
@@ -55,10 +50,8 @@ class AnswerController
     }
 
     /**
-     *
      * @Route("/questionnaires/ecc_add_answer/{subquestionId}", name="editor_questionnaire_add-eec-answer", options={"expose"=true})
      * @Method("POST")
-     *
      */
     public function addAnswersAction(Request $request, Subquestion $subquestion)
     {
@@ -70,10 +63,8 @@ class AnswerController
     }
 
     /**
-     *
      * @Route("/questionnaires/ecc_toggle_answer/{propositionId}", name="ecc_toggle_answer", options={"expose"=true})
      * @Method("PUT")
-     *
      */
     public function toggleRightAnswerAction(Proposition $proposition)
     {

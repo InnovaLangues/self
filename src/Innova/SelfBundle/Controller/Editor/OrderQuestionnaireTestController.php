@@ -12,7 +12,8 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 
 /**
- * Class OrderQuestionnaireTestController
+ * Class OrderQuestionnaireTestController.
+ *
  * @Route(
  *      "/admin",
  *      service = "innova_editor_orderquestionnaire"
@@ -22,38 +23,30 @@ use Innova\SelfBundle\Entity\Questionnaire;
  */
 class OrderQuestionnaireTestController
 {
-    protected $entityManager;
     protected $orderQuestionnaireTestManager;
     protected $questionnaireManager;
     protected $templating;
     protected $voter;
-    protected $session;
 
     public function __construct(
-            $entityManager,
-            $orderQuestionnaireTestManager,
-            $questionnaireManager,
-            $templating,
-            $voter,
-            $session
-
+        $orderQuestionnaireTestManager,
+        $questionnaireManager,
+        $templating,
+        $voter
     ) {
-        $this->entityManager                    = $entityManager;
-        $this->orderQuestionnaireTestManager    = $orderQuestionnaireTestManager;
-        $this->questionnaireManager             = $questionnaireManager;
-        $this->templating                       = $templating;
-        $this->voter                            = $voter;
-        $this->session                          = $session;
+        $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
+        $this->questionnaireManager = $questionnaireManager;
+        $this->templating = $templating;
+        $this->voter = $voter;
     }
 
     /**
      * @Route("/order-test-questionnaire/{testId}", name="save-order-test-questionnaire", options={"expose"=true})
      * @Method("POST")
-     *
      */
     public function saveOrderAction(Request $request, Test $test)
     {
-        $this->voter->isAllowed("right.reordertasktest", $test);
+        $this->voter->isAllowed('right.reordertasktest', $test);
 
         $newOrderArray = json_decode($request->get('newOrder'));
         $this->orderQuestionnaireTestManager->saveOrder($newOrderArray, $test);
@@ -64,11 +57,10 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/editor_add_task_to_test/{testId}/{questionnaireId}", name="editor_add_task_to_test", options={"expose"=true})
      * @Method("PUT")
-     *
      */
     public function addTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
-        $this->voter->isAllowed("right.addtasktest", $test);
+        $this->voter->isAllowed('right.addtasktest', $test);
 
         $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $questionnaire);
         $orders = $test->getOrderQuestionnaireTests();
@@ -81,11 +73,10 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/editor_duplicate_task_to_test/{testId}/{questionnaireId}", name="editor_duplicate_task_to_test", options={"expose"=true})
      * @Method("PUT")
-     *
      */
     public function duplicateTaskToTestAction(Test $test, Questionnaire $questionnaire)
     {
-        $this->voter->isAllowed("right.addtasktest", $test);
+        $this->voter->isAllowed('right.addtasktest', $test);
 
         $newQuestionnaire = $this->questionnaireManager->duplicate($questionnaire);
         $this->orderQuestionnaireTestManager->createOrderQuestionnaireTest($test, $newQuestionnaire);
@@ -99,18 +90,12 @@ class OrderQuestionnaireTestController
     /**
      * @Route("/delete-task/{testId}/{questionnaireId}", name="delete-task", options={"expose"=true})
      * @Method("POST")
-     *
      */
     public function deleteTaskAction(Test $test, Questionnaire $questionnaire)
     {
-        $this->voter->isAllowed("right.deletetasktest", $test);
+        $this->voter->isAllowed('right.deletetasktest', $test);
 
-        $em = $this->entityManager;
-        $taskToRemove = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array('test' => $test, 'questionnaire' => $questionnaire));
-        $em->remove($taskToRemove);
-        $em->flush();
-
-        $this->orderQuestionnaireTestManager->recalculateOrder($test);
+        $this->orderQuestionnaireTestManager->deleteTask($test, $questionnaire);
 
         return new JsonResponse(null);
     }
