@@ -5,6 +5,8 @@ namespace Innova\SelfBundle\Manager\Editor;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Form\Type\TaskInfosType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Innova\SelfBundle\Form\Type\QuestionnaireType;
 
 class QuestionnaireManager
 {
@@ -50,21 +52,57 @@ class QuestionnaireManager
         return $questionnaire;
     }
 
+    public function setTextTitle(Request $request, Questionnaire $questionnaire)
+    {
+        $title = $request->request->get('title');
+        $questionnaire->setTextTitle($title);
+        $this->entityManager->persist($questionnaire);
+        $this->entityManager->flush();
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+
+        return $questionnaire;
+    }
+
+    public function setTextType(Request $request, Questionnaire $questionnaire)
+    {
+        $textType = $request->request->get('textType');
+        $questionnaire->setDialogue($textType);
+        $this->entityManager->persist($questionnaire);
+        $this->entityManager->flush();
+
+        return $questionnaire;
+    }
+
+    public function setField(Request $request, Questionnaire $questionnaire)
+    {
+        $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
+        $form->bind($request);
+        if ($form->isValid()) {
+            $this->entityManager->persist($questionnaire);
+            $this->entityManager->flush();
+
+            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        }
+
+        return;
+    }
+
     public function editQuestionnaireField(Questionnaire $questionnaire, $field, $value)
     {
         $em = $this->entityManager;
 
-        if ($field == "contexte") {
+        if ($field == 'contexte') {
             $questionnaire->setMediaContext($value);
-        } elseif ($field == "texte") {
+        } elseif ($field == 'texte') {
             $questionnaire->setMediaText($value);
-        } elseif ($field == "feedback") {
+        } elseif ($field == 'feedback') {
             $questionnaire->setMediaFeedback($value);
-        } elseif ($field == "blank-text") {
+        } elseif ($field == 'blank-text') {
             $questionnaire->setMediaBlankText($value);
-        } elseif ($field == "functional-instruction") {
+        } elseif ($field == 'functional-instruction') {
             $questionnaire->setMediaFunctionalInstruction($value);
-        } elseif ($field == "instruction") {
+        } elseif ($field == 'instruction') {
             $questionnaire->setMediaInstruction($value);
         }
         $em->persist($questionnaire);
@@ -110,9 +148,12 @@ class QuestionnaireManager
         return $isUnique;
     }
 
-    public function setIdentityField(Questionnaire $questionnaire, $field, $value)
+    public function setIdentityField(Questionnaire $questionnaire, Request $request)
     {
         $em = $this->entityManager;
+
+        $field = $request->request->get('field');
+        $value = $request->request->get('value');
 
         switch ($field) {
             case 'fixedOrder':
@@ -135,7 +176,7 @@ class QuestionnaireManager
                                 'taskInfosForm' => $form->createView(),
                         ));
 
-                    return new JsonResponse(array('template' => $template, 'test' => "test"));
+                    return new JsonResponse(array('template' => $template, 'test' => 'test'));
                 }
                 break;
             case 'typology':
@@ -167,7 +208,7 @@ class QuestionnaireManager
         $newTask->setAuthorMore($task->getAuthorMore());
         $newTask->setLanguageLevel($task->getLanguageLevel());
         $newTask->setStatus($task->getStatus());
-        $newTask->setTheme("Copie de ".$task->getTheme());
+        $newTask->setTheme('Copie de '.$task->getTheme());
         $newTask->setTextTitle($task->getTextTitle());
         $newTask->setDialogue($task->getDialogue());
         $newTask->setFixedOrder($task->getFixedOrder());

@@ -10,7 +10,8 @@ use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Proposition;
 
 /**
- * Class PropositionController
+ * Class PropositionController.
+ *
  * @Route(
  *      "/admin",
  *      service = "innova_editor_proposition"
@@ -31,17 +32,15 @@ class PropositionController
         $questionnaireRevisorsManager,
         $voter
     ) {
-        $this->propositionManager           = $propositionManager;
-        $this->templating                   = $templating;
+        $this->propositionManager = $propositionManager;
+        $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        $this->voter                        = $voter;
+        $this->voter = $voter;
     }
 
     /**
-     *
      * @Route("/toggle_right_answer/{questionnaireId}/{propositionId}", name="editor_questionnaire_toggle_right_anwser", options={"expose"=true})
      * @Method("PUT")
-     *
      */
     public function toggleRightAnswserAction(Questionnaire $questionnaire, Proposition $proposition)
     {

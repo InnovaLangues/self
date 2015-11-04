@@ -45,11 +45,7 @@ services:
         class: Innova\SelfBundle\Controller\Editor\QuestionnaireController
         arguments:
             questionnaireManager:           @self.questionnaire.manager
-            orderQuestionnaireTestManager:  @self.order_questionnaire_test.manager
-            entityManager:                  @doctrine.orm.entity_manager
             templating:                     @templating
-            questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
-            formFactory:                    @form.factory
             voter:                          @innova_voter
 
     innova_editor_task:
@@ -86,20 +82,14 @@ services:
     innova_editor_subquestion:
         class: Innova\SelfBundle\Controller\Editor\SubquestionController
         arguments:
-            mediaManager:       @self.media.manager
-            propositionManager: @self.proposition.manager
             subquestionManager: @self.subquestion.manager
-            entityManager:      @doctrine.orm.entity_manager
             templating:         @templating
-            questionnaireRevisorsManager: @self.questionnaire_revisors.manager
-            formFactory:        @form.factory
             voter:              @innova_voter
 
     innova_editor_eec:
         class: Innova\SelfBundle\Controller\Editor\EecController
         arguments:
             eecManager:                     @self.eec.manager
-            entityManager:                  @doctrine.orm.entity_manager
             templating:                     @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
             voter:                          @innova_voter
@@ -116,25 +106,17 @@ services:
     innova_player_trace:
         class: Innova\SelfBundle\Controller\TraceController
         arguments:
-            mediaManager:       @self.media.manager
-            propositionManager: @self.proposition.manager
             traceManager:       @self.trace.manager
-            answerManager:      @self.answer.manager
-            entityManager:      @doctrine.orm.entity_manager
             session:            @session
             router:             @router
-            securityContext:    @security.token_storage
-            translator:         @translator
 
     innova_editor_orderquestionnaire:
         class: Innova\SelfBundle\Controller\Editor\OrderQuestionnaireTestController
         arguments:
-            entityManager:          @doctrine.orm.entity_manager
             orderQuestionnaireTest: @self.order_questionnaire_test.manager
             questionnaireManager:   @self.questionnaire.manager
             templating:             @templating
             voter:                  @innova_voter
-            session:                @session
 
     innova_mediaclick:
         class: Innova\SelfBundle\Controller\MediaClickController
