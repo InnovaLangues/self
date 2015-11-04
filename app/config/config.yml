@@ -25,8 +25,8 @@ framework:
     trusted_proxies: [192.0.0.1]
     session:
         handler_id:     session.handler.pdo
+        name: "self"
         #save_path: "%kernel.root_dir%/sessions"
-        #name: "self"
     http_method_override: true
 
 parameters:
