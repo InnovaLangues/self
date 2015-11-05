@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Doctrine\ORM\EntityManager;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Session;
@@ -20,7 +19,7 @@ use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Manager\PlayerManager;
 
 /**
- * Class PlayerController
+ * Class PlayerController.
  *
  * @Route(
  *      name = "innova_player",
@@ -50,15 +49,15 @@ class PlayerController
         $scoreManager,
         $templating
     ) {
-        $this->securityContext      = $securityContext;
-        $this->entityManager        = $entityManager;
-        $this->session              = $session;
-        $this->router               = $router;
-        $this->user                 = $this->securityContext->getToken()->getUser();
-        $this->playerManager        = $playerManager;
-        $this->scoreManager         = $scoreManager;
-        $this->templating           = $templating;
-        $this->questionnaireRepo    = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
+        $this->securityContext = $securityContext;
+        $this->entityManager = $entityManager;
+        $this->session = $session;
+        $this->router = $router;
+        $this->user = $this->securityContext->getToken()->getUser();
+        $this->playerManager = $playerManager;
+        $this->scoreManager = $scoreManager;
+        $this->templating = $templating;
+        $this->questionnaireRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
     }
 
     /**
@@ -68,7 +67,6 @@ class PlayerController
      * @Route("test/{testId}/session/{sessionId}", name="test_start", requirements={"sessionId": "\d+"})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
-     * @Cache(smaxage="0", maxage="0")
      */
     public function startAction(Test $test, Session $session)
     {
@@ -81,7 +79,7 @@ class PlayerController
 
         // cas où il n'y a plus de tâche candidate. L'utilisateur est redirigé vers la page de fin de test.
         if (!$orderQuestionnaire = $this->playerManager->pickQuestionnaire($test, $session)) {
-            $url = $this->router->generate('test_end', array("testId" => $test->getId(), 'sessionId' => $session->getId()));
+            $url = $this->router->generate('test_end', array('testId' => $test->getId(), 'sessionId' => $session->getId()));
 
             return new RedirectResponse($url);
         }
@@ -93,39 +91,38 @@ class PlayerController
         $countQuestionnaireTotal = $this->playerManager->countQuestionnaireTotal($component, $questionnaires);
 
         return array(
-                'test' => $test,
-                'session' => $session,
-                'component' => $component,
-                'questionnaire' => $questionnaire,
-                'questionnaires' => $questionnaires,
-                'countQuestionnaireDone' => $countQuestionnaireDone,
-                'countQuestionnaireTotal' => $countQuestionnaireTotal,
-            );
+            'test' => $test,
+            'session' => $session,
+            'component' => $component,
+            'questionnaire' => $questionnaire,
+            'questionnaires' => $questionnaires,
+            'countQuestionnaireDone' => $countQuestionnaireDone,
+            'countQuestionnaireTotal' => $countQuestionnaireTotal,
+        );
     }
 
-     /**
-     * Gère la vue de fin de test
+    /**
+     * Gère la vue de fin de test.
      *
      * @Route("/test/{testId}/session/{sessionId}/end", name="test_end")
      * @Template("InnovaSelfBundle:Player:common/end.html.twig")
      * @Method("GET")
-     * @Cache(smaxage="0", maxage="0")
      */
     public function endAction(Test $test, Session $session)
     {
         $levelFeedback = $this->scoreManager->getGlobalLevelFromThreshold($session, $this->user);
-        $eecFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $this->user, "EEC");
-        $coFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $this->user, "CO");
-        $ceFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $this->user, "CE");
+        $eecFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $this->user, 'EEC');
+        $coFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $this->user, 'CO');
+        $ceFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $this->user, 'CE');
         $score = $this->scoreManager->calculateScoreByTest($test, $session, $this->user);
 
         return array(
-            "score" => $score,
-            "session" => $session,
-            "levelFeedback" => $levelFeedback,
-            "coFeedback" => $coFeedback,
-            "ceFeedback" => $ceFeedback,
-            "eecFeedback" => $eecFeedback,
+            'score' => $score,
+            'session' => $session,
+            'levelFeedback' => $levelFeedback,
+            'coFeedback' => $coFeedback,
+            'ceFeedback' => $ceFeedback,
+            'eecFeedback' => $eecFeedback,
         );
     }
 
@@ -133,7 +130,6 @@ class PlayerController
      * @Route("/home", name="show_tests")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:showTests.html.twig")
-     * @Cache(smaxage="0", maxage="0")
      */
     public function showTestsAction()
     {
@@ -152,7 +148,6 @@ class PlayerController
      * @ParamConverter("questionnairePicked", class="InnovaSelfBundle:Questionnaire", options={"mapping": {"questionnaireId": "id"}})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
-     * @Cache(smaxage="0", maxage="0")
      */
     public function pickAQuestionnaireAction(Test $test, Session $session, Questionnaire $questionnairePicked)
     {
@@ -164,7 +159,7 @@ class PlayerController
                 $countQuestionnaireDone = $i;
                 break;
             }
-            $i++;
+            ++$i;
         }
 
         return array(
@@ -181,27 +176,25 @@ class PlayerController
      * @Method("GET")
      * @Route("/session/connect", name="session_connect")
      * @Template("InnovaSelfBundle:Player:common/log.html.twig")
-     * @Cache(smaxage="0", maxage="0")
      */
     public function sessionConnectAction()
     {
         return array();
     }
 
-     /**
+    /**
      * @Method("POST")
      * @Route("/session/log", name="session_log")
-     * @Cache(smaxage="0", maxage="0")
      */
     public function sessionLogAction(Request $request)
     {
         $post = $request->request->all();
-        $password = $post["passwd"];
-        $sessions = $this->entityManager->getRepository('InnovaSelfBundle:Session')->findBy(array("passwd" => $password, "actif" => true));
+        $password = $post['passwd'];
+        $sessions = $this->entityManager->getRepository('InnovaSelfBundle:Session')->findBy(array('passwd' => $password, 'actif' => true));
 
         if (count($sessions) >= 1) {
             $this->playerManager->considerAsLogged($sessions);
-            $template = $this->templating->render('InnovaSelfBundle:Player:common/log.html.twig', array("sessions" => $sessions));
+            $template = $this->templating->render('InnovaSelfBundle:Player:common/log.html.twig', array('sessions' => $sessions));
 
             return new Response($template);
         } else {

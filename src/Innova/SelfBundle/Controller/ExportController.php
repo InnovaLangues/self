@@ -11,7 +11,7 @@ use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
 
 /**
- * Class ExportController
+ * Class ExportController.
  *
  * @Route(service = "innova_export")
  *
@@ -30,12 +30,12 @@ class ExportController
 
     public function __construct($kernelRoot, $exportManager, $securityContext, $rightManager, $voter)
     {
-        $this->kernelRoot       = $kernelRoot;
-        $this->exportManager    = $exportManager;
-        $this->securityContext  = $securityContext;
-        $this->rightManager     = $rightManager;
-        $this->voter            = $voter;
-        $this->user             = $this->securityContext->getToken()->getUser();
+        $this->kernelRoot = $kernelRoot;
+        $this->exportManager = $exportManager;
+        $this->securityContext = $securityContext;
+        $this->rightManager = $rightManager;
+        $this->voter = $voter;
+        $this->user = $this->securityContext->getToken()->getUser();
     }
 
     /**
@@ -44,9 +44,9 @@ class ExportController
      */
     public function getFileAction($testId, $filename, $mode)
     {
-        if ($this->rightManager->checkRight("right.exportPDF", $this->user) || $this->rightManager->checkRight("right.exportCSV", $this->user)) {
-            $dir = ($mode == "pdf") ? "exportPdf" : "export";
-            $file = $this->kernelRoot."/data/".$dir."/".$testId."/".$filename;
+        if ($this->rightManager->checkRight('right.exportPDF', $this->user) || $this->rightManager->checkRight('right.exportCSV', $this->user)) {
+            $dir = ($mode == 'pdf') ? 'exportPdf' : 'export';
+            $file = $this->kernelRoot.'/data/'.$dir.'/'.$testId.'/'.$filename;
             $response = $this->exportManager->generateResponse($file);
 
             return $response;
@@ -56,7 +56,7 @@ class ExportController
     }
 
     /**
-     * exportCsvSQL function
+     * exportCsvSQL function.
      *
      * @Route("admin/export/csv/test/{testId}/session/{sessionId}/mode/{tia}", name = "csv-export")
      * @Method("PUT")
@@ -64,21 +64,21 @@ class ExportController
      */
     public function exportCsvAction(Test $test, Session $session, $tia)
     {
-        $this->voter->isAllowed("right.exportCSV");
+        $this->voter->isAllowed('right.exportCSV');
 
         $csvName = $this->exportManager->generateCsv($test, $session, $tia);
-        $fileList = $this->exportManager->getFileList($test, "csv");
+        $fileList = $this->exportManager->getFileList($test, 'csv');
 
         return array(
-            "csvName" => $csvName,
+            'csvName' => $csvName,
             'test' => $test,
-            "fileList" => $fileList,
-            "tia" => $tia,
+            'fileList' => $fileList,
+            'tia' => $tia,
         );
-}
+    }
 
-     /**
-     * List CSV export files for a given test
+    /**
+     * List CSV export files for a given test.
      *
      * @Route("admin/export/csv/filelist/test/{testId}/{tia}", name = "csv-export-show")
      * @Method("GET")
@@ -86,23 +86,22 @@ class ExportController
      */
     public function showCsvAction(Test $test, $tia)
     {
-        $this->voter->isAllowed("right.exportCSV");
+        $this->voter->isAllowed('right.exportCSV');
 
-        $fileList = $this->exportManager->getFileList($test, "csv");
+        $fileList = $this->exportManager->getFileList($test, 'csv');
 
         return array(
             'test' => $test,
-            "fileList" => $fileList,
-            "tia" => $tia,
+            'fileList' => $fileList,
+            'tia' => $tia,
         );
     }
 
     /**
-     * Export result session PDF for current user
+     * Export result session PDF for current user.
      *
      * @Route("/self-export/pdf-export-session/session/{sessionId}", name = "pdf-export-session-user")
      * @Method("GET")
-     *
      */
     public function exportSessionUserPdfAction(Session $session)
     {
@@ -112,15 +111,14 @@ class ExportController
     }
 
     /**
-     * Export result session PDF for a given user
+     * Export result session PDF for a given user.
      *
      * @Route("admin/export/pdf-export-session/session/{sessionId}/user/{userId}", name = "admin-pdf-export-session-user")
      * @Method("GET")
-     *
      */
     public function exportSessionUserPdfAdminAction(Session $session, User $user)
     {
-        $this->voter->isAllowed("right.individualresultssession", $session);
+        $this->voter->isAllowed('right.individualresultssession', $session);
 
         $response = $this->exportManager->exportSessionUserPdfAction($session, $user);
 

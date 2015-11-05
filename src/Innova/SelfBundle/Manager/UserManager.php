@@ -16,10 +16,10 @@ class UserManager
 
     public function __construct($entityManager, $formFactory, $fosUserManager, $session)
     {
-        $this->entityManager    = $entityManager;
-        $this->formFactory      = $formFactory;
-        $this->fosUserManager   = $fosUserManager;
-        $this->session          = $session;
+        $this->entityManager = $entityManager;
+        $this->formFactory = $formFactory;
+        $this->fosUserManager = $fosUserManager;
+        $this->session = $session;
     }
 
     public function setLocale(User $user, $locale)
@@ -41,6 +41,8 @@ class UserManager
         $em->remove($user);
         $em->flush();
 
+        $this->session->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
+
         return $this;
     }
 
@@ -48,7 +50,7 @@ class UserManager
     {
         $user = $this->entityManager->getRepository('InnovaSelfBundle:User')->findAnotherByUsername($user);
         if ($user) {
-            return "Existing user with this username";
+            return 'Existing user with this username';
         }
 
         return;
@@ -58,14 +60,14 @@ class UserManager
     {
         $user = $this->entityManager->getRepository('InnovaSelfBundle:User')->findAnotherByEmail($user);
         if ($user) {
-            return "Existing user with this email";
+            return 'Existing user with this email';
         }
 
         return;
     }
 
     /**
-     * Handles session form
+     * Handles session form.
      */
     public function handleForm(User $user, Request $request)
     {

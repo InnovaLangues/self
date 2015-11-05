@@ -20,18 +20,16 @@ class GeneralParametersController
     protected $generalParamsManager;
     protected $router;
 
-
     public function __construct($entityManager, $voter, $generalParamsManager, $router)
     {
-        $this->entityManager            = $entityManager;
-        $this->voter                    = $voter;
-        $this->generalParamsManager     = $generalParamsManager;
-        $this->router                   = $router;
+        $this->entityManager = $entityManager;
+        $this->voter = $voter;
+        $this->generalParamsManager = $generalParamsManager;
+        $this->router = $router;
     }
 
-
     /**
-     * Edit general parameters
+     * Edit general parameters.
      *
      * @Route("/parameters", name="parameters")
      * @Method({"GET", "POST"})
@@ -39,7 +37,7 @@ class GeneralParametersController
      */
     public function editAction(Request $request)
     {
-        $this->voter->isAllowed("right.generalParameters");
+        $this->voter->isAllowed('right.generalParameters');
 
         $parameters = $this->entityManager->getRepository('InnovaSelfBundle:GeneralParameters')->get();
         $form = $this->generalParamsManager->handleForm($parameters, $request);

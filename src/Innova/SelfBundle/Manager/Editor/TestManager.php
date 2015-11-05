@@ -58,7 +58,7 @@ class TestManager
         $phased = $test->getPhased();
 
         $newTest = new Test();
-        $newTest->setName("Copie de ".$name);
+        $newTest->setName('Copie de '.$name);
         $newTest->setLanguage($language);
         $newTest->setPhased($phased);
         $newTest->setArchived(false);
@@ -85,6 +85,8 @@ class TestManager
         $this->entityManager->persist($newTest);
         $this->entityManager->flush();
 
+        $this->session->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué.');
+
         return $newTest;
     }
 
@@ -104,5 +106,23 @@ class TestManager
         $this->session->getFlashBag()->set('success', $msg);
 
         return $test;
+    }
+
+    public function deleteTest(Test $test)
+    {
+        $testName = $test->getName();
+        $this->entityManager > remove($test);
+        $this->entityManager > flush();
+
+        $this->session->getFlashBag()->set('success', 'Le test '.$testName.' a bien été supprimé.');
+
+        return;
+    }
+
+    public function getFavoriteTests()
+    {
+        $tests = $this->user->getFavoritesTests();
+
+        return $tests;
     }
 }

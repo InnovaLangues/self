@@ -26,6 +26,21 @@ services:
             formFactory:            @form.factory
             templating:             @templating
 
+    self.session.manager:
+        class: Innova\SelfBundle\Manager\SessionManager
+        arguments:
+            entityManager:          @doctrine.orm.entity_manager
+            session:                @session
+            securityContext:        @security.token_storage
+            rightManager:           @self.right.manager
+
+    self.task.manager:
+        class: Innova\SelfBundle\Manager\TaskManager
+        arguments:
+            entityManager:          @doctrine.orm.entity_manager
+            securityContext:        @security.token_storage
+            templating:             @templating
+
     self.order_questionnaire_test.manager:
         class: Innova\SelfBundle\Manager\Editor\OrderQuestionnaireTestManager
         arguments:
@@ -36,6 +51,7 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             mediaManager:       @self.media.manager
+            revisorManager:     @self.questionnaire_revisors.manager
 
     self.media.manager:
         class: Innova\SelfBundle\Manager\Media\MediaManager
@@ -43,7 +59,7 @@ services:
             entityManager:                  @doctrine.orm.entity_manager
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
             cacheManager:                   @?fos_http_cache.cache_manager
-            cacheManagerEnabled:          %cache_manager_enabled%
+            cacheManagerEnabled:            %cache_manager_enabled%
 
     self.app.manager:
         class: Innova\SelfBundle\Manager\Editor\AppManager

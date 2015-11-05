@@ -16,25 +16,22 @@ use Innova\SelfBundle\Entity\Proposition;
  *      "/admin",
  *      service = "innova_editor_proposition"
  * )
- * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",       options={"id" = "questionnaireId"})
- * @ParamConverter("proposition",     isOptional="true", class="InnovaSelfBundle:Proposition",      options={"id" = "propositionId"})
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
+ * @ParamConverter("proposition",   isOptional="true", class="InnovaSelfBundle:Proposition",   options={"id" = "propositionId"})
  */
 class PropositionController
 {
     protected $propositionManager;
     protected $templating;
-    protected $questionnaireRevisorsManager;
     protected $voter;
 
     public function __construct(
         $propositionManager,
         $templating,
-        $questionnaireRevisorsManager,
         $voter
     ) {
         $this->propositionManager = $propositionManager;
         $this->templating = $templating;
-        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
         $this->voter = $voter;
     }
 
@@ -47,7 +44,6 @@ class PropositionController
         $this->voter->canEditTask($questionnaire);
 
         $proposition = $this->propositionManager->toggleRightAnswer($proposition);
-        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:proposition.html.twig', array('questionnaire' => $questionnaire, 'proposition' => $proposition));
 
         return new Response($template);

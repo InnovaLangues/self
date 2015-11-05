@@ -18,32 +18,29 @@ use Innova\SelfBundle\Entity\User;
 class UserController extends Controller
 {
     /**
-     * Lists all users
+     * Lists all users.
      *
      * @Route("/admin/users/", name="admin_user")
      * @Method("GET")
-     *
      * @Template()
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
-        if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
-            $entities = $em->getRepository('InnovaSelfBundle:User')->findAllLight();
-        } else {
-            $entities = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findAuthorized($currentUser);
-        }
+        $users = ($this->get('self.right.manager')->checkRight('right.listuser', $currentUser))
+            ? $userRepo->findAllLight()
+            : $userRepo->findAuthorized($currentUser);
 
         return array(
-            'entities' => $entities,
-            'subset' => "user.all",
+            'entities' => $users,
+            'subset' => 'user.all',
         );
     }
 
     /**
-     * Lists connected users
+     * Lists connected users.
      *
      * @Route("/admin/users/connected", name="admin_users_connected")
      * @Method("GET")
@@ -51,15 +48,13 @@ class UserController extends Controller
      */
     public function connectedAction()
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get('innova_voter')->isAllowed('right.listuser');
 
-        if ($this->get("self.right.manager")->checkRight("right.listuser", $currentUser)) {
-            $connectedUsers = $this->get('self.user.manager')->getConnected();
-        }
+        $connectedUsers = $this->get('self.user.manager')->getConnected();
 
         return array(
             'entities' => $connectedUsers,
-            'subset' => "user.connected",
+            'subset' => 'user.connected',
         );
     }
 
@@ -68,12 +63,11 @@ class UserController extends Controller
      *
      * @Route("/admin/user/{id}", name="admin_user_show", requirements={"id": "\d+"})
      * @Method("GET")
-     *
      * @Template()
      */
     public function showAction($id)
     {
-        $this->get("innova_voter")->isAllowed("right.listuser");
+        $this->get('innova_voter')->isAllowed('right.listuser');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -90,27 +84,26 @@ class UserController extends Controller
         }
 
         return array(
-            'tests'  => $testsWithTraces,
-            'user'   => $user,
+            'tests' => $testsWithTraces,
+            'user' => $user,
         );
     }
 
     /**
-     * Delete trace for a given user and a given test
+     * Delete trace for a given user and a given test.
      *
      * @Route("/admin/user/{userId}/test/{testId}/delete-trace", name="delete-test-trace")
      * @Method("DELETE")
-     *
      */
     public function deleteTestTraceAction($userId, $testId)
     {
-        $this->get("innova_voter")->isAllowed("right.deletetraceuser");
+        $this->get('innova_voter')->isAllowed('right.deletetraceuser');
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
 
-        if ($this->get("self.trace.manager")->deleteTestTrace($user, $test)) {
+        if ($this->get('self.trace.manager')->deleteTestTrace($user, $test)) {
             $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour le test '.$test->getName().' ont été supprimées');
         }
 
@@ -118,15 +111,14 @@ class UserController extends Controller
     }
 
     /**
-     * Delete trace for a given user and a given test
+     * Delete trace for a given user and a given test.
      *
      * @Route("/admin/user/{userId}/test/{testId}/questionnaire/{questionnaireId}/delete-trace", name="delete-task-trace")
      * @Method("DELETE")
-     *
      */
     public function deleteTaskTraceAction($userId, $testId, $questionnaireId)
     {
-        $this->get("innova_voter")->isAllowed("right.deletetraceuser");
+        $this->get('innova_voter')->isAllowed('right.deletetraceuser');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -134,7 +126,7 @@ class UserController extends Controller
         $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
         $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
 
-        if ($this->get("self.trace.manager")->deleteTaskTrace($user, $test, $questionnaire)) {
+        if ($this->get('self.trace.manager')->deleteTaskTrace($user, $test, $questionnaire)) {
             $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la tâche '.$questionnaire->getTheme().' ont été supprimées');
         }
 
@@ -142,40 +134,33 @@ class UserController extends Controller
     }
 
     /**
-     * Delete trace for a given user and a given test
+     * Delete trace for a given user and a given test.
      *
      * @Route("/admin/user/{userId}/delete", name="delete-user")
      * @Method("DELETE")
-     *
      */
-    public function deleteUserAction($userId)
+    public function deleteUserAction(User $user)
     {
-        $this->get("innova_voter")->isAllowed("right.deleteuser");
+        $this->get('innova_voter')->isAllowed('right.deleteuser');
 
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-        if ($this->get("self.user.manager")->deleteUser($user)) {
-            $this->get('session')->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
-        }
+        $this->get('self.user.manager')->deleteUser($user);
 
         return $this->redirect($this->generateUrl('admin_user'));
     }
 
-     /**
-     *
+    /**
      * @Route("/admin/user/create", name="user_create")
      * @Method({"GET", "POST"})
-     *
      * @Template("InnovaSelfBundle:User:new.html.twig")
      */
     public function newAction(Request $request)
     {
-        $this->get("innova_voter")->isAllowed("right.createuser");
+        $this->get('innova_voter')->isAllowed('right.createuser');
 
         $user = new User();
-        $form = $this->get("self.user.manager")->handleForm($user, $request);
+        $form = $this->get('self.user.manager')->handleForm($user, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->add('info', "L'utilisateur a bien été créée");
+            $this->get('session')->getFlashBag()->add('info', "L'utilisateur a bien été créée");
 
             return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
         }
@@ -184,19 +169,17 @@ class UserController extends Controller
     }
 
     /**
-     *
      * @Route("/admin/user/{userId}/edit", name="user_edit")
      * @Method({"GET", "POST"})
-     *
      * @Template("InnovaSelfBundle:User:new.html.twig")
      */
     public function editAction(User $user, Request $request)
     {
-        $this->get("innova_voter")->isAllowed("right.edituser");
+        $this->get('innova_voter')->isAllowed('right.edituser');
 
-        $form = $this->get("self.user.manager")->handleForm($user, $request);
+        $form = $this->get('self.user.manager')->handleForm($user, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
+            $this->get('session')->getFlashBag()->set('info', "L'utilisateur a bien été modifié");
 
             return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
         }
@@ -205,22 +188,20 @@ class UserController extends Controller
     }
 
     /**
-     *
      * @Route("/admin/user/{userId}/change-passwd", name="passwd_edit")
      * @Method({"GET", "POST"})
-     *
      * @Template("InnovaSelfBundle:User:passwd.html.twig")
      */
     public function editPasswordAction(User $user, Request $request)
     {
-        $this->get("innova_voter")->isAllowed("right.editpassworduser");
+        $this->get('innova_voter')->isAllowed('right.editpassworduser');
 
         if ($request->isMethod('POST')) {
             $um = $this->get('fos_user.user_manager');
             $user->setPlainPassword($request->request->get('passwd'));
             $um->updateUser($user, true);
 
-            $this->get("session")->getFlashBag()->set('info', "Le mot de passe a bien été modifié");
+            $this->get('session')->getFlashBag()->set('info', 'Le mot de passe a bien été modifié');
 
             return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
         }
@@ -231,7 +212,6 @@ class UserController extends Controller
     /**
      * @Route("/user/self_display", name="self_user_display")
      * @Method("GET")
-     *
      * @Template("InnovaSelfBundle:User:show.html.twig")
      */
     public function selfDisplayAction()
@@ -239,23 +219,22 @@ class UserController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         return array(
-            'user'   => $user,
+            'user' => $user,
         );
     }
 
     /**
      * @Route("/user/self-edit", name="self_user_edit")
      * @Method({"GET", "POST"})
-     *
      * @Template("InnovaSelfBundle:User:new.html.twig")
      */
     public function selfEditAction(Request $request)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $form = $this->get("self.user.manager")->handleForm($user, $request);
+        $form = $this->get('self.user.manager')->handleForm($user, $request);
 
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les informations ont bien été modifiées");
+            $this->get('session')->getFlashBag()->set('info', 'Les informations ont bien été modifiées');
 
             return $this->redirect($this->generateUrl('self_user_display'));
         }
