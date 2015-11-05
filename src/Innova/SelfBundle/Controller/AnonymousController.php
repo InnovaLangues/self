@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class AnonymousController
 {
     /**
-     * Display anonymous page
-     * 
+     * Display anonymous page.
+     *
      * @Route("/", name="show_start")
      * @Template("InnovaSelfBundle:Anonymous:start.html.twig")
      * @Method("GET")

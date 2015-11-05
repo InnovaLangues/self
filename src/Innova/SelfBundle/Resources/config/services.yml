@@ -51,17 +51,15 @@ services:
     innova_editor_task:
         class: Innova\SelfBundle\Controller\TaskController
         arguments:
+            taskManager:            @self.task.manager
             questionnaireManager:   @self.questionnaire.manager
             questionManager:        @self.question.manager
             orderQuestionnaireTestManager: @self.order_questionnaire_test.manager
             entityManager:      @doctrine.orm.entity_manager
-            templating:         @templating
             formFactory:        @form.factory
             securityContext:    @security.token_storage
             voter:              @innova_voter
             rightManager:       @self.right.manager
-            session:            @session
-            router:             @router
 
     innova_editor_media:
         class: Innova\SelfBundle\Controller\MediaController
@@ -72,12 +70,11 @@ services:
             commentManager:             @self.comment.manager
             entityManager:              @doctrine.orm.entity_manager
             templating:                 @templating
-            questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
+            revisorManager:             @self.questionnaire_revisors.manager
             templatingManager:          @self.templating.manager
             questionnaireManager:       @self.questionnaire.manager
             securityContext:            @security.token_storage
             rightManager:               @self.right.manager
-            session:                    @session
 
     innova_editor_subquestion:
         class: Innova\SelfBundle\Controller\Editor\SubquestionController
@@ -93,7 +90,6 @@ services:
             templating:                     @templating
             questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
             voter:                          @innova_voter
-            session:                        @session
 
     innova_editor_answer:
         class: Innova\SelfBundle\Controller\Editor\AnswerController
@@ -134,7 +130,6 @@ services:
         arguments:
             propositionManager:             @self.proposition.manager
             templating:                     @templating
-            questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
             voter:                          @innova_voter
 
     innova_general_parameters:

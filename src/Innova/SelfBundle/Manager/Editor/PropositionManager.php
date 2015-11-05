@@ -12,14 +12,17 @@ class PropositionManager
 {
     protected $entityManager;
     protected $mediaManager;
+    protected $revisorManager;
 
-    public function __construct($entityManager, $mediaManager)
+    public function __construct($entityManager, $mediaManager, $revisorManager)
     {
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
+        $this->revisorManager = $revisorManager;
     }
+
     /**
-     * @param boolean $rightAnswer
+     * @param bool $rightAnswer
      */
     public function createProposition(Subquestion $subquestion, Media $media, $rightAnswer)
     {
@@ -39,14 +42,14 @@ class PropositionManager
     {
         $typologyName = $typology->getName();
 
-        if ($typologyName == "TVF" || $typologyName == "TVFNM") {
-            $true = $this->mediaManager->createMedia($questionnaire, "texte", "VRAI", "VRAI", null, 0, "proposition");
+        if ($typologyName == 'TVF' || $typologyName == 'TVFNM') {
+            $true = $this->mediaManager->createMedia($questionnaire, 'texte', 'VRAI', 'VRAI', null, 0, 'proposition');
             $this->createProposition($subquestion, $true, false);
-            $false = $this->mediaManager->createMedia($questionnaire, "texte", "FAUX", "FAUX", null, 0, "proposition");
+            $false = $this->mediaManager->createMedia($questionnaire, 'texte', 'FAUX', 'FAUX', null, 0, 'proposition');
             $this->createProposition($subquestion, $false, false);
         }
-        if ($typologyName == "TVFNM") {
-            $nd = $this->mediaManager->createMedia($questionnaire, "texte", "ND", "ND", null, 0, "proposition");
+        if ($typologyName == 'TVFNM') {
+            $nd = $this->mediaManager->createMedia($questionnaire, 'texte', 'ND', 'ND', null, 0, 'proposition');
             $this->createProposition($subquestion, $nd, false);
         }
 
@@ -55,7 +58,7 @@ class PropositionManager
 
     public function toggleRightAnswer(Proposition $proposition)
     {
-        $em = $this->entityManager;
+        $questionnaire = $proposition->getSubquestion()->getQuestion()->getQuestionnaire();
 
         if ($proposition->getRightAnswer() === true) {
             $proposition->setRightAnswer(false);
@@ -63,8 +66,10 @@ class PropositionManager
             $proposition->setRightAnswer(true);
         }
 
-        $em->persist($proposition);
-        $em->flush();
+        $this->entityManager->persist($proposition);
+        $this->entityManager->flush();
+
+        $this->revisorManager->addRevisor($questionnaire);
 
         return $proposition;
     }
@@ -77,7 +82,7 @@ class PropositionManager
         $subquestions = $question->getSubquestions();
         $media = $proposition->getMedia();
 
-        if ($question->getTypology()->getName() == "APP" && $subquestions->count() >= 2) {
+        if ($question->getTypology()->getName() == 'APP' && $subquestions->count() >= 2) {
             $baseSubquestion = $subquestions[0];
             $this->entityManager->refresh($baseSubquestion);
             foreach ($baseSubquestion->getPropositions() as $prop) {

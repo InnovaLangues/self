@@ -15,22 +15,22 @@ use Innova\SelfBundle\Entity\Test;
 class ExportTestController extends Controller
 {
     /**
-     * Export CSV basic infos for a given test 
+     * Export CSV basic infos for a given test.
      *
      * @Route("admin/export/csv/test/{testId}", name = "test-export-csv")
      * @Method("GET")
      */
     public function exportCsvAction(Test $test)
     {
-        $this->get("innova_voter")->isAllowed("right.exportCSV");
+        $this->get('innova_voter')->isAllowed('right.exportCSV');
 
-        $response = $this->get("self.testexport.manager")->generateCsv($test);
+        $response = $this->get('self.testexport.manager')->generateCsv($test);
 
         return $response;
     }
 
     /**
-     * Export Livret PDF for a given test
+     * Export Livret PDF for a given test.
      *
      * @Route("admin/export/pdf/test/{testId}", name = "pdf-export")
      * @Method({"GET", "PUT"})
@@ -38,33 +38,34 @@ class ExportTestController extends Controller
      */
     public function exportPdfAction(Test $test)
     {
-        $this->get("innova_voter")->isAllowed("right.exportPDF");
+        $this->get('innova_voter')->isAllowed('right.exportPDF');
 
-        $pdfName    = $this->get("self.testexport.manager")->exportPdf($test);
-        $fileList   = $this->get("self.export.manager")->getFileList($test, "pdf");
+        $pdfName = $this->get('self.testexport.manager')->exportPdf($test);
+        $fileList = $this->get('self.export.manager')->getFileList($test, 'pdf');
 
         return array(
-            "pdfName"   => $pdfName,
-            "test"      => $test,
-            "fileList"  => $fileList,
+            'pdfName' => $pdfName,
+            'test' => $test,
+            'fileList' => $fileList,
         );
     }
 
     /**
-     * List PDF export files for a given test
+     * List PDF export files for a given test.
+     *
      * @Route("admin/export/pdf/filelist/test/{testId}",name = "pdf-export-show")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Export:exportPdf.html.twig")
      */
     public function showPdfAction(Test $test)
     {
-        $this->get("innova_voter")->isAllowed("right.exportPDF");
+        $this->get('innova_voter')->isAllowed('right.exportPDF');
 
-        $fileList = $this->get("self.export.manager")->getFileList($test, "pdf");
+        $fileList = $this->get('self.export.manager')->getFileList($test, 'pdf');
 
         return array(
-            "test"        => $test,
-            "fileList"    => $fileList,
+            'test' => $test,
+            'fileList' => $fileList,
         );
     }
 }

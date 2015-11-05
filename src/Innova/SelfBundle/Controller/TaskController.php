@@ -15,53 +15,48 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Language;
 
 /**
- * Class TaskController
+ * Class TaskController.
+ *
  * @Route(
  *      "/admin",
  *      service = "innova_editor_task"
  * )
- * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
- * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test", options={"id" = "testId"})
- * @ParamConverter("language", isOptional="true", class="InnovaSelfBundle:Language", options={"id" = "languageId"})
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",  options={"id" = "questionnaireId"})
+ * @ParamConverter("test",          isOptional="true", class="InnovaSelfBundle:Test",           options={"id" = "testId"})
+ * @ParamConverter("language",      isOptional="true", class="InnovaSelfBundle:Language",       options={"id" = "languageId"})
  */
 class TaskController
 {
+    protected $taskManager;
     protected $questionnaireManager;
     protected $questionManager;
     protected $orderQuestionnaireTestManager;
     protected $entityManager;
-    protected $templating;
     protected $formFactory;
     protected $securityContext;
     protected $voter;
     protected $rightManager;
-    protected $session;
-    protected $router;
 
     public function __construct(
-            $questionnaireManager,
-            $questionManager,
-            $orderQuestionnaireTestManager,
-            $entityManager,
-            $templating,
-            $formFactory,
-            $securityContext,
-            $voter,
-            $rightManager,
-            $session,
-            $router
+        $taskManager,
+        $questionnaireManager,
+        $questionManager,
+        $orderQuestionnaireTestManager,
+        $entityManager,
+        $formFactory,
+        $securityContext,
+        $voter,
+        $rightManager
     ) {
-        $this->questionnaireManager         = $questionnaireManager;
-        $this->questionManager              = $questionManager;
-        $this->orderQuestionnaireTestManager    = $orderQuestionnaireTestManager;
-        $this->entityManager                = $entityManager;
-        $this->templating                   = $templating;
-        $this->formFactory                  = $formFactory;
-        $this->securityContext              = $securityContext;
-        $this->voter                        = $voter;
-        $this->rightManager                 = $rightManager;
-        $this->session                      = $session;
-        $this->router                       = $router;
+        $this->taskManager = $taskManager;
+        $this->questionnaireManager = $questionnaireManager;
+        $this->questionManager = $questionManager;
+        $this->orderQuestionnaireTestManager = $orderQuestionnaireTestManager;
+        $this->entityManager = $entityManager;
+        $this->formFactory = $formFactory;
+        $this->securityContext = $securityContext;
+        $this->voter = $voter;
+        $this->rightManager = $rightManager;
     }
 
     /**
@@ -69,61 +64,44 @@ class TaskController
      *
      * @Route("/tasks", name="editor_questionnaires_show")
      * @Method("GET")
-     *
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
     public function listQuestionnairesAction()
     {
-        $this->voter->isAllowed("right.listtask");
+        $this->voter->isAllowed('right.listtask');
 
-        $currentUser = $this->securityContext->getToken()->getUser();
-        $em = $this->entityManager;
-        if ($currentUser->getPreferedLanguage()) {
-            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($currentUser->getPreferedLanguage());
-        } else {
-            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->findAll();
-        }
+        $questionnaires = $this->taskManager->listQuestionnaires();
 
         return array('questionnaires' => $questionnaires);
     }
 
     /**
-     * Lists all Questionnaire entities.
+     * Lists all Questionnaire entities for a given language.
      *
      * @Route("/tasks/language/{languageId}", name="editor_questionnaires_by_language_show")
      * @Method("GET")
-     *
      * @Template("InnovaSelfBundle:Editor:listQuestionnaires.html.twig")
      */
     public function listQuestionnairesByLanguageAction(Language $language)
     {
-        $this->voter->isAllowed("right.listtask");
+        $this->voter->isAllowed('right.listtask');
 
-        $questionnaires = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->findByLanguage($language);
+        $questionnaires = $this->taskManager->listQuestionnairesByLanguage($language);
 
         return array('questionnaires' => $questionnaires);
     }
 
     /**
-     * Lists all Questionnaire entities for a test (ordered)
+     * Lists all Questionnaire entities for a test (ordered).
      *
      * @Route("/test/{testId}/tasks", name="editor_test_questionnaires_show", options={"expose"=true})
      * @Method("GET")
-     *
-     * @Template("InnovaSelfBundle:Editor:listTestQuestionnaires.html.twig")
      */
     public function listTestQuestionnairesAction(Test $test)
     {
-        $this->voter->isAllowed("right.managetaskstest", $test);
-        
-        $em = $this->entityManager;
-        if ($test->getPhased()) {
-            $template = $this->templating->render('InnovaSelfBundle:Editor/phased:test.html.twig', array('test' => $test));
-        } else {
-            $orders = $test->getOrderQuestionnaireTests();
-            $potentialQuestionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getPotentialByTest($test);
-            $template = $this->templating->render('InnovaSelfBundle:Editor:listTestQuestionnaires.html.twig', array('test' => $test, 'orders' => $orders, 'potentialQuestionnaires' => $potentialQuestionnaires));
-        }
+        $this->voter->isAllowed('right.managetaskstest', $test);
+
+        $template = $this->taskManager->listTestQuestionnaires($test);
 
         return new Response($template);
     }
@@ -138,28 +116,37 @@ class TaskController
      */
     public function listOrphansAction()
     {
-        $this->voter->isAllowed("right.listtask");
+        $this->voter->isAllowed('right.listtask');
 
-        $questionnaires = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->findOrphans();
+        $questionnaires = $this->taskManager->listOrphans();
 
         return array('questionnaires' => $questionnaires);
     }
 
     /**
-     * Get questionnaires not associated yet to a test
+     * Get questionnaires not associated yet to a test.
      *
      * @Route("/test/{testId}/potentials", name="editor_test_questionnaires_potentials", options={"expose"=true})
      * @Method("GET")
-     *
      */
     public function getPotentialQuestionnairesAction(Test $test)
     {
-        $em = $this->entityManager;
-
-        $potentialQuestionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getPotentialByTest($test);
-        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig', array('test' => $test, 'potentialQuestionnaires' => $potentialQuestionnaires));
+        $template = $this->taskManager->getPotentialQuestionnaires($test);
 
         return new Response($template);
+    }
+
+    /**
+     * @Route("/delete-task-list/{questionnaireId}", name="delete-task-list", options={"expose"=true})
+     * @Method("DELETE")
+     */
+    public function deleteTaskListAction(Questionnaire $questionnaire)
+    {
+        $this->voter->isAllowed('right.deletetask');
+
+        $this->taskManager->deleteTask($questionnaire);
+
+        return new JsonResponse(null);
     }
 
     /**
@@ -167,7 +154,6 @@ class TaskController
      *
      * @Route("/questionnaire/{questionnaireId}/{testId}", name="editor_questionnaire_show", options={"expose"=true} , defaults={"testId" = null})
      * @Method("GET")
-     *
      * @Template("InnovaSelfBundle:Editor:index.html.twig")
      */
     public function showAction(Questionnaire $questionnaire, $testId)
@@ -195,14 +181,12 @@ class TaskController
     }
 
     /**
-     *
      * @Route("/questionnaire/create/{testId}", name="editor_questionnaire_create", options={"expose"=true})
      * @Method("POST")
-     *
      */
     public function createQuestionnaireAction(Test $test = null)
     {
-        $this->voter->isAllowed("right.createtask");
+        $this->voter->isAllowed('right.createtask');
 
         $questionnaire = $this->questionnaireManager->createQuestionnaire();
         $this->questionManager->createQuestion($questionnaire);
@@ -216,25 +200,9 @@ class TaskController
 
         return new JsonResponse(
             array(
-                'questionnaireId' =>  $questionnaire->getId(),
+                'questionnaireId' => $questionnaire->getId(),
                 'testId' => $testId,
             )
         );
-    }
-
-     /**
-     * @Route("/delete-task-list/{questionnaireId}", name="delete-task-list", options={"expose"=true})
-     * @Method("DELETE")
-     *
-     */
-    public function deleteTaskListAction(Questionnaire $questionnaire)
-    {
-        $this->voter->isAllowed("right.deletetask");
-
-        $em = $this->entityManager;
-        $em->remove($questionnaire);
-        $em->flush();
-
-        return new JsonResponse(null);
     }
 }

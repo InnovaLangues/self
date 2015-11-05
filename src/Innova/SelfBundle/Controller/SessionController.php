@@ -4,7 +4,6 @@ namespace Innova\SelfBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -25,33 +24,19 @@ use Innova\SelfBundle\Entity\User;
 class SessionController extends Controller
 {
     /**
-     *
      * @Route("/sessions/active/{isActive}", name="editor_sessions_active")
      * @Method("GET")
      * @Template("InnovaSelfBundle:Session:list.html.twig")
      */
     public function listByActivityAction($isActive)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-        $sessionRepository = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session');
+        $sessions = $this->get('self.session.manager')->listSessionByActivity($isActive);
+        $subset = (!$isActive) ? 'editor.session.inactives' : 'editor.session.actives';
 
-        if ($this->get("self.right.manager")->checkRight("right.listsession", $currentUser)) {
-            if ($currentUser->getPreferedLanguage()) {
-                $sessions = $sessionRepository->findByLanguageByActivity($currentUser->getPreferedLanguage(), $isActive);
-            } else {
-                $sessions = $sessionRepository->findBy(array("actif" => $isActive), array("name" => "ASC"));
-            }
-        } else {
-            $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findAllAuthorizedByActivity($currentUser, $isActive);
-        }
-
-        $subset = (!$isActive) ? "editor.session.inactives" : "editor.session.actives";
-
-        return array("sessions" => $sessions, "subset" => $subset);
+        return array('sessions' => $sessions, 'subset' => $subset);
     }
 
     /**
-     *
      * @Route("/test/{testId}/sessions", name="editor_test_sessions")
      * @Method("GET")
      *
@@ -59,19 +44,12 @@ class SessionController extends Controller
      */
     public function listByTestAction(Test $test)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $sessions = $this->get('self.session.manager')->listSessionByTest($test);
 
-        if ($this->get("self.right.manager")->checkRight("right.listsession", $currentUser, $test)) {
-            $sessions = $test->getSessions();
-        } else {
-            $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findAuthorized($test, $currentUser);
-        }
-
-        return array("test" => $test, "sessions" => $sessions);
+        return array('test' => $test, 'sessions' => $sessions, 'subset' => 'pour '.$test->getName());
     }
 
     /**
-     *
      * @Route("/test/{testId}/session/create", name="editor_test_create_session")
      * @Method({"GET", "POST"})
      *
@@ -79,16 +57,13 @@ class SessionController extends Controller
      */
     public function createSessionAction(Test $test, Request $request)
     {
-        $this->get("innova_voter")->isAllowed("right.createsession");
+        $this->get('innova_voter')->isAllowed('right.createsession');
 
-        $session = new Session();
-        $session->setName('Nouvelle session');
-        $session->setActif(false);
-        $session->setTest($test);
+        $session = $this->get('self.session.manager')->createSession($test, 'Nouvelle session', false, '', false);
 
         $form = $this->handleForm($session, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "La session a bien été créée");
+            $this->get('session')->getFlashBag()->set('info', 'La session a bien été créée');
 
             return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
         }
@@ -97,7 +72,6 @@ class SessionController extends Controller
     }
 
     /**
-     *
      * @Route("/session/{sessionId}/remove", name="editor_test_delete_session", options = {"expose"=true})
      * @Method("DELETE")
      *
@@ -105,21 +79,15 @@ class SessionController extends Controller
      */
     public function deleteSessionAction(Session $session)
     {
-        $this->get("innova_voter")->isAllowed("right.deletesession", $session);
+        $this->get('innova_voter')->isAllowed('right.deletesession', $session);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($session);
-        $em->flush();
-
-        $this->get("session")->getFlashBag()->set('info', "La session a bien été supprimée");
         $testId = $session->getTest()->getId();
+        $session = $this->get('self.session.manager')->deleteSession($session);
 
         return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $testId)));
-
     }
 
     /**
-     *
      * @Route("/test/{testId}/session/{sessionId}/edit", name="editor_test_edit_session")
      * @Method({"GET", "POST"})
      *
@@ -127,11 +95,11 @@ class SessionController extends Controller
      */
     public function editSessionAction(Test $test, Session $session, Request $request)
     {
-        $this->get("innova_voter")->isAllowed("right.editsession", $session);
+        $this->get('innova_voter')->isAllowed('right.editsession', $session);
 
         $form = $this->handleForm($session, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "La session a bien été modifiée");
+            $this->get('session')->getFlashBag()->set('info', 'La session a bien été modifiée');
 
             return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $test->getId())));
         }
@@ -140,7 +108,6 @@ class SessionController extends Controller
     }
 
     /**
-     *
      * @Route("/session/{sessionId}/results", name="editor_test_session_results")
      * @Method("GET")
      *
@@ -148,15 +115,14 @@ class SessionController extends Controller
      */
     public function getSessionResultsAction(Session $session)
     {
-        $this->get("innova_voter")->isAllowed("right.individualresultssession", $session);
+        $this->get('innova_voter')->isAllowed('right.individualresultssession', $session);
 
-        $users = $this->getDoctrine()->getManager()->getRepository("InnovaSelfBundle:User")->findBySession($session);
+        $users = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findBySession($session);
 
         return array('session' => $session, 'users' => $users);
     }
 
     /**
-     *
      * @Route("/user/{userId}/session/{sessionId}/results", name="editor_session_user_results")
      * @Method("GET")
      *
@@ -164,118 +130,74 @@ class SessionController extends Controller
      */
     public function getUserResultsAction(User $user, Session $session)
     {
-        $this->get("innova_voter")->isAllowed("right.individualresultssession", $session);
+        $this->get('innova_voter')->isAllowed('right.individualresultssession', $session);
 
-        $sm = $this->get("self.score.manager");
+        $sm = $this->get('self.score.manager');
         $levelFeedback = $sm->getGlobalLevelFromThreshold($session, $user);
-        $eecFeedback = $sm->getSkillLevelFromThreshold($session, $user, "EEC");
-        $coFeedback = $sm->getSkillLevelFromThreshold($session, $user, "CO");
-        $ceFeedback = $sm->getSkillLevelFromThreshold($session, $user, "CE");
+        $eecFeedback = $sm->getSkillLevelFromThreshold($session, $user, 'EEC');
+        $coFeedback = $sm->getSkillLevelFromThreshold($session, $user, 'CO');
+        $ceFeedback = $sm->getSkillLevelFromThreshold($session, $user, 'CE');
         $score = $sm->calculateScoreByTest($session->getTest(), $session, $user);
 
         return array(
-            "score"         => $score,
-            "session"       => $session,
-            "levelFeedback" => $levelFeedback,
-            "coFeedback"    => $coFeedback,
-            "ceFeedback"    => $ceFeedback,
-            "eecFeedback"   => $eecFeedback,
-            "user"          => $user,
+            'score' => $score,
+            'session' => $session,
+            'levelFeedback' => $levelFeedback,
+            'coFeedback' => $coFeedback,
+            'ceFeedback' => $ceFeedback,
+            'eecFeedback' => $eecFeedback,
+            'user' => $user,
         );
     }
 
     /**
-     *
      * @Route("/session/{sessionId}/export", name="editor_session_export_results")
      * @Method("GET")
-     *
      */
     public function exportAction(Session $session)
     {
-        $this->get("innova_voter")->isAllowed("right.exportresultssession", $session);
+        $this->get('innova_voter')->isAllowed('right.exportresultssession', $session);
 
-        $filename = $this->get("self.export.manager")->exportSession($session);
-        $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
+        $filename = $this->get('self.export.manager')->exportSession($session);
+        $file = $this->get('kernel')->getRootDir().'/data/session/'.$session->getId().'/'.$filename;
 
-        $response = new Response();
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', mime_content_type($file));
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
-        $response->headers->set('Content-length', filesize($file));
-        $response->sendHeaders();
-
-        $response->setContent(file_get_contents($file));
+        $response = $this->get('self.export.manager')->generateResponse($file);
 
         return $response;
     }
 
     /**
-     *
      * @Route("/session/{sessionId}/export", name="editor_session_export_results_dates", options = {"expose"=true})
      * @Method("POST")
-     *
      */
     public function exportByDatesAction(Request $request, Session $session)
     {
-        $this->get("innova_voter")->isAllowed("right.exportresultssession", $session);
+        $this->get('innova_voter')->isAllowed('right.exportresultssession', $session);
 
         $startDate = $request->get('startDate');
         $endDate = $request->get('endDate');
-        $filename = $this->get("self.export.manager")->exportSession($session, $startDate, $endDate);
-        $file = $this->get('kernel')->getRootDir()."/data/session/".$session->getId()."/".$filename;
-        $response = new Response();
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', mime_content_type($file));
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
-        $response->headers->set('Content-length', filesize($file));
-        $response->sendHeaders();
+        $filename = $this->get('self.export.manager')->exportSession($session, $startDate, $endDate);
+        $file = $this->get('kernel')->getRootDir().'/data/session/'.$session->getId().'/'.$filename;
 
-        $response->setContent(file_get_contents($file));
+        $response = $this->get('self.export.manager')->generateResponse($file);
 
         return $response;
     }
 
     /**
-     *
      * @Route("/test/{testId}/create-session", name="create_session_for_export")
      * @Method("POST")
-     *
      */
     public function createSessionForExportAction(Test $test)
     {
-        if ($test->getSessions()->isEmpty()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $session = new Session();
-            $session->setName('Session '.$test->getId());
-            $session->setActif(false);
-            $session->setTest($test);
-            $session->setPasswd("passwd");
-
-            $em->persist($session);
-            $em->flush();
-
-            $test->addSession($session);
-            $em->persist($test);
-            $em->flush();
-
-            $traces = $em->getRepository("InnovaSelfBundle:Trace")->findBy(array("session" => null, "test" => $test));
-
-            foreach ($traces as $trace) {
-                $trace->setSession($session);
-                $em->persist($trace);
-            }
-
-            $em->flush();
-        }
-
-        $this->get("session")->getFlashBag()->set('info', "La session a bien été créée à partir des traces");
+        $this->get('self.session.manager')->createSessionforExport($test);
 
         return $this->redirect($this->generateUrl('csv-export-show', array('testId' => $test->getId(), 'tia' => 0)));
     }
 
     /**
-     * Handles session form
+     * Handles session form.
+     *
      * @param Request $request
      */
     private function handleForm(Session $session, $request)

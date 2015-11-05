@@ -27,7 +27,6 @@ class TestController extends Controller
      *
      * @Route("/tests", name="editor_tests_show")
      * @Method("GET")
-     *
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listTestsAction()
@@ -35,17 +34,15 @@ class TestController extends Controller
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         $testRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test');
 
-        if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
-            if ($currentUser->getPreferedLanguage()) {
-                $tests = $testRepo->findByArchivedByLanguage(0, $currentUser->getPreferedLanguage());
-            } else {
-                $tests = $testRepo->findByArchived(false);
-            }
+        if ($this->get('self.right.manager')->checkRight('right.listtest', $currentUser)) {
+            $tests = ($currentUser->getPreferedLanguage())
+                ? $testRepo->findByArchivedByLanguage(0, $currentUser->getPreferedLanguage())
+                : $testRepo->findByArchived(false);
         } else {
             $tests = $testRepo->findAuthorized($currentUser);
         }
 
-        return array('tests' => $tests, 'subset' => "test.all");
+        return array('tests' => $tests, 'subset' => 'test.all');
     }
 
     /**
@@ -53,18 +50,16 @@ class TestController extends Controller
      *
      * @Route("/tests/language/{languageId}", name="editor_tests_by_language_show")
      * @Method("GET")
-     *
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listTestsByLanguageAction(Language $language)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $testRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test');
 
-        if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
-            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findBy(array("language" => $language, "archived" => false));
-        } else {
-            $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findAuthorizedByLanguage($currentUser, $language);
-        }
+        $tests = ($this->get('self.right.manager')->checkRight('right.listtest', $currentUser))
+            ? $testRepo->findBy(array('language' => $language, 'archived' => false))
+            : $testRepo->findAuthorizedByLanguage($currentUser, $language);
 
         return array('tests' => $tests, 'subset' => $language->getName());
     }
@@ -74,7 +69,6 @@ class TestController extends Controller
      *
      * @Route("/tests/archived", name="editor_tests_archived_show")
      * @Method("GET")
-     *
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listArchivedTestsAction()
@@ -82,17 +76,15 @@ class TestController extends Controller
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         $testRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test');
 
-        if ($this->get("self.right.manager")->checkRight("right.listtest", $currentUser)) {
-            if ($currentUser->getPreferedLanguage()) {
-                $tests = $testRepo->findByArchivedByLanguage(1, $currentUser->getPreferedLanguage());
-            } else {
-                $tests = $testRepo->findByArchived(1);
-            }
+        if ($this->get('self.right.manager')->checkRight('right.listtest', $currentUser)) {
+            $tests = ($currentUser->getPreferedLanguage())
+                ? $testRepo->findByArchivedByLanguage(1, $currentUser->getPreferedLanguage())
+                : $testRepo->findByArchived(1);
         } else {
             $tests = $testRepo->findAuthorized($currentUser);
         }
 
-        return array('tests' => $tests, 'subset' => "test.archived");
+        return array('tests' => $tests, 'subset' => 'test.archived');
     }
 
     /**
@@ -100,55 +92,43 @@ class TestController extends Controller
      *
      * @Route("/tests/favorites", name="editor_tests_my_favorites")
      * @Method("GET")
-     *
      * @Template("InnovaSelfBundle:Test:list.html.twig")
      */
     public function listFavoritesAction()
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-        $tests = $currentUser->getFavoritesTests();
+        $tests = $this->get('self.test.manager')->getFavoriteTests();
 
-        return array('tests' => $tests, 'subset' => "test.favorites");
+        return array('tests' => $tests, 'subset' => 'test.favorites');
     }
 
     /**
-     * Edits a test entity.
+     * Delete a test entity.
      *
      * @Route("/test/{testId}/delete", name="editor_test_delete")
      * @Method("DELETE")
-     *
      */
     public function deleteTestAction(Test $test)
     {
-        $this->get("innova_voter")->isAllowed("right.deletetest", $test);
+        $this->get('innova_voter')->isAllowed('right.deletetest', $test);
 
-        $testName = $test->getName();
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($test);
-        $em->flush();
-
-        $this->get('session')->getFlashBag()->set('success', 'Le test '.$testName.' a bien été supprimé.');
+        $this->get('self.test.manager')->deleteTest($test);
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
-      
     }
 
     /**
-     * duplicate a test entity.
+     * Duplicate a test entity.
      *
      * @Route("/test/{testId}/duplicate", name="editor_test_duplicate")
      * @Method("GET")
-     *
      */
     public function duplicateTestAction(Test $test)
     {
-        $this->get("innova_voter")->isAllowed("right.duplicatetest", $test);
+        $this->get('innova_voter')->isAllowed('right.duplicatetest', $test);
 
-        $this->get("self.test.manager")->duplicate($test);
-        $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été dupliqué.');
+        $this->get('self.test.manager')->duplicate($test);
 
         return $this->redirect($this->generateUrl('editor_tests_show'));
-       
     }
 
     /**
@@ -156,23 +136,21 @@ class TestController extends Controller
      *
      * @Route("/test/create", name="editor_test_create")
      * @Method({"GET", "POST"})
-     *
      * @Template("InnovaSelfBundle:Test:form.html.twig")
      */
     public function newAction(Request $request)
     {
-        $this->get("innova_voter")->isAllowed("right.createtest");
+        $this->get('innova_voter')->isAllowed('right.createtest');
 
         $test = new Test();
         $form = $this->handleForm($test, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()." a bien été créé.");
+            $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().' a bien été créé.');
 
             return $this->redirect($this->generateUrl('editor_tests_show'));
         }
 
         return array('form' => $form->createView());
-       
     }
 
     /**
@@ -180,16 +158,15 @@ class TestController extends Controller
      *
      * @Route("/test/{testId}/edit", name="editor_test_edit")
      * @Method({"GET", "POST"})
-     *
      * @Template("InnovaSelfBundle:Test:form.html.twig")
      */
     public function editAction(Test $test, Request $request)
     {
-        $this->get("innova_voter")->isAllowed("right.edittest", $test);
+        $this->get('innova_voter')->isAllowed('right.edittest', $test);
 
         $form = $this->handleForm($test, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('success', "Le test ".$test->getName()."a bien été modifié.");
+            $this->get('session')->getFlashBag()->set('success', 'Le test '.$test->getName().'a bien été modifié.');
 
             return $this->redirect($this->generateUrl('editor_tests_show'));
         }
@@ -200,21 +177,20 @@ class TestController extends Controller
     /**
      * @Route("/test/{testId}/favorite-toggle", name="test_favorite_toggle" , options={"expose"=true}))
      * @Method("GET")
-     *
      */
     public function toggleFavoriteAction(Test $test)
     {
-        $this->get("self.test.manager")->toggleFavorite($test);
+        $this->get('self.test.manager')->toggleFavorite($test);
 
         return new JsonResponse();
     }
 
     /**
-     * Handles test form
+     * Handles test form.
      */
     private function handleForm(Test $test, $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->get('form.factory')->createBuilder(new TestType(), $test)->getForm();
 
         if ($request->isMethod('POST')) {
@@ -222,13 +198,13 @@ class TestController extends Controller
 
             if ($form->isValid()) {
                 if (!$test->getId() && $test->getPhased()) {
-                    $test = $this->get("self.phasedtest.manager")->generateBaseComponents($test);
-                    $params = $this->get("self.phasedtest.manager")->initializeParams();
+                    $test = $this->get('self.phasedtest.manager')->generateBaseComponents($test);
+                    $params = $this->get('self.phasedtest.manager')->initializeParams();
                     $test->setPhasedParams($params);
                 }
 
-                $em->persist($test);
-                $em->flush();
+                $entityManager->persist($test);
+                $entityManager->flush();
 
                 return;
             }

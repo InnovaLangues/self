@@ -28,20 +28,17 @@ class EecController
     protected $templating;
     protected $questionnaireRevisorsManager;
     protected $voter;
-    protected $session;
 
     public function __construct(
         $eecManager,
         $templating,
         $questionnaireRevisorsManager,
-        $voter,
-        $session
+        $voter
     ) {
         $this->eecManager = $eecManager;
         $this->templating = $templating;
         $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
         $this->voter = $voter;
-        $this->session = $session;
     }
 
     /**

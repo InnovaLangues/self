@@ -19,9 +19,9 @@ use Innova\SelfBundle\Entity\Typology;
  *      "/admin",
  *      service = "innova_editor_subquestion"
  * )
- * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire", options={"id" = "questionnaireId"})
- * @ParamConverter("typology",      isOptional="true", class="InnovaSelfBundle:Typology", options={"id" = "typologyId"})
- * @ParamConverter("subquestion",   isOptional="true", class="InnovaSelfBundle:Subquestion", options={"id" = "subquestionId"})
+ * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",  options={"id" = "questionnaireId"})
+ * @ParamConverter("typology",      isOptional="true", class="InnovaSelfBundle:Typology",       options={"id" = "typologyId"})
+ * @ParamConverter("subquestion",   isOptional="true", class="InnovaSelfBundle:Subquestion",    options={"id" = "subquestionId"})
  */
 class SubquestionController
 {
