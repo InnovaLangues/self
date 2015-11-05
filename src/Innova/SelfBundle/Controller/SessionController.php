@@ -82,7 +82,7 @@ class SessionController extends Controller
         $this->get('innova_voter')->isAllowed('right.deletesession', $session);
 
         $testId = $session->getTest()->getId();
-        $session = $this->get('self.session.manager')->deleteSession($session);
+        $this->get('self.session.manager')->deleteSession($session);
 
         return $this->redirect($this->generateUrl('editor_test_sessions', array('testId' => $testId)));
     }
