@@ -11,6 +11,8 @@ class TaskManager
     protected $entityManager;
     protected $securityContext;
     protected $templating;
+    protected $currentUser;
+    protected $taskRepo;
 
     public function __construct($entityManager, $securityContext, $templating)
     {
