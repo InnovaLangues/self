@@ -24,22 +24,18 @@ class UserManager
 
     public function setLocale(User $user, $locale)
     {
-        $em = $this->entityManager;
-
         $user->setLocale($locale);
 
-        $em->persist($user);
-        $em->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         return $user;
     }
 
     public function deleteUser(User $user)
     {
-        $em = $this->entityManager;
-
-        $em->remove($user);
-        $em->flush();
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
 
         $this->session->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
 
@@ -107,12 +103,10 @@ class UserManager
         $limit = time() - $threshold;
         $connectedUsers = array();
 
-        $em = $this->entityManager;
-
         $dql = 'select s from InnovaSelfBundle:PDOSession s
             where s.session_time >= ?1
             order by s.session_time desc';
-        $query = $em->createQuery($dql);
+        $query = $this->entityManager->createQuery($dql);
         $query->setParameter(1, $limit);
         $sessions = $query->getResult();
 
@@ -139,16 +133,5 @@ class UserManager
         }
 
         return $connectedUsers;
-    }
-
-    private function inArrayRecursiv($needle, $haystack, $strict = false)
-    {
-        foreach ($haystack as $item) {
-            if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->inArrayRecursiv($needle, $item, $strict))) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
