@@ -14,6 +14,10 @@ class PhasedTestManager
     protected $entityManager;
     protected $questionnaireManager;
     protected $questionManager;
+    protected $componentRepo;
+    protected $componentTypeRepo;
+    protected $ordertaskCompoRepo;
+    protected $questionnaireRepo;
 
     public function __construct($entityManager, $questionnaireManager, $questionManager)
     {
@@ -22,9 +26,8 @@ class PhasedTestManager
         $this->questionManager = $questionManager;
         $this->componentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component');
         $this->componentTypeRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\ComponentType');
-        $this->orderQuestionnaireComponentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent');
+        $this->ordertaskCompoRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\OrderQuestionnaireComponent');
         $this->questionnaireRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
-        $this->testRepo = $this->entityManager->getRepository('InnovaSelfBundle:Test');
     }
 
     public function generateBaseComponents(Test $test)
@@ -48,32 +51,27 @@ class PhasedTestManager
 
     public function generateComponent(Test $test, ComponentType $type)
     {
-        $em = $this->entityManager;
-
-        if ($components = $this->componentRepo->findBy(array("test" => $test, "componentType" => $type))) {
-            $count = count($components);
-        } else {
-            $count = 0;
-        }
+        $count = ($components = $this->componentRepo->findBy(array('test' => $test, 'componentType' => $type)))
+            ? count($components)
+            : 0;
 
         $component = new Component();
         $component->setComponentType($type);
         $component->setAlternativeNumber($count);
         $component->setTest($test);
 
-        $em->persist($component);
-        $em->flush();
+        $this->entityManager->persist($component);
+        $this->entityManager->flush();
 
         return $this;
     }
 
     public function removeComponent(Test $test, Component $component)
     {
-        $em = $this->entityManager;
         $type = $component->getComponentType();
 
-        $em->remove($component);
-        $em->flush();
+        $this->entityManager->remove($component);
+        $this->entityManager->flush();
 
         $this->reorganizeAlternative($test, $type);
 
@@ -99,21 +97,17 @@ class PhasedTestManager
 
     public function addQuestionnaireToComponent(Questionnaire $questionnaire, Component $component)
     {
-        $em = $this->entityManager;
-
-        if ($orderedTasks = $this->orderQuestionnaireComponentRepo->findByComponent($component)) {
-            $count = count($orderedTasks);
-        } else {
-            $count = 0;
-        }
+        $count = ($orderedTasks = $this->ordertaskCompoRepo->findByComponent($component))
+            ? count($orderedTasks)
+            : 0;
 
         $orderedTask = new OrderQuestionnaireComponent();
         $orderedTask->setQuestionnaire($questionnaire);
         $orderedTask->setComponent($component);
         $orderedTask->setDisplayOrder($count + 1);
 
-        $em->persist($orderedTask);
-        $em->flush();
+        $this->entityManager->persist($orderedTask);
+        $this->entityManager->flush();
 
         return $this;
     }
@@ -122,9 +116,8 @@ class PhasedTestManager
     {
         $component = $orderQuestionnaireComponent->getComponent();
 
-        $em = $this->entityManager;
-        $em->remove($orderQuestionnaireComponent);
-        $em->flush();
+        $this->entityManager->remove($orderQuestionnaireComponent);
+        $this->entityManager->flush();
 
         $this->recalculateOrder($component);
 
@@ -133,58 +126,50 @@ class PhasedTestManager
 
     public function saveOrder($newOrderArray)
     {
-        $em = $this->entityManager;
-
         $i = 0;
         foreach ($newOrderArray as $orderId) {
-            $i++;
-            $orderQuestionnaireComponent = $this->orderQuestionnaireComponentRepo->find($orderId);
+            ++$i;
+            $orderQuestionnaireComponent = $this->ordertaskCompoRepo->find($orderId);
             $orderQuestionnaireComponent->setDisplayOrder($i);
-            $em->persist($orderQuestionnaireComponent);
+            $this->entityManager->persist($orderQuestionnaireComponent);
         }
-        $em->flush();
+        $this->entityManager->flush();
 
         return $this;
     }
 
     public function recalculateOrder(Component $component)
     {
-        $em = $this->entityManager;
-
-        $orderedQuestionnaires = $this->orderQuestionnaireComponentRepo->findByComponent($component);
+        $orderedQuestionnaires = $this->ordertaskCompoRepo->findByComponent($component);
 
         $i = 1;
         foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
             $orderedQuestionnaire->setDisplayOrder($i);
-            $em->persist($orderedQuestionnaire);
-            $i++;
+            $this->entityManager->persist($orderedQuestionnaire);
+            ++$i;
         }
-        $em->flush();
+        $this->entityManager->flush();
 
         return $this;
     }
 
     public function reorganizeAlternative(Test $test, ComponentType $type)
     {
-        $em = $this->entityManager;
-
         $i = 0;
-        $orderedComponents = $this->componentRepo->findBy(array("test" => $test, "componentType" => $type));
+        $orderedComponents = $this->componentRepo->findBy(array('test' => $test, 'componentType' => $type));
         foreach ($orderedComponents as $orderedComponent) {
             $orderedComponent->setAlternativeNumber($i);
-            $em->persist($orderedComponent);
-            $i++;
+            $this->entityManager->persist($orderedComponent);
+            ++$i;
         }
-        $em->flush();
+        $this->entityManager->flush();
     }
 
     public function initializeParams()
     {
-        $em = $this->entityManager;
-
         $params = new PhasedParams();
-        $em->persist($params);
-        $em->flush();
+        $this->entityManager->persist($params);
+        $this->entityManager->flush();
 
         return $params;
     }
