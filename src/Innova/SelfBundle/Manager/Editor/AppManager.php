@@ -10,6 +10,7 @@ class AppManager
 {
     protected $entityManager;
     protected $propositionManager;
+    protected $propositionRepo;
 
     public function __construct($entityManager, $propositionManager)
     {
@@ -35,7 +36,7 @@ class AppManager
         // reste à ajouter les propositions des autres à la subquestion courante.
         foreach ($otherPropositions as $otherProposition) {
             $media = $otherProposition->getMedia();
-            if (!$this->propositionRepo->findOneBy(array("subquestion" => $currentSubquestion, "media" => $media))) {
+            if (!$this->propositionRepo->findOneBy(array('subquestion' => $currentSubquestion, 'media' => $media))) {
                 $this->propositionManager->createProposition($currentSubquestion, $media, false);
             }
         }
@@ -45,33 +46,29 @@ class AppManager
 
     public function appDeletePropositions(Media $media, Question $question)
     {
-        $em = $this->entityManager;
-
         $subquestions = $question->getSubquestions();
         foreach ($subquestions as $subquestion) {
-            if ($propositionToDelete = $this->propositionRepo->findOneBy(array("subquestion" => $subquestion, "media" => $media))) {
-                $em->remove($propositionToDelete);
+            if ($propositionToDelete = $this->propositionRepo->findOneBy(array('subquestion' => $subquestion, 'media' => $media))) {
+                $this->entityManager->remove($propositionToDelete);
             }
         }
-        $em->flush();
+        $this->entityManager->flush();
 
         return true;
     }
 
     public function deleteDistractor(Question $question, Proposition $proposition)
     {
-        $em = $this->entityManager;
-
         $media = $proposition->getMedia();
         foreach ($question->getSubquestions() as $subquestion) {
             foreach ($subquestion->getPropositions() as $needle) {
                 if ($needle->getMedia() == $media) {
-                    $em->remove($needle);
+                    $this->entityManager->remove($needle);
                 }
             }
         }
-        $em->remove($media);
-        $em->flush();
+        $this->entityManager->remove($media);
+        $this->entityManager->flush();
 
         return $this;
     }

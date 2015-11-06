@@ -9,54 +9,39 @@ use Innova\SelfBundle\Entity\Media\MediaLimit;
 class MediaManager
 {
     protected $entityManager;
-    protected $questionnaireRevisorsManager;
-    protected $cacheManager;
-    protected $cacheManagerEnabled;
 
-    public function __construct($entityManager, $questionnaireRevisorsManager, $cacheManager, $cacheManagerEnabled)
+    public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->questionnaireRevisorsManager = $questionnaireRevisorsManager;
-        $this->cacheManager = $cacheManager;
-        $this->cacheManagerEnabled = $cacheManagerEnabled;
     }
 
     public function createMedia(Questionnaire $questionnaire = null, $mediaTypeName, $name, $description, $url, $mediaLimit, $entityField)
     {
         $entityField2Purpose = array(
-            "texte" => "objet de la question",
-            "contexte" => "contexte",
-            "amorce" => "question",
-            "app-media" => "question",
-            "app-answer" => "proposition",
-            "app-distractor" => "proposition",
-            "proposition" => "proposition",
-            "reponse" => "reponse",
-            "clue" => "clue",
-            "syllable" => "syllable",
-            "instruction" => "instruction",
-            "functional-instruction" => "functional-instruction",
-            "comment" => "comment",
-            "feedback" => "feedback",
-            "distractor" => "distractor",
-            "blank-text" => "blank-text",
+            'texte' => 'objet de la question',
+            'contexte' => 'contexte',
+            'amorce' => 'question',
+            'app-media' => 'question',
+            'app-answer' => 'proposition',
+            'app-distractor' => 'proposition',
+            'proposition' => 'proposition',
+            'reponse' => 'reponse',
+            'clue' => 'clue',
+            'syllable' => 'syllable',
+            'instruction' => 'instruction',
+            'functional-instruction' => 'functional-instruction',
+            'comment' => 'comment',
+            'feedback' => 'feedback',
+            'distractor' => 'distractor',
+            'blank-text' => 'blank-text',
         );
 
-        $em = $this->entityManager;
-        $type = $em->getRepository('InnovaSelfBundle:Media\MediaType')->findOneByName($mediaTypeName);
-        $purpose = $em->getRepository('InnovaSelfBundle:Media\MediaPurpose')->findOneByName($entityField2Purpose[$entityField]);
+        $type = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaType')->findOneByName($mediaTypeName);
+        $purpose = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaPurpose')->findOneByName($entityField2Purpose[$entityField]);
 
-        $media = new Media();
-        $media->setMediaType($type);
-        $media->setMediaPurpose($purpose);
-        $media->setName($name);
-        $media->setDescription($description);
-        $media->setUrl($url);
+        $media = $this->newMedia($name, $url, $description, $purpose, $type);
 
-        $em->persist($media);
-        $em->flush();
-
-        if ($mediaTypeName == "audio" || $mediaTypeName == "video") {
+        if ($mediaTypeName == 'audio' || $mediaTypeName == 'video') {
             $this->updateMediaLimit($questionnaire, $media, $mediaLimit);
         }
 
@@ -65,35 +50,29 @@ class MediaManager
 
     public function updateMedia($mediaId, $url, $name, $description)
     {
-        $em = $this->entityManager;
-
-        $media = $em->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
+        $media = $this->entityManager->getRepository('InnovaSelfBundle:Media\Media')->find($mediaId);
         $media->setUrl($url);
         $media->setName($name);
         $media->setDescription($description);
 
-        $em->persist($media);
-        $em->flush();
+        $this->entityManager->persist($media);
+        $this->entityManager->flush();
 
         return $media;
     }
 
     /**
-     * UpdateMediaLimit a mediaLimit entity or create one for a given media, and questionnaire
+     * UpdateMediaLimit a mediaLimit entity or create one for a given media, and questionnaire.
      */
     public function updateMediaLimit(Questionnaire $questionnaire, Media $media, $limit)
     {
-        $em = $this->entityManager;
-
-        if (!$mediaLimit = $em->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array('questionnaire' => $questionnaire, 'media' => $media))) {
-            $mediaLimit = new MediaLimit();
-            $mediaLimit->setQuestionnaire($questionnaire);
-            $mediaLimit->setMedia($media);
+        if (!$mediaLimit = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaLimit')->findOneBy(array('questionnaire' => $questionnaire, 'media' => $media))) {
+            $mediaLimit = $this->newMediaLimit($questionnaire, $media);
         }
         $mediaLimit->setListeningLimit($limit);
 
-        $em->persist($mediaLimit);
-        $em->flush();
+        $this->entityManager->persist($mediaLimit);
+        $this->entityManager->flush();
 
         return $mediaLimit;
     }
@@ -101,88 +80,41 @@ class MediaManager
     public function duplicate(Media $media = null, Questionnaire $questionnaire)
     {
         if ($media) {
-            $em = $this->entityManager;
-
-            $newMedia = new Media();
-            $newMedia->setName($media->getName());
-            $newMedia->setUrl($media->getUrl());
-            $newMedia->setDescription($media->getDescription());
-            $newMedia->setMediaPurpose($media->getMediaPurpose());
-            $newMedia->setMediaType($media->getMediaType());
-            $em->persist($newMedia);
+            $newMedia = $this->newMedia($media->getName(), $media->getUrl(), $media->getDescription(), $media->getMediaPurpose(), $media->getMediaType());
 
             $limits = $media->getMediaLimits();
             foreach ($limits as $limit) {
-                $newLimit = new MediaLimit();
-                $newLimit->setQuestionnaire($questionnaire);
-                $newLimit->setMedia($newMedia);
+                $newLimit = $this->newMediaLimit($questionnaire, $newMedia);
                 $newLimit->setListeningLimit($limit->getListeningLimit());
-                $em->persist($newLimit);
+                $this->entityManager->persist($newLimit);
             }
-            $em->flush();
+            $this->entityManager->flush();
 
             return $newMedia;
         }
     }
 
-    /**
-    * Fonction qui invalide le cache de tests et des questionnaires pour un média donné
-    */
-    public function invalidateMediaAction(Media $media, $typeReloaded)
+    private function newMedia($name, $url, $description, $mediaPurpose, $mediaType)
     {
-        if ($this->cacheManagerEnabled) {
-            $em = $this->entityManager;
+        $media = new Media();
+        $media->setName($name);
+        $media->setUrl($url);
+        $media->setDescription($description);
+        $media->setMediaPurpose($mediaPurpose);
+        $media->setMediaType($mediaType);
 
-            // Suivant la zone modifiée, appel du questionnaire
-            switch ($typeReloaded) {
-                case 'contexte':
-                    $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaContext($media);
-                    break;
-                case 'texte':
-                    $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaText($media);
-                    break;
-                case 'functional-instruction':
-                    $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFunctionalInstruction($media);
-                    break;
-                case 'feedback':
-                    $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findBymediaFeedback($media);
-                    break;
-                case 'subquestion':
-                    $subquestions = $em->getRepository('InnovaSelfBundle:Subquestion')->findBymediaAmorce($media);
-                    foreach ($subquestions as $subquestion) {
-                        $questions = $em->getRepository('InnovaSelfBundle:Question')->findByQuestionnaire($subquestion->getQuestion());
-                        foreach ($questions as $question) {
-                            $questionnaireId = $question->getQuestionnaire()->getId();
-                            $questionnairesForMedia = $em->getRepository('InnovaSelfBundle:Questionnaire')->findById($questionnaireId);
-                        }
-                    }
-                    break;
-            }
+        $this->entityManager->persist($media);
+        $this->entityManager->flush();
 
-            // A ce niveau, j'ai tous les questionnaires qui ont le média modifié
-            foreach ($questionnairesForMedia as $questionnaireForMedia) {
-                $questionnaireId = $questionnaireForMedia->getId();
+        return $media;
+    }
 
-                // Appel des tests qui ont ce questionnaire dans leur liste
-                $testsForQuestionnaire = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->
-                                    findBy(array('questionnaire' => $questionnaireId));
-                foreach ($testsForQuestionnaire as $testForQuestionnaire) {
-                    $testId = $testForQuestionnaire->getTest()->getId();
+    private function newMediaLimit($questionnaire, $media)
+    {
+        $limit = new MediaLimit();
+        $limit->setQuestionnaire($questionnaire);
+        $limit->setMedia($media);
 
-                    // Now, I will invalidate
-                    // questionnaire_pick : route définie dans le playerController.
-                    // admin/test/{testId}/questionnaire/{questionnaireId}",
-                    // Add router service
-                    $pathToInvalidate = $this->router->generate('questionnaire_pick',
-                                            array(
-                                                    'testId' => $testId,
-                                                    'questionnaireId' => $questionnaireId,
-                                                 )
-
-                     );
-                    $this->cacheManager->invalidatePath($pathToInvalidate);
-                }
-            }
-        }
+        return $limit;
     }
 }

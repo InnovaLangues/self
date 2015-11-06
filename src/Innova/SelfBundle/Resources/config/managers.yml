@@ -57,9 +57,6 @@ services:
         class: Innova\SelfBundle\Manager\Media\MediaManager
         arguments:
             entityManager:                  @doctrine.orm.entity_manager
-            questionnaireRevisorsManager:   @self.questionnaire_revisors.manager
-            cacheManager:                   @?fos_http_cache.cache_manager
-            cacheManagerEnabled:            %cache_manager_enabled%
 
     self.app.manager:
         class: Innova\SelfBundle\Manager\Editor\AppManager
