@@ -25,17 +25,6 @@ services:
             rightManager:       @self.right.manager
             voter:              @innova_voter
 
-    innova_player:
-        class: Innova\SelfBundle\Controller\PlayerController
-        arguments:
-            securityContext:    @security.token_storage
-            entityManager:      @doctrine.orm.entity_manager
-            session:            @session
-            router:             @router
-            playerManager:      @self.player.manager
-            scoreManager:       @self.score.manager
-            templating:         @templating
-
     innova_editor_upload:
         class: Innova\SelfBundle\Controller\UploadController
         arguments:
@@ -105,6 +94,7 @@ services:
             traceManager:       @self.trace.manager
             session:            @session
             router:             @router
+            kernel:             @http_kernel
 
     innova_editor_orderquestionnaire:
         class: Innova\SelfBundle\Controller\Editor\OrderQuestionnaireTestController
