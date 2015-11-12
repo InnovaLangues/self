@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -31,13 +32,15 @@ class TraceController
     protected $traceManager;
     protected $session;
     protected $router;
+    protected $kernel;
     protected $user;
 
-    public function __construct($traceManager, $session, $router)
+    public function __construct($traceManager, $session, $router, $kernel)
     {
         $this->traceManager = $traceManager;
         $this->session = $session;
         $this->router = $router;
+        $this->kernel = $kernel;
     }
 
     /**
@@ -80,8 +83,15 @@ class TraceController
     {
         $this->traceManager->setDifficulty($trace, $request);
 
-        $url = $this->router->generate('test_start', array('testId' => $test->getId(), 'sessionId' => $session->getId()));
+        $controller = 'InnovaSelfBundle:Player:start';
+        $path = array(
+            'testId' => $test->getId(),
+            'sessionId' => $session->getId(),
+            '_controller' => $controller,
+        );
+        $subRequest = $request->duplicate(array(), null, $path);
+        $response = $this->kernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
 
-        return new RedirectResponse($url);
+        return $response;
     }
 }

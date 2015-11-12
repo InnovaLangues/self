@@ -35,7 +35,7 @@ class ExportManager
         $response = new Response();
         $response->headers->set('Cache-Control', 'private');
         $response->headers->set('Content-Encoding', 'UTF-8');
-        $response->headers->set('Content-type', mime_content_type($file).";charset=UTF-8");
+        $response->headers->set('Content-type', mime_content_type($file).';charset=UTF-8');
         $response->headers->set('Content-Disposition', 'attachment; filename="'.basename($file).'";');
         $response->headers->set('Content-length', filesize($file));
         $response->sendHeaders();
@@ -47,26 +47,26 @@ class ExportManager
     public function getTaskPosition(Test $test, Questionnaire $questionnaire)
     {
         $em = $this->entityManager;
-        if ($test->getPhased()){
+        if ($test->getPhased()) {
             $component = $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->getByTestAndQuestionnaire($test, $questionnaire);
             if ($component) {
                 return $component->getComponentType()->getName();
-            } 
+            }
         }
 
-        return "-";
+        return '-';
     }
 
     public function getUserSecondStep(Session $session, User $user)
     {
         $em = $this->entityManager;
-        if ($session->getTest()->getPhased()){
+        if ($session->getTest()->getPhased()) {
             if ($trace = $em->getRepository('InnovaSelfBundle:Trace')->getFirstForSecondStep($session, $user)) {
                 return $trace->getComponent()->getComponentType()->getName();
-            } 
+            }
         }
 
-        return "-";
+        return '-';
     }
 
     public function exportSessionUserPdfAction(Session $session, User $user)
@@ -75,23 +75,23 @@ class ExportManager
         $userId = $user->getId();
         $sessionId = $session->getId();
 
-        $pdfName = "self_export-".$userId."pdf-session_".$sessionId."-".date("d-m-Y_H:i:s").'.pdf';
-        $pdfPathExport = $this->kernelRoot."/data/user/";
-        $fileName = $pdfPathExport."/".$pdfName;
+        $pdfName = 'self_export-'.$userId.'pdf-session_'.$sessionId.'-'.date('d-m-Y_H:i:s').'.pdf';
+        $pdfPathExport = $this->kernelRoot.'/data/user/';
+        $fileName = $pdfPathExport.'/'.$pdfName;
         $fs->mkdir($pdfPathExport, 0777);
 
         $score = $this->scoreManager->calculateScoreByTest($session->getTest(), $session, $user);
-        $levelFeedback = $this->scoreManager->getGlobalLevelFromThreshold($session, $user);
-        $coFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CO");
-        $ceFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CE");
-        $eecFeedback = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "EEC");
+        $levelFeedback = $this->scoreManager->getGlobalScore($session, $user);
+        $coFeedback = $this->scoreManager->getSkillScore($session, $user, 'CO');
+        $ceFeedback = $this->scoreManager->getSkillScore($session, $user, 'CE');
+        $eecFeedback = $this->scoreManager->getSkillScore($session, $user, 'EEC');
 
         $this->knpSnappyPdf->generateFromHtml(
             $this->templating->render(
                 'InnovaSelfBundle:Export:exportUserPdf.html.twig',
                 array(
                     'user' => $user, 'score' => $score, 'session' => $session, 'levelFeedback' => $levelFeedback,
-                    "coFeedback" => $coFeedback, "ceFeedback" => $ceFeedback, "eecFeedback" => $eecFeedback,
+                    'coFeedback' => $coFeedback, 'ceFeedback' => $ceFeedback, 'eecFeedback' => $eecFeedback,
                 )),
                 $fileName
         );
@@ -108,18 +108,18 @@ class ExportManager
         $sessionId = $session->getId();
 
         if ($tia == 0) {
-            $tia = "";
+            $tia = '';
             $csvContent = $this->getCsvContent($test, $session);
         } else {
-            $tia = "-tia";
+            $tia = '-tia';
             $csvContent = $this->getCsvTiaContent($test, $session);
         }
 
-        $csvName = "self_export-test_".$testId."-session".$sessionId."-".date("d-m-Y_H:i:s").$tia.'.csv';
-        $csvPathExport = $this->kernelRoot."/data/export/".$testId."/";
+        $csvName = 'self_export-test_'.$testId.'-session'.$sessionId.'-'.date('d-m-Y_H:i:s').$tia.'.csv';
+        $csvPathExport = $this->kernelRoot.'/data/export/'.$testId.'/';
 
         $fs->mkdir($csvPathExport, 0777);
-        $csvh = fopen($csvPathExport."/".$csvName, 'w+');
+        $csvh = fopen($csvPathExport.'/'.$csvName, 'w+');
 
         fwrite($csvh, $csvContent);
         fclose($csvh);
@@ -131,12 +131,12 @@ class ExportManager
     {
         $fs = new Filesystem();
         $sessionId = $session->getId();
-        $sessionName = preg_replace("#[^a-zàâçéèêëîïôûùüÿñæœ0-9]#i", "_", $session->getname());
+        $sessionName = preg_replace('#[^a-zàâçéèêëîïôûùüÿñæœ0-9]#i', '_', $session->getname());
 
-        $filename = "self_export-session".$sessionName."-".date("d-m-Y_H:i:s").'.csv';
-        $sessionPathExport = $this->kernelRoot."/data/session/".$sessionId."/";
+        $filename = 'self_export-session'.$sessionName.'-'.date('d-m-Y_H:i:s').'.csv';
+        $sessionPathExport = $this->kernelRoot.'/data/session/'.$sessionId.'/';
         $fs->mkdir($sessionPathExport, 0777);
-        $csvh = fopen($sessionPathExport."/".$filename, 'w+');
+        $csvh = fopen($sessionPathExport.'/'.$filename, 'w+');
 
         $fileContent = $this->getCsvSessionContent($session, $startDate, $endDate);
 
@@ -147,18 +147,18 @@ class ExportManager
     }
 
     /**
-     * Retourne la liste des fichiers d'export pour un test et un mode donné (csv | pdf)
+     * Retourne la liste des fichiers d'export pour un test et un mode donné (csv | pdf).
      */
     public function getFileList(Test $test, $mode)
     {
-        if ($mode == "pdf") {
-            $dir = "exportPdf";
+        if ($mode == 'pdf') {
+            $dir = 'exportPdf';
         } else {
-            $dir = "export";
+            $dir = 'export';
         }
 
         $testId = $test->getId();
-        $csvPathExport = $this->kernelRoot."/data/".$dir."/".$testId."/";
+        $csvPathExport = $this->kernelRoot.'/data/'.$dir.'/'.$testId.'/';
         $fileList = array();
 
         if (is_dir($csvPathExport) && $dossier = opendir($csvPathExport)) {
@@ -175,10 +175,8 @@ class ExportManager
     }
 
     /**
-     *
-     *
      * getCvsContent function
-     * Fonction principale pour l'export CSV "classique"
+     * Fonction principale pour l'export CSV "classique".
      */
     private function getCsvContent(Test $test, Session $session)
     {
@@ -186,13 +184,13 @@ class ExportManager
         $sessionId = $session->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
-        $preprocess  = $this->preprocessTest($sessionId, $questionnaires, "csv");
+        $preprocess = $this->preprocessTest($sessionId, $questionnaires, 'csv');
         $propLetters = $preprocess[0];
-        $rightProps  = $preprocess[1];
-        $result      = $preprocess[2];
-        $csv         = $preprocess[3];
-        $typology    = $preprocess[4];
-        $theme       = $preprocess[5];
+        $rightProps = $preprocess[1];
+        $result = $preprocess[2];
+        $csv = $preprocess[3];
+        $typology = $preprocess[4];
+        $theme = $preprocess[5];
 
         $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
         foreach ($users as $user) {
@@ -202,8 +200,8 @@ class ExportManager
 
             $csv .= $this->addColumn($user->getUserName());
             $csv .= $this->addColumn($user->getFirstName());
-            $csv .= $this->addColumn($result[$userId]["date"]);
-            $csv .= $this->addColumn($result[$userId]["time"]);
+            $csv .= $this->addColumn($result[$userId]['date']);
+            $csv .= $this->addColumn($result[$userId]['time']);
             $csv .= $this->addColumn($user->getCoLevel());
             $csv .= $this->addColumn($user->getCeLevel());
             $csv .= $this->addColumn($user->getEeLevel());
@@ -216,7 +214,7 @@ class ExportManager
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $typology[$questionnaireId];
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
-                
+
                 if ($traces) {
                     foreach ($traces as $trace) {
                         $csv .= $this->addColumn($theme[$questionnaireId]);
@@ -236,21 +234,21 @@ class ExportManager
                         $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
                             $subquestionId = $subquestion->getId();
-                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps["sub".$subquestionId], $typologyName);
+                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps['sub'.$subquestionId], $typologyName);
                             $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
                         }
                     }
                 } else {
                     if (count($questions) > 0) {
-                        $csv .= $this->addColumn("");
-                        $csv .= $this->addColumn("");
-                        $csv .= $this->addColumn("");
-                        $csv .= $this->addColumn("");
+                        $csv .= $this->addColumn('');
+                        $csv .= $this->addColumn('');
+                        $csv .= $this->addColumn('');
+                        $csv .= $this->addColumn('');
 
                         $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
-                            $csv .= $this->addColumn("");
-                            $csv .= $this->addColumn("");
+                            $csv .= $this->addColumn('');
+                            $csv .= $this->addColumn('');
                         }
                     }
                 }
@@ -263,7 +261,7 @@ class ExportManager
 
     public function addColumn($text)
     {
-        $column = "\"".$text."\"".";";
+        $column = '"'.$text.'"'.';';
 
         return $column;
     }
@@ -316,7 +314,7 @@ class ExportManager
 
     private function textToDisplay($subquestionId, $answersArray, $propLetters, $typo)
     {
-        $textToDisplay = "";
+        $textToDisplay = '';
 
         switch ($typo) {
             case 'TVF':
@@ -353,33 +351,28 @@ class ExportManager
     }
 
     /**
-     *
-     *
      * getCvsTiaContent function
-     * Fonction principale pour l'export CSV "Tia+"
-     *
-     *
+     * Fonction principale pour l'export CSV "Tia+".
      */
     private function getCsvTiaContent(Test $test, Session $session)
     {
         $em = $this->entityManager;
         $sessionId = $session->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-        $preprocess  = $this->preprocessTest($sessionId, $questionnaires, "tia");
+        $preprocess = $this->preprocessTest($sessionId, $questionnaires, 'tia');
         $propLetters = $preprocess[0];
-        $rightProps  = $preprocess[1];
+        $rightProps = $preprocess[1];
         $csv = $preprocess[3];
 
         //  BODY
         $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
         foreach ($users as $user) {
-            $csv .= $user->getUserName()." ".$user->getFirstName().";";
+            $csv .= $user->getUserName().' '.$user->getFirstName().';';
             $userId = $user->getId();
             $secondStep = $this->getUserSecondStep($session, $user);
             $csv .= $this->addColumn($secondStep);
 
             foreach ($questionnaires as $questionnaire) {
-                
                 $questionnaireId = $questionnaire->getId();
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
 
@@ -401,7 +394,7 @@ class ExportManager
                         $subquestions = $questions[0]->getSubQuestions();
                         foreach ($subquestions as $subquestion) {
                             $subquestionId = $subquestion->getId();
-                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps["sub".$subquestionId], $typologyName);
+                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps['sub'.$subquestionId], $typologyName);
                             $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
                         }
                     }
@@ -409,8 +402,8 @@ class ExportManager
                     if ($questions->count() > 0) {
                         $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
-                            $csv .= $this->addColumn("");
-                            $csv .= $this->addColumn("");
+                            $csv .= $this->addColumn('');
+                            $csv .= $this->addColumn('');
                         }
                     }
                 }
@@ -419,29 +412,28 @@ class ExportManager
         }
 
         $csv .= "\n";
-        $csv .= "Légende :".";";
+        $csv .= 'Légende :'.';';
         $csv .= "\n";
-        $csv .= "première colonne = 1 -> Il s'agit d'une bonne réponse. 0 -> Il s'agit d'une mauvaise réponse".";";
+        $csv .= "première colonne = 1 -> Il s'agit d'une bonne réponse. 0 -> Il s'agit d'une mauvaise réponse".';';
         $csv .= "\n";
-        $csv .= "seconde colonne = la réponse tapée/choisie par l'étudiant".";";
+        $csv .= "seconde colonne = la réponse tapée/choisie par l'étudiant".';';
 
         return $csv;
     }
 
     /**
-     * @param integer $int
+     * @param int $int
      */
     public function intToLetter($int)
     {
-        $arr = array(1 => "A", 2 => "B", 3 => "C", 4 => "D", 5 => "E", 6 => "F",
-        7 => "G", 8 => "H", 9 => "I", 10 => "J", 11 => "K", 12 => "L", );
+        $arr = array(1 => 'A', 2 => 'B', 3 => 'C', 4 => 'D', 5 => 'E', 6 => 'F',
+        7 => 'G', 8 => 'H', 9 => 'I', 10 => 'J', 11 => 'K', 12 => 'L', );
 
         return $arr[$int];
     }
 
     /**
-     * calculateScore function
-     *
+     * calculateScore function.
      */
     private function calculateScore(User $user, Session $session, $rightProps)
     {
@@ -469,8 +461,8 @@ class ExportManager
 
                         foreach ($answersArray as $subquestionId => $answers) {
                             $rightPropositions = array();
-                            if (isset($rightProps["sub".$subquestionId])) {
-                                $rightPropositions = $rightProps["sub".$subquestionId];
+                            if (isset($rightProps['sub'.$subquestionId])) {
+                                $rightPropositions = $rightProps['sub'.$subquestionId];
                             }
 
                             $nbPropositionRightAnswer = $nbRightAnswer = 0;
@@ -482,32 +474,32 @@ class ExportManager
                             if ($nbAnswers == count($rightPropositions)) {
                                 foreach ($rightPropositions as $rightProp) {
                                     if (in_array($rightProp, $answersArray[$subquestionId])) {
-                                        $nbRightAnswer++;
+                                        ++$nbRightAnswer;
                                     }
                                 }
                             }
 
                             if (($nbPropositionRightAnswer == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                                $score++;
+                                ++$score;
                             }
                         }
                         break;
 
-                    case "APP";
+                    case 'APP';
                         foreach ($answers as $answer) {
                             if ($answer->getProposition()->getRightAnswer()) {
-                                $score++;
+                                ++$score;
                             }
                         }
                         break;
-                    case "QRM";
-                    case "TQRM";
-                    case "QRU";
-                    case "TQRU";
-                    case "VF";
-                    case "TVF";
-                    case "VFNM";
-                    case "TVFNM";
+                    case 'QRM';
+                    case 'TQRM';
+                    case 'QRU';
+                    case 'TQRU';
+                    case 'VF';
+                    case 'TVF';
+                    case 'VFNM';
+                    case 'TVFNM';
                         foreach ($answers as $answer) {
                             if (!isset($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
                                 $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
@@ -529,9 +521,9 @@ class ExportManager
                             // Calcul du nombre de proposition et
                             // calcul du nombre de bonnes réponses.
                             foreach ($propositions as $proposition) {
-                                $nbProposition++;
+                                ++$nbProposition;
                                 if ($proposition->getRightAnswer()) {
-                                    $nbPropositionRightAnswser++;
+                                    ++$nbPropositionRightAnswser;
                                     $rightProps[] = $proposition;
                                 }
                             }
@@ -542,13 +534,13 @@ class ExportManager
                             if ($nbAnswers == $nbPropositionRightAnswser) {
                                 foreach ($rightProps as $rightProp) {
                                     if (in_array($rightProp->getId(), $answersArray[$subquestionId])) {
-                                        $nbRightAnswer++;
+                                        ++$nbRightAnswer;
                                     }
                                 }
                             }
 
                             if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                                $score++;
+                                ++$score;
                             }
                         }
                         break;
@@ -560,10 +552,11 @@ class ExportManager
         return $score;
     }
 
-     /**
-     * Précalcule pas mal de choses pour éviter les requêtes redondantes plus tard
-     * @param integer $sessionId
-     * @param string  $mode
+    /**
+     * Précalcule pas mal de choses pour éviter les requêtes redondantes plus tard.
+     *
+     * @param int    $sessionId
+     * @param string $mode
      */
     private function preprocessTest($sessionId, $questionnaires, $mode)
     {
@@ -572,80 +565,80 @@ class ExportManager
         $rightProps = array();
         $result = array();
         $cpt_questionnaire = 0;
-        $csv = "";
+        $csv = '';
         $typology = array();
         $theme = array();
 
-        if ($mode == "csv") {
-            $csv .= $this->addColumn("Nom");
-            $csv .= $this->addColumn("Prénom");
-            $csv .= $this->addColumn("Date");
-            $csv .= $this->addColumn("Temps en secondes (pour le test entier)");
-            $csv .= $this->addColumn("Niveau Dialang CO");
-            $csv .= $this->addColumn("Niveau Dialang CE");
-            $csv .= $this->addColumn("Niveau Dialang EEC");
-            $csv .= $this->addColumn("Niveau Lansad acquis");
-            $csv .= $this->addColumn("Score total obtenu dans le test (formule du total)");
-            $csv .= $this->addColumn("Etape de sortie");
+        if ($mode == 'csv') {
+            $csv .= $this->addColumn('Nom');
+            $csv .= $this->addColumn('Prénom');
+            $csv .= $this->addColumn('Date');
+            $csv .= $this->addColumn('Temps en secondes (pour le test entier)');
+            $csv .= $this->addColumn('Niveau Dialang CO');
+            $csv .= $this->addColumn('Niveau Dialang CE');
+            $csv .= $this->addColumn('Niveau Dialang EEC');
+            $csv .= $this->addColumn('Niveau Lansad acquis');
+            $csv .= $this->addColumn('Score total obtenu dans le test (formule du total)');
+            $csv .= $this->addColumn('Etape de sortie');
         } else {
-            $csv .= $this->addColumn("Etudiant");
-            $csv .= $this->addColumn("Etape de sortie");
+            $csv .= $this->addColumn('Etudiant');
+            $csv .= $this->addColumn('Etape de sortie');
         }
 
         foreach ($questionnaires as $questionnaire) {
-            $cpt_questionnaire++;
+            ++$cpt_questionnaire;
             $questionnaireId = $questionnaire->getId();
 
             $theme[$questionnaireId] = $questionnaire->getTheme();
             $questions = $questionnaire->getQuestions();
             $typology[$questionnaireId] = $questions[0]->getTypology()->getName();
 
-            if ($mode == "csv") {
-                $csv .= $this->addColumn("T".$cpt_questionnaire." - NOM de la TACHE");
-                $csv .= $this->addColumn("T".$cpt_questionnaire." - Protocole d'interaction");
-                $csv .= $this->addColumn("T".$cpt_questionnaire." - difficulté");
-                $csv .= $this->addColumn("T".$cpt_questionnaire." - TEMPS");
+            if ($mode == 'csv') {
+                $csv .= $this->addColumn('T'.$cpt_questionnaire.' - NOM de la TACHE');
+                $csv .= $this->addColumn('T'.$cpt_questionnaire." - Protocole d'interaction");
+                $csv .= $this->addColumn('T'.$cpt_questionnaire.' - difficulté');
+                $csv .= $this->addColumn('T'.$cpt_questionnaire.' - TEMPS');
             }
 
             if (count($questions) > 0) {
                 $subquestions = $questions[0]->getSubquestions();
                 $cpt = 0;
                 foreach ($subquestions as $subquestion) {
-                    $cpt++;
-                    $csv .= $this->addColumn($theme[$questionnaireId]." (item ".$cpt.") SCORE (0/1)");
-                    $csv .= $this->addColumn($theme[$questionnaireId]." (item ".$cpt.") PROPOSITION");
+                    ++$cpt;
+                    $csv .= $this->addColumn($theme[$questionnaireId].' (item '.$cpt.') SCORE (0/1)');
+                    $csv .= $this->addColumn($theme[$questionnaireId].' (item '.$cpt.') PROPOSITION');
                 }
             }
 
             $traces = $em->getRepository('InnovaSelfBundle:Trace')->getBySessionAndQuestionnaire($sessionId, $questionnaireId);
             foreach ($traces as $trace) {
-                $userId  = $trace->getUser()->getId();
-                $userName  = (string) $trace->getUser();
+                $userId = $trace->getUser()->getId();
+                $userName = (string) $trace->getUser();
                 $emailName = (string) $trace->getUser()->getEmail();
-                $testDate  = date_format($trace->getDate(), 'dm');
-                if (!isset($result[$userId]["time"])) {
-                    $result[$userId]["time"] = 0;
+                $testDate = date_format($trace->getDate(), 'dm');
+                if (!isset($result[$userId]['time'])) {
+                    $result[$userId]['time'] = 0;
                 }
-                $result[$userId]["time"] = $result[$userId]["time"] + $trace->getTotalTime();
-                $result[$userId]["name"]  = $userName;
-                $result[$userId]["email"] = $emailName;
-                $result[$userId]["date"]  = $testDate;
+                $result[$userId]['time'] = $result[$userId]['time'] + $trace->getTotalTime();
+                $result[$userId]['name'] = $userName;
+                $result[$userId]['email'] = $emailName;
+                $result[$userId]['date'] = $testDate;
             }
 
             foreach ($questions as $question) {
                 $typologyName = $question->getTypology()->getName();
                 $subquestions = $question->getSubquestions();
                 foreach ($subquestions as $subquestion) {
-                    $rightProps["sub".$subquestion->getId()] = array();
+                    $rightProps['sub'.$subquestion->getId()] = array();
                     $cptProposition = 0;
                     $propositions = $subquestion->getPropositions();
                     foreach ($propositions as $proposition) {
-                        $cptProposition++;
-                        if ($typologyName != "TLQROC") {
+                        ++$cptProposition;
+                        if ($typologyName != 'TLQROC') {
                             $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                         }
                         if ($proposition->getRightAnswer()) {
-                            $rightProps["sub".$subquestion->getId()][] = $proposition->getId();
+                            $rightProps['sub'.$subquestion->getId()][] = $proposition->getId();
                         }
                     }
                 }
@@ -660,13 +653,13 @@ class ExportManager
     private function getCsvSessionContent(Session $session, $startDate, $endDate)
     {
         $format = 'Y-m-d H:i:s';
-        $csv = "";
+        $csv = '';
         $em = $this->entityManager;
 
         if ($startDate === null) {
-            $startDate =  date_create_from_format($format, '1970-01-01 00:00:00');
+            $startDate = date_create_from_format($format, '1970-01-01 00:00:00');
         } else {
-            $startDate =  date_create_from_format($format, $startDate);
+            $startDate = date_create_from_format($format, $startDate);
         }
 
         if ($endDate === null) {
@@ -683,19 +676,19 @@ class ExportManager
         $csv .= "\n";
 
         $csv .= $this->addColumn("Nom d'utilisateur");
-        $csv .= $this->addColumn("Nom");
-        $csv .= $this->addColumn("Prénom");
-        $csv .= $this->addColumn("Email");
-        $csv .= $this->addColumn("Filière (ancien champ)");
-        $csv .= $this->addColumn("Etablissement");
-        $csv .= $this->addColumn("Filière");
-        $csv .= $this->addColumn("Année");
-        $csv .= $this->addColumn("Début");
-        $csv .= $this->addColumn("Durée approx.");
-        $csv .= $this->addColumn("Score agrégé");
-        $csv .= $this->addColumn("Score CO");
-        $csv .= $this->addColumn("Score CE");
-        $csv .= $this->addColumn("Score EEC");
+        $csv .= $this->addColumn('Nom');
+        $csv .= $this->addColumn('Prénom');
+        $csv .= $this->addColumn('Email');
+        $csv .= $this->addColumn('Filière (ancien champ)');
+        $csv .= $this->addColumn('Etablissement');
+        $csv .= $this->addColumn('Filière');
+        $csv .= $this->addColumn('Année');
+        $csv .= $this->addColumn('Début');
+        $csv .= $this->addColumn('Durée approx.');
+        $csv .= $this->addColumn('Score agrégé');
+        $csv .= $this->addColumn('Score CO');
+        $csv .= $this->addColumn('Score CE');
+        $csv .= $this->addColumn('Score EEC');
 
         $csv .= "\n";
 
@@ -705,14 +698,14 @@ class ExportManager
             $csv .= $this->addColumn($user->getFirstName());
             $csv .= $this->addColumn($user->getEmail());
 
-            $origin = ($user->getOriginStudent()) ? $user->getOriginStudent()->getName() : "";
-            $institution = ($user->getInstitution()) ? $user->getInstitution()->getName() : "";
-            $course = ($user->getCourse()) ? $user->getCourse()->getName() : "";
-            $year = ($user->getYear()) ? $user->getYear()->getName() : "";
-            $scoreGlobal = $this->scoreManager->getGlobalLevelFromThreshold($session, $user);
-            $scoreCO = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CO");
-            $scoreCE = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "CE");
-            $scoreEEC = $this->scoreManager->getSkillLevelFromThreshold($session, $user, "EEC");
+            $origin = ($user->getOriginStudent()) ? $user->getOriginStudent()->getName() : '';
+            $institution = ($user->getInstitution()) ? $user->getInstitution()->getName() : '';
+            $course = ($user->getCourse()) ? $user->getCourse()->getName() : '';
+            $year = ($user->getYear()) ? $user->getYear()->getName() : '';
+            $scoreGlobal = $this->scoreManager->getGlobalScore($session, $user);
+            $scoreCO = $this->scoreManager->getSkillScore($session, $user, 'CO');
+            $scoreCE = $this->scoreManager->getSkillScore($session, $user, 'CE');
+            $scoreEEC = $this->scoreManager->getSkillScore($session, $user, 'EEC');
             $traces = $this->entityManager->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $session->getTest(), 'session' => $session));
             $lastTrace = end($traces)->getDate();
             $firstTrace = reset($traces)->getDate();

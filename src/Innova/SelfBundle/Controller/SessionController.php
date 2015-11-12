@@ -133,10 +133,10 @@ class SessionController extends Controller
         $this->get('innova_voter')->isAllowed('right.individualresultssession', $session);
 
         $sm = $this->get('self.score.manager');
-        $levelFeedback = $sm->getGlobalLevelFromThreshold($session, $user);
-        $eecFeedback = $sm->getSkillLevelFromThreshold($session, $user, 'EEC');
-        $coFeedback = $sm->getSkillLevelFromThreshold($session, $user, 'CO');
-        $ceFeedback = $sm->getSkillLevelFromThreshold($session, $user, 'CE');
+        $levelFeedback = $sm->getGlobalScore($session, $user);
+        $eecFeedback = $sm->getSkillScore($session, $user, 'EEC');
+        $coFeedback = $sm->getSkillScore($session, $user, 'CO');
+        $ceFeedback = $sm->getSkillScore($session, $user, 'CE');
         $score = $sm->calculateScoreByTest($session->getTest(), $session, $user);
 
         return array(
