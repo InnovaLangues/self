@@ -184,7 +184,7 @@ class ScoreManager
             $user = $trace->getUser();
             $component = $trace->getComponent();
             $componentType = ($component)
-                ? $component()->getComponentType()
+                ? $component->getComponentType()
                 : null;
             $params = $session->getTest()->getPhasedParams();
             $skill = $trace->getQuestionnaire()->getSkill();
