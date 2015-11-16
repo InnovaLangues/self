@@ -165,7 +165,7 @@ function checkBadges(){
         }
     });
 
-    if (incomplete_tab == 0) {
+    if (!$(".tab-pane").length || incomplete_tab == 0) {
         $("#submit").removeAttr("disabled", "disabled");
     } else {
         $("#submit").attr("disabled", "disabled");

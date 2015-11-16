@@ -72,6 +72,7 @@ services:
             propositionManager: @self.proposition.manager
             answerManager:      @self.answer.manager
             securityContext:    @security.token_storage
+            session:            @session
 
     self.user.manager:
         class: Innova\SelfBundle\Manager\UserManager

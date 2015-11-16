@@ -96,7 +96,7 @@
                         {% endfor %}
 
                     {% elseif typoQuestion == "TLCMLDM" %}
-                        {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
+                        {% set html = "<select required class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
                         {% set html = html~"<option value=''>"~"</option>" %}
                         {% set rightAnswer = '' %}
                         {# fix #438 : Affichage aléatoires des valeurs dans les listes de choix #}
@@ -118,7 +118,7 @@
                         {% set texte = texte|replace({(selector): html}) %}
 
                     {% elseif typoQuestion == "TLCMLMULT" %}
-                        {% set html = "<select class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
+                        {% set html = "<select required class='proposition-input check-select' name='"~ subquestion.id ~"[]'>" %}
                         {% set html = html~"<option value=''>"~"</option>" %}
                         {% set rightAnswer = '' %}
                         {% if questionnaire.fixedOrder %}
