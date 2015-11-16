@@ -43,8 +43,13 @@ class PlayerController extends Controller
         $questionnaire = $orderQuestionnaire->getQuestionnaire();
         $questionnaires = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
         $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
+
+        $total = ($component)
+            ? count($component->getOrderQuestionnaireComponents())
+            : count($test->getOrderQuestionnaireTests());
         $done = $this->get('self.player.manager')->countQuestionnaireDone($component, $session);
-        $total = $this->get('self.player.manager')->countQuestionnaireTotal($component, $questionnaires);
+
+        $percent = round($done / $total * 100);
 
         return array(
             'test' => $test,
@@ -52,8 +57,7 @@ class PlayerController extends Controller
             'component' => $component,
             'questionnaire' => $questionnaire,
             'questionnaires' => $questionnaires,
-            'countQuestionnaireDone' => $done,
-            'countQuestionnaireTotal' => $total,
+            'percent' => $percent,
         );
     }
 
