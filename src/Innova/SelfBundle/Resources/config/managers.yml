@@ -109,10 +109,11 @@ services:
     self.player.manager:
         class: Innova\SelfBundle\Manager\PlayerManager
         arguments:
-            entityManager:      @doctrine.orm.entity_manager
-            securityContext:    @security.token_storage
-            scoreManager:       @self.score.manager
-            session:            @session
+            entityManager:          @doctrine.orm.entity_manager
+            securityContext:        @security.token_storage
+            scoreManager:           @self.score.manager
+            session:                @session
+            securityAuthorization:  @security.authorization_checker
 
     self.export.manager:
         class: Innova\SelfBundle\Manager\ExportManager

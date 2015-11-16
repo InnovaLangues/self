@@ -14,14 +14,16 @@ class PlayerManager
     protected $securityContext;
     protected $scoreManager;
     protected $session;
+    protected $securityAuthorization;
     protected $user;
 
-    public function __construct($entityManager, $securityContext, $scoreManager, $session)
+    public function __construct($entityManager, $securityContext, $scoreManager, $session, $securityAuthorization)
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
         $this->scoreManager = $scoreManager;
         $this->session = $session;
+        $this->securityAuthorization = $securityAuthorization;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->traceRepo = $this->entityManager->getRepository('InnovaSelfBundle:Trace');
         $this->componentRepo = $this->entityManager->getRepository('InnovaSelfBundle:PhasedTest\Component');
@@ -36,7 +38,7 @@ class PlayerManager
     {
         $sessionLogged = $this->session->get('sessionLogged-'.$session->getId());
 
-        if ($sessionLogged != 1) {
+        if ($sessionLogged != 1 && !$this->securityAuthorization->isGranted('ROLE_ADMIN')) {
             return true;
         }
 
@@ -90,7 +92,7 @@ class PlayerManager
     }
 
     /**
-     * Picks orderedQuestionnaire for a classic test
+     * Picks orderedQuestionnaire for a classic test.
      */
     private function pickQuestionnaireClassic(Test $test, Session $session)
     {
@@ -99,7 +101,7 @@ class PlayerManager
 
         foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
             $traces = $this->traceRepo->findBy(
-                array(  'user' => $this->user,
+                array('user' => $this->user,
                         'test' => $test->getId(),
                         'session' => $session,
                         'questionnaire' => $orderedQuestionnaire->getQuestionnaire(),
@@ -114,7 +116,7 @@ class PlayerManager
     }
 
     /**
-     * Picks orderedQuestionnaire for a phased test
+     * Picks orderedQuestionnaire for a phased test.
      */
     private function pickQuestionnairePhased(Test $test, Session $session)
     {
@@ -123,7 +125,7 @@ class PlayerManager
             $lastTrace = end($traces);
             $questionnaire = $lastTrace->getQuestionnaire();
             $component = $lastTrace->getComponent();
-            $orderQC = $this->orderQCRepo->findOneBy(array("questionnaire" => $questionnaire, "component" => $component));
+            $orderQC = $this->orderQCRepo->findOneBy(array('questionnaire' => $questionnaire, 'component' => $component));
 
             // on prend la tâche suivante pour le composant courant
             if (!$nextOrderQuestionnaire = $this->pickNextQuestionnaire($component, $orderQC)) {
@@ -144,18 +146,19 @@ class PlayerManager
     }
 
     /**
-     * Picks next orderQuestionnaire for a given component
+     * Picks next orderQuestionnaire for a given component.
      */
     private function pickNextQuestionnaire(Component $component, OrderQuestionnaireComponent $orderQC = null)
     {
         $displayOrder = ($orderQC !== null) ? $orderQC->getDisplayOrder() + 1 : 1;
-        $nextOrderQC = $this->orderQCRepo->findOneBy(array("component" => $component, "displayOrder" => $displayOrder));
+        $nextOrderQC = $this->orderQCRepo->findOneBy(array('component' => $component, 'displayOrder' => $displayOrder));
 
         return $nextOrderQC;
     }
 
     /**
-     * Picks next component for a given test / session, depending of a possible previous one
+     * Picks next component for a given test / session, depending of a possible previous one.
+     *
      * @return Component
      */
     private function pickNextComponent(Test $test, Session $session, Component $component = null)
@@ -170,13 +173,13 @@ class PlayerManager
             if (count($componentsDone) >= 2) {
                 return;
             } else {
-                if ($componentTypeName == "minitest") {
+                if ($componentTypeName == 'minitest') {
                     $nextComponentTypeName = $this->scoreManager->orientateToStep($this->user, $session, $component);
                 }
             }
         } else {
             // sinon c'est qu'on commence le test alors on lui propose un minitest
-            $nextComponentTypeName = "minitest";
+            $nextComponentTypeName = 'minitest';
         }
 
         $nextComponentType = $this->componentTypeRepo->findOneByName($nextComponentTypeName);
@@ -187,12 +190,12 @@ class PlayerManager
 
     /**
      * Picks a component of a given componentType for a user.
-     * Favor not done yet component in another session
+     * Favor not done yet component in another session.
      */
     private function pickComponentAmongAlternatives(ComponentType $componentType, Test $test)
     {
         if (!$candidates = $this->componentRepo->findNotDoneByTypeByUserByTest($this->user, $test, $componentType)) {
-            $candidates = $this->componentRepo->findBy(array("test" => $test, "componentType" => $componentType));
+            $candidates = $this->componentRepo->findBy(array('test' => $test, 'componentType' => $componentType));
         }
 
         $component = $candidates[array_rand($candidates)];
