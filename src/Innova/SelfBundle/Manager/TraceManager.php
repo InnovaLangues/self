@@ -58,7 +58,7 @@ class TraceManager
 
         $trace->setDifficulty($post['difficulty']);
         $this->entityManager->persist($trace);
-        $this->entityManager > flush();
+        $this->entityManager->flush();
 
         return;
     }
