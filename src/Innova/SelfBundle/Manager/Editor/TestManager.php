@@ -111,8 +111,8 @@ class TestManager
     public function deleteTest(Test $test)
     {
         $testName = $test->getName();
-        $this->entityManager > remove($test);
-        $this->entityManager > flush();
+        $this->entityManager->remove($test);
+        $this->entityManager->flush();
 
         $this->session->getFlashBag()->set('success', 'Le test '.$testName.' a bien été supprimé.');
 
