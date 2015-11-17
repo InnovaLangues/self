@@ -106,29 +106,20 @@ class PlayerController extends Controller
      *      "admin/test/{testId}/session/{sessionId}/questionnaire/{questionnaireId}",
      *      name="questionnaire_pick"
      * )
-     * @ParamConverter("questionnairePicked", class="InnovaSelfBundle:Questionnaire", options={"mapping": {"questionnaireId": "id"}})
+     * @ParamConverter("questionnaire", class="InnovaSelfBundle:Questionnaire", options={"mapping": {"questionnaireId": "id"}})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */
-    public function pickAQuestionnaireAction(Test $test, Session $session, Questionnaire $questionnairePicked)
+    public function pickAQuestionnaireAction(Test $test, Session $session, Questionnaire $questionnaire)
     {
         $questionnaires = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-
-        $i = 0;
-        foreach ($questionnaires as $q) {
-            if ($q == $questionnairePicked) {
-                $done = $i;
-                break;
-            }
-            ++$i;
-        }
 
         return array(
             'test' => $test,
             'session' => $session,
             'questionnaires' => $questionnaires,
-            'questionnaire' => $questionnairePicked,
-            'countQuestionnaireDone' => $done,
+            'questionnaire' => $questionnaire,
+            'percent' => null,
             'component' => null,
         );
     }
