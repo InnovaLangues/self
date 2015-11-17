@@ -18,14 +18,16 @@ class TraceManager
     protected $propositionManager;
     protected $answerManager;
     protected $securityContext;
+    protected $session;
 
-    public function __construct($entityManager, $mediaManager, $propositionManager, $answerManager, $securityContext)
+    public function __construct($entityManager, $mediaManager, $propositionManager, $answerManager, $securityContext, $session)
     {
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
         $this->propositionManager = $propositionManager;
         $this->answerManager = $answerManager;
         $this->securityContext = $securityContext;
+        $this->session = $session;
         $this->user = $this->securityContext->getToken()->getUser();
     }
 
