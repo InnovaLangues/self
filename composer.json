@@ -26,14 +26,15 @@
         "friendsofsymfony/jsrouting-bundle": "~1.1",
         "friendsofsymfony/http-cache-bundle": "~1.0",
         "stfalcon/tinymce-bundle": "dev-master#758c19947b04d93d",
-        "avalanche123/imagine-bundle": "v2.1.2",
         "knplabs/knp-snappy-bundle": "dev-master#c023573e1b0b",
         "willdurand/js-translation-bundle": "@stable",
         "innova/gitter-bundle": "v1.0",
         "jms/i18n-routing-bundle": "~1.1",
         "lexik/maintenance-bundle": "dev-master#4967701a108aa8262f",
         "nc/faye-client": "v1.1.1",
-        "twig/twig": "1.*"
+        "twig/twig": "1.*",
+        "imagine/imagine": "v0.6.3",
+        "liip/imagine-bundle": "1.3.1"
     },
     "scripts": {
         "post-install-cmd": [

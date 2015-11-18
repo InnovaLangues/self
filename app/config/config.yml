@@ -122,18 +122,8 @@ stfalcon_tinymce:
             font_formats: "kaiti=kaiti"
 
 
-avalanche_imagine:
-    source_root:  %kernel.root_dir%/../web/upload/media
-    web_root:     %kernel.root_dir%/../web
-    cache_prefix: upload/thumbnail
-    driver:       gd
-    filters:
-        app4:
-            type:    thumbnail
-            options: { size: [120, 118], mode: outbound }
-        app3:
-            type:    thumbnail
-            options: { size: [174, 118], mode: outbound }
+
+        
 
 knp_snappy:
     pdf:
@@ -191,3 +181,25 @@ lexik_maintenance:
         # File driver
         class: '\Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver'      # Classe pour le FileDriver
         options: {file_path: %kernel.root_dir%/lock}
+
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                web_root: %kernel.root_dir%/../web/
+                cache_prefix: /upload/cache/
+    driver:               gd
+    cache:                default
+    data_loader:          default
+    default_image:        null
+    controller:
+        filter_action:         liip_imagine.controller:filterAction
+        filter_runtime_action: liip_imagine.controller:filterRuntimeAction
+
+    filter_sets:
+        app4:
+            filters:
+                thumbnail: { size: [120, 100], mode: outbound }
+        app3:
+            filters:
+                thumbnail: { size: [174, 100], mode: outbound }
