@@ -94,11 +94,7 @@ class PlayerController extends Controller
      */
     public function showTestsAction()
     {
-        $tests = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Test')->findWithOpenSession();
-
-        return array(
-            'tests' => $tests,
-        );
+        return array();
     }
 
     /**
