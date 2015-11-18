@@ -35,7 +35,8 @@
 
 {% macro imageAPP(id, media, tooltip, filter) %}
     {% import _self as macros %}
-    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ media.url | apply_filter(filter) }}" />
+    {% set url = "upload/media/" ~ media.url %}
+    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ url | imagine_filter(filter) }}" />
 {% endmacro %}
 
 {% macro video(id, media, limitAudio) %}
