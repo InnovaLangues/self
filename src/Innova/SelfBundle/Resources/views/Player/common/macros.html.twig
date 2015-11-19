@@ -35,8 +35,12 @@
 
 {% macro imageAPP(id, media, tooltip, filter) %}
     {% import _self as macros %}
-    {% set url = "upload/media/" ~ media.url %}
-    <img data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ url | imagine_filter(filter) }}" />
+    {% if filter == 3 %}
+        {% set maxwidth = 174 %}
+    {% else %}
+        {% set maxwidth = 120 %}
+    {% endif %}
+    <img style="max-width:{{ maxwidth }}px" data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
 {% endmacro %}
 
 {% macro video(id, media, limitAudio) %}
