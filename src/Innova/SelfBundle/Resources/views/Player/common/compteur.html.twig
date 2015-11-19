@@ -4,16 +4,6 @@
 		<div class="progress">
 			<div class="progress-bar" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{ percent }}%;">
 				{{ percent }}% 
-				{% if component %}
-					<span class="glyphicon glyphicon-question-sign" rel="tooltip" data-original-title="
-					{% if component.componentType.name == "minitest" %}
-						de la première partie du test.
-					{% else %}
-					    de la seconde et dernière partie du test.
-					{% endif %}
-					">
-					</span>
-				{% endif %}
 			</div>
 		</div>
 	</div>

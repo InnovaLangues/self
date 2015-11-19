@@ -92,6 +92,27 @@ class PlayerManager
     }
 
     /**
+     * Return percent done for a test. minitest and 2nd step have the same weight.
+     */
+    public function getPercentDone(Test $test, Component $component, Session $session)
+    {
+        $total = ($component)
+            ? count($component->getOrderQuestionnaireComponents())
+            : count($test->getOrderQuestionnaireTests());
+        $done = $this->countQuestionnaireDone($component, $session);
+
+        $percent = $done / $total * 100;
+
+        if ($component) {
+            $percent = ($component->getComponentType()->getName() == 'minitest')
+                ? $percent / 2
+                : ($percent / 2) + 50;
+        }
+
+        return round($percent);
+    }
+
+    /**
      * Picks orderedQuestionnaire for a classic test.
      */
     private function pickQuestionnaireClassic(Test $test, Session $session)
