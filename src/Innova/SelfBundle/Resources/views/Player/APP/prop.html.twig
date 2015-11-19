@@ -7,7 +7,7 @@
         {% elseif mediaType == "audio" %}
             {{ macros.audio(subquestion.media.id, subquestion.media, "situation_dialogue.png", 90, 0, "") }}
         {% elseif mediaType == "image" %}
-            {{ macros.imageAPP(subquestion.media.id, subquestion.media, 'player.tooltip.enlarge' | trans, "app"~question.subquestions |length ) }}
+            {{ macros.imageAPP(subquestion.media.id, subquestion.media, 'player.tooltip.enlarge' | trans, question.subquestions |length ) }}
         {% endif %}
         </div>
     </div>
