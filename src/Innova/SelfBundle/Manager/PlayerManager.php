@@ -94,7 +94,7 @@ class PlayerManager
     /**
      * Return percent done for a test. minitest and 2nd step have the same weight.
      */
-    public function getPercentDone(Test $test, Component $component, Session $session)
+    public function getPercentDone(Test $test, Component $component = null, Session $session)
     {
         $total = ($component)
             ? count($component->getOrderQuestionnaireComponents())
