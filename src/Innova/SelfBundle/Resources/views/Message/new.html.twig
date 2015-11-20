@@ -35,12 +35,16 @@
 {{ parent() }}
 <script>
     $(document).ready(function() {
+        $('#message_user').attr("required", false);
+
         $('#message_channel').change(function(event) {
             var choice = $("#message_channel option:selected").val();
             if(choice == "user"){
                 $('#message-user-group').show();
+                $('#message_user').attr("required", true);
             } else {
                 $('#message-user-group').hide();
+                $('#message_user').attr("required", false);
             }
         });
     });
