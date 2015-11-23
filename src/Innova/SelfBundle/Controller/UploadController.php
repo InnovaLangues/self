@@ -43,10 +43,16 @@ class UploadController extends Controller
             if (in_array(strtolower($ext), $authorizedExtensions)) {
                 $newName = uniqid().'.'.$ext;
                 $directory = $this->kernelRoot.'/../web/upload/media/';
-                $uploadedFile->move($directory, $newName);
+                if (!$uploadedFile->move($directory, $newName)) {
+                    $msg = 'Upload error. File has not been uploaded.';
+                }
             } else {
-                $msg = "Wrong file type ('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif')";
+                $msg = "Upload error. Wrong file type ('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif')";
             }
+        }
+
+        if (!$newName) {
+            $msg = 'Upload error. File has not been uploaded.';
         }
 
         return new JsonResponse(
