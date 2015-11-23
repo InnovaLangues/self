@@ -1000,12 +1000,15 @@ $('.file').on('change', function(event){
         dataType: 'json',
         processData: false,
         contentType: false,
-        data : data
+        data: data
     })
     .done(function(data) {
-        if (data["msg"] != "") { alert(data["msg"])};
-        $("#"+fileType+"-url").val(data["url"]);
-        $("#create-"+fileType+"-btn").prop("disabled", false);
+        if (data["msg"] != "") { 
+            alert(data["msg"])
+        } else {
+            $("#"+fileType+"-url").val(data["url"]);
+            $("#create-"+fileType+"-btn").prop("disabled", false);
+        };
         afterAjax();
     });
 });
