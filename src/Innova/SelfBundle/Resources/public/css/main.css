@@ -27,3 +27,7 @@
 }
 
 .mce-i-selfemoticon:before{content:"\e021"}
+
+ruby > rt{
+    font-size: 85%;
+}
