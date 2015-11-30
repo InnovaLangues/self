@@ -10,11 +10,21 @@
 				{% if sessions is defined %}
 					<p>{{ 'editor.session.availableForCode'|transchoice(sessions|length) }}</p>
 					<ul class="list-group">
+					{% set warning = false %}
 					{% for session in sessions %}
+						{% if session.test.language.name == "Japanese" %}
+							{% set warning = true %}
+							{% set sessionConcerned = true %}
+						{% endif %}
 						<li class="list-group-item">
-							<a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id } )}}">{{ session.test.name }} - {{ session.name }}</a>
+							<a {% if sessionConcerned is defined %}class="session-japanese disabled" {% endif %} href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id } )}}">{{ session.test.name }} - {{ session.name }}</a>
 						</li>
 					{% endfor %}
+					{% if warning %}
+						<li class="list-group-item list-group-item-warning">
+							<a class="japanase-warning" href="#">Lire</a> l'avertissement concernant le japonais.
+						</li>
+					{% endif %}
 					</ul>
 				{% else %}
 					<form class="form-inline" action="{{ path('session_log') }}" method="post" autocomplete="off">
@@ -39,4 +49,10 @@
     </div>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }} 
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/session-warning.js") }}"></script>
+{% endblock %}
+
 
