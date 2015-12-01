@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    </head>
+    <body>
+	    <div class="modal-body">
+		    <div class="well text-center">
+		        <img height="290px" src="{{ app.request.getSchemeAndHttpHost() ~ asset('bundles/innovaself/images/') ~ "innova_logo_web_390.png" }}"/>
+		        <h1>SELF</h1>
+		        <h2>Système d’Evaluation en Langues à visée Formative</h2>
+		    </div>
+		</div>
+		<div class="modal-body">
+		    <div class="well text-center">
+		    	<div class="col-md-12">
+	                <h2>Export PDF</h2>
+					<hr/>
+					<p><strong>{{ test.name }}</strong></p>
+					<p>au</p>
+					<p><strong>{{ "now"|date("d/m/Y") }}</strong></p>
+	            </div>
+		    </div>
+		</div>
+	</body>
+</html>
