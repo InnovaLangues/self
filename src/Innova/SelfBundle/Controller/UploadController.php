@@ -43,9 +43,7 @@ class UploadController extends Controller
             if (in_array(strtolower($ext), $authorizedExtensions)) {
                 $newName = uniqid().'.'.$ext;
                 $directory = $this->kernelRoot.'/../web/upload/media/';
-                if (!$uploadedFile->move($directory, $newName)) {
-                    $msg = 'Upload error. File has not been uploaded.';
-                }
+                $uploadedFile->move($directory, $newName);
             } else {
                 $msg = "Upload error. Wrong file type ('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif')";
             }
