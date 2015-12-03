@@ -33,6 +33,20 @@ class QuestionnaireController
     }
 
     /**
+     * @Route("/questionnaire/{questionnaireId}/check", name="editor_questionnaire_repair", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function repairAction(Questionnaire $questionnaire)
+    {
+        $this->voter->canEditTask($questionnaire);
+
+        $questionnaire = $this->questionnaireManager->repair($questionnaire);
+        $template = $this->templating->render('InnovaSelfBundle:Editor/partials:subquestions.html.twig', array('questionnaire' => $questionnaire));
+
+        return new Response($template);
+    }
+
+    /**
      * @Route("/questionnaire/{questionnaireId}/set-text-title", name="editor_questionnaire_set-text-title", options={"expose"=true})
      * @Method("POST")
      */

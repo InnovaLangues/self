@@ -9,6 +9,7 @@ services:
             formFactory:        @form.factory
             mediaManager:       @self.media.manager
             questionManager:    @self.question.manager
+            propositionManager: @self.proposition.manager
 
     self.question.manager:
         class: Innova\SelfBundle\Manager\Editor\QuestionManager
