@@ -20,47 +20,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class UploadController extends Controller
 {
     protected $kernelRoot;
+    protected $fileSystemManager;
 
-    public function __construct($kernelRoot)
+    public function __construct($kernelRoot, $fileSystemManager)
     {
         $this->kernelRoot = $kernelRoot;
-    }
-
-    /**
-     * @Route("/upload-file", name="editor_questionnaire_upload-file", options={"expose"=true})
-     * @Method("POST")
-     */
-    public function uploadFileAction(Request $request)
-    {
-        $authorizedExtensions = array('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif');
-        $msg = '';
-        $newName = '';
-
-        foreach ($request->files as $uploadedFile) {
-            $originalName = $uploadedFile->getClientOriginalName();
-            $ext = pathinfo($originalName, PATHINFO_EXTENSION);
-
-            if (in_array(strtolower($ext), $authorizedExtensions)) {
-                $newName = uniqid().'.'.$ext;
-                $directory = $this->kernelRoot.'/../web/upload/media/';
-                if (!$uploadedFile->move($directory, $newName)) {
-                    $msg = 'Upload error. File has not been uploaded.';
-                }
-            } else {
-                $msg = "Upload error. Wrong file type ('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif')";
-            }
-        }
-
-        if (!$newName) {
-            $msg = 'Upload error. File has not been uploaded.';
-        }
-
-        return new JsonResponse(
-            array(
-                'url' => $newName,
-                'msg' => $msg,
-            )
-        );
+        $this->fileSystemManager = $fileSystemManager;
     }
 
     /**
@@ -99,8 +64,36 @@ class UploadController extends Controller
             case 'png': imagepng($dst_r, $src); break;
         }
 
+        return new JsonResponse(array());
+    }
+
+    /**
+     * @Route("/upload-file", name="editor_questionnaire_upload-file", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function uploadFileAction(Request $request)
+    {
+        $authorizedExtensions = array('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif');
+        $msg = '';
+        $newName = '';
+
+        foreach ($request->files as $file) {
+            $originalName = $file->getClientOriginalName();
+            $ext = pathinfo($originalName, PATHINFO_EXTENSION);
+
+            if (in_array(strtolower($ext), $authorizedExtensions)) {
+                $newName = uniqid().'.'.$ext;
+                $this->fileSystemManager->writeFile('public', $newName, file_get_contents($file->getPathname()));
+            } else {
+                $msg = "Upload error. Wrong file type ('png', 'mp3', 'jpg', 'jpeg', 'webm', 'gif')";
+            }
+        }
+
         return new JsonResponse(
-            array()
+            array(
+                'url' => $newName,
+                'msg' => $msg,
+            )
         );
     }
 }

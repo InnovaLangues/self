@@ -17,9 +17,10 @@ class ExportManager
     protected $kernelRoot;
     protected $knpSnappyPdf;
     protected $templating;
+    protected $fileSystemManager;
     protected $user;
 
-    public function __construct($entityManager, $scoreManager, $securityContext, $kernelRoot, $knpSnappyPdf, $templating)
+    public function __construct($entityManager, $scoreManager, $securityContext, $kernelRoot, $knpSnappyPdf, $templating, $fileSystemManager)
     {
         $this->entityManager = $entityManager;
         $this->scoreManager = $scoreManager;
@@ -27,6 +28,7 @@ class ExportManager
         $this->kernelRoot = $kernelRoot;
         $this->knpSnappyPdf = $knpSnappyPdf;
         $this->templating = $templating;
+        $this->fileSystemManager = $fileSystemManager;
         $this->user = $this->securityContext->getToken()->getUser();
     }
 
@@ -129,19 +131,13 @@ class ExportManager
 
     public function exportSession(Session $session, $startDate = null, $endDate = null)
     {
-        $fs = new Filesystem();
         $sessionId = $session->getId();
         $sessionName = preg_replace('#[^a-zàâçéèêëîïôûùüÿñæœ0-9]#i', '_', $session->getname());
 
-        $filename = 'self_export-session'.$sessionName.'-'.date('d-m-Y_H:i:s').'.csv';
-        $sessionPathExport = $this->kernelRoot.'/data/session/'.$sessionId.'/';
-        $fs->mkdir($sessionPathExport, 0777);
-        $csvh = fopen($sessionPathExport.'/'.$filename, 'w+');
-
+        $filename = 'session/'.$sessionId.'/self_export-session'.$sessionName.'-'.date('d-m-Y_H:i:s').'.csv';
         $fileContent = $this->getCsvSessionContent($session, $startDate, $endDate);
 
-        fwrite($csvh, $fileContent);
-        fclose($csvh);
+        $this->fileSystemManager->writeFile('private', $filename, $fileContent);
 
         return $filename;
     }
@@ -151,11 +147,7 @@ class ExportManager
      */
     public function getFileList(Test $test, $mode)
     {
-        if ($mode == 'pdf') {
-            $dir = 'exportPdf';
-        } else {
-            $dir = 'export';
-        }
+        $dir = ($mode == 'pdf') ? 'exportPdf' : 'export';
 
         $testId = $test->getId();
         $csvPathExport = $this->kernelRoot.'/data/'.$dir.'/'.$testId.'/';
