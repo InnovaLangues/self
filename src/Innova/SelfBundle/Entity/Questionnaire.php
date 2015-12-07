@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Questionnaire
+ * Questionnaire.
  *
  * @ORM\Table("questionnaire")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\QuestionnaireRepository")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Questionnaire
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,13 +22,13 @@ class Questionnaire
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Level", inversedBy="questionnaires")
-    */
+     * @ORM\ManyToOne(targetEntity="Level", inversedBy="questionnaires")
+     */
     protected $level;
 
-     /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="questionnaires")
-    */
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="questionnaires")
+     */
     protected $author;
 
     /**
@@ -39,34 +39,34 @@ class Questionnaire
     private $authorMore;
 
     /**
-    * @ORM\ManyToMany(targetEntity="User", inversedBy="revisedQuestionnaires")
-    * @ORM\JoinTable(name="questionnaires_revisors")
-    */
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="revisedQuestionnaires")
+     * @ORM\JoinTable(name="questionnaires_revisors")
+     */
     protected $revisors;
 
     /**
-    * @ORM\ManyToOne(targetEntity="LanguageLevel", inversedBy="questionnaires")
-    */
+     * @ORM\ManyToOne(targetEntity="LanguageLevel", inversedBy="questionnaires")
+     */
     protected $languageLevel;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Status", inversedBy="questionnaires")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Status", inversedBy="questionnaires")
+     */
     protected $status;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaLimit", mappedBy="questionnaire", cascade={"persist", "remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaLimit", mappedBy="questionnaire", cascade={"persist", "remove"})
+     */
     private $mediaLimits;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="questionnaire", cascade={"persist", "remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="questionnaire", cascade={"persist", "remove"})
+     */
     private $mediaClicks;
 
     /**
-    * @ORM\OneToMany(targetEntity="Comment", mappedBy="questionnaire", cascade={"persist", "remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="questionnaire", cascade={"persist", "remove"})
+     */
     private $comments;
 
     /**
@@ -74,7 +74,7 @@ class Questionnaire
      *
      * @ORM\Column(name="theme", type="string", length=255)
      */
-    private $theme = "Tâche sans nom";
+    private $theme = 'Tâche sans nom';
 
     /**
      * @var string
@@ -83,74 +83,73 @@ class Questionnaire
      */
     private $textTitle;
 
-     /**
-     * @var integer
+    /**
+     * @var int
      *
      * @ORM\Column(name="dialogue", type="integer")
      */
     private $dialogue = 0;
 
-     /**
-     * @var boolean
+    /**
+     * @var bool
      *
      * @ORM\Column(name="fixedOrder", type="boolean")
-     *
      */
     private $fixedOrder = 0;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
+     */
     protected $mediaInstruction;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
+     */
     protected $mediaContext;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
+     */
     protected $mediaText;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
+     */
     protected $mediaBlankText;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
+     */
     protected $mediaFunctionalInstruction;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
+     */
     protected $mediaFeedback;
 
     /**
-    * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"persist", "remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire", cascade={"persist", "remove"})
+     */
     protected $questions;
 
     /**
-    * @ORM\OneToMany(targetEntity="Trace", mappedBy="questionnaire", cascade={"persist", "remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Trace", mappedBy="questionnaire", cascade={"persist", "remove"})
+     */
     protected $traces;
 
     /**
-    * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="questionnaire")
-    */
+     * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="questionnaire")
+     */
     private $orderQuestionnaireTests;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent", mappedBy="questionnaire")
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent", mappedBy="questionnaire")
+     */
     private $orderQuestionnaireComponents;
 
-     /**
-    * @ORM\ManyToOne(targetEntity="Language", inversedBy="questionnaires")
-    */
+    /**
+     * @ORM\ManyToOne(targetEntity="Language", inversedBy="questionnaires")
+     */
     protected $language;
 
     // FICHE D'IDENTITE
@@ -163,12 +162,12 @@ class Questionnaire
     private $lisibility;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $skill;
 
-     /**
+    /**
      * @var text
      *
      * @ORM\Column(name="levelProof", type="text", nullable=true)
@@ -183,21 +182,21 @@ class Questionnaire
     private $authorRightMore;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $authorRight;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Source", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Source", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $source;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $sourceOperation;
 
     /**
@@ -215,75 +214,75 @@ class Questionnaire
     private $speechType;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType", inversedBy="questionnaires")
-    * @ORM\JoinTable(name="questionnaires_sourceType")
-    */
+     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType", inversedBy="questionnaires")
+     * @ORM\JoinTable(name="questionnaires_sourceType")
+     */
     protected $sourceTypes;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel", inversedBy="questionnaires")
-    * @ORM\JoinTable(name="questionnaires_channel")
-    */
+     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel", inversedBy="questionnaires")
+     * @ORM\JoinTable(name="questionnaires_channel")
+     */
     protected $channels;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation", inversedBy="questionnaires")
-    * @ORM\JoinTable(name="questionnaires_socialLocation")
-    */
+     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation", inversedBy="questionnaires")
+     * @ORM\JoinTable(name="questionnaires_socialLocation")
+     */
     protected $socialLocations;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre", inversedBy="questionnaires")
-    * @ORM\JoinTable(name="questionnaires_genre")
-    */
+     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre", inversedBy="questionnaires")
+     * @ORM\JoinTable(name="questionnaires_genre")
+     */
     protected $genres;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety", inversedBy="questionnaires")
-    * @ORM\JoinTable(name="questionnaires_variety")
-    */
+     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety", inversedBy="questionnaires")
+     * @ORM\JoinTable(name="questionnaires_variety")
+     */
     protected $varieties;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $domain;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $productionType;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Register", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Register", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $register;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $reception;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Length", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Length", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $length;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $textLength;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $flow;
 
     public function __toString()
@@ -292,9 +291,9 @@ class Questionnaire
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -302,9 +301,10 @@ class Questionnaire
     }
 
     /**
-     * Set level
+     * Set level.
      *
-     * @param  string        $level
+     * @param string $level
+     *
      * @return Questionnaire
      */
     public function setLevel($level)
@@ -315,7 +315,7 @@ class Questionnaire
     }
 
     /**
-     * Get level
+     * Get level.
      *
      * @return string
      */
@@ -325,9 +325,10 @@ class Questionnaire
     }
 
     /**
-     * Set theme
+     * Set theme.
      *
-     * @param  string        $theme
+     * @param string $theme
+     *
      * @return Questionnaire
      */
     public function setTheme($theme)
@@ -338,7 +339,7 @@ class Questionnaire
     }
 
     /**
-     * Get theme
+     * Get theme.
      *
      * @return string
      */
@@ -348,9 +349,10 @@ class Questionnaire
     }
 
     /**
-     * Add questions
+     * Add questions.
      *
-     * @param  \Innova\SelfBundle\Entity\Question $questions
+     * @param \Innova\SelfBundle\Entity\Question $questions
+     *
      * @return Questionnaire
      */
     public function addQuestion(\Innova\SelfBundle\Entity\Question $questions)
@@ -361,7 +363,7 @@ class Questionnaire
     }
 
     /**
-     * Remove questions
+     * Remove questions.
      *
      * @param \Innova\SelfBundle\Entity\Question $questions
      */
@@ -371,7 +373,7 @@ class Questionnaire
     }
 
     /**
-     * Get questions
+     * Get questions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -381,9 +383,10 @@ class Questionnaire
     }
 
     /**
-     * Add traces
+     * Add traces.
      *
-     * @param  \Innova\SelfBundle\Entity\Trace $traces
+     * @param \Innova\SelfBundle\Entity\Trace $traces
+     *
      * @return Questionnaire
      */
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
@@ -394,7 +397,7 @@ class Questionnaire
     }
 
     /**
-     * Remove traces
+     * Remove traces.
      *
      * @param \Innova\SelfBundle\Entity\Trace $traces
      */
@@ -404,7 +407,7 @@ class Questionnaire
     }
 
     /**
-     * Get traces
+     * Get traces.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -414,9 +417,10 @@ class Questionnaire
     }
 
     /**
-     * Set languageLevel
+     * Set languageLevel.
      *
-     * @param  \Innova\SelfBundle\Entity\LanguageLevel $languageLevel
+     * @param \Innova\SelfBundle\Entity\LanguageLevel $languageLevel
+     *
      * @return Questionnaire
      */
     public function setLanguageLevel(\Innova\SelfBundle\Entity\LanguageLevel $languageLevel = null)
@@ -427,7 +431,7 @@ class Questionnaire
     }
 
     /**
-     * Get languageLevel
+     * Get languageLevel.
      *
      * @return \Innova\SelfBundle\Entity\LanguageLevel
      */
@@ -437,9 +441,10 @@ class Questionnaire
     }
 
     /**
-     * Set skill
+     * Set skill.
      *
-     * @param  \Innova\SelfBundle\Entity\Skill $skill
+     * @param \Innova\SelfBundle\Entity\Skill $skill
+     *
      * @return Questionnaire
      */
     public function setSkill($skill = null)
@@ -450,7 +455,7 @@ class Questionnaire
     }
 
     /**
-     * Get skill
+     * Get skill.
      *
      * @return \Innova\SelfBundle\Entity\Skill
      */
@@ -460,9 +465,10 @@ class Questionnaire
     }
 
     /**
-     * Set author
+     * Set author.
      *
-     * @param  \Innova\SelfBundle\Entity\User $author
+     * @param \Innova\SelfBundle\Entity\User $author
+     *
      * @return Questionnaire
      */
     public function setAuthor(\Innova\SelfBundle\Entity\User $author = null)
@@ -473,7 +479,7 @@ class Questionnaire
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return \Innova\SelfBundle\Entity\User
      */
@@ -483,9 +489,10 @@ class Questionnaire
     }
 
     /**
-     * Set dialogue
+     * Set dialogue.
      *
-     * @param  integer       $dialogue
+     * @param int $dialogue
+     *
      * @return Questionnaire
      */
     public function setDialogue($dialogue)
@@ -496,9 +503,9 @@ class Questionnaire
     }
 
     /**
-     * Get dialogue
+     * Get dialogue.
      *
-     * @return integer
+     * @return int
      */
     public function getDialogue()
     {
@@ -506,9 +513,10 @@ class Questionnaire
     }
 
     /**
-     * Set mediaInstruction
+     * Set mediaInstruction.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaInstruction
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaInstruction
+     *
      * @return Questionnaire
      */
     public function setMediaInstruction(\Innova\SelfBundle\Entity\Media\Media $mediaInstruction = null)
@@ -519,7 +527,7 @@ class Questionnaire
     }
 
     /**
-     * Get mediaInstruction
+     * Get mediaInstruction.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
@@ -529,9 +537,10 @@ class Questionnaire
     }
 
     /**
-     * Set mediaContext
+     * Set mediaContext.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaContext
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaContext
+     *
      * @return Questionnaire
      */
     public function setMediaContext(\Innova\SelfBundle\Entity\Media\Media $mediaContext = null)
@@ -542,7 +551,7 @@ class Questionnaire
     }
 
     /**
-     * Get mediaContext
+     * Get mediaContext.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
@@ -552,9 +561,10 @@ class Questionnaire
     }
 
     /**
-     * Set mediaText
+     * Set mediaText.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaText
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaText
+     *
      * @return Questionnaire
      */
     public function setMediaText(\Innova\SelfBundle\Entity\Media\Media $mediaText = null)
@@ -565,7 +575,7 @@ class Questionnaire
     }
 
     /**
-     * Get mediaText
+     * Get mediaText.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
@@ -575,9 +585,10 @@ class Questionnaire
     }
 
     /**
-     * Set fixedOrder
+     * Set fixedOrder.
      *
-     * @param  boolean       $fixedOrder
+     * @param bool $fixedOrder
+     *
      * @return Questionnaire
      */
     public function setFixedOrder($fixedOrder)
@@ -588,9 +599,9 @@ class Questionnaire
     }
 
     /**
-     * Get fixedOrder
+     * Get fixedOrder.
      *
-     * @return boolean
+     * @return bool
      */
     public function getFixedOrder()
     {
@@ -598,9 +609,10 @@ class Questionnaire
     }
 
     /**
-     * Add mediaLimits
+     * Add mediaLimits.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
+     * @param \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
+     *
      * @return Questionnaire
      */
     public function addMediaLimit(\Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits)
@@ -611,7 +623,7 @@ class Questionnaire
     }
 
     /**
-     * Remove mediaLimits
+     * Remove mediaLimits.
      *
      * @param \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
      */
@@ -621,7 +633,7 @@ class Questionnaire
     }
 
     /**
-     * Get mediaLimits
+     * Get mediaLimits.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -631,9 +643,10 @@ class Questionnaire
     }
 
     /**
-     * Add mediaClicks
+     * Add mediaClicks.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
+     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
+     *
      * @return Questionnaire
      */
     public function addMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
@@ -644,7 +657,7 @@ class Questionnaire
     }
 
     /**
-     * Remove mediaClicks
+     * Remove mediaClicks.
      *
      * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      */
@@ -654,7 +667,7 @@ class Questionnaire
     }
 
     /**
-     * Get mediaClicks
+     * Get mediaClicks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -664,9 +677,10 @@ class Questionnaire
     }
 
     /**
-     * Add orderQuestionnaireTests
+     * Add orderQuestionnaireTests.
      *
-     * @param  \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
+     * @param \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
+     *
      * @return Questionnaire
      */
     public function addOrderQuestionnaireTest(\Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests)
@@ -677,7 +691,7 @@ class Questionnaire
     }
 
     /**
-     * Remove orderQuestionnaireTests
+     * Remove orderQuestionnaireTests.
      *
      * @param \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
      */
@@ -687,7 +701,7 @@ class Questionnaire
     }
 
     /**
-     * Get orderQuestionnaireTests
+     * Get orderQuestionnaireTests.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -697,9 +711,10 @@ class Questionnaire
     }
 
     /**
-     * Set mediaFunctionalInstruction
+     * Set mediaFunctionalInstruction.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaFunctionalInstruction
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaFunctionalInstruction
+     *
      * @return Questionnaire
      */
     public function setMediaFunctionalInstruction(\Innova\SelfBundle\Entity\Media\Media $mediaFunctionalInstruction = null)
@@ -710,7 +725,7 @@ class Questionnaire
     }
 
     /**
-     * Get mediaFunctionalInstruction
+     * Get mediaFunctionalInstruction.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
@@ -720,9 +735,10 @@ class Questionnaire
     }
 
     /**
-     * Add comments
+     * Add comments.
      *
-     * @param  \Innova\SelfBundle\Entity\Comment $comments
+     * @param \Innova\SelfBundle\Entity\Comment $comments
+     *
      * @return Questionnaire
      */
     public function addComment(\Innova\SelfBundle\Entity\Comment $comments)
@@ -733,7 +749,7 @@ class Questionnaire
     }
 
     /**
-     * Remove comments
+     * Remove comments.
      *
      * @param \Innova\SelfBundle\Entity\Comment $comments
      */
@@ -743,7 +759,7 @@ class Questionnaire
     }
 
     /**
-     * Get comments
+     * Get comments.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -753,9 +769,10 @@ class Questionnaire
     }
 
     /**
-     * Set mediaFeedback
+     * Set mediaFeedback.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaFeedback
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaFeedback
+     *
      * @return Questionnaire
      */
     public function setMediaFeedback(\Innova\SelfBundle\Entity\Media\Media $mediaFeedback = null)
@@ -766,7 +783,7 @@ class Questionnaire
     }
 
     /**
-     * Get mediaFeedback
+     * Get mediaFeedback.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
@@ -776,9 +793,10 @@ class Questionnaire
     }
 
     /**
-     * Set mediaBlankText
+     * Set mediaBlankText.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaBlankText
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaBlankText
+     *
      * @return Questionnaire
      */
     public function setMediaBlankText(\Innova\SelfBundle\Entity\Media\Media $mediaBlankText = null)
@@ -789,7 +807,7 @@ class Questionnaire
     }
 
     /**
-     * Get mediaBlankText
+     * Get mediaBlankText.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
@@ -799,9 +817,10 @@ class Questionnaire
     }
 
     /**
-     * Set language
+     * Set language.
      *
-     * @param  \Innova\SelfBundle\Entity\Language $language
+     * @param \Innova\SelfBundle\Entity\Language $language
+     *
      * @return Questionnaire
      */
     public function setLanguage(\Innova\SelfBundle\Entity\Language $language = null)
@@ -812,7 +831,7 @@ class Questionnaire
     }
 
     /**
-     * Get language
+     * Get language.
      *
      * @return \Innova\SelfBundle\Entity\Language
      */
@@ -822,9 +841,10 @@ class Questionnaire
     }
 
     /**
-     * Set textTitle
+     * Set textTitle.
      *
-     * @param  string        $textTitle
+     * @param string $textTitle
+     *
      * @return Questionnaire
      */
     public function setTextTitle($textTitle)
@@ -835,7 +855,7 @@ class Questionnaire
     }
 
     /**
-     * Get textTitle
+     * Get textTitle.
      *
      * @return string
      */
@@ -845,9 +865,10 @@ class Questionnaire
     }
 
     /**
-     * Set levelProof
+     * Set levelProof.
      *
-     * @param  text          $levelProof
+     * @param text $levelProof
+     *
      * @return Questionnaire
      */
     public function setLevelProof($levelProof)
@@ -858,7 +879,7 @@ class Questionnaire
     }
 
     /**
-     * Get levelProof
+     * Get levelProof.
      *
      * @return string
      */
@@ -868,9 +889,10 @@ class Questionnaire
     }
 
     /**
-     * Set authorRightMore
+     * Set authorRightMore.
      *
-     * @param  text          $authorRightMore
+     * @param text $authorRightMore
+     *
      * @return Questionnaire
      */
     public function setAuthorRightMore($authorRightMore)
@@ -881,7 +903,7 @@ class Questionnaire
     }
 
     /**
-     * Get authorRightMore
+     * Get authorRightMore.
      *
      * @return string
      */
@@ -891,9 +913,10 @@ class Questionnaire
     }
 
     /**
-     * Set sourceMore
+     * Set sourceMore.
      *
-     * @param  text          $sourceMore
+     * @param text $sourceMore
+     *
      * @return Questionnaire
      */
     public function setSourceMore($sourceMore)
@@ -904,7 +927,7 @@ class Questionnaire
     }
 
     /**
-     * Get sourceMore
+     * Get sourceMore.
      *
      * @return string
      */
@@ -914,9 +937,10 @@ class Questionnaire
     }
 
     /**
-     * Add revisors
+     * Add revisors.
      *
-     * @param  \Innova\SelfBundle\Entity\User $revisors
+     * @param \Innova\SelfBundle\Entity\User $revisors
+     *
      * @return Questionnaire
      */
     public function addRevisor(\Innova\SelfBundle\Entity\User $revisors)
@@ -927,7 +951,7 @@ class Questionnaire
     }
 
     /**
-     * Remove revisors
+     * Remove revisors.
      *
      * @param \Innova\SelfBundle\Entity\User $revisors
      */
@@ -937,7 +961,7 @@ class Questionnaire
     }
 
     /**
-     * Get revisors
+     * Get revisors.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -947,9 +971,10 @@ class Questionnaire
     }
 
     /**
-     * Set status
+     * Set status.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Status $status
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Status $status
+     *
      * @return Questionnaire
      */
     public function setStatus(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Status $status = null)
@@ -960,7 +985,7 @@ class Questionnaire
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Status
      */
@@ -970,9 +995,10 @@ class Questionnaire
     }
 
     /**
-     * Set authorRight
+     * Set authorRight.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight $authorRight
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight $authorRight
+     *
      * @return Questionnaire
      */
     public function setAuthorRight(\Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight $authorRight = null)
@@ -983,7 +1009,7 @@ class Questionnaire
     }
 
     /**
-     * Get authorRight
+     * Get authorRight.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight
      */
@@ -993,9 +1019,10 @@ class Questionnaire
     }
 
     /**
-     * Set source
+     * Set source.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Source $source
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Source $source
+     *
      * @return Questionnaire
      */
     public function setSource(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Source $source = null)
@@ -1006,7 +1033,7 @@ class Questionnaire
     }
 
     /**
-     * Get source
+     * Get source.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Source
      */
@@ -1016,9 +1043,10 @@ class Questionnaire
     }
 
     /**
-     * Set sourceOperation
+     * Set sourceOperation.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation $sourceOperation
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation $sourceOperation
+     *
      * @return Questionnaire
      */
     public function setSourceOperation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation $sourceOperation = null)
@@ -1029,7 +1057,7 @@ class Questionnaire
     }
 
     /**
-     * Get sourceOperation
+     * Get sourceOperation.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation
      */
@@ -1039,9 +1067,10 @@ class Questionnaire
     }
 
     /**
-     * Set domain
+     * Set domain.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain $domain
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain $domain
+     *
      * @return Questionnaire
      */
     public function setDomain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain $domain = null)
@@ -1052,7 +1081,7 @@ class Questionnaire
     }
 
     /**
-     * Get domain
+     * Get domain.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain
      */
@@ -1062,9 +1091,10 @@ class Questionnaire
     }
 
     /**
-     * Set register
+     * Set register.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Register $register
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Register $register
+     *
      * @return Questionnaire
      */
     public function setRegister(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Register $register = null)
@@ -1075,7 +1105,7 @@ class Questionnaire
     }
 
     /**
-     * Get register
+     * Get register.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Register
      */
@@ -1085,9 +1115,10 @@ class Questionnaire
     }
 
     /**
-     * Set reception
+     * Set reception.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception $reception
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception $reception
+     *
      * @return Questionnaire
      */
     public function setReception(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception $reception = null)
@@ -1098,7 +1129,7 @@ class Questionnaire
     }
 
     /**
-     * Get reception
+     * Get reception.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception
      */
@@ -1108,9 +1139,10 @@ class Questionnaire
     }
 
     /**
-     * Set length
+     * Set length.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Length $length
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Length $length
+     *
      * @return Questionnaire
      */
     public function setLength(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Length $length = null)
@@ -1121,7 +1153,7 @@ class Questionnaire
     }
 
     /**
-     * Get length
+     * Get length.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Length
      */
@@ -1131,9 +1163,10 @@ class Questionnaire
     }
 
     /**
-     * Set flow
+     * Set flow.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow $flow
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow $flow
+     *
      * @return Questionnaire
      */
     public function setFlow(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow $flow = null)
@@ -1144,7 +1177,7 @@ class Questionnaire
     }
 
     /**
-     * Get flow
+     * Get flow.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow
      */
@@ -1154,9 +1187,10 @@ class Questionnaire
     }
 
     /**
-     * Set authorMore
+     * Set authorMore.
      *
-     * @param  string        $authorMore
+     * @param string $authorMore
+     *
      * @return Questionnaire
      */
     public function setAuthorMore($authorMore)
@@ -1167,7 +1201,7 @@ class Questionnaire
     }
 
     /**
-     * Get authorMore
+     * Get authorMore.
      *
      * @return string
      */
@@ -1177,9 +1211,10 @@ class Questionnaire
     }
 
     /**
-     * Add sourceTypes
+     * Add sourceTypes.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
+     *
      * @return Questionnaire
      */
     public function addSourceType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes)
@@ -1190,7 +1225,7 @@ class Questionnaire
     }
 
     /**
-     * Add sourceTypes collection
+     * Add sourceTypes collection.
      */
     public function addSourceTypes($sourceTypes)
     {
@@ -1202,7 +1237,7 @@ class Questionnaire
     }
 
     /**
-     * Remove sourceTypes
+     * Remove sourceTypes.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType $sourceTypes
      */
@@ -1212,7 +1247,7 @@ class Questionnaire
     }
 
     /**
-     * Get sourceTypes
+     * Get sourceTypes.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -1222,9 +1257,10 @@ class Questionnaire
     }
 
     /**
-     * Add channels
+     * Add channels.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
+     *
      * @return Questionnaire
      */
     public function addChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
@@ -1235,7 +1271,7 @@ class Questionnaire
     }
 
     /**
-     * Add channels collection
+     * Add channels collection.
      */
     public function addChannels($channels)
     {
@@ -1247,7 +1283,7 @@ class Questionnaire
     }
 
     /**
-     * Remove channels
+     * Remove channels.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
      */
@@ -1257,7 +1293,7 @@ class Questionnaire
     }
 
     /**
-     * Get channels
+     * Get channels.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -1267,9 +1303,10 @@ class Questionnaire
     }
 
     /**
-     * Add genres
+     * Add genres.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres
+     *
      * @return Questionnaire
      */
     public function addGenre(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres)
@@ -1280,7 +1317,7 @@ class Questionnaire
     }
 
     /**
-     * Add genres collection
+     * Add genres collection.
      */
     public function addGenres($genres)
     {
@@ -1292,7 +1329,7 @@ class Questionnaire
     }
 
     /**
-     * Remove genres
+     * Remove genres.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres
      */
@@ -1302,7 +1339,7 @@ class Questionnaire
     }
 
     /**
-     * Get genres
+     * Get genres.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -1312,9 +1349,10 @@ class Questionnaire
     }
 
     /**
-     * Add varieties
+     * Add varieties.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
+     *
      * @return Questionnaire
      */
     public function addVarietie(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
@@ -1325,7 +1363,7 @@ class Questionnaire
     }
 
     /**
-     * Add varieties collection
+     * Add varieties collection.
      */
     public function addVarieties($varieties)
     {
@@ -1337,7 +1375,7 @@ class Questionnaire
     }
 
     /**
-     * Remove varieties
+     * Remove varieties.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
      */
@@ -1347,7 +1385,7 @@ class Questionnaire
     }
 
     /**
-     * Get varieties
+     * Get varieties.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -1356,29 +1394,30 @@ class Questionnaire
         return $this->varieties;
     }
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->revisors                 = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mediaLimits              = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mediaClicks              = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comments                 = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->questions                = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->traces                   = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->orderQuestionnaireTests  = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->sourceTypes              = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->channels                 = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->genres                   = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->varieties                = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->socialLocations          = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->revisors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mediaLimits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mediaClicks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orderQuestionnaireTests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sourceTypes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->channels = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->varieties = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->socialLocations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderQuestionnaireComponents = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add orderQuestionnaireComponents
+     * Add orderQuestionnaireComponents.
      *
-     * @param  \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     *
      * @return Questionnaire
      */
     public function addOrderQuestionnaireComponent(\Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents)
@@ -1389,7 +1428,7 @@ class Questionnaire
     }
 
     /**
-     * Remove orderQuestionnaireComponents
+     * Remove orderQuestionnaireComponents.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
      */
@@ -1399,7 +1438,7 @@ class Questionnaire
     }
 
     /**
-     * Get orderQuestionnaireComponents
+     * Get orderQuestionnaireComponents.
      *
      * @return PhasedTest\OrderQuestionnaireComponent[]
      */
@@ -1409,9 +1448,10 @@ class Questionnaire
     }
 
     /**
-     * Set lisibility
+     * Set lisibility.
      *
-     * @param  string        $lisibility
+     * @param string $lisibility
+     *
      * @return Questionnaire
      */
     public function setLisibility($lisibility)
@@ -1422,7 +1462,7 @@ class Questionnaire
     }
 
     /**
-     * Get lisibility
+     * Get lisibility.
      *
      * @return string
      */
@@ -1432,9 +1472,26 @@ class Questionnaire
     }
 
     /**
-     * Add socialLocations
+     * Add socialLocations.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
+     *
+     * @return Questionnaire
+     */
+    public function addSocialLocations($socialLocations)
+    {
+        foreach ($socialLocations as $socialLocation) {
+            $this->socialLocations[] = $socialLocation;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add socialLocation.
+     *
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
+     *
      * @return Questionnaire
      */
     public function addSocialLocation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations)
@@ -1445,7 +1502,7 @@ class Questionnaire
     }
 
     /**
-     * Remove socialLocations
+     * Remove socialLocations.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
      */
@@ -1455,7 +1512,7 @@ class Questionnaire
     }
 
     /**
-     * Get socialLocations
+     * Get socialLocations.
      *
      * @return QuestionnaireIdentity\SocialLocation[]
      */
@@ -1465,9 +1522,10 @@ class Questionnaire
     }
 
     /**
-     * Set textLength
+     * Set textLength.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength
+     *
      * @return Questionnaire
      */
     public function setTextLength(\Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength = null)
@@ -1478,7 +1536,7 @@ class Questionnaire
     }
 
     /**
-     * Get textLength
+     * Get textLength.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength
      */
@@ -1488,9 +1546,10 @@ class Questionnaire
     }
 
     /**
-     * Set speechType
+     * Set speechType.
      *
-     * @param  text          $speechType
+     * @param text $speechType
+     *
      * @return Questionnaire
      */
     public function setSpeechType($speechType)
@@ -1501,7 +1560,7 @@ class Questionnaire
     }
 
     /**
-     * Get speechType
+     * Get speechType.
      *
      * @return string
      */
@@ -1511,9 +1570,10 @@ class Questionnaire
     }
 
     /**
-     * Set productionType
+     * Set productionType.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType
+     *
      * @return Questionnaire
      */
     public function setProductionType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType = null)
@@ -1524,7 +1584,7 @@ class Questionnaire
     }
 
     /**
-     * Get productionType
+     * Get productionType.
      *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType
      */
@@ -1534,9 +1594,10 @@ class Questionnaire
     }
 
     /**
-     * Add varieties
+     * Add varieties.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
+     *
      * @return Questionnaire
      */
     public function addVariety(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
@@ -1547,7 +1608,7 @@ class Questionnaire
     }
 
     /**
-     * Remove varieties
+     * Remove varieties.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
      */
