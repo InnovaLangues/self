@@ -275,6 +275,11 @@ class QuestionnaireManager
         $newTask->addChannels($task->getChannels());
         $newTask->addGenres($task->getGenres());
         $newTask->addVarieties($task->getVarieties());
+        $newTask->addSocialLocations($task->getSocialLocations());
+        $newTask->setLisibility($task->getLisibility());
+        $newTask->setSpeechType($task->getSpeechType());
+        $newTask->setTextLength($task->getTextLength());
+        $newTask->setProductionType($task->getProductionType());
 
         $questions = $task->getQuestions();
         foreach ($questions as $question) {
