@@ -66,10 +66,11 @@ class PlayerController extends Controller
     public function endAction(Test $test, Session $session)
     {
         $scoreManager = $this->get('self.score.manager');
-        $levelFeedback = $scoreManager->getGlobalScore($session, $this->getUser());
-        $eecFeedback = $scoreManager->getSkillScore($session, $this->getUser(), 'EEC');
-        $coFeedback = $scoreManager->getSkillScore($session, $this->getUser(), 'CO');
-        $ceFeedback = $scoreManager->getSkillScore($session, $this->getUser(), 'CE');
+
+        $levelFeedback = $scoreManager->getGlobalScore($session, $this->getUser(), true);
+        $eecFeedback = $scoreManager->getSkillScore($session, $this->getUser(), 'EEC', true);
+        $coFeedback = $scoreManager->getSkillScore($session, $this->getUser(), 'CO', true);
+        $ceFeedback = $scoreManager->getSkillScore($session, $this->getUser(), 'CE', true);
         $score = $scoreManager->calculateScoreByTest($test, $session, $this->getUser());
 
         return array(
