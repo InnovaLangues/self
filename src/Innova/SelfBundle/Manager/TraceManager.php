@@ -46,7 +46,14 @@ class TraceManager
         } else {
             $agent = $request->headers->get('User-Agent');
             $trace = $this->createTrace($questionnaire, $test, $this->user, $post['totalTime'], $agent, $component, $session);
-            $this->parsePost($post, $trace);
+            if (!$this->parsePost($post, $trace)) {
+                $answers = $em->getRepository('InnovaSelfBundle:Answer')->findByTrace($trace);
+                foreach ($answers as $answer) {
+                    $em->remove($answer);
+                }
+                $em->remove($trace);
+                $em->flush();
+            }
         }
 
         return $trace;
@@ -125,14 +132,17 @@ class TraceManager
                         $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
                         if ($subquestion->getPropositions()->contains($proposition)) {
                             $this->answerManager->createAnswer($trace, $subquestion, $proposition);
+                        } else {
+                            return false;
                         }
-                        // check proposition is part of subquestion->propositions
                     } else {
                         $this->createAnswerProposition($trace, $propositionId, $subquestion);
                     }
                 }
             }
         }
+
+        return true;
     }
 
     /**
