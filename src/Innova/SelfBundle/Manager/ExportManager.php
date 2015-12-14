@@ -662,10 +662,12 @@ class ExportManager
         $csv .= $this->addColumn('Score CO');
         $csv .= $this->addColumn('Score CE');
         $csv .= $this->addColumn('Score EEC');
+        $csv .= $this->addColumn('Test fini');
 
         $csv .= "\n";
 
         foreach ($users as $user) {
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $session->getTest(), 'session' => $session));
             $csv .= $this->addColumn($user->getUsername());
             $csv .= $this->addColumn($user->getLastName());
             $csv .= $this->addColumn($user->getFirstName());
@@ -675,11 +677,27 @@ class ExportManager
             $institution = ($user->getInstitution()) ? $user->getInstitution()->getName() : '';
             $course = ($user->getCourse()) ? $user->getCourse()->getName() : '';
             $year = ($user->getYear()) ? $user->getYear()->getName() : '';
-            $scoreGlobal = $this->scoreManager->getGlobalScore($session, $user);
-            $scoreCO = $this->scoreManager->getSkillScore($session, $user, 'CO');
-            $scoreCE = $this->scoreManager->getSkillScore($session, $user, 'CE');
-            $scoreEEC = $this->scoreManager->getSkillScore($session, $user, 'EEC');
-            $traces = $this->entityManager->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $session->getTest(), 'session' => $session));
+            $registeredScore = $em->getRepository('InnovaSelfBundle:UserResult')->findOneBy(array('user' => $user, 'session' => $session));
+
+            $isTestFinished = $registeredScore ? true : $this->isTestFinished($traces);
+            $saveScore = ($isTestFinished && !$registeredScore) ? true : false;
+
+            $scoreGlobal = $registeredScore
+                ? $registeredScore->getGeneralScore()
+                : $this->scoreManager->getGlobalScore($session, $user, $saveScore);
+
+            $scoreCO = $registeredScore
+                ? $registeredScore->getCoScore()
+                : $this->scoreManager->getSkillScore($session, $user, 'CO', $saveScore);
+
+            $scoreCE = $registeredScore
+                ? $registeredScore->getCeScore()
+                : $this->scoreManager->getSkillScore($session, $user, 'CE', $saveScore);
+
+            $scoreEEC = $registeredScore
+                ? $registeredScore->getEecScore()
+                : $this->scoreManager->getSkillScore($session, $user, 'EEC', $saveScore);
+
             $lastTrace = end($traces)->getDate();
             $firstTrace = reset($traces)->getDate();
 
@@ -693,6 +711,7 @@ class ExportManager
             $csv .= $this->addColumn($scoreCO);
             $csv .= $this->addColumn($scoreCE);
             $csv .= $this->addColumn($scoreEEC);
+            $csv .= $this->addColumn($isTestFinished ? 'oui' : 'non');
 
             $csv .= "\n";
         }
@@ -700,6 +719,28 @@ class ExportManager
         $csv .= "\n";
 
         return $csv;
+    }
+
+    private function isTestFinished($traces)
+    {
+        $lastTrace = end($traces);
+        $firstTrace = reset($traces);
+        $lastComponent = $lastTrace->getComponent();
+        $test = $lastTrace->getTest();
+
+        if ($test->getPhased() && $lastComponent->getComponentType()->getName() == 'minitest') {
+            return false;
+        }
+
+        $expectedTracesCount = ($test->getPhased())
+            ? count($lastTrace->getComponent()->getOrderQuestionnaireComponents()) + count($lastTrace->getComponent()->getOrderQuestionnaireComponents())
+            : count($test->getOrderQuestionnaireTests());
+
+        if (count($traces) < $expectedTracesCount) {
+            return false;
+        }
+
+        return true;
     }
 
     private function diff(\DateTime $startTime, \DateTime $endTime)

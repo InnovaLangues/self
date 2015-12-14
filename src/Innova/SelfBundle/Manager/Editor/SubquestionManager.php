@@ -111,6 +111,9 @@ class SubquestionManager
 
         $newSubquestion = $this->createSubquestion($subquestion->getTypology(), $question);
         $newSubquestion->setTitle($subquestion->getTitle());
+        $newSubquestion->setLevel($subquestion->getLevel());
+        $newSubquestion->setDifficultyIndex($subquestion->getDifficultyIndex());
+        $newSubquestion->setDiscriminationIndex($subquestion->getDiscriminationIndex());
         $newSubquestion->setMedia($this->mediaManager->duplicate($subquestion->getMedia(), $questionnaire));
         $newSubquestion->setMediaAmorce($this->mediaManager->duplicate($subquestion->getMediaAmorce(), $questionnaire));
         $newSubquestion->setMediaSyllable($this->mediaManager->duplicate($subquestion->getMediaSyllable(), $questionnaire));

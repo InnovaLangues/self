@@ -13,12 +13,14 @@ class ScoreManager
 {
     protected $entityManager;
     protected $securityContext;
+    protected $userResultManager;
     protected $user;
 
-    public function __construct($entityManager, $securityContext)
+    public function __construct($entityManager, $securityContext, $userResultManager)
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
+        $this->userResultManager = $userResultManager;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->traceRepo = $this->entityManager->getRepository('InnovaSelfBundle:Trace');
         $this->propositionRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
@@ -75,7 +77,7 @@ class ScoreManager
         return $nextComponentTypeName;
     }
 
-    public function getGlobalScore(Session $session, User $user)
+    public function getGlobalScore(Session $session, User $user, $saveScore = false)
     {
         $test = $session->getTest();
         if ($traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session))) {
@@ -97,11 +99,18 @@ class ScoreManager
 
                 foreach ($thresholds as $threshold) {
                     if ($correctAnswers >= $threshold->getRightAnswers()) {
+                        if ($saveScore) {
+                            $this->userResultManager->setGeneralScore($threshold->getDescription(), $user, $session);
+                        }
+
                         return $threshold->getDescription();
                     }
                 }
             } else {
                 $score = $this->getRightPercentFromTraces($traces);
+                if ($saveScore) {
+                    $this->userResultManager->setGeneralScore($score, $user, $session);
+                }
 
                 return $score;
             }
@@ -110,7 +119,7 @@ class ScoreManager
         return;
     }
 
-    public function getSkillScore(Session $session, User $user, $skillName)
+    public function getSkillScore(Session $session, User $user, $skillName, $saveScore = false)
     {
         $test = $session->getTest();
         $skill = $this->entityManager->getRepository('InnovaSelfBundle:Skill')->findByName($skillName);
@@ -129,11 +138,18 @@ class ScoreManager
                 $correctAnswers = $this->countCorrectAnswers($scores);
                 foreach ($thresholds as $threshold) {
                     if ($correctAnswers >= $threshold->getRightAnswers()) {
+                        if ($saveScore) {
+                            $this->userResultManager->setSkillScore($threshold->getDescription(), $user, $session, $skillName);
+                        }
+
                         return $threshold->getDescription();
                     }
                 }
             } else {
                 $score = $this->getRightPercentFromTraces($traces);
+                if ($saveScore) {
+                    $this->userResultManager->setSkillScore($score, $user, $session, $skillName);
+                }
 
                 return $score;
             }
