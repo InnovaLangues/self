@@ -2,7 +2,6 @@
 
 namespace Innova\SelfBundle\Manager;
 
-use Symfony\Component\Filesystem\Filesystem;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Subquestion;
 
@@ -13,26 +12,29 @@ class ExportTestManager
     protected $knpSnappyPdf;
     protected $templating;
     protected $exportManager;
+    protected $fileSystemManager;
 
-    public function __construct($entityManager, $kernelRoot, $knpSnappyPdf, $templating, $exportManager)
+    public function __construct($entityManager, $kernelRoot, $knpSnappyPdf, $templating, $exportManager, $fileSystemManager)
     {
         $this->entityManager = $entityManager;
         $this->kernelRoot = $kernelRoot;
         $this->knpSnappyPdf = $knpSnappyPdf;
         $this->templating = $templating;
         $this->exportManager = $exportManager;
+        $this->fileSystemManager = $fileSystemManager;
     }
 
     public function exportPdf(Test $test)
     {
-        $em = $this->entityManager;
-        $pdfName = 'self_export-pdf-test_'.$test->getId().'-'.date('d-m-Y_H:i:s').'.pdf';
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
+        $filename = 'self_export-pdf-test_'.$test->getId().'-'.date('d-m-Y_H:i:s').'.pdf';
+        $pdflocalPath = $this->kernelRoot.'/data/exportPdf/'.$test->getId().'/'.$filename;
+        $remotePath = 'test/'.$test->getId().'/pdf/'.$filename;
+        $questionnaires = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
         // Appel de la vue et de la génération du PDF
         $this->knpSnappyPdf->generateFromHtml(
                 $this->templating->render('InnovaSelfBundle:Export:templatePdf.html.twig', array('test' => $test, 'questionnaires' => $questionnaires)),
-                $this->kernelRoot.'/data/exportPdf/'.$test->getId().'/'.$pdfName,
+                $pdflocalPath,
                 array(
                     'footer-center' => $test->getName(),
                     'footer-right' => utf8_decode('page [page] / [topage]'),
@@ -41,25 +43,20 @@ class ExportTestManager
                 )
         );
 
-        return $pdfName;
+        $fileContent = file_get_contents($pdflocalPath);
+        $this->fileSystemManager->writeFile('private', $remotePath, $fileContent);
+
+        return $filename;
     }
 
     public function generateCsv(Test $test)
     {
-        $fs = new Filesystem();
-        $testId = $test->getId();
+        $filename = 'test/'.$test->getId().'/csv/self_export-test'.$test->getId().'-'.date('d-m-Y_H:i:s').'.csv';
+        $fileContent = $this->getCsvContent($test);
 
-        $csvName = 'self_export-test_'.$testId.'-'.date('d-m-Y_H:i:s').'.csv';
-        $csvPathExport = $this->kernelRoot.'/data/export/'.$testId.'/';
+        $this->fileSystemManager->writeFile('private', $filename, $fileContent);
+        $file = $this->fileSystemManager->getFile('private', $filename);
 
-        $fs->mkdir($csvPathExport, 0777);
-        $csvh = fopen($csvPathExport.'/'.$csvName, 'w+');
-
-        $csvContent = $this->getCsvContent($test);
-        fwrite($csvh, $csvContent);
-        fclose($csvh);
-
-        $file = $this->kernelRoot.'/data/export/'.$test->getId().'/'.$csvName;
         $response = $this->exportManager->generateResponse($file);
 
         return $response;

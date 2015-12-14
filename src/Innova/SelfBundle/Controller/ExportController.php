@@ -26,15 +26,17 @@ class ExportController
     protected $securityContext;
     protected $rightManager;
     protected $voter;
+    protected $fileSystem;
     protected $user;
 
-    public function __construct($kernelRoot, $exportManager, $securityContext, $rightManager, $voter)
+    public function __construct($kernelRoot, $exportManager, $securityContext, $rightManager, $voter, $fileSystem)
     {
         $this->kernelRoot = $kernelRoot;
         $this->exportManager = $exportManager;
         $this->securityContext = $securityContext;
         $this->rightManager = $rightManager;
         $this->voter = $voter;
+        $this->fileSystem = $fileSystem;
         $this->user = $this->securityContext->getToken()->getUser();
     }
 
@@ -45,8 +47,7 @@ class ExportController
     public function getFileAction($testId, $filename, $mode)
     {
         if ($this->rightManager->checkRight('right.exportPDF', $this->user) || $this->rightManager->checkRight('right.exportCSV', $this->user)) {
-            $dir = ($mode == 'pdf') ? 'exportPdf' : 'export';
-            $file = $this->kernelRoot.'/data/'.$dir.'/'.$testId.'/'.$filename;
+            $file = $this->fileSystem->getFile('private', 'test/'.$testId.'/'.$mode.'/'.$filename);
             $response = $this->exportManager->generateResponse($file);
 
             return $response;

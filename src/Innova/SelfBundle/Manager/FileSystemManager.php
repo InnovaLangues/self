@@ -44,6 +44,18 @@ class FileSystemManager
         return $file;
     }
 
+    public function listFiles($acl, $dir)
+    {
+        $adapter = $this->getAdapter($acl);
+        $files = $adapter->listKeys($dir);
+        $fileNames = array();
+        foreach ($files as $file) {
+            $fileNames[] = basename($file);
+        }
+
+        return $fileNames;
+    }
+
     private function createLocalFile($fileContent, $filename)
     {
         $fs = new Filesystem();

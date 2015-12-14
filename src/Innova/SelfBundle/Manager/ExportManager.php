@@ -105,28 +105,23 @@ class ExportManager
 
     public function generateCsv(Test $test, Session $session, $tia)
     {
-        $fs = new Filesystem();
         $testId = $test->getId();
         $sessionId = $session->getId();
 
         if ($tia == 0) {
             $tia = '';
-            $csvContent = $this->getCsvContent($test, $session);
+            $fileContent = $this->getCsvContent($test, $session);
         } else {
             $tia = '-tia';
-            $csvContent = $this->getCsvTiaContent($test, $session);
+            $fileContent = $this->getCsvTiaContent($test, $session);
         }
 
-        $csvName = 'self_export-test_'.$testId.'-session'.$sessionId.'-'.date('d-m-Y_H:i:s').$tia.'.csv';
-        $csvPathExport = $this->kernelRoot.'/data/export/'.$testId.'/';
+        $path = 'test/'.$testId.'/csv/';
+        $filename = 'self_export-test_'.$testId.'-session'.$sessionId.'-'.date('d-m-Y_H:i:s').$tia.'.csv';
 
-        $fs->mkdir($csvPathExport, 0777);
-        $csvh = fopen($csvPathExport.'/'.$csvName, 'w+');
+        $this->fileSystemManager->writeFile('private', $path.$filename, $fileContent);
 
-        fwrite($csvh, $csvContent);
-        fclose($csvh);
-
-        return $csvName;
+        return $filename;
     }
 
     public function exportSession(Session $session, $startDate = null, $endDate = null)
@@ -147,21 +142,7 @@ class ExportManager
      */
     public function getFileList(Test $test, $mode)
     {
-        $dir = ($mode == 'pdf') ? 'exportPdf' : 'export';
-
-        $testId = $test->getId();
-        $csvPathExport = $this->kernelRoot.'/data/'.$dir.'/'.$testId.'/';
-        $fileList = array();
-
-        if (is_dir($csvPathExport) && $dossier = opendir($csvPathExport)) {
-            while (false !== ($fichier = readdir($dossier))) {
-                if ($fichier != '.' && $fichier != '..') {
-                    $fileList[] = $fichier;
-                }
-            }
-            closedir($dossier);
-        }
-        arsort($fileList);
+        $fileList = $this->fileSystemManager->listFiles('private', 'test/'.$test->getId().'/'.$mode.'/');
 
         return $fileList;
     }

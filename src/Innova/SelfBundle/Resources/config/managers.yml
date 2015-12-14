@@ -143,6 +143,7 @@ services:
             knpSnappyPdf:       @knp_snappy.pdf
             templating:         @templating
             exportManager:      @self.export.manager
+            fileSystemManager:  @self.filesystem.manager
 
     self.test.manager:
         class: Innova\SelfBundle\Manager\Editor\TestManager
