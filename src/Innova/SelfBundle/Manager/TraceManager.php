@@ -123,7 +123,10 @@ class TraceManager
                 foreach ($postVar as $key => $propositionId) {
                     if ($subquestion->getTypology()->getName() != 'TLQROC') {
                         $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
-                        $this->answerManager->createAnswer($trace, $subquestion, $proposition);
+                        if ($subquestion->getPropositions()->contains($proposition)) {
+                            $this->answerManager->createAnswer($trace, $subquestion, $proposition);
+                        }
+                        // check proposition is part of subquestion->propositions
                     } else {
                         $this->createAnswerProposition($trace, $propositionId, $subquestion);
                     }
