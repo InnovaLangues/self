@@ -108,6 +108,36 @@ class SessionController extends Controller
     }
 
     /**
+     * @Route("/session/{sessionId}/invalidate-results", name="editor_test_invalidate_results_session")
+     * @Method("GET")
+     *
+     * @Template("InnovaSelfBundle:Session:new.html.twig")
+     */
+    public function invalidateResultsAction(Session $session)
+    {
+        $this->get('innova_voter')->isAllowed('right.individualresultssession', $session);
+
+        $this->get('self.session.manager')->invalidateResults($session);
+
+        return $this->redirect($this->generateUrl('editor_test_session_results', array('sessionId' => $session->getId())));
+    }
+
+    /**
+     * @Route("/session/{sessionId}/user/{userId}/invalidate-results", name="editor_test_invalidate_results_session_user")
+     * @Method("GET")
+     *
+     * @Template("InnovaSelfBundle:Session:new.html.twig")
+     */
+    public function invalidateUserResultsAction(Session $session, User $user)
+    {
+        $this->get('innova_voter')->isAllowed('right.individualresultssession', $session);
+
+        $this->get('self.session.manager')->invalidateUserResults($session, $user);
+
+        return $this->redirect($this->generateUrl('editor_test_session_results', array('sessionId' => $session->getId())));
+    }
+
+    /**
      * @Route("/session/{sessionId}/results", name="editor_test_session_results")
      * @Method("GET")
      *
