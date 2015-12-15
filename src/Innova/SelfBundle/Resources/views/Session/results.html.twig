@@ -20,6 +20,13 @@
 </a>
 {% endif %}
 
+{% if checkRight("right.individualresultssession", session) %}
+<a class="btn btn-default btn-sm" href="{{ path('editor_test_invalidate_results_session', {'sessionId': session.id }) }}">
+    <span class="glyphicon glyphicon-remove"></span> {{ 'editor.session.invalidate_results' | trans }}
+</a>
+{% endif %}
+
+
 <hr/>
 <h3>{{ 'editor.session.results' | trans }} <b>{{ session.name }}</b> </h3>
 <div class="input-group">
@@ -61,6 +68,10 @@
 				<a class="btn btn-default btn-sm" href="{{ path('editor_session_user_results', {'sessionId': session.id, 'userId': user.id }) }}">
 					<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results_user' | trans }}
 				</a>
+
+                <a class="btn btn-default btn-sm" href="{{ path('editor_test_invalidate_results_session_user', {'sessionId': session.id, 'userId': user.id }) }}">
+                    <span class="glyphicon glyphicon-remove"></span> {{ 'editor.session.invalidate_results' | trans }}
+                </a>
 			</td>
 		</tr>
 	{% endfor %}
