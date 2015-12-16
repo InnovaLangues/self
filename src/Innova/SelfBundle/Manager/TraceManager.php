@@ -91,10 +91,10 @@ class TraceManager
         return $trace;
     }
 
-    public function deleteTestTrace(User $user, Test $test)
+    public function deleteSessionTrace(User $user, Session $session)
     {
         $em = $this->entityManager;
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $test));
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'session' => $session));
 
         foreach ($traces as $trace) {
             $em->remove($trace);
