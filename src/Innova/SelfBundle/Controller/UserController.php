@@ -9,11 +9,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\Session;
 
 /**
  * User controller.
  *
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
+ * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  */
 class UserController extends Controller
 {
@@ -72,65 +74,29 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-        $testsWithTraces = array();
-
-        foreach ($tests as $test) {
-            $count = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
-            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getQuestionnairesDoneYetByUserByTest($test->getId(), $user->getId());
-            if ($count > 0) {
-                $testsWithTraces[] = array($test, $count, $questionnaires);
-            }
-        }
+        $sessionsWithTraces = $em->getRepository('InnovaSelfBundle:Session')->findWithTraces($user);
 
         return array(
-            'tests' => $testsWithTraces,
+            'sessions' => $sessionsWithTraces,
             'user' => $user,
         );
     }
 
     /**
-     * Delete trace for a given user and a given test.
+     * Delete trace for a given user and a given session.
      *
-     * @Route("/admin/user/{userId}/test/{testId}/delete-trace", name="delete-test-trace")
+     * @Route("/admin/user/{userId}/session/{sessionId}/delete-trace", name="delete-session-trace")
      * @Method("DELETE")
      */
-    public function deleteTestTraceAction($userId, $testId)
+    public function deleteSessionTraceAction(User $user, Session $session)
     {
         $this->get('innova_voter')->isAllowed('right.deletetraceuser');
 
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-
-        if ($this->get('self.trace.manager')->deleteTestTrace($user, $test)) {
-            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour le test '.$test->getName().' ont été supprimées');
+        if ($this->get('self.trace.manager')->deleteSessionTrace($user, $session)) {
+            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la session '.$session->getName().' ('.$session->getTest()->getName().') ont été supprimées');
         }
 
-        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
-    }
-
-    /**
-     * Delete trace for a given user and a given test.
-     *
-     * @Route("/admin/user/{userId}/test/{testId}/questionnaire/{questionnaireId}/delete-trace", name="delete-task-trace")
-     * @Method("DELETE")
-     */
-    public function deleteTaskTraceAction($userId, $testId, $questionnaireId)
-    {
-        $this->get('innova_voter')->isAllowed('right.deletetraceuser');
-
-        $em = $this->getDoctrine()->getManager();
-
-        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-
-        if ($this->get('self.trace.manager')->deleteTaskTrace($user, $test, $questionnaire)) {
-            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la tâche '.$questionnaire->getTheme().' ont été supprimées');
-        }
-
-        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
+        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
     }
 
     /**
