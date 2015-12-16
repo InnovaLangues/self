@@ -44,12 +44,12 @@ class OrderQuestionnaireTestManager
     {
         $em = $this->entityManager;
 
-        $orderedQuestionnaires = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findByTest($test);
+        $questionnaires = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findBy(array('test' => $test), array('displayOrder' => 'asc'));
 
         $i = 1;
-        foreach ($orderedQuestionnaires as $orderedQuestionnaire) {
-            $orderedQuestionnaire->setDisplayOrder($i);
-            $em->persist($orderedQuestionnaire);
+        foreach ($questionnaires as $questionnaire) {
+            $questionnaire->setDisplayOrder($i);
+            $em->persist($questionnaire);
             ++$i;
         }
         $em->flush();
@@ -66,7 +66,7 @@ class OrderQuestionnaireTestManager
             $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
             ++$i;
             $orderQuestionnaireTest = $em->getRepository('InnovaSelfBundle:OrderQuestionnaireTest')->findOneBy(array('questionnaire' => $questionnaire, 'test' => $test));
-            $orderQuestionnaireTest->setDisplayOrder($i + 1);
+            $orderQuestionnaireTest->setDisplayOrder($i);
             $em->persist($orderQuestionnaireTest);
         }
         $em->flush();
