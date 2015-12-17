@@ -47,7 +47,6 @@ class TraceRepository extends EntityRepository
         return $query->getResult();
     }
 
-
     public function getFirstForSecondStep($session, $user)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
@@ -65,7 +64,6 @@ class TraceRepository extends EntityRepository
         return $query->getOneOrNullResult();
     }
 
-
     public function getByUserBySessionBySkill($user, $session, $skill)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
@@ -78,6 +76,40 @@ class TraceRepository extends EntityRepository
                 ->setParameter('user', $user)
                 ->setParameter('session', $session)
                 ->setParameter('skill', $skill);
+
+        return $query->getResult();
+    }
+
+    /**
+     * countTraceByUserByTestByQuestionnaire Count Trace By user/test/questionnaire.
+     *
+     * @param id $test
+     * @param id $questionnaire
+     * @param id $user
+     *
+     * @return int number of traces for the test and the questionnaire and the user
+     */
+    public function findByUserByTestByQuestionnaire($test, $questionnaire, $user, $component, $session)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        WHERE t.user = :user
+        AND t.test = :test
+        AND t.session = :session
+        AND t.questionnaire = :questionnaire";
+
+        if ($component) {
+            $dql .= ' AND t.component = :component';
+        }
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('test', $test)
+                ->setParameter('questionnaire', $questionnaire)
+                ->setParameter('user', $user)
+                ->setParameter('session', $session);
+
+        if ($component) {
+            $query->setParameter('component', $component);
+        }
 
         return $query->getResult();
     }

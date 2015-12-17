@@ -41,7 +41,8 @@ class TraceManager
             : null;
 
         $trace = $em->getRepository('InnovaSelfBundle:Trace')->findByUserByTestByQuestionnaire($test, $questionnaire, $this->user, $component, $session);
-        if ($trace) {
+
+        if (count($trace) > 0) {
             $this->session->getFlashBag()->set('danger', 'Vous avez déjà répondu à cette question.');
         } else {
             $agent = $request->headers->get('User-Agent');

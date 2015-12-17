@@ -7,7 +7,8 @@ use Doctrine\ORM\EntityRepository;
 class QuestionnaireRepository extends EntityRepository
 {
     /**
-     * findOneNotDoneYetByUserByTest description]
+     * findOneNotDoneYetByUserByTest description].
+     *
      * @param id $testId
      * @param id $userId
      *
@@ -34,7 +35,8 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * countDoneYetByUserByTest count traces for test and for user
+     * countDoneYetByUserByTest count traces for test and for user.
+     *
      * @param id $testId
      * @param id $userId
      *
@@ -55,7 +57,7 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * Returns orphan tasks. Not associate to a testQuestionnaire or testComponent
+     * Returns orphan tasks. Not associate to a testQuestionnaire or testComponent.
      */
     public function findOrphans()
     {
@@ -75,7 +77,8 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * countDoneYetByUserByTest count traces for test and for user
+     * countDoneYetByUserByTest count traces for test and for user.
+     *
      * @param id $testId
      * @param id $userId
      *
@@ -98,7 +101,8 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * countDoneYetByUserByTestByComponent count traces for test, session, and component
+     * countDoneYetByUserByTestByComponent count traces for test, session, and component.
+     *
      * @param id $test
      * @param id $user
      *
@@ -123,7 +127,8 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * getQuestionnairesDoneYetByUserByTest questionnairre done for an user and a test
+     * getQuestionnairesDoneYetByUserByTest questionnairre done for an user and a test.
+     *
      * @param id $testId
      * @param id $userId
      *
@@ -144,34 +149,8 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * countTraceByUserByTestByQuestionnaire Count Trace By user/test/questionnaire
-     * @param id $test
-     * @param id $questionnaire
-     * @param id $user
+     * countAnswerByUserByTest Count Answer By user/test.
      *
-     * @return int number of traces for the test and the questionnaire and the user
-     */
-    public function findByUserByTestByQuestionnaire($test, $questionnaire, $user, $component, $session)
-    {
-        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
-        WHERE t.user = :user
-        AND t.test = :test
-        AND t.component = :component
-        AND t.session = :session
-        AND t.questionnaire = :questionnaire";
-
-        $query = $this->_em->createQuery($dql)
-                ->setParameter('test', $test)
-                ->setParameter('questionnaire', $questionnaire)
-                ->setParameter('user', $user)
-                ->setParameter('component', $component)
-                ->setParameter('session', $session);
-
-        return $query->getOneOrNullResult();
-    }
-
-    /**
-     * countAnswerByUserByTest Count Answer By user/test
      * @param id $testId
      * @param id $userId
      *
@@ -191,7 +170,8 @@ class QuestionnaireRepository extends EntityRepository
     }
 
     /**
-     * countRightAnswerByUserByTest Count right answer by test/user
+     * countRightAnswerByUserByTest Count right answer by test/user.
+     *
      * @param id $testId
      * @param id $userId
      *
@@ -213,7 +193,7 @@ class QuestionnaireRepository extends EntityRepository
 
     public function getPotentialByTest($test)
     {
-        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        $dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
         WHERE NOT EXISTS (
             SELECT otq FROM Innova\SelfBundle\Entity\orderQuestionnaireTest otq
             WHERE otq.questionnaire = q
@@ -230,7 +210,7 @@ class QuestionnaireRepository extends EntityRepository
 
     public function getByTest($test)
     {
-        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        $dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
         LEFT JOIN q.orderQuestionnaireTests qot
         LEFT JOIN q.orderQuestionnaireComponents qoc
         LEFT JOIN qoc.component c
@@ -239,7 +219,7 @@ class QuestionnaireRepository extends EntityRepository
         ORDER BY
         ";
 
-        $dql .= (!$test->getPhased()) ? "qot.displayOrder" : "ct.id, qoc.displayOrder";
+        $dql .= (!$test->getPhased()) ? 'qot.displayOrder' : 'ct.id, qoc.displayOrder';
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('test', $test);
@@ -249,7 +229,7 @@ class QuestionnaireRepository extends EntityRepository
 
     public function findPotentialByComponent($component)
     {
-        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        $dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
         WHERE NOT EXISTS (
             SELECT otc FROM Innova\SelfBundle\Entity\PhasedTest\orderQuestionnaireComponent otc
             LEFT JOIN otc.component c
@@ -287,7 +267,7 @@ class QuestionnaireRepository extends EntityRepository
 
     public function findByTestAndMissingLevel($test)
     {
-        $dql  = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        $dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
         LEFT JOIN q.orderQuestionnaireTests qot
         LEFT JOIN q.orderQuestionnaireComponents qoc
         LEFT JOIN qoc.component c
