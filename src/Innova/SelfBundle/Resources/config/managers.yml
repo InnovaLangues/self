@@ -1,4 +1,11 @@
 services:
+    self.filesystem.manager:
+        class: Innova\SelfBundle\Manager\FileSystemManager
+        arguments:
+            publicFileSystem:    @aws_s3_filesystem
+            privateFileSystem:   @aws_s3_filesystem_private
+            kernelRoot:          %kernel.root_dir%
+
     self.questionnaire.manager:
         class: Innova\SelfBundle\Manager\Editor\QuestionnaireManager
         arguments:
@@ -126,6 +133,7 @@ services:
             kernelRoot:         %kernel.root_dir%
             knpSnappyPdf:       @knp_snappy.pdf
             templating:         @templating
+            fileSystemManager:  @self.filesystem.manager
 
     self.testexport.manager:
         class: Innova\SelfBundle\Manager\ExportTestManager
@@ -135,6 +143,7 @@ services:
             knpSnappyPdf:       @knp_snappy.pdf
             templating:         @templating
             exportManager:      @self.export.manager
+            fileSystemManager:  @self.filesystem.manager
 
     self.test.manager:
         class: Innova\SelfBundle\Manager\Editor\TestManager

@@ -189,8 +189,7 @@ class SessionController extends Controller
         $this->get('innova_voter')->isAllowed('right.exportresultssession', $session);
 
         $filename = $this->get('self.export.manager')->exportSession($session);
-        $file = $this->get('kernel')->getRootDir().'/data/session/'.$session->getId().'/'.$filename;
-
+        $file = $this->get('self.filesystem.manager')->getFile('private', $filename);
         $response = $this->get('self.export.manager')->generateResponse($file);
 
         return $response;
@@ -206,9 +205,9 @@ class SessionController extends Controller
 
         $startDate = $request->get('startDate');
         $endDate = $request->get('endDate');
-        $filename = $this->get('self.export.manager')->exportSession($session, $startDate, $endDate);
-        $file = $this->get('kernel')->getRootDir().'/data/session/'.$session->getId().'/'.$filename;
 
+        $filename = $this->get('self.export.manager')->exportSession($session, $startDate, $endDate);
+        $file = $this->get('self.filesystem.manager')->getFile('private', $filename);
         $response = $this->get('self.export.manager')->generateResponse($file);
 
         return $response;

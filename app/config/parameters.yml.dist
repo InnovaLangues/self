@@ -24,3 +24,5 @@ parameters:
     gitter_token:               null
     gitter_room:                null
     faye_server.endpoint:       http://localhost:3000/
+    aws_key:                    test123
+    aws_secret_key:             test123

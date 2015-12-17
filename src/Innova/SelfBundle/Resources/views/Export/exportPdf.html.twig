@@ -12,6 +12,7 @@
         <hr/>
 
         <h3> Export PDF pour le test <strong>{{ test.name }}</strong></h3>
+
         {% if pdfName is defined %}
         <div class="alert alert-success" role="alert">{{ 'export.file_generated' | trans }} - <a href="{{ path('get-file', {'testId': test.id, 'filename': pdfName, 'mode':"pdf" } )}}">{{ 'export.file_download_pdf' | trans }}</a></div>
         {% endif %}

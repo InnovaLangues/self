@@ -42,6 +42,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         faye_server: %faye_server.endpoint%
+        uploads_url: %uploads_url%
 
 # Assetic Configuration
 assetic:
@@ -121,10 +122,6 @@ stfalcon_tinymce:
             relative_urls: false
             font_formats: "kaiti=kaiti"
 
-
-
-        
-
 knp_snappy:
     pdf:
         enabled:    true
@@ -203,3 +200,28 @@ liip_imagine:
         app3:
             filters:
                 thumbnail: { size: [174, 100], mode: outbound }
+
+knp_gaufrette:
+    adapters:
+        aws_s3_adapter:
+            aws_s3:
+                service_id: 'et.aws_s3'
+                bucket_name: %aws_bucket_name%
+                options:
+                    create: true
+                    directory: 'uploads'
+                    acl: 'public-read'
+        aws_s3_adapter_private:
+            aws_s3:
+                service_id: 'et.aws_s3'
+                bucket_name: %aws_bucket_name%
+                options:
+                    create: true
+                    directory: 'private'
+    filesystems:
+        aws_s3_fs:
+            adapter: aws_s3_adapter
+            alias: aws_s3_filesystem
+        aws_s3_fs_private:
+            adapter: aws_s3_adapter_private
+            alias: aws_s3_filesystem_private

@@ -1,7 +1,20 @@
 parameters:
     faye_server.adapter.class:  Nc\FayeClient\Adapter\CurlAdapter
     faye_server.client.class:   Nc\FayeClient\Client
+
 services:
+    et.aws_s3:
+        class: Aws\S3\S3Client #Gaufrette\Adapter\AwsS3
+        factory_class: Aws\S3\S3Client
+        factory_method: factory
+        arguments:
+            -
+                region: %aws_s3_region%
+                version: latest
+                credentials:
+                    key: %aws_key%
+                    secret: %aws_secret_key%
+
     innova_voter:
         class: Innova\SelfBundle\Voter\Voter
         arguments:
@@ -24,11 +37,13 @@ services:
             securityContext:    @security.token_storage
             rightManager:       @self.right.manager
             voter:              @innova_voter
+            fileSystemManager:  @self.filesystem.manager
 
     innova_editor_upload:
         class: Innova\SelfBundle\Controller\UploadController
         arguments:
             kernelRoot: %kernel.root_dir%
+            fileSystemManager: @self.filesystem.manager
 
     innova_editor_questionnaire:
         class: Innova\SelfBundle\Controller\Editor\QuestionnaireController
