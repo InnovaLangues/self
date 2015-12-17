@@ -751,7 +751,6 @@ class ExportManager
     private function isTestFinished($traces)
     {
         $lastTrace = end($traces);
-        $firstTrace = reset($traces);
         $lastComponent = $lastTrace->getComponent();
         $test = $lastTrace->getTest();
 
