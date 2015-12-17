@@ -24,3 +24,7 @@ parameters:
     gitter_token:               null
     gitter_room:                null
     faye_server.endpoint:       http://localhost:3000/
+    pusher_url: http://localhost:3000/
+    pusher_app: 1
+    pusher_key: keykeykeykey
+    pusher_secret: A$%jd)dfb

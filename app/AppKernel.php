@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new FOS\HttpCacheBundle\FOSHttpCacheBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Innova\GitterBundle\InnovaGitterBundle(),
+            new Innova\PusherBundle\InnovaPusherBundle(),
             new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
