@@ -100,6 +100,25 @@ class UserController extends Controller
     }
 
     /**
+     * get traces for a given user and a given session.
+     *
+     * @Route("/admin/user/{userId}/session/{sessionId}/traces", name="get-session-traces")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:User:traces_infos.html.twig")
+     */
+    public function getSessionTracesAction(User $user, Session $session)
+    {
+        $traceRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Trace');
+        $traces = $traceRepo->findBy(array('user' => $user, 'session' => $session));
+
+        return array(
+            'traces' => $traces,
+            'user' => $user,
+            'session' => $session,
+        );
+    }
+
+    /**
      * Delete trace for a given user and a given test.
      *
      * @Route("/admin/user/{userId}/delete", name="delete-user")
