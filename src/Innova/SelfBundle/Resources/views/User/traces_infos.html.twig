@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
+	<span class="glyphicon glyphicon-chevron-left"></span>
+	Revenir sur la fiche utilisateur
+</a>
+
+<hr/>
+
+<h3>Traces pour la session <strong>{{ session.name }}</strong> <span class="text-muted">({{ session.test.name }})</span> pour l'utilisateur <strong>{{ user.username }}</strong></h3>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Date</th>
+			<th>Temps (en secondes)</th>
+			<th>User Agent</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for i, trace in traces %}
+		<tr>
+			<td>{{ i + 1 }}</td>
+			<td>{{ trace.date|date('d-m-Y H:m:s') }}</td>
+			<td>{{ trace.totalTime }}</td>
+			<td>{{ trace.userAgent }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
