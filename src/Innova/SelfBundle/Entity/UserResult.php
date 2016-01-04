@@ -23,11 +23,13 @@ class UserResult
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Session")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $session;
 
