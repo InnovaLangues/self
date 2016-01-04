@@ -90,7 +90,7 @@
 {% endmacro %}
 
 {% macro translateVF(description) %}
-    {% set description = description |striptags %}
+    {% set description = description |striptags('<ruby><rt>') %}
     {% if description == "VRAI" %}
         {{ 'generic.boolTrue' | trans }}
     {% elseif description == "FAUX" %}
@@ -98,7 +98,7 @@
     {% elseif description == "ND" %}
        {{ 'generic.boolND' | trans }}
     {% else %}
-            {{ description|raw }}
+        {{ description|raw }}
     {% endif %}
 {% endmacro %}
 
