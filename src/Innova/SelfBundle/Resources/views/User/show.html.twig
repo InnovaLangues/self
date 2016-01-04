@@ -64,7 +64,7 @@
         </tbody>
     </table>
 
-    {% if sessions %}
+    {% if sessions is defined %}
         <h2>Traces</h2>
         <ul class="list-group">
         {% for session in sessions %}
