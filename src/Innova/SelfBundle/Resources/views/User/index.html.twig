@@ -9,17 +9,17 @@
     {% endif %}
 
     {% if checkRight("right.listuser") %}
-        {% if subset == "user.all" %}
-            <a href="{{ path('admin_users_connected') }}" class="btn btn-sm btn-default">
-                <span class=" glyphicon glyphicon-eye-open"></span>
+            <a href="{{ path('admin_user', { 'subset': 'connected' }) }}" class="btn btn-sm btn-default">
                 Voir les utilisateurs connectés
             </a>
-        {% else %}
-            <a href="{{ path('admin_user') }}" class="btn btn-sm btn-default">
-                <span class=" glyphicon glyphicon-eye-open"></span>
+        
+            <a href="{{ path('admin_user', { 'subset': 'all' }) }}" class="btn btn-sm btn-default">
                 Voir tous les utilisateurs
             </a>
-        {% endif %}  
+            
+            <a href="{{ path('admin_user', { 'subset': 'last' }) }}" class="btn btn-sm btn-default">
+                Voir les 1000 derniers inscrits
+            </a>
     {% endif %}
 
     <hr/>
