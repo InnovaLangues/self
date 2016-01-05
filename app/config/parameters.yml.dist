@@ -26,3 +26,6 @@ parameters:
     faye_server.endpoint:       http://localhost:3000/
     aws_key:                    test123
     aws_secret_key:             test123
+    aws_bucket_name:            selfprod
+    aws_s3_region:              us-west-2
+    uploads_url:                https://s3-%aws_s3_region%.amazonaws.com/%aws_bucket_name%/uploads/
