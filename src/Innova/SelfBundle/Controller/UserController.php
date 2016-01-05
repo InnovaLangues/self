@@ -20,43 +20,32 @@ use Innova\SelfBundle\Entity\Session;
 class UserController extends Controller
 {
     /**
-     * Lists all users.
+     * Lists users.
      *
-     * @Route("/admin/users/", name="admin_user")
+     * @Route("/admin/users/{subset}", name="admin_user")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
-        $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-
-        $users = ($this->get('self.right.manager')->checkRight('right.listuser', $currentUser))
-            ? $userRepo->findAllLight()
-            : $userRepo->findAuthorized($currentUser);
-
-        return array(
-            'entities' => $users,
-            'subset' => 'user.all',
-        );
-    }
-
-    /**
-     * Lists connected users.
-     *
-     * @Route("/admin/users/connected", name="admin_users_connected")
-     * @Method("GET")
-     * @Template("InnovaSelfBundle:User:index.html.twig")
-     */
-    public function connectedAction()
+    public function indexAction($subset)
     {
         $this->get('innova_voter')->isAllowed('right.listuser');
 
-        $connectedUsers = $this->get('self.user.manager')->getConnected();
+        $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
+        switch ($subset) {
+            case 'all':
+                $users = $userRepo->findAllLight();
+                break;
+            case 'connected':
+                $users = $this->get('self.user.manager')->getConnected();
+                break;
+            case 'last':
+                $users = $userRepo->findBy(array(), array('id' => 'DESC'), $limit = 1000, $offset = null);
+                break;
+        }
 
         return array(
-            'entities' => $connectedUsers,
-            'subset' => 'user.connected',
+            'entities' => $users,
+            'subset' => 'user.'.$subset,
         );
     }
 
@@ -130,7 +119,7 @@ class UserController extends Controller
 
         $this->get('self.user.manager')->deleteUser($user);
 
-        return $this->redirect($this->generateUrl('admin_user'));
+        return $this->redirect($this->generateUrl('admin_user', array('subset' => 'last')));
     }
 
     /**
