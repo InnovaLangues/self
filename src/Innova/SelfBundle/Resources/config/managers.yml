@@ -2,9 +2,9 @@ services:
     self.filesystem.manager:
         class: Innova\SelfBundle\Manager\FileSystemManager
         arguments:
-            publicFileSystem:    @aws_s3_filesystem
-            privateFileSystem:   @aws_s3_filesystem_private
-            kernelRoot:          %kernel.root_dir%
+            publicFileSystem:               @aws_s3_filesystem
+            privateFileSystem:              @aws_s3_filesystem_private
+            kernelRoot:                     %kernel.root_dir%
 
     self.questionnaire.manager:
         class: Innova\SelfBundle\Manager\Editor\QuestionnaireManager

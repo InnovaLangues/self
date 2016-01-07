@@ -210,7 +210,6 @@ knp_gaufrette:
                 options:
                     create: true
                     directory: 'uploads'
-                    acl: 'public-read'
         aws_s3_adapter_private:
             aws_s3:
                 service_id: 'et.aws_s3'
@@ -218,6 +217,14 @@ knp_gaufrette:
                 options:
                     create: true
                     directory: 'private'
+        #local_adapter:
+        #    local: 
+        #        directory: %kernel.root_dir%/../web/upload
+        #        create: true
+        #local_adapter_private:
+        #    local:
+        #        directory: %kernel.root_dir%/data/
+        #       create: true
     filesystems:
         aws_s3_fs:
             adapter: aws_s3_adapter
@@ -225,3 +232,9 @@ knp_gaufrette:
         aws_s3_fs_private:
             adapter: aws_s3_adapter_private
             alias: aws_s3_filesystem_private
+        #local_fs:
+        #    adapter: local_adapter
+        #    alias: aws_s3_filesystem
+        #local_fs_private:
+        #    adapter: local_adapter_private
+        #    alias: aws_s3_filesystem_private

@@ -78,6 +78,11 @@ node server.js
 ```
 if you wanna install node server on another server, you have to edit parameters.yml (the 'faye_server.endpoint' entry)
 
+
+# Uploaded medias storage 
+By default, medias are stored with amazon s3 service. In order to change to a local storage system, in 'app/config.yml' you have to comment filesystems & adaptaters related to amazon and uncomment the ones concerning localstorage. You also have to change URL generation in some twig views to point to 'web/upload/'.
+On amazon, medias are stored privately (through gaufrette) and a specific policy has been set on the bucket to allow anonymous requests coming from a specific domain to be authorized.
+
 ### Quality code services
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/InnovaLangues/self/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/InnovaLangues/self/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/128adf45-d4c4-4397-be56-4e1a279f2a38/mini.png)](https://insight.sensiolabs.com/projects/128adf45-d4c4-4397-be56-4e1a279f2a38)
