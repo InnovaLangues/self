@@ -62,11 +62,7 @@ class FileSystemManager
         $pdfPathExport = $this->kernelRoot.'/data/'.uniqid().'/';
         $fs->mkdir($pdfPathExport, 0777);
 
-        $fileName = 'self_export-'.date('d-m-Y_H:i:s').'.csv';
-
-        //$fileName = $pdfPathExport.$name;
-
-        $localFilePath = $pdfPathExport.'/'.$fileName;
+        $localFilePath = $pdfPathExport.'/'.$filename;
         $f = fopen($localFilePath, 'w+');
         fwrite($f, $fileContent);
         fclose($f);
