@@ -59,13 +59,9 @@ class FileSystemManager
     private function createLocalFile($fileContent, $filename)
     {
         $fs = new Filesystem();
-        $pdfPathExport = $this->kernelRoot.'/data/'.uniqid().'/';
-        $fs->mkdir($pdfPathExport, 0777);
-
-        $localFilePath = $pdfPathExport.'/'.$filename;
-        $f = fopen($localFilePath, 'w+');
-        fwrite($f, $fileContent);
-        fclose($f);
+        $pdfPathExport = $this->kernelRoot.'/data/tmp/';
+        $localFilePath = $pdfPathExport.$filename;
+        $fs->dumpFile($localFilePath, $fileContent);
 
         return $localFilePath;
     }
