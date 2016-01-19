@@ -215,6 +215,23 @@ class SessionController extends Controller
     }
 
     /**
+     * Delete trace for a given user and a given session.
+     *
+     * @Route("/session/{sessionId}/user/{userId}/delete-trace", name="delete-session-user-trace")
+     * @Method("GET")
+     */
+    public function deleteSessionUserTraceAction(User $user, Session $session)
+    {
+        $this->get('innova_voter')->isAllowed('right.deletetracesession', $session);
+
+        if ($this->get('self.trace.manager')->deleteSessionTrace($user, $session)) {
+            $this->get('session')->getFlashBag()->set('success', 'Les traces de l\'utilisateur '.$user->getUsername().' ont été supprimées');
+        }
+
+        return $this->redirect($this->generateUrl('editor_test_session_results', array('sessionId' => $session->getId())));
+    }
+
+    /**
      * @Route("/test/{testId}/create-session", name="create_session_for_export")
      * @Method("POST")
      */
