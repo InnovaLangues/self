@@ -13,35 +13,42 @@ class RightUserSessionType extends AbstractType
                 'class' => 'InnovaSelfBundle:User',
                 'property' => 'username',
                 'attr' => array('class' => 'form-control', 'data-field' => 'user'),
-                'label'  => 'user.single',
+                'label' => 'user.single',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canEdit', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canEdit'),
-                'label'  => 'canEdit',
+                'label' => 'canEdit',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canDelete', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canDelete'),
-                'label'  => 'canDelete',
+                'label' => 'canDelete',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canExportIndividual', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canExportIndividual'),
-                'label'  => 'canExportIndividual',
+                'label' => 'canExportIndividual',
+                'translation_domain' => 'messages',
+            ));
+
+        $builder->add('canDeleteTrace', 'choice', array(
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'attr' => array('class' => 'form-control', 'data-field' => 'canDeleteTrace'),
+                'label' => 'canDeleteTrace',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canExportCollective', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canExportCollective'),
-                'label'  => 'canExportCollective',
+                'label' => 'canExportCollective',
                 'translation_domain' => 'messages',
             ));
 
