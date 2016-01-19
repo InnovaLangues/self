@@ -72,6 +72,11 @@
                 <a class="btn btn-default btn-sm" href="{{ path('editor_test_invalidate_results_session_user', {'sessionId': session.id, 'userId': user.id }) }}">
                     <span class="glyphicon glyphicon-remove"></span> {{ 'editor.session.invalidate_results' | trans }}
                 </a>
+
+                <a class="btn btn-danger btn-sm delete-trace" href="#" realpath="{{ path('delete-session-user-trace', {'sessionId': session.id, 'userId': user.id }) }}">
+                    <span class="glyphicon glyphicon-remove"></span> {{ 'editor.session.delete_results' | trans }}
+                </a>
+
 			</td>
 		</tr>
 	{% endfor %}
