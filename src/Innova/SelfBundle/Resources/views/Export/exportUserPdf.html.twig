@@ -15,17 +15,19 @@
     </head>
     <body>
         <div class="container">
-            <div class="row">
-                <h1>
+            <div class="row text-center" style="margin-top:3cm">
+                <h4>Lansad</h4>
+                <h4 style="margin-bottom:3cm">Service des langues pour spécialistes d'autres disciplines</h4>
+                <h2>Attestation de positionnement en langue ({{ session.test.language.name |trans}})</h2>
+                <h3 style="margin-bottom:3cm">
+                    Délivrée à : 
                     {% if user.firstname is defined and user.lastname is defined %}
                         {{ user.lastname }} {{ user.firstname }}
                     {% else %} 
                         {{ user.username }}
                     {% endif %}
-                </h1>
-                <h1>
-                    Test : {{ session.test.name }} ({{ session.name}})
-                </h1>
+                    <br/> le {{ "now"|date("d/m/Y") }}.
+                </h3>
                 {% include "InnovaSelfBundle:Player/common:score.html.twig" %}
             </div>
         </div>
