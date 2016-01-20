@@ -28,7 +28,7 @@
 
 
 <hr/>
-<h3>{{ 'editor.session.results' | trans }} <b>{{ session.name }}</b> </h3>
+<h3>{{ 'editor.session.results' | trans }} <b>{{ session.name }}</b> ({{ users | length }})</h3>
 <div class="input-group">
     <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
     <input type="text" id="search" class="form-control" value="">
@@ -40,8 +40,8 @@
         <tr>
             <th>Login</th>
             <th>Email</th>
-            <th>Nom</th>
             <th>Prénom</th>
+            <th>Nom</th>
             <th></th>
         </tr>
     </thead>
