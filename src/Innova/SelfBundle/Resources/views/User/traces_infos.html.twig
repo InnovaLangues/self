@@ -2,10 +2,14 @@
 
 {% block body -%}
 <a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
-	<span class="glyphicon glyphicon-chevron-left"></span>
-	Revenir sur la fiche utilisateur
-</a>
+	<span class="glyphicon glyphicon-user"></span> Revenir sur la fiche utilisateur
+</a>                     
 
+{% if checkRight("right.individualresultssession", session) %}                  
+<a class="btn btn-default btn-sm" href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
+	<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
+</a>
+{% endif %}
 <hr/>
 
 <h3>Traces pour la session <strong>{{ session.name }}</strong> <span class="text-muted">({{ session.test.name }})</span> pour l'utilisateur <strong>{{ user.username }}</strong></h3>

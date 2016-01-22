@@ -65,6 +65,7 @@ user:
     plural: Utilisateurs
     firstname: Prénom
     name: Nom
+    login: Nom d'utilisateur
     email: Adresse mail
     admin_users: Administrateurs
     session_managers: Gestionnaires de sessions
@@ -315,7 +316,7 @@ editor:
         list_test: Liste des session pour le test
         edit: Editer la session
         results: Résultats pour la session
-        results_user: Résultats pour l'utilisateur
+        results_user: Résultats
         export: Exporter les résultats
         export_date: Exporter par dates
         available: Sessions disponibles
@@ -327,7 +328,7 @@ editor:
         connexion: Connexion à une session
         helptext: Cliquez sur le bouton ci-dessous pour vous connecter à une session de test. Il vous sera demandé d'entrer le code de session.
         availableForCode: "1 session répond à ce code:|Plusieurs sessions répondent à ce code:"
-        invalidate_results: Invalider les résultats
+        invalidate_results: Invalider le résultats
         delete_results: Supprimer les traces
 
 
