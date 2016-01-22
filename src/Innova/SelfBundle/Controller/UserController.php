@@ -50,6 +50,27 @@ class UserController extends Controller
     }
 
     /**
+     * Lists users.
+     *
+     * @Route("/admin/users/search/", name="admin_user_search")
+     * @Method("POST")
+     * @Template("InnovaSelfBundle:User:index.html.twig")
+     */
+    public function searchAction()
+    {
+        $this->get('innova_voter')->isAllowed('right.listuser');
+
+        $search = $this->get('request')->request->get('search');
+        $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
+        $users = $userRepo->getBySomethingLike($search);
+
+        return array(
+            'entities' => $users,
+            'subset' => 'Recherche de '.$search,
+        );
+    }
+
+    /**
      * Displays a user entity.
      *
      * @Route("/admin/user/{id}", name="admin_user_show", requirements={"id": "\d+"})

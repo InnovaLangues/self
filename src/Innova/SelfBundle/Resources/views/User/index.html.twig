@@ -24,9 +24,9 @@
 
     <hr/>
 
-    {% if entities is not empty %}
-    <h3>{{ 'user.list' | trans }} ({{ subset|trans }})</h3>
+    <h3>{{ 'user.list' | trans }} ({{ subset|trans }}) - {{ entities |length }} résultat(s)</h3>
 
+    {% if entities is not empty %}
     <div class="input-group">
         <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
         <input type="text" id="search" class="form-control" value="">

@@ -7,7 +7,6 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         {% if app.user is not null and is_granted('ROLE_ADMIN') %}
-
                             {# USERS #}
                             {% if checkRight("right.listuser") %}
                                 <li class="dropdown">
@@ -30,6 +29,16 @@
                                             <a href="{{ path('admin_user', { 'subset': 'connected' }) }}">
                                                 {{ 'user.connected' | trans }}
                                             </a>
+                                        </li>
+                                        <li>
+                                            <form id="user-search" method="POST" action="{{ path('admin_user_search') }}">
+                                                <div style="margin:0 12px;" class="input-group">
+                                                    <input type="text" name="search" class="form-control"/>
+                                                    <span type="submit" id="user-search-btn" class="input-group-addon" id="basic-addon1">
+                                                        <span class="glyphicon glyphicon-search"></span>
+                                                    </span>
+                                                </div>
+                                            </form>
                                         </li>
                                     </ul>
                                 </li>
