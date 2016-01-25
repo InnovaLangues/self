@@ -671,7 +671,6 @@ class ExportManager
         $csv .= $this->addColumn('Nom');
         $csv .= $this->addColumn('Prénom');
         $csv .= $this->addColumn('Email');
-        $csv .= $this->addColumn('Filière (ancien champ)');
         $csv .= $this->addColumn('Etablissement');
         $csv .= $this->addColumn('Filière');
         $csv .= $this->addColumn('Année');
@@ -692,7 +691,6 @@ class ExportManager
             $csv .= $this->addColumn($user->getFirstName());
             $csv .= $this->addColumn($user->getEmail());
 
-            $origin = ($user->getOriginStudent()) ? $user->getOriginStudent()->getName() : '';
             $institution = ($user->getInstitution()) ? $user->getInstitution()->getName() : '';
             $course = ($user->getCourse()) ? $user->getCourse()->getName() : '';
             $year = ($user->getYear()) ? $user->getYear()->getName() : '';
@@ -720,7 +718,6 @@ class ExportManager
             $lastTrace = end($traces)->getDate();
             $firstTrace = reset($traces)->getDate();
 
-            $csv .= $this->addColumn($origin);
             $csv .= $this->addColumn($institution);
             $csv .= $this->addColumn($course);
             $csv .= $this->addColumn($year);
