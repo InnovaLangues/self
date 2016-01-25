@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Innova\SelfBundle\InnovaSelfBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
-            new FOS\HttpCacheBundle\FOSHttpCacheBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Innova\GitterBundle\InnovaGitterBundle(),
             new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
