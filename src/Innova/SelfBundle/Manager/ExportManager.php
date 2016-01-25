@@ -202,10 +202,6 @@ class ExportManager
             $csv .= $this->addColumn($user->getFirstName());
             $csv .= $this->addColumn($result[$userId]['date']);
             $csv .= $this->addColumn($result[$userId]['time']);
-            $csv .= $this->addColumn($user->getCoLevel());
-            $csv .= $this->addColumn($user->getCeLevel());
-            $csv .= $this->addColumn($user->getEeLevel());
-            $csv .= $this->addColumn($user->getlevelLansad());
             $csv .= $this->addColumn($score);
             $csv .= $this->addColumn($secondStep);
 
@@ -459,91 +455,91 @@ class ExportManager
                                 $answersArray[$subquestionId][] = $answer->getProposition()->getId();
                             }
 
-                        foreach ($answersArray as $subquestionId => $answers) {
-                            $rightPropositions = array();
-                            if (isset($rightProps['sub'.$subquestionId])) {
-                                $rightPropositions = $rightProps['sub'.$subquestionId];
-                            }
+                            foreach ($answersArray as $subquestionId => $answers) {
+                                $rightPropositions = array();
+                                if (isset($rightProps['sub'.$subquestionId])) {
+                                    $rightPropositions = $rightProps['sub'.$subquestionId];
+                                }
 
-                            $nbPropositionRightAnswer = $nbRightAnswer = 0;
-                            $nbAnswers = count($answers);
+                                $nbPropositionRightAnswer = $nbRightAnswer = 0;
+                                $nbAnswers = count($answers);
 
-                            // Je calcule le score que si le testeur a répondu à autant de réponses
-                            // qu'il y a de propositions.
-                            // Si ce n'est pas le cas, il aura forcément ZERO point.
-                            if ($nbAnswers == count($rightPropositions)) {
-                                foreach ($rightPropositions as $rightProp) {
-                                    if (in_array($rightProp, $answersArray[$subquestionId])) {
-                                        ++$nbRightAnswer;
+                                // Je calcule le score que si le testeur a répondu à autant de réponses
+                                // qu'il y a de propositions.
+                                // Si ce n'est pas le cas, il aura forcément ZERO point.
+                                if ($nbAnswers == count($rightPropositions)) {
+                                    foreach ($rightPropositions as $rightProp) {
+                                        if (in_array($rightProp, $answersArray[$subquestionId])) {
+                                            ++$nbRightAnswer;
+                                        }
                                     }
                                 }
-                            }
 
-                            if (($nbPropositionRightAnswer == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                                ++$score;
-                            }
-                        }
-                        break;
-
-                    case 'APP';
-                        foreach ($answers as $answer) {
-                            if ($answer->getProposition()->getRightAnswer()) {
-                                ++$score;
-                            }
-                        }
-                        break;
-                    case 'QRM';
-                    case 'TQRM';
-                    case 'QRU';
-                    case 'TQRU';
-                    case 'VF';
-                    case 'TVF';
-                    case 'VFNM';
-                    case 'TVFNM';
-                        foreach ($answers as $answer) {
-                            if (!isset($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                            }
-                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
-                        }
-
-                        foreach ($answersArray as $subquestionId => $answers) {
-                            // Initialisation des variables.
-                            $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
-                            // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
-                            $propositions = $subquestion->getPropositions();
-
-                            // Calcul du nombre de réponses.
-                            $nbAnswers = count($answers);
-                            $rightProps = array();
-                            // Accès à la proposition.
-                            // Calcul du nombre de proposition et
-                            // calcul du nombre de bonnes réponses.
-                            foreach ($propositions as $proposition) {
-                                ++$nbProposition;
-                                if ($proposition->getRightAnswer()) {
-                                    ++$nbPropositionRightAnswser;
-                                    $rightProps[] = $proposition;
+                                if (($nbPropositionRightAnswer == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
+                                    ++$score;
                                 }
                             }
+                            break;
 
-                            // Je calcule le score que si le testeur a répondu à autant de réponses
-                            // qu'il y a de propositions.
-                            // Si ce n'est pas le cas, il aura forcément ZERO point.
-                            if ($nbAnswers == $nbPropositionRightAnswser) {
-                                foreach ($rightProps as $rightProp) {
-                                    if (in_array($rightProp->getId(), $answersArray[$subquestionId])) {
-                                        ++$nbRightAnswer;
+                        case 'APP';
+                            foreach ($answers as $answer) {
+                                if ($answer->getProposition()->getRightAnswer()) {
+                                    ++$score;
+                                }
+                            }
+                            break;
+                        case 'QRM';
+                        case 'TQRM';
+                        case 'QRU';
+                        case 'TQRU';
+                        case 'VF';
+                        case 'TVF';
+                        case 'VFNM';
+                        case 'TVFNM';
+                            foreach ($answers as $answer) {
+                                if (!isset($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
+                                    $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
+                                }
+                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
+                            }
+
+                            foreach ($answersArray as $subquestionId => $answers) {
+                                // Initialisation des variables.
+                                $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
+                                // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
+                                $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
+                                $propositions = $subquestion->getPropositions();
+
+                                // Calcul du nombre de réponses.
+                                $nbAnswers = count($answers);
+                                $rightProps = array();
+                                // Accès à la proposition.
+                                // Calcul du nombre de proposition et
+                                // calcul du nombre de bonnes réponses.
+                                foreach ($propositions as $proposition) {
+                                    ++$nbProposition;
+                                    if ($proposition->getRightAnswer()) {
+                                        ++$nbPropositionRightAnswser;
+                                        $rightProps[] = $proposition;
                                     }
                                 }
-                            }
 
-                            if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                                ++$score;
+                                // Je calcule le score que si le testeur a répondu à autant de réponses
+                                // qu'il y a de propositions.
+                                // Si ce n'est pas le cas, il aura forcément ZERO point.
+                                if ($nbAnswers == $nbPropositionRightAnswser) {
+                                    foreach ($rightProps as $rightProp) {
+                                        if (in_array($rightProp->getId(), $answersArray[$subquestionId])) {
+                                            ++$nbRightAnswer;
+                                        }
+                                    }
+                                }
+
+                                if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
+                                    ++$score;
+                                }
                             }
-                        }
-                        break;
+                            break;
                     }
                 }
             }
@@ -574,10 +570,6 @@ class ExportManager
             $csv .= $this->addColumn('Prénom');
             $csv .= $this->addColumn('Date');
             $csv .= $this->addColumn('Temps en secondes (pour le test entier)');
-            $csv .= $this->addColumn('Niveau Dialang CO');
-            $csv .= $this->addColumn('Niveau Dialang CE');
-            $csv .= $this->addColumn('Niveau Dialang EEC');
-            $csv .= $this->addColumn('Niveau Lansad acquis');
             $csv .= $this->addColumn('Score total obtenu dans le test (formule du total)');
             $csv .= $this->addColumn('Etape de sortie');
         } else {
