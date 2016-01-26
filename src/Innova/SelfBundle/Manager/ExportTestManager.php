@@ -77,6 +77,7 @@ class ExportTestManager
         $csv .= $this->exportManager->addColumn('n° item');
         $csv .= $this->exportManager->addColumn('position');
         $csv .= $this->exportManager->addColumn('clés');
+        $csv .= $this->exportManager->addColumn('clé (valeur)');
         $csv .= $this->exportManager->addColumn('nb options');
         $csv .= $this->exportManager->addColumn('');
         $csv .= $this->exportManager->addColumn('typologie');
@@ -96,6 +97,7 @@ class ExportTestManager
                 $csv .= $this->exportManager->addColumn($itemCount);
                 $csv .= $this->exportManager->addColumn($taskPosition);
                 $csv .= $this->exportManager->addColumn($propsInfos[0]);
+                $csv .= $this->exportManager->addColumn($propsInfos[4]);
                 $csv .= $this->exportManager->addColumn($propsInfos[1]);
                 $csv .= $this->exportManager->addColumn('');
                 $csv .= $this->exportManager->addColumn($propsInfos[2]);
@@ -109,19 +111,24 @@ class ExportTestManager
     private function getPropsInfos(Subquestion $subquestion)
     {
         $keys = '';
+        $rightAnswerText = '';
         $propCount = 0;
         $em = $this->entityManager;
+        $typo = $subquestion->getTypology()->getName();
+
         $propositions = $em->getRepository('InnovaSelfBundle:Proposition')->getBySubquestionExcludingAnswers($subquestion);
         foreach ($propositions as $prop) {
             ++$propCount;
             if ($prop->getRightAnswer()) {
                 $keys .= $this->exportManager->intToLetter($propCount);
+                if ($typo == 'TLCMLMULT' || $typo == 'TLCMLDM') {
+                    $rightAnswerText = $prop->getMedia()->getDescription();
+                }
             }
         }
 
         $optionCount = count($propositions);
 
-        $typo = $subquestion->getTypology()->getName();
         if ($typo == 'TLQROC') {
             $optionCount = 1;
             $keys = 'A';
@@ -129,7 +136,7 @@ class ExportTestManager
 
         $item = $subquestion->getQuestion()->getQuestionnaire()->getTheme();
 
-        return array($keys, $optionCount, $typo, $item);
+        return array($keys, $optionCount, $typo, $item, $rightAnswerText);
     }
 
     private function addLine()
