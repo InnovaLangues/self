@@ -38,27 +38,11 @@ class FixtureCommand extends ContainerAwareCommand
         $levelManager = $this->getContainer()->get('self.level.manager');
         $levelManager->create(array('A1', 'A1+', 'A2', 'A2+', 'B1', 'B1+', 'B2', 'B2+', 'C1', 'C1+'));
 
-        $originStudentManager = $this->getContainer()->get('self.originStudent.manager');
-        $originStudentManager->create(array(
-            'MEEF Savoie', 'MEEF Valence', 'MEEF Grenoble', 'ICM', 'LANSAD Grenoble', 'LANSAD Valence',
-            'IFSI Valence', 'LLCE Valence', 'LLCE Grenoble', 'LEA', 'IUT2', 'Formation continue', 'Lycée Vaucanson',
-            'Université de Nice', 'Université Lyon 1', 'Université de Strasbourg',
-            'Ecole Doctorale Grenoble', "Ecole d'Architecture Grenoble", 'Autres', ));
-
         $languageManager = $this->getContainer()->get('self.language.manager');
         $languageManager->create(array('English', 'Italian', 'Chinese', 'Spanish', 'Japanese'));
 
-        $levelLansadManager = $this->getContainer()->get('self.levelLansad.manager');
-        $levelLansadManager->create(array(
-            array('English', array('A1', 'A2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1', 'C2')),
-            array('Italian', array('A1', 'A2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1', 'C2')),
-            array('Chinese', array('A1', 'A1.1', 'A1.2', 'A2', 'A2.1', 'A2.2', 'B1', 'B1.1', 'B1.2', 'B2.1', 'Débutant complet', 'Faux débutant', 'Intermédiaire', 'Avancé')),
-            array('Spanish', array('A1', 'A2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1', 'C2')),
-        ));
-
         $componentTypeManager = $this->getContainer()->get('self.componentType.manager');
         $componentTypeManager->create(array('minitest', 'step1', 'step2', 'step3'));
-        $componentTypeManager->delete(array('step4'));
 
         $clueTypeManager = $this->getContainer()->get('self.clueType.manager');
         $clueTypeManager->create(array(
