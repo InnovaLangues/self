@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "576dbacc4098f35672bb157332ef8463",
-    "content-hash": "69ef6cf19863759c6709d9314d32412d",
+    "hash": "30e60e2031f3b5b9ef69b302c7a00037",
+    "content-hash": "b88bcfcc096e9cdaa0058aa4ce6e4d7a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1230,63 +1230,6 @@
             "time": "2015-04-29 17:06:53"
         },
         {
-            "name": "imagine/imagine",
-            "version": "v0.6.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/avalanche123/Imagine.git",
-                "reference": "149041d2a1b517107bfe270ca2b1a17aa341715d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/149041d2a1b517107bfe270ca2b1a17aa341715d",
-                "reference": "149041d2a1b517107bfe270ca2b1a17aa341715d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "sami/sami": "dev-master"
-            },
-            "suggest": {
-                "ext-gd": "to use the GD implementation",
-                "ext-gmagick": "to use the Gmagick implementation",
-                "ext-imagick": "to use the Imagick implementation"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Imagine": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bulat Shakirzyanov",
-                    "email": "mallluhuct@gmail.com",
-                    "homepage": "http://avalanche123.com"
-                }
-            ],
-            "description": "Image processing for PHP 5.3",
-            "homepage": "http://imagine.readthedocs.org/",
-            "keywords": [
-                "drawing",
-                "graphics",
-                "image manipulation",
-                "image processing"
-            ],
-            "time": "2015-09-19 16:54:05"
-        },
-        {
             "name": "incenteev/composer-parameter-handler",
             "version": "dev-master",
             "source": {
@@ -1838,81 +1781,6 @@
                 "maintenance"
             ],
             "time": "2015-10-01 13:15:01"
-        },
-        {
-            "name": "liip/imagine-bundle",
-            "version": "1.3.1",
-            "target-dir": "Liip/ImagineBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "91ed657efca36693c6d5ab02c5cc2f7cd9bd3ee9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/91ed657efca36693c6d5ab02c5cc2f7cd9bd3ee9",
-                "reference": "91ed657efca36693c6d5ab02c5cc2f7cd9bd3ee9",
-                "shasum": ""
-            },
-            "require": {
-                "imagine/imagine": "~0.5,<0.7",
-                "php": ">=5.3.2",
-                "symfony/filesystem": "~2.3 || ~3.0",
-                "symfony/finder": "~2.3 || ~3.0",
-                "symfony/framework-bundle": "~2.3 || ~3.0",
-                "symfony/options-resolver": "~2.3 || ~3.0"
-            },
-            "require-dev": {
-                "amazonwebservices/aws-sdk-for-php": "~1.0",
-                "aws/aws-sdk-php": "~2.4",
-                "doctrine/cache": "~1.1",
-                "doctrine/mongodb-odm": "1.0.*",
-                "doctrine/orm": "~2.3",
-                "ext-gd": "*",
-                "phpunit/phpunit": "~4.3",
-                "psr/log": "~1.0",
-                "symfony/browser-kit": "~2.3 || ~3.0",
-                "symfony/console": "~2.3 || ~3.0",
-                "symfony/form": "~2.3 || ~3.0",
-                "symfony/phpunit-bridge": "~2.3 || ~3.0",
-                "symfony/yaml": "~2.3 || ~3.0",
-                "twig/twig": "~1.12"
-            },
-            "suggest": {
-                "amazonwebservices/aws-sdk-for-php": "Add it if you'd like to use aws v1 resolver",
-                "aws/aws-sdk-php": "Add it if you'd like to use aws v2 or v3 resolver",
-                "monolog/monolog": "If you'd want to write logs",
-                "twig/twig": "If you'd want to use some handy twig filters, version 1.12 or greater required"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-0.x": "0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Liip\\ImagineBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Liip and other contributors",
-                    "homepage": "https://github.com/liip/LiipImagineBundle/contributors"
-                }
-            ],
-            "description": "This Bundle assists in imagine manipulation using the imagine library",
-            "homepage": "http://liip.ch",
-            "keywords": [
-                "image",
-                "imagine"
-            ],
-            "time": "2015-08-27 11:27:33"
         },
         {
             "name": "monolog/monolog",
