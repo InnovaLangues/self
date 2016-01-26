@@ -297,16 +297,6 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
-    self.originStudent.manager:
-        class: Innova\SelfBundle\Manager\OriginStudentManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.levelLansad.manager:
-        class: Innova\SelfBundle\Manager\LevelLansadManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
     self.clueType.manager:
         class: Innova\SelfBundle\Manager\ClueTypeManager
         arguments:
