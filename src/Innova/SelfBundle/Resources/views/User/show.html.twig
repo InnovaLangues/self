@@ -74,7 +74,14 @@
             {% if sessions|length > 0 %}
                 {% for session in sessions %}
                     <li class="list-group-item">
-                    {{ session.name }} <span class="text-muted">{{session.test.name}}</span>
+                    {% if checkRight("right.individualresultssession", session) %}
+                        <a href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
+                            {{ session.name }}
+                        </a>
+                    {% else %}
+                        {{ session.name }}
+                    {% endif %}
+                    <span class="text-muted">{{session.test.name}}</span>
                     <span class="buttons pull-right">
                         <a class="btn btn-default btn-xs" href="{{ path('get-session-traces', {'sessionId': session.id, 'userId': user.id } )}}">
                             <span class="glyphicon glyphicon-search"></span>
