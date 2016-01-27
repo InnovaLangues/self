@@ -5,26 +5,23 @@
         <link href="{{ asset("bundles/innovaself/css/main.css") }}" rel="stylesheet" />
 {% endblock %}
 
-{% block navbar %}
-{% endblock %}
-
 {% block body %}
-            <br/>
-            
-            {% if app.request.hasPreviousSession %}
+    <br/>
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for key, message in messages %}
+                <div class="flash-{{ type }}">
+                    <div class="alert alert-success">{{ message|trans({}, 'FOSUserBundle') }}</div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
 
-                {% for type, messages in app.session.flashbag.all() %}
-                    {% for key, message in messages %}
-                        <div class="flash-{{ type }}">
-                            <div class="alert alert-success">{{ message|trans({}, 'FOSUserBundle') }}</div>
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-
-            {% endif %}
-
-            <div>
-                {% block fos_user_content %}
-                {% endblock fos_user_content %}
-            </div>
+    <div>
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+    </div>
 {% endblock %}
+
+
+{% block page_title %}Réinialisation du mot de passe{% endblock %}

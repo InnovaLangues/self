@@ -1,5 +1,5 @@
 #footer {
-    background-color: #222222;
+    background-color: #3E3F3A;
     color: #999;
     margin-top: 60px;
     height: 28px;
@@ -30,4 +30,8 @@
 
 ruby > rt{
     font-size: 85%;
+}
+
+#item-container{
+    background-color:white;
 }
