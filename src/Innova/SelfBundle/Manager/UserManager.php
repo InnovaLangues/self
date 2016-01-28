@@ -149,6 +149,15 @@ class UserManager
         return count($connectedUsers);
     }
 
+    public function getRegisteredCount()
+    {
+        $dql = 'SELECT COUNT(u.id)from InnovaSelfBundle:User u';
+        $query = $this->entityManager->createQuery($dql);
+        $count = $query->getSingleScalarResult();
+
+        return $count;
+    }
+
     private function getLastSessions($threshold)
     {
         $limit = time() - $threshold;

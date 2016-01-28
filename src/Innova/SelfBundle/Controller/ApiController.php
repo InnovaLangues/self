@@ -16,8 +16,12 @@ class ApiController extends Controller
     public function getStatsAction()
     {
         $authCount = $this->get('self.user.manager')->getAuthCount();
+        $registeredCount = $this->get('self.user.manager')->getRegisteredCount();
 
-        $data = array('auth_users' => $authCount);
+        $data = array(
+                'auth_users' => $authCount,
+                'registered_users' => $registeredCount,
+                );
 
         $response = new JsonResponse();
         $response->setData($data);
