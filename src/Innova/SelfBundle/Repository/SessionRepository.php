@@ -110,4 +110,14 @@ class SessionRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function getOpenCount()
+    {
+        $dql = 'SELECT COUNT(s.id)from Innova\SelfBundle\Entity\Session s
+        WHERE s.actif = 1';
+        $query = $this->_em->createQuery($dql);
+        $count = $query->getSingleScalarResult();
+
+        return $count;
+    }
 }
