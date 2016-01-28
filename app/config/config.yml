@@ -160,16 +160,16 @@ liuggio_stats_d_client:
         #    class: Liuggio\StatsdClient\Sender\SocketSender
         #    debug_class: Liuggio\StatsdClient\Sender\SysLogSender # or EchoSender
         #    debug: %kernel.debug%   # use false if you want to disable debugging and shot packet over Socket
-        host: crash.innovalangues.net
-        port: 8125
+        host: %statsd_host%
+        port: %statsd_port%
         #    protocol: udp
         #    reduce_packet: true
         fail_silently: false
-    enable_collector: true
+    enable_collector: %statsd_enabled%
     collectors:
-        liuggio_stats_d_client.collector.dbal: 'arnaud-self.query'
-        liuggio_stats_d_client.collector.visitor: 'arnaud-self.visitor'
-        liuggio_stats_d_client.collector.memory: 'arnaud-self.memory'
-        liuggio_stats_d_client.collector.user: 'arnaud-self.user'
-        liuggio_stats_d_client.collector.exception: 'arnaud-self.exception'
-        liuggio_stats_d_client.collector.time: 'arnaud-self.time'
+        liuggio_stats_d_client.collector.dbal: '%statsd_prefix%.query'
+        liuggio_stats_d_client.collector.visitor: '%statsd_prefix%.visitor'
+        liuggio_stats_d_client.collector.memory: '%statsd_prefix%.memory'
+        liuggio_stats_d_client.collector.user: '%statsd_prefix%.user'
+        liuggio_stats_d_client.collector.exception: '%statsd_prefix%.exception'
+        liuggio_stats_d_client.collector.time: '%statsd_prefix%.time'
