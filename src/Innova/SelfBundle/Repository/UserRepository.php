@@ -159,4 +159,13 @@ class UserRepository extends EntityRepository
 
         return false;
     }
+
+    public function getRegisteredCount()
+    {
+        $dql = 'SELECT COUNT(u.id)from Innova\SelfBundle\Entity\User u';
+        $query = $this->_em->createQuery($dql);
+        $count = $query->getSingleScalarResult();
+
+        return $count;
+    }
 }

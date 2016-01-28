@@ -15,13 +15,17 @@ class ApiController extends Controller
      */
     public function getStatsAction()
     {
+        $em = $this->getDoctrine()->getManager();
+
         $authCount = $this->get('self.user.manager')->getAuthCount();
-        $registeredCount = $this->get('self.user.manager')->getRegisteredCount();
+        $registeredCount = $em->getRepository('InnovaSelfBundle:User')->getRegisteredCount();
+        $openCount = $em->getRepository('InnovaSelfBundle:Session')->getOpenCount();
 
         $data = array(
-                'auth_users' => $authCount,
-                'registered_users' => $registeredCount,
-                );
+            'auth_users' => $authCount,
+            'registered_users' => $registeredCount,
+            'open_session' => $openCount,
+        );
 
         $response = new JsonResponse();
         $response->setData($data);
