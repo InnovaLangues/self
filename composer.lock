@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "69cea1d815cc77c4965c38b648daaa92",
-    "content-hash": "2ec0491d25529e9a97310f3cff9c4506",
+    "hash": "2143f701c90c4a8539e003390106bcfa",
+    "content-hash": "9d02886a826b8fe4de516da15c96c977",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1076,7 +1076,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/587bcaefbd50167336032ac6ed047ad326250212",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/8f1fc2273b37c61ddcc1620abf4500320a23763e",
                 "reference": "45d6f40178216a840885b4ca6d7de9e67068568a",
                 "shasum": ""
             },
@@ -1780,6 +1780,120 @@
                 "maintenance"
             ],
             "time": "2015-10-01 13:15:01"
+        },
+        {
+            "name": "liuggio/statsd-client-bundle",
+            "version": "dev-master",
+            "target-dir": "Liuggio/StatsDClientBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/liuggio/StatsDClientBundle.git",
+                "reference": "09ffd81025a233e2be202065f7117d0f7fb47bb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/liuggio/StatsDClientBundle/zipball/09ffd81025a233e2be202065f7117d0f7fb47bb2",
+                "reference": "09ffd81025a233e2be202065f7117d0f7fb47bb2",
+                "shasum": ""
+            },
+            "require": {
+                "liuggio/statsd-php-client": "~1.0.14",
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">2.0"
+            },
+            "require-dev": {
+                "doctrine/dbal": ">=2.2.0",
+                "monolog/monolog": ">=1.2.0",
+                "symfony/yaml": ">=2.0.0"
+            },
+            "suggest": {
+                "doctrine/dbal": "Doctrine Dbal, collect statistic to/from the database (>=2.2.0,<2.4-dev required)",
+                "monolog/monolog": "Monolog, in order to generate statistic from log >=1.2.0)"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Liuggio\\StatsDClientBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/liuggio/StatsDClientBundle/contributors"
+                },
+                {
+                    "name": "Liuggio",
+                    "email": "liuggio@gmail.com",
+                    "homepage": "https://github.com/Liuggio"
+                }
+            ],
+            "description": "Provides a statsd client and simple ready-to-use support for #Symfony2 Application",
+            "keywords": [
+                "graphite",
+                "monitor",
+                "statsd",
+                "symfony"
+            ],
+            "time": "2015-12-21 16:09:21"
+        },
+        {
+            "name": "liuggio/statsd-php-client",
+            "version": "v1.0.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/liuggio/statsd-php-client.git",
+                "reference": "c42e6d6687b7b2d7683186ec7f4f03351cc3dbca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/liuggio/statsd-php-client/zipball/c42e6d6687b7b2d7683186ec7f4f03351cc3dbca",
+                "reference": "c42e6d6687b7b2d7683186ec7f4f03351cc3dbca",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "monolog/monolog": ">=1.2.0",
+                "phpunit/phpunit": "^4.7"
+            },
+            "suggest": {
+                "monolog/monolog": "Monolog, in order to do generate statistic from log >=1.2.0)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Liuggio": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giulio De Donato",
+                    "email": "liuggio@gmail.com"
+                }
+            ],
+            "description": "Statsd (Object Oriented) client library for PHP",
+            "homepage": "https://github.com/liuggio/statsd-php-client/",
+            "keywords": [
+                "etsy",
+                "monitoring",
+                "php",
+                "statsd"
+            ],
+            "time": "2015-07-23 23:12:45"
         },
         {
             "name": "monolog/monolog",

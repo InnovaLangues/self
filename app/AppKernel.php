@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Innova\GitterBundle\InnovaGitterBundle(),
             new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
+            new Liuggio\StatsDClientBundle\LiuggioStatsDClientBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

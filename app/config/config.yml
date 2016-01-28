@@ -143,3 +143,33 @@ lexik_maintenance:
         # File driver
         class: '\Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver'      # Classe pour le FileDriver
         options: {file_path: %kernel.root_dir%/lock}
+
+liuggio_stats_d_client:
+    monolog:
+        enable: true
+        prefix: 'my-app.log'
+        formatter:
+#       class:               # if you want to change the formatter class.
+#       format:              # if you want to change the format.
+            context_logging: true # if you want additional packets for context.
+            extra_logging: true   # if you want additional packets for extra.
+            words: 2              # the number of the word in the stats key.
+        level: 'warning'
+
+    connection:
+        #    class: Liuggio\StatsdClient\Sender\SocketSender
+        #    debug_class: Liuggio\StatsdClient\Sender\SysLogSender # or EchoSender
+        #    debug: %kernel.debug%   # use false if you want to disable debugging and shot packet over Socket
+        host: crash.innovalangues.net
+        port: 8125
+        #    protocol: udp
+        #    reduce_packet: true
+        fail_silently: false
+    enable_collector: true
+    collectors:
+        liuggio_stats_d_client.collector.dbal: 'arnaud-self.query'
+        liuggio_stats_d_client.collector.visitor: 'arnaud-self.visitor'
+        liuggio_stats_d_client.collector.memory: 'arnaud-self.memory'
+        liuggio_stats_d_client.collector.user: 'arnaud-self.user'
+        liuggio_stats_d_client.collector.exception: 'arnaud-self.exception'
+        liuggio_stats_d_client.collector.time: 'arnaud-self.time'
