@@ -31,7 +31,8 @@
         "jms/i18n-routing-bundle": "~1.1",
         "lexik/maintenance-bundle": "dev-master#4967701a108aa8262f",
         "nc/faye-client": "v1.1.1",
-        "twig/twig": "1.*"
+        "twig/twig": "1.*",
+        "liuggio/statsd-client-bundle": "1.6.*"
     },
     "scripts": {
         "post-install-cmd": [
