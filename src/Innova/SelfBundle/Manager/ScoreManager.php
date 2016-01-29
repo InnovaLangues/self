@@ -214,7 +214,7 @@ class ScoreManager
                     $level = $questionnaire->getLevel()->getName();
                 }
 
-                if (($level && !in_array($level, $levelsToIgnore)) || !$ignore) {
+                if ($level && (!in_array($level, $levelsToIgnore) || !$ignore)) {
                     if ($this->subquestionCorrect($subquestion, $session, null, $user)) {
                         ++$scores[$skill][$level]['correct'];
                     }
