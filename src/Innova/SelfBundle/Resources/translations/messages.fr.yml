@@ -150,7 +150,7 @@ editor:
         phased: Test à étapes
         difficulty: Afficher le formulaire de perception de difficulté
         exportpdf: Export livret PDF
-        exportcsv: Export CSV
+        exportcsv: Export liste de tâches
         exportscsv: Export Stats (tia+, etc.)
     task:
         task: Tâche

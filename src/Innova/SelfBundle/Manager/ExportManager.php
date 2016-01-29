@@ -195,7 +195,11 @@ class ExportManager
         $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
         foreach ($users as $user) {
             $userId = $user->getId();
-            $score = $this->calculateScore($user, $session, $rightProps);
+
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
+            $scores = $this->scoreManager->getScoresFromTraces($traces, false);
+            $score = $this->scoreManager->countCorrectAnswers($scores);
+
             $secondStep = $this->getUserSecondStep($session, $user);
 
             $csv .= $this->addColumn($user->getUserName());
@@ -230,7 +234,8 @@ class ExportManager
                         $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
                             $subquestionId = $subquestion->getId();
-                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps['sub'.$subquestionId], $typologyName);
+
+                            $csv .= $this->checkRightAnswer($subquestion, $session, $user);
                             $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
                         }
                     }
@@ -262,48 +267,10 @@ class ExportManager
         return $column;
     }
 
-    private function checkRightAnswer($answersArray, $subquestionId, $rightProps, $typo)
+    private function checkRightAnswer($subquestion, $session, $user)
     {
-        switch ($typo) {
-            case 'TQRM':
-                $subquestionOk = true;
-                foreach ($rightProps as $rightPropId) {
-                    $found = false;
-                    foreach ($answersArray[$subquestionId] as $answerProp) {
-                        if ($answerProp->getRightAnswer() === false) {
-                            $subquestionOk = false;
-                        }
-                        if ($rightPropId == $answerProp->getId()) {
-                            $found = true;
-                        }
-                    }
-                    if ($found === false) {
-                        $subquestionOk = false;
-                    }
-                }
-                break;
-
-            case 'TLCMLDM':
-            case 'TLCMLMULT':
-            case 'TLQROC':
-            case 'APP':
-            case 'TVF':
-            case 'TVFNM':
-            case 'TQRU':
-                $subquestionOk = false;
-                if (isset($answersArray[$subquestionId])) {
-                    $proposition = $answersArray[$subquestionId][0];
-                    $subquestionOk = $proposition->getRightAnswer();
-                }
-
-                break;
-        }
-
-        if ($subquestionOk) {
-            $output = $this->addColumn(1);
-        } else {
-            $output = $this->addColumn(0);
-        }
+        $right = ($this->scoreManager->subquestionCorrect($subquestion, $session, null, $user)) ? 1 : 0;
+        $output = $this->addColumn($right);
 
         return $output;
     }
@@ -390,7 +357,7 @@ class ExportManager
                         $subquestions = $questions[0]->getSubQuestions();
                         foreach ($subquestions as $subquestion) {
                             $subquestionId = $subquestion->getId();
-                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps['sub'.$subquestionId], $typologyName);
+                            $csv .= $this->checkRightAnswer($subquestion, $session, $user);
                             $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
                         }
                     }
@@ -426,126 +393,6 @@ class ExportManager
         7 => 'G', 8 => 'H', 9 => 'I', 10 => 'J', 11 => 'K', 12 => 'L', );
 
         return $arr[$int];
-    }
-
-    /**
-     * calculateScore function.
-     */
-    private function calculateScore(User $user, Session $session, $rightProps)
-    {
-        $em = $this->entityManager;
-        $score = 0;
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSession($user->getId(), $session->getId());
-
-        foreach ($traces as $trace) {
-            if ($answers = $trace->getAnswers()) {
-                if (isset($answers[0])) {
-                    $answersArray = array();
-                    $typology = $answers[0]->getSubquestion()->getTypology()->getName();
-
-                    switch ($typology) {
-                        case 'TLCMLDM':
-                        case 'TLCMLMULT':
-                        case 'TLQROC':
-                            foreach ($answers as $answer) {
-                                $subquestionId = $answer->getSubquestion()->getId();
-                                if (!isset($answersArray[$subquestionId])) {
-                                    $answersArray[$subquestionId] = array();
-                                }
-                                $answersArray[$subquestionId][] = $answer->getProposition()->getId();
-                            }
-
-                            foreach ($answersArray as $subquestionId => $answers) {
-                                $rightPropositions = array();
-                                if (isset($rightProps['sub'.$subquestionId])) {
-                                    $rightPropositions = $rightProps['sub'.$subquestionId];
-                                }
-
-                                $nbPropositionRightAnswer = $nbRightAnswer = 0;
-                                $nbAnswers = count($answers);
-
-                                // Je calcule le score que si le testeur a répondu à autant de réponses
-                                // qu'il y a de propositions.
-                                // Si ce n'est pas le cas, il aura forcément ZERO point.
-                                if ($nbAnswers == count($rightPropositions)) {
-                                    foreach ($rightPropositions as $rightProp) {
-                                        if (in_array($rightProp, $answersArray[$subquestionId])) {
-                                            ++$nbRightAnswer;
-                                        }
-                                    }
-                                }
-
-                                if (($nbPropositionRightAnswer == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                                    ++$score;
-                                }
-                            }
-                            break;
-
-                        case 'APP';
-                            foreach ($answers as $answer) {
-                                if ($answer->getProposition()->getRightAnswer()) {
-                                    ++$score;
-                                }
-                            }
-                            break;
-                        case 'QRM';
-                        case 'TQRM';
-                        case 'QRU';
-                        case 'TQRU';
-                        case 'VF';
-                        case 'TVF';
-                        case 'VFNM';
-                        case 'TVFNM';
-                            foreach ($answers as $answer) {
-                                if (!isset($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                                    $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                                }
-                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
-                            }
-
-                            foreach ($answersArray as $subquestionId => $answers) {
-                                // Initialisation des variables.
-                                $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
-                                // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                                $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
-                                $propositions = $subquestion->getPropositions();
-
-                                // Calcul du nombre de réponses.
-                                $nbAnswers = count($answers);
-                                $rightProps = array();
-                                // Accès à la proposition.
-                                // Calcul du nombre de proposition et
-                                // calcul du nombre de bonnes réponses.
-                                foreach ($propositions as $proposition) {
-                                    ++$nbProposition;
-                                    if ($proposition->getRightAnswer()) {
-                                        ++$nbPropositionRightAnswser;
-                                        $rightProps[] = $proposition;
-                                    }
-                                }
-
-                                // Je calcule le score que si le testeur a répondu à autant de réponses
-                                // qu'il y a de propositions.
-                                // Si ce n'est pas le cas, il aura forcément ZERO point.
-                                if ($nbAnswers == $nbPropositionRightAnswser) {
-                                    foreach ($rightProps as $rightProp) {
-                                        if (in_array($rightProp->getId(), $answersArray[$subquestionId])) {
-                                            ++$nbRightAnswer;
-                                        }
-                                    }
-                                }
-
-                                if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                                    ++$score;
-                                }
-                            }
-                            break;
-                    }
-                }
-            }
-        }
-
-        return $score;
     }
 
     /**
