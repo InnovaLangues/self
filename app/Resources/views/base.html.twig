@@ -6,12 +6,13 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
         <link href="{{ asset('bundles/innovaself/css/main.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('bundles/innovaself/css/boostraptheme.css') }}" rel="stylesheet"/>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block navbar %}
-            {% include 'InnovaSelfBundle::Main/navbarBlock.html.twig' %}
+            {% include 'InnovaSelfBundle::Main/navbarBlock.html.twig' with {page_title: block('page_title')} %}
         {% endblock %}
 
         <div id="body" class="container">

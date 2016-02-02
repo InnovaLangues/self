@@ -1,13 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h4>
-        <a href="{{ path('show_start') }}"><img src="{{ asset("bundles/innovaself/images/innova_logo_web_24.png") }}"/></a>
-        Reset mot de passe SELF - Système d’Evaluation en Langues à visée Formative
-        </h4>
-    </div>
     <div class="panel-body">
-
         <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
             <div class="form-group">
                 {% if invalid_username is defined %}
