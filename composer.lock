@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2143f701c90c4a8539e003390106bcfa",
-    "content-hash": "9d02886a826b8fe4de516da15c96c977",
+    "hash": "af9875e3a7d943076d2af33c63d7ad9e",
+    "content-hash": "a9539ed5931edce61f59729742d8889e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1393,72 +1393,6 @@
                 "sql"
             ],
             "time": "2015-08-30 16:36:01"
-        },
-        {
-            "name": "jms/i18n-routing-bundle",
-            "version": "dev-master",
-            "target-dir": "JMS/I18nRoutingBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/schmittjoh/JMSI18nRoutingBundle.git",
-                "reference": "eda6c5ff06c9100e5cad143b8a74224e0038a97c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSI18nRoutingBundle/zipball/eda6c5ff06c9100e5cad143b8a74224e0038a97c",
-                "reference": "eda6c5ff06c9100e5cad143b8a74224e0038a97c",
-                "shasum": ""
-            },
-            "require": {
-                "jms/translation-bundle": "~1.0",
-                "symfony/framework-bundle": "~2.1"
-            },
-            "require-dev": {
-                "jms/di-extra-bundle": "*",
-                "sensio/framework-extra-bundle": "<2.1.5",
-                "symfony/browser-kit": "<2.1.5",
-                "symfony/class-loader": "<2.1.5",
-                "symfony/css-selector": "<2.1.5",
-                "symfony/finder": "<2.1.5",
-                "symfony/form": "<2.1.5",
-                "symfony/framework-bundle": "<2.1.5",
-                "symfony/http-foundation": "<2.1.5",
-                "symfony/http-kernel": "<2.1.5",
-                "symfony/process": "<2.1.5",
-                "symfony/routing": "<2.1.5",
-                "symfony/twig-bundle": "<2.1.5",
-                "symfony/validator": "<2.1.5",
-                "symfony/yaml": "<2.1.5"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "JMS\\I18nRoutingBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache2"
-            ],
-            "authors": [
-                {
-                    "name": "Johannes M. Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "This bundle allows you to create i18n routes.",
-            "homepage": "http://jmsyst.com/bundles/JMSI18nRoutingBundle",
-            "keywords": [
-                "multilanguage",
-                "routing",
-                "translation"
-            ],
-            "time": "2015-02-20 16:41:04"
         },
         {
             "name": "jms/translation-bundle",
@@ -2893,7 +2827,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e0fbf85380a6dc80b2077b2e90c89b0b4dc9f553",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f0a4fa678465491947554f6687c5fca5e482f8ec",
                 "reference": "fd84403ac725fe1a053a0a109e26ecdb9928c912",
                 "shasum": ""
             },
