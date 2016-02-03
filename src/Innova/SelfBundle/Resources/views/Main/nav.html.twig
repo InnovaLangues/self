@@ -1,3 +1,4 @@
+{% block navbar %}
 {% set logged = app.user is not null ? true : false %}
 
 <nav class="navbar navbar-default navbar-static-top">
@@ -199,3 +200,4 @@
         </ul>
     </div>
 </nav>
+{% endblock %}

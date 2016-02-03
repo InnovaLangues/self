@@ -10,30 +10,18 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block navbar %}
-            {% include 'InnovaSelfBundle::Main/navbarBlock.html.twig' with {page_title: block('page_title')} %}
-        {% endblock %}
-
+        {% include 'InnovaSelfBundle::Main/nav.html.twig' with {page_title: block('page_title')} %}
+        
         <div id="body" class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="flash-messages">
-                    </div>
+                    <div class="flash-messages"></div>
                     {% block body %}{% endblock %}
                 </div>
             </div>
         </div>
 
-        <div class="navbar-default" id="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 ">
-                        SELF - Système d’Evaluation en Langues à visée Formative.
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        {% include 'InnovaSelfBundle::Main/footer.html.twig' %}
         {% include 'InnovaSelfBundle::Main/helpModale.html.twig' %}
         {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
         
@@ -58,13 +46,11 @@
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
-
             {# ROUTER #}
             <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             {# FAYE NODE SERVER #}
             <script type="text/javascript" src="{{ faye_server }}/client.js"></script>
             {% include 'InnovaSelfBundle::Main/nodeMessage.html.twig' %}
-
         {% endblock %}
     </body>
 </html>
