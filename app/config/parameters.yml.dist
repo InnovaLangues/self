@@ -25,3 +25,4 @@ parameters:
     statsd_port:                8125
     statsd_prefix:              self
     statsd_enabled:             true
+    base_url_prod:              ""
