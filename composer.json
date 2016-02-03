@@ -23,7 +23,7 @@
         "sensio/generator-bundle": "v3.0.5",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "friendsofsymfony/jsrouting-bundle": "~1.1",
+        "friendsofsymfony/jsrouting-bundle": "1.5.4",
         "stfalcon/tinymce-bundle": "dev-master#758c19947b04d93d",
         "knplabs/knp-snappy-bundle": "dev-master#c023573e1b0b",
         "willdurand/js-translation-bundle": "@stable",

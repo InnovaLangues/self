@@ -1,6 +1,6 @@
 <div id="comments-container">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
-    <div class="panel panel-info">
+    <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">
             {{ 'editor.task.comments' | trans }} <button id="add-comment" class="btn btn-default btn-xs pull-right">{{ 'editor.task.add_comment' | trans }}</button>
@@ -9,7 +9,7 @@
         <div class="panel-body">
         {% if questionnaire.comments|length > 0 %}
             {% for comment in questionnaire.comments %}
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-body">
                         {{ macros.displayMedia(questionnaire, comment.description) }}
                         <div class="pull-right">
@@ -27,7 +27,7 @@
                 </div>
             {% endfor %}
         {% else %}
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-body">
                 {{ 'editor.task.no_comment' | trans }}
             </div>

@@ -1,10 +1,5 @@
 {% extends '::base.html.twig' %}
 
-{% block stylesheets %}
-        <link href="{{ asset("bundles/innovaself/css/navWizard.css") }}" rel="stylesheet" />
-        <link href="{{ asset("bundles/innovaself/css/main.css") }}" rel="stylesheet" />
-{% endblock %}
-
 {% block body %}
     <br/>
     {% if app.request.hasPreviousSession %}

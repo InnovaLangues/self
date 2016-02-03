@@ -1,6 +1,6 @@
 {% if subquestions|length > 0 %}
 
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
         <div class="panel-heading">Liste de mots</div>
         <div class="panel-body list-group" style="padding:0">
                 {% for subquestion in subquestions %}
@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
         <div class="panel-heading">
             Distracteurs
             <span class="btn btn-default btn-xs eec-add-distractor pull-right">{{ 'editor.app.add_distractor' | trans }}</span>

@@ -1,4 +1,4 @@
-<div id="functional-instruction-container" class="panel panel-info">
+<div id="functional-instruction-container" class="panel panel-primary">
     {% import "InnovaSelfBundle:Editor:common/macros.html.twig" as macros %}
     <div class="panel-heading">
         {{ macros.help("Court texte présentant des indications purement fonctionnelles. 'Cochez la bonne réponse' par exemple. Texte uniquement pour le moment !") }}
@@ -6,7 +6,9 @@
         {% if questionnaire.mediaFunctionalInstruction is not null %}
             <div class="pull-right">
                 {{ macros.editMedia(questionnaire.mediaFunctionalInstruction, "functional-instruction") }}
-                <span id="delete-functional-instruction" class="glyphicon glyphicon-remove btn btn-default btn-sm" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}"></span>
+                <span id="delete-functional-instruction" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </span>
             </div>
         {% endif %}
     </div>

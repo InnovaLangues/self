@@ -54,7 +54,6 @@
                             Sessions <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                           
                             <li>
                                 <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">
                                     Sessions actives
@@ -152,31 +151,37 @@
             </span>                 
         </ul>
 
+        <ul class="nav navbar-nav pull-right">
+            <li class="change-locale">
+                <a href="#">
+                    <span class="glyphicon glyphicon-globe"></span>&nbsp;{{ app.request.locale | upper }}
+                </a>
+            </li>
         {% if logged %}
         <ul class="nav navbar-nav pull-right">
             {% if checkRight("right.message") %}
-                    <li>
-                        <a href="{{ path('send_message') }}">
-                            <span class="glyphicon glyphicon-envelope"></span> {{ 'menu.message' | trans }}
-                        </a>
-                    </li>
-                {% endif %}
+            <li>
+                <a href="{{ path('send_message') }}">
+                    <span class="glyphicon glyphicon-envelope"></span> 
+                </a>
+            </li>
+            {% endif %}
 
-                {% if checkRight("right.generalParameters") %}
-                    <li>
-                        <a href="{{ path('parameters') }}">
-                            <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
-                        </a>
-                    </li>
-                {% endif %}
+            {% if checkRight("right.generalParameters") %}
+                <li>
+                    <a href="{{ path('parameters') }}">
+                        <span class="glyphicon glyphicon-cog"></span> 
+                    </a>
+                </li>
+            {% endif %}
 
-                {% if checkRight("right.institution") %}
-                    <li>
-                        <a href="{{ path('institutions') }}">
-                            <span class="glyphicon glyphicon-leaf"></span> {{ 'menu.institutions' | trans }}
-                        </a>
-                    </li>
-                {% endif %}
+            {% if checkRight("right.institution") %}
+                <li>
+                    <a href="{{ path('institutions') }}">
+                        <span class="glyphicon glyphicon-leaf"></span> 
+                    </a>
+                </li>
+            {% endif %}
 
             <li>
                 <a href="{{ path('self_user_display') }}">
@@ -189,7 +194,8 @@
                     <span class="glyphicon glyphicon-log-out"></span> {{ 'menu.logout' | trans }}
                 </a>
             </li>
-        </ul>
+        
         {% endif %}
+        </ul>
     </div>
 </nav>

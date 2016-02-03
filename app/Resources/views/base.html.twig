@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}SELF{% endblock %}</title>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
         <link href="{{ asset('bundles/innovaself/css/main.css') }}" rel="stylesheet"/>
         <link href="{{ asset('bundles/innovaself/css/boostraptheme.css') }}" rel="stylesheet"/>
@@ -25,14 +24,11 @@
             </div>
         </div>
 
-        <div id="footer">
+        <div class="navbar-default" id="footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 ">
                         SELF - Système d’Evaluation en Langues à visée Formative.
-                        <span class="pull-right">
-                            <span class="btn btn-default btn-xs change-locale">{{ app.request.locale |upper }}</span>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -42,6 +38,7 @@
         {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
         
         {% block javascripts %}
+            {# MISC JS #}
             {% javascripts filter='yui_js' output='js/compiled/javascripts.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-1.11.2.min.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-ui-1.11.2.min.js'
@@ -50,22 +47,22 @@
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery.cookie.min.js'
                 '@InnovaSelfBundle/Resources/public/js/main.js'
                 '@InnovaSelfBundle/Resources/public/js/flashMessages.js'
-                %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-
-            {% javascripts filter='yui_js' output='js/compiled/translations.js'
+                '@InnovaSelfBundle/Resources/public/js/register.js'
                 'bundles/bazingajstranslation/js/translator.min.js'
+                'bundles/fosjsrouting/js/router.js'
                 'js/translations/config.js'
-                'js/translations/*/*.js'
+                'js/translations/*/fr.js'
+                'js/translations/*/en.js'
+                'js/translations/*/it.js'
+                'js/translations/*/cn.js'
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
 
-            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {# ROUTER #}
+            <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {# FAYE NODE SERVER #}
             <script type="text/javascript" src="{{ faye_server }}/client.js"></script>
-
             {% include 'InnovaSelfBundle::Main/nodeMessage.html.twig' %}
 
         {% endblock %}
