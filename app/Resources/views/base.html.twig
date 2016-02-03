@@ -3,15 +3,18 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}SELF{% endblock %}</title>
-        <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
-        <link href="{{ asset('bundles/innovaself/css/main.css') }}" rel="stylesheet"/>
-        <link href="{{ asset('bundles/innovaself/css/boostraptheme.css') }}" rel="stylesheet"/>
+        {% stylesheets filter='cssrewrite, ?yui_css' output='css/compiled/style.css'
+            'bundles/innovaself/css/jquery-ui.css'
+            'bundles/innovaself/css/main.css'
+            'bundles/innovaself/css/boostraptheme.css'
+        %}
+          <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% include 'InnovaSelfBundle::Main/nav.html.twig' with {page_title: block('page_title')} %}
-        
         <div id="body" class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -20,14 +23,12 @@
                 </div>
             </div>
         </div>
-
         {% include 'InnovaSelfBundle::Main/footer.html.twig' %}
         {% include 'InnovaSelfBundle::Main/helpModale.html.twig' %}
         {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
-        
         {% block javascripts %}
             {# MISC JS #}
-            {% javascripts filter='yui_js' output='js/compiled/javascripts.js'
+            {% javascripts filter='?yui_js' output='js/compiled/javascripts.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-1.11.2.min.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-ui-1.11.2.min.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/bootstrap-3.1.1.min.js'
