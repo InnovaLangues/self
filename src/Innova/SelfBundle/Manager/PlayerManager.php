@@ -57,22 +57,18 @@ class PlayerManager
     public function countQuestionnaireDone(Component $component = null, Session $session)
     {
         $test = $session->getTest();
-        if ($component) {
-            $count = $this->questionnaireRepo->countDoneYetByUserByTestByComponent($test, $this->user, $session, $component);
-        } else {
-            $count = $this->questionnaireRepo->countDoneYetByUserByTestBySession($test->getId(), $this->user->getId(), $session->getId());
-        }
+        $count = ($component)
+            ? $this->questionnaireRepo->countDoneYetByUserByTestByComponent($test, $this->user, $session, $component)
+            : $this->questionnaireRepo->countDoneYetByUserByTestBySession($test->getId(), $this->user->getId(), $session->getId());
 
         return $count;
     }
 
     public function countQuestionnaireTotal(Component $component = null, $questionnaires)
     {
-        if ($component) {
-            $count = count($component->getOrderQuestionnaireComponents());
-        } else {
-            $count = count($questionnaires);
-        }
+        $count = ($component)
+            ? count($component->getOrderQuestionnaireComponents())
+            : count($questionnaires);
 
         return $count;
     }
@@ -82,11 +78,9 @@ class PlayerManager
      */
     public function pickQuestionnaire(Test $test, Session $session)
     {
-        if ($test->getPhased()) {
-            $orderQuestionnaire = $this->pickQuestionnairePhased($test, $session);
-        } else {
-            $orderQuestionnaire = $this->pickQuestionnaireClassic($test, $session);
-        }
+        $orderQuestionnaire = ($test->getPhased())
+            ? $this->pickQuestionnairePhased($test, $session)
+            : $this->pickQuestionnaireClassic($test, $session);
 
         return $orderQuestionnaire;
     }
