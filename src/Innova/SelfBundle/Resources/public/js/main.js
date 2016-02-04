@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('*').tooltip({placement:'top'});
+    $('body *[data-toggle="tooltip"]').tooltip({placement:'top'});
 
     $(".rest").restfulizer();
 
