@@ -51,7 +51,7 @@
             {% if app.debug %}
                 <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             {% else %}
-                {% javascripts output='js/compiled/routes.js' 
+                {% javascripts filter='?yui_js' output='js/compiled/routes.js' 
                     'js/fos_js_routes.js' 
                 %}
                 <script src="{{ asset_url }}"></script>
