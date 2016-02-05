@@ -7,6 +7,8 @@
 {% block body -%}
     {% import "InnovaSelfBundle:Player:common/macros.html.twig" as macros %}
 
+    {% include "InnovaSelfBundle:Player/common:font-resize.html.twig" %}
+
     {# item #}
     {% include "InnovaSelfBundle:Player/common:item.html.twig" %}
 
@@ -25,6 +27,7 @@
 
     {% javascripts filter='?yui_js' output='js/compiled/player.js'
         'bundles/innovaself/js/dragAndDrop.js'
+        'bundles/innovaself/js/font-resize.js'
         'bundles/innovaself/js/player.js'
     %}
     <script src="{{ asset_url }}"></script>
