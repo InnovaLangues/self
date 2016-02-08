@@ -3,15 +3,21 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}SELF{% endblock %}</title>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-        <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
-        <link href="{{ asset('bundles/innovaself/css/main.css') }}" rel="stylesheet"/>
+
+        {% stylesheets filter='cssrewrite, ?yui_css' output='css/compiled/style.css'
+            'bundles/innovaself/css/jquery-ui.css'
+            'bundles/innovaself/css/main.css'
+            'bundles/innovaself/css/registration.css'
+            'bundles/innovaself/css/bootstrap.min.css'
+         %}
+         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block navbar %}
-            {% include 'InnovaSelfBundle::Main/navbarBlock.html.twig' %}
+            {% include 'InnovaSelfBundle::Main/nav.html.twig' %}
         {% endblock %}
 
         <div id="body" class="container">
@@ -46,6 +52,8 @@
         
         {% block javascripts %}
             {% javascripts filter='yui_js' output='js/compiled/javascripts.js'
+                'bundles/fosjsrouting/js/router.js'
+                'js/fos_js_routes.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-1.11.2.min.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-ui-1.11.2.min.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/bootstrap-3.1.1.min.js'
@@ -53,20 +61,21 @@
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery.cookie.min.js'
                 '@InnovaSelfBundle/Resources/public/js/main.js'
                 '@InnovaSelfBundle/Resources/public/js/flashMessages.js'
+                'bundles/bazingajstranslation/js/translator.min.js'
+                'js/translations/config.js'
+                'js/translations/*/fr.js'
+                'js/translations/*/en.js'
+                'js/translations/*/it.js'
+                'js/translations/*/cn.js'
+                '@InnovaSelfBundle/Resources/public/js/register.js'
                 %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
 
-            {% javascripts filter='yui_js' output='js/compiled/translations.js'
-                'bundles/bazingajstranslation/js/translator.min.js'
-                'js/translations/config.js'
-                'js/translations/*/*.js'
-            %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            {% if app.debug %}
+                <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {% endif %}
 
-            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             <script type="text/javascript" src="{{ faye_server }}/client.js"></script>
 
             {% include 'InnovaSelfBundle::Main/nodeMessage.html.twig' %}

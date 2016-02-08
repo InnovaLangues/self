@@ -64,7 +64,7 @@ git checkout ...
 php app/console doctrine:schema:update --force (or php app/console doctrine:migrations:migrate)
 php app/console self:fixtures:load
 php app/console assets:install --symlink -env=prod
-php app/console fos:js-routing:dump
+php app/console fos:js-routing:dump --env=prod
 php app/console bazinga:js-translation:dump
 php app/console assetic:dump --env=prod
 php app/console cache:clear --env=prod --no-debug

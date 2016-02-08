@@ -137,13 +137,6 @@ $(document).ready(function() {
 
     });
 
-    $(window).keydown(function(event){
-        if(event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-        }
-    });
-
     $("#fos_user_registration_form_institution").change(function(){
         $('#fos_user_registration_form_course').attr("disabled", "disabled");
         $.ajax({

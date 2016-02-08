@@ -21,3 +21,6 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
+
+parameters:
+    router.request_context.base_url: %base_url_prod%

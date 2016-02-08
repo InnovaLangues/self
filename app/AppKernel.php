@@ -25,7 +25,6 @@ class AppKernel extends Kernel
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Innova\GitterBundle\InnovaGitterBundle(),
-            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
             new Liuggio\StatsDClientBundle\LiuggioStatsDClientBundle(),
         );

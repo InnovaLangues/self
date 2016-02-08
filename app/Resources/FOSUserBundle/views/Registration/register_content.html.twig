@@ -1,9 +1,4 @@
-{% block stylesheets %}
-     {# Appel de ce CSS pour afficher un astérisque rouge devant les zones obligatoires #}
-    <link href="{{ asset("bundles/innovaself/css/registration.css") }}" rel="stylesheet" />
-{% endblock %}
-
-<div class="panel panel-default">
+<div id="register-form" class="panel panel-default">
     <div class="panel-heading">
         <h4>
             <a href="{{ path('show_start') }}"><img src="{{ asset("bundles/innovaself/images/innova_logo_web_24.png") }}"/></a>
@@ -137,14 +132,5 @@
                 <span class="glyphicon glyphicon-info-sign"></span> Auto-inscription désactivée.
             </div>
         {% endif %}
-
-
     </div>
 </div>
-
-{% block javascripts %}
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery-1.11.2.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/register.js") }}"></script>
-{% endblock %}
