@@ -22,9 +22,9 @@
                         <input class="clue form-control" data-subquestion-id="{{ subquestion.id }}" type="text" value="{% if subquestion.clue is not null %}{{ subquestion.clue.media.description }}{% endif %}"/>
                         {% if subquestion.clue is not null %}
                         <span class="input-group-addon">
-                                <span rel="tooltip" data-original-title="fonctionnel">f</span>
+                                <span rel="tooltip" data-toggle="tooltip" data-original-title="fonctionnel">f</span>
                                 <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="fonctionnel" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "fonctionnel" %}checked{% endif %} />
-                                <span rel="tooltip" data-original-title="didactique">d</span>
+                                <span rel="tooltip" data-toggle="tooltip" data-original-title="didactique">d</span>
                                 <input class="clue-type" type="radio" name="clueType-{{ subquestion.clue.id }}[]" value="didactique" data-clue-id="{{ subquestion.clue.id }}" {% if subquestion.clue.clueType.name == "didactique" %}checked{% endif %}/>
                         </span>
                         {% endif %}

@@ -1,11 +1,11 @@
 <div id="contexte-icon">
-    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" rel="tooltip" data-original-title="{{ 'player.tooltip.context' | trans }}" />
+    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" data-toggle="tooltip" rel="tooltip" data-original-title="{{ 'player.tooltip.context' | trans }}" />
 </div>
 
 {# fix #436 : Enlever l'image texte #}
 {% if questionnaire.mediaText is not null %}
     <div id="situation-icon">
-        <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-EEC.png" rel="tooltip" data-original-title="Objet de la question" />
+        <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-EEC.png" data-toggle="tooltip" rel="tooltip" data-original-title="Objet de la question" />
     </div>
 {% endif %}
 

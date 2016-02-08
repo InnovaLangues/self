@@ -38,19 +38,19 @@
 
             <span class="buttons">
                 {#
-                <a toggle="tooltip" data-original-title="{{ 'generic.player' | trans }}" class="btn btn-default btn-sm" href="{{ path('questionnaire_pick', { testId: order.test.id, questionnaireId: order.questionnaire.id }) }}">
+                <a data-toggle="tooltip" data-original-title="{{ 'generic.player' | trans }}" class="btn btn-default btn-sm" href="{{ path('questionnaire_pick', { testId: order.test.id, questionnaireId: order.questionnaire.id }) }}">
                     <span class="glyphicon glyphicon-play"></span>
                 </a>
                 #}
 
                 {% if canEdit %}
-                    <a toggle="tooltip" data-original-title="{{ 'generic.edit' | trans }}" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id, 'testId': order.test.id }) }}">
+                    <a rel="tooltip" data-toggle="tooltip" data-original-title="{{ 'generic.edit' | trans }}" class="btn btn-default btn-sm" href="{{ path('editor_questionnaire_show', { 'questionnaireId': order.questionnaire.id, 'testId': order.test.id }) }}">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                 {% endif %}
                  
                 {% if canDelete %}
-                    <a toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}" class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
+                    <a rel="tooltip" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}" class="btn btn-default btn-danger btn-sm delete-task" data-questionnaire-id="{{ order.questionnaire.id}}">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
                 {% endif %}

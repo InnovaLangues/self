@@ -11,12 +11,12 @@
     <li data-questionnaire-id="{{ oqc.questionnaire.id }}" id="order{{ oqc.id }}" class="list-group-item questionnaire" data-order-id="{{ oqc.id }}">{{ oqc.questionnaire.theme |truncate(25) }}
     	<span class="pull-right">
             {% if canEdit %}
-        		<a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': oqc.questionnaire.id, 'testId': component.test.id }) }}" toggle="tooltip" data-original-title="{{ "generic.edit" | trans }}">
+        		<a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': oqc.questionnaire.id, 'testId': component.test.id }) }}" data-toggle="tooltip" data-original-title="{{ "generic.edit" | trans }}">
         			<span class="glyphicon glyphicon-pencil"></span>
         		</a>
             {% endif %}
             {% if canDelete %}
-        		<span toggle="tooltip" data-original-title="Supprimer la tâche" class="btn btn-default btn-xs remove-questionnaire" data-order-questionnaire-id="{{ oqc.id }}">
+        		<span data-toggle="tooltip" data-original-title="Supprimer la tâche" class="btn btn-default btn-xs remove-questionnaire" data-order-questionnaire-id="{{ oqc.id }}">
         			<span class="glyphicon glyphicon-trash"></span>
         		</span>
             {% endif %}
