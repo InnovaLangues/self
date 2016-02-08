@@ -156,7 +156,7 @@
         <ul class="nav navbar-nav pull-right">
             <li>
                 <a href="{{ path('self_user_display') }}">
-                    <span class="glyphicon glyphicon-user"></span> {{ app.user.username }}
+                    <span class="glyphicon glyphicon-user"></span> {{ app.user.lastName is defined and app.user.firstName is defined  ? app.user.lastName ~ ' ' ~ app.user.firstName : app.user.username }}
                 </a>
             </li>
 

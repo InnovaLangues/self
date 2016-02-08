@@ -6,7 +6,9 @@
         {% if questionnaire.mediaText is not null %}
             <div class="pull-right">
                 {{ macros.editMedia(questionnaire.mediaText, "texte") }}
-                <span id="delete-text" class="glyphicon glyphicon-remove btn btn-default btn-sm" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}"></span>
+                <span id="delete-text" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </span>
             </div>
         {% endif %}
     </div>

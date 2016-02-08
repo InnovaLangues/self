@@ -6,7 +6,9 @@
         {% if questionnaire.mediaFeedback is not null %}
             <div class="pull-right">
                 {{ macros.editMedia(questionnaire.mediaFeedback, "feedback") }}
-                <button id="delete-feedback" class="glyphicon glyphicon-remove btn btn-default btn-sm" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}"></button>
+                <button id="delete-feedback" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ 'generic.remove' | trans }}">
+                     <span class="glyphicon glyphicon-remove"></span>
+                </button>
             </div>
         {% endif %}
     </div>

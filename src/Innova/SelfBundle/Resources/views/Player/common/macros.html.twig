@@ -8,7 +8,7 @@
 {% endmacro %}
 
 {% macro audio(id, media, icon, height, limitAudio, tooltip) %}
-    <img rel="tooltip" data-original-title="{{ tooltip }}" sound="{{ id }}" class="item_audio_button" height="{{ height }}px" data-media-id="{{ media.id }}" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+    <img rel="tooltip" data-toggle="tooltip" data-original-title="{{ tooltip }}" sound="{{ id }}" class="item_audio_button" height="{{ height }}px" data-media-id="{{ media.id }}" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
 
     <audio preload="none" id="{{ id }}" class="item_audio">
         <source src="{{ asset('upload/media/') ~ media.url }}" type="audio/mp3">
