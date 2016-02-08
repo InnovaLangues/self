@@ -1,0 +1,7 @@
+services:
+    app.locale_listener:
+        class: Innova\SelfBundle\Listener\LocaleSetter
+        arguments:
+            localeManager: @self.locale.manager
+        tags:
+            - { name: kernel.event_subscriber }

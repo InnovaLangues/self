@@ -2,7 +2,7 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}SELF{% endblock %}</title>
+        <title>{% block title %}SELF - Système d'Evaluation en Langues à visée Formative{% endblock %}</title>
 
         {% stylesheets filter='cssrewrite, ?yui_css' output='css/compiled/style.css'
             'bundles/innovaself/css/jquery-ui.css'
@@ -35,20 +35,18 @@
                 <div class="row">
                     <div class="col-md-12">
                         SELF - Système d’Evaluation en Langues à visée Formative.
-                        {#
                         <span class="pull-right">
                             <span class="btn btn-default btn-xs change-locale">
-                                <span class="glyphicon glyphicon-globe"> </span> {{ 'menu.language_change' | trans }}
+                                <span class="glyphicon glyphicon-globe"> </span> {{ app.request.locale | upper }}
                             </span>
                         </span>
-                        #}
                     </div>
                 </div>
             </div>
         </div>
 
         {% include 'InnovaSelfBundle::Main/helpModale.html.twig' %}
-        {# {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %} #}
+        {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
         
         {% block javascripts %}
             {% javascripts filter='yui_js' output='js/compiled/javascripts.js'
