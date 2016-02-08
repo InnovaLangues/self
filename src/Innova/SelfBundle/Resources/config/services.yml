@@ -175,3 +175,8 @@ services:
         arguments: 
             - @faye_server.adapter
             - %faye_server.endpoint%
+
+    innova_locale_controller:
+        class: Innova\SelfBundle\Controller\LocaleController
+        arguments:
+            localeManager:          @self.locale.manager

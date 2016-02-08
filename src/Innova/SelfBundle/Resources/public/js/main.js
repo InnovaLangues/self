@@ -5,6 +5,13 @@ $(document).ready(function() {
         $("#locale-modale").modal('show');
     });
 
+    $('body').on('click', '.locale-select', function () {
+        $.ajax(Routing.generate('locale_change', {'_locale': $(this).html().toLowerCase()}))
+        .done(function () {
+            window.location.reload();
+        });
+    });
+
     $(".rest").restfulizer();
 
     $(document).on('click', 'body .dropdown-menu', function (e) {
