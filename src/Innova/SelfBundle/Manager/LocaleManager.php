@@ -2,7 +2,7 @@
 
 namespace Innova\SelfBundle\Manager;
 
-use Claroline\CoreBundle\Manager\UserManager;
+use Symfony\Component\HttpFoundation\Request;
 
 class LocaleManager
 {
@@ -33,13 +33,13 @@ class LocaleManager
      *
      * @return string The locale string as en, fr, es, etc.
      */
-    public function getUserLocale($request)
+    public function getUserLocale(Request $request)
     {
         $locale = 'fr';
 
         switch (true) {
             case ($locale = $request->attributes->get('_locale')): break;
-            case (($user = $this->getCurrentUser()) and ($locale = $user->getLocale()) !== ''): break;
+            case (($user = $this->getCurrentUser()) && ($locale = $user->getLocale()) !== ''): break;
             case ($locale = $request->getSession()->get('_locale')): break;
         }
 
@@ -53,7 +53,7 @@ class LocaleManager
      */
     private function getCurrentUser()
     {
-        if (is_object($token = $this->securityContext->getToken()) and is_object($user = $token->getUser())) {
+        if (is_object($token = $this->securityContext->getToken()) && is_object($user = $token->getUser())) {
             return $user;
         }
     }

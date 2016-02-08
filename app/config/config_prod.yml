@@ -24,3 +24,4 @@ monolog:
 
 parameters:
     router.request_context.base_url: %base_url_prod%
+    
