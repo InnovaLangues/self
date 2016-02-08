@@ -12,9 +12,9 @@ class SubquestionType extends AbstractType
         $builder->add('level', 'entity', array(
             'class' => 'InnovaSelfBundle:Level',
             'property' => 'name',
-            'empty_value' => "-",
+            'empty_value' => '-',
             'attr' => array('class' => 'form-control identity-select'),
-            'label'  => 'level',
+            'label' => 'level',
             'translation_domain' => 'messages',
         ));
 
@@ -23,9 +23,10 @@ class SubquestionType extends AbstractType
                 'property' => 'name',
                 'attr' => array('class' => 'form-control subquestion-identity-field', 'data-field' => 'focuses', 'size' => 3),
                 'multiple' => true,
-                'label'  => 'editor.identity.focuses',
+                'label' => 'editor.identity.focuses',
                 'translation_domain' => 'messages',
                 'required' => false,
+                'choice_translation_domain' => 'messages',
             ));
 
         $builder->add('cognitiveOpsMain', 'entity', array(
@@ -33,9 +34,10 @@ class SubquestionType extends AbstractType
                 'property' => 'name',
                 'attr' => array('class' => 'form-control subquestion-identity-field', 'data-field' => 'cognitiveOpsMain', 'size' => 7),
                 'multiple' => true,
-                'label'  => 'editor.identity.cognitive_main',
+                'label' => 'editor.identity.cognitive_main',
                 'translation_domain' => 'messages',
                 'required' => false,
+                'choice_translation_domain' => 'messages',
             ));
 
         $builder->add('cognitiveOpsSecondary', 'entity', array(
@@ -43,21 +45,22 @@ class SubquestionType extends AbstractType
                 'property' => 'name',
                 'attr' => array('class' => 'form-control subquestion-identity-field', 'data-field' => 'cognitiveOpsSecondary', 'size' => 7),
                 'multiple' => true,
-                'label'  => 'editor.identity.cognitive_secondary',
+                'label' => 'editor.identity.cognitive_secondary',
                 'translation_domain' => 'messages',
                 'required' => false,
+                'choice_translation_domain' => 'messages',
             ));
 
         $builder->add('difficultyIndex', 'text', array(
                 'attr' => array('class' => 'form-control subquestion-identity-field'),
-                'label'  => 'difficultyIndex',
+                'label' => 'difficultyIndex',
                 'translation_domain' => 'messages',
                 'required' => false,
             ));
 
         $builder->add('discriminationIndex', 'text', array(
                 'attr' => array('class' => 'form-control subquestion-identity-field'),
-                'label'  => 'discriminationIndex',
+                'label' => 'discriminationIndex',
                 'translation_domain' => 'messages',
                 'required' => false,
             ));
