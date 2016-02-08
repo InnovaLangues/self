@@ -212,6 +212,8 @@ class ScoreManager
                     $level = $subquestion->getLevel()->getName();
                 } elseif ($questionnaire->getLevel()) {
                     $level = $questionnaire->getLevel()->getName();
+                } else {
+                    $level = 'none';
                 }
 
                 if ($level && (!in_array($level, $levelsToIgnore) || !$ignore)) {
@@ -288,6 +290,8 @@ class ScoreManager
                 $scores[$skillName][$levelName]['count'] = 0;
                 $scores[$skillName][$levelName]['correct'] = 0;
             }
+            $scores[$skillName]['none']['count'] = 0;
+            $scores[$skillName]['none']['correct'] = 0;
         }
 
         return $scores;

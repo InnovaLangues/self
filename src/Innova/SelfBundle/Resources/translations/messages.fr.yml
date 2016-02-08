@@ -18,7 +18,8 @@ menu:
     groups: Groupes
     generalparams: Paramètres
     message: Message
-    institutions: Institutions 
+    institutions: Institutions
+    language_choose: Changer la langue
 
 message:
     content: Contenu du message

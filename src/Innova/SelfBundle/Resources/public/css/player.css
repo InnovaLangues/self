@@ -85,7 +85,7 @@ p {
 	padding: 15px;
 	max-height: 500px;
 	overflow: auto;
-	background-color: #E37E71;
+	background-color: #46637F;
 	color: black;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
@@ -130,9 +130,14 @@ p {
 	margin-bottom: 5px;
 }
 
-.progress-bar{
-	background-color:#E37E71;
+.progress{
+	height: 25px;
+}
 
+.progress .progress-bar{
+	background-color:#46637F;
+	font-size: 16px;
+	line-height: 20px;
 }
 
 /**********************************
@@ -178,12 +183,12 @@ p {
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus	{
 	opacity:1;
 	color:white;
-	background-color: #E37E71;
+	background-color: #46637F;
 	border-left:none;
 }
 
 .tab-pane {
-	background-color: #E37E71;
+	background-color: #46637F;
 	color: white;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -193,7 +198,7 @@ p {
 
 /** pour le cas EEC **/
 .tab-pane-EEC {
-	background-color: #E37E71;
+	background-color: #46637F;
 	color: white;
 	padding:20px;
 	border-top-right-radius: 5px;
@@ -203,7 +208,7 @@ p {
 
 /** pour le cas EEC **/
 .tab-pane-EEC-empty {
-	background-color: #E37E71;
+	background-color: #46637F;
 	color: white;
 	padding:5px;
 	border-top-right-radius: 5px;
@@ -406,8 +411,8 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 	text-align: center;
 	margin: 20px auto 0px auto;
 	padding:5px;
-	border: 1px solid #E37E71;
-	background-color: #F19588;
+	border: 1px solid #46637F;
+	background-color: #95A5A6;
 	border-radius:5px;
 }
 
@@ -526,4 +531,3 @@ et de faire disparaître la séparation entre les deux zones (affichage/saisie) 
 	display: inline-block;
 	height: 20px;
 }*/
-

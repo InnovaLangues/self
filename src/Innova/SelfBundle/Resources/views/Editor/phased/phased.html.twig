@@ -5,7 +5,7 @@
 {% set parts = [null, null, null, test.phasedParams.lowerPart1, test.phasedParams.upperPart1, test.phasedParams.lowerPart2, test.phasedParams.upperPart2, test.phasedParams.lowerPart3, test.phasedParams.upperPart3 ] %}
 #}
 
-<div class="panel panel-default">
+<div class="panel panel-primary">
     <div class="panel-heading">
         {% autoescape 'html' %}
         {{ 'editor.task.list' | trans({'%testName%': test.name}) | raw }}

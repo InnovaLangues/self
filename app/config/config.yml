@@ -9,7 +9,7 @@ services:
 framework:
     # http://blog.eleven-labs.com/symfony-2-cache-http-esi/
     fragments:       { path: /_proxy }
-    esi:             true
+    esi:             false
     translator:      { fallback: %locale% }
     secret:          %secret%
     router:

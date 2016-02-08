@@ -355,3 +355,10 @@ services:
         arguments:
             fayeClient:      @faye_server.client
             entityManager:      @doctrine.orm.entity_manager
+
+    self.locale.manager:
+        class: Innova\SelfBundle\Manager\LocaleManager
+        arguments:
+            securityContext:    @security.context
+            userManager:        @self.user.manager
+

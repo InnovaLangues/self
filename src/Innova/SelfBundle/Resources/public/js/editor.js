@@ -978,7 +978,7 @@ function beforeAjax(){
 function afterAjax(){
     $("#loader-img").hide();
     $(".btn, input, textarea, select:not(.to-check)").removeAttr("disabled");
-    $('*').tooltip({placement:'top'});
+    $('body *[data-toggle="tooltip"]').tooltip({placement:'top'});
 }
 
 function disableAndHideElements(){
