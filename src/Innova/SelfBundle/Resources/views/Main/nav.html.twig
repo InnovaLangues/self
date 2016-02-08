@@ -1,183 +1,195 @@
-            <nav class="navbar navbar-inverse navbar-static-top">
-                <div class="navbar-header">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="{{ path('show_tests') }}">SELF</a></li>
-                    </ul>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        {% if app.user is not null and is_granted('ROLE_ADMIN') %}
-                            {# USERS #}
-                            {% if checkRight("right.listuser") %}
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-user"></span>
-                                        {{ 'menu.users' | trans }} <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="{{ path('admin_user', { 'subset': 'last' }) }}">
-                                                {{ 'user.last' | trans }}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('admin_user', { 'subset': 'all' }) }}">
-                                                {{ 'user.all' | trans }}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('admin_user', { 'subset': 'connected' }) }}">
-                                                {{ 'user.connected' | trans }}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <form id="user-search" method="POST" action="{{ path('admin_user_search') }}">
-                                                <div style="margin:0 12px;" class="input-group">
-                                                    <input type="text" name="search" class="form-control"/>
-                                                    <span type="submit" id="user-search-btn" class="input-group-addon" id="basic-addon1">
-                                                        <span class="glyphicon glyphicon-search"></span>
-                                                    </span>
-                                                </div>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
+{% set logged = app.user is not null ? true : false %}
 
-                            {# SESSIONS #}
-                            {% if checkRight("right.listsession") or checkRight("right.createsession") or hasRightsOnGroup("RightUserSession") %}
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                        Sessions <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                       
-                                        <li>
-                                            <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">
-                                                Sessions actives
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('editor_sessions_active', { 'isActive': 0 }) }}">
-                                               Sessions inactives
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-
-                            {# TASKS AND TESTS #}
-                            {% if checkRight("right.listtest") or checkRight("right.createtest") or hasRightsOnGroup("RightUserTest") %}
-                                {% set canPlayWithTests = true %}
-                            {% else %}
-                                {% set canPlayWithTests = false %}
-                            {% endif %}
-
-                            {% if checkRight("right.listtask") or checkRight("right.createtask") or checkRight("right.edittask") or checkRight("right.deletetask")%}
-                                {% set canPlayWithTasks = true %}
-                            {% else %}
-                                {% set canPlayWithTasks = false %}
-                            {% endif %}
-                            
-                            {% if canPlayWithTests == true or canPlayWithTasks == true %}
-                                {% set languages = get_languages() %}
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                        {{ 'menu.editor' | trans }} <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-submenu">
-                                            <a tabindex="-1" href="#">Tests</a>
-                                            <ul class="dropdown-menu">
-                                            {% if canPlayWithTests == true %}
-                                                <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
-                                                <li><a href="{{path('editor_tests_my_favorites')}}">Tests favoris</a></li>
-                                                <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
-                                                <li class="divider"></li>
-                                                
-                                                {% for language in languages %}
-                                                    <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{language.name | trans }}</a></li>
-                                                {% endfor %}
-                                            {% else %}
-                                                <li><a href="#"> Vous n'avez pas les droits </a></li>
-                                            {% endif %}
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown-submenu">
-                                            <a tabindex="-1" href="#">{{ 'editor.task.tasks' | trans }}</a>
-                                            <ul class="dropdown-menu">
-                                                {% if canPlayWithTasks == true %}
-                                                    <li><a href="{{path('editor_questionnaires_show')}}">{{ 'editor.task.all_tasks' | trans }}</a></li>
-                                                    <li class="divider"></li>
-                                                    {% for language in languages %}
-                                                        <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{ language.name | trans }}</a></li>
-                                                    {% endfor %}
-                                                    <li class="divider"></li>
-                                                    <li><a href="{{path('editor_questionnaires_orphan_show')}}">{{ 'editor.task.orphan' | trans }}</a></li>
-                                                {% else %}
-                                                    <li><a href="#">Vous n'avez pas les droits</a></li>
-                                                {% endif %}
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-                        {% endif %}
-
-                        {# HOME #}
-                        <li>
-                            <a href="{{ path('show_tests') }}">
-                                <span class="glyphicon glyphicon-play-circle"></span>
-                                {{ 'menu.tests' | trans }}
-                            </a>
-                        </li>
-
-                        {# HELP #}
-                        <li>
-                            <a data-toggle="modal" href="#helpModal">
-                                <span class="glyphicon glyphicon-question-sign"></span>
-                                {{ 'menu.help' | trans }}
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav pull-right">
-                        <li>
-                            <a href="{{ path('self_user_display') }}">
-                                <span class="glyphicon glyphicon-user"></span> {{ app.user.username }}
-                            </a>
-                        </li>
-
-                        {% if checkRight("right.message") %}
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="navbar-header">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ path('show_tests') }}">SELF</a></li>
+        </ul>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            {% if logged and is_granted('ROLE_ADMIN') %}
+                {# USERS #}
+                {% if checkRight("right.listuser") %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user"></span>
+                            {{ 'menu.users' | trans }} <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
                             <li>
-                                <a href="{{ path('send_message') }}">
-                                    <span class="glyphicon glyphicon-envelope"></span> {{ 'menu.message' | trans }}
+                                <a href="{{ path('admin_user', { 'subset': 'last' }) }}">
+                                    {{ 'user.last' | trans }}
                                 </a>
                             </li>
-                        {% endif %}
-
-                        {% if checkRight("right.generalParameters") %}
                             <li>
-                                <a href="{{ path('parameters') }}">
-                                    <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
+                                <a href="{{ path('admin_user', { 'subset': 'all' }) }}">
+                                    {{ 'user.all' | trans }}
                                 </a>
                             </li>
-                        {% endif %}
-
-                        {% if checkRight("right.institution") %}
                             <li>
-                                <a href="{{ path('institutions') }}">
-                                    <span class="glyphicon glyphicon-leaf"></span> {{ 'menu.institutions' | trans }}
+                                <a href="{{ path('admin_user', { 'subset': 'connected' }) }}">
+                                    {{ 'user.connected' | trans }}
                                 </a>
                             </li>
-                        {% endif %}
+                            <li>
+                                <form id="user-search" method="POST" action="{{ path('admin_user_search') }}">
+                                    <div style="margin:0 12px;" class="input-group">
+                                        <input type="text" name="search" class="form-control"/>
+                                        <span type="submit" id="user-search-btn" class="input-group-addon" id="basic-addon1">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </span>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
 
-                         <li>
-                            <a href="{{ path('fos_user_security_logout') }}">
-                                <span class="glyphicon glyphicon-log-out"></span> {{ 'menu.logout' | trans }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+                {# SESSIONS #}
+                {% if checkRight("right.listsession") or checkRight("right.createsession") or hasRightsOnGroup("RightUserSession") %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            Sessions <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                           
+                            <li>
+                                <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">
+                                    Sessions actives
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('editor_sessions_active', { 'isActive': 0 }) }}">
+                                   Sessions inactives
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+
+                {# TASKS AND TESTS #}
+                {% if checkRight("right.listtest") or checkRight("right.createtest") or hasRightsOnGroup("RightUserTest") %}
+                    {% set canPlayWithTests = true %}
+                {% else %}
+                    {% set canPlayWithTests = false %}
+                {% endif %}
+
+                {% if checkRight("right.listtask") or checkRight("right.createtask") or checkRight("right.edittask") or checkRight("right.deletetask")%}
+                    {% set canPlayWithTasks = true %}
+                {% else %}
+                    {% set canPlayWithTasks = false %}
+                {% endif %}
+                
+                {% if canPlayWithTests == true or canPlayWithTasks == true %}
+                    {% set languages = get_languages() %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            {{ 'menu.editor' | trans }} <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Tests</a>
+                                <ul class="dropdown-menu">
+                                {% if canPlayWithTests == true %}
+                                    <li><a href="{{path('editor_tests_show')}}">{{ 'editor.test.all_tests' | trans }}</a></li>
+                                    <li><a href="{{path('editor_tests_my_favorites')}}">Tests favoris</a></li>
+                                    <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
+                                    <li class="divider"></li>
+                                    
+                                    {% for language in languages %}
+                                        <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{language.name | trans }}</a></li>
+                                    {% endfor %}
+                                {% else %}
+                                    <li><a href="#"> Vous n'avez pas les droits </a></li>
+                                {% endif %}
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">{{ 'editor.task.tasks' | trans }}</a>
+                                <ul class="dropdown-menu">
+                                    {% if canPlayWithTasks == true %}
+                                        <li><a href="{{path('editor_questionnaires_show')}}">{{ 'editor.task.all_tasks' | trans }}</a></li>
+                                        <li class="divider"></li>
+                                        {% for language in languages %}
+                                            <li><a href="{{path('editor_questionnaires_by_language_show', { 'languageId': language.id })}}">{{ language.name | trans }}</a></li>
+                                        {% endfor %}
+                                        <li class="divider"></li>
+                                        <li><a href="{{path('editor_questionnaires_orphan_show')}}">{{ 'editor.task.orphan' | trans }}</a></li>
+                                    {% else %}
+                                        <li><a href="#">Vous n'avez pas les droits</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endif %}
+
+            {% if logged %}
+                {# HOME #}
+                <li>
+                    <a href="{{ path('show_tests') }}">
+                        <span class="glyphicon glyphicon-play-circle"></span>
+                        {{ 'menu.tests' | trans }}
+                    </a>
+                </li>
+
+                {# HELP #}
+                <li>
+                    <a data-toggle="modal" href="#helpModal">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                        {{ 'menu.help' | trans }}
+                    </a>
+                </li>
+            {% endif %}
+            <span class="navbar-brand">
+                {% if page_title is not empty %}
+                    {{ page_title }}
+                {% endif %}
+            </span>                 
+        </ul>
+
+        {% if logged %}
+        <ul class="nav navbar-nav pull-right">
+            <li>
+                <a href="{{ path('self_user_display') }}">
+                    <span class="glyphicon glyphicon-user"></span> {{ app.user.username }}
+                </a>
+            </li>
+
+            {% if checkRight("right.message") %}
+                <li>
+                    <a href="{{ path('send_message') }}">
+                        <span class="glyphicon glyphicon-envelope"></span> {{ 'menu.message' | trans }}
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if checkRight("right.generalParameters") %}
+                <li>
+                    <a href="{{ path('parameters') }}">
+                        <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if checkRight("right.institution") %}
+                <li>
+                    <a href="{{ path('institutions') }}">
+                        <span class="glyphicon glyphicon-leaf"></span> {{ 'menu.institutions' | trans }}
+                    </a>
+                </li>
+            {% endif %}
+
+             <li>
+                <a href="{{ path('fos_user_security_logout') }}">
+                    <span class="glyphicon glyphicon-log-out"></span> {{ 'menu.logout' | trans }}
+                </a>
+            </li>
+        </ul>
+        {% endif %}
+    </div>
+</nav>

@@ -17,7 +17,7 @@
     </head>
     <body>
         {% block navbar %}
-            {% include 'InnovaSelfBundle::Main/nav.html.twig' %}
+            {% include 'InnovaSelfBundle::Main/nav.html.twig' with {page_title: block('page_title')} %}
         {% endblock %}
 
         <div id="body" class="container">
