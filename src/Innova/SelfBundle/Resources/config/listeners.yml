@@ -5,3 +5,4 @@ services:
             localeManager: @self.locale.manager
         tags:
             - { name: kernel.event_subscriber }
+            

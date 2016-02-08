@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -25,10 +26,11 @@ class LocaleController
      * Change locale.
      *
      * @Route("/locale/change/{_locale}", name="locale_change", options = {"expose" = true})
+     * @Method("GET")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changeLocale($_locale)
+    public function changeLocaleAction($_locale)
     {
         $this->localeManager->setUserLocale($_locale);
 
