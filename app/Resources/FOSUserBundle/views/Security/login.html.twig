@@ -1,8 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends "FOSUserBundle::layout.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block body %}
+{% block fos_user_content %}
+
 <form action="{{ path('fos_user_security_check') }}" class="form-horizontal" method="post" autocomplete="off">
     <fieldset>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -33,6 +34,7 @@
         </div>
     </fieldset>
 </form>
-{% endblock body %}
+
+{% endblock fos_user_content %}
 
 {% block page_title %}Connexion{% endblock %}

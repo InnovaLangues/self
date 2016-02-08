@@ -1,10 +1,9 @@
-{% block navbar %}
 {% set logged = app.user is not null ? true : false %}
 
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-inverse navbar-static-top">
     <div class="navbar-header">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="{{ logged ? path('show_tests') : path('show_start') }}">SELF</a></li>
+            <li class="active"><a href="{{ path('show_tests') }}">SELF</a></li>
         </ul>
     </div>
     <div class="collapse navbar-collapse">
@@ -37,7 +36,7 @@
                                 <form id="user-search" method="POST" action="{{ path('admin_user_search') }}">
                                     <div style="margin:0 12px;" class="input-group">
                                         <input type="text" name="search" class="form-control"/>
-                                        <span type="submit" id="user-search-btn" class="input-group-addon">
+                                        <span type="submit" id="user-search-btn" class="input-group-addon" id="basic-addon1">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </span>
                                     </div>
@@ -55,6 +54,7 @@
                             Sessions <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
+                           
                             <li>
                                 <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">
                                     Sessions actives
@@ -152,26 +152,26 @@
             </span>                 
         </ul>
 
-        <ul class="nav navbar-nav pull-right">
-            <li class="change-locale">
-                <a href="#">
-                    <span class="glyphicon glyphicon-globe"></span>&nbsp;{{ app.request.locale | upper }}
-                </a>
-            </li>
         {% if logged %}
         <ul class="nav navbar-nav pull-right">
-            {% if checkRight("right.message") %}
             <li>
-                <a href="{{ path('send_message') }}">
-                    <span class="glyphicon glyphicon-envelope"></span> 
+                <a href="{{ path('self_user_display') }}">
+                    <span class="glyphicon glyphicon-user"></span> {{ app.user.username }}
                 </a>
             </li>
+
+            {% if checkRight("right.message") %}
+                <li>
+                    <a href="{{ path('send_message') }}">
+                        <span class="glyphicon glyphicon-envelope"></span> {{ 'menu.message' | trans }}
+                    </a>
+                </li>
             {% endif %}
 
             {% if checkRight("right.generalParameters") %}
                 <li>
                     <a href="{{ path('parameters') }}">
-                        <span class="glyphicon glyphicon-cog"></span> 
+                        <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
                     </a>
                 </li>
             {% endif %}
@@ -179,25 +179,17 @@
             {% if checkRight("right.institution") %}
                 <li>
                     <a href="{{ path('institutions') }}">
-                        <span class="glyphicon glyphicon-leaf"></span> 
+                        <span class="glyphicon glyphicon-leaf"></span> {{ 'menu.institutions' | trans }}
                     </a>
                 </li>
             {% endif %}
-
-            <li>
-                <a href="{{ path('self_user_display') }}">
-                    <span class="glyphicon glyphicon-user"></span> {{ app.user.lastName is defined and app.user.firstName is defined  ? app.user.lastName ~ ' ' ~ app.user.firstName : app.user.username }}
-                </a>
-            </li>
 
              <li>
                 <a href="{{ path('fos_user_security_logout') }}">
                     <span class="glyphicon glyphicon-log-out"></span> {{ 'menu.logout' | trans }}
                 </a>
             </li>
-        
-        {% endif %}
         </ul>
+        {% endif %}
     </div>
 </nav>
-{% endblock %}

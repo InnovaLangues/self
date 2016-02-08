@@ -265,7 +265,6 @@ function uncheckEverything(){
     $('input[type="radio"],input[type="checkbox"]').prop('checked', false);
 }
 
-
 /**************
     SPECIAL CHAR PICKER
 **************/

@@ -1,10 +1,5 @@
-{% block stylesheets %}
-     {# Appel de ce CSS pour afficher un astérisque rouge devant les zones obligatoires #}
-    <link href="{{ asset("bundles/innovaself/css/registration.css") }}" rel="stylesheet" />
-{% endblock %}
-
-
 {% if isSelfRegistrationEnabled() %}
+    <div id="register-form">
     <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post" class="form-horizontal fos_user_registration_register" autocomplete="off">
         <div class="legend">
             <p class="warning text-left">
@@ -125,6 +120,7 @@
 
         </div>
     </form>
+    </div>
 {% else %}
     <div class="alert alert-danger" role="alert">
         <span class="glyphicon glyphicon-info-sign"></span> Auto-inscription désactivée.

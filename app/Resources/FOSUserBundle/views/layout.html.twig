@@ -1,22 +1,22 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <br/>
-    {% if app.request.hasPreviousSession %}
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for key, message in messages %}
-                <div class="flash-{{ type }}">
-                    <div class="alert alert-success">{{ message|trans({}, 'FOSUserBundle') }}</div>
-                </div>
-            {% endfor %}
-        {% endfor %}
-    {% endif %}
+            <br/>
+            {% if app.request.hasPreviousSession %}
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for key, message in messages %}
+                        <div class="flash-{{ type }}">
+                            <div class="alert alert-success">{{ message|trans({}, 'FOSUserBundle') }}</div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
 
-    <div>
-        {% block fos_user_content %}
-        {% endblock fos_user_content %}
-    </div>
+            {% endif %}
+
+            <div>
+                {% block fos_user_content %}
+                {% endblock fos_user_content %}
+            </div>
 {% endblock %}
-
 
 {% block page_title %}Réinialisation du mot de passe{% endblock %}

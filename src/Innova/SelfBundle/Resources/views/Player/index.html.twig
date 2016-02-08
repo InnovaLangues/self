@@ -24,7 +24,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-
+    
     {% javascripts filter='?yui_js' output='js/compiled/player.js'
         'bundles/innovaself/js/dragAndDrop.js'
         'bundles/innovaself/js/font-resize.js'
@@ -33,5 +33,3 @@
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
-
-{% block page_title %} {{ test.name }}  ({{ session.name }}){% endblock %}
