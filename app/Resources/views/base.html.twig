@@ -23,28 +23,13 @@
         <div id="body" class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="flash-messages">
-                    </div>
+                    <div class="flash-messages"></div>
                     {% block body %}{% endblock %}
                 </div>
             </div>
         </div>
 
-        <div id="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        SELF - Système d’Evaluation en Langues à visée Formative.
-                        <span class="pull-right">
-                            <span class="btn btn-default btn-xs change-locale">
-                                <span class="glyphicon glyphicon-globe"> </span> {{ app.request.locale | upper }}
-                            </span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        {% include 'InnovaSelfBundle::Main/footer.html.twig' %}
         {% include 'InnovaSelfBundle::Main/helpModale.html.twig' %}
         {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
         
@@ -75,9 +60,7 @@
             {% endif %}
 
             <script type="text/javascript" src="{{ faye_server }}/client.js"></script>
-
             {% include 'InnovaSelfBundle::Main/nodeMessage.html.twig' %}
-
         {% endblock %}
     </body>
 </html>
