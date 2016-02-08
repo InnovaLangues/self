@@ -1,24 +1,14 @@
 {% trans_default_domain 'FOSUserBundle' %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4>
-        <a href="{{ path('show_start') }}"><img src="{{ asset("bundles/innovaself/images/innova_logo_web_24.png") }}"/></a>
-        Reset mot de passe SELF - Système d’Evaluation en Langues à visée Formative
-        </h4>
-    </div>
-    <div class="panel-body">
 
-        <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-            <div class="form-group">
-                {% if invalid_username is defined %}
-                    <p class="alert alert-warning">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
-                {% endif %}
-                <label for="username">{{ 'resetting.request.username'|trans }}</label>
-                <input class="form-control" type="text" id="username" name="username" required="required" />
-            </div>
-            <div class="form-group">
-                <input class="btn btn-default" type="submit" value="{{ 'resetting.request.submit'|trans }}" />
-            </div>
-        </form>
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+    <div class="form-group">
+        {% if invalid_username is defined %}
+            <p class="alert alert-warning">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+        {% endif %}
+        <label for="username">{{ 'resetting.request.username'|trans }}</label>
+        <input class="form-control" type="text" id="username" name="username" required="required" />
     </div>
-</div>
+    <div class="form-group">
+        <input class="btn btn-default" type="submit" value="{{ 'resetting.request.submit'|trans }}" />
+    </div>
+</form>

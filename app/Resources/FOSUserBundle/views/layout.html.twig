@@ -1,8 +1,5 @@
 {% extends '::base.html.twig' %}
 
-{% block navbar %}
-{% endblock %}
-
 {% block body %}
             <br/>
             {% if app.request.hasPreviousSession %}
@@ -21,3 +18,5 @@
                 {% endblock fos_user_content %}
             </div>
 {% endblock %}
+
+{% block page_title %}Réinialisation du mot de passe{% endblock %}
