@@ -6,7 +6,7 @@
 
     {% if type == "image" %}
         <!-- <span class="glyphicon glyphicon-picture"></span> -->
-        <br/> <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('upload/media/') ~ media.url }}" width="100px"/>
+        <br/> <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('upload/media/'~ media.url) }}" width="100px"/>
 
     {% elseif type == "texte" %}
         <span class="glyphicon glyphicon-align-center"></span>
