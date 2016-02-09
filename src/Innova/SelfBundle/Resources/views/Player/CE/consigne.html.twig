@@ -1,14 +1,14 @@
 <div class="question-CE">
     {#fix #432 : Enlever l'image avec le point d'interrogation si absence de consigne #}
     {% if subquestion.mediaAmorce is not null %}
-        <img width="70px" src="{{ asset("bundles/innovaself/images/") }}oignon.png" data-toggle="tooltip" rel="tooltip" data-original-title="{{ 'player.tooltip.question' | trans }}" />
+        <img width="70px" src="{{ asset("bundles/innovaself/images/oignon.png") }}" data-toggle="tooltip" rel="tooltip" data-original-title="{{ 'player.tooltip.question' | trans }}" />
         <div class="question-CE-text">
             {% autoescape %}
                 {{ subquestion.mediaAmorce.description|raw }}
             {% endautoescape %}
         </div>
     {% elseif questionnaire.mediaInstruction is not null %}
-        <img width="70px" src="{{ asset("bundles/innovaself/images/") }}oignon.png" data-toggle="tooltip" rel="tooltip" data-original-title="{{ 'player.tooltip.question' | trans }}" />
+        <img width="70px" src="{{ asset("bundles/innovaself/images/"oignon.png) }}" data-toggle="tooltip" rel="tooltip" data-original-title="{{ 'player.tooltip.question' | trans }}" />
         <div class="question-CE-text">
             {% autoescape %}
                 {{ questionnaire.mediaInstruction.description|raw }}

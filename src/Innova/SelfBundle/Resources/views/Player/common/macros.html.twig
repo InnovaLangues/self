@@ -8,10 +8,10 @@
 {% endmacro %}
 
 {% macro audio(id, media, icon, height, limitAudio, tooltip) %}
-    <img rel="tooltip" data-toggle="tooltip" data-original-title="{{ tooltip }}" sound="{{ id }}" class="item_audio_button" height="{{ height }}px" data-media-id="{{ media.id }}" src="{{ asset("bundles/innovaself/images/") }}{{ icon }}"/>
+    <img rel="tooltip" data-toggle="tooltip" data-original-title="{{ tooltip }}" sound="{{ id }}" class="item_audio_button" height="{{ height }}px" data-media-id="{{ media.id }}" src="{{ asset("bundles/innovaself/images/" ~ icon) }}"/>
 
     <audio preload="none" id="{{ id }}" class="item_audio">
-        <source src="{{ asset('upload/media/') ~ media.url }}" type="audio/mp3">
+        <source src="{{ asset('upload/media/' ~ media.url) }}" type="audio/mp3">
         Votre navigateur est trop ancien.
     </audio>
 
@@ -28,7 +28,7 @@
 {% macro image(id, media, tooltip, width, maxheight) %}
     {% import _self as macros %}
     <div style='position: relative;'>
-        <img data-toggle="modal" style="max-width:{{ width }}px; max-height:{{ maxheight }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
+        <img data-toggle="modal" style="max-width:{{ width }}px; max-height:{{ maxheight }}px" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/'~ media.url)  }}" />
     </div>
 {% endmacro %}
 
@@ -44,7 +44,7 @@
 
 {% macro video(id, media, limitAudio) %}
     <video id="video" preload="none">
-        <source src="{{ asset('upload/media/') ~ media.url }}" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
+        <source src="{{ asset('upload/media/'~ media.url)  }}" poster="{{ asset('bundles/innovaself/images/video.png') }}" >
         Your browser does not support the video tag.
     </video>
     <div id="video-controls" class="row">
@@ -69,13 +69,13 @@
                 <div class="modal-body">
                 {% if media.mediaType.name == "image" %}
                     <div class="text-center">
-                        <img src="{{ asset('upload/media/') ~ media.url }}"/>
+                        <img src="{{ asset('upload/media/'~ media.url) }}"/>
                     </div>
                 {% elseif media.mediaType.name == "texte" %}
                     <div id="{{ id }}"> {{ media.description }} </div>
                 {% elseif media.mediaType.name == "video" %}
                     <video id="{{ id }}" preload="none">
-                        <source src="{{ asset('upload/media/') ~ media.url }}" >
+                        <source src="{{ asset('upload/media/'~ media.url) }}" >
                         Your browser does not support the video tag.
                     </video>
                 {% endif %}
