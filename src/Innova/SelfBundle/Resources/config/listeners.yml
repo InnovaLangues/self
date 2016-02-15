@@ -5,4 +5,9 @@ services:
             localeManager: @self.locale.manager
         tags:
             - { name: kernel.event_subscriber }
-            
+
+    self.logout:
+        class: Innova\SelfBundle\Listener\LogoutListener
+        arguments:  
+            security: @security.context
+            router: @router

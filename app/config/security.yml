@@ -21,14 +21,11 @@ security:
                 default_target_path: /home
                 always_use_default_target_path: true
                 use_referer:                    false
-
             logout:
                 path:        fos_user_security_logout
                 target:      /
-                #http://foshttpcachebundle.readthedocs.org/en/latest/reference/configuration/user-context.html
                 invalidate_session: true
-                #handlers:
-                #   - fos_http_cache.user_context.logout_handler
+                success_handler: self.logout 
             anonymous:    true
 
     access_control:
