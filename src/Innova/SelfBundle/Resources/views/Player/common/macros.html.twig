@@ -39,7 +39,7 @@
     {% else %}
         {% set maxwidth = 120 %}
     {% endif %}
-    <img style="max-width:{{ maxwidth }}px" data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/') ~ media.url }}" />
+    <img style="max-width:{{ maxwidth }}px" data-toggle="modal" data-target="#modal-{{ id }}" rel="tooltip" data-original-title="{{ tooltip }}" src="{{ asset('upload/media/' ~ media.url) }}" />
 {% endmacro %}
 
 {% macro video(id, media, limitAudio) %}
