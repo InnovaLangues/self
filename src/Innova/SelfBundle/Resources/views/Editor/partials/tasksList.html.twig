@@ -4,7 +4,7 @@
     {% set canEdit = false %}
     {% set canDelete = false %}
 
-    {% if checkRight("right.edittasktest", orders[0].test) %}
+    {% if checkRight("right.edittasktest", orders[0].test) or checkRight("right.editorreadonlytest", orders[0].test) %}
         {% set canEdit = true %}
     {% endif %}
 

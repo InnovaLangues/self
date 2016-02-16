@@ -13,70 +13,77 @@ class RightUserTestType extends AbstractType
                 'class' => 'InnovaSelfBundle:User',
                 'property' => 'username',
                 'attr' => array('class' => 'form-control', 'data-field' => 'user'),
-                'label'  => 'user.single',
+                'label' => 'user.single',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canEdit', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canEdit'),
-                'label'  => 'canEdit',
+                'label' => 'canEdit',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canDelete', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canDelete'),
-                'label'  => 'canDelete',
+                'label' => 'canDelete',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canDuplicate', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canDuplicate'),
-                'label'  => 'canDuplicate',
+                'label' => 'canDuplicate',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canManageSession', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canManageSession'),
-                'label'  => 'canManageSession',
+                'label' => 'canManageSession',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canManageTask', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canManageTask'),
-                'label'  => 'canManageTask',
+                'label' => 'canManageTask',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canAddTask', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canAddTask'),
-                'label'  => 'canAddTask',
+                'label' => 'canAddTask',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canDeleteTask', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canDeleteTask'),
-                'label'  => 'canDeleteTask',
+                'label' => 'canDeleteTask',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canEditTask', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canEditTask'),
-                'label'  => 'canEditTask',
+                'label' => 'canEditTask',
                 'translation_domain' => 'messages',
             ));
 
         $builder->add('canReorderTasks', 'choice', array(
-                'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control', 'data-field' => 'canReorderTasks'),
-                'label'  => 'canReorderTasks',
+                'label' => 'canReorderTasks',
+                'translation_domain' => 'messages',
+            ));
+
+        $builder->add('canEditorReadOnlyTasks', 'choice', array(
+                'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
+                'attr' => array('class' => 'form-control', 'data-field' => 'canEditorReadOnlyTasks'),
+                'label' => 'canEditorReadOnlyTasks',
                 'translation_domain' => 'messages',
             ));
 

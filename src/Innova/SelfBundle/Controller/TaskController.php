@@ -159,8 +159,21 @@ class TaskController
     public function showAction(Questionnaire $questionnaire, $testId)
     {
         $currentUser = $this->securityContext->getToken()->getUser();
+        $em = $this->entityManager;
 
-        if ($this->rightManager->canEditTask($currentUser, $questionnaire)) {
+        $test = ($testId)
+            ? $em->getRepository('InnovaSelfBundle:Test')->find($testId)
+            : null;
+
+        $readOnly = ($this->rightManager->checkRight('right.editorreadonlytest', $currentUser, $test))
+            ? true
+            : false;
+
+        $canEdit = ($this->rightManager->canEditTask($currentUser, $questionnaire))
+            ? true
+            : false;
+
+        if ($readOnly || $canEdit) {
             $em = $this->entityManager;
             $typologies = $em->getRepository('InnovaSelfBundle:Typology')->findAll();
             $status = $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Status')->findAll();
@@ -174,6 +187,8 @@ class TaskController
                 'testId' => $testId,
                 'form' => $form->createView(),
                 'taskInfosForm' => $taskInfosForm->createView(),
+                'readOnly' => $readOnly,
+                'canEdit' => $canEdit,
             );
         }
 
