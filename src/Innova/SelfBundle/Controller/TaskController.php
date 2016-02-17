@@ -187,7 +187,6 @@ class TaskController
                 'testId' => $testId,
                 'form' => $form->createView(),
                 'taskInfosForm' => $taskInfosForm->createView(),
-                'readOnly' => $readOnly,
                 'canEdit' => $canEdit,
             );
         }
