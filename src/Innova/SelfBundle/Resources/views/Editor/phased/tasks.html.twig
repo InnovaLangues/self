@@ -3,7 +3,7 @@
 {% if checkRight("right.deletetasktest", component.test) %}
     {% set canDelete = true %}
 {% endif %}
-{% if checkRight("right.edittasktest", component.test) %}
+{% if checkRight("right.edittasktest", component.test) or checkRight("right.editorreadonlytest", component.test) %}
     {% set canEdit = true %}
 {% endif %}
 

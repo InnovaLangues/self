@@ -53,8 +53,12 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {% if canEdit %}
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.Jcrop.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor_crop.js") }}"></script>
     {{ tinymce_init() }}
+    {% else %}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor_readonly.js") }}"></script>
+    {% endif %}
 {% endblock %}
