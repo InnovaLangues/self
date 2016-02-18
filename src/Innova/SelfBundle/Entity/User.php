@@ -5,17 +5,19 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
+use JsonSerializable;
 
 /**
- * User
+ * User.
+ *
  * @ORM\Table(name="self_user")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\UserRepository")
  */
-class User extends BaseUser
+class User extends BaseUser implements JsonSerializable
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -24,18 +26,18 @@ class User extends BaseUser
     protected $id;
 
     /**
-    * @ORM\OneToMany(targetEntity="Trace", mappedBy="user", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Trace", mappedBy="user", cascade={"remove"})
+     */
     protected $traces;
 
     /**
-    * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="author")
-    */
+     * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="author")
+     */
     protected $questionnaires;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Questionnaire", mappedBy="revisors")
-    */
+     * @ORM\ManyToMany(targetEntity="Questionnaire", mappedBy="revisors")
+     */
     protected $revisedQuestionnaires;
 
     /**
@@ -59,8 +61,8 @@ class User extends BaseUser
     private $firstName;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Test", inversedBy="users")
-    */
+     * @ORM\ManyToMany(targetEntity="Test", inversedBy="users")
+     */
     private $tests;
 
     /**
@@ -87,62 +89,75 @@ class User extends BaseUser
     private $year;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Level", inversedBy="coLevels")
-    */
+     * @ORM\ManyToOne(targetEntity="Level", inversedBy="coLevels")
+     */
     protected $coLevel;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Level", inversedBy="ceLevels")
-    */
+     * @ORM\ManyToOne(targetEntity="Level", inversedBy="ceLevels")
+     */
     protected $ceLevel;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Level", inversedBy="eeLevels")
-    */
+     * @ORM\ManyToOne(targetEntity="Level", inversedBy="eeLevels")
+     */
     protected $eeLevel;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Language", inversedBy="users")
-    */
+     * @ORM\ManyToOne(targetEntity="Language", inversedBy="users")
+     */
     protected $preferedLanguage;
 
     /**
-    * @ORM\ManyToOne(targetEntity="LevelLansad", inversedBy="levelLansads")
-    */
+     * @ORM\ManyToOne(targetEntity="LevelLansad", inversedBy="levelLansads")
+     */
     protected $levelLansad;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="user", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="user", cascade={"remove"})
+     */
     protected $mediaClicks;
 
     /**
-    * @ORM\OneToMany(targetEntity="Comment", mappedBy="user", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user", cascade={"remove"})
+     */
     private $comments;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Test")
-    * @ORM\JoinTable(name="user_test_favorites")
-    */
+     * @ORM\ManyToMany(targetEntity="Test")
+     * @ORM\JoinTable(name="user_test_favorites")
+     */
     protected $favoritesTests;
 
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'username' => $this->__toString(),
+        );
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername().' ('.$this->getLastName().' '.$this->getFirstName().')';
+    }
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
         parent::__construct();
-        $this->traces           = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tests            = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->favoritesTests   = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->locale           = "fr";
+        $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->favoritesTests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->locale = 'fr';
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -150,9 +165,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set lastName
+     * Set lastName.
      *
-     * @param  string $lastName
+     * @param string $lastName
+     *
      * @return User
      */
     public function setLastName($lastName)
@@ -163,7 +179,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get lastName
+     * Get lastName.
      *
      * @return string
      */
@@ -173,9 +189,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set firstName
+     * Set firstName.
      *
-     * @param  string $firstName
+     * @param string $firstName
+     *
      * @return User
      */
     public function setFirstName($firstName)
@@ -186,9 +203,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set password
+     * Set password.
      *
-     * @param  string $password
+     * @param string $password
+     *
      * @return User
      */
     public function setPassword($password)
@@ -199,7 +217,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get password
+     * Get password.
      *
      * @return string
      */
@@ -209,9 +227,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add traces
+     * Add traces.
      *
-     * @param  \Innova\SelfBundle\Entity\Trace $traces
+     * @param \Innova\SelfBundle\Entity\Trace $traces
+     *
      * @return User
      */
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
@@ -222,7 +241,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove traces
+     * Remove traces.
      *
      * @param \Innova\SelfBundle\Entity\Trace $traces
      */
@@ -232,7 +251,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get traces
+     * Get traces.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -242,7 +261,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get firstName
+     * Get firstName.
      *
      * @return string
      */
@@ -252,9 +271,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add tests
+     * Add tests.
      *
-     * @param  \Innova\SelfBundle\Entity\Test $tests
+     * @param \Innova\SelfBundle\Entity\Test $tests
+     *
      * @return User
      */
     public function addTest(\Innova\SelfBundle\Entity\Test $tests)
@@ -265,7 +285,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove tests
+     * Remove tests.
      *
      * @param \Innova\SelfBundle\Entity\Test $tests
      */
@@ -275,7 +295,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get tests
+     * Get tests.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -285,9 +305,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set salt
+     * Set salt.
      *
-     * @param  string $salt
+     * @param string $salt
+     *
      * @return User
      */
     public function setSalt($salt)
@@ -298,7 +319,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get salt
+     * Get salt.
      *
      * @return string
      */
@@ -308,9 +329,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add questionnaires
+     * Add questionnaires.
      *
-     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     *
      * @return User
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
@@ -321,7 +343,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove questionnaires
+     * Remove questionnaires.
      *
      * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      */
@@ -331,7 +353,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get questionnaires
+     * Get questionnaires.
      *
      * @return Questionnaire[]
      */
@@ -341,9 +363,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set coLevel
+     * Set coLevel.
      *
-     * @param  \Innova\SelfBundle\Entity\Level $coLevel
+     * @param \Innova\SelfBundle\Entity\Level $coLevel
+     *
      * @return User
      */
     public function setCoLevel(\Innova\SelfBundle\Entity\Level $coLevel = null)
@@ -354,7 +377,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get coLevel
+     * Get coLevel.
      *
      * @return \Innova\SelfBundle\Entity\Level
      */
@@ -364,9 +387,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set ceLevel
+     * Set ceLevel.
      *
-     * @param  \Innova\SelfBundle\Entity\Level $ceLevel
+     * @param \Innova\SelfBundle\Entity\Level $ceLevel
+     *
      * @return User
      */
     public function setCeLevel(\Innova\SelfBundle\Entity\Level $ceLevel = null)
@@ -377,7 +401,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get ceLevel
+     * Get ceLevel.
      *
      * @return \Innova\SelfBundle\Entity\Level
      */
@@ -387,9 +411,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set eeLevel
+     * Set eeLevel.
      *
-     * @param  \Innova\SelfBundle\Entity\Level $eeLevel
+     * @param \Innova\SelfBundle\Entity\Level $eeLevel
+     *
      * @return User
      */
     public function setEeLevel(\Innova\SelfBundle\Entity\Level $eeLevel = null)
@@ -400,7 +425,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get eeLevel
+     * Get eeLevel.
      *
      * @return \Innova\SelfBundle\Entity\Level
      */
@@ -410,9 +435,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set originStudent
+     * Set originStudent.
      *
-     * @param  \Innova\SelfBundle\Entity\OriginStudent $originStudent
+     * @param \Innova\SelfBundle\Entity\OriginStudent $originStudent
+     *
      * @return User
      */
     public function setOriginStudent(\Innova\SelfBundle\Entity\OriginStudent $originStudent = null)
@@ -423,7 +449,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get originStudent
+     * Get originStudent.
      *
      * @return \Innova\SelfBundle\Entity\OriginStudent
      */
@@ -433,9 +459,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set levelLansad
+     * Set levelLansad.
      *
-     * @param  \Innova\SelfBundle\Entity\LevelLansad $levelLansad
+     * @param \Innova\SelfBundle\Entity\LevelLansad $levelLansad
+     *
      * @return User
      */
     public function setLevelLansad(\Innova\SelfBundle\Entity\LevelLansad $levelLansad = null)
@@ -446,7 +473,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get levelLansad
+     * Get levelLansad.
      *
      * @return \Innova\SelfBundle\Entity\LevelLansad
      */
@@ -456,9 +483,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set locale
+     * Set locale.
      *
-     * @param  string $locale
+     * @param string $locale
+     *
      * @return User
      */
     public function setLocale($locale)
@@ -469,7 +497,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get locale
+     * Get locale.
      *
      * @return string
      */
@@ -479,9 +507,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add mediaClicks
+     * Add mediaClicks.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
+     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
+     *
      * @return User
      */
     public function addMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
@@ -492,7 +521,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove mediaClicks
+     * Remove mediaClicks.
      *
      * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      */
@@ -502,7 +531,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get mediaClicks
+     * Get mediaClicks.
      *
      * @return Media\MediaClick[]
      */
@@ -512,9 +541,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add comments
+     * Add comments.
      *
-     * @param  \Innova\SelfBundle\Entity\Comment $comments
+     * @param \Innova\SelfBundle\Entity\Comment $comments
+     *
      * @return User
      */
     public function addComment(\Innova\SelfBundle\Entity\Comment $comments)
@@ -525,7 +555,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove comments
+     * Remove comments.
      *
      * @param \Innova\SelfBundle\Entity\Comment $comments
      */
@@ -535,7 +565,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get comments
+     * Get comments.
      *
      * @return Comment[]
      */
@@ -545,9 +575,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add revisedQuestionnaires
+     * Add revisedQuestionnaires.
      *
-     * @param  \Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires
+     * @param \Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires
+     *
      * @return User
      */
     public function addRevisedQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires)
@@ -558,7 +589,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove revisedQuestionnaires
+     * Remove revisedQuestionnaires.
      *
      * @param \Innova\SelfBundle\Entity\Questionnaire $revisedQuestionnaires
      */
@@ -568,7 +599,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get revisedQuestionnaires
+     * Get revisedQuestionnaires.
      *
      * @return Questionnaire[]
      */
@@ -578,9 +609,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add favoritesTests
+     * Add favoritesTests.
      *
-     * @param  \Innova\SelfBundle\Entity\Test $favoritesTests
+     * @param \Innova\SelfBundle\Entity\Test $favoritesTests
+     *
      * @return User
      */
     public function addFavoritesTest(\Innova\SelfBundle\Entity\Test $favoritesTests)
@@ -591,7 +623,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove favoritesTests
+     * Remove favoritesTests.
      *
      * @param \Innova\SelfBundle\Entity\Test $favoritesTests
      */
@@ -601,7 +633,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get favoritesTests
+     * Get favoritesTests.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -611,7 +643,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set preferedLanguage
+     * Set preferedLanguage.
      *
      * @param \Innova\SelfBundle\Entity\Language $preferedLanguage
      *
@@ -625,7 +657,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get preferedLanguage
+     * Get preferedLanguage.
      *
      * @return \Innova\SelfBundle\Entity\Language
      */
@@ -635,9 +667,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set institution
+     * Set institution.
      *
      * @param \Innova\SelfBundle\Entity\Institution\Institution $institution
+     *
      * @return User
      */
     public function setInstitution(\Innova\SelfBundle\Entity\Institution\Institution $institution = null)
@@ -648,9 +681,9 @@ class User extends BaseUser
     }
 
     /**
-     * Get institution
+     * Get institution.
      *
-     * @return \Innova\SelfBundle\Entity\Institution\Institution 
+     * @return \Innova\SelfBundle\Entity\Institution\Institution
      */
     public function getInstitution()
     {
@@ -658,9 +691,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set course
+     * Set course.
      *
      * @param \Innova\SelfBundle\Entity\Institution\Course $course
+     *
      * @return User
      */
     public function setCourse(\Innova\SelfBundle\Entity\Institution\Course $course = null)
@@ -671,9 +705,9 @@ class User extends BaseUser
     }
 
     /**
-     * Get course
+     * Get course.
      *
-     * @return \Innova\SelfBundle\Entity\Institution\Course 
+     * @return \Innova\SelfBundle\Entity\Institution\Course
      */
     public function getCourse()
     {
@@ -681,9 +715,10 @@ class User extends BaseUser
     }
 
     /**
-     * Set year
+     * Set year.
      *
      * @param \Innova\SelfBundle\Entity\Institution\Year $year
+     *
      * @return User
      */
     public function setYear(\Innova\SelfBundle\Entity\Institution\Year $year = null)
@@ -694,9 +729,9 @@ class User extends BaseUser
     }
 
     /**
-     * Get year
+     * Get year.
      *
-     * @return \Innova\SelfBundle\Entity\Institution\Year 
+     * @return \Innova\SelfBundle\Entity\Institution\Year
      */
     public function getYear()
     {
