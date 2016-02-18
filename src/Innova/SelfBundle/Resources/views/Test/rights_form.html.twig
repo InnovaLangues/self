@@ -1,5 +1,9 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets -%}
+    <link href="{{ asset("bundles/innovaself/css/select2.min.css") }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body -%}
 
 {% if rightUserTest.id is defined %}
@@ -7,22 +11,20 @@
 		Supprimer
    	</a>
 {% endif %}
-
 <hr/>
 
 <h3> Droits </h3>
-
 {{ form(form) }}
 
 {% endblock %}
 
-
 {% block javascripts %}
     {{ parent() }}
-	<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/css/select2.min.css" rel="stylesheet" />
-	<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/js/select2.min.js"></script>
+	<script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/select2.min.js") }}"></script>
 
-	<script type="text/javascript">
-  		$('#right_user_test_user').select2();
-	</script>
+	{% javascripts filter='yui_js' output='js/compiled/select2users.js'
+        '@InnovaSelfBundle/Resources/public/js/select2_users.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

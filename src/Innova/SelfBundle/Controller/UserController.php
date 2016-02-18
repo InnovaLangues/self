@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -235,5 +236,19 @@ class UserController extends Controller
         }
 
         return array('form' => $form->createView(), 'user' => $user);
+    }
+
+    /**
+     * @Route("/user/all/rights", name="get_users_for_rights", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function getUserForRights(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $request->query->get('q');
+        $users = $em->getRepository('InnovaSelfBundle:User')->getBySomethingLike($query);
+
+        return new JsonResponse(array('users' => $users));
     }
 }

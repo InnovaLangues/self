@@ -4,18 +4,43 @@ namespace Innova\SelfBundle\Form\Type\Right;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class RightUserSessionType extends AbstractType
 {
+    public function __construct($em, $rightUserSession)
+    {
+        $this->em = $em;
+        $this->rightUserSession = $rightUserSession;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('user', 'entity', array(
+        if (!$this->rightUserSession->getId()) {
+            $builder->add('user', 'entity', array(
+                'choices' => array(),
                 'class' => 'InnovaSelfBundle:User',
-                'property' => 'username',
-                'attr' => array('class' => 'form-control', 'data-field' => 'user'),
+                'attr' => array('class' => 'form-control', 'data-field' => 'user', 'required' => true),
                 'label' => 'user.single',
                 'translation_domain' => 'messages',
             ));
+        } else {
+            $userId = $this->rightUserSession->getUser()->getId();
+            $builder->add('user', 'entity', array(
+                'class' => 'InnovaSelfBundle:User',
+                'query_builder' => function () use ($userId) {
+                $query = $this->em->getRepository('InnovaSelfBundle:User')->createQueryBuilder('u')
+                                ->where('u.id = :id')
+                                ->setParameter('id', $userId);
+
+                return $query;
+                },
+                'attr' => array('class' => 'form-control', 'data-field' => 'user', 'required' => true),
+                'label' => 'user.single',
+                'translation_domain' => 'messages',
+            ));
+        }
 
         $builder->add('canEdit', 'choice', array(
                 'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
@@ -56,6 +81,24 @@ class RightUserSessionType extends AbstractType
                 'label' => 'generic.save',
                 'attr' => array('class' => 'btn btn-default btn-primary'),
             ));
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $form = $event->getForm();
+            $data = $event->getData();
+
+            $formOptions = array(
+                'class' => 'InnovaSelfBundle:User',
+                'property' => 'username',
+                'query_builder' => function () use ($data) {
+                    $query = $this->em->getRepository('InnovaSelfBundle:User')->createQueryBuilder('u')
+                                    ->where('u.id = :id')
+                                    ->setParameter('id', $data['user']);
+
+                    return $query;
+                },
+            );
+            $form->add('user', 'entity', $formOptions);
+        });
     }
 
     public function getName()

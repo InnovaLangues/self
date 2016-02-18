@@ -11,7 +11,7 @@
 <ul class="list-group"> 
 {% for right in rights %}
     <li class="list-group-item">
-        {{ right.user.username }}
+        {{ right.user }}
         <span class="pull-right">
             <a href="{{ path('editor_test_rights_edit', { 'testId': test.id, 'rightId': right.id }) }}" class="btn btn-default btn-xs">Editer les droits
             </a>
