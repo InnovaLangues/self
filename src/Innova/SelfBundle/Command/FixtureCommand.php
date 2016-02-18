@@ -159,6 +159,7 @@ class FixtureCommand extends ContainerAwareCommand
             array('right.deletetasktest', 'rightgroup.tests', 'canDeleteTask', 'RightUserTest'),
             array('right.edittasktest', 'rightgroup.tests', 'canEditTask', 'RightUserTest'),
             array('right.editrightstest', 'rightgroup.tests', null, 'RightUserTest'),
+            array('right.editorreadonlytest', 'rightgroup.tests', 'canEditorReadOnlyTasks', 'RightUserTest'),
 
             // user
             array('right.listuser', 'rightgroup.users', null, 'RightUserSomeone'),

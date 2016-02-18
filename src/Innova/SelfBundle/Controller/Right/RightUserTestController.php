@@ -22,7 +22,6 @@ use Innova\SelfBundle\Form\Type\Right\RightUserTestType;
 class RightUserTestController extends Controller
 {
     /**
-     *
      * @Route("/test/{testId}/rights", name="editor_test_rights")
      * @Method("GET")
      *
@@ -30,15 +29,14 @@ class RightUserTestController extends Controller
      */
     public function handleRightsAction(Test $test)
     {
-        $this->get("innova_voter")->isAllowed("right.editrightstest");
+        $this->get('innova_voter')->isAllowed('right.editrightstest');
 
         $rights = $this->getDoctrine()->getManager()->getRepository("InnovaSelfBundle:Right\RightUserTest")->findByTarget($test);
 
-        return array("test" => $test, "rights" => $rights);
+        return array('test' => $test, 'rights' => $rights);
     }
 
     /**
-     *
      * @Route("/test/{testId}/rights/add", name="editor_test_rights_add")
      * @Method({"GET", "POST"})
      *
@@ -46,12 +44,12 @@ class RightUserTestController extends Controller
      */
     public function createRightsAction(Test $test, Request $request)
     {
-        $this->get("innova_voter")->isAllowed("right.editrightstest");
+        $this->get('innova_voter')->isAllowed('right.editrightstest');
 
         $right = new RightUserTest();
         $form = $this->handleRightsForm($right, $test, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été créés");
+            $this->get('session')->getFlashBag()->set('info', 'Les droits ont bien été créés');
 
             return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
         }
@@ -60,7 +58,6 @@ class RightUserTestController extends Controller
     }
 
     /**
-     *
      * @Route("/test/{testId}/rights/{rightId}/edit", name="editor_test_rights_edit")
      * @Method({"GET", "POST"})
      *
@@ -68,20 +65,19 @@ class RightUserTestController extends Controller
      */
     public function editRightsAction(Test $test, RightUserTest $rightUserTest, Request $request)
     {
-       $this->get("innova_voter")->isAllowed("right.editrightstest");
+        $this->get('innova_voter')->isAllowed('right.editrightstest');
 
         $form = $this->handleRightsForm($rightUserTest, $test, $request);
         if (!$form) {
-            $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été modifiés");
+            $this->get('session')->getFlashBag()->set('info', 'Les droits ont bien été modifiés');
 
             return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
         }
 
-        return array('form' => $form->createView(), 'test' => $test, 'rightUserTest' => $rightUserTest );
+        return array('form' => $form->createView(), 'test' => $test, 'rightUserTest' => $rightUserTest);
     }
 
     /**
-     *
      * @Route("/test/{testId}/right/{rightId}/delete", name="editor_test_rights_delete", options = {"expose"=true})
      * @Method("DELETE")
      *
@@ -89,34 +85,34 @@ class RightUserTestController extends Controller
      */
     public function deleteRightAction(Test $test, RightUsertest $rightUserTest)
     {
-        $this->get("innova_voter")->isAllowed("right.editrightstest");
+        $this->get('innova_voter')->isAllowed('right.editrightstest');
 
         $user = $rightUserTest->getUser();
         $em = $this->getDoctrine()->getManager();
         $em->remove($rightUserTest);
         $em->flush();
 
-        $this->get("self.right.manager")->adminToggle($user);
+        $this->get('self.right.manager')->adminToggle($user);
 
-        $this->get("session")->getFlashBag()->set('info', "Les droits ont bien été supprimés");
+        $this->get('session')->getFlashBag()->set('info', 'Les droits ont bien été supprimés');
 
         return $this->redirect($this->generateUrl('editor_test_rights', array('testId' => $test->getId())));
     }
 
     private function handleRightsForm(RightUserTest $rightUserTest, Test $test, $request)
     {
-        $form = $this->get('form.factory')->createBuilder(new RightUserTestType(), $rightUserTest)->getForm();
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('form.factory')->createBuilder(new RightUserTestType($em, $rightUserTest), $rightUserTest)->getForm();
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
                 $rightUserTest->setTarget($test);
                 $em->persist($rightUserTest);
                 $em->flush();
 
-                $this->get("self.right.manager")->adminToggle($rightUserTest->getUser());
+                $this->get('self.right.manager')->adminToggle($rightUserTest->getUser());
 
                 return;
             }

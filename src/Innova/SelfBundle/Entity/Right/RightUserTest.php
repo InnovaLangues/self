@@ -5,14 +5,15 @@ namespace Innova\SelfBundle\Entity\Right;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * RightUserTest
+ * RightUserTest.
+ *
  * @ORM\Table(name="right_user_test")
  * @ORM\Entity
  */
 class RightUserTest
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -21,109 +22,105 @@ class RightUserTest
     protected $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User")
-    * @ORM\JoinColumn(onDelete="CASCADE")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
     protected $user;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test")
-    * @ORM\JoinColumn(onDelete="CASCADE")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
     protected $target;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canCreate", type="boolean")
-     *
      */
     private $canCreate = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canEdit", type="boolean")
-     *
      */
     private $canEdit = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canDelete", type="boolean")
-     *
      */
     private $canDelete = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canList", type="boolean")
-     *
      */
     private $canList = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canDuplicate", type="boolean")
-     *
      */
     private $canDuplicate = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canManageSession", type="boolean")
-     *
      */
     private $canManageSession = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canManageTask", type="boolean")
-     *
      */
     private $canManageTask = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canAddTask", type="boolean")
-     *
      */
     private $canAddTask = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canReorderTasks", type="boolean")
-     *
      */
     private $canReorderTasks = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canDeleteTask", type="boolean")
-     *
      */
     private $canDeleteTask = 0;
 
     /**
-     * @var boolean
+     * @var bool
+     *
+     * @ORM\Column(name="canEditorReadOnlyTasks", type="boolean")
+     */
+    private $canEditorReadOnlyTasks = 0;
+
+    /**
+     * @var bool
      *
      * @ORM\Column(name="canEditTask", type="boolean")
-     *
      */
     private $canEditTask = 0;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -131,9 +128,10 @@ class RightUserTest
     }
 
     /**
-     * Set canCreate
+     * Set canCreate.
      *
-     * @param  boolean       $canCreate
+     * @param bool $canCreate
+     *
      * @return RightUserTest
      */
     public function setCanCreate($canCreate)
@@ -144,9 +142,9 @@ class RightUserTest
     }
 
     /**
-     * Get canCreate
+     * Get canCreate.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanCreate()
     {
@@ -154,9 +152,10 @@ class RightUserTest
     }
 
     /**
-     * Set canEdit
+     * Set canEdit.
      *
-     * @param  boolean       $canEdit
+     * @param bool $canEdit
+     *
      * @return RightUserTest
      */
     public function setCanEdit($canEdit)
@@ -167,9 +166,9 @@ class RightUserTest
     }
 
     /**
-     * Get canEdit
+     * Get canEdit.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanEdit()
     {
@@ -177,9 +176,10 @@ class RightUserTest
     }
 
     /**
-     * Set canList
+     * Set canList.
      *
-     * @param  boolean       $canList
+     * @param bool $canList
+     *
      * @return RightUserTest
      */
     public function setCanList($canList)
@@ -190,9 +190,9 @@ class RightUserTest
     }
 
     /**
-     * Get canList
+     * Get canList.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanList()
     {
@@ -200,9 +200,10 @@ class RightUserTest
     }
 
     /**
-     * Set canDuplicate
+     * Set canDuplicate.
      *
-     * @param  boolean       $canDuplicate
+     * @param bool $canDuplicate
+     *
      * @return RightUserTest
      */
     public function setCanDuplicate($canDuplicate)
@@ -213,9 +214,9 @@ class RightUserTest
     }
 
     /**
-     * Get canDuplicate
+     * Get canDuplicate.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanDuplicate()
     {
@@ -223,9 +224,10 @@ class RightUserTest
     }
 
     /**
-     * Set canManageSession
+     * Set canManageSession.
      *
-     * @param  boolean       $canManageSession
+     * @param bool $canManageSession
+     *
      * @return RightUserTest
      */
     public function setCanManageSession($canManageSession)
@@ -236,9 +238,9 @@ class RightUserTest
     }
 
     /**
-     * Get canManageSession
+     * Get canManageSession.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanManageSession()
     {
@@ -246,9 +248,10 @@ class RightUserTest
     }
 
     /**
-     * Set canManageTask
+     * Set canManageTask.
      *
-     * @param  boolean       $canManageTask
+     * @param bool $canManageTask
+     *
      * @return RightUserTest
      */
     public function setCanManageTask($canManageTask)
@@ -259,9 +262,9 @@ class RightUserTest
     }
 
     /**
-     * Get canManageTask
+     * Get canManageTask.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanManageTask()
     {
@@ -269,9 +272,10 @@ class RightUserTest
     }
 
     /**
-     * Set user
+     * Set user.
      *
-     * @param  \Innova\SelfBundle\Entity\User $user
+     * @param \Innova\SelfBundle\Entity\User $user
+     *
      * @return RightUserTest
      */
     public function setUser(\Innova\SelfBundle\Entity\User $user = null)
@@ -282,7 +286,7 @@ class RightUserTest
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \Innova\SelfBundle\Entity\User
      */
@@ -292,9 +296,10 @@ class RightUserTest
     }
 
     /**
-     * Set test
+     * Set test.
      *
-     * @param  \Innova\SelfBundle\Entity\Test $test
+     * @param \Innova\SelfBundle\Entity\Test $test
+     *
      * @return RightUserTest
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
@@ -305,7 +310,7 @@ class RightUserTest
     }
 
     /**
-     * Get test
+     * Get test.
      *
      * @return \Innova\SelfBundle\Entity\Test
      */
@@ -315,9 +320,10 @@ class RightUserTest
     }
 
     /**
-     * Set canDelete
+     * Set canDelete.
      *
-     * @param  boolean       $canDelete
+     * @param bool $canDelete
+     *
      * @return RightUserTest
      */
     public function setCanDelete($canDelete)
@@ -328,9 +334,9 @@ class RightUserTest
     }
 
     /**
-     * Get canDelete
+     * Get canDelete.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanDelete()
     {
@@ -338,9 +344,10 @@ class RightUserTest
     }
 
     /**
-     * Set target
+     * Set target.
      *
-     * @param  \Innova\SelfBundle\Entity\Test $target
+     * @param \Innova\SelfBundle\Entity\Test $target
+     *
      * @return RightUserTest
      */
     public function setTarget(\Innova\SelfBundle\Entity\Test $target = null)
@@ -351,7 +358,7 @@ class RightUserTest
     }
 
     /**
-     * Get target
+     * Get target.
      *
      * @return \Innova\SelfBundle\Entity\Test
      */
@@ -361,9 +368,10 @@ class RightUserTest
     }
 
     /**
-     * Set canAddTask
+     * Set canAddTask.
      *
-     * @param  boolean       $canAddTask
+     * @param bool $canAddTask
+     *
      * @return RightUserTest
      */
     public function setCanAddTask($canAddTask)
@@ -374,9 +382,9 @@ class RightUserTest
     }
 
     /**
-     * Get canAddTask
+     * Get canAddTask.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanAddTask()
     {
@@ -384,9 +392,10 @@ class RightUserTest
     }
 
     /**
-     * Set canReorderTasks
+     * Set canReorderTasks.
      *
-     * @param  boolean       $canReorderTasks
+     * @param bool $canReorderTasks
+     *
      * @return RightUserTest
      */
     public function setCanReorderTasks($canReorderTasks)
@@ -397,9 +406,9 @@ class RightUserTest
     }
 
     /**
-     * Get canReorderTasks
+     * Get canReorderTasks.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanReorderTasks()
     {
@@ -407,9 +416,10 @@ class RightUserTest
     }
 
     /**
-     * Set canDeleteTask
+     * Set canDeleteTask.
      *
-     * @param  boolean       $canDeleteTask
+     * @param bool $canDeleteTask
+     *
      * @return RightUserTest
      */
     public function setCanDeleteTask($canDeleteTask)
@@ -420,9 +430,9 @@ class RightUserTest
     }
 
     /**
-     * Get canDeleteTask
+     * Get canDeleteTask.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanDeleteTask()
     {
@@ -430,9 +440,10 @@ class RightUserTest
     }
 
     /**
-     * Set canEditTask
+     * Set canEditTask.
      *
-     * @param  boolean       $canEditTask
+     * @param bool $canEditTask
+     *
      * @return RightUserTest
      */
     public function setCanEditTask($canEditTask)
@@ -443,12 +454,36 @@ class RightUserTest
     }
 
     /**
-     * Get canEditTask
+     * Get canEditTask.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanEditTask()
     {
         return $this->canEditTask;
+    }
+
+    /**
+     * Set canEditorReadOnlyTasks
+     *
+     * @param boolean $canEditorReadOnlyTasks
+     *
+     * @return RightUserTest
+     */
+    public function setCanEditorReadOnlyTasks($canEditorReadOnlyTasks)
+    {
+        $this->canEditorReadOnlyTasks = $canEditorReadOnlyTasks;
+
+        return $this;
+    }
+
+    /**
+     * Get canEditorReadOnlyTasks
+     *
+     * @return boolean
+     */
+    public function getCanEditorReadOnlyTasks()
+    {
+        return $this->canEditorReadOnlyTasks;
     }
 }

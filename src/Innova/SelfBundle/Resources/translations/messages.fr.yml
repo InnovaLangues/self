@@ -593,7 +593,8 @@ right:
     exportCSV: Export CSV classique et Tia+
     generalParameters: Modifier les paramètres généraux
     message: Envoyer des messages
-    deletetracesession: Supprimer les traces des utilisateurs d'une session 
+    deletetracesession: Supprimer les traces des utilisateurs d'une session
+    editorreadonlytest: Voir les tâches sans pouvoir les éditer (lecture seule)
 
 rightgroup:
     tasks: Permissions sur les tâches
@@ -619,3 +620,4 @@ canEditPassword: Peut éditer le mot de passe
 canImportCsv: Peut importer via CSV
 canExportIndividual: Peut exporter individuellement
 canExportCollective: Peut exporter collectivement
+canEditorReadOnlyTasks: Voir les tâches sans pouvoir les éditer (lecture seule)
