@@ -84,7 +84,8 @@ p {
 	width:100%;
 	padding: 15px;
 	max-height: 500px;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y:auto;
 	background-color: #E37E71;
 	color: black;
 	border-bottom-right-radius: 5px;
@@ -107,7 +108,8 @@ p {
 #situation-CE, #situation-APP {
 	padding: 5px 5px 0 5px;
 	max-height: 500px;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y:auto;
 /*	text-align: justify;*/
 }
 

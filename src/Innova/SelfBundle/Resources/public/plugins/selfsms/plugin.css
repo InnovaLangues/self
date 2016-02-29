@@ -1,0 +1,70 @@
+.bulle {
+  position:relative;
+  padding:15px;
+  color:#000;
+  border-radius:10px;
+  margin-bottom:-10px;
+}
+
+.bulle.left {
+    margin-left:50px;
+    background:#b5c2d4;
+}
+
+.bulle.right {
+	color:white;
+	margin-right:50px;
+	background:#0B93F6;
+	text-align: right;
+}
+
+.bulle:after {
+    content:"";
+    position:absolute;
+    bottom:-15px; /* value = - border-top-width - border-bottom-width */
+    left:50px; /* controls horizontal position */
+    border-width:15px 15px 0; /* vary these values to change the angle of the vertex */
+    border-style:solid;
+    border-color:#b5c2d4 black;
+    /* reduce the damage in FF3.0 */
+    display:block;
+    width:0;
+}
+
+.bulle.left:after {
+    top:16px; /* controls vertical position */
+    left:-50px; /* value = - border-left-width - border-right-width */
+    bottom:auto;
+    border-width:10px 50px 10px 0;
+    border-color:transparent #b5c2d4;
+}
+
+.bulle.right:after {
+    top:16px; /* controls vertical position */
+    right:-50px; /* value = - border-left-width - border-right-width */
+    bottom:auto;
+    left:auto;
+    border-width:10px 0 10px 50px;
+    border-color:transparent #0B93F6;
+}
+
+.header-sms{
+	background-color:#9FB1C8;
+	color:white;
+	font-variant: capitalize;
+	text-align:center;
+	padding:6px;
+}
+
+.phone-header{
+	color:#B6C6D5;
+	background-color:#4D6788
+}
+
+.phone-hour{
+	text-align: center;
+}
+
+.phone-batterie{
+	text-align: right;
+}
