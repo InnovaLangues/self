@@ -6,25 +6,15 @@
 
 {% block body -%}
     {% import "InnovaSelfBundle:Player:common/macros.html.twig" as macros %}
-
     {% include "InnovaSelfBundle:Player/common:font-resize.html.twig" %}
-
-    {# item #}
     {% include "InnovaSelfBundle:Player/common:item.html.twig" %}
-
-    {# Compteur n° de la tâche #}
     {% include "InnovaSelfBundle:Player/common:compteur.html.twig" %}
-
     {% include "InnovaSelfBundle:Player/common:specialCharPicker.html.twig" %}
-
     {% include "InnovaSelfBundle:Player/common:admin.html.twig" %}
-
-    {% include "InnovaSelfBundle:Player/common:modaleListenContext.html.twig" %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    
     {% javascripts filter='?yui_js' output='js/compiled/player.js'
         'bundles/innovaself/js/dragAndDrop.js'
         'bundles/innovaself/js/font-resize.js'

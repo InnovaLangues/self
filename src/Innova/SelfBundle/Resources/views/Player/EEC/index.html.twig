@@ -5,7 +5,7 @@
 {# fix #436 : Enlever l'image texte #}
 {% if questionnaire.mediaText is not null %}
     <div id="situation-icon">
-        <img width=70px src="{{ asset("bundles/innovaself/images/situation-EEC.png") }}" data-toggle="tooltip" rel="tooltip" data-original-title="Objet de la question" />
+        <img width="70px" src="{{ asset("bundles/innovaself/images/situation-EEC.png") }}" data-toggle="tooltip" rel="tooltip" data-original-title="Objet de la question" />
     </div>
 {% endif %}
 
@@ -18,19 +18,17 @@
         {% include "InnovaSelfBundle:Player/CE:situation.html.twig" %}
         </div>
         <div id="right-container-CO" class="col-md-7 right-container">
+            <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit', { 'testId': test.id, 'sessionId': session.id, 'questionnaireId': questionnaire.id }) }}" method="post">
             {% if (question.typology.name in typoCe) %}
-                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit', { 'testId': test.id, 'sessionId': session.id, 'questionnaireId': questionnaire.id }) }}" method="post">
-                    {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
-                    {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
-                    {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
-                </form>
+                {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
+                {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
+                {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
             {% else %}
-                <form class="col-md-12 form-inline" id="main_form" action="{{ path('trace_submit', { 'testId': test.id, 'sessionId': session.id, 'questionnaireId': questionnaire.id }) }}" method="post">
-                    {% include "InnovaSelfBundle:Player/EEC:consigne.html.twig" %}
-                    {% include "InnovaSelfBundle:Player/EEC:situation.html.twig" %}
-                    {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
-                </form>
+                {% include "InnovaSelfBundle:Player/EEC:consigne.html.twig" %}
+                {% include "InnovaSelfBundle:Player/EEC:situation.html.twig" %}
+                {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
             {% endif %}
+            </form>
         </div>
     {% else %}
         {% if (question.typology.name in typoCe) %}

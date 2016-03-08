@@ -2,9 +2,7 @@
     {% for i, subquestion in question.subquestions %}
         <div class="tab-pane {% if i == 0 %} active {% endif %}" id="tab-{{ i }}" data-subquestion-id="{{ subquestion.id }}">
             <div class="row">
-                {# CONSIGNE #}
                 {% include "InnovaSelfBundle:Player/CE:consigne.html.twig" %}
-                {# PROPOSITIONS #}
                 {% include "InnovaSelfBundle:Player/CE:propositions.html.twig" %}
             </div>
             {% include "InnovaSelfBundle:Player/common:functionalInstruction.html.twig" %}
