@@ -113,4 +113,21 @@ class TraceRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findDuplicate()
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        WHERE EXISTS (
+            SELECT t FROM Innova\SelfBundle\Entity\Trace td
+            WHERE td.id < t.id
+            AND td.user = t.user
+            AND td.test = t.test
+            AND td.questionnaire = t.questionnaire
+            AND ((td.session IS NULL AND t.session IS NULL) OR (td.session = t.session))
+        )";
+
+        $query = $this->_em->createQuery($dql);
+
+        return $query->getResult();
+    }
 }
