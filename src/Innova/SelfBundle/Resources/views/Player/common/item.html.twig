@@ -1,12 +1,4 @@
 <div id="item-container" class="row" style="{% if app.request.cookies.has('self-font-size') %}font-size:{{ app.request.cookies.get('self-font-size')}}px{% endif %}">
-    {% if questionnaire.questions[0].typology.name == "APP" %}
-        {% include "InnovaSelfBundle:Player/APP:index.html.twig" %}
-    {% elseif questionnaire.skill.name == "CO" %}
-        {% include "InnovaSelfBundle:Player/CO:index.html.twig" %}
-    {% elseif questionnaire.skill.name == "CE" %}
-        {% include "InnovaSelfBundle:Player/CE:index.html.twig" %}
-    {% elseif questionnaire.skill.name == "EEC" %}
-        {% include "InnovaSelfBundle:Player/EEC:index.html.twig" %}
-    {% endif %}
+ 	{% set prefix = questionnaire.questions[0].typology.name == "APP" ? "APP" : questionnaire.skill.name %}
+    {% include "InnovaSelfBundle:Player/"~prefix~":index.html.twig" %}
 </div>
-

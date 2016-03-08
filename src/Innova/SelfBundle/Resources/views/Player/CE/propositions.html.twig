@@ -1,16 +1,7 @@
+{% set propositions = questionnaire.fixedOrder ? subquestion.propositions : subquestion.propositions | shuffle  %}
+{% set vf = subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" ? true : false %}
+
 <div class="propositions-CE">
-    {% if subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" %}
-        {% set vf = true %}
-    {% else %}
-        {% set vf = false %}
-    {% endif %}
-
-    {% if questionnaire.fixedOrder %}
-        {% set propositions = subquestion.propositions %}
-    {% else %}
-        {% set propositions = subquestion.propositions | shuffle %}
-    {% endif %}
-
     {% for i, proposition in propositions %}
         {% set bulleCount = i + 1 %}
         <div class="proposition-CE">

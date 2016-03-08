@@ -3,25 +3,16 @@
         <div>En tant qu'administrateur, vous avez la possibilité d'accéder à toutes les tâches de ce test</div>
         <div class="btn-toolbar" role="toolbar">
         {% for i, questionnaire in questionnaires %}
-            {% set typo = "" %}
-            {% if questionnaire.questions[0].typology %}
-                {% set typo = questionnaire.questions[0].typology.name %}
-            {% endif %}
-
-            {% if questionnaire.theme != "" %}
-                {% set theme = questionnaire.theme %}
-            {% else %}
-                {% set theme = 'editor.task.unnamed' | trans %}
-            {% endif %}
-
-                <div class="btn-group" role="group">
-                    <a class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ typo }}" href="{{ path('questionnaire_pick', { testId: test.id, sessionId: session.id, questionnaireId: questionnaire.id }) }}">
-                       {{ i + 1 }} - {{ theme }}
-                    </a>
-                    <a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id, 'testId': test.id }) }}">
-                        <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                </div>
+            {% set typo = questionnaire.questions[0].typology ? questionnaire.questions[0].typology.name : "" %}
+            {% set theme = questionnaire.theme != "" ? questionnaire.theme : 'editor.task.unnamed' | trans  %}
+            <div class="btn-group" role="group">
+                <a class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="{{ typo }}" href="{{ path('questionnaire_pick', { testId: test.id, sessionId: session.id, questionnaireId: questionnaire.id }) }}">
+                   {{ i + 1 }} - {{ theme }}
+                </a>
+                <a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': questionnaire.id, 'testId': test.id }) }}">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+            </div>
         {% endfor %}
          </div>
     </div>

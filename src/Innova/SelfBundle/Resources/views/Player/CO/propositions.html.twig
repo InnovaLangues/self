@@ -1,14 +1,5 @@
-{% set propositions = subquestion.propositions | shuffle %}
-
-{% if questionnaire.fixedOrder %}
-    {% set propositions = subquestion.propositions %}
-{% endif %}
-
-{% if subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" %}
-    {% set vf = true %}
-{% else %}
-    {% set vf = false %}
-{% endif %}
+{% set propositions = questionnaire.fixedOrder ? subquestion.propositions : subquestion.propositions | shuffle  %}
+{% set vf = subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" ? true : false %}
 
 <div class="col-md-7 propositions-CO">
     {% for i, proposition in propositions %}
