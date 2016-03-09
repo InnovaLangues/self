@@ -493,6 +493,7 @@ variety:
         secondLang: Mandarin - Langue seconde
 
 phased:
+    considerMinitest: Considérer les réponses du minitest
     checklevel: Vérifier niveaux manquants
     minitest: Minitest
     step1: Etape 1
