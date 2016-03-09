@@ -11,43 +11,50 @@ class PhasedParamsType extends AbstractType
     {
         $builder->add('thresholdToStep2', 'integer', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.step2Threshold',
+            'label' => 'phased.step2Threshold',
             'translation_domain' => 'messages',
         ));
 
         $builder->add('thresholdToStep3', 'integer', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.step3Threshold',
+            'label' => 'phased.step3Threshold',
             'translation_domain' => 'messages',
         ));
 
         $builder->add('thresholdToStep2Leveled', 'integer', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.step2ThresholdLeveled',
+            'label' => 'phased.step2ThresholdLeveled',
             'translation_domain' => 'messages',
         ));
 
         $builder->add('thresholdToStep2Level', 'entity', array(
             'class' => 'InnovaSelfBundle:Level',
             'property' => 'name',
-            'empty_value' => "-",
+            'empty_value' => '-',
             'attr' => array('class' => 'form-control identity-select'),
-            'label'  => 'phased.thresholdToStep2Level',
+            'label' => 'phased.thresholdToStep2Level',
             'translation_domain' => 'messages',
         ));
 
         $builder->add('thresholdToStep3Leveled', 'integer', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'phased.step3ThresholdLeveled',
+            'label' => 'phased.step3ThresholdLeveled',
             'translation_domain' => 'messages',
         ));
 
         $builder->add('thresholdToStep3Level', 'entity', array(
             'class' => 'InnovaSelfBundle:Level',
             'property' => 'name',
-            'empty_value' => "-",
+            'empty_value' => '-',
             'attr' => array('class' => 'form-control identity-select'),
-            'label'  => 'phased.thresholdToStep3Level',
+            'label' => 'phased.thresholdToStep3Level',
+            'translation_domain' => 'messages',
+        ));
+
+        $builder->add('considerMinitest', 'choice', array(
+            'choices' => array('0' => 'generic.no', '1' => 'generic.yes'),
+            'attr' => array('class' => 'form-control'),
+            'label' => 'phased.considerMinitest',
             'translation_domain' => 'messages',
         ));
 
@@ -77,7 +84,7 @@ class PhasedParamsType extends AbstractType
 
         $builder->add('save', 'submit', array(
             'attr' => array('class' => 'btn btn-default btn-primary'),
-            'label'  => 'generic.validate',
+            'label' => 'generic.validate',
             'translation_domain' => 'messages',
         ));
     }

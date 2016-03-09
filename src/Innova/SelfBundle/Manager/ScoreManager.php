@@ -93,9 +93,12 @@ class ScoreManager
                     array('rightAnswers' => 'DESC')
                 );
 
-                $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session, 'component' => $component));
-                $scoresLastComponent = $this->getScoresFromTraces($traces, true);
-                $correctAnswers = $this->countCorrectAnswers($scoresLastComponent);
+                if (!$params->getConsiderMinitest()) {
+                    $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session, 'component' => $component));
+                }
+
+                $score = $this->getScoresFromTraces($traces, true);
+                $correctAnswers = $this->countCorrectAnswers($score);
 
                 foreach ($thresholds as $threshold) {
                     if ($correctAnswers >= $threshold->getRightAnswers()) {

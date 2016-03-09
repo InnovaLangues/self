@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity\PhasedTest;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Phased Params
+ * Phased Params.
  *
  * @ORM\Table("phasedParams")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PhasedParams
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,83 +22,102 @@ class PhasedParams
     private $id;
 
     /**
-     * @var integer
+     * @var string
+     *
+     * @ORM\Column(name="considerMinitest", type="boolean")
+     */
+    private $considerMinitest = false;
+
+    /**
+     * @var int
      *
      * @ORM\Column(name="thresholdToStep2", type="integer")
      */
     private $thresholdToStep2 = 33;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="thresholdToStep2Leveled", type="integer")
      */
     private $thresholdToStep2Leveled = 50;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
+     */
     protected $thresholdToStep2Level;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="thresholdToStep3", type="integer")
      */
     private $thresholdToStep3 = 66;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="thresholdToStep3Leveled", type="integer")
      */
     private $thresholdToStep3Leveled = 50;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
+     */
     protected $thresholdToStep3Level;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold", mappedBy="phasedParam", cascade={"persist"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold", mappedBy="phasedParam", cascade={"persist"})
+     */
     protected $generalScoreThresholds;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold", mappedBy="phasedParam", cascade={"persist"})
-    * @ORM\OrderBy({"componentType" = "ASC", "skill" = "ASC", "level" = "ASC"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold", mappedBy="phasedParam", cascade={"persist"})
+     * @ORM\OrderBy({"componentType" = "ASC", "skill" = "ASC", "level" = "ASC"})
+     */
     protected $skillScoreThresholds;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel", mappedBy="phasedParam", cascade={"persist"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel", mappedBy="phasedParam", cascade={"persist"})
+     */
     protected $ignoredLevels;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->generalScoreThresholds   = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->skillScoreThresholds     = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->ignoredLevels            = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->generalScoreThresholds = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->skillScoreThresholds = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ignoredLevels = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
 
+    public function setConsiderMinitest($considerMinitest)
+    {
+        $this->considerMinitest = $considerMinitest;
+
+        return $this;
+    }
+
+    public function getConsiderMinitest()
+    {
+        return $this->considerMinitest;
+    }
+
     /**
-     * Set thresholdToStep2
+     * Set thresholdToStep2.
      *
-     * @param integer $thresholdToStep2
+     * @param int $thresholdToStep2
      *
      * @return PhasedParams
      */
@@ -110,9 +129,9 @@ class PhasedParams
     }
 
     /**
-     * Get thresholdToStep2
+     * Get thresholdToStep2.
      *
-     * @return integer
+     * @return int
      */
     public function getThresholdToStep2()
     {
@@ -120,9 +139,9 @@ class PhasedParams
     }
 
     /**
-     * Set thresholdToStep2Leveled
+     * Set thresholdToStep2Leveled.
      *
-     * @param integer $thresholdToStep2Leveled
+     * @param int $thresholdToStep2Leveled
      *
      * @return PhasedParams
      */
@@ -134,9 +153,9 @@ class PhasedParams
     }
 
     /**
-     * Get thresholdToStep2Leveled
+     * Get thresholdToStep2Leveled.
      *
-     * @return integer
+     * @return int
      */
     public function getThresholdToStep2Leveled()
     {
@@ -144,9 +163,9 @@ class PhasedParams
     }
 
     /**
-     * Set thresholdToStep3
+     * Set thresholdToStep3.
      *
-     * @param integer $thresholdToStep3
+     * @param int $thresholdToStep3
      *
      * @return PhasedParams
      */
@@ -158,9 +177,9 @@ class PhasedParams
     }
 
     /**
-     * Get thresholdToStep3
+     * Get thresholdToStep3.
      *
-     * @return integer
+     * @return int
      */
     public function getThresholdToStep3()
     {
@@ -168,9 +187,9 @@ class PhasedParams
     }
 
     /**
-     * Set thresholdToStep3Leveled
+     * Set thresholdToStep3Leveled.
      *
-     * @param integer $thresholdToStep3Leveled
+     * @param int $thresholdToStep3Leveled
      *
      * @return PhasedParams
      */
@@ -182,9 +201,9 @@ class PhasedParams
     }
 
     /**
-     * Get thresholdToStep3Leveled
+     * Get thresholdToStep3Leveled.
      *
-     * @return integer
+     * @return int
      */
     public function getThresholdToStep3Leveled()
     {
@@ -192,7 +211,7 @@ class PhasedParams
     }
 
     /**
-     * Set thresholdToStep2Level
+     * Set thresholdToStep2Level.
      *
      * @param \Innova\SelfBundle\Entity\Level $thresholdToStep2Level
      *
@@ -206,7 +225,7 @@ class PhasedParams
     }
 
     /**
-     * Get thresholdToStep2Level
+     * Get thresholdToStep2Level.
      *
      * @return \Innova\SelfBundle\Entity\Level
      */
@@ -216,7 +235,7 @@ class PhasedParams
     }
 
     /**
-     * Set thresholdToStep3Level
+     * Set thresholdToStep3Level.
      *
      * @param \Innova\SelfBundle\Entity\Level $thresholdToStep3Level
      *
@@ -230,7 +249,7 @@ class PhasedParams
     }
 
     /**
-     * Get thresholdToStep3Level
+     * Get thresholdToStep3Level.
      *
      * @return \Innova\SelfBundle\Entity\Level
      */
@@ -240,7 +259,7 @@ class PhasedParams
     }
 
     /**
-     * Add generalScoreThreshold
+     * Add generalScoreThreshold.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold $generalScoreThreshold
      *
@@ -254,7 +273,7 @@ class PhasedParams
     }
 
     /**
-     * Remove generalScoreThreshold
+     * Remove generalScoreThreshold.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\GeneralScoreThreshold $generalScoreThreshold
      */
@@ -264,7 +283,7 @@ class PhasedParams
     }
 
     /**
-     * Get generalScoreThresholds
+     * Get generalScoreThresholds.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -274,7 +293,7 @@ class PhasedParams
     }
 
     /**
-     * Add skillScoreThreshold
+     * Add skillScoreThreshold.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold $skillScoreThreshold
      *
@@ -288,7 +307,7 @@ class PhasedParams
     }
 
     /**
-     * Remove skillScoreThreshold
+     * Remove skillScoreThreshold.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\SkillScoreThreshold $skillScoreThreshold
      */
@@ -298,7 +317,7 @@ class PhasedParams
     }
 
     /**
-     * Get skillScoreThresholds
+     * Get skillScoreThresholds.
      *
      * @return SkillScoreThreshold[]
      */
@@ -308,7 +327,7 @@ class PhasedParams
     }
 
     /**
-     * Add ignoredLevel
+     * Add ignoredLevel.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel $ignoredLevel
      *
@@ -322,7 +341,7 @@ class PhasedParams
     }
 
     /**
-     * Remove ignoredLevel
+     * Remove ignoredLevel.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\IgnoredLevel $ignoredLevel
      */
@@ -332,7 +351,7 @@ class PhasedParams
     }
 
     /**
-     * Get ignoredLevels
+     * Get ignoredLevels.
      *
      * @return IgnoredLevel[]
      */

@@ -79,6 +79,12 @@
     <div class="tab-pane" id="global-score">
     	<div class="row">
     		<div class="col-md-12">
+	    		<h3>Options</h3> 
+	    		<div class="form-group">
+				{{ form_label(form.considerMinitest) }}
+				{{ form_widget(form.considerMinitest) }}
+	    		<h3>Seuils</h3>
+    		</div>
 		    	<br/><span id="add-threshold" class="btn btn-default">Ajouter seuil</span><br/><br/>
 			    <ul class="list-group thresholds" data-prototype="{{ form_widget(form.generalScoreThresholds.vars.prototype)|e }}">
 			        {% for generalScoreThreshold in form.generalScoreThresholds %}
