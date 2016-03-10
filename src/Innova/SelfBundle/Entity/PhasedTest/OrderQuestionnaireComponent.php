@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity\PhasedTest;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OrderQuestionnaireComponent
+ * OrderQuestionnaireComponent.
  *
  * @ORM\Table("orderQuestionnaireComponent")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderQuestionnaireComponent
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,36 +22,56 @@ class OrderQuestionnaireComponent
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Component", inversedBy="orderQuestionnaireComponents", cascade={"persist"})
-    */
+     * @ORM\ManyToOne(targetEntity="Component", inversedBy="orderQuestionnaireComponents", cascade={"persist"})
+     */
     protected $component;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire", inversedBy="orderQuestionnaireComponents")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Questionnaire", inversedBy="orderQuestionnaireComponents")
+     */
     private $questionnaire;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="displayOrder", type="integer")
      */
     private $displayOrder;
 
     /**
-     * Get id
+     * @var int
      *
-     * @return integer
+     * @ORM\Column(name="ignoreInScoring", type="boolean")
+     */
+    private $ignoreInScoring = false;
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
 
+    public function setIgnoreInScoring($ignoreInScoring)
+    {
+        $this->ignoreInScoring = $ignoreInScoring;
+
+        return $this;
+    }
+
+    public function getIgnoreInScoring()
+    {
+        return $this->ignoreInScoring;
+    }
+
     /**
-     * Set displayOrder
+     * Set displayOrder.
      *
-     * @param  integer                     $displayOrder
+     * @param int $displayOrder
+     *
      * @return OrderQuestionnaireComponent
      */
     public function setDisplayOrder($displayOrder)
@@ -62,9 +82,9 @@ class OrderQuestionnaireComponent
     }
 
     /**
-     * Get displayOrder
+     * Get displayOrder.
      *
-     * @return integer
+     * @return int
      */
     public function getDisplayOrder()
     {
@@ -72,9 +92,10 @@ class OrderQuestionnaireComponent
     }
 
     /**
-     * Set component
+     * Set component.
      *
-     * @param  \Innova\SelfBundle\Entity\PhasedTest\Component $component
+     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $component
+     *
      * @return OrderQuestionnaireComponent
      */
     public function setComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $component = null)
@@ -85,7 +106,7 @@ class OrderQuestionnaireComponent
     }
 
     /**
-     * Get component
+     * Get component.
      *
      * @return \Innova\SelfBundle\Entity\PhasedTest\Component
      */
@@ -95,9 +116,10 @@ class OrderQuestionnaireComponent
     }
 
     /**
-     * Set questionnaire
+     * Set questionnaire.
      *
-     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     *
      * @return OrderQuestionnaireComponent
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
@@ -108,7 +130,7 @@ class OrderQuestionnaireComponent
     }
 
     /**
-     * Get questionnaire
+     * Get questionnaire.
      *
      * @return \Innova\SelfBundle\Entity\Questionnaire
      */

@@ -64,18 +64,90 @@ class TraceRepository extends EntityRepository
         return $query->getOneOrNullResult();
     }
 
+    public function getByUserBySessionByComponent($user, $session, $component)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        LEFT JOIN t.session s
+        LEFT JOIN t.questionnaire q
+        WHERE t.user = :user
+        AND t.component = :component
+        AND s = :session
+        AND (
+            EXISTS (
+            SELECT oqc FROM Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent oqc
+            LEFT JOIN oqc.component c
+            WHERE c.test = s.test
+            AND oqc.questionnaire = q
+            AND oqc.ignoreInScoring = 0) 
+            OR 
+            EXISTS (
+            SELECT oqt FROM Innova\SelfBundle\Entity\OrderQuestionnaireTest oqt
+            WHERE oqt.questionnaire = q
+            AND oqt.test = s.test)
+        )";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('user', $user)
+                ->setParameter('session', $session)
+                ->setParameter('component', $component);
+
+        return $query->getResult();
+    }
+
     public function getByUserBySessionBySkill($user, $session, $skill)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        LEFT JOIN t.session s
         LEFT JOIN t.questionnaire q
         WHERE t.user = :user
-        AND t.session = :session
-        AND q.skill = :skill";
+        AND s = :session
+        AND q.skill = :skill
+        AND (
+            EXISTS (
+            SELECT oqc FROM Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent oqc
+            LEFT JOIN oqc.component c
+            WHERE c.test = s.test
+            AND oqc.questionnaire = q
+            AND oqc.ignoreInScoring = 0) 
+            OR 
+            EXISTS (
+            SELECT oqt FROM Innova\SelfBundle\Entity\OrderQuestionnaireTest oqt
+            WHERE oqt.questionnaire = q
+            AND oqt.test = s.test)
+        )";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('user', $user)
                 ->setParameter('session', $session)
                 ->setParameter('skill', $skill);
+
+        return $query->getResult();
+    }
+
+    public function getByUserBySession($user, $session)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        LEFT JOIN t.session s
+        LEFT JOIN t.questionnaire q
+        WHERE t.user = :user
+        AND s = :session
+        AND (
+            EXISTS (
+            SELECT oqc FROM Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent oqc
+            LEFT JOIN oqc.component c
+            WHERE c.test = s.test
+            AND oqc.questionnaire = q
+            AND oqc.ignoreInScoring = 0) 
+            OR 
+            EXISTS (
+            SELECT oqt FROM Innova\SelfBundle\Entity\OrderQuestionnaireTest oqt
+            WHERE oqt.questionnaire = q
+            AND oqt.test = s.test)
+        )";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('user', $user)
+                ->setParameter('session', $session);
 
         return $query->getResult();
     }

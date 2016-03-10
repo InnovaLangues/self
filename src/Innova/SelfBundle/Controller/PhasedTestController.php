@@ -20,6 +20,7 @@ use Innova\SelfBundle\Form\Type\PhasedParamsType;
 
 /**
  * PhasedTest controller.
+ *
  * @Route("/admin")
  * @ParamConverter("test",          isOptional="true", class="InnovaSelfBundle:Test",                     options={"id" = "testId"})
  * @ParamConverter("questionnaire", isOptional="true", class="InnovaSelfBundle:Questionnaire",            options={"id" = "questionnaireId"})
@@ -30,16 +31,16 @@ use Innova\SelfBundle\Form\Type\PhasedParamsType;
 class PhasedTestController extends Controller
 {
     /**
-     * Check level
+     * Check level.
      *
      * @Route("/test/{testId}/check-level", name="phased-check-level", options={"expose"=true})
      * @Method("GET")
      */
     public function checkLevelAction(Test $test)
     {
-        $this->get("innova_voter")->isAllowed("right.edittasktest", $test);
+        $this->get('innova_voter')->isAllowed('right.edittasktest', $test);
 
-        $tasks = $this->get("self.phasedtest.manager")->checkLevel($test);
+        $tasks = $this->get('self.phasedtest.manager')->checkLevel($test);
 
         $missingLevelTasks = array();
         foreach ($tasks as $task) {
@@ -50,82 +51,93 @@ class PhasedTestController extends Controller
     }
 
     /**
-     * Generate a component for a test entity
+     * Generate a component for a test entity.
      *
      * @Route("/test/{testId}/component-type/{typeId}/add", name="editor_generate_component")
      * @Method("GET")
-     *
      */
     public function generateComponentAction(Test $test, ComponentType $type)
     {
-        $this->get("innova_voter")->isAllowed("right.addtasktest", $test);
+        $this->get('innova_voter')->isAllowed('right.addtasktest', $test);
 
-        $this->get("self.phasedtest.manager")->generateComponent($test, $type);
+        $this->get('self.phasedtest.manager')->generateComponent($test, $type);
 
         return $this->redirect($this->generateUrl('editor_test_questionnaires_show', array('testId' => $test->getId())));
     }
 
     /**
-     * Remove a component from a test entity
+     * Remove a component from a test entity.
      *
      * @Route("/test/{testId}/component/{componentId}/remove", name="editor_remove_component", options={"expose"=true})
      * @Method("GET")
-     *
      */
     public function removeComponentAction(Test $test, Component $component)
     {
-        $this->get("innova_voter")->isAllowed("right.deletetasktest", $test);
+        $this->get('innova_voter')->isAllowed('right.deletetasktest', $test);
 
-        $this->get("self.phasedtest.manager")->removeComponent($test, $component);
+        $this->get('self.phasedtest.manager')->removeComponent($test, $component);
 
         return $this->redirect($this->generateUrl('editor_test_questionnaires_show', array('testId' => $test->getId())));
     }
 
     /**
-     * Save questionnaire order for a component
+     * Remove a component from a test entity.
+     *
+     * @Route("/orderQuestionnaireComponent/{orderQuestionnaireComponentId}/toggleignore", name="editor_questionnaire_ignore_in_scoring", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function toggleIgnoreInScoringAction(OrderQuestionnaireComponent $orderQuestionnaireComponent)
+    {
+        $test = $orderQuestionnaireComponent->getComponent()->getTest();
+        $this->get('innova_voter')->isAllowed('right.edittasktest', $test);
+
+        $this->get('self.orderquestionnairecomponent.manager')->toggleIgnoreInScoring($orderQuestionnaireComponent);
+
+        return $this->redirect($this->generateUrl('editor_test_questionnaires_show', array('testId' => $test->getId())));
+    }
+
+    /**
+     * Save questionnaire order for a component.
      *
      * @Route("/component/{componentId}/order", name="save-order-component-questionnaire", options={"expose"=true})
      * @Method("PUT")
-     *
      */
     public function saveOrderAction(Component $component)
     {
-        $this->get("innova_voter")->isAllowed("right.reordertasktest", $component->getTest());
+        $this->get('innova_voter')->isAllowed('right.reordertasktest', $component->getTest());
 
         $newOrderArray = json_decode($this->get('request')->request->get('newOrder'));
-        $this->get("self.phasedtest.manager")->saveOrder($newOrderArray);
+        $this->get('self.phasedtest.manager')->saveOrder($newOrderArray);
 
         return new Response(null);
     }
 
     /**
-     * Remove a questionnaire from a component
+     * Remove a questionnaire from a component.
      *
      * @Route("/orderQuestionnaireComponent/{orderQuestionnaireComponentId}/remove", name="remove-component-questionnaire", options={"expose"=true})
      * @Method("DELETE")
-     *
      */
     public function removeQuestionnaireFromComponentAction(OrderQuestionnaireComponent $orderQuestionnaireComponent)
     {
-        $this->get("innova_voter")->isAllowed("right.deletetasktest", $orderQuestionnaireComponent->getComponent()->getTest());
+        $this->get('innova_voter')->isAllowed('right.deletetasktest', $orderQuestionnaireComponent->getComponent()->getTest());
 
-        $this->get("self.phasedtest.manager")->removeQuestionnaireFromComponent($orderQuestionnaireComponent);
+        $this->get('self.phasedtest.manager')->removeQuestionnaireFromComponent($orderQuestionnaireComponent);
 
         return new Response(null);
     }
 
     /**
-     * Create a questionnaire and add it to a component
+     * Create a questionnaire and add it to a component.
      *
      * @Route("/component/{componentId}/create-task", name="editor_create_task_component", options={"expose"=true})
      * @Method("GET")
-     *
      */
     public function createQuestionnaireToComponentAction(Component $component)
     {
-        $this->get("innova_voter")->isAllowed("right.addtasktest", $component->getTest());
+        $this->get('innova_voter')->isAllowed('right.addtasktest', $component->getTest());
 
-        $questionnaire = $this->get("self.phasedtest.manager")->createQuestionnaireToComponent($component);
+        $questionnaire = $this->get('self.phasedtest.manager')->createQuestionnaireToComponent($component);
         $qId = $questionnaire->getId();
 
         return $this->redirect($this->generateUrl(
@@ -135,60 +147,57 @@ class PhasedTestController extends Controller
         );
     }
 
-     /**
-     * Get potential questionnaires to a component
+    /**
+     * Get potential questionnaires to a component.
      *
      * @Route("/component/{componentId}/potentials", name="get-component-potentials", options={"expose"=true})
      * @Method("GET")
-     *
      */
     public function getPotentialQuestionnairesAction(Component $component)
     {
-        $this->get("innova_voter")->isAllowed("right.addtasktest", $component->getTest());
+        $this->get('innova_voter')->isAllowed('right.addtasktest', $component->getTest());
 
-        $questionnaires = $this->get("self.phasedtest.manager")->getPotentialQuestionnaires($component);
+        $questionnaires = $this->get('self.phasedtest.manager')->getPotentialQuestionnaires($component);
         $template = $this->renderView('InnovaSelfBundle:Editor/phased:potentials.html.twig', array('questionnaires' => $questionnaires));
 
         return new Response($template);
     }
 
     /**
-     * Add a questionnaire to a component
+     * Add a questionnaire to a component.
      *
      * @Route("/component/{componentId}/questionnaire/{questionnaireId}/add-task", name="add-component-questionnaire", options={"expose"=true})
      * @Method("POST")
-     *
      */
     public function addQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
-        $this->get("innova_voter")->isAllowed("right.addtasktest", $component->getTest());
+        $this->get('innova_voter')->isAllowed('right.addtasktest', $component->getTest());
 
-        $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($questionnaire, $component);
+        $this->get('self.phasedtest.manager')->addQuestionnaireToComponent($questionnaire, $component);
         $template = $this->renderView('InnovaSelfBundle:Editor/phased:tasks.html.twig', array('component' => $component));
 
         return new Response($template);
     }
 
     /**
-     * Duplicate a questionnaire and add it to a component
+     * Duplicate a questionnaire and add it to a component.
      *
      * @Route("/duplicate/component/{componentId}/questionnaire/{questionnaireId}", name="duplicate-component-questionnaire", options={"expose"=true})
      * @Method("POST")
-     *
      */
     public function duplicateQuestionnaireToComponentAction(Questionnaire $questionnaire, Component $component)
     {
-        $this->get("innova_voter")->isAllowed("right.addtasktest", $component->getTest());
+        $this->get('innova_voter')->isAllowed('right.addtasktest', $component->getTest());
 
-        $newQuestionnaire = $this->get("self.questionnaire.manager")->duplicate($questionnaire);
-        $this->get("self.phasedtest.manager")->addQuestionnaireToComponent($newQuestionnaire, $component);
+        $newQuestionnaire = $this->get('self.questionnaire.manager')->duplicate($questionnaire);
+        $this->get('self.phasedtest.manager')->addQuestionnaireToComponent($newQuestionnaire, $component);
         $template = $this->renderView('InnovaSelfBundle:Editor/phased:tasks.html.twig', array('component' => $component));
 
         return new Response($template);
     }
 
     /**
-     * Duplicate a questionnaire and add it to a component
+     * Duplicate a questionnaire and add it to a component.
      *
      * @Route("/test/{testId}/edit-params", name="editor_phased_params", options={"expose"=true})
      * @Method({"GET", "POST"})
