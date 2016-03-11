@@ -493,6 +493,7 @@ variety:
         secondLang: Mandarin - Langue seconde
 
 phased:
+    ignore: Ignorer/considérer pour le scoring 
     considerMinitest: Considérer les réponses du minitest
     checklevel: Vérifier niveaux manquants
     minitest: Minitest

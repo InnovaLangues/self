@@ -80,7 +80,7 @@ class ScoreManager
     public function getGlobalScore(Session $session, User $user, $saveScore = false)
     {
         $test = $session->getTest();
-        if ($traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session))) {
+        if ($traces = $this->traceRepo->getByUserBySession($user, $session)) {
             if ($test->getPhased()) {
                 $params = $test->getPhasedParams();
 
@@ -94,7 +94,7 @@ class ScoreManager
                 );
 
                 if (!$params->getConsiderMinitest()) {
-                    $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session, 'component' => $component));
+                    $traces = $this->traceRepo->getByUserBySessionByComponent($user, $session, $component);
                 }
 
                 $score = $this->getScoresFromTraces($traces, true);
