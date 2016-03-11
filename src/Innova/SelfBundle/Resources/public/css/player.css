@@ -82,10 +82,14 @@ p {
 	padding: 15px;
 	max-height: 500px;
 	overflow: auto;
-	background-color: #E37E71;
+	background-color: #fefefe;
 	color: black;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
+	border-left: 10px solid #E37E71;
+	border-right: 10px solid #E37E71;
+	border-bottom: 10px solid #E37E71;
+
 }
 
 #situation-EEC img {
