@@ -113,6 +113,7 @@ class PlayerController extends Controller
             'questionnaire' => $questionnaire,
             'percent' => null,
             'component' => null,
+            'canSave' => false,
         );
     }
 
