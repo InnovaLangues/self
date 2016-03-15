@@ -7,10 +7,8 @@
 	<input type="hidden" id="componentId" name="componentId" value={{ component.id }} />
 {% endif %}
 
-<input type="hidden" name="testName" value="{{ test.name }}"/>
-
-<input type="hidden" name="typoName" value="{{ questionnaire.questions[0].typology.name }}"/>
-
+{% if canSave is not defined or canSave == true %}
 <div class="submit-container row">
     <input id="submit" type="submit" class="btn btn-default" value="{{ 'generic.validate' | trans }}" disabled />
 </div>
+{% endif %}
