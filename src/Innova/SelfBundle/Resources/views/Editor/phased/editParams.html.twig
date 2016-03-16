@@ -1,5 +1,9 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets -%}
+	    <link href="{{ asset("bundles/innovaself/css/editor-params.css") }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body -%}
 <a class="btn btn-default btn-sm" href="{{ path('editor_test_questionnaires_show', { 'testId': test.id }) }}">
     <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.task.manage' | trans }}
@@ -83,39 +87,75 @@
 	    		<div class="form-group">
 				{{ form_label(form.considerMinitest) }}
 				{{ form_widget(form.considerMinitest) }}
-	    		<h3>Seuils</h3>
-    		</div>
-		    	<br/><span id="add-threshold" class="btn btn-default">Ajouter seuil</span><br/><br/>
-			    <ul class="list-group thresholds" data-prototype="{{ form_widget(form.generalScoreThresholds.vars.prototype)|e }}">
-			        {% for generalScoreThreshold in form.generalScoreThresholds %}
-			        	<li class="list-group-item col-md-6">
-			            {{ form_row(generalScoreThreshold.componentType) }}
-			     		{{ form_row(generalScoreThreshold.rightAnswers) }}
-			            {{ form_row(generalScoreThreshold.description) }}
-			            {{ form_row(generalScoreThreshold.level) }}
-			            </li>
-			        {% endfor %}
-			    </ul>
-		    </div>
-	    </div>
+    			</div>
+	    		<h3>Seuils, selon l'étape de sortie</h3>
+
+			    <div class="panel-group thresholds" id="accordion" role="tablist" aria-multiselectable="true" data-prototype="{{ form_widget(form.generalScoreThresholds.vars.prototype)|e }}">
+
+			    {% for step in ["step1", "step2", "step3"] %}
+  					<div class="panel panel-default">
+    					<div class="panel-heading" role="tab" id="heading-{{step}}">
+      						<h4 class="panel-title"> 
+      							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{step}}" aria-expanded="true" aria-controls="collapse-{{step}}">
+      							 {{ step }} 
+      							</a>
+      						</h4>
+      					</div> 
+
+      					<div id="collapse-{{step}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{step}}">
+      						<div id="thresholds-{{step}}" class="panel-body">
+      							<br/><span class="add-threshold btn btn-default" data-step="{{step}}">Ajouter seuil</span><br/><br/>
+
+						        {% for generalScoreThreshold in form.generalScoreThresholds if generalScoreThreshold.vars.value.componentType.name == step %}
+						        	<li class="list-group-item col-md-3 threshold">
+						            {{ form_row(generalScoreThreshold.componentType) }}
+						     		{{ form_row(generalScoreThreshold.rightAnswers) }}
+						            {{ form_row(generalScoreThreshold.level) }}
+						            {{ form_row(generalScoreThreshold.description) }}
+						            </li>
+						        {% endfor %}
+			    			</div>
+   						 </div>
+  					</div>
+	  			{% endfor %}			
+
+		    	</div>
+	    	</div>
+    	</div>
     </div>
 
     <div class="tab-pane " id="skill-score">
     	<div class="row">
     		<div class="col-md-12">
-				<br/><span id="add-skill-threshold" class="btn btn-default">Ajouter seuil</span><br/><br/>
-			    <ul class="list-group skill-thresholds" data-prototype="{{ form_widget(form.skillScoreThresholds.vars.prototype)|e }}">
-			        {% for skillScoreThreshold in form.skillScoreThresholds %}
-			        	<li class="list-group-item col-md-6" >
-				            {{ form_row(skillScoreThreshold.skill) }}
-				            {{ form_row(skillScoreThreshold.componentType) }}
-				     		{{ form_row(skillScoreThreshold.rightAnswers) }}
-					     	
-				            {{ form_row(skillScoreThreshold.description) }}
-				            {{ form_row(skillScoreThreshold.level) }}
-			            </li>
-			        {% endfor %}
-			    </ul>
+    			<h3>Seuils, selon la compétence</h3>
+			    <div class="panel-group skill-thresholds" id="accordion" role="tablist" aria-multiselectable="true" data-prototype="{{ form_widget(form.skillScoreThresholds.vars.prototype)|e }}">
+
+			    {% for skill in ["CO", "CE", "EEC"] %}
+  					<div class="panel panel-default">
+    					<div class="panel-heading" role="tab" id="heading-{{skill}}">
+      						<h4 class="panel-title"> 
+      							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{skill}}" aria-expanded="true" aria-controls="collapse-{{skill}}">
+      							 {{ skill }} 
+      							</a>
+      						</h4>
+      					</div> 
+      					<div id="collapse-{{skill}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{skill}}">
+      						<div id="thresholds-{{skill}}" class="panel-body">
+      							<br/><span class="add-skill-threshold btn btn-default" data-skill="{{skill}}">Ajouter seuil</span><br/><br/>
+						        {% for skillScoreThreshold in form.skillScoreThresholds if skillScoreThreshold.vars.value.skill.name == skill %}
+						        	<li class="list-group-item col-md-3 threshold">
+							            {{ form_row(skillScoreThreshold.skill) }}
+							            {{ form_row(skillScoreThreshold.componentType) }}
+							     		{{ form_row(skillScoreThreshold.rightAnswers) }}
+							            {{ form_row(skillScoreThreshold.description) }}
+							            {{ form_row(skillScoreThreshold.level) }}
+						            </li>
+						        {% endfor %}
+			    			</div>
+   						 </div>
+  					</div>
+	  			{% endfor %}			
+		    	</div>
 			</div>
 		</div>
     </div>
@@ -127,7 +167,7 @@
     			<br/><span id="add-ignored" class="btn btn-default">Ajouter niveau ignoré</span><br/><br/>
 			    <ul class="list-group ignored" data-prototype="{{ form_widget(form.ignoredLevels.vars.prototype)|e }}">
 				{% for ignoredLevel in form.ignoredLevels %}
-		        	<li class="list-group-item col-md-6" >
+		        	<li class="list-group-item col-md-3 threshold">
 			            {{ form_row(ignoredLevel.skill) }}
 			            {{ form_row(ignoredLevel.componentType) }}
 			            {{ form_row(ignoredLevel.levels) }}
@@ -157,31 +197,43 @@
     {{ parent() }}
    	<script>
 	$(document).ready(function() {
-		var collectionHolder = $('ul.thresholds');
+
+
 		var collectionHolderSkill = $('ul.skill-thresholds');
 		var collectionHolderIgnored = $('ul.ignored');
 
-		collectionHolder.find('li').each(function() {
+		$('.thresholds, .skill-thresholds, ul.ignored').find('li').each(function() {
 	        addTagFormDeleteLink($(this));
 	    });
 
-		collectionHolderSkill.find('li').each(function() {
-	        addTagFormDeleteLink($(this));
+
+
+		$(".add-threshold").on('click', function(e) {
+	        e.preventDefault();
+	        var step = $(this).attr("data-step"); 
+	        var thresh = $("#thresholds-"+step);
+	     	var collection = $(".thresholds");
+	     	var prototype = collection.attr("data-prototype");
+	        addTagForm(thresh, prototype, collection);
 	    });
 
-	    collectionHolderIgnored.find('li').each(function() {
-	        addTagFormDeleteLink($(this));
+	    $(".add-skill-threshold").on('click', function(e) {
+	        e.preventDefault();
+	        var skill = $(this).attr("data-skill"); 
+	        var thresh = $("#thresholds-"+skill);
+	     	var collection = $(".skill-thresholds");
+	     	var prototype = collection.attr("data-prototype");
+	        addTagForm(thresh, prototype, collection);
 	    });
 
-		 $("#add-skill-threshold").on('click', function(e) {
+
+
+		$("#add-skill-threshold").on('click', function(e) {
 	        e.preventDefault();
 	        addTagForm(collectionHolderSkill);
 	    });
 
-	    $("#add-threshold").on('click', function(e) {
-	        e.preventDefault();
-	        addTagForm(collectionHolder);
-	    });
+	    
 
 	    $("#add-ignored").on('click', function(e) {
 	        e.preventDefault();
@@ -189,21 +241,16 @@
 	    });
 	});
 
-	function addTagForm(collectionHolder) {
-	    // Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
-	    var prototype = collectionHolder.attr('data-prototype');
-	    console.log(prototype);
-	    // Remplace '__name__' dans le HTML du prototype par un nombre basé sur
-	    // la longueur de la collection courante
-	    var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
-	    var newFormLi = $('<li class="list-group-item col-md-6"></div>').append(newForm);
+	function addTagForm(collectionHolder, prototype, collection) {
+	    var newForm = prototype.replace(/__name__/g, collection.find("li").length);
+	    var newFormLi = $('<li class="list-group-item col-md-3 threshold"></div>').append(newForm);
 
 	    collectionHolder.append(newFormLi);
 	    addTagFormDeleteLink(newFormLi);
 	}
 
 	function addTagFormDeleteLink(tagFormLi) {
-	    var $removeFormA = $('<a href="#">Supprimer</a>');
+	    var $removeFormA = $('<a class="btn btn-default btn-xs delete-threshold" href="#">Supprimer</a>');
 	    tagFormLi.append($removeFormA);
 	    $removeFormA.on('click', function(e) {
 	        // empêche le lien de créer un « # » dans l'URL
