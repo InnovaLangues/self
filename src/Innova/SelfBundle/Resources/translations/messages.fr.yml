@@ -364,6 +364,10 @@ Chinese: Mandarin
 Spanish: Espagnol
 Japanese: Japonais
 
+CO: Compréhension Orale
+CE: Compréhension Ecrite
+EEC: Expression Ecrite Courte 
+
 author_right:
     not_needed: Pas besoin
     authorized: Autorisé
@@ -493,6 +497,16 @@ variety:
         secondLang: Mandarin - Langue seconde
 
 phased:
+    removeThreshold: Supprimer
+    thresholdByStep: Seuils, par étape de sortie
+    thresholdBySkill: Seuils, par compétence
+    addThreshold: Ajouter un seuil
+    addLevels: Ajouter des niveaux à ignorer
+    minitestEndingConditions: Conditions de sortie du minitest
+    step2conditions: vers l'étape 2
+    step3conditions: vers l'étape 3
+    globalScore: Score agrégé
+    skillScore: Score par compétence
     ignore: Ignorer/considérer pour le scoring 
     considerMinitest: Considérer les réponses du minitest
     checklevel: Vérifier niveaux manquants

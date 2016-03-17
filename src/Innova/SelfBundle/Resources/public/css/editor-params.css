@@ -1,0 +1,10 @@
+.threshold {
+	padding:10px;
+	border:1px solid #aaa;
+	border-radius:3px;
+	margin:5px 0;
+}
+
+.delete-threshold{
+	margin-top:10px;
+}
