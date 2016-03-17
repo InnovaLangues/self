@@ -164,16 +164,34 @@
     <div class="tab-pane " id="ignored-levels">
     	<div class="row">
     		<div class="col-md-12">
-    			<br/><span id="add-ignored" class="btn btn-default">Ajouter niveau ignoré</span><br/><br/>
-			    <ul class="list-group ignored" data-prototype="{{ form_widget(form.ignoredLevels.vars.prototype)|e }}">
-				{% for ignoredLevel in form.ignoredLevels %}
-		        	<li class="list-group-item col-md-3 threshold">
-			            {{ form_row(ignoredLevel.skill) }}
-			            {{ form_row(ignoredLevel.componentType) }}
-			            {{ form_row(ignoredLevel.levels) }}
-		            </li>
-		        {% endfor %}
-		       	</ul>
+				<h3>Niveaux ignorés, selon la compétence</h3>
+				    <div class="panel-group ignored-levels" id="accordion" role="tablist" aria-multiselectable="true" data-prototype="{{ form_widget(form.ignoredLevels.vars.prototype)|e }}">
+
+				    {% for skill in ["CO", "CE", "EEC"] %}
+	  					<div class="panel panel-default">
+	    					<div class="panel-heading" role="tab" id="heading-ignored-{{skill}}">
+	      						<h4 class="panel-title"> 
+	      							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-ignored-{{skill}}" aria-expanded="true" aria-controls="collapse-ignored-{{skill}}">
+	      							 {{ skill }} 
+	      							</a>
+	      						</h4>
+	      					</div> 
+	      					<div id="collapse-ignored-{{skill}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-ignored-{{skill}}">
+	      						<div id="ignored-level-{{skill}}" class="panel-body">
+	      							<br/><span class="add-ignore-level btn btn-default" data-skill="{{skill}}">Ajouter niveaux</span><br/><br/>
+							        {% for ignoredLevel in form.ignoredLevels if ignoredLevel.vars.value.skill.name == skill %}
+							        	<li class="list-group-item col-md-3 threshold">
+								            {{ form_row(ignoredLevel.skill) }}
+								            {{ form_row(ignoredLevel.componentType) }}
+								            {{ form_row(ignoredLevel.levels) }}
+							            </li>
+							        {% endfor %}
+				    			</div>
+	   						 </div>
+	  					</div>
+		  			{% endfor %}			
+			    	</div>
+
 			</div>
 
 		</div>
@@ -197,16 +215,9 @@
     {{ parent() }}
    	<script>
 	$(document).ready(function() {
-
-
-		var collectionHolderSkill = $('ul.skill-thresholds');
-		var collectionHolderIgnored = $('ul.ignored');
-
-		$('.thresholds, .skill-thresholds, ul.ignored').find('li').each(function() {
+		$('.thresholds, .skill-thresholds, .ignored-levels').find('li').each(function() {
 	        addTagFormDeleteLink($(this));
 	    });
-
-
 
 		$(".add-threshold").on('click', function(e) {
 	        e.preventDefault();
@@ -226,18 +237,13 @@
 	        addTagForm(thresh, prototype, collection);
 	    });
 
-
-
-		$("#add-skill-threshold").on('click', function(e) {
+	    $(".add-ignore-level").on('click', function(e) {
 	        e.preventDefault();
-	        addTagForm(collectionHolderSkill);
-	    });
-
-	    
-
-	    $("#add-ignored").on('click', function(e) {
-	        e.preventDefault();
-	        addTagForm(collectionHolderIgnored);
+	        var skill = $(this).attr("data-skill"); 
+	        var thresh = $("#ignored-level-"+skill);
+	     	var collection = $(".ignored-levels");
+	     	var prototype = collection.attr("data-prototype");
+	        addTagForm(thresh, prototype, collection);
 	    });
 	});
 
@@ -253,9 +259,7 @@
 	    var $removeFormA = $('<a class="btn btn-default btn-xs delete-threshold" href="#">Supprimer</a>');
 	    tagFormLi.append($removeFormA);
 	    $removeFormA.on('click', function(e) {
-	        // empêche le lien de créer un « # » dans l'URL
 	        e.preventDefault();
-	        // supprime l'élément li pour le formulaire de tag
 	        tagFormLi.remove();
 	    });
 	}
