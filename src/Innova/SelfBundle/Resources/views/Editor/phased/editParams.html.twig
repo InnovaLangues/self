@@ -13,26 +13,25 @@
 
 {{ form_start(form) }}
 
-
 <ul class="nav nav-tabs" role="tablist">
     <li class="active">
         <a href="#progress" role="tab" data-toggle="tab">
-        	Passage Minitest -> Etapes
+        	{{ 'phased.minitestEndingConditions' | trans }}
         </a>
     </li>
     <li>
         <a href="#global-score" role="tab" data-toggle="tab">
-            Score agrégé
+        	{{ 'phased.globalScore' | trans }}
         </a>
     </li>
     <li>
         <a href="#skill-score" role="tab" data-toggle="tab">
-            Score par compétence
+            {{ 'phased.skillScore' | trans }}
         </a>
     </li>
     <li>
         <a href="#ignored-levels" role="tab" data-toggle="tab">
-            Niveaux ignorés
+            {{ 'phased.ignoredLevels' | trans }}
         </a>
     </li>
 </ul>
@@ -42,7 +41,7 @@
         <div class="row">
         	<br/>
 			<div class="col-md-6">
-				<h4>Minitest > Etape 2</h4>
+				<h4>{{ 'phased.step2conditions' | trans }}</h4>
 				<div class="form-group">
 				{{ form_label(form.thresholdToStep2) }}
 				{{ form_widget(form.thresholdToStep2) }}
@@ -57,11 +56,10 @@
 				{{ form_label(form.thresholdToStep2Level) }}
 				{{ form_widget(form.thresholdToStep2Level) }}
 				</div>
-
 			</div>
 
 			<div class="col-md-6">
-				<h4>Minitest > Etape 3</h4>
+				<h4>{{ 'phased.step3conditions' | trans }}</h4>
 				<div class="form-group">
 				{{ form_label(form.thresholdToStep3) }}
 				{{ form_widget(form.thresholdToStep3) }}
@@ -88,7 +86,7 @@
 				{{ form_label(form.considerMinitest) }}
 				{{ form_widget(form.considerMinitest) }}
     			</div>
-	    		<h3>Seuils, selon l'étape de sortie</h3>
+	    		<h3>{{ 'phased.thresholdByStep' | trans }}</h3>
 
 			    <div class="panel-group thresholds" id="accordion" role="tablist" aria-multiselectable="true" data-prototype="{{ form_widget(form.generalScoreThresholds.vars.prototype)|e }}">
 
@@ -97,15 +95,19 @@
     					<div class="panel-heading" role="tab" id="heading-{{step}}">
       						<h4 class="panel-title"> 
       							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{step}}" aria-expanded="true" aria-controls="collapse-{{step}}">
-      							 {{ step }} 
+      							 {{ step | trans }} 
       							</a>
       						</h4>
       					</div> 
 
       					<div id="collapse-{{step}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{step}}">
       						<div id="thresholds-{{step}}" class="panel-body">
-      							<br/><span class="add-threshold btn btn-default" data-step="{{step}}">Ajouter seuil</span><br/><br/>
-
+      							<div>
+      								<span class="add-threshold btn btn-default" data-step="{{step}}">
+      									<span class="glyphicon glyphicon-plus"></span> 
+      									{{ "phased.addThreshold" | trans }}
+      								</span>
+      							</div>
 						        {% for generalScoreThreshold in form.generalScoreThresholds if generalScoreThreshold.vars.value.componentType.name == step %}
 						        	<li class="list-group-item col-md-3 threshold">
 						            {{ form_row(generalScoreThreshold.componentType) }}
@@ -118,7 +120,6 @@
    						 </div>
   					</div>
 	  			{% endfor %}			
-
 		    	</div>
 	    	</div>
     	</div>
@@ -127,7 +128,7 @@
     <div class="tab-pane " id="skill-score">
     	<div class="row">
     		<div class="col-md-12">
-    			<h3>Seuils, selon la compétence</h3>
+    			<h3>{{ 'phased.thresholdBySkill' | trans }}</h3>
 			    <div class="panel-group skill-thresholds" id="accordion" role="tablist" aria-multiselectable="true" data-prototype="{{ form_widget(form.skillScoreThresholds.vars.prototype)|e }}">
 
 			    {% for skill in ["CO", "CE", "EEC"] %}
@@ -135,13 +136,18 @@
     					<div class="panel-heading" role="tab" id="heading-{{skill}}">
       						<h4 class="panel-title"> 
       							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{skill}}" aria-expanded="true" aria-controls="collapse-{{skill}}">
-      							 {{ skill }} 
+      							 {{ skill | trans }} 
       							</a>
       						</h4>
       					</div> 
       					<div id="collapse-{{skill}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{skill}}">
       						<div id="thresholds-{{skill}}" class="panel-body">
-      							<br/><span class="add-skill-threshold btn btn-default" data-skill="{{skill}}">Ajouter seuil</span><br/><br/>
+      							<div>
+	      							<span class="add-skill-threshold btn btn-default" data-skill="{{skill}}">
+		      							<span class="glyphicon glyphicon-plus"></span> 
+		      							{{ "phased.addThreshold" | trans }}
+		      						</span>
+	      						</div>
 						        {% for skillScoreThreshold in form.skillScoreThresholds if skillScoreThreshold.vars.value.skill.name == skill %}
 						        	<li class="list-group-item col-md-3 threshold">
 							            {{ form_row(skillScoreThreshold.skill) }}
@@ -160,45 +166,43 @@
 		</div>
     </div>
 
-
     <div class="tab-pane " id="ignored-levels">
     	<div class="row">
     		<div class="col-md-12">
 				<h3>Niveaux ignorés, selon la compétence</h3>
-				    <div class="panel-group ignored-levels" id="accordion" role="tablist" aria-multiselectable="true" data-prototype="{{ form_widget(form.ignoredLevels.vars.prototype)|e }}">
-
-				    {% for skill in ["CO", "CE", "EEC"] %}
-	  					<div class="panel panel-default">
-	    					<div class="panel-heading" role="tab" id="heading-ignored-{{skill}}">
-	      						<h4 class="panel-title"> 
-	      							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-ignored-{{skill}}" aria-expanded="true" aria-controls="collapse-ignored-{{skill}}">
-	      							 {{ skill }} 
-	      							</a>
-	      						</h4>
-	      					</div> 
-	      					<div id="collapse-ignored-{{skill}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-ignored-{{skill}}">
-	      						<div id="ignored-level-{{skill}}" class="panel-body">
-	      							<br/><span class="add-ignore-level btn btn-default" data-skill="{{skill}}">Ajouter niveaux</span><br/><br/>
-							        {% for ignoredLevel in form.ignoredLevels if ignoredLevel.vars.value.skill.name == skill %}
-							        	<li class="list-group-item col-md-3 threshold">
-								            {{ form_row(ignoredLevel.skill) }}
-								            {{ form_row(ignoredLevel.componentType) }}
-								            {{ form_row(ignoredLevel.levels) }}
-							            </li>
-							        {% endfor %}
-				    			</div>
-	   						 </div>
-	  					</div>
-		  			{% endfor %}			
-			    	</div>
-
+			    <div class="panel-group ignored-levels" id="accordion" role="tablist" aria-multiselectable="true" data-prototype="{{ form_widget(form.ignoredLevels.vars.prototype)|e }}">
+			    {% for skill in ["CO", "CE", "EEC"] %}
+  					<div class="panel panel-default">
+    					<div class="panel-heading" role="tab" id="heading-ignored-{{skill}}">
+      						<h4 class="panel-title"> 
+      							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-ignored-{{skill}}" aria-expanded="true" aria-controls="collapse-ignored-{{skill}}">
+      							 {{ skill | trans }} 
+      							</a>
+      						</h4>
+      					</div> 
+      					<div id="collapse-ignored-{{skill}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-ignored-{{skill}}">
+      						<div id="ignored-level-{{skill}}" class="panel-body">
+      							<div>
+	      							<span class="add-ignore-level btn btn-default" data-skill="{{skill}}">
+	      								<span class="glyphicon glyphicon-plus"></span> 
+		      							{{ "phased.addLevels" | trans }}
+		      						</span>
+		      					</div>
+						        {% for ignoredLevel in form.ignoredLevels if ignoredLevel.vars.value.skill.name == skill %}
+						        	<li class="list-group-item col-md-3 threshold">
+							            {{ form_row(ignoredLevel.skill) }}
+							            {{ form_row(ignoredLevel.componentType) }}
+							            {{ form_row(ignoredLevel.levels) }}
+						            </li>
+						        {% endfor %}
+			    			</div>
+   						 </div>
+  					</div>
+	  			{% endfor %}			
+		    	</div>
 			</div>
-
 		</div>
     </div>
-
-
-
 
 </div>
 
@@ -256,7 +260,7 @@
 	}
 
 	function addTagFormDeleteLink(tagFormLi) {
-	    var $removeFormA = $('<a class="btn btn-default btn-xs delete-threshold" href="#">Supprimer</a>');
+	    var $removeFormA = $('<a class="btn btn-default btn-xs delete-threshold" href="#"><span class="glyphicon glyphicon-trash"></span> {{ "phased.removeThreshold" | trans }}</a>');
 	    tagFormLi.append($removeFormA);
 	    $removeFormA.on('click', function(e) {
 	        e.preventDefault();
@@ -264,6 +268,4 @@
 	    });
 	}
 	</script>
-
-
 {% endblock %}
