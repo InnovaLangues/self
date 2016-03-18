@@ -12,9 +12,16 @@
 
 <hr/>
 
-<h3>
-{{ institution.name }}
-</h3>
+<h3>{{ institution.name }}</h3>
+
+{% if institution.path %}
+	<p>
+		<img height="220px" src="{{ asset('upload/media/'~institution.path ) }}"/>
+	</p>
+{% endif %}
+
+
+<h3>Filières</h3>
 
 <ul class="list-group">
 {% for course in institution.courses %}

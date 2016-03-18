@@ -31,6 +31,9 @@
 		{% for institution in institutions %}
 			<tr>
 				<td>
+                    {% if institution.path %}
+                        <img height="30px" src="{{ asset('upload/media/'~institution.path ) }}"/> 
+                    {% endif %}
 					{{ institution.name }} 
 				</td>
                 <td class="text-right">

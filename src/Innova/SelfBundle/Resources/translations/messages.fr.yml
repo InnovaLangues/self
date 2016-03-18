@@ -32,6 +32,7 @@ institution:
     courses: Filières de l'institution
     edit: Editer l'institution
     manage: Gérer les institutions 
+    file: Image associée
 
 year:
     name: Nom de l'année

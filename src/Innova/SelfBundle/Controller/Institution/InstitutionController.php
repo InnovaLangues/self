@@ -28,16 +28,15 @@ class InstitutionController
 
     public function __construct($entityManager, $voter, $router, $formFactory, $session)
     {
-        $this->entityManager            = $entityManager;
-        $this->voter                    = $voter;
-        $this->router                   = $router;
-        $this->formFactory              = $formFactory;
-        $this->session                  = $session;
+        $this->entityManager = $entityManager;
+        $this->voter = $voter;
+        $this->router = $router;
+        $this->formFactory = $formFactory;
+        $this->session = $session;
     }
 
-
     /**
-     * List institutions
+     * List institutions.
      *
      * @Route("/institutions", name="institutions")
      * @Method({"GET"})
@@ -45,15 +44,15 @@ class InstitutionController
      */
     public function listInstitutionAction()
     {
-        $this->voter->isAllowed("right.institution");
-        
-        $institutions = $this->entityManager->getRepository('InnovaSelfBundle:Institution\Institution')->findBy(array(), array('name'=>'asc'));
-          
+        $this->voter->isAllowed('right.institution');
+
+        $institutions = $this->entityManager->getRepository('InnovaSelfBundle:Institution\Institution')->findBy(array(), array('name' => 'asc'));
+
         return array('institutions' => $institutions);
     }
 
     /**
-     * List institutions
+     * List institutions.
      *
      * @Route("/institution/new", name="institution_create")
      * @Method({"GET", "POST"})
@@ -61,7 +60,7 @@ class InstitutionController
      */
     public function createInstitutionAction(Request $request)
     {
-        $this->voter->isAllowed("right.institution");
+        $this->voter->isAllowed('right.institution');
 
         $institution = new Institution();
         $form = $this->handleForm($institution, $request);
@@ -75,7 +74,7 @@ class InstitutionController
     }
 
     /**
-     * List institutions
+     * List institutions.
      *
      * @Route("/institution/{institutionId}", name="institution_view")
      * @Method({"GET"})
@@ -83,20 +82,20 @@ class InstitutionController
      */
     public function viewInstitutionAction(Institution $institution)
     {
-        $this->voter->isAllowed("right.institution");
-           
+        $this->voter->isAllowed('right.institution');
+
         return array('institution' => $institution);
     }
 
     /**
-     * Delete institutions
+     * Delete institutions.
      *
      * @Route("/institution/{institutionId}/delete", name="institution_delete")
      * @Method("DELETE")
      */
     public function deleteInstitutionAction(Institution $institution)
     {
-        $this->voter->isAllowed("right.institution");
+        $this->voter->isAllowed('right.institution');
 
         $em = $this->entityManager;
         $em->remove($institution);
@@ -106,9 +105,8 @@ class InstitutionController
         return new RedirectResponse($this->router->generate('institutions'));
     }
 
-
     /**
-     * List institutions
+     * List institutions.
      *
      * @Route("/institution/{institutionId}/edit", name="institution_edit")
      * @Method({"GET", "POST"})
@@ -116,7 +114,7 @@ class InstitutionController
      */
     public function editInstitutionAction(Institution $institution, Request $request)
     {
-        $this->voter->isAllowed("right.institution");
+        $this->voter->isAllowed('right.institution');
 
         $form = $this->handleForm($institution, $request);
         if (!$form) {
@@ -129,7 +127,8 @@ class InstitutionController
     }
 
     /**
-     * Handles institution form
+     * Handles institution form.
+     *
      * @param Request $request
      */
     private function handleForm(Institution $institution, Request $request)
@@ -140,7 +139,6 @@ class InstitutionController
         foreach ($institution->getCourses() as $course) {
             $courses->add($course);
         }
-
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -155,6 +153,13 @@ class InstitutionController
 
                 foreach ($institution->getCourses() as $course) {
                     $course->setInstitution($institution);
+                }
+
+                $img = $form['file']->getData();
+                if ($img) {
+                    $fileName = $img->getClientOriginalName();
+                    $img->move(__DIR__.'/../../../../../web/upload/media/', $fileName);
+                    $institution->setPath($fileName);
                 }
 
                 $em->persist($institution);
