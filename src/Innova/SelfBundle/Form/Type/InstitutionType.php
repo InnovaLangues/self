@@ -11,13 +11,20 @@ class InstitutionType extends AbstractType
     {
         $builder->add('name', 'text', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'institution.name',
+            'label' => 'institution.name',
+            'translation_domain' => 'messages',
+        ));
+
+        $builder->add('file', 'file', array(
+            'attr' => array('class' => 'form-control'),
+            'label' => 'institution.file',
+            'required' => false,
             'translation_domain' => 'messages',
         ));
 
         $builder->add('courses', 'collection', array(
             'type' => new CourseType(),
-            'label'  => 'institution.courses',
+            'label' => 'institution.courses',
             'allow_add' => true,
             'allow_delete' => true,
             'mapped' => true,
@@ -26,7 +33,7 @@ class InstitutionType extends AbstractType
 
         $builder->add('save', 'submit', array(
             'attr' => array('class' => 'btn btn-default'),
-            'label'  => 'generic.validate',
+            'label' => 'generic.validate',
             'translation_domain' => 'messages',
         ));
     }

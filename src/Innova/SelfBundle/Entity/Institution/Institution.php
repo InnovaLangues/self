@@ -3,9 +3,10 @@
 namespace Innova\SelfBundle\Entity\Institution;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Media
+ * Media.
  *
  * @ORM\Table("institution")
  * @ORM\Entity
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Institution
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -29,9 +30,19 @@ class Institution
     private $name;
 
     /**
-    * @ORM\OneToMany(targetEntity="Course", mappedBy="institution", cascade={"persist", "remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Course", mappedBy="institution", cascade={"persist", "remove"})
+     */
     protected $courses;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $path;
+
+    /**
+     * @Assert\Image()
+     */
+    public $file;
 
     public function __toString()
     {
@@ -39,7 +50,7 @@ class Institution
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -47,9 +58,9 @@ class Institution
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -57,9 +68,10 @@ class Institution
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Institution
      */
     public function setName($name)
@@ -70,9 +82,9 @@ class Institution
     }
 
     /**
-     * Get name
+     * Get name.
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -80,9 +92,10 @@ class Institution
     }
 
     /**
-     * Add courses
+     * Add courses.
      *
      * @param \Innova\SelfBundle\Entity\Institution\Course $courses
+     *
      * @return Institution
      */
     public function addCourse(\Innova\SelfBundle\Entity\Institution\Course $courses)
@@ -93,7 +106,7 @@ class Institution
     }
 
     /**
-     * Remove courses
+     * Remove courses.
      *
      * @param \Innova\SelfBundle\Entity\Institution\Course $courses
      */
@@ -103,12 +116,36 @@ class Institution
     }
 
     /**
-     * Get courses
+     * Get courses.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCourses()
     {
         return $this->courses;
+    }
+
+    /**
+     * Set path.
+     *
+     * @param string $path
+     *
+     * @return Institution
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path.
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 }
