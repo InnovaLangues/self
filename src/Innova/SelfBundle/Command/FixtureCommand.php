@@ -39,7 +39,7 @@ class FixtureCommand extends ContainerAwareCommand
         $levelManager->create(array('A1', 'A1+', 'A2', 'A2+', 'B1', 'B1+', 'B2', 'B2+', 'C1', 'C1+'));
 
         $languageManager = $this->getContainer()->get('self.language.manager');
-        $languageManager->create(array('English', 'Italian', 'Chinese', 'Spanish', 'Japanese'));
+        $languageManager->create(array('English', 'Italian', 'Chinese', 'Spanish', 'Japanese', 'FLE'));
 
         $componentTypeManager = $this->getContainer()->get('self.componentType.manager');
         $componentTypeManager->create(array('minitest', 'step1', 'step2', 'step3'));
