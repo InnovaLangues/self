@@ -151,6 +151,8 @@ class TraceManager
                 $saisie = $syllableAnswer.$saisie;
             }
 
+            $saisie = trim($saisie);
+
             foreach ($propositions as $proposition) {
                 $text = $proposition->getMedia()->getName();
                 if (strtolower($text) == htmlentities(strtolower($saisie))) {
