@@ -1,10 +1,5 @@
 {% import _self as macros %}
 
-{#
-{% set thresholds = [null, null, 0, test.phasedParams.step2Threshold, test.phasedParams.step3Threshold, null ] %}
-{% set parts = [null, null, null, test.phasedParams.lowerPart1, test.phasedParams.upperPart1, test.phasedParams.lowerPart2, test.phasedParams.upperPart2, test.phasedParams.lowerPart3, test.phasedParams.upperPart3 ] %}
-#}
-
 <div class="panel panel-default">
     <div class="panel-heading">
         {% autoescape 'html' %}
@@ -29,12 +24,8 @@
             <div class="panel-heading">
                 {% set nameTrans = "phased."~typeName %}
                 <strong>{{ nameTrans | trans }}</strong>
-                {#
-                {% if type > 1 %}{{ parts[type * 2 - 1] ~ "-" ~ parts[type * 2] }}{% endif %}
-                {% if type > 2 %}(> {{ thresholds[type] }}%){% endif %}
-                #}
                 <div class="pull-right">
-                    <a class="btn btn-default btn-xs" href="{{ path('editor_generate_component', { 'testId': test.id, 'typeId': type  }) }}" toggle="tooltip" data-original-title="{{'phased.create_alternative' | trans }}">
+                    <a class="btn btn-default btn-xs" href="{{ path('editor_generate_component', { 'testId': test.id, 'typeId': type  }) }}" data-toggle="tooltip" data-original-title="{{'phased.create_alternative' | trans }}">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </div>

@@ -18,6 +18,7 @@ class QuestionnaireManager
     protected $formFactory;
     protected $mediaManager;
     protected $questionManager;
+    protected $propositionManager;
 
     public function __construct(
         $entityManager,
@@ -26,7 +27,8 @@ class QuestionnaireManager
         $templating,
         $formFactory,
         $mediaManager,
-        $questionManager
+        $questionManager,
+        $propositionManager
     ) {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
@@ -36,6 +38,7 @@ class QuestionnaireManager
         $this->formFactory = $formFactory;
         $this->mediaManager = $mediaManager;
         $this->questionManager = $questionManager;
+        $this->propositionManager = $propositionManager;
     }
 
     public function createQuestionnaire()
@@ -198,6 +201,43 @@ class QuestionnaireManager
         return new JsonResponse(array());
     }
 
+    public function repair(Questionnaire $questionnaire)
+    {
+        $subquestions = $questionnaire->getQuestions()[0]->getSubquestions();
+        $typology = $questionnaire->getQuestions()[0]->getTypology()->getName();
+
+        if ($typology == 'APP') {
+            $mediaIds = array();
+            foreach ($subquestions as $subquestion) {
+                $propositions = $subquestion->getPropositions();
+                foreach ($propositions as $proposition) {
+                    $mediaId = $proposition->getMedia()->getId();
+                    if (!in_array($mediaId, $mediaIds)) {
+                        $mediaIds[] = $mediaId;
+                    }
+                }
+            }
+            foreach ($mediaIds as $mediaIdToFind) {
+                foreach ($subquestions as $subquestion) {
+                    $propositions = $subquestion->getPropositions();
+                    $mediaIdFound = false;
+                    foreach ($propositions as $proposition) {
+                        $media = $proposition->getMedia();
+                        $mediaId = $media->getId();
+                        if ($mediaId == $mediaIdToFind) {
+                            $mediaIdFound = true;
+                        }
+                    }
+                    if (!$mediaIdFound) {
+                        $this->propositionManager->createProposition($subquestion, $media, false);
+                    }
+                }
+            }
+        }
+
+        return $questionnaire;
+    }
+
     public function duplicate(Questionnaire $task)
     {
         $em = $this->entityManager;
@@ -235,6 +275,11 @@ class QuestionnaireManager
         $newTask->addChannels($task->getChannels());
         $newTask->addGenres($task->getGenres());
         $newTask->addVarieties($task->getVarieties());
+        $newTask->addSocialLocations($task->getSocialLocations());
+        $newTask->setLisibility($task->getLisibility());
+        $newTask->setSpeechType($task->getSpeechType());
+        $newTask->setTextLength($task->getTextLength());
+        $newTask->setProductionType($task->getProductionType());
 
         $questions = $task->getQuestions();
         foreach ($questions as $question) {

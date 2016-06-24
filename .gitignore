@@ -17,6 +17,7 @@ app/lock
 web/bundles/*
 web/upload/
 web/js/*
+web/css/*
 !web/js/.gitkeep
 
 # Configuration files

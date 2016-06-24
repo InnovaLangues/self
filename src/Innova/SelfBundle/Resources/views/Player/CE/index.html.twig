@@ -1,9 +1,9 @@
 <div id="contexte-icon">
-    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/") }}contexte.png" rel="tooltip" data-original-title="{{ 'player.tooltip.context' | trans }}" />
+    <img {% if questionnaire.mediaContext is null %} class="plop" {% endif %} src="{{ asset("bundles/innovaself/images/contexte.png") }}" data-toggle="tooltip" rel="tooltip" data-original-title="{{ 'player.tooltip.context' | trans }}" />
 </div>
 
 <div id="situation-icon">
-    <img width=70px src="{{ asset("bundles/innovaself/images/") }}situation-CE.png" rel="tooltip" data-original-title="{{ 'player.tooltip.question_object' | trans }}" />
+    <img width=70px src="{{ asset("bundles/innovaself/images/situation-CE.png") }}" data-toggle="tooltip" rel="tooltip" data-original-title="{{ 'player.tooltip.question_object' | trans }}" />
 </div>
 
 <div id="left-container-CE" class="col-md-5 left-container">
@@ -14,13 +14,8 @@
 {% for question in questionnaire.questions %}
 <div id="right-container-CO" class="col-md-7 right-container">
     <form class="col-md-12" id="main_form" action="{{ path('trace_submit', { 'testId': test.id, 'sessionId': session.id, 'questionnaireId': questionnaire.id }) }}" method="post">
-        {# ONGLETS #}
         {% include "InnovaSelfBundle:Player/common:tab-nav.html.twig" %}
-
-        {# CONTENU DES ONGLETS #}
         {% include "InnovaSelfBundle:Player/CE:tab-content.html.twig" %}
-
-        {# SUBMIT BUTTON #}
         {% include "InnovaSelfBundle:Player/common:submit.html.twig" %}
     </form>
 </div>

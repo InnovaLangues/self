@@ -23,12 +23,10 @@ class AppKernel extends Kernel
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Innova\SelfBundle\InnovaSelfBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
-            new FOS\HttpCacheBundle\FOSHttpCacheBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Innova\GitterBundle\InnovaGitterBundle(),
-            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
-            new Liip\ImagineBundle\LiipImagineBundle(),
+            new Liuggio\StatsDClientBundle\LiuggioStatsDClientBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

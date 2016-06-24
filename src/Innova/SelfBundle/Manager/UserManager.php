@@ -99,22 +99,11 @@ class UserManager
 
     public function getConnected()
     {
-        $threshold = 300;
-        $limit = time() - $threshold;
         $connectedUsers = array();
-
-        $dql = 'select s from InnovaSelfBundle:PDOSession s
-            where s.session_time >= ?1
-            order by s.session_time desc';
-        $query = $this->entityManager->createQuery($dql);
-        $query->setParameter(1, $limit);
-        $sessions = $query->getResult();
+        $sessions = $this->getLastSessions(300);
 
         foreach ($sessions as $session) {
-            $data = stream_get_contents($session->getSessionValue());
-
-            $data = str_replace('_sf2_attributes|', '', $data);
-            $data = unserialize($data);
+            $data = $this->getSessionData($session);
 
             // If this is a session belonging to an anonymous user, do nothing
             if (!array_key_exists('_security_main', $data)) {
@@ -133,5 +122,54 @@ class UserManager
         }
 
         return $connectedUsers;
+    }
+
+    public function getAuthCount()
+    {
+        $connectedUsers = array();
+        $sessions = $this->getLastSessions(300);
+        foreach ($sessions as $session) {
+            $data = $this->getSessionData($session);
+
+            // If this is a session belonging to an anonymous user, do nothing
+            if (!array_key_exists('_security_main', $data)) {
+                continue;
+            }
+
+            // Grab security data
+            $data = $data['_security_main'];
+            $data = unserialize($data);
+            $username = $data->getUser()->getUsername();
+
+            if (!in_array($username, $connectedUsers)) {
+                $connectedUsers[] = $username;
+            }
+        }
+
+        return count($connectedUsers);
+    }
+
+    private function getLastSessions($threshold)
+    {
+        $limit = time() - $threshold;
+
+        $dql = 'select s from InnovaSelfBundle:PDOSession s
+            where s.session_time >= ?1
+            order by s.session_time desc';
+        $query = $this->entityManager->createQuery($dql);
+        $query->setParameter(1, $limit);
+        $sessions = $query->getResult();
+
+        return $sessions;
+    }
+
+    private function getSessionData($session)
+    {
+        $data = stream_get_contents($session->getSessionValue());
+        $data = str_replace('_sf2_attributes|', '', $data);
+
+        $data = unserialize($data);
+
+        return $data;
     }
 }

@@ -13,12 +13,14 @@ class ScoreManager
 {
     protected $entityManager;
     protected $securityContext;
+    protected $userResultManager;
     protected $user;
 
-    public function __construct($entityManager, $securityContext)
+    public function __construct($entityManager, $securityContext, $userResultManager)
     {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
+        $this->userResultManager = $userResultManager;
         $this->user = $this->securityContext->getToken()->getUser();
         $this->traceRepo = $this->entityManager->getRepository('InnovaSelfBundle:Trace');
         $this->propositionRepo = $this->entityManager->getRepository('InnovaSelfBundle:Proposition');
@@ -30,7 +32,7 @@ class ScoreManager
     public function getScoreBySkillByLevelForComponent(Test $test, Session $session, Component $component, User $user)
     {
         $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session, 'component' => $component));
-        $scores = $this->getScoresFromTraces($traces);
+        $scores = $this->getScoresFromTraces($traces, true);
 
         return $scores;
     }
@@ -39,7 +41,7 @@ class ScoreManager
     {
         if ($test->getPhased()) {
             $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
-            $scores = $this->getScoresFromTraces($traces);
+            $scores = $this->getScoresFromTraces($traces, true);
 
             return $scores;
         }
@@ -75,10 +77,10 @@ class ScoreManager
         return $nextComponentTypeName;
     }
 
-    public function getGlobalScore(Session $session, User $user)
+    public function getGlobalScore(Session $session, User $user, $saveScore = false)
     {
         $test = $session->getTest();
-        if ($traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session))) {
+        if ($traces = $this->traceRepo->getByUserBySession($user, $session)) {
             if ($test->getPhased()) {
                 $params = $test->getPhasedParams();
 
@@ -91,17 +93,27 @@ class ScoreManager
                     array('rightAnswers' => 'DESC')
                 );
 
-                $traces = $this->traceRepo->findBy(array('user' => $user, 'test' => $test, 'session' => $session, 'component' => $component));
-                $scoresLastComponent = $this->getScoresFromTraces($traces);
-                $correctAnswers = $this->countCorrectAnswers($scoresLastComponent);
+                if (!$params->getConsiderMinitest()) {
+                    $traces = $this->traceRepo->getByUserBySessionByComponent($user, $session, $component);
+                }
+
+                $score = $this->getScoresFromTraces($traces, true);
+                $correctAnswers = $this->countCorrectAnswers($score);
 
                 foreach ($thresholds as $threshold) {
                     if ($correctAnswers >= $threshold->getRightAnswers()) {
+                        if ($saveScore) {
+                            $this->userResultManager->setGeneralScore($threshold->getDescription(), $user, $session);
+                        }
+
                         return $threshold->getDescription();
                     }
                 }
             } else {
                 $score = $this->getRightPercentFromTraces($traces);
+                if ($saveScore) {
+                    $this->userResultManager->setGeneralScore($score, $user, $session);
+                }
 
                 return $score;
             }
@@ -110,7 +122,7 @@ class ScoreManager
         return;
     }
 
-    public function getSkillScore(Session $session, User $user, $skillName)
+    public function getSkillScore(Session $session, User $user, $skillName, $saveScore = false)
     {
         $test = $session->getTest();
         $skill = $this->entityManager->getRepository('InnovaSelfBundle:Skill')->findByName($skillName);
@@ -125,15 +137,22 @@ class ScoreManager
                     array('rightAnswers' => 'DESC')
                 );
 
-                $scores = $this->getScoresFromTraces($traces);
+                $scores = $this->getScoresFromTraces($traces, true);
                 $correctAnswers = $this->countCorrectAnswers($scores);
                 foreach ($thresholds as $threshold) {
                     if ($correctAnswers >= $threshold->getRightAnswers()) {
+                        if ($saveScore) {
+                            $this->userResultManager->setSkillScore($threshold->getDescription(), $user, $session, $skillName);
+                        }
+
                         return $threshold->getDescription();
                     }
                 }
             } else {
                 $score = $this->getRightPercentFromTraces($traces);
+                if ($saveScore) {
+                    $this->userResultManager->setSkillScore($score, $user, $session, $skillName);
+                }
 
                 return $score;
             }
@@ -174,7 +193,7 @@ class ScoreManager
         return $percent.'%';
     }
 
-    private function getScoresFromTraces($traces)
+    public function getScoresFromTraces($traces, $ignore)
     {
         $scores = $this->initializeScoreArray();
 
@@ -183,9 +202,7 @@ class ScoreManager
             $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
             $user = $trace->getUser();
             $component = $trace->getComponent();
-            $componentType = ($component)
-                ? $component->getComponentType()
-                : null;
+            $componentType = ($component) ? $component->getComponentType() : null;
             $params = $session->getTest()->getPhasedParams();
             $skill = $trace->getQuestionnaire()->getSkill();
             $levelsToIgnore = $this->getIgnoredLevels($params, $skill, $componentType);
@@ -200,7 +217,7 @@ class ScoreManager
                     $level = $questionnaire->getLevel()->getName();
                 }
 
-                if ($level && !in_array($level, $levelsToIgnore)) {
+                if ($level && (!in_array($level, $levelsToIgnore) || !$ignore)) {
                     if ($this->subquestionCorrect($subquestion, $session, null, $user)) {
                         ++$scores[$skill][$level]['correct'];
                     }
@@ -212,7 +229,7 @@ class ScoreManager
         return $scores;
     }
 
-    private function countCorrectAnswers($scores)
+    public function countCorrectAnswers($scores)
     {
         $correctAnswers = 0;
         foreach ($scores as $skill => $levels) {
@@ -236,7 +253,7 @@ class ScoreManager
         return $correctAnswers;
     }
 
-    private function subquestionCorrect(Subquestion $subquestion, Session $session, Component $component = null, User $user)
+    public function subquestionCorrect(Subquestion $subquestion, Session $session, Component $component = null, User $user)
     {
         $correct = true;
         $rightProps = $this->propositionRepo->findBy(array('subquestion' => $subquestion, 'rightAnswer' => true));

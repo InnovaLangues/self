@@ -1,12 +1,5 @@
 <div class="propositions-EEC">
-    {# Avril 2014 : affichage en ordre fixe ou pas. EV. #}
-    {# {% if subquestion.typology.name == "TVF" or subquestion.typology.name == "TVFNM" %} #}
-    {% if questionnaire.fixedOrder %}
-        {% set propositions = subquestion.propositions %}
-    {% else %}
-        {% set propositions = subquestion.propositions | shuffle %}
-    {% endif %}
-
+    {% set propositions = questionnaire.fixedOrder ? subquestion.propositions : subquestion.propositions | shuffle %}
     {% for i, proposition in propositions %}
         {% set bulleCount = i + 1 %}
         <div class="proposition-EEC">

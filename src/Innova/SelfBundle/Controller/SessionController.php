@@ -108,6 +108,36 @@ class SessionController extends Controller
     }
 
     /**
+     * @Route("/session/{sessionId}/invalidate-results", name="editor_test_invalidate_results_session")
+     * @Method("GET")
+     *
+     * @Template("InnovaSelfBundle:Session:new.html.twig")
+     */
+    public function invalidateResultsAction(Session $session)
+    {
+        $this->get('innova_voter')->isAllowed('right.individualresultssession', $session);
+
+        $this->get('self.session.manager')->invalidateResults($session);
+
+        return $this->redirect($this->generateUrl('editor_test_session_results', array('sessionId' => $session->getId())));
+    }
+
+    /**
+     * @Route("/session/{sessionId}/user/{userId}/invalidate-results", name="editor_test_invalidate_results_session_user")
+     * @Method("GET")
+     *
+     * @Template("InnovaSelfBundle:Session:new.html.twig")
+     */
+    public function invalidateUserResultsAction(Session $session, User $user)
+    {
+        $this->get('innova_voter')->isAllowed('right.individualresultssession', $session);
+
+        $this->get('self.session.manager')->invalidateUserResults($session, $user);
+
+        return $this->redirect($this->generateUrl('editor_test_session_results', array('sessionId' => $session->getId())));
+    }
+
+    /**
      * @Route("/session/{sessionId}/results", name="editor_test_session_results")
      * @Method("GET")
      *
@@ -182,6 +212,23 @@ class SessionController extends Controller
         $response = $this->get('self.export.manager')->generateResponse($file);
 
         return $response;
+    }
+
+    /**
+     * Delete trace for a given user and a given session.
+     *
+     * @Route("/session/{sessionId}/user/{userId}/delete-trace", name="delete-session-user-trace")
+     * @Method("GET")
+     */
+    public function deleteSessionUserTraceAction(User $user, Session $session)
+    {
+        $this->get('innova_voter')->isAllowed('right.deletetracesession', $session);
+
+        if ($this->get('self.trace.manager')->deleteSessionTrace($user, $session)) {
+            $this->get('session')->getFlashBag()->set('success', 'Les traces de l\'utilisateur '.$user->getUsername().' ont été supprimées');
+        }
+
+        return $this->redirect($this->generateUrl('editor_test_session_results', array('sessionId' => $session->getId())));
     }
 
     /**

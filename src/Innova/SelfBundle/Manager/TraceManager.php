@@ -40,13 +40,21 @@ class TraceManager
             ? $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->find($post['componentId'])
             : null;
 
-        $trace = $em->getRepository('InnovaSelfBundle:Questionnaire')->findByUserByTestByQuestionnaire($test, $questionnaire, $this->user, $component, $session);
-        if ($trace) {
+        $trace = $em->getRepository('InnovaSelfBundle:Trace')->findByUserByTestByQuestionnaire($test, $questionnaire, $this->user, $component, $session);
+
+        if (count($trace) > 0) {
             $this->session->getFlashBag()->set('danger', 'Vous avez déjà répondu à cette question.');
         } else {
             $agent = $request->headers->get('User-Agent');
             $trace = $this->createTrace($questionnaire, $test, $this->user, $post['totalTime'], $agent, $component, $session);
-            $this->parsePost($post, $trace);
+            if (!$this->parsePost($post, $trace)) {
+                $answers = $em->getRepository('InnovaSelfBundle:Answer')->findByTrace($trace);
+                foreach ($answers as $answer) {
+                    $em->remove($answer);
+                }
+                $em->remove($trace);
+                $em->flush();
+            }
         }
 
         return $trace;
@@ -84,23 +92,10 @@ class TraceManager
         return $trace;
     }
 
-    public function deleteTestTrace(User $user, Test $test)
+    public function deleteSessionTrace(User $user, Session $session)
     {
         $em = $this->entityManager;
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $test));
-
-        foreach ($traces as $trace) {
-            $em->remove($trace);
-        }
-        $em->flush();
-
-        return $this;
-    }
-
-    public function deleteTaskTrace(User $user, Test $test, Questionnaire $questionnaire)
-    {
-        $em = $this->entityManager;
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $test, 'questionnaire' => $questionnaire));
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'session' => $session));
 
         foreach ($traces as $trace) {
             $em->remove($trace);
@@ -123,13 +118,19 @@ class TraceManager
                 foreach ($postVar as $key => $propositionId) {
                     if ($subquestion->getTypology()->getName() != 'TLQROC') {
                         $proposition = $em->getRepository('InnovaSelfBundle:Proposition')->find($propositionId);
-                        $this->answerManager->createAnswer($trace, $subquestion, $proposition);
+                        if ($subquestion->getPropositions()->contains($proposition)) {
+                            $this->answerManager->createAnswer($trace, $subquestion, $proposition);
+                        } else {
+                            return false;
+                        }
                     } else {
                         $this->createAnswerProposition($trace, $propositionId, $subquestion);
                     }
                 }
             }
         }
+
+        return true;
     }
 
     /**
@@ -149,6 +150,8 @@ class TraceManager
                 $syllableAnswer = $subquestion->getMediaSyllable()->getDescription();
                 $saisie = $syllableAnswer.$saisie;
             }
+
+            $saisie = trim($saisie);
 
             foreach ($propositions as $proposition) {
                 $text = $proposition->getMedia()->getName();

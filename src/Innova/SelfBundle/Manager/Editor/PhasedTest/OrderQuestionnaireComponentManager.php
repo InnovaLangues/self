@@ -32,4 +32,15 @@ class OrderQuestionnaireComponentManager
 
         return $newOrderQuestionnaireComponent;
     }
+
+    public function toggleIgnoreInScoring(OrderQuestionnaireComponent $orderQuestionnaireComponent)
+    {
+        $ignore = $orderQuestionnaireComponent->getIgnoreInScoring() ? false : true;
+        $orderQuestionnaireComponent->setIgnoreInScoring($ignore);
+
+        $this->entityManager->persist($orderQuestionnaireComponent);
+        $this->entityManager->flush();
+
+        return;
+    }
 }

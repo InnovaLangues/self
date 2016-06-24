@@ -38,6 +38,10 @@
     <table class="record_properties table">
         <tbody>
             <tr>
+                <th>{{ 'user.login' | trans }}</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
                 <th>{{ 'user.name' | trans }}</th>
                 <td>{{ user.lastName }}</td>
             </tr>
@@ -64,51 +68,42 @@
         </tbody>
     </table>
 
-
-    {% if tests is defined %}
-        {# List of tests #}
+    {% if sessions is defined %}
         <h2>Traces</h2>
-
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        {% for test in tests %}
-            <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ test[0].id }}" aria-expanded="true" aria-controls="collapseOne">
-                                    {{ test[0].name }} ({{ test[1] }})
-                                </a>
-
-                                {% if checkRight("right.deletetraceuser") %}
-                                    <span class="buttons pull-right">
-                                        <span data-method="DELETE" class="btn btn-danger btn-xs rest" href="{{ path('delete-test-trace', {'testId': test[0].id, 'userId': user.id } )}}">
-                                         Supprimer les traces pour le test
-                                        </span>
-                                    </span>
-                                {% endif %}
-                            </h4>
-                    </div>
-                    <div id="collapse{{ test[0].id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            <ul class="list-group">
-                                {% for questionnaire in test[2] %}
-                                    <li class="list-group-item">
-                                        {{questionnaire.theme}}
-                                        {% if checkRight("right.deletetraceuser") %}
-                                            <span class="buttons pull-right">
-                                                <span data-method="DELETE" class="btn btn-danger btn-xs rest" href="{{ path('delete-task-trace', {'testId': test[0].id, 'userId': user.id, 'questionnaireId': questionnaire.id} )}}">
-                                                Supprimer les traces pour cette tâche
-                                                </span>
-                                            </span>
-                                        {% endif %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-            </div>
-        {% endfor %}
-        </div>
-
+        <ul class="list-group">
+            {% if sessions|length > 0 %}
+                {% for session in sessions %}
+                    <li class="list-group-item">
+                    {% if checkRight("right.individualresultssession", session) %}
+                        <a href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
+                            {{ session.name }}
+                        </a>
+                    {% else %}
+                        {{ session.name }}
+                    {% endif %}
+                    <span class="text-muted">{{session.test.name}}</span>
+                    <span class="buttons pull-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('get-session-traces', {'sessionId': session.id, 'userId': user.id } )}}">
+                            <span class="glyphicon glyphicon-search"></span>
+                            Détails
+                        </a>
+                        <a class="btn btn-default btn-xs" href="{{ path('editor_session_user_results', {'sessionId': session.id, 'userId': user.id } )}}">
+                            <span class="glyphicon glyphicon-signal"></span>
+                            Afficher les résultats
+                        </a>
+                        {% if checkRight("right.deletetraceuser") %}
+                        <span data-method="DELETE" class="btn btn-danger btn-xs rest" href="{{ path('delete-session-trace', {'sessionId': session.id, 'userId': user.id } )}}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            Supprimer les traces pour la session
+                        </span>
+                        {% endif %}
+                    </span>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li class="list-group-item">Aucune trace liée à cet utilisateur.</li>
+            {% endif %}
+        <ul>
 
         <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">

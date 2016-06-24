@@ -20,8 +20,15 @@
 </a>
 {% endif %}
 
+{% if checkRight("right.individualresultssession", session) %}
+<a class="btn btn-default btn-sm" href="{{ path('editor_test_invalidate_results_session', {'sessionId': session.id }) }}">
+    <span class="glyphicon glyphicon-remove"></span> {{ 'editor.session.invalidate_results' | trans }}
+</a>
+{% endif %}
+
+
 <hr/>
-<h3>{{ 'editor.session.results' | trans }} <b>{{ session.name }}</b> </h3>
+<h3>{{ 'editor.session.results' | trans }} <b>{{ session.name }}</b> ({{ users | length }})</h3>
 <div class="input-group">
     <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
     <input type="text" id="search" class="form-control" value="">
@@ -33,8 +40,8 @@
         <tr>
             <th>Login</th>
             <th>Email</th>
-            <th>Nom</th>
             <th>Prénom</th>
+            <th>Nom</th>
             <th></th>
         </tr>
     </thead>
@@ -42,7 +49,9 @@
 	{% for user in users %}
 		<tr>
             <td>
-                {{ user.username }}
+                <a href="{{ path('admin_user_show', { 'id': user.id }) }}">
+                    {{ user.username }}
+                </a>
             </td>
             <td>
                 {{ user.email }}
@@ -61,6 +70,21 @@
 				<a class="btn btn-default btn-sm" href="{{ path('editor_session_user_results', {'sessionId': session.id, 'userId': user.id }) }}">
 					<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results_user' | trans }}
 				</a>
+
+                <a class="btn btn-default btn-sm" href="{{ path('editor_test_invalidate_results_session_user', {'sessionId': session.id, 'userId': user.id }) }}">
+                    <span class="glyphicon glyphicon-remove"></span> {{ 'editor.session.invalidate_results' | trans }}
+                </a>
+
+                <a class="btn btn-default btn-sm" href="{{ path('get-session-traces', {'sessionId': session.id, 'userId': user.id } )}}">
+                    <span class="glyphicon glyphicon-search"></span>
+                    Détails
+                </a>
+
+                {% if checkRight("right.deletetracesession", session) %}
+                <a class="btn btn-danger btn-sm delete-trace" href="#" realpath="{{ path('delete-session-user-trace', {'sessionId': session.id, 'userId': user.id }) }}">
+                    <span class="glyphicon glyphicon-remove"></span> {{ 'editor.session.delete_results' | trans }}
+                </a>
+                {% endif %}
 			</td>
 		</tr>
 	{% endfor %}

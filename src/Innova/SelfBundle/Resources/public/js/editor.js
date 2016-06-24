@@ -337,6 +337,11 @@ $(document).ready(function() {
         chooseMediaTypeModal();
     });
 
+    $( "body" ).on( "click", '.app-repair', function() {
+        //setParamForRequest("proposition", "app-repair", questionnaireId, "subquestion-container");
+        appRepair(questionnaireId);
+    });
+
     $( "body" ).on( "click", '.app-delete-subquestion', function() {
         var subquestionId = $(this).data("subquestion-id");
         setParamForRequest("subquestion", "app-paire", subquestionId, "subquestion-container");
@@ -594,6 +599,24 @@ function createSubquestion(questionnaireId) {
         $("#subquestion-container").replaceWith(data.responseText);
     });
 }
+
+function appRepair(questionnaireId) {
+    beforeAjax();
+    $.ajax({
+        url: Routing.generate('editor_questionnaire_repair',
+            {
+                'questionnaireId': questionnaireId,
+            }),
+        type: 'POST',
+        dataType: 'json',
+    })
+    .complete(function(data) {
+        afterAjax();
+        $("#subquestion-container").replaceWith(data.responseText);
+    });
+}
+
+
 
 function deleteSubquestion(questionnaireId, subquestionId){
     beforeAjax();
@@ -955,7 +978,7 @@ function beforeAjax(){
 function afterAjax(){
     $("#loader-img").hide();
     $(".btn, input, textarea, select:not(.to-check)").removeAttr("disabled");
-    $('*').tooltip({placement:'top'});
+    $('body *[data-toggle="tooltip"]').tooltip({placement:'top'});
 }
 
 function disableAndHideElements(){

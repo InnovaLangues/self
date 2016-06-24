@@ -1,40 +1,37 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "innova/self",
     "license": "MIT",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Système d'EvaLuation à visée Formative.",
     "autoload": {
         "psr-0": { "": "src/" }
     },
     "require": {
         "php": ">=5.4",
-        "symfony/symfony": "2.7.6",
+        "symfony/symfony": "2.7.9",
         "symfony/assetic-bundle": "2.3.*",
         "symfony/swiftmailer-bundle": "2.3.*",
         "symfony/monolog-bundle": "2.3.*",
-        "doctrine/orm": "2.5.1",
-        "doctrine/dbal": "2.5.2",
-        "doctrine/doctrine-bundle": "1.6.0",
+        "doctrine/orm": "v2.5.4",
+        "doctrine/dbal": "v2.5.4",
+        "doctrine/doctrine-bundle": "1.6.1",
         "doctrine/doctrine-fixtures-bundle" : "2.3.0",
         "doctrine/doctrine-migrations-bundle": "dev-master#6a1bd731dbdd4a",
         "twig/extensions": "1.3",
         "sensio/distribution-bundle": "2.3.*",
         "sensio/framework-extra-bundle": "2.3.*",
-        "sensio/generator-bundle": "2.5.3",
+        "sensio/generator-bundle": "v3.0.5",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofsymfony/jsrouting-bundle": "~1.1",
-        "friendsofsymfony/http-cache-bundle": "~1.0",
         "stfalcon/tinymce-bundle": "dev-master#758c19947b04d93d",
         "knplabs/knp-snappy-bundle": "dev-master#c023573e1b0b",
         "willdurand/js-translation-bundle": "@stable",
         "innova/gitter-bundle": "v1.0",
-        "jms/i18n-routing-bundle": "~1.1",
         "lexik/maintenance-bundle": "dev-master#4967701a108aa8262f",
         "nc/faye-client": "v1.1.1",
         "twig/twig": "1.*",
-        "imagine/imagine": "v0.6.3",
-        "liip/imagine-bundle": "1.3.1"
+        "liuggio/statsd-client-bundle": "1.6.*"
     },
     "scripts": {
         "post-install-cmd": [

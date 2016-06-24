@@ -1,6 +1,5 @@
 $(document).ready(function() {
     uncheckEverything();
-    maskManager();
     getRemainingListening();
     checkSelect();
     checkBadges();
@@ -264,30 +263,6 @@ function timestamp(){
 **************/
 function uncheckEverything(){
     $('input[type="radio"],input[type="checkbox"]').prop('checked', false);
-}
-
-
-/**************
-    MASKS
-**************/
-function maskManager(){
-    $('.mask').each(function() {
-        var length = $(this).data("right-answer-length");
-        var mask = constructMask(length, "*");
-        var placeholder = constructMask(length, "-");
-
-        $(this).attr("placeholder", placeholder);
-        $(this).mask(mask, {placeholder:'-'});
-    });
-}
-
-function constructMask(count, char){
-    var mask = "";
-    for (var i = 0; i < count; i++) {
-        mask = mask + char;
-    };
-
-    return mask;
 }
 
 /**************

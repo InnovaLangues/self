@@ -1,8 +1,8 @@
-.required:after {
+#register-form .required:after {
     content: " *";
     color:red;
 }
 
-.warning, .form-error{
+#register-form .warning, .form-error{
 	color:red;
 }

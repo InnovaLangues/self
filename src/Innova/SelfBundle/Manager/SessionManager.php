@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Entity\User;
 
 class SessionManager
 {
@@ -96,5 +97,31 @@ class SessionManager
             : $this->sessionRepo->findAuthorized($test, $this->currentUser);
 
         return $sessions;
+    }
+
+    public function invalidateResults(Session $session)
+    {
+        $results = $this->entityManager->getRepository('InnovaSelfBundle:UserResult')->findBySession($session);
+        foreach ($results as $result) {
+            $this->entityManager->remove($result);
+        }
+        $this->entityManager->flush();
+
+        $this->session->getFlashBag()->set('info', 'Les résultats ont bien été invalidés. Ils seront recalculés au prochain export.');
+
+        return $session;
+    }
+
+    public function invalidateUserResults(Session $session, User $user)
+    {
+        $results = $this->entityManager->getRepository('InnovaSelfBundle:UserResult')->findBy(array('session' => $session, 'user' => $user));
+        foreach ($results as $result) {
+            $this->entityManager->remove($result);
+        }
+        $this->entityManager->flush();
+
+        $this->session->getFlashBag()->set('info', 'Les résultats pour l\'utilisateur ont bien été invalidés. Ils seront recalculés au prochain export.');
+
+        return $session;
     }
 }

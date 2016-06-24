@@ -39,6 +39,21 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function getBySomethingLike($something)
+    {
+        $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
+         WHERE u.username LIKE :something
+         OR u.email LIKE :something
+         OR u.lastName LIKE :something
+         OR u.firstName LIKE :something
+         ";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('something', '%'.$something.'%');
+
+        return $query->getResult();
+    }
+
     public function findBySession($session)
     {
         $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
@@ -79,7 +94,7 @@ class UserRepository extends EntityRepository
         ";
 
         if ($user->getId()) {
-            $dql .= " AND u.id != ".$user->getId();
+            $dql .= ' AND u.id != '.$user->getId();
         }
 
         $query = $this->_em->createQuery($dql)
@@ -95,7 +110,7 @@ class UserRepository extends EntityRepository
         ";
 
         if ($user->getId()) {
-            $dql .= " AND u.id != ".$user->getId();
+            $dql .= ' AND u.id != '.$user->getId();
         }
 
         $query = $this->_em->createQuery($dql)
@@ -143,5 +158,14 @@ class UserRepository extends EntityRepository
         }
 
         return false;
+    }
+
+    public function getRegisteredCount()
+    {
+        $dql = 'SELECT COUNT(u.id)from Innova\SelfBundle\Entity\User u';
+        $query = $this->_em->createQuery($dql);
+        $count = $query->getSingleScalarResult();
+
+        return $count;
     }
 }

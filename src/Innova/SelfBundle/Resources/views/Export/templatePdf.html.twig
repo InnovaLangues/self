@@ -6,7 +6,7 @@
 
     {% if type == "image" %}
         <!-- <span class="glyphicon glyphicon-picture"></span> -->
-        <br/> <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('upload/media/') ~ media.url }}" width="100px"/>
+        <br/> <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('upload/media/'~ media.url) }}" width="100px"/>
 
     {% elseif type == "texte" %}
         <span class="glyphicon glyphicon-align-center"></span>
@@ -47,14 +47,6 @@
         <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
     </head>
     <body>
-        <h1>SELF Export PDF</h1>
-        <hr/>
-        <p><strong>Test : </strong>{{ test.name }}</p>
-        <p><strong>Langue : </strong>{{ test.language.name }}</p>
-        <p><strong>Date de l'export : </strong>{{ "now"|date("d/m/Y") }}</p>
-
-        <div class="page-breaker"></div>
-
         {% for i, q in questionnaires %}
             {% set question = q.questions[0] %}
             {% set items = question.subquestions %}

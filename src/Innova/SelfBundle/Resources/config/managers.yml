@@ -9,6 +9,7 @@ services:
             formFactory:        @form.factory
             mediaManager:       @self.media.manager
             questionManager:    @self.question.manager
+            propositionManager: @self.proposition.manager
 
     self.question.manager:
         class: Innova\SelfBundle\Manager\Editor\QuestionManager
@@ -167,6 +168,12 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.token_storage
+            userResultManager:  @self.user_result.manager 
+
+    self.user_result.manager:
+        class: Innova\SelfBundle\Manager\UserResultManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
 
     self.component.manager:
         class: Innova\SelfBundle\Manager\Editor\PhasedTest\ComponentManager
@@ -290,16 +297,6 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
-    self.originStudent.manager:
-        class: Innova\SelfBundle\Manager\OriginStudentManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.levelLansad.manager:
-        class: Innova\SelfBundle\Manager\LevelLansadManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
     self.clueType.manager:
         class: Innova\SelfBundle\Manager\ClueTypeManager
         arguments:
@@ -358,3 +355,9 @@ services:
         arguments:
             fayeClient:      @faye_server.client
             entityManager:      @doctrine.orm.entity_manager
+
+    self.locale.manager:
+        class: Innova\SelfBundle\Manager\LocaleManager
+        arguments:
+            securityContext:    @security.context
+            userManager:        @self.user.manager

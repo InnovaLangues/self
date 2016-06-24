@@ -195,17 +195,17 @@ class ExportManager
         $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
         foreach ($users as $user) {
             $userId = $user->getId();
-            $score = $this->calculateScore($user, $session, $rightProps);
+
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
+            $scores = $this->scoreManager->getScoresFromTraces($traces, false);
+            $score = $this->scoreManager->countCorrectAnswers($scores);
+
             $secondStep = $this->getUserSecondStep($session, $user);
 
             $csv .= $this->addColumn($user->getUserName());
             $csv .= $this->addColumn($user->getFirstName());
             $csv .= $this->addColumn($result[$userId]['date']);
             $csv .= $this->addColumn($result[$userId]['time']);
-            $csv .= $this->addColumn($user->getCoLevel());
-            $csv .= $this->addColumn($user->getCeLevel());
-            $csv .= $this->addColumn($user->getEeLevel());
-            $csv .= $this->addColumn($user->getlevelLansad());
             $csv .= $this->addColumn($score);
             $csv .= $this->addColumn($secondStep);
 
@@ -234,7 +234,8 @@ class ExportManager
                         $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
                             $subquestionId = $subquestion->getId();
-                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps['sub'.$subquestionId], $typologyName);
+
+                            $csv .= $this->checkRightAnswer($subquestion, $session, $user);
                             $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
                         }
                     }
@@ -266,48 +267,10 @@ class ExportManager
         return $column;
     }
 
-    private function checkRightAnswer($answersArray, $subquestionId, $rightProps, $typo)
+    private function checkRightAnswer($subquestion, $session, $user)
     {
-        switch ($typo) {
-            case 'TQRM':
-                $subquestionOk = true;
-                foreach ($rightProps as $rightPropId) {
-                    $found = false;
-                    foreach ($answersArray[$subquestionId] as $answerProp) {
-                        if ($answerProp->getRightAnswer() === false) {
-                            $subquestionOk = false;
-                        }
-                        if ($rightPropId == $answerProp->getId()) {
-                            $found = true;
-                        }
-                    }
-                    if ($found === false) {
-                        $subquestionOk = false;
-                    }
-                }
-                break;
-
-            case 'TLCMLDM':
-            case 'TLCMLMULT':
-            case 'TLQROC':
-            case 'APP':
-            case 'TVF':
-            case 'TVFNM':
-            case 'TQRU':
-                $subquestionOk = false;
-                if (isset($answersArray[$subquestionId])) {
-                    $proposition = $answersArray[$subquestionId][0];
-                    $subquestionOk = $proposition->getRightAnswer();
-                }
-
-                break;
-        }
-
-        if ($subquestionOk) {
-            $output = $this->addColumn(1);
-        } else {
-            $output = $this->addColumn(0);
-        }
+        $right = ($this->scoreManager->subquestionCorrect($subquestion, $session, null, $user)) ? 1 : 0;
+        $output = $this->addColumn($right);
 
         return $output;
     }
@@ -394,7 +357,7 @@ class ExportManager
                         $subquestions = $questions[0]->getSubQuestions();
                         foreach ($subquestions as $subquestion) {
                             $subquestionId = $subquestion->getId();
-                            $csv .= $this->checkRightAnswer($answersArray, $subquestionId, $rightProps['sub'.$subquestionId], $typologyName);
+                            $csv .= $this->checkRightAnswer($subquestion, $session, $user);
                             $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
                         }
                     }
@@ -433,126 +396,6 @@ class ExportManager
     }
 
     /**
-     * calculateScore function.
-     */
-    private function calculateScore(User $user, Session $session, $rightProps)
-    {
-        $em = $this->entityManager;
-        $score = 0;
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSession($user->getId(), $session->getId());
-
-        foreach ($traces as $trace) {
-            if ($answers = $trace->getAnswers()) {
-                if (isset($answers[0])) {
-                    $answersArray = array();
-                    $typology = $answers[0]->getSubquestion()->getTypology()->getName();
-
-                    switch ($typology) {
-                        case 'TLCMLDM':
-                        case 'TLCMLMULT':
-                        case 'TLQROC':
-                            foreach ($answers as $answer) {
-                                $subquestionId = $answer->getSubquestion()->getId();
-                                if (!isset($answersArray[$subquestionId])) {
-                                    $answersArray[$subquestionId] = array();
-                                }
-                                $answersArray[$subquestionId][] = $answer->getProposition()->getId();
-                            }
-
-                        foreach ($answersArray as $subquestionId => $answers) {
-                            $rightPropositions = array();
-                            if (isset($rightProps['sub'.$subquestionId])) {
-                                $rightPropositions = $rightProps['sub'.$subquestionId];
-                            }
-
-                            $nbPropositionRightAnswer = $nbRightAnswer = 0;
-                            $nbAnswers = count($answers);
-
-                            // Je calcule le score que si le testeur a répondu à autant de réponses
-                            // qu'il y a de propositions.
-                            // Si ce n'est pas le cas, il aura forcément ZERO point.
-                            if ($nbAnswers == count($rightPropositions)) {
-                                foreach ($rightPropositions as $rightProp) {
-                                    if (in_array($rightProp, $answersArray[$subquestionId])) {
-                                        ++$nbRightAnswer;
-                                    }
-                                }
-                            }
-
-                            if (($nbPropositionRightAnswer == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                                ++$score;
-                            }
-                        }
-                        break;
-
-                    case 'APP';
-                        foreach ($answers as $answer) {
-                            if ($answer->getProposition()->getRightAnswer()) {
-                                ++$score;
-                            }
-                        }
-                        break;
-                    case 'QRM';
-                    case 'TQRM';
-                    case 'QRU';
-                    case 'TQRU';
-                    case 'VF';
-                    case 'TVF';
-                    case 'VFNM';
-                    case 'TVFNM';
-                        foreach ($answers as $answer) {
-                            if (!isset($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
-                                $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
-                            }
-                            $answersArray[$answer->getProposition()->getSubQuestion()->getId()][] = $answer->getProposition()->getId();
-                        }
-
-                        foreach ($answersArray as $subquestionId => $answers) {
-                            // Initialisation des variables.
-                            $nbProposition = $nbPropositionRightAnswser = $nbRightAnswer = 0;
-                            // Recherche de toutes les traces pour un utilisateur, un questionnaire et un test.
-                            $subquestion = $em->getRepository('InnovaSelfBundle:Subquestion')->findOneById($subquestionId);
-                            $propositions = $subquestion->getPropositions();
-
-                            // Calcul du nombre de réponses.
-                            $nbAnswers = count($answers);
-                            $rightProps = array();
-                            // Accès à la proposition.
-                            // Calcul du nombre de proposition et
-                            // calcul du nombre de bonnes réponses.
-                            foreach ($propositions as $proposition) {
-                                ++$nbProposition;
-                                if ($proposition->getRightAnswer()) {
-                                    ++$nbPropositionRightAnswser;
-                                    $rightProps[] = $proposition;
-                                }
-                            }
-
-                            // Je calcule le score que si le testeur a répondu à autant de réponses
-                            // qu'il y a de propositions.
-                            // Si ce n'est pas le cas, il aura forcément ZERO point.
-                            if ($nbAnswers == $nbPropositionRightAnswser) {
-                                foreach ($rightProps as $rightProp) {
-                                    if (in_array($rightProp->getId(), $answersArray[$subquestionId])) {
-                                        ++$nbRightAnswer;
-                                    }
-                                }
-                            }
-
-                            if (($nbPropositionRightAnswser == $nbAnswers) && ($nbAnswers == $nbRightAnswer)) {
-                                ++$score;
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-
-        return $score;
-    }
-
-    /**
      * Précalcule pas mal de choses pour éviter les requêtes redondantes plus tard.
      *
      * @param int    $sessionId
@@ -574,10 +417,6 @@ class ExportManager
             $csv .= $this->addColumn('Prénom');
             $csv .= $this->addColumn('Date');
             $csv .= $this->addColumn('Temps en secondes (pour le test entier)');
-            $csv .= $this->addColumn('Niveau Dialang CO');
-            $csv .= $this->addColumn('Niveau Dialang CE');
-            $csv .= $this->addColumn('Niveau Dialang EEC');
-            $csv .= $this->addColumn('Niveau Lansad acquis');
             $csv .= $this->addColumn('Score total obtenu dans le test (formule du total)');
             $csv .= $this->addColumn('Etape de sortie');
         } else {
@@ -679,7 +518,6 @@ class ExportManager
         $csv .= $this->addColumn('Nom');
         $csv .= $this->addColumn('Prénom');
         $csv .= $this->addColumn('Email');
-        $csv .= $this->addColumn('Filière (ancien champ)');
         $csv .= $this->addColumn('Etablissement');
         $csv .= $this->addColumn('Filière');
         $csv .= $this->addColumn('Année');
@@ -689,28 +527,44 @@ class ExportManager
         $csv .= $this->addColumn('Score CO');
         $csv .= $this->addColumn('Score CE');
         $csv .= $this->addColumn('Score EEC');
+        $csv .= $this->addColumn('Test fini');
 
         $csv .= "\n";
 
         foreach ($users as $user) {
+            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $session->getTest(), 'session' => $session));
             $csv .= $this->addColumn($user->getUsername());
             $csv .= $this->addColumn($user->getLastName());
             $csv .= $this->addColumn($user->getFirstName());
             $csv .= $this->addColumn($user->getEmail());
 
-            $origin = ($user->getOriginStudent()) ? $user->getOriginStudent()->getName() : '';
             $institution = ($user->getInstitution()) ? $user->getInstitution()->getName() : '';
             $course = ($user->getCourse()) ? $user->getCourse()->getName() : '';
             $year = ($user->getYear()) ? $user->getYear()->getName() : '';
-            $scoreGlobal = $this->scoreManager->getGlobalScore($session, $user);
-            $scoreCO = $this->scoreManager->getSkillScore($session, $user, 'CO');
-            $scoreCE = $this->scoreManager->getSkillScore($session, $user, 'CE');
-            $scoreEEC = $this->scoreManager->getSkillScore($session, $user, 'EEC');
-            $traces = $this->entityManager->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $session->getTest(), 'session' => $session));
+            $registeredScore = $em->getRepository('InnovaSelfBundle:UserResult')->findOneBy(array('user' => $user, 'session' => $session));
+
+            $isTestFinished = $registeredScore ? true : $this->isTestFinished($traces);
+            $saveScore = ($isTestFinished && !$registeredScore) ? true : false;
+
+            $scoreGlobal = $registeredScore
+                ? $registeredScore->getGeneralScore()
+                : $this->scoreManager->getGlobalScore($session, $user, $saveScore);
+
+            $scoreCO = $registeredScore
+                ? $registeredScore->getCoScore()
+                : $this->scoreManager->getSkillScore($session, $user, 'CO', $saveScore);
+
+            $scoreCE = $registeredScore
+                ? $registeredScore->getCeScore()
+                : $this->scoreManager->getSkillScore($session, $user, 'CE', $saveScore);
+
+            $scoreEEC = $registeredScore
+                ? $registeredScore->getEecScore()
+                : $this->scoreManager->getSkillScore($session, $user, 'EEC', $saveScore);
+
             $lastTrace = end($traces)->getDate();
             $firstTrace = reset($traces)->getDate();
 
-            $csv .= $this->addColumn($origin);
             $csv .= $this->addColumn($institution);
             $csv .= $this->addColumn($course);
             $csv .= $this->addColumn($year);
@@ -720,6 +574,7 @@ class ExportManager
             $csv .= $this->addColumn($scoreCO);
             $csv .= $this->addColumn($scoreCE);
             $csv .= $this->addColumn($scoreEEC);
+            $csv .= $this->addColumn($isTestFinished ? 'oui' : 'non');
 
             $csv .= "\n";
         }
@@ -727,6 +582,27 @@ class ExportManager
         $csv .= "\n";
 
         return $csv;
+    }
+
+    private function isTestFinished($traces)
+    {
+        $lastTrace = end($traces);
+        $lastComponent = $lastTrace->getComponent();
+        $test = $lastTrace->getTest();
+
+        if ($test->getPhased() && $lastComponent->getComponentType()->getName() == 'minitest') {
+            return false;
+        }
+
+        $expectedTracesCount = ($test->getPhased())
+            ? count($lastTrace->getComponent()->getOrderQuestionnaireComponents()) + count($lastTrace->getComponent()->getOrderQuestionnaireComponents())
+            : count($test->getOrderQuestionnaireTests());
+
+        if (count($traces) < $expectedTracesCount) {
+            return false;
+        }
+
+        return true;
     }
 
     private function diff(\DateTime $startTime, \DateTime $endTime)

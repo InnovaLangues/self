@@ -20,7 +20,7 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        #assets_version: v4.0.0
+        assets_version: v20160317A
     default_locale:  "%locale%"
     trusted_proxies: [192.0.0.1]
     session:
@@ -121,10 +121,6 @@ stfalcon_tinymce:
             relative_urls: false
             font_formats: "kaiti=kaiti"
 
-
-
-        
-
 knp_snappy:
     pdf:
         enabled:    true
@@ -135,46 +131,6 @@ bazinga_js_translation:
     locale_fallback:      fr
     default_domain:       messages
 
-fos_http_cache:
-    cache_manager:
-        enabled: %cache_manager_enabled%
-    proxy_client:
-        varnish:
-            servers: %varnish_servers%
-            base_url: %base_url%
-    user_context:
-        enabled: false
-        role_provider: true
-    flash_message:
-        enabled: true
-        name: flashes
-    cache_control :
-        defaults:
-            overwrite: false
-        rules:
-            -
-                match:
-                    path: ^/login|logout|admin|register
-                headers:
-                    overwrite: true
-                    cache_control:
-                        public: false
-                        max_age: 0
-                        s_maxage: 0
-            -
-                match:
-                    path: ^/
-                headers:
-                    cache_control:
-                        public: true
-                        max_age: 120
-                        s_maxage: 120
-
-jms_i18n_routing:
-    default_locale: fr
-    locales: [fr, en, it]
-    strategy: prefix_except_default
-
 lexik_maintenance:
     #authorized_ips: ['127.0.0.1']                       # option facultative, Adresses autorisées
     driver:
@@ -182,24 +138,32 @@ lexik_maintenance:
         class: '\Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver'      # Classe pour le FileDriver
         options: {file_path: %kernel.root_dir%/lock}
 
-liip_imagine:
-    resolvers:
-        default:
-            web_path:
-                web_root: %kernel.root_dir%/../web/
-                cache_prefix: /upload/cache/
-    driver:               gd
-    cache:                default
-    data_loader:          default
-    default_image:        null
-    controller:
-        filter_action:         liip_imagine.controller:filterAction
-        filter_runtime_action: liip_imagine.controller:filterRuntimeAction
+liuggio_stats_d_client:
+    monolog:
+        enable: true
+        prefix: 'my-app.log'
+        formatter:
+#       class:               # if you want to change the formatter class.
+#       format:              # if you want to change the format.
+            context_logging: true # if you want additional packets for context.
+            extra_logging: true   # if you want additional packets for extra.
+            words: 2              # the number of the word in the stats key.
+        level: 'warning'
 
-    filter_sets:
-        app4:
-            filters:
-                thumbnail: { size: [120, 100], mode: outbound }
-        app3:
-            filters:
-                thumbnail: { size: [174, 100], mode: outbound }
+    connection:
+        #    class: Liuggio\StatsdClient\Sender\SocketSender
+        #    debug_class: Liuggio\StatsdClient\Sender\SysLogSender # or EchoSender
+        #    debug: %kernel.debug%   # use false if you want to disable debugging and shot packet over Socket
+        host: %statsd_host%
+        port: %statsd_port%
+        #    protocol: udp
+        #    reduce_packet: true
+        fail_silently: false
+    enable_collector: %statsd_enabled%
+    collectors:
+        liuggio_stats_d_client.collector.dbal: '%statsd_prefix%.query'
+        liuggio_stats_d_client.collector.visitor: '%statsd_prefix%.visitor'
+        liuggio_stats_d_client.collector.memory: '%statsd_prefix%.memory'
+        liuggio_stats_d_client.collector.user: '%statsd_prefix%.user'
+        liuggio_stats_d_client.collector.exception: '%statsd_prefix%.exception'
+        liuggio_stats_d_client.collector.time: '%statsd_prefix%.time'

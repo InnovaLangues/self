@@ -3,20 +3,25 @@
 {% if checkRight("right.deletetasktest", component.test) %}
     {% set canDelete = true %}
 {% endif %}
-{% if checkRight("right.edittasktest", component.test) %}
+{% if checkRight("right.edittasktest", component.test) or checkRight("right.editorreadonlytest", component.test) %}
     {% set canEdit = true %}
 {% endif %}
 
 {% for oqc in component.orderQuestionnaireComponents %}
-    <li data-questionnaire-id="{{ oqc.questionnaire.id }}" id="order{{ oqc.id }}" class="list-group-item questionnaire" data-order-id="{{ oqc.id }}">{{ oqc.questionnaire.theme |truncate(25) }}
+    <li data-questionnaire-id="{{ oqc.questionnaire.id }}" id="order{{ oqc.id }}" class="list-group-item questionnaire {{ oqc.ignoreInScoring ? "text-muted" : "" }}" data-order-id="{{ oqc.id }}"> {{ oqc.questionnaire.theme |truncate(25) }} 
     	<span class="pull-right">
             {% if canEdit %}
-        		<a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': oqc.questionnaire.id, 'testId': component.test.id }) }}" toggle="tooltip" data-original-title="{{ "generic.edit" | trans }}">
+        		<a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_show', { 'questionnaireId': oqc.questionnaire.id, 'testId': component.test.id }) }}" data-toggle="tooltip" data-original-title="{{ "generic.edit" | trans }}">
         			<span class="glyphicon glyphicon-pencil"></span>
         		</a>
             {% endif %}
+            {% if canEdit %}
+                <a class="btn btn-default btn-xs" href="{{ path('editor_questionnaire_ignore_in_scoring', { 'orderQuestionnaireComponentId': oqc.id }) }}" data-toggle="tooltip" data-original-title="{{ "phased.ignore" | trans }}" >
+                    <span class="glyphicon glyphicon-{{ oqc.ignoreInScoring ? "ok-circle" : "ban-circle" }}"></span>
+                </a>
+            {% endif %}
             {% if canDelete %}
-        		<span toggle="tooltip" data-original-title="Supprimer la tâche" class="btn btn-default btn-xs remove-questionnaire" data-order-questionnaire-id="{{ oqc.id }}">
+        		<span data-toggle="tooltip" data-original-title="Supprimer la tâche" class="btn btn-default btn-xs remove-questionnaire" data-order-questionnaire-id="{{ oqc.id }}">
         			<span class="glyphicon glyphicon-trash"></span>
         		</span>
             {% endif %}

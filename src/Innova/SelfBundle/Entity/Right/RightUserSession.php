@@ -5,14 +5,15 @@ namespace Innova\SelfBundle\Entity\Right;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * RightUserTest
+ * RightUserTest.
+ *
  * @ORM\Table(name="right_user_session")
  * @ORM\Entity
  */
 class RightUserSession
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -21,69 +22,70 @@ class RightUserSession
     protected $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User")
-    * @ORM\JoinColumn(onDelete="CASCADE")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
     protected $user;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Session")
-    * @ORM\JoinColumn(onDelete="CASCADE")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Session")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
     protected $target;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canCreate", type="boolean")
-     *
      */
     private $canCreate = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canEdit", type="boolean")
-     *
      */
     private $canEdit = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canDelete", type="boolean")
-     *
      */
     private $canDelete = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canList", type="boolean")
-     *
      */
     private $canList = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canExportIndividual", type="boolean")
-     *
      */
     private $canExportIndividual = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="canExportCollective", type="boolean")
-     *
      */
     private $canExportCollective = 0;
 
     /**
-     * Get id
+     * @var bool
      *
-     * @return integer
+     * @ORM\Column(name="canDeleteTrace", type="boolean")
+     */
+    private $canDeleteTrace = 0;
+
+    /**
+     * Get id.
+     *
+     * @return int
      */
     public function getId()
     {
@@ -91,9 +93,10 @@ class RightUserSession
     }
 
     /**
-     * Set canCreate
+     * Set canCreate.
      *
-     * @param  boolean          $canCreate
+     * @param bool $canCreate
+     *
      * @return RightUserSession
      */
     public function setCanCreate($canCreate)
@@ -104,9 +107,9 @@ class RightUserSession
     }
 
     /**
-     * Get canCreate
+     * Get canCreate.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanCreate()
     {
@@ -114,9 +117,10 @@ class RightUserSession
     }
 
     /**
-     * Set canEdit
+     * Set canEdit.
      *
-     * @param  boolean          $canEdit
+     * @param bool $canEdit
+     *
      * @return RightUserSession
      */
     public function setCanEdit($canEdit)
@@ -127,9 +131,9 @@ class RightUserSession
     }
 
     /**
-     * Get canEdit
+     * Get canEdit.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanEdit()
     {
@@ -137,9 +141,10 @@ class RightUserSession
     }
 
     /**
-     * Set canDelete
+     * Set canDelete.
      *
-     * @param  boolean          $canDelete
+     * @param bool $canDelete
+     *
      * @return RightUserSession
      */
     public function setCanDelete($canDelete)
@@ -150,9 +155,9 @@ class RightUserSession
     }
 
     /**
-     * Get canDelete
+     * Get canDelete.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanDelete()
     {
@@ -160,9 +165,10 @@ class RightUserSession
     }
 
     /**
-     * Set canList
+     * Set canList.
      *
-     * @param  boolean          $canList
+     * @param bool $canList
+     *
      * @return RightUserSession
      */
     public function setCanList($canList)
@@ -173,9 +179,9 @@ class RightUserSession
     }
 
     /**
-     * Get canList
+     * Get canList.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanList()
     {
@@ -183,9 +189,10 @@ class RightUserSession
     }
 
     /**
-     * Set canExportIndividual
+     * Set canExportIndividual.
      *
-     * @param  boolean          $canExportIndividual
+     * @param bool $canExportIndividual
+     *
      * @return RightUserSession
      */
     public function setCanExportIndividual($canExportIndividual)
@@ -196,9 +203,9 @@ class RightUserSession
     }
 
     /**
-     * Get canExportIndividual
+     * Get canExportIndividual.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanExportIndividual()
     {
@@ -206,9 +213,10 @@ class RightUserSession
     }
 
     /**
-     * Set canExportCollective
+     * Set canExportCollective.
      *
-     * @param  boolean          $canExportCollective
+     * @param bool $canExportCollective
+     *
      * @return RightUserSession
      */
     public function setCanExportCollective($canExportCollective)
@@ -219,9 +227,9 @@ class RightUserSession
     }
 
     /**
-     * Get canExportCollective
+     * Get canExportCollective.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanExportCollective()
     {
@@ -229,9 +237,10 @@ class RightUserSession
     }
 
     /**
-     * Set user
+     * Set user.
      *
-     * @param  \Innova\SelfBundle\Entity\User $user
+     * @param \Innova\SelfBundle\Entity\User $user
+     *
      * @return RightUserSession
      */
     public function setUser(\Innova\SelfBundle\Entity\User $user = null)
@@ -242,7 +251,7 @@ class RightUserSession
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return \Innova\SelfBundle\Entity\User
      */
@@ -252,9 +261,10 @@ class RightUserSession
     }
 
     /**
-     * Set session
+     * Set session.
      *
-     * @param  \Innova\SelfBundle\Entity\Session $session
+     * @param \Innova\SelfBundle\Entity\Session $session
+     *
      * @return RightUserSession
      */
     public function setSession(\Innova\SelfBundle\Entity\Session $session = null)
@@ -265,7 +275,7 @@ class RightUserSession
     }
 
     /**
-     * Get session
+     * Get session.
      *
      * @return \Innova\SelfBundle\Entity\Session
      */
@@ -275,9 +285,10 @@ class RightUserSession
     }
 
     /**
-     * Set target
+     * Set target.
      *
-     * @param  \Innova\SelfBundle\Entity\Session $target
+     * @param \Innova\SelfBundle\Entity\Session $target
+     *
      * @return RightUserSession
      */
     public function setTarget(\Innova\SelfBundle\Entity\Session $target = null)
@@ -288,7 +299,7 @@ class RightUserSession
     }
 
     /**
-     * Get target
+     * Get target.
      *
      * @return \Innova\SelfBundle\Entity\Session
      */
@@ -298,9 +309,10 @@ class RightUserSession
     }
 
     /**
-     * Set canEditRights
+     * Set canEditRights.
      *
-     * @param  boolean          $canEditRights
+     * @param bool $canEditRights
+     *
      * @return RightUserSession
      */
     public function setCanEditRights($canEditRights)
@@ -311,12 +323,36 @@ class RightUserSession
     }
 
     /**
-     * Get canEditRights
+     * Get canEditRights.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCanEditRights()
     {
         return $this->canEditRights;
+    }
+
+    /**
+     * Set canDeleteTrace
+     *
+     * @param boolean $canDeleteTrace
+     *
+     * @return RightUserSession
+     */
+    public function setCanDeleteTrace($canDeleteTrace)
+    {
+        $this->canDeleteTrace = $canDeleteTrace;
+
+        return $this;
+    }
+
+    /**
+     * Get canDeleteTrace
+     *
+     * @return boolean
+     */
+    public function getCanDeleteTrace()
+    {
+        return $this->canDeleteTrace;
     }
 }

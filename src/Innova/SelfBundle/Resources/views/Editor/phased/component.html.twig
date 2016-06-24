@@ -3,10 +3,10 @@
         #{{ component.alternativeNumber+1 }}
         <div class="pull-right">
             {% if checkRight("right.addtasktest", test) %}
-                <a class="btn btn-default btn-xs" href="{{ path('editor_create_task_component', { 'componentId': component.id  }) }}"  toggle="tooltip" data-original-title="{{'editor.task.create' | trans }}">
+                <a class="btn btn-default btn-xs" href="{{ path('editor_create_task_component', { 'componentId': component.id  }) }}"  data-toggle="tooltip" data-original-title="{{'editor.task.create' | trans }}">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
-                <a class="btn btn-default btn-xs get-potentials" data-test-id="{{ test.id }}" data-component-id="{{ component.id }}" toggle="tooltip" data-original-title="{{'editor.task.add_existing' | trans }}">
+                <a class="btn btn-default btn-xs get-potentials" data-test-id="{{ test.id }}" data-component-id="{{ component.id }}" data-toggle="tooltip" data-original-title="{{'editor.task.add_existing' | trans }}">
                     <span class="glyphicon glyphicon-log-in"></span>
                 </a>
             {% endif %}
@@ -16,7 +16,7 @@
                 </a>
             {% endif %}
             {% if checkRight("right.reordertasktest", test) %}
-                <span id="save-order-{{ component.id }}" class="btn btn-default btn-xs save-order" data-component-id="{{ component.id }}" toggle="tooltip" data-original-title="{{'editor.task.save_order' | trans }}" disabled>
+                <span id="save-order-{{ component.id }}" class="btn btn-default btn-xs save-order" data-component-id="{{ component.id }}" data-toggle="tooltip" data-original-title="{{'editor.task.save_order' | trans }}" disabled>
                     <span class="glyphicon glyphicon-floppy-disk"></span>
                 </span>
             {% endif %}

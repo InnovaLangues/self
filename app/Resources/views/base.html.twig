@@ -2,50 +2,62 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}SELF{% endblock %}</title>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-        <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
-        <link href="{{ asset('bundles/innovaself/css/main.css') }}" rel="stylesheet"/>
+        <title>{% block title %}SELF - Système d'Evaluation en Langues à visée Formative{% endblock %}</title>
+
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-touch-icon-57x57.png') }}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('apple-touch-icon-60x60.png') }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('apple-touch-icon-72x72.png') }}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('apple-touch-icon-76x76.png') }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('apple-touch-icon-114x114.png') }}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('apple-touch-icon-120x120.png') }}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('apple-touch-icon-144x144.png') }}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('apple-touch-icon-152x152.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon-180x180.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-32x32.png') }}" sizes="32x32">
+        <link rel="icon" type="image/png" href="{{ asset('android-chrome-192x192.png') }}" sizes="192x192">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}" sizes="96x96">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-16x16.png') }}" sizes="16x16">
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
+        <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#5bbad5">
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+        <meta name="apple-mobile-web-app-title" content="SELF - Innovalangues">
+        <meta name="application-name" content="SELF - Innovalangues">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="msapplication-TileImage" content="{{ asset('mstile-144x144.png') }}">
+        <meta name="theme-color" content="#ffffff">
+
+        {% stylesheets filter='cssrewrite, ?yui_css' output='css/compiled/style.css'
+            'bundles/innovaself/css/jquery-ui.css'
+            'bundles/innovaself/css/main.css'
+            'bundles/innovaself/css/registration.css'
+            'bundles/innovaself/css/bootstrap.min.css'
+         %}
+         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block navbar %}
-            {% include 'InnovaSelfBundle::Main/navbarBlock.html.twig' %}
+            {% include 'InnovaSelfBundle::Main/nav.html.twig' with {page_title: block('page_title')} %}
         {% endblock %}
 
         <div id="body" class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="flash-messages">
-                    </div>
+                    <div class="flash-messages"></div>
                     {% block body %}{% endblock %}
                 </div>
             </div>
         </div>
 
-        <div id="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        SELF - Système d’Evaluation en Langues à visée Formative.
-                        {#
-                        <span class="pull-right">
-                            <span class="btn btn-default btn-xs change-locale">
-                                <span class="glyphicon glyphicon-globe"> </span> {{ 'menu.language_change' | trans }}
-                            </span>
-                        </span>
-                        #}
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        {% include 'InnovaSelfBundle::Main/footer.html.twig' %}
         {% include 'InnovaSelfBundle::Main/helpModale.html.twig' %}
-        {# {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %} #}
+        {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
         
         {% block javascripts %}
             {% javascripts filter='yui_js' output='js/compiled/javascripts.js'
+                'bundles/fosjsrouting/js/router.js'
+                'js/fos_js_routes.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-1.11.2.min.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-ui-1.11.2.min.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/bootstrap-3.1.1.min.js'
@@ -53,24 +65,23 @@
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery.cookie.min.js'
                 '@InnovaSelfBundle/Resources/public/js/main.js'
                 '@InnovaSelfBundle/Resources/public/js/flashMessages.js'
+                'bundles/bazingajstranslation/js/translator.min.js'
+                'js/translations/config.js'
+                'js/translations/*/fr.js'
+                'js/translations/*/en.js'
+                'js/translations/*/it.js'
+                'js/translations/*/cn.js'
+                '@InnovaSelfBundle/Resources/public/js/register.js'
                 %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
 
-            {% javascripts filter='yui_js' output='js/compiled/translations.js'
-                'bundles/bazingajstranslation/js/translator.min.js'
-                'js/translations/config.js'
-                'js/translations/*/*.js'
-            %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            {% if app.debug %}
+                <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {% endif %}
 
-            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             <script type="text/javascript" src="{{ faye_server }}/client.js"></script>
-
             {% include 'InnovaSelfBundle::Main/nodeMessage.html.twig' %}
-
         {% endblock %}
     </body>
 </html>

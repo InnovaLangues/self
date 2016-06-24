@@ -3,58 +3,71 @@
 namespace Innova\SelfBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Entity\Session;
 
 /**
  * User controller.
  *
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
+ * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  */
 class UserController extends Controller
 {
     /**
-     * Lists all users.
+     * Lists users.
      *
-     * @Route("/admin/users/", name="admin_user")
+     * @Route("/admin/users/{subset}", name="admin_user")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($subset)
     {
-        $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $this->get('innova_voter')->isAllowed('right.listuser');
 
-        $users = ($this->get('self.right.manager')->checkRight('right.listuser', $currentUser))
-            ? $userRepo->findAllLight()
-            : $userRepo->findAuthorized($currentUser);
+        $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
+        switch ($subset) {
+            case 'all':
+                $users = $userRepo->findAllLight();
+                break;
+            case 'connected':
+                $users = $this->get('self.user.manager')->getConnected();
+                break;
+            case 'last':
+                $users = $userRepo->findBy(array(), array('id' => 'DESC'), $limit = 1000, $offset = null);
+                break;
+        }
 
         return array(
             'entities' => $users,
-            'subset' => 'user.all',
+            'subset' => 'user.'.$subset,
         );
     }
 
     /**
-     * Lists connected users.
+     * Lists users.
      *
-     * @Route("/admin/users/connected", name="admin_users_connected")
-     * @Method("GET")
+     * @Route("/admin/users/search/", name="admin_user_search")
+     * @Method("POST")
      * @Template("InnovaSelfBundle:User:index.html.twig")
      */
-    public function connectedAction()
+    public function searchAction()
     {
         $this->get('innova_voter')->isAllowed('right.listuser');
 
-        $connectedUsers = $this->get('self.user.manager')->getConnected();
+        $search = $this->get('request')->request->get('search');
+        $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
+        $users = $userRepo->getBySomethingLike($search);
 
         return array(
-            'entities' => $connectedUsers,
-            'subset' => 'user.connected',
+            'entities' => $users,
+            'subset' => 'Recherche de '.$search,
         );
     }
 
@@ -72,65 +85,48 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
-        $tests = $em->getRepository('InnovaSelfBundle:Test')->findAll();
-        $testsWithTraces = array();
-
-        foreach ($tests as $test) {
-            $count = $em->getRepository('InnovaSelfBundle:Questionnaire')->countDoneYetByUserByTest($test->getId(), $user->getId());
-            $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getQuestionnairesDoneYetByUserByTest($test->getId(), $user->getId());
-            if ($count > 0) {
-                $testsWithTraces[] = array($test, $count, $questionnaires);
-            }
-        }
+        $sessionsWithTraces = $em->getRepository('InnovaSelfBundle:Session')->findWithTraces($user);
 
         return array(
-            'tests' => $testsWithTraces,
+            'sessions' => $sessionsWithTraces,
             'user' => $user,
         );
     }
 
     /**
-     * Delete trace for a given user and a given test.
+     * Delete trace for a given user and a given session.
      *
-     * @Route("/admin/user/{userId}/test/{testId}/delete-trace", name="delete-test-trace")
+     * @Route("/admin/user/{userId}/session/{sessionId}/delete-trace", name="delete-session-trace")
      * @Method("DELETE")
      */
-    public function deleteTestTraceAction($userId, $testId)
+    public function deleteSessionTraceAction(User $user, Session $session)
     {
         $this->get('innova_voter')->isAllowed('right.deletetraceuser');
 
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-
-        if ($this->get('self.trace.manager')->deleteTestTrace($user, $test)) {
-            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour le test '.$test->getName().' ont été supprimées');
+        if ($this->get('self.trace.manager')->deleteSessionTrace($user, $session)) {
+            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la session '.$session->getName().' ('.$session->getTest()->getName().') ont été supprimées');
         }
 
-        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
+        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
     }
 
     /**
-     * Delete trace for a given user and a given test.
+     * get traces for a given user and a given session.
      *
-     * @Route("/admin/user/{userId}/test/{testId}/questionnaire/{questionnaireId}/delete-trace", name="delete-task-trace")
-     * @Method("DELETE")
+     * @Route("/admin/user/{userId}/session/{sessionId}/traces", name="get-session-traces")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:User:traces_infos.html.twig")
      */
-    public function deleteTaskTraceAction($userId, $testId, $questionnaireId)
+    public function getSessionTracesAction(User $user, Session $session)
     {
-        $this->get('innova_voter')->isAllowed('right.deletetraceuser');
+        $traceRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Trace');
+        $traces = $traceRepo->findBy(array('user' => $user, 'session' => $session));
 
-        $em = $this->getDoctrine()->getManager();
-
-        $user = $em->getRepository('InnovaSelfBundle:User')->find($userId);
-        $test = $em->getRepository('InnovaSelfBundle:Test')->find($testId);
-        $questionnaire = $em->getRepository('InnovaSelfBundle:Questionnaire')->find($questionnaireId);
-
-        if ($this->get('self.trace.manager')->deleteTaskTrace($user, $test, $questionnaire)) {
-            $this->get('session')->getFlashBag()->set('success', 'Les traces de cet utilisateur pour la tâche '.$questionnaire->getTheme().' ont été supprimées');
-        }
-
-        return $this->redirect($this->generateUrl('admin_user_show', array('id' => $userId)));
+        return array(
+            'traces' => $traces,
+            'user' => $user,
+            'session' => $session,
+        );
     }
 
     /**
@@ -145,7 +141,7 @@ class UserController extends Controller
 
         $this->get('self.user.manager')->deleteUser($user);
 
-        return $this->redirect($this->generateUrl('admin_user'));
+        return $this->redirect($this->generateUrl('admin_user', array('subset' => 'last')));
     }
 
     /**
@@ -240,5 +236,19 @@ class UserController extends Controller
         }
 
         return array('form' => $form->createView(), 'user' => $user);
+    }
+
+    /**
+     * @Route("/user/all/rights", name="get_users_for_rights", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function getUserForRights(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $request->query->get('q');
+        $users = $em->getRepository('InnovaSelfBundle:User')->getBySomethingLike($query);
+
+        return new JsonResponse(array('users' => $users));
     }
 }

@@ -4,18 +4,18 @@
     {% if mediaType == "texte" %}
        {{ media.description | raw }}
     {% elseif mediaType == "image" %}
-        <img src="{{ asset('upload/media/') ~ media.url }}" height="180px"/>
+        <img src="{{ asset('upload/media/'~ media.url) }}" height="180px"/>
         <br/>
-        <span class="btn btn-default btn-xs crop-open-modale" data-url="{{ asset('upload/media/') ~ media.url }}">crop</span>
+        <span class="btn btn-default btn-xs crop-open-modale" data-url="{{ asset('upload/media/'~ media.url) }}">crop</span>
     {% elseif mediaType == "video" %}
         <video id="video" controls class="vertical-middle" height="180px" preload="none">
-            <source src="{{ asset('upload/media/') ~ media.url }}" poster="{{ asset('bundles/innovaself/images/') ~ "video.png"}}" >
+            <source src="{{ asset('upload/media/'~ media.url) }}" poster="{{ asset('bundles/innovaself/images/video.png') }}" >
             Your browser does not support the video tag.
         </video>
         {{ macros.listeningLimit(questionnaire, media) }}
     {% elseif mediaType == "audio" %}
         <audio controls preload="none" class="vertical-middle">
-            <source src="{{ asset('upload/media/') ~ media.url }}" type="audio/mp3">
+            <source src="{{ asset('upload/media/'~ media.url)  }}" type="audio/mp3">
             Votre navigateur est trop ancien.
         </audio>
         {{ macros.listeningLimit(questionnaire, media) }}
@@ -56,13 +56,13 @@
 {% endmacro %}
 
 {% macro deleteAmorce(subquestion) %}
-    <button rel="tooltip" data-original-title="{{ 'editor.subquestion.remove_instruction' | trans }}" class="btn btn-default btn-xs delete-amorce vertical-middle" data-subquestion-id="{{ subquestion.id }}">
+    <button rel="tooltip" data-toggle="tooltip" data-original-title="{{ 'editor.subquestion.remove_instruction' | trans }}" class="btn btn-default btn-xs delete-amorce vertical-middle" data-subquestion-id="{{ subquestion.id }}">
         <span class="glyphicon glyphicon-remove"></span>
     </button>
 {% endmacro %}
 
 {% macro deleteInstruction() %}
-    <button rel="tooltip" data-original-title="{{ 'editor.subquestion.remove_instruction' | trans }}" class="btn btn-default btn-xs delete-instruction vertical-middle">
+    <button rel="tooltip" data-toggle="tooltip" data-original-title="{{ 'editor.subquestion.remove_instruction' | trans }}" class="btn btn-default btn-xs delete-instruction vertical-middle">
         <span class="glyphicon glyphicon-remove"></span>
     </button>
 {% endmacro %}

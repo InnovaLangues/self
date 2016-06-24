@@ -32,6 +32,7 @@ institution:
     courses: Filières de l'institution
     edit: Editer l'institution
     manage: Gérer les institutions 
+    file: Image associée
 
 year:
     name: Nom de l'année
@@ -65,6 +66,7 @@ user:
     plural: Utilisateurs
     firstname: Prénom
     name: Nom
+    login: Nom d'utilisateur
     email: Adresse mail
     admin_users: Administrateurs
     session_managers: Gestionnaires de sessions
@@ -72,6 +74,7 @@ user:
     preferedLanguage: Langue
     all: Tous
     connected: Connectés
+    last: 1000 derniers inscrits
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires
@@ -148,7 +151,7 @@ editor:
         phased: Test à étapes
         difficulty: Afficher le formulaire de perception de difficulté
         exportpdf: Export livret PDF
-        exportcsv: Export CSV
+        exportcsv: Export liste de tâches
         exportscsv: Export Stats (tia+, etc.)
     task:
         task: Tâche
@@ -313,8 +316,8 @@ editor:
         manage: Sessions
         list_test: Liste des session pour le test
         edit: Editer la session
-        results: Résultats pour la session
-        results_user: Résultats pour l'utilisateur
+        results: Résultats invididuels
+        results_user: Résultats
         export: Exporter les résultats
         export_date: Exporter par dates
         available: Sessions disponibles
@@ -326,6 +329,8 @@ editor:
         connexion: Connexion à une session
         helptext: Cliquez sur le bouton ci-dessous pour vous connecter à une session de test. Il vous sera demandé d'entrer le code de session.
         availableForCode: "1 session répond à ce code:|Plusieurs sessions répondent à ce code:"
+        invalidate_results: Invalider les résultats
+        delete_results: Supprimer les traces
 
 
 player:
@@ -359,6 +364,11 @@ Italian: Italien
 Chinese: Mandarin
 Spanish: Espagnol
 Japanese: Japonais
+FLE: FLE
+
+CO: Compréhension Orale
+CE: Compréhension Ecrite
+EEC: Expression Ecrite Courte 
 
 author_right:
     not_needed: Pas besoin
@@ -489,6 +499,18 @@ variety:
         secondLang: Mandarin - Langue seconde
 
 phased:
+    removeThreshold: Supprimer
+    thresholdByStep: Seuils, par étape de sortie
+    thresholdBySkill: Seuils, par compétence
+    addThreshold: Ajouter un seuil
+    addLevels: Ajouter des niveaux à ignorer
+    minitestEndingConditions: Conditions de sortie du minitest
+    step2conditions: vers l'étape 2
+    step3conditions: vers l'étape 3
+    globalScore: Score agrégé
+    skillScore: Score par compétence
+    ignore: Ignorer/considérer pour le scoring 
+    considerMinitest: Considérer les réponses du minitest
     checklevel: Vérifier niveaux manquants
     minitest: Minitest
     step1: Etape 1
@@ -589,6 +611,8 @@ right:
     exportCSV: Export CSV classique et Tia+
     generalParameters: Modifier les paramètres généraux
     message: Envoyer des messages
+    deletetracesession: Supprimer les traces des utilisateurs d'une session
+    editorreadonlytest: Voir les tâches sans pouvoir les éditer (lecture seule)
 
 rightgroup:
     tasks: Permissions sur les tâches
@@ -614,3 +638,4 @@ canEditPassword: Peut éditer le mot de passe
 canImportCsv: Peut importer via CSV
 canExportIndividual: Peut exporter individuellement
 canExportCollective: Peut exporter collectivement
+canEditorReadOnlyTasks: Voir les tâches sans pouvoir les éditer (lecture seule)
