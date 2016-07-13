@@ -211,10 +211,10 @@ class ScoreManager
                 $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
                 $skill = $questionnaire->getSkill()->getName();
 
-                if ($subquestion->getLevel()) {
-                    $level = $subquestion->getLevel()->getName();
-                } elseif ($questionnaire->getLevel()) {
+                if ($questionnaire->getLevel()) {
                     $level = $questionnaire->getLevel()->getName();
+                } elseif ($subquestion->getLevel()) {
+                    $level = $subquestion->getLevel()->getName();
                 }
 
                 if ($level && (!in_array($level, $levelsToIgnore) || !$ignore)) {
