@@ -18,7 +18,7 @@ menu:
     groups: Groupes
     generalparams: Paramètres
     message: Message
-    institutions: Institutions 
+    institutions: Institutions
 
 message:
     content: Contenu du message
@@ -31,7 +31,7 @@ institution:
     addcourse: Ajouter une filère
     courses: Filières de l'institution
     edit: Editer l'institution
-    manage: Gérer les institutions 
+    manage: Gérer les institutions
     file: Image associée
 
 year:
@@ -368,7 +368,7 @@ FLE: FLE
 
 CO: Compréhension Orale
 CE: Compréhension Ecrite
-EEC: Expression Ecrite Courte 
+EEC: Expression Ecrite Courte
 
 author_right:
     not_needed: Pas besoin
@@ -509,7 +509,7 @@ phased:
     step3conditions: vers l'étape 3
     globalScore: Score agrégé
     skillScore: Score par compétence
-    ignore: Ignorer/considérer pour le scoring 
+    ignore: Ignorer/considérer pour le scoring
     considerMinitest: Considérer les réponses du minitest
     checklevel: Vérifier niveaux manquants
     minitest: Minitest
@@ -551,7 +551,7 @@ channel:
     chat_sms_written: Chat/SMS par téléphoe
     tools: Outil 2.0
     postit: Post-it / message bref
-    brochure: Brochure / dépliant 
+    brochure: Brochure / dépliant
     ticket: Tickets (train, théâtre, reçu)
     notice: Panneau / affiche
 
@@ -579,7 +579,7 @@ right:
     deletetest: Supprimer un test
     edittest: Editer un test
     listtest: Lister les tests
-    duplicatetest: Dupliquer un test 
+    duplicatetest: Dupliquer un test
     managesessiontest: Gérer les session
     managetaskstest: Gérer les tâches
     addtasktest: Ajouter une tâche
@@ -639,3 +639,9 @@ canImportCsv: Peut importer via CSV
 canExportIndividual: Peut exporter individuellement
 canExportCollective: Peut exporter collectivement
 canEditorReadOnlyTasks: Voir les tâches sans pouvoir les éditer (lecture seule)
+
+
+input:
+    title: Saisie
+    help_text: Une aide est disponible concernant la saisie dans cette langue (voir la partie "<a data-toggle="modal" href="#helpModal">aide</a>" dans le menu)
+    japanese: Pour le japonais, merci de vous reporter à ces documents :

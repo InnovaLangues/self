@@ -7,12 +7,17 @@
                 <h4 class="modal-title">{{ 'menu.help' | trans }}</h4>
             </div>
             <div class="modal-body">
-            <!-- Help file -->
+                <h1>{{ 'input.title' | trans }}</h1>
+                {{ 'input.japanese' | trans }}
+                <a target="_blank" href="{{ asset('docs/Fiche_explications.pdf') }}">Windows</a> -
+                <a target="_blank" href="{{ asset('docs/Fiche_explications_MAC.pdf') }}">macOS</a>
+
+                <h1>Vidéo</h1>
                 {% include 'InnovaSelfBundle::Main/help.html.twig' %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'generic.ok' | trans }}</button>
           </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
