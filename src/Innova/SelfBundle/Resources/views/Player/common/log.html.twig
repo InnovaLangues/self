@@ -11,8 +11,16 @@
 					<p>{{ 'editor.session.availableForCode'|transchoice(sessions|length) }}</p>
 					<ul class="list-group">
 					{% for session in sessions %}
+						{% set language =  session.test.language.name %}
+						{% set needHelpLanguages = ["Japanese"] %}
+
 						<li class="list-group-item">
 							<a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id } )}}">{{ session.test.name }} - {{ session.name }}</a>
+							{% if language in needHelpLanguages %}
+							<div class="alert alert-danger" role="alert">
+								{{ "input.help_text" | trans | raw }}
+							</div>
+							{% endif %}
 						</li>
 					{% endfor %}
 					</ul>
@@ -39,4 +47,3 @@
     </div>
 </div>
 {% endblock %}
-
