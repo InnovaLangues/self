@@ -37,6 +37,8 @@ class PlayerController extends Controller
 
         // cas où il n'y a plus de tâche candidate. L'utilisateur est redirigé vers la page de fin de test.
         if (!$orderQuestionnaire = $this->get('self.player.manager')->pickQuestionnaire($test, $session)) {
+            $this->get('self.mediaclick.manager')->deleteMediaClick($test, $session);
+
             return $this->redirect($this->generateUrl('test_end', array('testId' => $test->getId(), 'sessionId' => $session->getId())));
         }
 
