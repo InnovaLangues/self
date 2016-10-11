@@ -54,7 +54,7 @@
                             Sessions <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                           
+
                             <li>
                                 <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">
                                     Sessions actives
@@ -81,7 +81,7 @@
                 {% else %}
                     {% set canPlayWithTasks = false %}
                 {% endif %}
-                
+
                 {% if canPlayWithTests == true or canPlayWithTasks == true %}
                     {% set languages = get_languages() %}
                     <li class="dropdown">
@@ -98,7 +98,7 @@
                                     <li><a href="{{path('editor_tests_my_favorites')}}">Tests favoris</a></li>
                                     <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
                                     <li class="divider"></li>
-                                    
+
                                     {% for language in languages %}
                                         <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{language.name | trans }}</a></li>
                                     {% endfor %}
@@ -149,7 +149,7 @@
                 {% if page_title is not empty %}
                     {{ page_title }}
                 {% endif %}
-            </span>                 
+            </span>
         </ul>
 
         {% if logged %}
@@ -160,28 +160,30 @@
                 </a>
             </li>
 
-            {% if checkRight("right.message") %}
-                <li>
-                    <a href="{{ path('send_message') }}">
-                        <span class="glyphicon glyphicon-envelope"></span> {{ 'menu.message' | trans }}
-                    </a>
-                </li>
-            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {% if checkRight("right.message") %}
+                    <li>
+                        <a href="{{ path('send_message') }}">
+                            <span class="glyphicon glyphicon-envelope"></span> {{ 'menu.message' | trans }}
+                        </a>
+                    </li>
+                {% endif %}
 
-            {% if checkRight("right.generalParameters") %}
-                <li>
-                    <a href="{{ path('parameters') }}">
-                        <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
-                    </a>
-                </li>
-            {% endif %}
+                {% if checkRight("right.generalParameters") %}
+                    <li>
+                        <a href="{{ path('parameters') }}">
+                            <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
+                        </a>
+                    </li>
+                {% endif %}
 
-            {% if checkRight("right.institution") %}
-                <li>
-                    <a href="{{ path('institutions') }}">
-                        <span class="glyphicon glyphicon-leaf"></span> {{ 'menu.institutions' | trans }}
-                    </a>
-                </li>
+                {% if checkRight("right.institution") %}
+                    <li>
+                        <a href="{{ path('institutions') }}">
+                            <span class="glyphicon glyphicon-leaf"></span> {{ 'menu.institutions' | trans }}
+                        </a>
+                    </li>
+                {% endif %}
             {% endif %}
 
              <li>
