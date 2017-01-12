@@ -62,12 +62,9 @@ class UserManager
         return;
     }
 
-    /**
-     * Handles session form.
-     */
     public function handleForm(User $user, Request $request)
     {
-        $form = $this->formFactory->createBuilder(new UserType(), $user)->getForm();
+        $form = $this->formFactory->createBuilder(new UserType($this->entityManager), $user)->getForm();
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
