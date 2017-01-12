@@ -101,6 +101,22 @@ function removeDiacritics (str) {
     });
 }
 
+function populateCourse(institution, selectedCourse){
+    var courses = $('#fos_user_registration_form_course, #user_type_course');
+    courses.html('<option value="">Choisissez une option</option>');
+    $.ajax({
+        type: 'POST',
+        url: Routing.generate('findCoursesByInstitution',{'institutionId': institution}),
+        success: function(data) {
+            for (var i=0, total = data.length; i < total; i++) {
+                courses.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+            }
+            courses.attr("disabled", false);
+            $("#user_type_course option[value='"+selectedCourse+"']").prop('selected', true);
+        }
+    });
+}
+
 $( "body" ).on( "change", '#fos_user_registration_form_firstName, #fos_user_registration_form_lastName', function() {
    var fn = $("#fos_user_registration_form_firstName").val();
    var ln = $("#fos_user_registration_form_lastName").val();
@@ -132,18 +148,12 @@ $(document).ready(function() {
         });
     });
 
-    $("#fos_user_registration_form_institution").change(function(){
-        var courses = $('#fos_user_registration_form_course');
-        courses.html('<option value="">Choisissez une option</option>');
-        $.ajax({
-            type: 'POST',
-            url: Routing.generate('findCoursesByInstitution',{'institutionId': $(this).val()}),
-            success: function(data) {
-                for (var i=0, total = data.length; i < total; i++) {
-                    courses.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
-                }
-                courses.attr("disabled", false);
-            }
-        });
+    $("#fos_user_registration_form_institution, #user_type_institution").change(function(){
+        populateCourse($(this).val(), "");
     });
+
+    if ($("#user_type_institution").length > 0) {
+        var selectedCourse = $("#user_type_course").val();
+        populateCourse($("#user_type_institution").val(), selectedCourse);
+    }
 });
