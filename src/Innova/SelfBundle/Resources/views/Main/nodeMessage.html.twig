@@ -1,19 +1,5 @@
-{% if app.user is not null %}
+{% if app.user is not null and isMaintenanceEnabled()  %}
 <script>
-	{% if isMaintenanceEnabled() %}
     showFlash("warning", "{{ getMaintenanceText() }}");
-    {% endif %}
-
-	if (typeof Faye !== 'undefined'){
-		client = new Faye.Client("{{ faye_server }}");
-		var channels = ["/all", "/user{{ app.user.id}}"];
-		{% if app.user is not null and is_granted('ROLE_ADMIN') %}
-		channels.push("/admin"),
-		{% endif %}
-		client.subscribe(channels, function (message) {
-		    showFlash("warning", message.text);
-		});
-	}
 </script>
 {% endif %}
-

@@ -9,16 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 class GeneralParametersManager
 {
     protected $entityManager;
-    protected $messageManager;
     protected $formFactory;
     protected $session;
 
-    public function __construct($entityManager, $messageManager, $formFactory, $session)
+    public function __construct($entityManager, $formFactory, $session)
     {
-        $this->entityManager    = $entityManager;
-        $this->messageManager   = $messageManager;
-        $this->formFactory      = $formFactory;
-        $this->session          = $session;
+        $this->entityManager = $entityManager;
+        $this->formFactory = $formFactory;
+        $this->session = $session;
     }
 
     public function initialize()
@@ -29,13 +27,13 @@ class GeneralParametersManager
             $params = new GeneralParameters();
             $params->setMaintenance(false);
             $params->setSelfRegistration(true);
-            $params->setMaintenanceText("");
+            $params->setMaintenanceText('');
             $em->persist($params);
             $em->flush();
         }
     }
 
-    public function setMaintenance($enabled, $message = "")
+    public function setMaintenance($enabled, $message = '')
     {
         $em = $this->entityManager;
         $params = $em->getRepository('InnovaSelfBundle:GeneralParameters')->get();
@@ -47,10 +45,6 @@ class GeneralParametersManager
 
         $em->persist($params);
         $em->flush();
-
-        if ($enabled) {
-            $this->messageManager->sendMessage($params->getMaintenanceText(), "all");
-        }
 
         return $enabled;
     }
@@ -68,7 +62,7 @@ class GeneralParametersManager
     }
 
     /**
-     * Handles parameters form
+     * Handles parameters form.
      */
     public function handleForm(GeneralParameters $parameters, Request $request)
     {
@@ -82,7 +76,7 @@ class GeneralParametersManager
                 $em->persist($parameters);
                 $em->flush();
 
-                $this->session->getFlashBag()->set('info', "Les paramètres ont bien été modifiés");
+                $this->session->getFlashBag()->set('info', 'Les paramètres ont bien été modifiés');
 
                 return;
             }
