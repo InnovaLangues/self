@@ -53,7 +53,7 @@
         {% include 'InnovaSelfBundle::Main/footer.html.twig' %}
         {% include 'InnovaSelfBundle::Main/helpModale.html.twig' %}
         {% include 'InnovaSelfBundle::Main/localeModale.html.twig' %}
-        
+
         {% block javascripts %}
             {% javascripts filter='yui_js' output='js/compiled/javascripts.js'
                 'bundles/fosjsrouting/js/router.js'
@@ -80,9 +80,7 @@
                 <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             {% endif %}
 
-            <script type="text/javascript" src="{{ faye_server }}/client.js"></script>
             {% include 'InnovaSelfBundle::Main/nodeMessage.html.twig' %}
         {% endblock %}
     </body>
 </html>
-<!-- {{ get_hostname() }} -->

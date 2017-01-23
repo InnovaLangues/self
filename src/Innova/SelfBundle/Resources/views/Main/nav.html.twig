@@ -157,14 +157,6 @@
             </li>
 
             {% if admin %}
-                {% if checkRight("right.message") %}
-                    <li>
-                        <a href="{{ path('send_message') }}">
-                            <span class="glyphicon glyphicon-envelope"></span> {{ 'menu.message' | trans }}
-                        </a>
-                    </li>
-                {% endif %}
-
                 {% if checkRight("right.generalParameters") %}
                     <li>
                         <a href="{{ path('parameters') }}">
