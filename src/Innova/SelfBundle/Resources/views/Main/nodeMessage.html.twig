@@ -1,5 +1,0 @@
-{% if app.user is not null and isMaintenanceEnabled()  %}
-<script>
-    showFlash("warning", "{{ getMaintenanceText() }}");
-</script>
-{% endif %}

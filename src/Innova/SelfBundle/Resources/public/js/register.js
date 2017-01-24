@@ -95,46 +95,58 @@ for (var i=0; i < defaultDiacriticsRemovalap.length; i++){
     }
 }
 
-function removeDiacritics (str) {
-    return str.replace(/[^\u0000-\u007E]/g, function(a){
-       return diacriticsMap[a] || a;
-    });
+var userForm = {
+     institutions: $("#fos_user_registration_form_institution, #user_type_institution"),
+     courses: $('#fos_user_registration_form_course, #user_type_course'),
+     registerForm: ".fos_user_registration_register",
+
+     cleanUserName: function(){
+         var fn = $("#fos_user_registration_form_firstName").val();
+         var ln = $("#fos_user_registration_form_lastName").val();
+         // suppression des accents et de tout ce qui n'est pas alphabétique ou point
+         var un = userForm.removeDiacritics(ln+"."+fn);
+         un = un.replace(/[^a-zA-Z\.]/g, "");
+         un = un.toLowerCase();
+         $("#fos_user_registration_form_username").val(un);
+     },
+
+     removeDiacritics: function(str){
+         return str.replace(/[^\u0000-\u007E]/g, function(a){
+            return diacriticsMap[a] || a;
+         });
+     },
+
+     populateCourse: function(institution, selectedCourse){
+         userForm.courses.html('<option value="">Choisissez une option</option>');
+         $.ajax({
+             type: 'POST',
+             url: Routing.generate('findCoursesByInstitution',{'institutionId': institution}),
+             success: function(data) {
+                 for (var i=0, total = data.length; i < total; i++) {
+                     userForm.courses.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                 }
+                 userForm.courses.attr("disabled", false);
+                 $("#user_type_course option[value='"+selectedCourse+"']").prop('selected', true);
+             }
+         });
+     }
 }
-
-function populateCourse(institution, selectedCourse){
-    var courses = $('#fos_user_registration_form_course, #user_type_course');
-    courses.html('<option value="">Choisissez une option</option>');
-    $.ajax({
-        type: 'POST',
-        url: Routing.generate('findCoursesByInstitution',{'institutionId': institution}),
-        success: function(data) {
-            for (var i=0, total = data.length; i < total; i++) {
-                courses.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
-            }
-            courses.attr("disabled", false);
-            $("#user_type_course option[value='"+selectedCourse+"']").prop('selected', true);
-        }
-    });
-}
-
-$( "body" ).on( "change", '#fos_user_registration_form_firstName, #fos_user_registration_form_lastName', function() {
-   var fn = $("#fos_user_registration_form_firstName").val();
-   var ln = $("#fos_user_registration_form_lastName").val();
-   // suppression des accents et de tout ce qui n'est pas alphabétique ou point
-   var un = removeDiacritics(ln+"."+fn);
-   un = un.replace(/[^a-zA-Z\.]/g, "");
-   un = un.toLowerCase();
-
-   $("#fos_user_registration_form_username").val(un);
-});
 
 $(document).ready(function() {
-    var registerForm = ".fos_user_registration_register";
+    if (userForm.institutions.val() != "") {
+        userForm.courses.attr("disabled", false);
+    }
+
+    if ($("#user_type_institution").length > 0) {
+        var selectedCourse = $("#user_type_course").val();
+        userForm.populateCourse($("#user_type_institution").val(), selectedCourse);
+    }
+
     /*Login form validation*/
-    $(registerForm + ' #_submit').click(function(event) {
-        $(registerForm + ' .help-block').remove();
-        $(registerForm + ' .has-error').removeClass('has-error');
-        $(registerForm).find('input, select').each(function(){
+    $(userForm.registerForm + ' #_submit').click(function(event) {
+        $(userForm.registerForm + ' .help-block').remove();
+        $(userForm.registerForm + ' .has-error').removeClass('has-error');
+        $(userForm.registerForm).find('input, select').each(function(){
             if($(this).prop('required') && !$(this).val()){
                 event.preventDefault();
                 var div = $(this).parent().parent();
@@ -148,12 +160,11 @@ $(document).ready(function() {
         });
     });
 
-    $("#fos_user_registration_form_institution, #user_type_institution").change(function(){
-        populateCourse($(this).val(), "");
+    userForm.institutions.change(function(){
+        userForm.populateCourse($(this).val(), "");
     });
 
-    if ($("#user_type_institution").length > 0) {
-        var selectedCourse = $("#user_type_course").val();
-        populateCourse($("#user_type_institution").val(), selectedCourse);
-    }
+    $( "body" ).on( "change", '#fos_user_registration_form_firstName, #fos_user_registration_form_lastName', function() {
+        userForm.cleanUserName();
+    });
 });
