@@ -44,8 +44,15 @@
         <div id="body" class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="flash-messages"></div>
+                    {% for label, flashes in app.session.flashbag.all %}
+                        {% for flash in flashes %}
+                            <div class="alert alert-{{ label }}">
+                                {{ flash }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                     {% block body %}{% endblock %}
+                    {% include 'InnovaSelfBundle::Main/maintenanceMessage.html.twig' %}
                 </div>
             </div>
         </div>
@@ -64,7 +71,6 @@
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery.restfulizer.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery.cookie.min.js'
                 '@InnovaSelfBundle/Resources/public/js/main.js'
-                '@InnovaSelfBundle/Resources/public/js/flashMessages.js'
                 'bundles/bazingajstranslation/js/translator.min.js'
                 'js/translations/config.js'
                 'js/translations/*/fr.js'
@@ -79,8 +85,6 @@
             {% if app.debug %}
                 <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             {% endif %}
-
-            {% include 'InnovaSelfBundle::Main/nodeMessage.html.twig' %}
         {% endblock %}
     </body>
 </html>
