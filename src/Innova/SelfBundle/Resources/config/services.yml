@@ -166,16 +166,6 @@ services:
         class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
         arguments: [@pdo, %pdo.db_options%]
 
-
-    faye_server.adapter:
-        class:     %faye_server.adapter.class%
-
-    faye_server.client:
-        class:     %faye_server.client.class%
-        arguments: 
-            - @faye_server.adapter
-            - %faye_server.endpoint%
-
     innova_locale_controller:
         class: Innova\SelfBundle\Controller\LocaleController
         arguments:

@@ -24,9 +24,7 @@ class AppKernel extends Kernel
             new Innova\SelfBundle\InnovaSelfBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
-            new Innova\GitterBundle\InnovaGitterBundle(),
             new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
-            new Liuggio\StatsDClientBundle\LiuggioStatsDClientBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

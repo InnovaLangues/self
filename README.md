@@ -1,4 +1,4 @@
-# Requirements 
+# Requirements
 php >= 5.4
 
 # Installation
@@ -28,7 +28,7 @@ php app/console assetic:dump --env=prod
 php app/console cache:clear --no-debug --env=prod
 ```
 
-### Create needed dirs and Set up rights 
+### Create needed dirs and Set up rights
 ``` bash
 sudo mkdir -p web/upload/ app/data/export app/data/exportPdf app/data/session app/data/importCsv app/data/user
 sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/data/
@@ -56,7 +56,7 @@ See online users
 php app/console self:sessions:check
 ```
 
-# Basic update 
+# Basic update
 ``` bash
 php app/console lexik:maintenance:lock -n
 git fetch
@@ -70,13 +70,6 @@ php app/console assetic:dump --env=prod
 php app/console cache:clear --env=prod --no-debug
 php app/console lexik:maintenance:unlock -n
 ```
-
-# Node maintenance notification.
-``` bash
-npm install faye-server
-node server.js
-```
-if you wanna install node server on another server, you have to edit parameters.yml (the 'faye_server.endpoint' entry)
 
 ### Quality code services
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/InnovaLangues/self/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/InnovaLangues/self/?branch=master)
