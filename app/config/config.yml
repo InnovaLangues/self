@@ -40,8 +40,6 @@ parameters:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
-    globals:
-        faye_server: %faye_server.endpoint%
 
 # Assetic Configuration
 assetic:
@@ -137,33 +135,3 @@ lexik_maintenance:
         # File driver
         class: '\Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver'      # Classe pour le FileDriver
         options: {file_path: %kernel.root_dir%/lock}
-
-liuggio_stats_d_client:
-    monolog:
-        enable: true
-        prefix: 'my-app.log'
-        formatter:
-#       class:               # if you want to change the formatter class.
-#       format:              # if you want to change the format.
-            context_logging: true # if you want additional packets for context.
-            extra_logging: true   # if you want additional packets for extra.
-            words: 2              # the number of the word in the stats key.
-        level: 'warning'
-
-    connection:
-        #    class: Liuggio\StatsdClient\Sender\SocketSender
-        #    debug_class: Liuggio\StatsdClient\Sender\SysLogSender # or EchoSender
-        #    debug: %kernel.debug%   # use false if you want to disable debugging and shot packet over Socket
-        host: %statsd_host%
-        port: %statsd_port%
-        #    protocol: udp
-        #    reduce_packet: true
-        fail_silently: false
-    enable_collector: %statsd_enabled%
-    collectors:
-        liuggio_stats_d_client.collector.dbal: '%statsd_prefix%.query'
-        liuggio_stats_d_client.collector.visitor: '%statsd_prefix%.visitor'
-        liuggio_stats_d_client.collector.memory: '%statsd_prefix%.memory'
-        liuggio_stats_d_client.collector.user: '%statsd_prefix%.user'
-        liuggio_stats_d_client.collector.exception: '%statsd_prefix%.exception'
-        liuggio_stats_d_client.collector.time: '%statsd_prefix%.time'

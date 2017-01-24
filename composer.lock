@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "af9875e3a7d943076d2af33c63d7ad9e",
-    "content-hash": "a9539ed5931edce61f59729742d8889e",
+    "content-hash": "ea85404cb43b71198759fb05e16231dc",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -85,7 +84,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/e0ef9e9833ca024d251e77e8d82a00ca92b0aa71",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/f69c21c5cea834def1664a73a1b7cd5fcdfbd23e",
                 "reference": "f69c21c5cea834def1664a73a1b7cd5fcdfbd23e",
                 "shasum": ""
             },
@@ -221,7 +220,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/68c0e2f52fce0b8379ddcee7d5e85f32387559c2",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/1fb4d85982a4c18bff80e05659b110312f416de7",
                 "reference": "1fb4d85982a4c18bff80e05659b110312f416de7",
                 "shasum": ""
             },
@@ -410,7 +409,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-01-05 22:11:12"
+            "time": "2016-01-05T22:11:12+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -488,7 +487,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2015-11-16 17:11:46"
+            "time": "2015-11-16T17:11:46+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -500,7 +499,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineCacheBundle/zipball/18c600a9b82f6454d2e81ca4957cdd56a1cf3504",
+                "url": "https://api.github.com/repos/doctrine/DoctrineCacheBundle/zipball/30f0ed4b5681842a2a78b861f54136782fbea963",
                 "reference": "30f0ed4b5681842a2a78b861f54136782fbea963",
                 "shasum": ""
             },
@@ -628,7 +627,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2015-11-04 21:23:23"
+            "time": "2015-11-04T21:23:23+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -641,7 +640,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/86d2b1c9c195c12175551d02a475067977c0afcf",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/6a1bd731dbdd4a",
                 "reference": "6a1bd731dbdd4a",
                 "shasum": ""
             },
@@ -699,7 +698,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/90b2128806bfde671b6952ab8bea493942c1fdae",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/097e7ba84f64a427e55008117ef2bb94096731dc",
                 "reference": "097e7ba84f64a427e55008117ef2bb94096731dc",
                 "shasum": ""
             },
@@ -874,7 +873,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/cdb33e47c00630555e555c8ad81f9e700723e782",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/68cc7bf629a7c1fc0696e583cc8ed46f897d0afb",
                 "reference": "68cc7bf629a7c1fc0696e583cc8ed46f897d0afb",
                 "shasum": ""
             },
@@ -1006,7 +1005,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2016-01-05 21:34:58"
+            "time": "2016-01-05T21:34:58+00:00"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -1018,7 +1017,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/0abe584a51d9c021ea9624c7f71a21fad0226646",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/2f52d924692647db02bbcb27c159fef03bf000c9",
                 "reference": "2f52d924692647db02bbcb27c159fef03bf000c9",
                 "shasum": ""
             },
@@ -1076,7 +1075,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/140cc28026304d3023c880f441689986f99b913b",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/45d6f40178216a840885b4ca6d7de9e67068568a",
                 "reference": "45d6f40178216a840885b4ca6d7de9e67068568a",
                 "shasum": ""
             },
@@ -1226,6 +1225,7 @@
                 "rest",
                 "web service"
             ],
+            "abandoned": "guzzlehttp/guzzle",
             "time": "2015-04-29 17:06:53"
         },
         {
@@ -1238,7 +1238,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/d7ce7f06136109e81d1cb9d57066c4d4a99cf1cc",
+                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/f7b677a5f9bfd8bf5f165a0ff96ce7426b870312",
                 "reference": "f7b677a5f9bfd8bf5f165a0ff96ce7426b870312",
                 "shasum": ""
             },
@@ -1278,68 +1278,6 @@
                 "parameters management"
             ],
             "time": "2015-10-07 14:51:08"
-        },
-        {
-            "name": "innova/gitter-bundle",
-            "version": "v1.0",
-            "target-dir": "Innova/GitterBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/InnovaLangues/GitterBundle.git",
-                "reference": "bf2ac7d3fe7a7c5cb099d142fefe85fdf00eee98"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/InnovaLangues/GitterBundle/zipball/bf2ac7d3fe7a7c5cb099d142fefe85fdf00eee98",
-                "reference": "bf2ac7d3fe7a7c5cb099d142fefe85fdf00eee98",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.1"
-            },
-            "type": "symfony2-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Innova\\GitterBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Arnaud Bey",
-                    "email": "arnaud.bey@u-grenoble3.fr"
-                },
-                {
-                    "name": "Axel Penin",
-                    "email": "axel.penin@u-grenoble3.fr"
-                },
-                {
-                    "name": "Eric Vincent",
-                    "email": "eric.vincent@u-grenoble3.fr"
-                },
-                {
-                    "name": "Donovan Tengblad",
-                    "email": "donovan.tengblad@u-grenoble3.fr"
-                },
-                {
-                    "name": "Patrick Guillou",
-                    "email": "patrick.guillou@u-grenoble3.fr"
-                },
-                {
-                    "name": "Nicolas Dufour",
-                    "email": "nicolas.dufour@u-grenoble3.fr"
-                }
-            ],
-            "description": "Gitter Bundle",
-            "homepage": "http://github.com/InnovaLangues/GitterBundle",
-            "keywords": [
-                "Innova",
-                "gitter"
-            ],
-            "time": "2015-04-09 08:23:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1477,7 +1415,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/aaaaf90c39214ceaac4bf6fe4adcf805a901cfbd",
+                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/99941b6f8475e2f02b8b89748504e5d471bded73",
                 "reference": "99941b6f8475e2f02b8b89748504e5d471bded73",
                 "shasum": ""
             },
@@ -1540,7 +1478,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpSnappyBundle/zipball/ead0b44c6a9a96c1817710cd854665ee755afe04",
+                "url": "https://api.github.com/repos/KnpLabs/KnpSnappyBundle/zipball/c023573e1b0b",
                 "reference": "c023573e1b0b",
                 "shasum": ""
             },
@@ -1668,7 +1606,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikMaintenanceBundle/zipball/2c72cc54e7156f2bf6a67a763d416d4e85201d57",
+                "url": "https://api.github.com/repos/lexik/LexikMaintenanceBundle/zipball/4967701a108aa8262f",
                 "reference": "4967701a108aa8262f",
                 "shasum": ""
             },
@@ -1714,120 +1652,6 @@
                 "maintenance"
             ],
             "time": "2015-10-01 13:15:01"
-        },
-        {
-            "name": "liuggio/statsd-client-bundle",
-            "version": "dev-master",
-            "target-dir": "Liuggio/StatsDClientBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/liuggio/StatsDClientBundle.git",
-                "reference": "09ffd81025a233e2be202065f7117d0f7fb47bb2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/liuggio/StatsDClientBundle/zipball/09ffd81025a233e2be202065f7117d0f7fb47bb2",
-                "reference": "09ffd81025a233e2be202065f7117d0f7fb47bb2",
-                "shasum": ""
-            },
-            "require": {
-                "liuggio/statsd-php-client": "~1.0.14",
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": ">2.0"
-            },
-            "require-dev": {
-                "doctrine/dbal": ">=2.2.0",
-                "monolog/monolog": ">=1.2.0",
-                "symfony/yaml": ">=2.0.0"
-            },
-            "suggest": {
-                "doctrine/dbal": "Doctrine Dbal, collect statistic to/from the database (>=2.2.0,<2.4-dev required)",
-                "monolog/monolog": "Monolog, in order to generate statistic from log >=1.2.0)"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.6.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Liuggio\\StatsDClientBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Community contributions",
-                    "homepage": "https://github.com/liuggio/StatsDClientBundle/contributors"
-                },
-                {
-                    "name": "Liuggio",
-                    "email": "liuggio@gmail.com",
-                    "homepage": "https://github.com/Liuggio"
-                }
-            ],
-            "description": "Provides a statsd client and simple ready-to-use support for #Symfony2 Application",
-            "keywords": [
-                "graphite",
-                "monitor",
-                "statsd",
-                "symfony"
-            ],
-            "time": "2015-12-21 16:09:21"
-        },
-        {
-            "name": "liuggio/statsd-php-client",
-            "version": "v1.0.18",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/liuggio/statsd-php-client.git",
-                "reference": "c42e6d6687b7b2d7683186ec7f4f03351cc3dbca"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/liuggio/statsd-php-client/zipball/c42e6d6687b7b2d7683186ec7f4f03351cc3dbca",
-                "reference": "c42e6d6687b7b2d7683186ec7f4f03351cc3dbca",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "monolog/monolog": ">=1.2.0",
-                "phpunit/phpunit": "^4.7"
-            },
-            "suggest": {
-                "monolog/monolog": "Monolog, in order to do generate statistic from log >=1.2.0)"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Liuggio": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Giulio De Donato",
-                    "email": "liuggio@gmail.com"
-                }
-            ],
-            "description": "Statsd (Object Oriented) client library for PHP",
-            "homepage": "https://github.com/liuggio/statsd-php-client/",
-            "keywords": [
-                "etsy",
-                "monitoring",
-                "php",
-                "statsd"
-            ],
-            "time": "2015-07-23 23:12:45"
         },
         {
             "name": "monolog/monolog",
@@ -1904,54 +1728,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-10-14 12:51:02"
-        },
-        {
-            "name": "nc/faye-client",
-            "version": "v1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nchaulet/faye-client.git",
-                "reference": "96859ea7717435e8f454e918726b15c98f41ba5d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nchaulet/faye-client/zipball/96859ea7717435e8f454e918726b15c98f41ba5d",
-                "reference": "96859ea7717435e8f454e918726b15c98f41ba5d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "atoum/atoum": "dev-master",
-                "guzzle/guzzle": "~3.0"
-            },
-            "suggest": {
-                "guzzle/guzzle": "~3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Nc\\FayeClient": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "nchaulet",
-                    "email": "n.chaulet@gmail.com"
-                }
-            ],
-            "description": "Php client for interacting with faye server",
-            "keywords": [
-                "faye",
-                "websocket"
-            ],
-            "time": "2014-06-10 06:11:09"
+            "time": "2015-10-14T12:51:02+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -1996,7 +1773,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2015-09-19 14:15:08"
+            "time": "2015-09-19T14:15:08+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2044,7 +1821,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-01-06 13:31:20"
+            "time": "2016-01-06T13:31:20+00:00"
         },
         {
             "name": "psr/log",
@@ -2056,7 +1833,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d8e60a5619fff77f9669da8997697443ef1a1d7e",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/9e45edca52cc9c954680072c93e621f8b71fab26",
                 "reference": "9e45edca52cc9c954680072c93e621f8b71fab26",
                 "shasum": ""
             },
@@ -2094,26 +1871,40 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "2.3.x-dev",
+            "version": "4.0.x-dev",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "98bdda791e7c2dfb5fd55781e69a4b00e4f751a6"
+                "reference": "b55230818f48e997028d522af7bf80f4117cdfeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/98bdda791e7c2dfb5fd55781e69a4b00e4f751a6",
-                "reference": "98bdda791e7c2dfb5fd55781e69a4b00e4f751a6",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/b55230818f48e997028d522af7bf80f4117cdfeb",
+                "reference": "b55230818f48e997028d522af7bf80f4117cdfeb",
                 "shasum": ""
             },
             "require": {
-                "symfony/framework-bundle": "~2.2"
+                "php": ">=5.3.9",
+                "sensiolabs/security-checker": "~3.0",
+                "symfony/class-loader": "~2.2",
+                "symfony/framework-bundle": "~2.3",
+                "symfony/process": "~2.2"
+            },
+            "require-dev": {
+                "symfony/form": "~2.2",
+                "symfony/validator": "~2.2",
+                "symfony/yaml": "~2.2"
+            },
+            "suggest": {
+                "symfony/form": "If you want to use the configurator",
+                "symfony/validator": "If you want to use the configurator",
+                "symfony/yaml": "If you want to use  the configurator"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3.x-dev"
+                    "dev-master": "4.0.x-dev"
                 }
             },
             "autoload": {
@@ -2131,12 +1922,12 @@
                     "email": "fabien@symfony.com"
                 }
             ],
-            "description": "The base bundle for the Symfony Distributions",
+            "description": "Base bundle for Symfony Distributions",
             "keywords": [
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-06-05 22:32:08"
+            "time": "2017-01-04 14:05:36"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2237,7 +2028,51 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2016-01-05 16:30:36"
+            "time": "2016-01-05T16:30:36+00:00"
+        },
+        {
+            "name": "sensiolabs/security-checker",
+            "version": "v3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensiolabs/security-checker.git",
+                "reference": "21696b0daa731064c23cfb694c60a2584a7b6e93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/21696b0daa731064c23cfb694c60a2584a7b6e93",
+                "reference": "21696b0daa731064c23cfb694c60a2584a7b6e93",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/console": "~2.0|~3.0"
+            },
+            "bin": [
+                "security-checker"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "SensioLabs\\Security": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien.potencier@gmail.com"
+                }
+            ],
+            "description": "A security checker for your composer.lock",
+            "time": "2015-11-07T08:07:40+00:00"
         },
         {
             "name": "stfalcon/tinymce-bundle",
@@ -2250,7 +2085,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stfalcon/TinymceBundle/zipball/5f8ed022dd6a606c8f0b4da97f524b9864cd0e29",
+                "url": "https://api.github.com/repos/stfalcon/TinymceBundle/zipball/758c19947b04d93d",
                 "reference": "758c19947b04d93d",
                 "shasum": ""
             },
@@ -2307,7 +2142,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/fffbc0e2a7e376dbb0a4b5f2ff6847330f20ccf9",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/6522539daf0a7bdada1cc2dccb7ec37dc0712136",
                 "reference": "6522539daf0a7bdada1cc2dccb7ec37dc0712136",
                 "shasum": ""
             },
@@ -2537,7 +2372,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/82159e61debcd09790b20154b350b1c083029aa6",
                 "reference": "82159e61debcd09790b20154b350b1c083029aa6",
                 "shasum": ""
             },
@@ -2763,7 +2598,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-01-14 10:41:56"
+            "time": "2016-01-14T10:41:56+00:00"
         },
         {
             "name": "twig/extensions",
@@ -2815,7 +2650,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2015-08-22 16:38:35"
+            "time": "2015-08-22T16:38:35+00:00"
         },
         {
             "name": "twig/twig",
@@ -2827,7 +2662,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f0a4fa678465491947554f6687c5fca5e482f8ec",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/fd84403ac725fe1a053a0a109e26ecdb9928c912",
                 "reference": "fd84403ac725fe1a053a0a109e26ecdb9928c912",
                 "shasum": ""
             },
@@ -2934,7 +2769,7 @@
                 "symfony",
                 "translation"
             ],
-            "time": "2015-10-27 10:05:55"
+            "time": "2015-10-27T10:05:55+00:00"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -2974,7 +2809,7 @@
                 }
             ],
             "description": "JSONP callback validator.",
-            "time": "2014-01-20 22:35:06"
+            "time": "2014-01-20T22:35:06+00:00"
         }
     ],
     "packages-dev": [],
