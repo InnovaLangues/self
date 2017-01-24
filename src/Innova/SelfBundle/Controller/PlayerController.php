@@ -43,6 +43,10 @@ class PlayerController extends Controller
         }
 
         $questionnaire = $orderQuestionnaire->getQuestionnaire();
+        $questionnaires = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')
+            ? $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test)
+            : null;
+
         $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
         $percent = $this->get('self.player.manager')->getPercentDone($test, $component, $session);
 
@@ -51,6 +55,7 @@ class PlayerController extends Controller
             'session' => $session,
             'component' => $component,
             'questionnaire' => $questionnaire,
+            'questionnaires' => $questionnaires,
             'percent' => $percent,
         );
     }
