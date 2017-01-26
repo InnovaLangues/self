@@ -13,13 +13,17 @@ class UserManager
     protected $formFactory;
     protected $fosUserManager;
     protected $session;
+    protected $securityContext;
+    protected $translator;
 
-    public function __construct($entityManager, $formFactory, $fosUserManager, $session)
+    public function __construct($entityManager, $formFactory, $fosUserManager, $session, $securityContext, $translator)
     {
         $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
         $this->fosUserManager = $fosUserManager;
         $this->session = $session;
+        $this->securityContext = $securityContext;
+        $this->translator = $translator;
     }
 
     public function setLocale(User $user, $locale)
@@ -144,6 +148,16 @@ class UserManager
         }
 
         return count($connectedUsers);
+    }
+
+    public function checkCourse()
+    {
+        $user = $this->securityContext->getToken()->getUser();
+        if (!$user->getCourse()) {
+            $this->session->getFlashBag()->set('warning', $this->translator->trans('warning_message_course'));
+        }
+
+        return;
     }
 
     private function getLastSessions($threshold)

@@ -645,3 +645,5 @@ input:
     title: Saisie
     help_text: Une aide est disponible concernant la saisie dans cette langue (voir la partie "<a data-toggle="modal" href="#helpModal">aide</a>" dans le menu)
     japanese: Pour le japonais, merci de vous reporter à ces documents :
+
+warning_message_course: Attention, votre profil est incomplet, veuillez cliquer sur votre nom en haut à droite et éditer vos informations. Merci.

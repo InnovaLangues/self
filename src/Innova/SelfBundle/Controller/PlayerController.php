@@ -94,6 +94,8 @@ class PlayerController extends Controller
      */
     public function showTestsAction()
     {
+        $this->get('self.user.manager')->checkCourse();
+
         return array();
     }
 
@@ -128,6 +130,8 @@ class PlayerController extends Controller
      */
     public function sessionConnectAction()
     {
+        $this->get('self.user.manager')->checkCourse();
+
         return array();
     }
 
@@ -146,7 +150,7 @@ class PlayerController extends Controller
 
             return $this->render('InnovaSelfBundle:Player:common/log.html.twig', array('sessions' => $sessions));
         }
-        $this->get('session')->getFlashBag()->set('warning', 'wrong passwd');
+        $this->get('session')->getFlashBag()->add('warning', 'wrong passwd');
 
         return $this->redirect($this->generateUrl('session_connect', array()));
     }

@@ -82,6 +82,8 @@ services:
             formFactory:        @form.factory
             fosUserManager:     @fos_user.util.user_manipulator
             session:            @session
+            securityContext:    @security.token_storage
+            translator:         @translator
 
     self.comment.manager:
         class: Innova\SelfBundle\Manager\CommentManager
