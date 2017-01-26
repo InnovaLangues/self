@@ -66,11 +66,6 @@ class User extends BaseUser implements JsonSerializable
     private $tests;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OriginStudent", inversedBy="originStudents")
-     */
-    private $originStudent;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Institution\Institution")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
@@ -89,29 +84,9 @@ class User extends BaseUser implements JsonSerializable
     private $year;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Level", inversedBy="coLevels")
-     */
-    protected $coLevel;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Level", inversedBy="ceLevels")
-     */
-    protected $ceLevel;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Level", inversedBy="eeLevels")
-     */
-    protected $eeLevel;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Language", inversedBy="users")
      */
     protected $preferedLanguage;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="LevelLansad", inversedBy="levelLansads")
-     */
-    protected $levelLansad;
 
     /**
      * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="user", cascade={"remove"})
@@ -360,126 +335,6 @@ class User extends BaseUser implements JsonSerializable
     public function getQuestionnaires()
     {
         return $this->questionnaires;
-    }
-
-    /**
-     * Set coLevel.
-     *
-     * @param \Innova\SelfBundle\Entity\Level $coLevel
-     *
-     * @return User
-     */
-    public function setCoLevel(\Innova\SelfBundle\Entity\Level $coLevel = null)
-    {
-        $this->coLevel = $coLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get coLevel.
-     *
-     * @return \Innova\SelfBundle\Entity\Level
-     */
-    public function getCoLevel()
-    {
-        return $this->coLevel;
-    }
-
-    /**
-     * Set ceLevel.
-     *
-     * @param \Innova\SelfBundle\Entity\Level $ceLevel
-     *
-     * @return User
-     */
-    public function setCeLevel(\Innova\SelfBundle\Entity\Level $ceLevel = null)
-    {
-        $this->ceLevel = $ceLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get ceLevel.
-     *
-     * @return \Innova\SelfBundle\Entity\Level
-     */
-    public function getCeLevel()
-    {
-        return $this->ceLevel;
-    }
-
-    /**
-     * Set eeLevel.
-     *
-     * @param \Innova\SelfBundle\Entity\Level $eeLevel
-     *
-     * @return User
-     */
-    public function setEeLevel(\Innova\SelfBundle\Entity\Level $eeLevel = null)
-    {
-        $this->eeLevel = $eeLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get eeLevel.
-     *
-     * @return \Innova\SelfBundle\Entity\Level
-     */
-    public function getEeLevel()
-    {
-        return $this->eeLevel;
-    }
-
-    /**
-     * Set originStudent.
-     *
-     * @param \Innova\SelfBundle\Entity\OriginStudent $originStudent
-     *
-     * @return User
-     */
-    public function setOriginStudent(\Innova\SelfBundle\Entity\OriginStudent $originStudent = null)
-    {
-        $this->originStudent = $originStudent;
-
-        return $this;
-    }
-
-    /**
-     * Get originStudent.
-     *
-     * @return \Innova\SelfBundle\Entity\OriginStudent
-     */
-    public function getOriginStudent()
-    {
-        return $this->originStudent;
-    }
-
-    /**
-     * Set levelLansad.
-     *
-     * @param \Innova\SelfBundle\Entity\LevelLansad $levelLansad
-     *
-     * @return User
-     */
-    public function setLevelLansad(\Innova\SelfBundle\Entity\LevelLansad $levelLansad = null)
-    {
-        $this->levelLansad = $levelLansad;
-
-        return $this;
-    }
-
-    /**
-     * Get levelLansad.
-     *
-     * @return \Innova\SelfBundle\Entity\LevelLansad
-     */
-    public function getLevelLansad()
-    {
-        return $this->levelLansad;
     }
 
     /**

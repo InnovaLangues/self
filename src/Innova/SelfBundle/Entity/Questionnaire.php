@@ -45,11 +45,6 @@ class Questionnaire
     protected $revisors;
 
     /**
-     * @ORM\ManyToOne(targetEntity="LanguageLevel", inversedBy="questionnaires")
-     */
-    protected $languageLevel;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Status", inversedBy="questionnaires")
      */
     protected $status;
@@ -414,30 +409,6 @@ class Questionnaire
     public function getTraces()
     {
         return $this->traces;
-    }
-
-    /**
-     * Set languageLevel.
-     *
-     * @param \Innova\SelfBundle\Entity\LanguageLevel $languageLevel
-     *
-     * @return Questionnaire
-     */
-    public function setLanguageLevel(\Innova\SelfBundle\Entity\LanguageLevel $languageLevel = null)
-    {
-        $this->languageLevel = $languageLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get languageLevel.
-     *
-     * @return \Innova\SelfBundle\Entity\LanguageLevel
-     */
-    public function getLanguageLevel()
-    {
-        return $this->languageLevel;
     }
 
     /**
