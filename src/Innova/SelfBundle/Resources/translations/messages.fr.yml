@@ -19,6 +19,7 @@ menu:
     generalparams: Paramètres
     message: Message
     institutions: Institutions
+    stats: Stats
 
 message:
     content: Contenu du message
@@ -647,3 +648,6 @@ input:
     japanese: Pour le japonais, merci de vous reporter à ces documents :
 
 warning_message_course: Attention, votre profil est incomplet, veuillez cliquer sur votre nom en haut à droite et éditer vos informations. Merci.
+
+stats:
+    usercount: Nombre d'utilisateurs

@@ -24,11 +24,6 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ path('admin_user', { 'subset': 'all' }) }}">
-                                    {{ 'user.all' | trans }}
-                                </a>
-                            </li>
-                            <li>
                                 <a href="{{ path('admin_user', { 'subset': 'connected' }) }}">
                                     {{ 'user.connected' | trans }}
                                 </a>
@@ -161,6 +156,11 @@
                     <li>
                         <a href="{{ path('parameters') }}">
                             <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('stats') }}">
+                            <span class="glyphicon glyphicon-dashboard"></span> {{ 'menu.stats' | trans }}
                         </a>
                     </li>
                 {% endif %}
