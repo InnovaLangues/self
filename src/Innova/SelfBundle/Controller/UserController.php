@@ -33,9 +33,6 @@ class UserController extends Controller
 
         $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
         switch ($subset) {
-            case 'all':
-                $users = $userRepo->findAllLight();
-                break;
             case 'connected':
                 $users = $this->get('self.user.manager')->getConnected();
                 break;
