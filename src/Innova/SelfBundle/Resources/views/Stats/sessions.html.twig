@@ -1,7 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h3>{{ 'menu.stats' | trans }} - Sessions</h3>
+    <h3>
+        {{ 'menu.stats' | trans }} - Sessions
+        <a href="#myChart" class="btn btn-default"><span class="glyphicon glyphicon-signal"></span></a>
+    </h3>
 
     <div class="input-group">
         <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
@@ -9,7 +12,7 @@
     </div>
     <br/>
 
-    <table id="data-table" class="table table-striped">
+    <table id="data-table" class="table table-striped" data-chart-type="pie" data-labels="language" data-numbers="usercount" data-aggregate=1>
         <thead>
             <tr>
                 <th>{{ 'editor.session.name' | trans }}</th>
@@ -20,7 +23,7 @@
         </thead>
         <tbody>
     		{% for data_session in data_sessions %}
-    			<tr>
+    			<tr class="chart-data" data-language="{{ data_session.language |trans }}" data-usercount="{{ data_session.usercount }}">
     				<td>
     					{{ data_session.name }}
     				</td>
@@ -37,13 +40,16 @@
     		{% endfor %}
         </tbody>
     </table>
-{% endblock %}
 
+    <hr/>
+    <canvas max-height="300px" width="100%" id="myChart"></canvas>
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 
     {% javascripts filter='yui_js' output='js/compiled/stats.js'
+        '@InnovaSelfBundle/Resources/public/js/lib/Chart.bundle.js'
         '@InnovaSelfBundle/Resources/public/js/lib/jquery.quicksearch.js'
         '@InnovaSelfBundle/Resources/public/js/stats.js'
     %}
