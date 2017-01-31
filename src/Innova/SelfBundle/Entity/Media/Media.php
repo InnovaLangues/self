@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity\Media;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Media
+ * Media.
  *
  * @ORM\Table("media")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Media
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -43,38 +43,37 @@ class Media
     private $url;
 
     /**
-    * @ORM\ManyToOne(targetEntity="MediaType", inversedBy="medias")
-    */
+     * @ORM\ManyToOne(targetEntity="MediaType", inversedBy="medias", fetch = "EAGER")
+     */
     protected $mediaType;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="media")
-    */
+     * @ORM\OneToMany(targetEntity="MediaLimit", mappedBy="media")
+     */
     private $mediaLimits;
 
     /**
-    * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="media")
-    */
+     * @ORM\OneToMany(targetEntity="MediaClick", mappedBy="media")
+     */
     private $mediaClicks;
 
     /**
-    * @ORM\ManyToOne(targetEntity="MediaPurpose", inversedBy="medias")
-    */
+     * @ORM\ManyToOne(targetEntity="MediaPurpose", inversedBy="medias", fetch = "EAGER")
+     */
     protected $mediaPurpose;
 
     /**
-     * To String
+     * To String.
      */
-
     public function __toString()
     {
         return $this->getName();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -82,9 +81,10 @@ class Media
     }
 
     /**
-     * Set description
+     * Set description.
      *
-     * @param  string $description
+     * @param string $description
+     *
      * @return Media
      */
     public function setDescription($description)
@@ -95,7 +95,7 @@ class Media
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -105,9 +105,10 @@ class Media
     }
 
     /**
-     * Set mediaType
+     * Set mediaType.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\MediaType $mediaType
+     * @param \Innova\SelfBundle\Entity\Media\MediaType $mediaType
+     *
      * @return Media
      */
     public function setMediaType(\Innova\SelfBundle\Entity\Media\MediaType $mediaType = null)
@@ -118,7 +119,7 @@ class Media
     }
 
     /**
-     * Get mediaType
+     * Get mediaType.
      *
      * @return \Innova\SelfBundle\Entity\Media\MediaType
      */
@@ -128,9 +129,10 @@ class Media
     }
 
     /**
-     * Set name
+     * Set name.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return Media
      */
     public function setName($name)
@@ -141,7 +143,7 @@ class Media
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -151,9 +153,10 @@ class Media
     }
 
     /**
-     * Set url
+     * Set url.
      *
-     * @param  string $url
+     * @param string $url
+     *
      * @return Media
      */
     public function setUrl($url)
@@ -164,7 +167,7 @@ class Media
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return string
      */
@@ -173,7 +176,7 @@ class Media
         return $this->url;
     }
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -182,9 +185,10 @@ class Media
     }
 
     /**
-     * Add mediaLimits
+     * Add mediaLimits.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
+     * @param \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
+     *
      * @return Media
      */
     public function addMediaLimit(\Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits)
@@ -195,7 +199,7 @@ class Media
     }
 
     /**
-     * Remove mediaLimits
+     * Remove mediaLimits.
      *
      * @param \Innova\SelfBundle\Entity\Media\MediaLimit $mediaLimits
      */
@@ -205,7 +209,7 @@ class Media
     }
 
     /**
-     * Get mediaLimits
+     * Get mediaLimits.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -215,9 +219,10 @@ class Media
     }
 
     /**
-     * Add mediaClicks
+     * Add mediaClicks.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
+     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
+     *
      * @return Media
      */
     public function addMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
@@ -228,7 +233,7 @@ class Media
     }
 
     /**
-     * Remove mediaClicks
+     * Remove mediaClicks.
      *
      * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      */
@@ -238,7 +243,7 @@ class Media
     }
 
     /**
-     * Get mediaClicks
+     * Get mediaClicks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -248,9 +253,10 @@ class Media
     }
 
     /**
-     * Set mediaPurpose
+     * Set mediaPurpose.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\MediaPurpose $mediaPurpose
+     * @param \Innova\SelfBundle\Entity\Media\MediaPurpose $mediaPurpose
+     *
      * @return Media
      */
     public function setMediaPurpose(\Innova\SelfBundle\Entity\Media\MediaPurpose $mediaPurpose = null)
@@ -261,7 +267,7 @@ class Media
     }
 
     /**
-     * Get mediaPurpose
+     * Get mediaPurpose.
      *
      * @return \Innova\SelfBundle\Entity\Media\MediaPurpose
      */

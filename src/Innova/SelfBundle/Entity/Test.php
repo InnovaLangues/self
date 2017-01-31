@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Test
+ * Test.
  *
  * @ORM\Table("test")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\TestRepository")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Test
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -33,7 +33,7 @@ class Test
      *
      * @ORM\Column(name="difficulty", type="boolean")
      */
-    private $difficulty  = 1;
+    private $difficulty = 1;
 
     /**
      * @var string
@@ -43,13 +43,13 @@ class Test
     private $phased;
 
     /**
-    * @ORM\OneToOne(targetEntity="Innova\SelfBundle\Entity\PhasedTest\PhasedParams", cascade={"remove"})
-    */
+     * @ORM\OneToOne(targetEntity="Innova\SelfBundle\Entity\PhasedTest\PhasedParams", cascade={"remove"})
+     */
     private $phasedParams;
 
     /**
-    * @ORM\OneToMany(targetEntity="Trace", mappedBy="test", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Trace", mappedBy="test", cascade={"remove"})
+     */
     private $traces;
 
     /**
@@ -58,47 +58,47 @@ class Test
     private $users;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Language", inversedBy="tests")
-    */
+     * @ORM\ManyToOne(targetEntity="Language", inversedBy="tests")
+     */
     protected $language;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="test", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Media\MediaClick", mappedBy="test", cascade={"remove"})
+     */
     private $mediaClicks;
 
     /**
-    * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="test", cascade={"persist", "remove"})
-    * @ORM\OrderBy({"displayOrder" = "ASC"})
-    */
+     * @ORM\OneToMany(targetEntity="OrderQuestionnaireTest", mappedBy="test", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"displayOrder" = "ASC"})
+     */
     private $orderQuestionnaireTests;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Test", inversedBy="copies" )
-    * @ORM\JoinColumn(onDelete="SET NULL")
-    */
+     * @ORM\ManyToOne(targetEntity="Test", inversedBy="copies" )
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
     protected $testOrigin;
 
     /**
-    * @ORM\OneToMany(targetEntity="Test", mappedBy="testOrigin")
-    */
+     * @ORM\OneToMany(targetEntity="Test", mappedBy="testOrigin")
+     */
     protected $copies;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="archived", type="boolean")
      */
     private $archived = 0;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\Component", mappedBy="test", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\PhasedTest\Component", mappedBy="test", cascade={"remove"})
+     */
     protected $components;
 
     /**
-    * @ORM\OneToMany(targetEntity="Session", mappedBy="test", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Session", mappedBy="test", cascade={"remove"})
+     */
     protected $sessions;
 
     public function __construct()
@@ -112,9 +112,9 @@ class Test
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -122,9 +122,10 @@ class Test
     }
 
     /**
-     * Set name
+     * Set name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return Test
      */
     public function setName($name)
@@ -135,7 +136,7 @@ class Test
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -145,9 +146,10 @@ class Test
     }
 
     /**
-     * Add users
+     * Add users.
      *
-     * @param  \Innova\SelfBundle\Entity\User $users
+     * @param \Innova\SelfBundle\Entity\User $users
+     *
      * @return Test
      */
     public function addUser(\Innova\SelfBundle\Entity\User $users)
@@ -158,7 +160,7 @@ class Test
     }
 
     /**
-     * Remove users
+     * Remove users.
      *
      * @param \Innova\SelfBundle\Entity\User $users
      */
@@ -168,7 +170,7 @@ class Test
     }
 
     /**
-     * Get users
+     * Get users.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -178,9 +180,10 @@ class Test
     }
 
     /**
-     * Add traces
+     * Add traces.
      *
-     * @param  \Innova\SelfBundle\Entity\Trace $traces
+     * @param \Innova\SelfBundle\Entity\Trace $traces
+     *
      * @return Test
      */
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
@@ -191,7 +194,7 @@ class Test
     }
 
     /**
-     * Remove traces
+     * Remove traces.
      *
      * @param \Innova\SelfBundle\Entity\Trace $traces
      */
@@ -201,7 +204,7 @@ class Test
     }
 
     /**
-     * Get traces
+     * Get traces.
      *
      * @return Trace[]
      */
@@ -211,9 +214,10 @@ class Test
     }
 
     /**
-     * Set language
+     * Set language.
      *
-     * @param  \Innova\SelfBundle\Entity\Language $language
+     * @param \Innova\SelfBundle\Entity\Language $language
+     *
      * @return Test
      */
     public function setLanguage(\Innova\SelfBundle\Entity\Language $language = null)
@@ -224,7 +228,7 @@ class Test
     }
 
     /**
-     * Get language
+     * Get language.
      *
      * @return \Innova\SelfBundle\Entity\Language
      */
@@ -234,9 +238,10 @@ class Test
     }
 
     /**
-     * Add mediaClicks
+     * Add mediaClicks.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
+     * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
+     *
      * @return Test
      */
     public function addMediaClick(\Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks)
@@ -247,7 +252,7 @@ class Test
     }
 
     /**
-     * Remove mediaClicks
+     * Remove mediaClicks.
      *
      * @param \Innova\SelfBundle\Entity\Media\MediaClick $mediaClicks
      */
@@ -257,7 +262,7 @@ class Test
     }
 
     /**
-     * Get mediaClicks
+     * Get mediaClicks.
      *
      * @return Media\MediaClick[]
      */
@@ -267,9 +272,10 @@ class Test
     }
 
     /**
-     * Add orderQuestionnaireTests
+     * Add orderQuestionnaireTests.
      *
-     * @param  \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
+     * @param \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
+     *
      * @return Test
      */
     public function addOrderQuestionnaireTest(\Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests)
@@ -280,7 +286,7 @@ class Test
     }
 
     /**
-     * Remove orderQuestionnaireTests
+     * Remove orderQuestionnaireTests.
      *
      * @param \Innova\SelfBundle\Entity\OrderQuestionnaireTest $orderQuestionnaireTests
      */
@@ -290,7 +296,7 @@ class Test
     }
 
     /**
-     * Get orderQuestionnaireTests
+     * Get orderQuestionnaireTests.
      *
      * @return OrderQuestionnaireTest[]
      */
@@ -300,9 +306,10 @@ class Test
     }
 
     /**
-     * Set testOrigin
+     * Set testOrigin.
      *
-     * @param  \Innova\SelfBundle\Entity\Test $testOrigin
+     * @param \Innova\SelfBundle\Entity\Test $testOrigin
+     *
      * @return Test
      */
     public function setTestOrigin(\Innova\SelfBundle\Entity\Test $testOrigin = null)
@@ -313,7 +320,7 @@ class Test
     }
 
     /**
-     * Get testOrigin
+     * Get testOrigin.
      *
      * @return \Innova\SelfBundle\Entity\Test
      */
@@ -323,9 +330,10 @@ class Test
     }
 
     /**
-     * Add copies
+     * Add copies.
      *
-     * @param  \Innova\SelfBundle\Entity\Test $copies
+     * @param \Innova\SelfBundle\Entity\Test $copies
+     *
      * @return Test
      */
     public function addCopie(\Innova\SelfBundle\Entity\Test $copies)
@@ -336,7 +344,7 @@ class Test
     }
 
     /**
-     * Remove copies
+     * Remove copies.
      *
      * @param \Innova\SelfBundle\Entity\Test $copies
      */
@@ -346,7 +354,7 @@ class Test
     }
 
     /**
-     * Get copies
+     * Get copies.
      *
      * @return Test[]
      */
@@ -356,9 +364,10 @@ class Test
     }
 
     /**
-     * Set archived
+     * Set archived.
      *
-     * @param  boolean $archived
+     * @param bool $archived
+     *
      * @return Test
      */
     public function setArchived($archived)
@@ -369,9 +378,9 @@ class Test
     }
 
     /**
-     * Get archived
+     * Get archived.
      *
-     * @return boolean
+     * @return bool
      */
     public function isArchived()
     {
@@ -379,9 +388,10 @@ class Test
     }
 
     /**
-     * Set phased
+     * Set phased.
      *
-     * @param  boolean $phased
+     * @param bool $phased
+     *
      * @return Test
      */
     public function setPhased($phased)
@@ -392,7 +402,7 @@ class Test
     }
 
     /**
-     * Get phased
+     * Get phased.
      *
      * @return string
      */
@@ -402,9 +412,9 @@ class Test
     }
 
     /**
-     * Get archived
+     * Get archived.
      *
-     * @return boolean
+     * @return bool
      */
     public function getArchived()
     {
@@ -412,9 +422,10 @@ class Test
     }
 
     /**
-     * Add components
+     * Add components.
      *
-     * @param  \Innova\SelfBundle\Entity\PhasedTest\Component $components
+     * @param \Innova\SelfBundle\Entity\PhasedTest\Component $components
+     *
      * @return Test
      */
     public function addComponent(\Innova\SelfBundle\Entity\PhasedTest\Component $components)
@@ -425,7 +436,7 @@ class Test
     }
 
     /**
-     * Remove components
+     * Remove components.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\Component $components
      */
@@ -435,7 +446,7 @@ class Test
     }
 
     /**
-     * Get components
+     * Get components.
      *
      * @return PhasedTest\Component[]
      */
@@ -445,9 +456,10 @@ class Test
     }
 
     /**
-     * Add sessions
+     * Add sessions.
      *
-     * @param  \Innova\SelfBundle\Entity\Session $sessions
+     * @param \Innova\SelfBundle\Entity\Session $sessions
+     *
      * @return Test
      */
     public function addSession(\Innova\SelfBundle\Entity\Session $sessions)
@@ -458,7 +470,7 @@ class Test
     }
 
     /**
-     * Remove sessions
+     * Remove sessions.
      *
      * @param \Innova\SelfBundle\Entity\Session $sessions
      */
@@ -468,7 +480,7 @@ class Test
     }
 
     /**
-     * Get sessions
+     * Get sessions.
      *
      * @return Session[]
      */
@@ -478,7 +490,7 @@ class Test
     }
 
     /**
-     * Set phasedParams
+     * Set phasedParams.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\PhasedParams $phasedParams
      *
@@ -492,7 +504,7 @@ class Test
     }
 
     /**
-     * Get phasedParams
+     * Get phasedParams.
      *
      * @return \Innova\SelfBundle\Entity\PhasedTest\PhasedParams
      */
@@ -502,7 +514,7 @@ class Test
     }
 
     /**
-     * Add copy
+     * Add copy.
      *
      * @param \Innova\SelfBundle\Entity\Test $copy
      *
@@ -516,7 +528,7 @@ class Test
     }
 
     /**
-     * Remove copy
+     * Remove copy.
      *
      * @param \Innova\SelfBundle\Entity\Test $copy
      */
@@ -526,9 +538,9 @@ class Test
     }
 
     /**
-     * Set difficulty
+     * Set difficulty.
      *
-     * @param boolean $difficulty
+     * @param bool $difficulty
      *
      * @return Test
      */
@@ -540,7 +552,7 @@ class Test
     }
 
     /**
-     * Get difficulty
+     * Get difficulty.
      *
      * @return string
      */
