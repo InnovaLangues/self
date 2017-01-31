@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Clue
+ * Clue.
  *
  * @ORM\Table("clue")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Clue
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,19 +22,19 @@ class Clue
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="ClueType")
-    */
+     * @ORM\ManyToOne(targetEntity="ClueType", fetch = "EAGER")
+     */
     protected $clueType;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media", fetch = "EAGER")
+     */
     protected $media;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -42,9 +42,10 @@ class Clue
     }
 
     /**
-     * Set clueType
+     * Set clueType.
      *
-     * @param  \Innova\SelfBundle\Entity\ClueType $clueType
+     * @param \Innova\SelfBundle\Entity\ClueType $clueType
+     *
      * @return Clue
      */
     public function setClueType(\Innova\SelfBundle\Entity\ClueType $clueType = null)
@@ -55,7 +56,7 @@ class Clue
     }
 
     /**
-     * Get clueType
+     * Get clueType.
      *
      * @return \Innova\SelfBundle\Entity\ClueType
      */
@@ -65,9 +66,10 @@ class Clue
     }
 
     /**
-     * Set media
+     * Set media.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $media
+     * @param \Innova\SelfBundle\Entity\Media\Media $media
+     *
      * @return Clue
      */
     public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
@@ -78,7 +80,7 @@ class Clue
     }
 
     /**
-     * Get media
+     * Get media.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */

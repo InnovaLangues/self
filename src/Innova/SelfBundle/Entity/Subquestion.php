@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Subquestion
+ * Subquestion.
  *
  * @ORM\Table("subquestion")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Subquestion
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,13 +22,13 @@ class Subquestion
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Typology", inversedBy="subquestions")
-    */
+     * @ORM\ManyToOne(targetEntity="Typology", inversedBy="subquestions", fetch = "EAGER")
+     */
     protected $typology;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Level")
+     */
     protected $level;
 
     /**
@@ -39,56 +39,56 @@ class Subquestion
     private $title;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media", fetch = "EAGER")
+     */
     protected $media;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media", fetch = "EAGER")
+     */
     protected $mediaAmorce;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Question", inversedBy="subquestions")
-    */
+     * @ORM\ManyToOne(targetEntity="Question", inversedBy="subquestions")
+     */
     protected $question;
 
     /**
-    * @ORM\OneToMany(targetEntity="Proposition", mappedBy="subquestion", cascade={"persist", "remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Proposition", mappedBy="subquestion", cascade={"persist", "remove"})
+     */
     protected $propositions;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Clue", cascade={"persist"})
-    */
+     * @ORM\ManyToOne(targetEntity="Clue", cascade={"persist"}, fetch = "EAGER")
+     */
     protected $clue;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media", fetch = "EAGER")
+     */
     protected $mediaSyllable;
 
     /**
-    * @ORM\OneToMany(targetEntity="Answer", mappedBy="subquestion")
-    */
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="subquestion")
+     */
     protected $answers;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus", inversedBy="subquestions")
-    * @ORM\JoinTable(name="subquestion_focuses")
-    */
+     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus", inversedBy="subquestions")
+     * @ORM\JoinTable(name="subquestion_focuses")
+     */
     protected $focuses;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation", inversedBy="subquestionsMain")
-    * @ORM\JoinTable(name="subquestion_cognitiveOpsMain")
-    */
+     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation", inversedBy="subquestionsMain")
+     * @ORM\JoinTable(name="subquestion_cognitiveOpsMain")
+     */
     protected $cognitiveOpsMain;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation", inversedBy="subquestionsSecondary")
-    * @ORM\JoinTable(name="subquestion_cognitiveOpsSecondary")
-    */
+     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation", inversedBy="subquestionsSecondary")
+     * @ORM\JoinTable(name="subquestion_cognitiveOpsSecondary")
+     */
     protected $cognitiveOpsSecondary;
 
     /**
@@ -106,13 +106,12 @@ class Subquestion
     private $discriminationIndex;
 
     /**
-     *
      * @ORM\Column(name="displayAnswer", type="boolean")
      */
     private $displayAnswer;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -120,9 +119,9 @@ class Subquestion
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -130,9 +129,10 @@ class Subquestion
     }
 
     /**
-     * Set title
+     * Set title.
      *
-     * @param  string      $title
+     * @param string $title
+     *
      * @return Subquestion
      */
     public function setTitle($title)
@@ -143,7 +143,7 @@ class Subquestion
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -153,9 +153,10 @@ class Subquestion
     }
 
     /**
-     * Set typology
+     * Set typology.
      *
-     * @param  \Innova\SelfBundle\Entity\Typology $typology
+     * @param \Innova\SelfBundle\Entity\Typology $typology
+     *
      * @return Subquestion
      */
     public function setTypology(\Innova\SelfBundle\Entity\Typology $typology = null)
@@ -166,7 +167,7 @@ class Subquestion
     }
 
     /**
-     * Get typology
+     * Get typology.
      *
      * @return \Innova\SelfBundle\Entity\Typology
      */
@@ -176,9 +177,10 @@ class Subquestion
     }
 
     /**
-     * Set media
+     * Set media.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $media
+     * @param \Innova\SelfBundle\Entity\Media\Media $media
+     *
      * @return Subquestion
      */
     public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
@@ -189,7 +191,7 @@ class Subquestion
     }
 
     /**
-     * Get media
+     * Get media.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
@@ -199,9 +201,10 @@ class Subquestion
     }
 
     /**
-     * Set question
+     * Set question.
      *
-     * @param  \Innova\SelfBundle\Entity\Question $question
+     * @param \Innova\SelfBundle\Entity\Question $question
+     *
      * @return Subquestion
      */
     public function setQuestion(\Innova\SelfBundle\Entity\Question $question = null)
@@ -212,7 +215,7 @@ class Subquestion
     }
 
     /**
-     * Get question
+     * Get question.
      *
      * @return \Innova\SelfBundle\Entity\Question
      */
@@ -222,9 +225,10 @@ class Subquestion
     }
 
     /**
-     * Add propositions
+     * Add propositions.
      *
-     * @param  \Innova\SelfBundle\Entity\Proposition $propositions
+     * @param \Innova\SelfBundle\Entity\Proposition $propositions
+     *
      * @return Subquestion
      */
     public function addProposition(\Innova\SelfBundle\Entity\Proposition $propositions)
@@ -235,7 +239,7 @@ class Subquestion
     }
 
     /**
-     * Remove propositions
+     * Remove propositions.
      *
      * @param \Innova\SelfBundle\Entity\Proposition $propositions
      */
@@ -245,7 +249,7 @@ class Subquestion
     }
 
     /**
-     * Get propositions
+     * Get propositions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -255,9 +259,10 @@ class Subquestion
     }
 
     /**
-     * Set mediaAmorce
+     * Set mediaAmorce.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaAmorce
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaAmorce
+     *
      * @return Subquestion
      */
     public function setMediaAmorce(\Innova\SelfBundle\Entity\Media\Media $mediaAmorce = null)
@@ -268,7 +273,7 @@ class Subquestion
     }
 
     /**
-     * Get mediaAmorce
+     * Get mediaAmorce.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
@@ -278,9 +283,10 @@ class Subquestion
     }
 
     /**
-     * Add answers
+     * Add answers.
      *
-     * @param  \Innova\SelfBundle\Entity\Answer $answers
+     * @param \Innova\SelfBundle\Entity\Answer $answers
+     *
      * @return Subquestion
      */
     public function addAnswer(\Innova\SelfBundle\Entity\Answer $answers)
@@ -291,7 +297,7 @@ class Subquestion
     }
 
     /**
-     * Remove answers
+     * Remove answers.
      *
      * @param \Innova\SelfBundle\Entity\Answer $answers
      */
@@ -301,7 +307,7 @@ class Subquestion
     }
 
     /**
-     * Get answers
+     * Get answers.
      *
      * @return Answer[]
      */
@@ -311,9 +317,10 @@ class Subquestion
     }
 
     /**
-     * Set mediaSyllable
+     * Set mediaSyllable.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $mediaSyllable
+     * @param \Innova\SelfBundle\Entity\Media\Media $mediaSyllable
+     *
      * @return Subquestion
      */
     public function setMediaSyllable(\Innova\SelfBundle\Entity\Media\Media $mediaSyllable = null)
@@ -324,7 +331,7 @@ class Subquestion
     }
 
     /**
-     * Get mediaSyllable
+     * Get mediaSyllable.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
@@ -334,9 +341,10 @@ class Subquestion
     }
 
     /**
-     * Set clue
+     * Set clue.
      *
-     * @param  \Innova\SelfBundle\Entity\Clue $clue
+     * @param \Innova\SelfBundle\Entity\Clue $clue
+     *
      * @return Subquestion
      */
     public function setClue(\Innova\SelfBundle\Entity\Clue $clue = null)
@@ -347,7 +355,7 @@ class Subquestion
     }
 
     /**
-     * Get clue
+     * Get clue.
      *
      * @return \Innova\SelfBundle\Entity\Clue
      */
@@ -357,9 +365,10 @@ class Subquestion
     }
 
     /**
-     * Set displayAnswer
+     * Set displayAnswer.
      *
-     * @param  boolean     $displayAnswer
+     * @param bool $displayAnswer
+     *
      * @return Subquestion
      */
     public function setDisplayAnswer($displayAnswer)
@@ -370,9 +379,9 @@ class Subquestion
     }
 
     /**
-     * Get displayAnswer
+     * Get displayAnswer.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDisplayAnswer()
     {
@@ -380,9 +389,10 @@ class Subquestion
     }
 
     /**
-     * Add focuses
+     * Add focuses.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
+     *
      * @return Subquestion
      */
     public function addFocuse(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses)
@@ -393,7 +403,8 @@ class Subquestion
     }
 
     /**
-     * Add focuses collection
+     * Add focuses collection.
+     *
      * @param QuestionnaireIdentity\Focus[] $focuses
      */
     public function addFocuses($focuses)
@@ -406,7 +417,7 @@ class Subquestion
     }
 
     /**
-     * Remove focuses
+     * Remove focuses.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
      */
@@ -416,7 +427,7 @@ class Subquestion
     }
 
     /**
-     * Get focuses
+     * Get focuses.
      *
      * @return QuestionnaireIdentity\Focus[]
      */
@@ -426,9 +437,10 @@ class Subquestion
     }
 
     /**
-     * Add cognitiveOpsMain
+     * Add cognitiveOpsMain.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
+     *
      * @return Subquestion
      */
     public function addCognitiveOpsMain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain)
@@ -439,7 +451,8 @@ class Subquestion
     }
 
     /**
-     * Add cognitiveOpsMain collection
+     * Add cognitiveOpsMain collection.
+     *
      * @param QuestionnaireIdentity\CognitiveOperation[] $cognitiveOpsMain
      */
     public function addCognitiveOpsMains($cognitiveOpsMain)
@@ -452,7 +465,7 @@ class Subquestion
     }
 
     /**
-     * Remove cognitiveOpsMain
+     * Remove cognitiveOpsMain.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
      */
@@ -462,7 +475,7 @@ class Subquestion
     }
 
     /**
-     * Get cognitiveOpsMain
+     * Get cognitiveOpsMain.
      *
      * @return QuestionnaireIdentity\CognitiveOperation[]
      */
@@ -472,9 +485,10 @@ class Subquestion
     }
 
     /**
-     * Add cognitiveOpsSecondary
+     * Add cognitiveOpsSecondary.
      *
-     * @param  \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary
+     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary
+     *
      * @return Subquestion
      */
     public function addCognitiveOpsSecondary(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary)
@@ -485,7 +499,8 @@ class Subquestion
     }
 
     /**
-     * Add cognitiveOpsSecondary collection
+     * Add cognitiveOpsSecondary collection.
+     *
      * @param QuestionnaireIdentity\CognitiveOperation[] $cognitiveOpsSecondary
      */
     public function addCognitiveOpsSecondarys($cognitiveOpsSecondary)
@@ -498,7 +513,7 @@ class Subquestion
     }
 
     /**
-     * Remove cognitiveOpsSecondary
+     * Remove cognitiveOpsSecondary.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary
      */
@@ -508,7 +523,7 @@ class Subquestion
     }
 
     /**
-     * Get cognitiveOpsSecondary
+     * Get cognitiveOpsSecondary.
      *
      * @return QuestionnaireIdentity\CognitiveOperation[]
      */
@@ -518,7 +533,7 @@ class Subquestion
     }
 
     /**
-     * Set level
+     * Set level.
      *
      * @param \Innova\SelfBundle\Entity\Level $level
      *
@@ -532,7 +547,7 @@ class Subquestion
     }
 
     /**
-     * Get level
+     * Get level.
      *
      * @return \Innova\SelfBundle\Entity\Level
      */
@@ -542,7 +557,7 @@ class Subquestion
     }
 
     /**
-     * Add focus
+     * Add focus.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus
      *
@@ -556,7 +571,7 @@ class Subquestion
     }
 
     /**
-     * Remove focus
+     * Remove focus.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus
      */
@@ -566,7 +581,7 @@ class Subquestion
     }
 
     /**
-     * Set difficultyIndex
+     * Set difficultyIndex.
      *
      * @param string $difficultyIndex
      *
@@ -580,7 +595,7 @@ class Subquestion
     }
 
     /**
-     * Get difficultyIndex
+     * Get difficultyIndex.
      *
      * @return string
      */
@@ -590,7 +605,7 @@ class Subquestion
     }
 
     /**
-     * Set discriminationIndex
+     * Set discriminationIndex.
      *
      * @param string $discriminationIndex
      *
@@ -604,7 +619,7 @@ class Subquestion
     }
 
     /**
-     * Get discriminationIndex
+     * Get discriminationIndex.
      *
      * @return string
      */

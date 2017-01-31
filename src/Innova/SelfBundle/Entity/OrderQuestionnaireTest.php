@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Media
+ * Media.
  *
  * @ORM\Table("orderQuestionnaireTest")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderQuestionnaireTest
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,26 +22,26 @@ class OrderQuestionnaireTest
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Test", inversedBy="orderQuestionnaireTests", cascade={"persist"})
-    */
+     * @ORM\ManyToOne(targetEntity="Test", inversedBy="orderQuestionnaireTests", cascade={"persist"})
+     */
     protected $test;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="orderQuestionnaireTests")
-    */
+     * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="orderQuestionnaireTests", fetch = "EAGER")
+     */
     private $questionnaire;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="displayOrder", type="integer")
      */
     private $displayOrder;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -49,9 +49,10 @@ class OrderQuestionnaireTest
     }
 
     /**
-     * Set displayOrder
+     * Set displayOrder.
      *
-     * @param  integer                $displayOrder
+     * @param int $displayOrder
+     *
      * @return OrderQuestionnaireTest
      */
     public function setDisplayOrder($displayOrder)
@@ -62,9 +63,9 @@ class OrderQuestionnaireTest
     }
 
     /**
-     * Get displayOrder
+     * Get displayOrder.
      *
-     * @return integer
+     * @return int
      */
     public function getDisplayOrder()
     {
@@ -72,9 +73,10 @@ class OrderQuestionnaireTest
     }
 
     /**
-     * Set test
+     * Set test.
      *
-     * @param  \Innova\SelfBundle\Entity\Test $test
+     * @param \Innova\SelfBundle\Entity\Test $test
+     *
      * @return OrderQuestionnaireTest
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
@@ -85,7 +87,7 @@ class OrderQuestionnaireTest
     }
 
     /**
-     * Get test
+     * Get test.
      *
      * @return \Innova\SelfBundle\Entity\Test
      */
@@ -95,9 +97,10 @@ class OrderQuestionnaireTest
     }
 
     /**
-     * Set questionnaire
+     * Set questionnaire.
      *
-     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     *
      * @return OrderQuestionnaireTest
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
@@ -108,7 +111,7 @@ class OrderQuestionnaireTest
     }
 
     /**
-     * Get questionnaire
+     * Get questionnaire.
      *
      * @return \Innova\SelfBundle\Entity\Questionnaire
      */

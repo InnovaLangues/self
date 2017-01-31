@@ -157,7 +157,7 @@ class Questionnaire
     private $lisibility;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires")
+     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires", fetch = "EAGER")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $skill;
