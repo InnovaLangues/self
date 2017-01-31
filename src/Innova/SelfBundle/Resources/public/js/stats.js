@@ -32,7 +32,6 @@ var chartHandler = {
         return $(".chart-data");
     },
 
-
     dynamicColors: function() {
         var r = Math.floor(Math.random() * 255);
         var g = Math.floor(Math.random() * 255);
@@ -40,7 +39,6 @@ var chartHandler = {
 
         return "rgb(" + r + "," + g + "," + b + ")";
     },
-
 
     generateChart: function(){
         var ctx = document.getElementById("myChart");
@@ -68,3 +66,14 @@ var chartHandler = {
         });
     },
 }
+
+$('#toggle_empty_lines').on('click',function(){
+    if($(this).data('click-state') == 1) {
+        $(".chart-data[data-usercount='0']").hide();
+
+        $(this).data('click-state', 0);
+    } else {
+        $(this).data('click-state', 1);
+        $(".chart-data").show();
+    }
+});

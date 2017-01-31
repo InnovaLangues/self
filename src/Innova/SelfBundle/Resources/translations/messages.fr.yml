@@ -312,6 +312,7 @@ editor:
         active: Actif
         actives: actives
         inactives: inactives
+        all: toutes
         list: Liste des sessions
         create: Créer une nouvelle session
         manage: Sessions
@@ -651,3 +652,6 @@ warning_message_course: Attention, votre profil est incomplet, veuillez cliquer 
 
 stats:
     usercount: Nombre d'utilisateurs
+    filter: Filtrer
+    define_interval: Définissez un intervalle de temps.
+    date_format: Format de la date:
