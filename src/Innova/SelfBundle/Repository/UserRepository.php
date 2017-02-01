@@ -54,6 +54,17 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findLightByInstitution($institution)
+    {
+        $dql = "SELECT u.id FROM Innova\SelfBundle\Entity\User u
+        WHERE u.institution = :institution";
+
+        $query = $this->_em->createQuery($dql)
+                 ->setParameter('institution', $institution);
+
+        return $query->getResult();
+    }
+
     public function findBySession($session)
     {
         $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
@@ -62,6 +73,18 @@ class UserRepository extends EntityRepository
             WHERE t.user = u
             AND t.session = :session
         )";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('session', $session);
+
+        return $query->getResult();
+    }
+
+    public function findLightBySession($session)
+    {
+        $dql = "SELECT DISTINCT u.id FROM Innova\SelfBundle\Entity\User u
+        LEFT JOIN u.traces ut
+        WHERE ut.session = :session";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('session', $session);
@@ -78,6 +101,21 @@ class UserRepository extends EntityRepository
             AND t.session = :session
             AND (t.date >= :startDate AND t.date <= :endDate)
         )";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('session', $session)
+                ->setParameter('startDate', $startDate)
+                ->setParameter('endDate', $endDate);
+
+        return $query->getResult();
+    }
+
+    public function findLightBySessionAndDates($session, $startDate, $endDate)
+    {
+        $dql = "SELECT DISTINCT u.id FROM Innova\SelfBundle\Entity\User u
+        LEFT JOIN u.traces ut
+        WHERE ut.session = :session
+        AND (ut.date >= :startDate AND ut.date <= :endDate)";
 
         $query = $this->_em->createQuery($dql)
                 ->setParameter('session', $session)
