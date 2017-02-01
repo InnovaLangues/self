@@ -47,7 +47,7 @@ class StatsController extends Controller
                 'name' => $session->getName(),
                 'test' => $session->getTest()->getName(),
                 'language' => $session->getTest()->getLanguage()->getName(),
-                'usercount' => count($this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findBySession($session)),
+                'usercount' => count($this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findLightBySession($session)),
             ];
         }
 
@@ -91,7 +91,7 @@ class StatsController extends Controller
                 'name' => $session->getName(),
                 'test' => $session->getTest()->getName(),
                 'language' => $session->getTest()->getLanguage()->getName(),
-                'usercount' => count($this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findBySessionAndDates($session, $startDate, $endDate)),
+                'usercount' => count($this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findLightBySessionAndDates($session, $startDate, $endDate)),
             ];
         }
 
@@ -115,7 +115,7 @@ class StatsController extends Controller
             $data_institutions[] = [
                 'name' => $institution->getName(),
                 'id' => $institution->getId(),
-                'usercount' => count($this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findByInstitution($institution)),
+                'usercount' => count($this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findLightByInstitution($institution)),
             ];
         }
 
