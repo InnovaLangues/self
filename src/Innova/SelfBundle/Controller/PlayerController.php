@@ -44,7 +44,7 @@ class PlayerController extends Controller
 
         $questionnaire = $orderQuestionnaire->getQuestionnaire();
         $questionnaires = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')
-            ? $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test)
+            ? $this->getDoctrine()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test)
             : null;
 
         $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
@@ -110,7 +110,7 @@ class PlayerController extends Controller
      */
     public function pickAQuestionnaireAction(Test $test, Session $session, Questionnaire $questionnaire)
     {
-        $questionnaires = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
+        $questionnaires = $this->getDoctrine()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
         return array(
             'test' => $test,
@@ -141,9 +141,8 @@ class PlayerController extends Controller
      */
     public function sessionLogAction(Request $request)
     {
-        $post = $request->request->all();
-        $password = $post['passwd'];
-        $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findBy(array('passwd' => $password, 'actif' => true));
+        $password = $request->request->get('passwd');
+        $sessions = $this->getDoctrine()->getRepository('InnovaSelfBundle:Session')->findActiveByPassword($password);
 
         if (count($sessions) >= 1) {
             $this->get('self.player.manager')->considerAsLogged($sessions);
