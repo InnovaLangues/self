@@ -58,7 +58,7 @@ class Media
     private $mediaClicks;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MediaPurpose", inversedBy="medias", fetch = "EAGER")
+     * @ORM\ManyToOne(targetEntity="MediaPurpose", inversedBy="medias")
      */
     protected $mediaPurpose;
 

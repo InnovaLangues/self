@@ -6,6 +6,18 @@ use Doctrine\ORM\EntityRepository;
 
 class SessionRepository extends EntityRepository
 {
+    public function findActiveByPassword($password)
+    {
+        $dql = "SELECT s FROM Innova\SelfBundle\Entity\Session s
+        WHERE s.passwd = :password
+        AND s.actif = 1";
+
+        $query = $this->_em->createQuery($dql)
+                        ->setParameter('password', $password);
+
+        return $query->getResult();
+    }
+
     public function findAuthorized($test, $user)
     {
         $dql = "SELECT s FROM Innova\SelfBundle\Entity\Session s
