@@ -26,7 +26,7 @@
 					</ul>
 				{% else %}
 					<form class="form-inline" action="{{ path('session_log') }}" method="post" autocomplete="off">
-						<p>Code de la session :</p>
+						<p>{{ "editor.session.passwd" | trans }}</p>
 						<div class="form-group">
 							<input id="passwd" class="form-control" type="password" name="passwd">
 						</div>
@@ -39,7 +39,7 @@
     </div>
     <div id="video-help"  class="col-md-8">
         <div class="panel panel-default">
-            <div class="panel-heading">Vidéo d'aide</div>
+            <div class="panel-heading">{{ "help_video" | trans }}</div>
             <div class="panel-body text-center">
                 {% include 'InnovaSelfBundle::Main/help.html.twig' %}
             </div>

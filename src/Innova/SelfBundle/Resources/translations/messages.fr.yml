@@ -655,3 +655,12 @@ stats:
     filter: Filtrer
     define_interval: Définissez un intervalle de temps.
     date_format: Format de la date:
+
+test_results: Résultats pour le test
+pdf_export: Exporter au format PDF
+comprehension_oral: Compréhension de l'oral
+comprehension_ecrite: Compréhension de l'écrit
+expression_ecrite_courte: Expression écrite courte
+attestation: Attestation de positionnement en
+delivre_a: Délivrée à
+le: le

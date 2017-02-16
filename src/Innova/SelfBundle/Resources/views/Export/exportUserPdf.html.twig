@@ -23,15 +23,15 @@
         <div class="container">
             <div class="row text-center">
                 <h2  style="margin-bottom:1cm"><b>Service des Langues</b></h2>
-                <h3>Attestation de positionnement en <b>{{ session.test.language.name |trans}}</b></h3>
+                <h3>{{"attestation" | trans }} <b>{{ session.test.language.name |trans}}</b></h3>
                 <h3 style="margin-bottom:1cm">
-                    Délivrée à:
+                    {{ "delivre_a" |trans}}:
                     {% if user.firstname is defined and user.lastname is defined %}
                         {{ user.firstname }} {{ user.lastname | upper }}
                     {% else %}
                         {{ user.username }}
                     {% endif %}
-                    <br/> le {{ date |date("d/m/Y") }}.
+                    <br/> {{ "le" |trans}} {{ date |date("d/m/Y") }}.
                 </h3>
                 {% include "InnovaSelfBundle:Player/common:score.html.twig" %}
             </div>
