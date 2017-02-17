@@ -206,4 +206,15 @@ class UserRepository extends EntityRepository
 
         return $count;
     }
+
+    public function findByRole($role)
+    {
+        $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
+         WHERE u.roles LIKE :role";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('role', '%'.$role.'%');
+
+        return $query->getResult();
+    }
 }

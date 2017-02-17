@@ -76,6 +76,7 @@ user:
     all: Tous
     connected: Connectés
     last: 1000 derniers inscrits
+    admins: Administrateurs
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires
