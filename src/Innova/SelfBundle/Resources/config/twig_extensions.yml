@@ -28,6 +28,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    twig.extension.user:
+        class: Innova\SelfBundle\Twig\UserExtension
+        arguments:
+            entityManager: @doctrine.orm.entity_manager
+        tags:
+            - { name: twig.extension }
+
     twig.extension.disambiguate:
         class: Innova\SelfBundle\Twig\DisambiguateExtension
         tags:

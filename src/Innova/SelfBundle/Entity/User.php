@@ -608,7 +608,7 @@ class User extends BaseUser implements JsonSerializable
     }
 
     /**
-     * Set motherTongue
+     * Set motherTongue.
      *
      * @param string $motherTongue
      *
@@ -622,7 +622,7 @@ class User extends BaseUser implements JsonSerializable
     }
 
     /**
-     * Get motherTongue
+     * Get motherTongue.
      *
      * @return string
      */
@@ -632,7 +632,7 @@ class User extends BaseUser implements JsonSerializable
     }
 
     /**
-     * Set motherTongueOther
+     * Set motherTongueOther.
      *
      * @param string $motherTongueOther
      *
@@ -646,7 +646,7 @@ class User extends BaseUser implements JsonSerializable
     }
 
     /**
-     * Get motherTongueOther
+     * Get motherTongueOther.
      *
      * @return string
      */

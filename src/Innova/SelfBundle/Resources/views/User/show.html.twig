@@ -77,6 +77,46 @@
     </table>
 
     {% if sessions is defined %}
+        <h2>Permissions</h2>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>{{ 'user.hasAnyGlobalRight' | trans }}</th>
+                    <td>{{ hasAnyGlobalRight(user) ? "generic.yes"|trans : "generic.no" |trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'user.testsWithRights' | trans }}</th>
+                    <td>
+                        {% set rights = getTestsWithRights(user) %}
+                        {% if rights|length > 0 %}
+                            {% for right in rights %}
+                            <a class="btn btn-default btn-xs" href="{{ path('editor_test_rights', { 'testId': right.target.id }) }}">
+                                {{ right.target.name }}
+                            </a>
+                            {% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}    
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'user.sessionsWithRights' | trans }}</th>
+                    <td>
+                        {% set rights = getSessionsWithRights(user) %}
+                        {% if rights|length > 0 %}
+                            {% for right in rights %}
+                            <a class="btn btn-default btn-xs" href="{{ path('editor_session_rights', { 'sessionId': right.target.id }) }}">
+                                {{ right.target.name }}
+                            </a>
+                            {% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
         <h2>Traces</h2>
         <ul class="list-group">
             {% if sessions|length > 0 %}
