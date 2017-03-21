@@ -33,31 +33,42 @@ class UserType extends BaseType
             ->add('lastName')
             ->add('firstName')
             ->add('institution', 'entity', array(
-                    'class'   => 'InnovaSelfBundle:Institution\Institution',
+                    'class' => 'InnovaSelfBundle:Institution\Institution',
                     'query_builder' => function () {
                         return $this->om->getRepository('InnovaSelfBundle:Institution\Institution')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
                     },
                     'required' => true,
-                    'empty_value' => 'Choisissez une option'
+                    'empty_value' => 'Choisissez une option',
                 ))
             ->add('course', 'entity', array(
-                    'class'   => 'InnovaSelfBundle:Institution\Course',
+                    'class' => 'InnovaSelfBundle:Institution\Course',
                     'required' => true,
                     'empty_value' => 'Choisissez une option',
                     'query_builder' => function () {
                         return $this->om->getRepository('InnovaSelfBundle:Institution\Course')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
                     },
-                    'attr' => array("disabled" => "disabled")
+                    'attr' => array('disabled' => 'disabled'),
                 ))
             ->add('year', 'entity', array(
-                    'class'   => 'InnovaSelfBundle:Institution\Year',
+                    'class' => 'InnovaSelfBundle:Institution\Year',
                     'query_builder' => function () {
                         return $this->om->getRepository('InnovaSelfBundle:Institution\Year')->createQueryBuilder('y')->orderBy('y.name', 'ASC');
                     },
                     'property' => 'name',
                     'required' => true,
-                    'empty_value' => 'Choisissez une option'
+                    'empty_value' => 'Choisissez une option',
                 ))
+            ->add('motherTongue', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'user.name',
+                    'translation_domain' => 'messages',
+                ))
+            ->add('motherTongueOther', 'text', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'user.name',
+                    'translation_domain' => 'messages',
+                ))
+
         ;
     }
 

@@ -77,6 +77,8 @@ user:
     connected: Connectés
     last: 1000 derniers inscrits
     admins: Administrateurs
+    motherTongue: Langue maternelle
+    motherTongueOther: Autre langue de référence
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires

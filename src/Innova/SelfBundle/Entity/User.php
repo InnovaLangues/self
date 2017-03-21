@@ -61,6 +61,20 @@ class User extends BaseUser implements JsonSerializable
     private $firstName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="motherTongue", type="string", length=255, nullable=true)
+     */
+    private $motherTongue;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="motherTongueOther", type="string", length=255, nullable=true)
+     */
+    private $motherTongueOther;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Test", inversedBy="users")
      */
     private $tests;
@@ -591,5 +605,53 @@ class User extends BaseUser implements JsonSerializable
     public function getYear()
     {
         return $this->year;
+    }
+
+    /**
+     * Set motherTongue
+     *
+     * @param string $motherTongue
+     *
+     * @return User
+     */
+    public function setMotherTongue($motherTongue)
+    {
+        $this->motherTongue = $motherTongue;
+
+        return $this;
+    }
+
+    /**
+     * Get motherTongue
+     *
+     * @return string
+     */
+    public function getMotherTongue()
+    {
+        return $this->motherTongue;
+    }
+
+    /**
+     * Set motherTongueOther
+     *
+     * @param string $motherTongueOther
+     *
+     * @return User
+     */
+    public function setMotherTongueOther($motherTongueOther)
+    {
+        $this->motherTongueOther = $motherTongueOther;
+
+        return $this;
+    }
+
+    /**
+     * Get motherTongueOther
+     *
+     * @return string
+     */
+    public function getMotherTongueOther()
+    {
+        return $this->motherTongueOther;
     }
 }
