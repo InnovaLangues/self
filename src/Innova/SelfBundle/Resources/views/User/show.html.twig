@@ -32,7 +32,7 @@
     {% endif %}
 
     <hr/>
-    
+
     <h2>Informations</h2>
 
     <table class="record_properties table">
@@ -64,6 +64,14 @@
             <tr>
                 <th>{{ 'registration.year' | trans }}</th>
                 <td>{{ user.year ? user.year.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'user.motherTongue' | trans }}</th>
+                <td>{{ user.motherTongue ? user.motherTongue }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'user.motherTongueOther' | trans }}</th>
+                <td>{{ user.motherTongueOther ? user.motherTongueOther }}</td>
             </tr>
         </tbody>
     </table>

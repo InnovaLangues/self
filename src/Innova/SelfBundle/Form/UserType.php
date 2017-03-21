@@ -60,12 +60,10 @@ class UserType extends BaseType
                 ))
             ->add('motherTongue', 'text', array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'user.name',
                     'translation_domain' => 'messages',
                 ))
             ->add('motherTongueOther', 'text', array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'user.name',
                     'translation_domain' => 'messages',
                 ))
 
