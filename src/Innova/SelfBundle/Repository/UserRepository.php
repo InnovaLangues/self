@@ -198,6 +198,28 @@ class UserRepository extends EntityRepository
         return false;
     }
 
+    public function getTestWithRights($user)
+    {
+        $dql = "SELECT r FROM Innova\SelfBundle\Entity\Right\RightUserTest r
+        WHERE r.user = :user";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('user', $user);
+
+        return $query->getResult();
+    }
+
+    public function getSessionsWithRights($user)
+    {
+        $dql = "SELECT r FROM Innova\SelfBundle\Entity\Right\RightUserSession r
+        WHERE r.user = :user";
+
+        $query = $this->_em->createQuery($dql)
+                ->setParameter('user', $user);
+
+        return $query->getResult();
+    }
+
     public function getRegisteredCount()
     {
         $dql = 'SELECT COUNT(u.id)from Innova\SelfBundle\Entity\User u';

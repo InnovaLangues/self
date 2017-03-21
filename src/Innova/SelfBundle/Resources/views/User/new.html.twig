@@ -37,7 +37,7 @@
 
 	    {{ form_label(form.firstname) }}
 	    {{ form_widget(form.firstname, { 'attr': {'class': 'form-control'} }) }}
-		
+
 	    {{ form_label(form.preferedLanguage) }}
 	    {{ form_widget(form.preferedLanguage, { 'attr': {'class': 'form-control'} }) }}
 
@@ -68,6 +68,12 @@
 
 		{{ form_label(form.year) }}
 	    {{ form_widget(form.year, { 'attr': {'class': 'form-control'} }) }}
+
+		{{ form_label(form.motherTongue) }}
+	    {{ form_widget(form.motherTongue) }}
+
+		{{ form_label(form.motherTongueOther) }}
+	    {{ form_widget(form.motherTongueOther) }}
 
 	    <br/>
 	    <div class="form-group">

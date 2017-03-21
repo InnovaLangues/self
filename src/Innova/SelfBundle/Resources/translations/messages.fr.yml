@@ -79,6 +79,9 @@ user:
     admins: Administrateurs
     motherTongue: Langue maternelle
     motherTongueOther: Autre langue de référence
+    hasAnyGlobalRight: A des droits globaux
+    testsWithRights: Tests avec des droits
+    sessionsWithRights: Sessions avec des droits
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires
