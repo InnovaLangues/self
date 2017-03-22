@@ -28,6 +28,13 @@
                                     {{ 'user.connected' | trans }}
                                 </a>
                             </li>
+                            {% if checkRight("right.generalParameters") %}
+                            <li>
+                                <a href="{{ path('admin_user', { 'subset': 'admins' }) }}">
+                                    {{ 'user.admins' | trans }}
+                                </a>
+                            </li>
+                            {% endif %}
                             <li>
                                 <form id="user-search" method="POST" action="{{ path('admin_user_search') }}">
                                     <div style="margin:0 12px;" class="input-group">

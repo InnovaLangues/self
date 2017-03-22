@@ -206,8 +206,10 @@ class ExportManager
 
             $secondStep = $this->getUserSecondStep($session, $user);
 
-            $csv .= $this->addColumn($user->getUserName());
+            $csv .= $this->addColumn($user->getLastName());
             $csv .= $this->addColumn($user->getFirstName());
+            $csv .= $this->addColumn(strtolower($user->getMotherTongue()));
+            $csv .= $this->addColumn(strtolower($user->getMotherTongueOther()));
             $csv .= $this->addColumn($result[$userId]['date']);
             $csv .= $this->addColumn($result[$userId]['time']);
             $csv .= $this->addColumn($score);
@@ -334,7 +336,9 @@ class ExportManager
         //  BODY
         $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
         foreach ($users as $user) {
-            $csv .= $user->getUserName().' '.$user->getFirstName().';';
+            $csv .= $user->getLastName().' '.$user->getFirstName().';';
+            $csv .= $this->addColumn(strtolower($user->getMotherTongue()));
+            $csv .= $this->addColumn(strtolower($user->getMotherTongueOther()));
             $userId = $user->getId();
             $secondStep = $this->getUserSecondStep($session, $user);
             $csv .= $this->addColumn($secondStep);
@@ -342,7 +346,6 @@ class ExportManager
             foreach ($questionnaires as $questionnaire) {
                 $questionnaireId = $questionnaire->getId();
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
-
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $questions[0]->getTypology()->getName();
 
@@ -419,12 +422,16 @@ class ExportManager
         if ($mode == 'csv') {
             $csv .= $this->addColumn('Nom');
             $csv .= $this->addColumn('Prénom');
+            $csv .= $this->addColumn('Langue maternelle');
+            $csv .= $this->addColumn('Autre langue de référence');
             $csv .= $this->addColumn('Date');
             $csv .= $this->addColumn('Temps en secondes (pour le test entier)');
             $csv .= $this->addColumn('Score total obtenu dans le test (formule du total)');
             $csv .= $this->addColumn('Etape de sortie');
         } else {
             $csv .= $this->addColumn('Etudiant');
+            $csv .= $this->addColumn('Langue maternelle');
+            $csv .= $this->addColumn('Autre langue de référence');
             $csv .= $this->addColumn('Etape de sortie');
         }
 
@@ -456,16 +463,12 @@ class ExportManager
             $traces = $em->getRepository('InnovaSelfBundle:Trace')->getBySessionAndQuestionnaire($sessionId, $questionnaireId);
             foreach ($traces as $trace) {
                 $userId = $trace->getUser()->getId();
-                $userName = (string) $trace->getUser();
-                $emailName = (string) $trace->getUser()->getEmail();
-                $testDate = date_format($trace->getDate(), 'dm');
                 if (!isset($result[$userId]['time'])) {
                     $result[$userId]['time'] = 0;
                 }
                 $result[$userId]['time'] = $result[$userId]['time'] + $trace->getTotalTime();
-                $result[$userId]['name'] = $userName;
-                $result[$userId]['email'] = $emailName;
-                $result[$userId]['date'] = $testDate;
+                $result[$userId]['name'] = (string) $trace->getUser();
+                $result[$userId]['date'] = date_format($trace->getDate(), 'dm');
             }
 
             foreach ($questions as $question) {
@@ -532,6 +535,8 @@ class ExportManager
         $csv .= $this->addColumn('Score CE');
         $csv .= $this->addColumn('Score EEC');
         $csv .= $this->addColumn('Test fini');
+        $csv .= $this->addColumn('Langue maternelle');
+        $csv .= $this->addColumn('Autre langue de référence');
 
         $csv .= "\n";
 
@@ -579,6 +584,9 @@ class ExportManager
             $csv .= $this->addColumn($scoreCE);
             $csv .= $this->addColumn($scoreEEC);
             $csv .= $this->addColumn($isTestFinished ? 'oui' : 'non');
+
+            $csv .= $this->addColumn(strtolower($user->getMotherTongue()));
+            $csv .= $this->addColumn(strtolower($user->getMotherTongueOther()));
 
             $csv .= "\n";
         }

@@ -39,6 +39,9 @@ class UserController extends Controller
             case 'last':
                 $users = $userRepo->findBy(array(), array('id' => 'DESC'), $limit = 1000, $offset = null);
                 break;
+            case 'admins':
+                $users = $userRepo->findByRole('ROLE_SUPER_ADMIN');
+                break;
         }
 
         return array(

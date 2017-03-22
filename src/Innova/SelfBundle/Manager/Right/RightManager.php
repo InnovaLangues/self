@@ -38,7 +38,7 @@ class RightManager
         return $this;
     }
 
-    /**  
+    /**
      * @param string $rightName
      */
     public function checkRight($rightName, User $user, $entity = null)
@@ -54,10 +54,10 @@ class RightManager
 
             if ($entity && $right->getAttribute()) {
                 $attribute = $right->getAttribute();
-                $repoName = "InnovaSelfBundle:Right\\".$right->getClass();
+                $repoName = 'InnovaSelfBundle:Right\\'.$right->getClass();
 
                 if ($em->getRepository($repoName)->findOneBy(array(
-                    "target" => $entity,
+                    'target' => $entity,
                     $attribute => true,
                 ))) {
                     return true;
@@ -66,8 +66,8 @@ class RightManager
 
             return false;
         } else {
-            echo "Le droit testé n'existe pas (".$rightName.")";
-            
+            echo "Le droit testé n'existe pas (".$rightName.')';
+
             return false;
         }
     }
@@ -101,9 +101,9 @@ class RightManager
     public function adminToggle(User $user)
     {
         if ($this->hasAnyRight($user)) {
-            $this->manipulator->addRole($user->getUsername(), "ROLE_SUPER_ADMIN");
+            $this->manipulator->addRole($user->getUsername(), 'ROLE_SUPER_ADMIN');
         } else {
-            $this->manipulator->removeRole($user->getUsername(), "ROLE_SUPER_ADMIN");
+            $this->manipulator->removeRole($user->getUsername(), 'ROLE_SUPER_ADMIN');
         }
     }
 
@@ -111,7 +111,7 @@ class RightManager
     {
         $em = $this->entityManager;
 
-        $hasAnyGlobalRight = $em->getRepository("InnovaSelfBundle:User")->hasAnyGlobalRight($user);
+        $hasAnyGlobalRight = $em->getRepository('InnovaSelfBundle:User')->hasAnyGlobalRight($user);
 
         return $hasAnyGlobalRight;
     }
@@ -128,7 +128,7 @@ class RightManager
             return true;
         };
 
-        if (count($em->getRepository("InnovaSelfBundle:Right\RightUserGroup")->findByUser($user)) > 0) {
+        if (count($em->getRepository("InnovaSelfBundle:Right\RightUserSomeone")->findByUser($user)) > 0) {
             return true;
         };
 
@@ -141,15 +141,15 @@ class RightManager
 
         switch ($groupClass) {
             case 'RightUserTest':
-                $authorized = $em->getRepository("InnovaSelfBundle:Test")->findAuthorized($user);
+                $authorized = $em->getRepository('InnovaSelfBundle:Test')->findAuthorized($user);
                 break;
 
             case 'RightUserSomeone':
-                $authorized = $em->getRepository("InnovaSelfBundle:User")->findAuthorized($user);
+                $authorized = $em->getRepository('InnovaSelfBundle:User')->findAuthorized($user);
                 break;
 
             case 'RightUserSession':
-                $authorized = $em->getRepository("InnovaSelfBundle:Session")->findAllAuthorized($user);
+                $authorized = $em->getRepository('InnovaSelfBundle:Session')->findAllAuthorized($user);
                 break;
         }
 
@@ -164,13 +164,13 @@ class RightManager
     {
         $em = $this->entityManager;
         // on vérifie d'abord que l'utilisateur à des droits globaux sur l'édition de tâche ou les droits sur la tâche en question
-        if ($this->checkRight("right.edittask", $user, $task)) {
+        if ($this->checkRight('right.edittask', $user, $task)) {
             return true;
         } else {
             // au besoin on vérifie que l'utlisateur à des droits d'édition sur les possibles tests liés à la tâche
-            if ($tests = $em->getRepository("InnovaSelfBundle:Test")->findByTask($task)) {
+            if ($tests = $em->getRepository('InnovaSelfBundle:Test')->findByTask($task)) {
                 foreach ($tests as $test) {
-                    if ($this->checkRight("right.edittasktest", $user, $test)) {
+                    if ($this->checkRight('right.edittasktest', $user, $test)) {
                         return true;
                     }
                 }
