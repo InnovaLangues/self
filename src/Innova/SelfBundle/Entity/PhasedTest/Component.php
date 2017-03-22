@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity\PhasedTest;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Component
+ * Component.
  *
  * @ORM\Table("component")
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Component
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,46 +23,46 @@ class Component
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="ComponentType")
-    */
+     * @ORM\ManyToOne(targetEntity="ComponentType", fetch = "EAGER")
+     */
     protected $componentType;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="alternativeNumber", type="integer")
      */
     private $alternativeNumber;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test", inversedBy="components", cascade={"persist"})
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Test", inversedBy="components", cascade={"persist"})
+     */
     protected $test;
 
     /**
-    * @ORM\OneToMany(targetEntity="OrderQuestionnaireComponent", mappedBy="component", cascade={"persist", "remove"})
-    * @ORM\OrderBy({"displayOrder" = "ASC"})
-    */
+     * @ORM\OneToMany(targetEntity="OrderQuestionnaireComponent", mappedBy="component", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"displayOrder" = "ASC"})
+     */
     private $orderQuestionnaireComponents;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="component", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="component", cascade={"remove"})
+     */
     protected $traces;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
         $this->orderQuestionnaireComponents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->traces                       = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -70,9 +70,10 @@ class Component
     }
 
     /**
-     * Set componentType
+     * Set componentType.
      *
-     * @param  \Innova\SelfBundle\Entity\PhasedTest\ComponentType $componentType
+     * @param \Innova\SelfBundle\Entity\PhasedTest\ComponentType $componentType
+     *
      * @return Component
      */
     public function setComponentType(\Innova\SelfBundle\Entity\PhasedTest\ComponentType $componentType = null)
@@ -83,7 +84,7 @@ class Component
     }
 
     /**
-     * Get componentType
+     * Get componentType.
      *
      * @return \Innova\SelfBundle\Entity\PhasedTest\ComponentType
      */
@@ -93,9 +94,10 @@ class Component
     }
 
     /**
-     * Set test
+     * Set test.
      *
-     * @param  \Innova\SelfBundle\Entity\Test $test
+     * @param \Innova\SelfBundle\Entity\Test $test
+     *
      * @return Component
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
@@ -106,7 +108,7 @@ class Component
     }
 
     /**
-     * Get test
+     * Get test.
      *
      * @return \Innova\SelfBundle\Entity\Test
      */
@@ -116,9 +118,10 @@ class Component
     }
 
     /**
-     * Add orderQuestionnaireComponents
+     * Add orderQuestionnaireComponents.
      *
-     * @param  \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
+     *
      * @return Component
      */
     public function addOrderQuestionnaireComponent(\Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents)
@@ -129,7 +132,7 @@ class Component
     }
 
     /**
-     * Remove orderQuestionnaireComponents
+     * Remove orderQuestionnaireComponents.
      *
      * @param \Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent $orderQuestionnaireComponents
      */
@@ -139,7 +142,7 @@ class Component
     }
 
     /**
-     * Get orderQuestionnaireComponents
+     * Get orderQuestionnaireComponents.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -149,9 +152,10 @@ class Component
     }
 
     /**
-     * Set alternativeNumber
+     * Set alternativeNumber.
      *
-     * @param  integer   $alternativeNumber
+     * @param int $alternativeNumber
+     *
      * @return Component
      */
     public function setAlternativeNumber($alternativeNumber)
@@ -162,9 +166,9 @@ class Component
     }
 
     /**
-     * Get alternativeNumber
+     * Get alternativeNumber.
      *
-     * @return integer
+     * @return int
      */
     public function getAlternativeNumber()
     {
@@ -172,9 +176,10 @@ class Component
     }
 
     /**
-     * Add traces
+     * Add traces.
      *
-     * @param  \Innova\SelfBundle\Entity\Trace $traces
+     * @param \Innova\SelfBundle\Entity\Trace $traces
+     *
      * @return Component
      */
     public function addTrace(\Innova\SelfBundle\Entity\Trace $traces)
@@ -185,7 +190,7 @@ class Component
     }
 
     /**
-     * Remove traces
+     * Remove traces.
      *
      * @param \Innova\SelfBundle\Entity\Trace $traces
      */
@@ -195,7 +200,7 @@ class Component
     }
 
     /**
-     * Get traces
+     * Get traces.
      *
      * @return \Innova\SelfBundle\Entity\Trace[]
      */

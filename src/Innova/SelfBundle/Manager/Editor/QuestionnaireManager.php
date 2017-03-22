@@ -246,7 +246,6 @@ class QuestionnaireManager
         $newTask->setLevel($task->getLevel());
         $newTask->setAuthor($task->getAuthor());
         $newTask->setAuthorMore($task->getAuthorMore());
-        $newTask->setLanguageLevel($task->getLanguageLevel());
         $newTask->setStatus($task->getStatus());
         $newTask->setTheme('Copie de '.$task->getTheme());
         $newTask->setTextTitle($task->getTextTitle());

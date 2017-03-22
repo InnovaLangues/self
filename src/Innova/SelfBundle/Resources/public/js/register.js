@@ -95,34 +95,58 @@ for (var i=0; i < defaultDiacriticsRemovalap.length; i++){
     }
 }
 
-function removeDiacritics (str) {
-    return str.replace(/[^\u0000-\u007E]/g, function(a){ 
-       return diacriticsMap[a] || a; 
-    });
-}    
+var userForm = {
+     institutions: $("#fos_user_registration_form_institution, #user_type_institution"),
+     courses: $('#fos_user_registration_form_course, #user_type_course'),
+     registerForm: ".fos_user_registration_register",
 
-$( "body" ).on( "change", '#fos_user_registration_form_firstName, #fos_user_registration_form_lastName', function() {
-   var fn = $("#fos_user_registration_form_firstName").val();
-   var ln = $("#fos_user_registration_form_lastName").val();
+     cleanUserName: function(){
+         var fn = $("#fos_user_registration_form_firstName").val();
+         var ln = $("#fos_user_registration_form_lastName").val();
+         // suppression des accents et de tout ce qui n'est pas alphabétique ou point
+         var un = userForm.removeDiacritics(ln+"."+fn);
+         un = un.replace(/[^a-zA-Z\.]/g, "");
+         un = un.toLowerCase();
+         $("#fos_user_registration_form_username").val(un);
+     },
 
-   // suppression des accents
-   var un = removeDiacritics(ln+"."+fn);
-   // suppression de tout ce qui n'est pas alphabétique ou point
-   un = un.replace(/[^a-zA-Z\.]/g, "");
-   // passage en minuscule
-   un = un.toLowerCase();
+     removeDiacritics: function(str){
+         return str.replace(/[^\u0000-\u007E]/g, function(a){
+            return diacriticsMap[a] || a;
+         });
+     },
 
-   $("#fos_user_registration_form_username").val(un);
-});
+     populateCourse: function(institution, selectedCourse){
+         userForm.courses.html('<option value="">Choisissez une option</option>');
+         $.ajax({
+             type: 'POST',
+             url: Routing.generate('findCoursesByInstitution',{'institutionId': institution}),
+             success: function(data) {
+                 for (var i=0, total = data.length; i < total; i++) {
+                     userForm.courses.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                 }
+                 userForm.courses.attr("disabled", false);
+                 $("#user_type_course option[value='"+selectedCourse+"']").prop('selected', true);
+             }
+         });
+     }
+}
 
 $(document).ready(function() {
+    if (userForm.institutions.val() != "") {
+        userForm.courses.attr("disabled", false);
+    }
+
+    if ($("#user_type_institution").length > 0) {
+        var selectedCourse = $("#user_type_course").val();
+        userForm.populateCourse($("#user_type_institution").val(), selectedCourse);
+    }
+
     /*Login form validation*/
-    $('.fos_user_registration_register #_submit').click(function(event) {
-
-        $('.fos_user_registration_register .help-block').remove();
-        $('.fos_user_registration_register .has-error').removeClass('has-error');
-
-        $('.fos_user_registration_register').find('input').each(function(){
+    $(userForm.registerForm + ' #_submit').click(function(event) {
+        $(userForm.registerForm + ' .help-block').remove();
+        $(userForm.registerForm + ' .has-error').removeClass('has-error');
+        $(userForm.registerForm).find('input, select').each(function(){
             if($(this).prop('required') && !$(this).val()){
                 event.preventDefault();
                 var div = $(this).parent().parent();
@@ -134,26 +158,13 @@ $(document).ready(function() {
                 };
             }
         });
-
     });
 
-    $("#fos_user_registration_form_institution").change(function(){
-        $('#fos_user_registration_form_course').attr("disabled", "disabled");
-        $.ajax({
-            type: 'POST',
-            url: Routing.generate('findCoursesByInstitution',
-            {
-                'institutionId': $(this).val()
-            }),
-            success: function(data) {
-                var $course_selector = $('#fos_user_registration_form_course');
-                $course_selector.html('<option value="">Choisissez une option</option>');
-     
-                for (var i=0, total = data.length; i < total; i++) {
-                    $course_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
-                }
-                $('#fos_user_registration_form_course').attr("disabled", false);
-            }
-        });
+    userForm.institutions.change(function(){
+        userForm.populateCourse($(this).val(), "");
+    });
+
+    $( "body" ).on( "change", '#fos_user_registration_form_firstName, #fos_user_registration_form_lastName', function() {
+        userForm.cleanUserName();
     });
 });

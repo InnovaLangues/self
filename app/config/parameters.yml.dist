@@ -18,11 +18,4 @@ parameters:
     mailer_password:            null
     locale:                     fr
     secret:                     CeCiNe888VousRegarde124Pas
-    gitter_token:               null
-    gitter_room:                null
-    faye_server.endpoint:       http://localhost:3000/
-    statsd_host:                crash.innovalangues.net
-    statsd_port:                8125
-    statsd_prefix:              self
-    statsd_enabled:             true
     base_url_prod:              ""

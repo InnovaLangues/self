@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-	
+
 	{% if user is defined and is_granted('ROLE_ADMIN') %}
 		<a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
 	        <span class="glyphicon glyphicon-chevron-left"></span>
@@ -15,7 +15,6 @@
     	{% endif %}
 
     	<hr/>
-    	
     {% endif %}
 
     <h2>
@@ -26,7 +25,7 @@
     {% endif %}
     </h2>
 
-    <form method="post">
+    <form method="post" class="fos_user_registration_register">
 	    {% if not form.vars.valid %}
 		    <div class="alert alert-danger">
 		    	{{ form_errors(form) }}
@@ -46,7 +45,7 @@
 	    {% if user is defined %}
             {{ form_widget(form.username, { 'attr': { 'class': 'form-control', 'readonly': 'readonly' } }) }}
         {% else %}
-	    	{{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}	
+	    	{{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
         {% endif %}
 
 
@@ -60,6 +59,21 @@
 		    {{ form_label(form.plainPassword.second) }}
 		    {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
 	    {% endif %}
+
+		{{ form_label(form.institution) }}
+	    {{ form_widget(form.institution, { 'attr': {'class': 'form-control'} }) }}
+
+		{{ form_label(form.course) }}
+	    {{ form_widget(form.course, { 'attr': {'class': 'form-control'} }) }}
+
+		{{ form_label(form.year) }}
+	    {{ form_widget(form.year, { 'attr': {'class': 'form-control'} }) }}
+
+		{{ form_label(form.motherTongue) }}
+	    {{ form_widget(form.motherTongue) }}
+
+		{{ form_label(form.motherTongueOther) }}
+	    {{ form_widget(form.motherTongueOther) }}
 
 	    <br/>
 	    <div class="form-group">

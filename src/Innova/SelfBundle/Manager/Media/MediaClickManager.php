@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Manager\Media;
 
 use Innova\SelfBundle\Entity\Media\MediaClick;
 use Innova\SelfBundle\Entity\Test;
+use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Session;
 use Innova\SelfBundle\Entity\Media\Media;
@@ -18,10 +19,10 @@ class MediaClickManager
 
     public function __construct($entityManager, $securityContext, $securityAuthorization)
     {
-        $this->entityManager            = $entityManager;
-        $this->securityContext          = $securityContext;
-        $this->securityAuthorization    = $securityAuthorization;
-        $this->user                     = $this->securityContext->getToken()->getUser();
+        $this->entityManager = $entityManager;
+        $this->securityContext = $securityContext;
+        $this->securityAuthorization = $securityAuthorization;
+        $this->user = $this->securityContext->getToken()->getUser();
     }
 
     public function getRemainingListening(Media $media, Questionnaire $questionnaire, Test $test, Session $session, Component $component = null)
@@ -33,7 +34,7 @@ class MediaClickManager
                                                                                     'questionnaire' => $questionnaire,
                                                                                 ));
         if (is_null($mediaLimit) || $mediaLimit->getListeningLimit() == 0) {
-            $remainingListening = "X";
+            $remainingListening = 'X';
         } else {
             $remainingListening = $mediaLimit->getListeningLimit() - $nbClick;
         }
@@ -85,5 +86,22 @@ class MediaClickManager
                                 );
 
         return count($mediaClicks);
+    }
+
+    public function deleteMediaClick(Test $test, Session $session)
+    {
+        $mediaClicks = $this->entityManager->getRepository('InnovaSelfBundle:Media\MediaClick')
+                        ->findBy([
+                            'user' => $this->user,
+                            'test' => $test,
+                            'session' => $session,
+                        ]);
+
+        foreach ($mediaClicks as $mediaClick) {
+            $this->entityManager->remove($mediaClick);
+        }
+        $this->entityManager->flush();
+
+        return;
     }
 }

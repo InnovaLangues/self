@@ -5,17 +5,16 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Proposition
+ * Proposition.
  *
  * @ORM\Table("proposition")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\PropositionRepository")
  */
-
 class Proposition
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -24,29 +23,29 @@ class Proposition
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Subquestion", inversedBy="propositions", cascade={"persist"})
-    */
+     * @ORM\ManyToOne(targetEntity="Subquestion", inversedBy="propositions", cascade={"persist"})
+     */
     protected $subquestion;
 
     /**
-    * @ORM\OneToMany(targetEntity="Answer", mappedBy="proposition", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="proposition", cascade={"remove"})
+     */
     protected $answers;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media")
-    */
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Media\Media", fetch = "EAGER")
+     */
     protected $media;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="rightAnswer", type="boolean")
      */
     private $rightAnswer;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -54,9 +53,9 @@ class Proposition
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -64,9 +63,10 @@ class Proposition
     }
 
     /**
-     * Set rightAnswer
+     * Set rightAnswer.
      *
-     * @param  boolean     $rightAnswer
+     * @param bool $rightAnswer
+     *
      * @return Proposition
      */
     public function setRightAnswer($rightAnswer)
@@ -77,9 +77,9 @@ class Proposition
     }
 
     /**
-     * Get rightAnswer
+     * Get rightAnswer.
      *
-     * @return boolean
+     * @return bool
      */
     public function getRightAnswer()
     {
@@ -87,9 +87,10 @@ class Proposition
     }
 
     /**
-     * Set subquestion
+     * Set subquestion.
      *
-     * @param  \Innova\SelfBundle\Entity\Subquestion $subquestion
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestion
+     *
      * @return Proposition
      */
     public function setSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestion = null)
@@ -100,7 +101,7 @@ class Proposition
     }
 
     /**
-     * Get subquestion
+     * Get subquestion.
      *
      * @return \Innova\SelfBundle\Entity\Subquestion
      */
@@ -110,9 +111,10 @@ class Proposition
     }
 
     /**
-     * Add answers
+     * Add answers.
      *
-     * @param  \Innova\SelfBundle\Entity\Answer $answers
+     * @param \Innova\SelfBundle\Entity\Answer $answers
+     *
      * @return Proposition
      */
     public function addAnswer(\Innova\SelfBundle\Entity\Answer $answers)
@@ -123,7 +125,7 @@ class Proposition
     }
 
     /**
-     * Remove answers
+     * Remove answers.
      *
      * @param \Innova\SelfBundle\Entity\Answer $answers
      */
@@ -133,7 +135,7 @@ class Proposition
     }
 
     /**
-     * Get answers
+     * Get answers.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -143,9 +145,10 @@ class Proposition
     }
 
     /**
-     * Set media
+     * Set media.
      *
-     * @param  \Innova\SelfBundle\Entity\Media\Media $media
+     * @param \Innova\SelfBundle\Entity\Media\Media $media
+     *
      * @return Proposition
      */
     public function setMedia(\Innova\SelfBundle\Entity\Media\Media $media = null)
@@ -156,7 +159,7 @@ class Proposition
     }
 
     /**
-     * Get media
+     * Get media.
      *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */

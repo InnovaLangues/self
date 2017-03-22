@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Language
+ * Language.
  *
  * @ORM\Table("language")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Language
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -36,48 +36,41 @@ class Language
     private $color;
 
     /**
-    * @ORM\OneToMany(targetEntity="LevelLansad", mappedBy="language")
-    */
-    protected $levelLansads;
-
-    /**
-    * @ORM\OneToMany(targetEntity="Test", mappedBy="language")
-    */
+     * @ORM\OneToMany(targetEntity="Test", mappedBy="language")
+     */
     protected $tests;
 
     /**
-    * @ORM\OneToMany(targetEntity="User", mappedBy="preferedLanguage")
-    */
+     * @ORM\OneToMany(targetEntity="User", mappedBy="preferedLanguage")
+     */
     protected $users;
 
-     /**
-    * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="language")
-    */
+    /**
+     * @ORM\OneToMany(targetEntity="Questionnaire", mappedBy="language")
+     */
     protected $questionnaires;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->levelLansads     = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tests            = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->questionnaires   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * To String
+     * To String.
      */
-
     public function __toString()
     {
         return $this->getName();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -85,9 +78,10 @@ class Language
     }
 
     /**
-     * Set name
+     * Set name.
      *
-     * @param  string   $name
+     * @param string $name
+     *
      * @return Language
      */
     public function setName($name)
@@ -98,7 +92,7 @@ class Language
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -108,9 +102,10 @@ class Language
     }
 
     /**
-     * Set color
+     * Set color.
      *
-     * @param  string   $color
+     * @param string $color
+     *
      * @return Language
      */
     public function setColor($color)
@@ -121,7 +116,7 @@ class Language
     }
 
     /**
-     * Get color
+     * Get color.
      *
      * @return string
      */
@@ -131,42 +126,10 @@ class Language
     }
 
     /**
-     * Add levelLansads
+     * Add tests.
      *
-     * @param  \Innova\SelfBundle\Entity\LevelLansad $levelLansads
-     * @return Language
-     */
-    public function addLevelLansad(\Innova\SelfBundle\Entity\LevelLansad $levelLansads)
-    {
-        $this->levelLansads[] = $levelLansads;
-
-        return $this;
-    }
-
-    /**
-     * Remove levelLansads
+     * @param \Innova\SelfBundle\Entity\Test $tests
      *
-     * @param \Innova\SelfBundle\Entity\LevelLansad $levelLansads
-     */
-    public function removeLevelLansad(\Innova\SelfBundle\Entity\LevelLansad $levelLansads)
-    {
-        $this->levelLansads->removeElement($levelLansads);
-    }
-
-    /**
-     * Get levelLansads
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLevelLansads()
-    {
-        return $this->levelLansads;
-    }
-
-    /**
-     * Add tests
-     *
-     * @param  \Innova\SelfBundle\Entity\Test $tests
      * @return Language
      */
     public function addTest(\Innova\SelfBundle\Entity\Test $tests)
@@ -177,7 +140,7 @@ class Language
     }
 
     /**
-     * Remove tests
+     * Remove tests.
      *
      * @param \Innova\SelfBundle\Entity\Test $tests
      */
@@ -187,7 +150,7 @@ class Language
     }
 
     /**
-     * Get tests
+     * Get tests.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -197,9 +160,10 @@ class Language
     }
 
     /**
-     * Add questionnaires
+     * Add questionnaires.
      *
-     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
+     *
      * @return Language
      */
     public function addQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaires)
@@ -210,7 +174,7 @@ class Language
     }
 
     /**
-     * Remove questionnaires
+     * Remove questionnaires.
      *
      * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaires
      */
@@ -220,7 +184,7 @@ class Language
     }
 
     /**
-     * Get questionnaires
+     * Get questionnaires.
      *
      * @return Questionnaire[]
      */
@@ -230,9 +194,10 @@ class Language
     }
 
     /**
-     * Add users
+     * Add users.
      *
      * @param \Innova\SelfBundle\Entity\User $users
+     *
      * @return Language
      */
     public function addUser(\Innova\SelfBundle\Entity\User $users)
@@ -243,7 +208,7 @@ class Language
     }
 
     /**
-     * Remove users
+     * Remove users.
      *
      * @param \Innova\SelfBundle\Entity\User $users
      */
@@ -253,9 +218,9 @@ class Language
     }
 
     /**
-     * Get users
+     * Get users.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {

@@ -14,19 +14,24 @@
         <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
     </head>
     <body>
+        <div class="row" style="margin-bottom:1cm">
+            <div class="col-md-12">
+                <img class="pull-left" src="{{  app.request.scheme ~'://' ~ app.request.httpHost ~ asset("bundles/innovaself/images/logo-uga.jpg") }}"/>
+                <img class="pull-right" src="{{  app.request.scheme ~'://' ~ app.request.httpHost ~ asset("bundles/innovaself/images/logo-innova.jpg") }}"/>
+            </div>
+        </div>
         <div class="container">
-            <div class="row text-center" style="margin-top:3cm">
-                <h4>Lansad</h4>
-                <h4 style="margin-bottom:3cm">Service des langues pour spécialistes d'autres disciplines</h4>
-                <h2>Attestation de positionnement en langue ({{ session.test.language.name |trans}})</h2>
-                <h3 style="margin-bottom:3cm">
-                    Délivrée à : 
+            <div class="row text-center">
+                <h2  style="margin-bottom:1cm"><b>Service des Langues</b></h2>
+                <h3>Attestation de positionnement en <b>{{ session.test.language.name |trans}}</b></h3>
+                <h3 style="margin-bottom:1cm">
+                    Délivrée à:
                     {% if user.firstname is defined and user.lastname is defined %}
-                        {{ user.lastname }} {{ user.firstname }}
-                    {% else %} 
+                        {{ user.firstname }} {{ user.lastname | upper }}
+                    {% else %}
                         {{ user.username }}
                     {% endif %}
-                    <br/> le {{ "now"|date("d/m/Y") }}.
+                    <br/> le {{ date |date("d/m/Y") }}.
                 </h3>
                 {% include "InnovaSelfBundle:Player/common:score.html.twig" %}
             </div>

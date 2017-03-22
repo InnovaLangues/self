@@ -137,7 +137,7 @@ class ScoreManager
                     array('rightAnswers' => 'DESC')
                 );
 
-                $scores = $this->getScoresFromTraces($traces, true);
+                $scores = $this->getScoresFromTraces($traces, false);
                 $correctAnswers = $this->countCorrectAnswers($scores);
                 foreach ($thresholds as $threshold) {
                     if ($correctAnswers >= $threshold->getRightAnswers()) {
@@ -196,21 +196,20 @@ class ScoreManager
     public function getScoresFromTraces($traces, $ignore)
     {
         $scores = $this->initializeScoreArray();
+        $lastTrace = end($traces);
+        $component = $lastTrace->getComponent();
+        $componentType = ($component) ? $component->getComponentType() : null;
 
         foreach ($traces as $trace) {
             $session = $trace->getSession();
             $subquestions = $trace->getQuestionnaire()->getQuestions()[0]->getSubquestions();
+            $questionnaire = $trace->getQuestionnaire();
             $user = $trace->getUser();
-            $component = $trace->getComponent();
-            $componentType = ($component) ? $component->getComponentType() : null;
             $params = $session->getTest()->getPhasedParams();
             $skill = $trace->getQuestionnaire()->getSkill();
+            $skillName = $questionnaire->getSkill()->getName();
             $levelsToIgnore = $this->getIgnoredLevels($params, $skill, $componentType);
-
             foreach ($subquestions as $subquestion) {
-                $questionnaire = $subquestion->getQuestion()->getQuestionnaire();
-                $skill = $questionnaire->getSkill()->getName();
-
                 if ($subquestion->getLevel()) {
                     $level = $subquestion->getLevel()->getName();
                 } elseif ($questionnaire->getLevel()) {
@@ -219,9 +218,9 @@ class ScoreManager
 
                 if ($level && (!in_array($level, $levelsToIgnore) || !$ignore)) {
                     if ($this->subquestionCorrect($subquestion, $session, null, $user)) {
-                        ++$scores[$skill][$level]['correct'];
+                        ++$scores[$skillName][$level]['correct'];
                     }
-                    ++$scores[$skill][$level]['count'];
+                    ++$scores[$skillName][$level]['count'];
                 }
             }
         }
@@ -266,7 +265,6 @@ class ScoreManager
                 $correct = false;
             }
         }
-
         // Teste si le nombre de réponses équivaut au nombre de réponses attendues.
         if ($typology === 'TQRM' && count($rightProps) !== count($choices)) {
             $correct = false;

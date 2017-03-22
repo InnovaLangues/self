@@ -82,6 +82,8 @@ services:
             formFactory:        @form.factory
             fosUserManager:     @fos_user.util.user_manipulator
             session:            @session
+            securityContext:    @security.token_storage
+            translator:         @translator
 
     self.comment.manager:
         class: Innova\SelfBundle\Manager\CommentManager
@@ -168,7 +170,7 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
             securityContext:    @security.token_storage
-            userResultManager:  @self.user_result.manager 
+            userResultManager:  @self.user_result.manager
 
     self.user_result.manager:
         class: Innova\SelfBundle\Manager\UserResultManager
@@ -346,15 +348,8 @@ services:
         class: Innova\SelfBundle\Manager\GeneralParametersManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
-            messageManager:     @self.message.manager
             formFactory:        @form.factory
             session:            @session
-
-    self.message.manager:
-        class: Innova\SelfBundle\Manager\MessageManager
-        arguments:
-            fayeClient:      @faye_server.client
-            entityManager:      @doctrine.orm.entity_manager
 
     self.locale.manager:
         class: Innova\SelfBundle\Manager\LocaleManager

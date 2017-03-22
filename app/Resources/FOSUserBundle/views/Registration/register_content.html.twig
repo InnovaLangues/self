@@ -41,6 +41,28 @@
                 <div class="col-md-offset-5">
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="fos_user_registration_form_motherTongue">
+                    {{ 'user.motherTongue' | trans({}, 'messages') }}
+                </label>
+                <div class="col-md-4">
+                    <input value="" class="form-control" id="fos_user_registration_form_motherTongue" type="text" name="fos_user_registration_form[motherTongue]">
+                </div>
+                <div class="col-md-offset-5">
+                    {{ form_errors(form.motherTongue) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="fos_user_registration_form_motherTongueOther">
+                    {{ 'user.motherTongueOther' | trans({}, 'messages') }}
+                </label>
+                <div class="col-md-4">
+                    <input value="" class="form-control" id="fos_user_registration_form_motherTongueOther" type="text" name="fos_user_registration_form[motherTongueOther]">
+                </div>
+                <div class="col-md-offset-5">
+                    {{ form_errors(form.motherTongueOther) }}
+                </div>
+            </div>
 
             <div class="form-group">
                 <span class="form-error">{{ form_errors(form.institution) }}</span>
@@ -77,6 +99,7 @@
                 <div class="col-md-offset-5">
                 </div>
             </div>
+
 
             <div class="form-group">
                 <span class="form-error">{{ form_errors(form.username) }}</span>

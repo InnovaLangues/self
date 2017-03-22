@@ -74,11 +74,15 @@ class ExportManager
         $fs = new Filesystem();
         $userId = $user->getId();
         $sessionId = $session->getId();
+        $em = $this->entityManager;
 
         $pdfName = 'self_export-'.$userId.'pdf-session_'.$sessionId.'-'.date('d-m-Y_H:i:s').'.pdf';
         $pdfPathExport = $this->kernelRoot.'/data/user/';
         $fileName = $pdfPathExport.'/'.$pdfName;
         $fs->mkdir($pdfPathExport, 0777);
+
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'session' => $session));
+        $date = end($traces)->getDate();
 
         $score = $this->scoreManager->calculateScoreByTest($session->getTest(), $session, $user);
         $levelFeedback = $this->scoreManager->getGlobalScore($session, $user);
@@ -90,8 +94,8 @@ class ExportManager
             $this->templating->render(
                 'InnovaSelfBundle:Export:exportUserPdf.html.twig',
                 array(
-                    'user' => $user, 'score' => $score, 'session' => $session, 'levelFeedback' => $levelFeedback,
-                    'coFeedback' => $coFeedback, 'ceFeedback' => $ceFeedback, 'eecFeedback' => $eecFeedback,
+                    'user' => $user, 'score' => $score, 'session' => $session, 'date' => $date,
+                    'levelFeedback' => $levelFeedback, 'coFeedback' => $coFeedback, 'ceFeedback' => $ceFeedback, 'eecFeedback' => $eecFeedback,
                 )),
                 $fileName
         );

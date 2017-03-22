@@ -7,29 +7,79 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UserType extends AbstractType
 {
+    public function __construct($em)
+    {
+        $this->em = $em;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('lastname', 'text', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'user.name',
+            'label' => 'user.name',
             'translation_domain' => 'messages',
-        ));
+        ))
 
-        $builder->add('firstname', 'text', array(
+        ->add('firstname', 'text', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'user.firstname',
+            'label' => 'user.firstname',
             'translation_domain' => 'messages',
-        ));
+        ))
 
-        $builder->add('preferedLanguage', 'entity', array(
-            'class'   => 'InnovaSelfBundle:Language',
-            'label'  => 'user.preferedLanguage',
-            'empty_value' => "-",
+        ->add('preferedLanguage', 'entity', array(
+            'class' => 'InnovaSelfBundle:Language',
+            'label' => 'user.preferedLanguage',
+            'empty_value' => '-',
             'required' => false,
-        ));
+        ))
 
-        $builder->add('save', 'submit', array(
-            'label'  => 'generic.save',
+        ->add('institution', 'entity', array(
+            'label' => 'registration.institution',
+            'class' => 'InnovaSelfBundle:Institution\Institution',
+            'query_builder' => function () {
+                return $this->em->getRepository('InnovaSelfBundle:Institution\Institution')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
+            },
+            'required' => true,
+            'empty_value' => 'Choisissez une option',
+        ))
+
+        ->add('course', 'entity', array(
+            'label' => 'registration.course',
+            'class' => 'InnovaSelfBundle:Institution\Course',
+            'required' => true,
+            'empty_value' => 'Choisissez une option',
+            'query_builder' => function () {
+                return $this->em->getRepository('InnovaSelfBundle:Institution\Course')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
+            },
+        ))
+
+        ->add('year', 'entity', array(
+            'label' => 'registration.year',
+            'class' => 'InnovaSelfBundle:Institution\Year',
+            'query_builder' => function () {
+                return $this->em->getRepository('InnovaSelfBundle:Institution\Year')->createQueryBuilder('y')->orderBy('y.name', 'ASC');
+            },
+            'property' => 'name',
+            'required' => true,
+            'empty_value' => 'Choisissez une option',
+        ))
+
+        ->add('motherTongue', 'text', array(
+            'attr' => array('class' => 'form-control', 'required' => false),
+            'label' => 'user.motherTongue',
+            'translation_domain' => 'messages',
+            'required' => false,
+        ))
+
+        ->add('motherTongueOther', 'text', array(
+            'attr' => array('class' => 'form-control'),
+            'label' => 'user.motherTongueOther',
+            'translation_domain' => 'messages',
+            'required' => false,
+        ))
+
+        ->add('save', 'submit', array(
+            'label' => 'generic.save',
         ));
     }
 

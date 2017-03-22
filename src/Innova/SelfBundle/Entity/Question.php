@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Question
+ * Question.
  *
  * @ORM\Table("question")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Question
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,22 +22,22 @@ class Question
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="questions", cascade={"persist"})
-    */
+     * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="questions", cascade={"persist"})
+     */
     protected $questionnaire;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Typology", inversedBy="questions")
-    */
+     * @ORM\ManyToOne(targetEntity="Typology", inversedBy="questions", fetch = "EAGER")
+     */
     protected $typology;
 
     /**
-    * @ORM\OneToMany(targetEntity="Subquestion", mappedBy="question", cascade={"persist", "remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Subquestion", mappedBy="question", cascade={"persist", "remove"})
+     */
     protected $subquestions;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -45,9 +45,9 @@ class Question
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -55,9 +55,10 @@ class Question
     }
 
     /**
-     * Set questionnaire
+     * Set questionnaire.
      *
-     * @param  \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     * @param \Innova\SelfBundle\Entity\Questionnaire $questionnaire
+     *
      * @return Question
      */
     public function setQuestionnaire(\Innova\SelfBundle\Entity\Questionnaire $questionnaire = null)
@@ -68,7 +69,7 @@ class Question
     }
 
     /**
-     * Get questionnaire
+     * Get questionnaire.
      *
      * @return \Innova\SelfBundle\Entity\Questionnaire
      */
@@ -78,9 +79,10 @@ class Question
     }
 
     /**
-     * Set typology
+     * Set typology.
      *
-     * @param  \Innova\SelfBundle\Entity\Typology $typology
+     * @param \Innova\SelfBundle\Entity\Typology $typology
+     *
      * @return Question
      */
     public function setTypology(\Innova\SelfBundle\Entity\Typology $typology = null)
@@ -91,7 +93,7 @@ class Question
     }
 
     /**
-     * Get typology
+     * Get typology.
      *
      * @return \Innova\SelfBundle\Entity\Typology
      */
@@ -101,9 +103,10 @@ class Question
     }
 
     /**
-     * Add subquestions
+     * Add subquestions.
      *
-     * @param  \Innova\SelfBundle\Entity\Subquestion $subquestions
+     * @param \Innova\SelfBundle\Entity\Subquestion $subquestions
+     *
      * @return Question
      */
     public function addSubquestion(\Innova\SelfBundle\Entity\Subquestion $subquestions)
@@ -114,7 +117,7 @@ class Question
     }
 
     /**
-     * Remove subquestions
+     * Remove subquestions.
      *
      * @param \Innova\SelfBundle\Entity\Subquestion $subquestions
      */
@@ -124,7 +127,7 @@ class Question
     }
 
     /**
-     * Get subquestions
+     * Get subquestions.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

@@ -1,4 +1,5 @@
 {% set logged = app.user is not null ? true : false %}
+{% set admin = is_granted('ROLE_ADMIN') %}
 
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="navbar-header">
@@ -8,7 +9,7 @@
     </div>
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            {% if logged and is_granted('ROLE_ADMIN') %}
+            {% if logged and admin %}
                 {# USERS #}
                 {% if checkRight("right.listuser") %}
                     <li class="dropdown">
@@ -23,15 +24,17 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ path('admin_user', { 'subset': 'all' }) }}">
-                                    {{ 'user.all' | trans }}
-                                </a>
-                            </li>
-                            <li>
                                 <a href="{{ path('admin_user', { 'subset': 'connected' }) }}">
                                     {{ 'user.connected' | trans }}
                                 </a>
                             </li>
+                            {% if checkRight("right.generalParameters") %}
+                            <li>
+                                <a href="{{ path('admin_user', { 'subset': 'admins' }) }}">
+                                    {{ 'user.admins' | trans }}
+                                </a>
+                            </li>
+                            {% endif %}
                             <li>
                                 <form id="user-search" method="POST" action="{{ path('admin_user_search') }}">
                                     <div style="margin:0 12px;" class="input-group">
@@ -54,16 +57,11 @@
                             Sessions <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                           
                             <li>
-                                <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">
-                                    Sessions actives
-                                </a>
+                                <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">Sessions actives</a>
                             </li>
                             <li>
-                                <a href="{{ path('editor_sessions_active', { 'isActive': 0 }) }}">
-                                   Sessions inactives
-                                </a>
+                                <a href="{{ path('editor_sessions_active', { 'isActive': 0 }) }}"> Sessions inactives</a>
                             </li>
                         </ul>
                     </li>
@@ -81,7 +79,7 @@
                 {% else %}
                     {% set canPlayWithTasks = false %}
                 {% endif %}
-                
+
                 {% if canPlayWithTests == true or canPlayWithTasks == true %}
                     {% set languages = get_languages() %}
                     <li class="dropdown">
@@ -98,7 +96,7 @@
                                     <li><a href="{{path('editor_tests_my_favorites')}}">Tests favoris</a></li>
                                     <li><a href="{{path('editor_tests_archived_show')}}">{{ 'editor.test.archived' | trans }}</a></li>
                                     <li class="divider"></li>
-                                    
+
                                     {% for language in languages %}
                                         <li><a href="{{path('editor_tests_by_language_show', { 'languageId': language.id })}}"> {{language.name | trans }}</a></li>
                                     {% endfor %}
@@ -149,7 +147,7 @@
                 {% if page_title is not empty %}
                     {{ page_title }}
                 {% endif %}
-            </span>                 
+            </span>
         </ul>
 
         {% if logged %}
@@ -160,28 +158,27 @@
                 </a>
             </li>
 
-            {% if checkRight("right.message") %}
-                <li>
-                    <a href="{{ path('send_message') }}">
-                        <span class="glyphicon glyphicon-envelope"></span> {{ 'menu.message' | trans }}
-                    </a>
-                </li>
-            {% endif %}
+            {% if admin %}
+                {% if checkRight("right.generalParameters") %}
+                    <li>
+                        <a href="{{ path('parameters') }}">
+                            <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('stats') }}">
+                            <span class="glyphicon glyphicon-dashboard"></span> {{ 'menu.stats' | trans }}
+                        </a>
+                    </li>
+                {% endif %}
 
-            {% if checkRight("right.generalParameters") %}
-                <li>
-                    <a href="{{ path('parameters') }}">
-                        <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
-                    </a>
-                </li>
-            {% endif %}
-
-            {% if checkRight("right.institution") %}
-                <li>
-                    <a href="{{ path('institutions') }}">
-                        <span class="glyphicon glyphicon-leaf"></span> {{ 'menu.institutions' | trans }}
-                    </a>
-                </li>
+                {% if checkRight("right.institution") %}
+                    <li>
+                        <a href="{{ path('institutions') }}">
+                            <span class="glyphicon glyphicon-leaf"></span> {{ 'menu.institutions' | trans }}
+                        </a>
+                    </li>
+                {% endif %}
             {% endif %}
 
              <li>

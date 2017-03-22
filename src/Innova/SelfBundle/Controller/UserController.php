@@ -33,14 +33,14 @@ class UserController extends Controller
 
         $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
         switch ($subset) {
-            case 'all':
-                $users = $userRepo->findAllLight();
-                break;
             case 'connected':
                 $users = $this->get('self.user.manager')->getConnected();
                 break;
             case 'last':
                 $users = $userRepo->findBy(array(), array('id' => 'DESC'), $limit = 1000, $offset = null);
+                break;
+            case 'admins':
+                $users = $userRepo->findByRole('ROLE_SUPER_ADMIN');
                 break;
         }
 

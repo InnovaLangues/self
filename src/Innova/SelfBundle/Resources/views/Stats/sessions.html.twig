@@ -1,0 +1,122 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h3>
+        {{ 'menu.stats' | trans }} - Sessions
+        <a href="#" data-toggle="modal" data-target="#date-modal" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span></a>
+        <a href="#myChart" class="btn btn-default"><span class="glyphicon glyphicon-signal"></span></a>
+    </h3>
+
+    <div class="input-group">
+        <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
+        <input type="text" id="search" class="form-control" value="">
+    </div>
+    <br/>
+
+    <table id="data-table" class="table table-striped" data-chart-type="pie" data-labels="language" data-numbers="usercount" data-aggregate=1>
+        <thead>
+            <tr>
+                <th>{{ 'editor.session.name' | trans }}</th>
+                <th>{{ 'editor.test.name' | trans }}</th>
+                <th>{{ 'editor.test.language' | trans }}</th>
+                <th>
+                    {{ 'stats.usercount' | trans }}
+                    <a id="toggle_empty_lines" href="#" class="btn btn-default btn-xs" data-click-state=1>
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    		{% for data_session in data_sessions %}
+    			<tr class="chart-data" data-language="{{ data_session.language |trans }}" data-usercount="{{ data_session.usercount }}">
+    				<td>
+    					{{ data_session.name }}
+    				</td>
+                    <td>
+                         <span class="text-muted">{{ data_session.test }}</span>
+                    </td>
+                    <td>
+                         <span class="text-muted">{{ data_session.language |trans }}</span>
+                    </td>
+    				<td>
+                        {{ data_session.usercount }}
+    				</td>
+    			</tr>
+    		{% endfor %}
+        </tbody>
+    </table>
+
+    <hr/>
+    <canvas max-height="300px" width="100%" id="myChart"></canvas>
+
+    <div class="modal fade" id="date-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <form id="stats-by-dates" method="POST" action="{{ path('stats_sessions_by_date') }}">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Sélection d'un intervalle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>
+                            {{ 'stats.define_interval' | trans }}
+                            {{ 'stats.date_format' | trans }} <strong>AAAA-MM-JJ HH:MM:SS</strong>.
+                            </p>
+                        </div>
+                        <div class="col-md-12">
+                            Date de début
+                            <div class='input-group date' id='datetimepickerStart'>
+                                <input type='text' class="form-control" name="startDate" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            Date de fin
+                            <div class='input-group date' id='datetimepickerEnd'>
+                                <input type='text' class="form-control" name="endDate"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            Type de session
+                            <div class='form-group' >
+                                <select name="session_type" class="form-control">
+                                    <option value="all">{{ "editor.session.all" | trans }}</option>
+                                    <option value="active">{{ "editor.session.actives" | trans }}</option>
+                                    <option value="inactive">{{ "editor.session.inactives" | trans }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
+                    <button type="submit" id="session-export-confirmation" class="btn btn-default btn-primary">
+                        {{ 'stats.filter' | trans }}
+                    </button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts filter='yui_js' output='js/compiled/stats.js'
+        '@InnovaSelfBundle/Resources/public/js/lib/Chart.bundle.js'
+        '@InnovaSelfBundle/Resources/public/js/lib/jquery.quicksearch.js'
+        '@InnovaSelfBundle/Resources/public/js/stats.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}

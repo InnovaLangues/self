@@ -37,13 +37,17 @@ class PlayerController extends Controller
 
         // cas où il n'y a plus de tâche candidate. L'utilisateur est redirigé vers la page de fin de test.
         if (!$orderQuestionnaire = $this->get('self.player.manager')->pickQuestionnaire($test, $session)) {
+            $this->get('self.mediaclick.manager')->deleteMediaClick($test, $session);
+
             return $this->redirect($this->generateUrl('test_end', array('testId' => $test->getId(), 'sessionId' => $session->getId())));
         }
 
         $questionnaire = $orderQuestionnaire->getQuestionnaire();
-        $questionnaires = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
-        $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
+        $questionnaires = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')
+            ? $this->getDoctrine()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test)
+            : null;
 
+        $component = ($test->getPhased()) ? $orderQuestionnaire->getComponent() : null;
         $percent = $this->get('self.player.manager')->getPercentDone($test, $component, $session);
 
         return array(
@@ -90,6 +94,8 @@ class PlayerController extends Controller
      */
     public function showTestsAction()
     {
+        $this->get('self.user.manager')->checkCourse();
+
         return array();
     }
 
@@ -104,7 +110,7 @@ class PlayerController extends Controller
      */
     public function pickAQuestionnaireAction(Test $test, Session $session, Questionnaire $questionnaire)
     {
-        $questionnaires = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
+        $questionnaires = $this->getDoctrine()->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
 
         return array(
             'test' => $test,
@@ -124,6 +130,8 @@ class PlayerController extends Controller
      */
     public function sessionConnectAction()
     {
+        $this->get('self.user.manager')->checkCourse();
+
         return array();
     }
 
@@ -133,16 +141,15 @@ class PlayerController extends Controller
      */
     public function sessionLogAction(Request $request)
     {
-        $post = $request->request->all();
-        $password = $post['passwd'];
-        $sessions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Session')->findBy(array('passwd' => $password, 'actif' => true));
+        $password = $request->request->get('passwd');
+        $sessions = $this->getDoctrine()->getRepository('InnovaSelfBundle:Session')->findActiveByPassword($password);
 
         if (count($sessions) >= 1) {
             $this->get('self.player.manager')->considerAsLogged($sessions);
 
             return $this->render('InnovaSelfBundle:Player:common/log.html.twig', array('sessions' => $sessions));
         }
-        $this->get('session')->getFlashBag()->set('warning', 'wrong passwd');
+        $this->get('session')->getFlashBag()->add('warning', 'wrong passwd');
 
         return $this->redirect($this->generateUrl('session_connect', array()));
     }
