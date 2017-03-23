@@ -13,9 +13,9 @@
     <hr/>
 {% endif %}
 
-{% set canEditRights = false %} 
+{% set canEditRights = false %}
 {% if checkRight("right.editrightssession") %}
-    {% set canEditRights = true %} 
+    {% set canEditRights = true %}
 {% endif %}
 
 <h3>
@@ -49,7 +49,7 @@
 		{% for session in sessions %}
 			<tr>
 				<td>
-					{{ session.name }} 
+					{{ session.name }}
 				</td>
                 {% if test is not defined %}
                 <td>
@@ -70,6 +70,12 @@
                         <li>
                             <a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id }) }}">
                                 <span class="glyphicon glyphicon-play"></span> {{ 'editor.session.test' | trans }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('session_infos', {'sessionId': session.id }) }}">
+                                <span class="glyphicon glyphicon-info-sign"></span> {{ 'editor.session.infos' | trans }}
                             </a>
                         </li>
 
@@ -134,7 +140,7 @@
             <h4 class="modal-title" id="myModalLabel">Confirmation de la suppression</h4>
         </div>
         <div class="modal-body">
-        Êtes-vous sûr de vouloir supprimer cette session ? Ceci supprimera toutes les traces liées à cette session 
+        Êtes-vous sûr de vouloir supprimer cette session ? Ceci supprimera toutes les traces liées à cette session
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
@@ -206,5 +212,5 @@
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    
+
 {% endblock %}

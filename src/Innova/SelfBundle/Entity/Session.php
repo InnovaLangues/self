@@ -5,7 +5,7 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Session
+ * Session.
  *
  * @ORM\Table("session")
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Session
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -37,8 +37,8 @@ class Session
     private $passwd;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Test", inversedBy="sessions")
-    */
+     * @ORM\ManyToOne(targetEntity="Test", inversedBy="sessions")
+     */
     protected $test;
 
     /**
@@ -53,7 +53,7 @@ class Session
      *
      * @ORM\Column(name="globalScoreWording", type="string", length=255)
      */
-    private $globalScoreWording = "Groupe cible conseillé";
+    private $globalScoreWording = 'Groupe cible conseillé';
 
     /**
      * @var string
@@ -63,11 +63,19 @@ class Session
     private $globalScoreShow;
 
     /**
-    * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="session", cascade={"remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Innova\SelfBundle\Entity\Trace", mappedBy="session", cascade={"remove"})
+     */
     protected $traces;
+
     /**
-     * Constructor
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createDate", type="datetime", nullable=true)
+     */
+    private $createDate;
+
+    /**
+     * Constructor.
      */
     public function __construct()
     {
@@ -75,9 +83,9 @@ class Session
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -85,9 +93,10 @@ class Session
     }
 
     /**
-     * Set name
+     * Set name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return Session
      */
     public function setName($name)
@@ -98,7 +107,7 @@ class Session
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -108,9 +117,10 @@ class Session
     }
 
     /**
-     * Set test
+     * Set test.
      *
-     * @param  \Innova\SelfBundle\Entity\Test $test
+     * @param \Innova\SelfBundle\Entity\Test $test
+     *
      * @return Session
      */
     public function setTest(\Innova\SelfBundle\Entity\Test $test = null)
@@ -121,7 +131,7 @@ class Session
     }
 
     /**
-     * Get test
+     * Get test.
      *
      * @return \Innova\SelfBundle\Entity\Test
      */
@@ -131,9 +141,10 @@ class Session
     }
 
     /**
-     * Add traces
+     * Add traces.
      *
-     * @param  \Innova\SelfBundle\Entity\Session $traces
+     * @param \Innova\SelfBundle\Entity\Session $traces
+     *
      * @return Session
      */
     public function addTrace(\Innova\SelfBundle\Entity\Session $traces)
@@ -144,7 +155,7 @@ class Session
     }
 
     /**
-     * Remove traces
+     * Remove traces.
      *
      * @param \Innova\SelfBundle\Entity\Session $traces
      */
@@ -154,7 +165,7 @@ class Session
     }
 
     /**
-     * Get traces
+     * Get traces.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -164,9 +175,10 @@ class Session
     }
 
     /**
-     * Set actif
+     * Set actif.
      *
-     * @param  boolean $actif
+     * @param bool $actif
+     *
      * @return Session
      */
     public function setActif($actif)
@@ -177,7 +189,7 @@ class Session
     }
 
     /**
-     * Get actif
+     * Get actif.
      *
      * @return string
      */
@@ -187,9 +199,10 @@ class Session
     }
 
     /**
-     * Set passwd
+     * Set passwd.
      *
-     * @param  string  $passwd
+     * @param string $passwd
+     *
      * @return Session
      */
     public function setPasswd($passwd)
@@ -200,7 +213,7 @@ class Session
     }
 
     /**
-     * Get passwd
+     * Get passwd.
      *
      * @return string
      */
@@ -210,7 +223,7 @@ class Session
     }
 
     /**
-     * Set globalScoreWording
+     * Set globalScoreWording.
      *
      * @param string $globalScoreWording
      *
@@ -224,7 +237,7 @@ class Session
     }
 
     /**
-     * Get globalScoreWording
+     * Get globalScoreWording.
      *
      * @return string
      */
@@ -234,9 +247,9 @@ class Session
     }
 
     /**
-     * Set globalScoreShow
+     * Set globalScoreShow.
      *
-     * @param boolean $globalScoreShow
+     * @param bool $globalScoreShow
      *
      * @return Session
      */
@@ -248,12 +261,36 @@ class Session
     }
 
     /**
-     * Get globalScoreShow
+     * Get globalScoreShow.
      *
      * @return string
      */
     public function getGlobalScoreShow()
     {
         return $this->globalScoreShow;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     *
+     * @return Session
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
     }
 }
