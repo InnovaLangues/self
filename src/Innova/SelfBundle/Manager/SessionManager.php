@@ -34,6 +34,7 @@ class SessionManager
         $session->setTest($test);
         $session->setPasswd($passwd);
         $session->setGlobalScoreShow(true);
+        $session->setCreateDate(new \Datetime());
 
         if ($save) {
             $session = $this->saveSession($session);
