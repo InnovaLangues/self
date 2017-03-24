@@ -27,7 +27,7 @@ framework:
         handler_id:     session.handler.pdo
         name: "self"
         #save_path: "%kernel.root_dir%/sessions"
-        cookie_lifetime: 3600
+        cookie_lifetime: 0
         gc_maxlifetime: 3600
     http_method_override: true
 
