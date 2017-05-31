@@ -17,7 +17,7 @@ vi app/config/parameters.yml
 
 ### Download vendors, update schema and assets install
 ``` bash
-composer update
+composer install
 php app/console doctrine:schema:drop --force
 php app/console doctrine:schema:update --force (or php app/console doctrine:migrations:migrate)
 php app/console self:fixtures:load
