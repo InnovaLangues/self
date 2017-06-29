@@ -4,15 +4,15 @@
 	<div class="row">
 		<div class="col-md-12">
 		    <h2></span>
-		    	Résultats pour le test <strong>{{ session.test.name }}</strong>
+		    	{{"test_results" | trans}} <strong>{{ session.test.name }}</strong>
 		    	<a class=" pull-right btn btn-primary" href="{{ path('pdf-export-session-user', { 'sessionId': session.id }) }}">
 		    		<span class="glyphicon glyphicon-floppy-disk"></span>
-		    		Exporter au format PDF
+		    		{{"pdf_export" | trans}}
 		    	</a>
 		    </h2>
 
 		    <hr/>
-		</div>    
+		</div>
 	    {% include "InnovaSelfBundle:Player/common:score.html.twig" %}
 	</div>
 {% endblock %}

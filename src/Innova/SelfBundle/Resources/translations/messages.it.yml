@@ -279,7 +279,8 @@ editor:
         globalScoreWording: Intitulé du score agrégé
         connect: Connettersi alla sessione
         connexion: Connettersi alla sessione
-        helptext: Cliccare sull’icona in basso per connettersi ad una sessione del test. Verrà richiesto di inserire il codice della sessione.
+        helptext: Cliccare sul pulsante in basso per connettersi ad una sessione del test. Inserire il codice della sessione.
+        availableForCode: "Une sessione disponibile per questo codice:|Più sessioni disponibili per questo codice:"
 
 player:
     listening_remaining: "{0} No ascolto possibilo |{1} 1 solo ascolto|]1,Inf] %count% ascolti possibili"
@@ -451,8 +452,8 @@ phased:
     parameters: Paramètres
     step2Threshold: Nombre de bonnes réponses requises
     step3Threshold: Nombre de bonnes réponses requises
-    step2ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné 
-    step3ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné 
+    step2ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné
+    step3ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné
     thresholdToStep3Level: Niveau
     thresholdToStep2Level: Niveau
     threshold:
@@ -481,7 +482,7 @@ channel:
     chat_sms_written: Chat/SMS par téléphoe
     tools: Outil 2.0
     postit: Post-it / message bref
-    brochure: Brochure / dépliant 
+    brochure: Brochure / dépliant
     ticket: Tickets (train, théâtre, reçu)
     notice: Panneau / affiche
 
@@ -509,7 +510,7 @@ right:
     deletetest: Supprimer un test
     edittest: Editer un test
     listtest: Lister les tests
-    duplicatetest: Dupliquer un test 
+    duplicatetest: Dupliquer un test
     managesessiontest: Gérer les session
     managetaskstest: Gérer les tâches
     addtasktest: Ajouter une tâche
@@ -554,3 +555,21 @@ canEditPassword: Peut éditer le mot de passe
 canImportCsv: Peut importer via CSV
 canExportIndividual: Peut exporter individuellement
 canExportCollective: Peut exporter collectivement
+
+help_video: Tutorial
+
+input:
+    title: Adattamento della tastiera
+    help_text: Une aide est disponible concernant la saisie dans cette langue (voir la partie "<a data-toggle="modal" href="#helpModal">aide</a>" dans le menu)
+    japanese: Per il giapponese, leggere questi documenti:
+
+
+test_results: Risultati per il test
+pdf_export: Risultati in PDF
+comprehension_oral: Comprensione orale
+comprehension_ecrite: Comprensione scritta
+expression_ecrite_courte: Espressione scritta breve
+attestation: Attestato di posizionamento in
+delivre_a: consegnato a
+le: il
+"en route vers A2.1": A2.1 in corso di acquisizione
