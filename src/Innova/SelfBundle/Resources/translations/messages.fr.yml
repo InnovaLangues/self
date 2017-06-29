@@ -339,6 +339,11 @@ editor:
         availableForCode: "1 session répond à ce code:|Plusieurs sessions répondent à ce code:"
         invalidate_results: Invalider les résultats
         delete_results: Supprimer les traces
+        infos: Informations session
+        lasttracedate: Date de la dernière trace
+        createdate: Date de création
+        usercount: Nombre de passations
+
 
 
 player:

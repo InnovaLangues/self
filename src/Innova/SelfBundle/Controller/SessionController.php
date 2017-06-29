@@ -243,6 +243,19 @@ class SessionController extends Controller
     }
 
     /**
+     * @Route("/session/{sessionId}/infos", name="session_infos")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Session:infos.html.twig")
+     */
+    public function displayInfos(Session $session)
+    {
+        $users = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findLightBySession($session);
+        $lastTrace = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Trace')->getLastBySession($session);
+
+        return array('session' => $session, 'users' => $users, 'lastTrace' => $lastTrace);
+    }
+
+    /**
      * Handles session form.
      *
      * @param Request $request

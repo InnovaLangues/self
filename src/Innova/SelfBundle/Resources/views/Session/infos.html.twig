@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<h3>{{ 'editor.session.infos' | trans }} <b>{{ session.name }}</b></h3>
+
+<table class="table">
+    <tr>
+        <td>{{ 'editor.test.language' | trans }}</td>
+        <td>
+            {{ session.test.language.name|trans }}
+        </td>
+    </tr>
+    <tr>
+        <td>{{ 'editor.test.name' | trans }}</td>
+        <td>
+            {{ session.test.name }}
+        </td>
+    </tr>
+    <tr>
+        <td>{{ 'editor.session.createdate' | trans }}</td>
+        <td>
+            {{ session.createDate ? session.createDate|date('d-m-Y H:m:s') : "-" }}
+        </td>
+    </tr>
+    <tr>
+        <td>{{ 'editor.session.active' | trans }}</td>
+        <td>
+            {{ session.getActif ? "generic.yes" |trans: "generic.no" |trans}}
+        </td>
+    </tr>
+    <tr>
+        <td>{{ 'editor.session.usercount' | trans }}</td>
+        <td>
+            {{ users|length }}
+        </td>
+    </tr>
+    <tr>
+        <td>{{ 'editor.session.lasttracedate' | trans }}</td>
+        <td>
+            {{ lastTrace ? lastTrace.date|date('d-m-Y H:m:s') : "-" }}
+        </td>
+    </tr>
+    <tr>
+        <td>{{ 'editor.session.passwd' | trans }}</td>
+        <td>
+            {{ session.passwd }}
+        </td>
+    </tr>
+</table>
+
+{% endblock %}

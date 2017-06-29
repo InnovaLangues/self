@@ -64,6 +64,19 @@ class TraceRepository extends EntityRepository
         return $query->getOneOrNullResult();
     }
 
+    public function getLastBySession($session)
+    {
+        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
+        WHERE t.session = :session
+        order by t.id DESC";
+
+        $query = $this->_em->createQuery($dql)
+                ->setMaxResults(1)
+                ->setParameter('session', $session);
+
+        return $query->getOneOrNullResult();
+    }
+
     public function getByUserBySessionByComponent($user, $session, $component)
     {
         $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
@@ -78,8 +91,8 @@ class TraceRepository extends EntityRepository
             LEFT JOIN oqc.component c
             WHERE c.test = s.test
             AND oqc.questionnaire = q
-            AND oqc.ignoreInScoring = 0) 
-            OR 
+            AND oqc.ignoreInScoring = 0)
+            OR
             EXISTS (
             SELECT oqt FROM Innova\SelfBundle\Entity\OrderQuestionnaireTest oqt
             WHERE oqt.questionnaire = q
@@ -108,8 +121,8 @@ class TraceRepository extends EntityRepository
             LEFT JOIN oqc.component c
             WHERE c.test = s.test
             AND oqc.questionnaire = q
-            AND oqc.ignoreInScoring = 0) 
-            OR 
+            AND oqc.ignoreInScoring = 0)
+            OR
             EXISTS (
             SELECT oqt FROM Innova\SelfBundle\Entity\OrderQuestionnaireTest oqt
             WHERE oqt.questionnaire = q
@@ -137,8 +150,8 @@ class TraceRepository extends EntityRepository
             LEFT JOIN oqc.component c
             WHERE c.test = s.test
             AND oqc.questionnaire = q
-            AND oqc.ignoreInScoring = 0) 
-            OR 
+            AND oqc.ignoreInScoring = 0)
+            OR
             EXISTS (
             SELECT oqt FROM Innova\SelfBundle\Entity\OrderQuestionnaireTest oqt
             WHERE oqt.questionnaire = q
