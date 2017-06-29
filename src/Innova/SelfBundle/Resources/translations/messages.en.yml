@@ -15,7 +15,7 @@ menu:
     credit : Credits
     logout: Logout
     language_change: Change language
-    groups: Groupes
+    groups: Groups
 
 export:
     file_generated: The file has been generated
@@ -34,11 +34,11 @@ user:
     creation: Creation of a user
     single: User
     plural: Users
-    firstname: firstname
+    firstname: First name
     name: Name
     email: Email address
     admin_users: Administrators
-    session_managers: Gestionnaires de sessions
+    session_managers: Session managers
 
 registration:
     warning_required: Zones with red asterisk are required
@@ -76,7 +76,7 @@ generic:
     validate: Validate
     boolTrue: "True"
     boolFalse: "False"
-    chooseCorrectAnswer: Chosse correct answer
+    chooseCorrectAnswer: Choose the correct answer
     remove: Remove
     add: Add
     close: Close
@@ -106,7 +106,8 @@ editor:
         archive: Archive
         unarchive: Unarchive
         archived: Archived tests
-        difficulty: Afficher le formulaire de perception de difficulté
+        difficulty: Display the difficulty perception form
+
     task:
         task: Task
         tasks: Tasks
@@ -132,6 +133,7 @@ editor:
         no_task_yet: No task for this test. You can create, or select an existing on through the corresponding buttons.
         duplicate_and_add: Duplicate and add
         orphan: Orphan tasks
+
     questionnaire:
         general_infos: General information
         title: Title
@@ -140,6 +142,7 @@ editor:
         context: Context
         question_object: Text
         skill: Skill
+
     subquestion:
         identity: Identity card
         subquestions: Items
@@ -148,6 +151,8 @@ editor:
         add_instruction: Add instructions/question/question stem
         remove_instruction: Delete the instructions/question/question stem
         answers: Answers
+
+
     proposition:
         add: Add an option
         remove: Delete the option
@@ -155,6 +160,7 @@ editor:
         wrong: Incorrect answer
         make_it_right: Make correct
         make_it_wrong: Make incorrect
+
     media:
         choose: Choose a type of media
         audio: Audio
@@ -165,6 +171,7 @@ editor:
         name: Name
         description: Description/Transcription
         file: File
+
     app:
         add_pair: Add a pair
         remove_pair: Delete a pair
@@ -175,44 +182,46 @@ editor:
         proposition: Option
         associated_answer: Related answer
         add_answer: Add an answer
+
     eec:
         distractor_delete: Delete a distractor
         distractor_delete_confirm: Are you sure you want to delete this distractor ?
         blank_delete: Delete a blank text
         blank_delete_confirm: Are you sure you want to delete this blank text ?
+
     identity:
-        level.proof: Justificatif du niveau
-        author.right_status: Status du droit d'auteur
-        author.right: Droit d'auteur
-        author.right.more: Informations complémentaires sur le droit d'auteur
+        level.proof: Proof of level
+        author.right_status: Copyright status
+        author.right: Copyright
+        author.right.more: Extra information regarding copyright
         source: Source
-        source.operation: Opération sur la source
-        source.more: Informations complémentaires sur la source
-        domain: Domaine
-        register: Registre
-        reception: Type de réception
-        length: Durée
-        textLength: Longueur du texte (nombre de mots)
-        productionType: Type de production
-        flow: Débit
-        status: Statut
-        language: Langue
-        level: Niveau
-        createdby: Tâche créée par
-        revisedby: et révisée par
-        skill: Compétence
-        theme: Titre
-        fixedOrder: Ordre fixe
-        authorMore: Auteur(s) de la tâche
+        source.operation: Source operation
+        source.more: Extra information regarding source operation
+        domain: Domain
+        register: Register
+        reception: Reception type
+        length: Length
+        textLength: Length of text (word count)
+        productionType: Production type
+        flow: Flow
+        status: Status
+        language: Language
+        level: Level
+        createdby: Task created by
+        revisedby: Reviewed by
+        skill: Skill
+        theme: Theme
+        fixedOrder: Fixed Order
+        authorMore: Task Author(s)
         focuses: Focus
-        cognitive_main: Opérations cognitives principales
-        cognitive_secondary: Opérations cognitives secondaires
-        channel: Mode de production
-        socialLocation: Lieu social de production
+        cognitive_main: Main cognitive operation
+        cognitive_secondary: Secondary cognitive operation
+        channel: Channel
+        socialLocation: Location of production
         sourceType: Format
-        genre: Mode de discours
-        variety: Variété
-        lisibility: Indice de lisibilité
+        genre: Genre
+        variety: Variety
+        lisibility: Legibility Index
 
     log:
         editor_create: Create
@@ -252,8 +261,8 @@ editor:
 
     session:
         name: Session name
-        passwd: Code de session
-        active: Actif
+        passwd: Password
+        active: Active
         list: Sessions list
         create: Create a session
         manage: Sessions
@@ -262,11 +271,11 @@ editor:
         results: Session results
         results_user: Session results for user
         export: Export results
-        available: Sessions disponibles
-        no-available: Aucune session disponible
-        test: Voir dans le player
-        globalScoreShow: Afficher le score agrégé
-        globalScoreWording: Intitulé du score agrégé
+        available: Available sessions
+        no-available: No session available
+        test: View in player
+        globalScoreShow: Show global score
+        globalScoreWording: Name of global score
 
 player:
     listening_remaining: "{0} No remaining listening |{1} Only 1 listening remaining|]1,Inf] %count% listenings remaining"
@@ -297,135 +306,135 @@ English: English
 Italian: Italian
 Chinese: Chinese
 Spanish: Spanish
-Japanese: Japonese
+Japanese: Japanese
 
 author_right:
-    not_needed: Pas besoin
-    authorized: Autorisé
-    pending: En attente
-    to_ask: A demander
+    not_needed: No needed
+    authorized: Authorized
+    pending: Pending
+    to_ask: Awaiting request
 
 domain:
-    personal: Personnel
+    personal: Personal
     public: Public
-    profesional: Profesionnel
-    educational: Educationnel
+    profesional: Professional
+    educational: Educational
 
 register:
-    formal_elevated: Formel soutenu
-    formal_neutral: Formel neutre
-    informal: Informel
-    mixte: Mixte
+    formal_elevated: Formal elevated
+    formal_neutral: Formal neutre
+    informal: Informal
+    mixte: Mixed
 
 reception:
-    listener: En tant que récepteur
-    listener_interact: En tant que récepteur - interactant
+    listener: As listener
+    listener_interact: As listener-interactor
 
 length:
-    short: Ecoute brève: 5"- 20"
-    medium: Ecoute moyenne: 21” - 40"
-    long: Ecoute longue: 41"- 60"
-    very_long: Ecoute très longue: > 60"
+    short: Short 5"-20"
+    medium: Medium 21"-40"
+    long: Long 41"-60"
+    very_long: Very long >61"
 
 text_length:
-    very_short: Très bref (1-10)
-    short : Bref (11-30)
-    medium: Moyen (31 - 80)
-    long: Long: (81 - 200)
-    very_long: Très long (>200)
+    very_short: Very short (1-10)
+    short : Short (11-30)
+    medium: Medium (31-80)
+    long: Long (81-200)
+    very_long: Very long (>200)
 
 flow:
-    slow: Lent
-    medium: Moyen
-    fast: Rapide
+    slow: Slow
+    medium: Medium
+    fast: Fast
 
 source:
     certification: Certification
-    textbook: Manuel
-    intern: Interne
-    other: Autre
+    textbook: Textbook
+    intern: Internal
+    other: Other
 
 source_operation:
-    original: Source originale
-    original_modified: Source modifiée
-    constructed: Source construite
-    constructed_modified: Source construite et modifiée
+    original: Original source
+    original_modified: Modified original source
+    constructed: Constructed source
+    constructed_modified: Constructed, modified source
 
 focus:
     lexical: Lexical
-    communicative: Communicatif
-    morphosyntaxic: Morphosyntaxique
-    textualCohesion: Cohésion textuelle
+    communicative: Communicative
+    morphosyntaxic: Morphosyntaxic
+    textualCohesion: Textual Cohesion
 
 cognitive:
-    global_comprehension: Compréhension globale
-    detailed_comprehension: Compréhension détaillée
-    infer_context: Reconnaitre le contexte
-    infer_intention: Reconnaitre l'intention communicative
-    infer_state: Reconnaitre l'état d'âme
-    infer_register: Reconnaitre les registres
+    global_comprehension: Global comprehension
+    detailed_comprehension: Detailed comprehension
+    infer_context: Infer context
+    infer_intention: Infer intention
+    infer_state: Infer state of mind
+    infer_register: Infer register
     interaction: Interaction
-    infer_information: Reconnaître des informations implicites
-    completeMessage: Compléter un message
-    reformulateMessage: Reformuler un message / une phrase
-    interact: Interagir
-    readBack: Relire pour corriger
-    other: Autre
+    infer_information: Infer implicit information
+    completeMessage: Complete message
+    reformulateMessage: Reformulate message / sentence
+    interact: Interact
+    readBack: Re-read and correct (Review and edit)
+    other: Other
 
 socialLocation:
     radio: Radio
-    tv: Télévision
+    tv: Television
     web: Web
-    institution: Institutions (politiques, éducatives, administratives, etc.)
-    press: Presse (magazine, journal, etc.)
-    edition: Edition (libre, encyclopédie)
-    other: Autre
+    institution: Institution (political, educational, administrative, etc)
+    press: Press (magazine, newspaper, etc)
+    edition: Publication (book, encyclopedia, etc)
+    other: Other
 
 productionType:
     monologal:
-        self: monologal (autogéré)
+        self: monologal (self-managed)
         hetero: monologal (hétérogéré)
     dialogal:
-        bi: dialogal (entre 2 personnes)
-        poly: dialogal (entre plusieurs personnes)
+        bi: Dialogue (between 2 people)
+        poly: Dialogue (among several people)
 
 sourceType:
     audio: Audio
-    video: Vidéo
-    text: Texte
+    video: Video
+    text: Text
     image: Image
 
 genre:
-    informative: Informatif
-    argumentative: Argumentatif
-    narrative: Narratif
-    descriptive: Descriptif
-    literary: Littéraire
-    conversational: Conversationnel
-    explicatif: Explicatif
-    injonctif: Injonctif
-    expressif: Expressif
-    poetique: Poétique
+    informative: Informative
+    argumentative: Argumentative
+    narrative: Narrative
+    descriptive: Descriptive
+    literary: Literary
+    conversational: Conversational
+    explicatif: Explicative
+    injonctif: Imperative
+    expressif: Expressive
+    poetique: Poetic
 
 
 
 variety:
     italian:
         standard: Italien - Standard
-        nonstandard_diatopie: Italien - Non standard marqué en diatopie
-        nonstandard_diastratie: Italien - Non standard marqué en diastratie
-        nonstandard_diaphasie: Italien - Non standard marqué en diaphasie
+        nonstandard_diatopie: Italien - Nonstandard, marked regional dialect
+        nonstandard_diastratie: Italien - Nonstandard, diastratic
+        nonstandard_diaphasie: Italien - Nonstandard, diaphasic
     english:
-        us_standard: Anglais - Américain standard
-        uk_standard: Anglais - Britannique standard
-        other_standard: Anglais - Autre standard
-        regional: Anglais - Variété régionale marquée
-        secondLang: Anglais - Langue seconde
+        us_standard: Anglais - US standard
+        uk_standard: Anglais - British standard
+        other_standard: Anglais - Other standard
+        regional: Anglais - Regional variety
+        secondLang: Anglais - Second language
     chinese:
         standard: Mandarin - Standard
-        taiwan: Mandarin - De Taiwan
-        otherVariant: Mandarin - Autres variantes
-        secondLang: Mandarin - Langue seconde
+        taiwan: Mandarin - From Taiwan
+        otherVariant: Mandarin - Other variants
+        secondLang: Mandarin - Second language
 phased:
     checklevel: Check missing levels
     minitest: Minitest
@@ -434,49 +443,49 @@ phased:
     step3: Step 3
     create_alternative: Create an alternative
     delete_alternative: Remove the alternative
-    parameters: Paramètres
-    step2Threshold: Nombre de bonnes réponses requises
-    step3Threshold: Nombre de bonnes réponses requises
-    step2ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné 
-    step3ThresholdLeveled: Nombre de bonnes réponses requises pour un niveau donné 
-    thresholdToStep3Level: Niveau
-    thresholdToStep2Level: Niveau
+    parameters: Parameters
+    step2Threshold: Number of required correct answers
+    step3Threshold: Number of required correct answers
+    step2ThresholdLeveled: Number of required correct answers per level
+    step3ThresholdLeveled: Number of required correct answers per level
+    thresholdToStep3Level: Level
+    thresholdToStep2Level: Level
     threshold:
-        componentType: Etape concernée
-        componentTypeIncludingMinitest: Etape concernée (+ minitest)
-        skill: Compétence
-        rightAnswers: Nombre de bonnes réponses requises
-        description: Feedback pour l'étudiant
-        level: Niveau
-    ignoredLevels: Niveaux ignorés
-    componentTypeOut: Etape de sortie
+        componentType: Step (test part)
+        componentTypeIncludingMinitest:  Step (+ minitest -> test, part 1)
+        skill: Skill
+        rightAnswers: Number of required correct answers
+        description: Feedback for student
+        level: Level
+    ignoredLevels: Ignored levels
+    componentTypeOut: Test, part 2
 minitest: Minitest
-step1: Etape 1
-step2: Etape 2
-step3: Etape 3
+step1: Step 1
+step2: Step 2
+step3: Step 3
 
 channel:
     phone: Téléphone
-    videoconf: Visioconférence
-    speaker: Moyen de sonorisation
-    tutorial: Didacticiel interactif
+    videoconf: Videoconference
+    speaker: Speaker type
+    tutorial: Interactive tutorial
     GPS: GPS
-    other: Autre
-    visual: Visu
+    other: Other
+    visual: Visual
     chat_sms_oral: Chat/SMS oral
-    chat_sms_written: Chat/SMS par téléphoe
-    tools: Outil 2.0
-    postit: Post-it / message bref
-    brochure: Brochure / dépliant 
-    ticket: Tickets (train, théâtre, reçu)
-    notice: Panneau / affiche
+    chat_sms_written: Chat/SMS by telephone
+    tools: Tool
+    postit: Post it / short message
+    brochure: Brochure
+    ticket: Tickets (train, theater, receipt, etc)
+    notice: Sign / poster
 
 group:
     create: Create a group
     list: List groups
     name: Group name
     edit: Edit group
-    delete: Delete groupe
+    delete: Delete group
     sessions: Group sessions
     no_session: No session for this group
     users: Group members
