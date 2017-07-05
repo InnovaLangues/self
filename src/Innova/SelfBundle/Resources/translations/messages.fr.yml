@@ -653,6 +653,7 @@ canExportIndividual: Peut exporter individuellement
 canExportCollective: Peut exporter collectivement
 canEditorReadOnlyTasks: Voir les tâches sans pouvoir les éditer (lecture seule)
 
+help_video: Tutoriel
 
 input:
     title: Saisie
