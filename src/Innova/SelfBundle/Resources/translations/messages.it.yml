@@ -562,6 +562,7 @@ input:
     title: Adattamento della tastiera
     help_text: Une aide est disponible concernant la saisie dans cette langue (voir la partie "<a data-toggle="modal" href="#helpModal">aide</a>" dans le menu)
     japanese: Per il giapponese, leggere questi documenti:
+    chinese: Per il cinese, leggere questi documenti:
 
 
 test_results: Risultati per il test
