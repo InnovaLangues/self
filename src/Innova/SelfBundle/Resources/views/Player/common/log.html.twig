@@ -1,7 +1,6 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-
 <div class="row">
 	<div class="col-md-4">
         <div class="panel panel-default">
@@ -12,8 +11,7 @@
 					<ul class="list-group">
 					{% for session in sessions %}
 						{% set language =  session.test.language.name %}
-						{% set needHelpLanguages = ["Japanese"] %}
-
+						{% set needHelpLanguages = ["Japanese", "Chinese"] %}
 						<li class="list-group-item">
 							<a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id } )}}">{{ session.test.name }} - {{ session.name }}</a>
 							{% if language in needHelpLanguages %}
@@ -33,7 +31,6 @@
 						<button type="submit" class="btn btn-default btn-primary">OK</button>
 					</form>
 				{% endif %}
-
            	</div>
         </div>
     </div>

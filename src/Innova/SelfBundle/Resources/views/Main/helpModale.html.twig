@@ -8,10 +8,15 @@
             </div>
             <div class="modal-body">
                 <h1>{{ 'input.title' | trans }}</h1>
+                <p>
                 {{ 'input.japanese' | trans }}
                 <a target="_blank" href="{{ asset('docs/Fiche_explications.pdf') }}">Windows</a> -
                 <a target="_blank" href="{{ asset('docs/Fiche_explications_MAC.pdf') }}">macOS</a>
-
+                </p>
+                <p>
+                    {{ 'input.chinese' | trans }}
+                    <a target="_blank" href="{{ asset('docs/saisie_mandarin_utilisateur.pdf') }}">Windows</a>
+                </p>
                 <h1>{{ "editor.media.video" | trans }} </h1>
                 {% include 'InnovaSelfBundle::Main/help.html.twig' %}
             </div>
