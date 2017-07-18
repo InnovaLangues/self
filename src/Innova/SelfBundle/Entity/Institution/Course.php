@@ -30,6 +30,11 @@ class Course implements JsonSerializable
     private $name;
 
     /**
+     * @ORM\OneToMany(targetEntity="Subcourse", mappedBy="course", cascade={"persist", "remove"})
+     */
+    protected $subcourses;
+
+    /**
     * @ORM\ManyToOne(targetEntity="Institution", inversedBy="courses")
     */
     protected $institution;
@@ -50,7 +55,7 @@ class Course implements JsonSerializable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -73,7 +78,7 @@ class Course implements JsonSerializable
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -96,12 +101,51 @@ class Course implements JsonSerializable
     /**
      * Get institution
      *
-     * @return \Innova\SelfBundle\Entity\Institution\Institution 
+     * @return \Innova\SelfBundle\Entity\Institution\Institution
      */
     public function getInstitution()
     {
         return $this->institution;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->subcourses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add subcourse
+     *
+     * @param \Innova\SelfBundle\Entity\Institution\Subcourse $subcourse
+     *
+     * @return Course
+     */
+    public function addSubcourse(\Innova\SelfBundle\Entity\Institution\Subcourse $subcourse)
+    {
+        $this->subcourses[] = $subcourse;
 
+        return $this;
+    }
+
+    /**
+     * Remove subcourse
+     *
+     * @param \Innova\SelfBundle\Entity\Institution\Subcourse $subcourse
+     */
+    public function removeSubcourse(\Innova\SelfBundle\Entity\Institution\Subcourse $subcourse)
+    {
+        $this->subcourses->removeElement($subcourse);
+    }
+
+    /**
+     * Get subcourses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubcourses()
+    {
+        return $this->subcourses;
+    }
 }

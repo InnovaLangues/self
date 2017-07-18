@@ -99,8 +99,9 @@ registration:
     test_dialang: Avez-vous déjà passé un test Dialang ?
     forgotten_paswd: Mot de passe oublié ?
     institution: Établissement (Université ou Institut)
-    course: Filière (UFR, spécialité ou composante)
+    course: Filière (UFR ou composante)
     year: Année d'étude
+    subcourse: Spécialité / Mention
 
 test:
     available: Tests disponibles
@@ -677,3 +678,9 @@ expression_ecrite_courte: Expression écrite courte
 attestation: Attestation de positionnement en
 delivre_a: Délivrée à
 le: le
+
+course:
+    edit: Editer la filière
+    name: Nom de la filière
+    subcourses: Sous-filières
+    addsubcourse: Ajouter une sous-filière

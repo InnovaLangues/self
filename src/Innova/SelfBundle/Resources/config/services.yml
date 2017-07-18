@@ -143,6 +143,10 @@ services:
         class: Innova\SelfBundle\Controller\Institution\CourseController
         arguments:
             entityManager:      @doctrine.orm.entity_manager
+            voter:              @innova_voter
+            router:             @router
+            formFactory:        @form.factory
+            session:            @session
 
     innova_year:
         class: Innova\SelfBundle\Controller\Institution\YearController

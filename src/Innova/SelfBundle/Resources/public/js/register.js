@@ -98,6 +98,7 @@ for (var i=0; i < defaultDiacriticsRemovalap.length; i++){
 var userForm = {
      institutions: $("#fos_user_registration_form_institution, #user_type_institution"),
      courses: $('#fos_user_registration_form_course, #user_type_course'),
+     subcourses: $('#fos_user_registration_form_subcourse, #user_type_subcourse'),
      registerForm: ".fos_user_registration_register",
 
      cleanUserName: function(){
@@ -116,7 +117,10 @@ var userForm = {
          });
      },
 
-     populateCourse: function(institution, selectedCourse){
+     populateCourse: function(institution, selectedCourse, callback){
+         if (userForm.subcourses.val() == "") {
+             userForm.resetSubCourse();
+         }
          userForm.courses.html('<option value="">Choisissez une option</option>');
          $.ajax({
              type: 'POST',
@@ -127,20 +131,79 @@ var userForm = {
                  }
                  userForm.courses.attr("disabled", false);
                  $("#user_type_course option[value='"+selectedCourse+"']").prop('selected', true);
+                 if (callback) {
+                     callback();
+                 }
              }
          });
-     }
+     },
+
+     populateSubcourse: function(course, selectedCourse){
+         userForm.subcourses.closest(".form-group").hide();
+         userForm.subcourses.html('<option value="">Choisissez une option</option>');
+         $.ajax({
+             type: 'POST',
+             url: Routing.generate('findSubcoursesByCourse',{'courseId': course}),
+             success: function(data) {
+                 for (var i=0, total = data.length; i < total; i++) {
+                     userForm.subcourses.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                 }
+                 if (data.length == 0) {
+                     userForm.resetSubCourse();
+                 } else {
+                     userForm.subcourses.attr("required", "required");
+                     userForm.subcourses.attr("disabled", false);
+                     userForm.subcourses.closest(".form-group").show(500);
+                 }
+                 $("#user_type_subcourse option[value='"+selectedCourse+"']").prop('selected', true);
+             }
+         });
+     },
+
+     resetSubCourse: function(){
+         userForm.subcourses.attr("required", null);
+         userForm.subcourses.closest(".form-group").hide();
+     },
+
+     retrieveCourse: function(callback){
+         if ($("#user_type_institution").length > 0) {
+             var selectedCourse = $("#user_type_course").val();
+             var institution = $("#user_type_institution").val();
+             userForm.populateCourse(institution, selectedCourse, callback);
+         }
+     },
+
+     retrieveSubcourse: function(){
+         if ($("#user_type_course").length > 0) {
+             var selectedSubcourse = $("#user_type_subcourse").val();
+             var course = $("#user_type_course").val();
+             userForm.populateSubcourse(course, selectedSubcourse);
+         }
+     },
+
 }
 
 $(document).ready(function() {
+    userForm.institutions.change(function(){
+        userForm.populateCourse($(this).val(), "");
+        userForm.courses.trigger('change');
+    });
+
+    userForm.courses.change(function(){
+        userForm.populateSubcourse($(this).val(), "");
+    });
+
+
     if (userForm.institutions.val() != "") {
         userForm.courses.attr("disabled", false);
     }
 
-    if ($("#user_type_institution").length > 0) {
-        var selectedCourse = $("#user_type_course").val();
-        userForm.populateCourse($("#user_type_institution").val(), selectedCourse);
+    if (userForm.courses.val() == "") {
+        userForm.resetSubCourse();
     }
+
+    userForm.retrieveCourse(userForm.retrieveSubcourse);
+
 
     /*Login form validation*/
     $(userForm.registerForm + ' #_submit').click(function(event) {
@@ -160,9 +223,6 @@ $(document).ready(function() {
         });
     });
 
-    userForm.institutions.change(function(){
-        userForm.populateCourse($(this).val(), "");
-    });
 
     $( "body" ).on( "change", '#fos_user_registration_form_firstName, #fos_user_registration_form_lastName', function() {
         userForm.cleanUserName();
