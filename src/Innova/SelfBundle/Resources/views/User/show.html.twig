@@ -62,6 +62,10 @@
                 <td>{{ user.course ? user.course.name }}</td>
             </tr>
             <tr>
+                <th>{{ 'registration.subcourse' | trans }}</th>
+                <td>{{ user.subcourse ? user.subcourse.name }}</td>
+            </tr>
+            <tr>
                 <th>{{ 'registration.year' | trans }}</th>
                 <td>{{ user.year ? user.year.name }}</td>
             </tr>
@@ -96,7 +100,7 @@
                             {% endfor %}
                         {% else %}
                             -
-                        {% endif %}    
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>

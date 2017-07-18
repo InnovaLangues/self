@@ -39,6 +39,8 @@ user:
     email: Indirizzo mail
     admin_users: Amministratore
     session_managers: Gestionnaires de sessions
+    motherTongue: Prima lingua
+    motherTongueOther: Altra lingua di riferimento
 
 registration:
     test_dialang: Hai già effettuato il test Dialang?
@@ -54,6 +56,11 @@ registration:
     EE_level: Livello ottenuto in PE(Produzione scritta)
     next_step: Fase successiva
     test_dialang: Avez-vous déjà passé un test Dialang ?
+    institution: Sede universitaria
+    course: Corso di laurea
+    year: Anno di corso
+    subcourse: specializzazione
+    confirm: Iscrizione avvenuta con successo
 
 test:
     available: Test disponibili
@@ -268,10 +275,10 @@ editor:
         create: Creare una nuova sessione
         manage: Sessioni
         list_test: Lista delle sessioni per il test
-        edit: Editer la session
-        results: Résultats pour la session
+        edit: Modificare la sessione
+        results: Risultati
         results_user: Résultats pour l'utilisateur
-        export: Exporter les résultats
+        export: Export dei risultati
         available: Sessioni disponibili
         no-available: Aucune session disponible
         test: Voir dans le player
@@ -280,7 +287,7 @@ editor:
         connect: Connettersi alla sessione
         connexion: Connettersi alla sessione
         helptext: Cliccare sul pulsante in basso per connettersi ad una sessione del test. Inserire il codice della sessione.
-        availableForCode: "Une sessione disponibile per questo codice:|Più sessioni disponibili per questo codice:"
+        availableForCode: "Una sessione disponibile per questo codice:|Più sessioni disponibili per questo codice:"
 
 player:
     listening_remaining: "{0} No ascolto possibilo |{1} 1 solo ascolto|]1,Inf] %count% ascolti possibili"

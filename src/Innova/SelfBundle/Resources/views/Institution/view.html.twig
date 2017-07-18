@@ -25,7 +25,9 @@
 
 <ul class="list-group">
 {% for course in institution.courses %}
-    <li class="list-group-item">{{ course.name }}</li>
+    <li class="list-group-item">{{ course.name }}
+        <a href="{{ path('course_list_subcourse', { 'courseId': course.id }) }}" class="pull-right btn btn-default btn-xs">{{ "edit" | trans }}</a>
+    </li>
 {% endfor %}
 </ul>
 {% endblock %}

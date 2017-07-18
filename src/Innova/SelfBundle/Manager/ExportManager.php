@@ -527,6 +527,7 @@ class ExportManager
         $csv .= $this->addColumn('Email');
         $csv .= $this->addColumn('Etablissement');
         $csv .= $this->addColumn('Filière');
+        $csv .= $this->addColumn('Spécialité');
         $csv .= $this->addColumn('Année');
         $csv .= $this->addColumn('Début');
         $csv .= $this->addColumn('Durée approx.');
@@ -549,6 +550,7 @@ class ExportManager
 
             $institution = ($user->getInstitution()) ? $user->getInstitution()->getName() : '';
             $course = ($user->getCourse()) ? $user->getCourse()->getName() : '';
+            $subcourse = ($user->getSubCourse()) ? $user->getSubCourse()->getName() : '';
             $year = ($user->getYear()) ? $user->getYear()->getName() : '';
             $registeredScore = $em->getRepository('InnovaSelfBundle:UserResult')->findOneBy(array('user' => $user, 'session' => $session));
 
@@ -576,6 +578,7 @@ class ExportManager
 
             $csv .= $this->addColumn($institution);
             $csv .= $this->addColumn($course);
+            $csv .= $this->addColumn($subcourse);
             $csv .= $this->addColumn($year);
             $csv .= $this->addColumn($firstTrace->format('d-m-Y H:i:s'));
             $csv .= $this->addColumn($this->diff($firstTrace, $lastTrace));

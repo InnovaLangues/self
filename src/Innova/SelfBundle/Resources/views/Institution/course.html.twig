@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<a href="{{ path('course_edit', { 'courseId': course.id }) }}" class="btn btn-default btn-sm">
+    <span class="glyphicon glyphicon-pencil"></span> Editer la filière
+</a>
+
+<hr/>
+
+<h3>{{ course.institution.name }}</h3>
+
+<h3>Sous-Filières de {{ course.name }}</h3>
+
+<ul class="list-group">
+{% for subcourse in course.subcourses %}
+    <li class="list-group-item">{{ subcourse.name }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
