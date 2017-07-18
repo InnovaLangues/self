@@ -102,6 +102,7 @@ registration:
     course: Filière (UFR ou composante)
     year: Année d'étude
     subcourse: Spécialité / Mention
+    confirm: Confirmation de l'inscription
 
 test:
     available: Tests disponibles
