@@ -34,10 +34,14 @@
                         <ul class="list-group">
                         {% for session in test.sessions %}
                             <li class="list-group-item">
-                                {{ session.name }} 
+                                {{ session.name }}
                                 <span class="pull-right">
-                                <a href="{{ path('csv-export', {'testId': test.id, 'sessionId': session.id, 'tia': 0 } )}}" data-method="PUT" class="rest btn btn-default btn-xs">CSV</a>
-                                <a href="{{ path('csv-export', {'testId': test.id, 'sessionId': session.id, 'tia': 1 } )}}" data-method="PUT" class="rest btn btn-default btn-xs">TIA+</a>
+                                    <a class="export-btn btn btn-default btn-xs" data-url="{{ path('csv-export-with-dates', {'testId': test.id, 'sessionId': session.id, 'tia': 0 } )}}" >
+                                        csv
+                                    </a>
+                                    <a class="export-btn btn btn-default btn-xs" data-url="{{ path('csv-export-with-dates', {'testId': test.id, 'sessionId': session.id, 'tia': 1 } )}}" >
+                                        tia+
+                                    </a>
                                 </span>
                             </li>
                         {% endfor %}
@@ -52,5 +56,21 @@
                 </div>
             </div>
         </div>
+
+        {% include "InnovaSelfBundle:Session:date-modale.html.twig" %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts filter='yui_js' output='js/compiled/session.js'
+        '@InnovaSelfBundle/Resources/public/js/lib/jquery.quicksearch.js'
+        '@InnovaSelfBundle/Resources/public/js/lib/moment-with-locales.min.js'
+        '@InnovaSelfBundle/Resources/public/js/lib/bootstrap-datetimepicker.js'
+        '@InnovaSelfBundle/Resources/public/js/editor-session.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 {% endblock %}
