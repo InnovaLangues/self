@@ -152,52 +152,7 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="export-session-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <form id="export-session-by-dates" method="POST" action="">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Export de la session - Sélection d'un intervalle</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>
-                        Définissez un intervalle de temps pour votre export CSV. Les dates sont au format <strong>AAAA-MM-JJ HH:MM:SS</strong>.
-                        </p>
-                    </div>
-                    <div class="col-md-12">
-                        Date de début
-                        <div class='input-group date' id='datetimepicker6'>
-                            <input type='text' class="form-control" name="startDate" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        Date de fin
-                        <div class='input-group date' id='datetimepicker7'>
-                            <input type='text' class="form-control" name="endDate"/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'generic.close' | trans }}</button>
-                <button type="submit" id="session-export-confirmation" class="btn btn-default btn-primary">
-                    {{ 'editor.session.export' | trans }}
-                </button>
-            </div>
-        </form>
-        </div>
-    </div>
-</div>
+{% include "InnovaSelfBundle:Session:date-modale.html.twig" %}
 
 {% endblock %}
 

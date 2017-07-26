@@ -105,19 +105,30 @@ class ExportManager
         return $response;
     }
 
-    public function generateCsv(Test $test, Session $session, $tia)
+    public function generateCsv(Test $test, Session $session, $tia, $startDate, $endDate)
     {
         $fs = new Filesystem();
         $testId = $test->getId();
         $sessionId = $session->getId();
 
+        $format = 'Y-m-d H:i:s';
+        $startDate = (!$startDate)
+            ? date_create_from_format($format, '1970-01-01 00:00:00')
+            : date_create_from_format($format, $startDate);
+
+        $endDate = (!$endDate)
+            ? date($format)
+            : date_create_from_format($format, $endDate);
+
         if ($tia == 0) {
             $tia = '';
-            $csvContent = $this->getCsvContent($test, $session);
+            $csvContent = $this->getCsvContent($test, $session, $startDate, $endDate);
         } else {
             $tia = '-tia';
-            $csvContent = $this->getCsvTiaContent($test, $session);
+            $csvContent = $this->getCsvTiaContent($test, $session, $startDate, $endDate);
         }
+
+
 
         $csvName = 'self_export-test_'.$testId.'-session'.$sessionId.'-'.date('d-m-Y_H:i:s').$tia.'.csv';
         $csvPathExport = $this->kernelRoot.'/data/export/'.$testId.'/';
@@ -182,7 +193,7 @@ class ExportManager
      * getCvsContent function
      * Fonction principale pour l'export CSV "classique".
      */
-    private function getCsvContent(Test $test, Session $session)
+    private function getCsvContent(Test $test, Session $session, $startDate, $endDate)
     {
         $em = $this->entityManager;
         $sessionId = $session->getId();
@@ -196,7 +207,7 @@ class ExportManager
         $typology = $preprocess[4];
         $theme = $preprocess[5];
 
-        $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
+        $users = $em->getRepository('InnovaSelfBundle:User')->findBySessionAndDates($session, $startDate, $endDate);
         foreach ($users as $user) {
             $userId = $user->getId();
 
@@ -323,7 +334,7 @@ class ExportManager
      * getCvsTiaContent function
      * Fonction principale pour l'export CSV "Tia+".
      */
-    private function getCsvTiaContent(Test $test, Session $session)
+    private function getCsvTiaContent(Test $test, Session $session, $startDate, $endDate)
     {
         $em = $this->entityManager;
         $sessionId = $session->getId();
@@ -334,7 +345,7 @@ class ExportManager
         $csv = $preprocess[3];
 
         //  BODY
-        $users = $em->getRepository('InnovaSelfBundle:User')->getByTraceOnSession($sessionId);
+        $users = $em->getRepository('InnovaSelfBundle:User')->findBySessionAndDates($session, $startDate, $endDate);
         foreach ($users as $user) {
             $csv .= $user->getLastName().' '.$user->getFirstName().';';
             $csv .= $this->addColumn(strtolower($user->getMotherTongue()));
@@ -502,13 +513,13 @@ class ExportManager
         $csv = '';
         $em = $this->entityManager;
 
-        if ($startDate === null) {
+        if ($startDate === null || $startDate === "") {
             $startDate = date_create_from_format($format, '1970-01-01 00:00:00');
         } else {
             $startDate = date_create_from_format($format, $startDate);
         }
 
-        if ($endDate === null) {
+        if ($endDate === null || $endDate === "") {
             $endDate = date($format);
         } else {
             $endDate = date_create_from_format($format, $endDate);
@@ -527,6 +538,7 @@ class ExportManager
         $csv .= $this->addColumn('Email');
         $csv .= $this->addColumn('Etablissement');
         $csv .= $this->addColumn('Filière');
+        $csv .= $this->addColumn('Spécialité');
         $csv .= $this->addColumn('Année');
         $csv .= $this->addColumn('Début');
         $csv .= $this->addColumn('Durée approx.');
@@ -549,6 +561,7 @@ class ExportManager
 
             $institution = ($user->getInstitution()) ? $user->getInstitution()->getName() : '';
             $course = ($user->getCourse()) ? $user->getCourse()->getName() : '';
+            $subcourse = ($user->getSubCourse()) ? $user->getSubCourse()->getName() : '';
             $year = ($user->getYear()) ? $user->getYear()->getName() : '';
             $registeredScore = $em->getRepository('InnovaSelfBundle:UserResult')->findOneBy(array('user' => $user, 'session' => $session));
 
@@ -576,6 +589,7 @@ class ExportManager
 
             $csv .= $this->addColumn($institution);
             $csv .= $this->addColumn($course);
+            $csv .= $this->addColumn($subcourse);
             $csv .= $this->addColumn($year);
             $csv .= $this->addColumn($firstTrace->format('d-m-Y H:i:s'));
             $csv .= $this->addColumn($this->diff($firstTrace, $lastTrace));

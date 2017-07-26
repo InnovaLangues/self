@@ -92,6 +92,12 @@ class User extends BaseUser implements JsonSerializable
     private $course;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Institution\Subcourse")
+     * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
+     */
+    private $subcourse;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\Institution\Year")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
@@ -653,5 +659,29 @@ class User extends BaseUser implements JsonSerializable
     public function getMotherTongueOther()
     {
         return $this->motherTongueOther;
+    }
+
+    /**
+     * Set subcourse
+     *
+     * @param \Innova\SelfBundle\Entity\Institution\Subcourse $subcourse
+     *
+     * @return User
+     */
+    public function setSubcourse(\Innova\SelfBundle\Entity\Institution\Subcourse $subcourse = null)
+    {
+        $this->subcourse = $subcourse;
+
+        return $this;
+    }
+
+    /**
+     * Get subcourse
+     *
+     * @return \Innova\SelfBundle\Entity\Institution\Subcourse
+     */
+    public function getSubcourse()
+    {
+        return $this->subcourse;
     }
 }

@@ -49,6 +49,15 @@ class UserType extends BaseType
                     },
                     'attr' => array('disabled' => 'disabled'),
                 ))
+            ->add('subcourse', 'entity', array(
+                    'label' => 'registration.subcourse',
+                    'class' => 'InnovaSelfBundle:Institution\Subcourse',
+                    'required' => true,
+                    'empty_value' => 'Choisissez une option',
+                    'query_builder' => function () {
+                        return $this->om->getRepository('InnovaSelfBundle:Institution\Subcourse')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
+                    },
+                ))
             ->add('year', 'entity', array(
                     'class' => 'InnovaSelfBundle:Institution\Year',
                     'query_builder' => function () {

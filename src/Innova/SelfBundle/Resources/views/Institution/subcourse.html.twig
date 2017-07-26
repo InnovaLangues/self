@@ -1,0 +1,69 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<h3>
+{{ course.id ? 'course.edit' | trans : 'institution.create' | trans }}
+</h3>
+<div class="row">
+	<div class="col-md-6">
+		<form method="post" enctype="multipart/form-data">
+		    <div class="form-group">
+		        {{ form_label(form.name) }}
+		        {{ form_widget(form.name) }}
+		    </div>
+
+		    {{ form_label(form.subcourses) }}
+		    <span class="btn btn-default btn-xs" id="add-subcourse">{{ 'course.addsubcourse' | trans }}</span>
+		    <div id="subcourses" data-prototype="{{ form_widget(form.subcourses.vars.prototype)|e }}">
+		        {% for subcourse in form.subcourses %}
+		        	<div class="subcourse">{{ form_widget(subcourse.name) }}</div>
+		        {% endfor %}
+		    </div>
+		    <br/>
+		    <div class="form-group">
+		        {{ form_label(form.save) }}
+		        {{ form_widget(form.save) }}
+		    </div>
+
+		    {{ form_widget(form._token) }}
+		</form>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+   	<script>
+	$(document).ready(function() {
+		var subcourses = $('div#subcourses');
+		subcourses.find('div.subcourse').each(function() {
+	        addTagFormDeleteLink($(this));
+	    });
+	    $("#add-subcourse").on('click', function(e) {
+	        e.preventDefault();
+	        addSubCourseForm(subcourses);
+	    });
+	});
+
+	function addSubCourseForm(subcourses) {
+	    // Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
+	    var prototype = subcourses.attr('data-prototype');
+	    var newForm = prototype.replace(/__name__/g, subcourses.children().length);
+	    var newFormLi = $('<div class="course"></div>').append(newForm);
+
+	    subcourses.append(newFormLi);
+	    addTagFormDeleteLink(newFormLi);
+	}
+
+	function addTagFormDeleteLink(tagFormLi) {
+	    var $removeFormA = $('<a class="pull-right btn btn-danger btn-xs" href="#">x</a>');
+	    tagFormLi.append($removeFormA);
+	    $removeFormA.on('click', function(e) {
+	        e.preventDefault();
+	        tagFormLi.remove();
+	    });
+	}
+	</script>
+{% endblock %}

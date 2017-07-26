@@ -2,6 +2,7 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -55,18 +56,22 @@ class ExportController
         return;
     }
 
+
     /**
-     * exportCsvSQL function.
+     * Export a session
      *
-     * @Route("admin/export/csv/test/{testId}/session/{sessionId}/mode/{tia}", name = "csv-export")
-     * @Method("PUT")
+     * @Route("admin/export/csv/test/{testId}/session/{sessionId}/mode/{tia}", name="csv-export-with-dates")
+     * @Method("POST")
      * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
-    public function exportCsvAction(Test $test, Session $session, $tia)
+    public function exportCsvWithDatesAction(Test $test, Session $session, $tia, Request $request)
     {
         $this->voter->isAllowed('right.exportCSV');
 
-        $csvName = $this->exportManager->generateCsv($test, $session, $tia);
+        $startDate = $request->get('startDate');
+        $endDate = $request->get('endDate');
+
+        $csvName = $this->exportManager->generateCsv($test, $session, $tia, $startDate, $endDate);
         $fileList = $this->exportManager->getFileList($test, 'csv');
 
         return array(
@@ -76,6 +81,7 @@ class ExportController
             'tia' => $tia,
         );
     }
+
 
     /**
      * List CSV export files for a given test.
