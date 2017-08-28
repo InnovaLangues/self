@@ -207,8 +207,6 @@ class SessionController extends Controller
         $startDate = $request->get('startDate');
         $endDate = $request->get('endDate');
 
-        var_dump($endDate);
-
         $filename = $this->get('self.export.manager')->exportSession($session, $startDate, $endDate);
         $file = $this->get('kernel')->getRootDir().'/data/session/'.$session->getId().'/'.$filename;
 
