@@ -3,9 +3,9 @@
 {% block body -%}
 <a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
 	<span class="glyphicon glyphicon-user"></span> Revenir sur la fiche utilisateur
-</a>                     
+</a>
 
-{% if checkRight("right.individualresultssession", session) %}                  
+{% if checkRight("right.individualresultssession", session) %}
 <a class="btn btn-default btn-sm" href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
 	<span class="glyphicon glyphicon-dashboard"></span> {{ 'editor.session.results' | trans }}
 </a>
@@ -27,7 +27,7 @@
 		{% for i, trace in traces %}
 		<tr>
 			<td>{{ i + 1 }}</td>
-			<td>{{ trace.date|date('d-m-Y H:m:s') }}</td>
+			<td>{{ trace.date|date('d-m-Y H:i:s') }}</td>
 			<td>{{ trace.totalTime }}</td>
 			<td>{{ trace.userAgent }}</td>
 		</tr>
