@@ -95,11 +95,17 @@ class TraceManager
     public function deleteSessionTrace(User $user, Session $session)
     {
         $em = $this->entityManager;
-        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'session' => $session));
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(['user' => $user, 'session' => $session]);
+        $mediaClicks = $em->getRepository('InnovaSelfBundle:Media\MediaClick')->findBy(['user' => $user, 'session' => $session]);
 
         foreach ($traces as $trace) {
             $em->remove($trace);
         }
+
+        foreach ($mediaClicks as $mediaClick) {
+            $em->remove($mediaClick);
+        }
+
         $em->flush();
 
         return $this;
