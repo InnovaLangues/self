@@ -31,15 +31,10 @@ $(document).ready(function() {
         if(!play_in_progress){
             checkMediaClicks(mediaId, function(isPlayable){
                 if(isPlayable && !play_in_progress) {
-                    if (sound != "situation"){
-                        playMedia(audio, $(this), mediaId);
-                    } else {
-                        playMedia(audio, $(this), mediaId);
-                    }
+                    playMedia(audio, $(this), mediaId);
                 }
             });
         }
-
     });
 
     /**************
@@ -199,7 +194,7 @@ function checkMediaClicks(mediaId, callBack){
     var componentId = $("#componentId").val();
 
     $.ajax({
-        url: Routing.generate('is-media-playable', 
+        url: Routing.generate('is-media-playable',
             {mediaId:mediaId, testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
         type: 'GET',
         dataType: 'json',
@@ -219,7 +214,7 @@ function getRemainingListening(){
         var componentId = $("#componentId").val();
 
         $.ajax({
-            url: Routing.generate('get-remaining-listening', 
+            url: Routing.generate('get-remaining-listening',
                 {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
             type: 'GET',
             dataType: 'json',
@@ -236,9 +231,9 @@ function updateMediaClicks(mediaId){
     var testId = $("#testId").val();
     var sessionId = $("#sessionId").val();
     var componentId = $("#componentId").val();
-    
+
     $.ajax({
-        url: Routing.generate('increment-media-clicks', 
+        url: Routing.generate('increment-media-clicks',
                 {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
         type: 'GET',
         dataType: 'json',
