@@ -29,17 +29,16 @@ $(document).ready(function() {
         var mediaId = $(this).data("media-id");
 
         if(!play_in_progress){
-            checkMediaClicks(mediaId, function(isPlayable){
-                if(isPlayable && !play_in_progress) {
-                    if (sound != "situation"){
-                        playMedia(audio, $(this), mediaId);
-                    } else {
-                        playMedia(audio, $(this), mediaId);
+            if (sound != "situation") {
+                playMedia(audio, $(this), mediaId, false);
+            } else {
+                checkMediaClicks(mediaId, function(isPlayable){
+                    if(isPlayable && !play_in_progress) {
+                        playMedia(audio, $(this), mediaId, true);
                     }
-                }
-            });
+                });
+            }
         }
-
     });
 
     /**************
@@ -115,7 +114,7 @@ $(document).ready(function() {
             checkMediaClicks(mediaId, function(isPlayable){
                 if(isPlayable && !play_in_progress) {
                     playButton.attr("disabled", "disabled");
-                    playMedia(video, $(this), mediaId);
+                    playMedia(video, $(this), mediaId, true);
                     $("#video").css("opacity","1");
                 }
             });
@@ -140,9 +139,9 @@ $(document).ready(function() {
 });
 
 
-function playMedia(media, btn, mediaId){
+function playMedia(media, btn, mediaId, increment){
     play_in_progress = true;
-    updateMediaClicks(mediaId);
+    if(increment) updateMediaClicks(mediaId);
     $(".item_audio_button").css("opacity","0.5");
     btn.css("opacity","1");
     media.play();
@@ -199,7 +198,7 @@ function checkMediaClicks(mediaId, callBack){
     var componentId = $("#componentId").val();
 
     $.ajax({
-        url: Routing.generate('is-media-playable', 
+        url: Routing.generate('is-media-playable',
             {mediaId:mediaId, testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
         type: 'GET',
         dataType: 'json',
@@ -219,7 +218,7 @@ function getRemainingListening(){
         var componentId = $("#componentId").val();
 
         $.ajax({
-            url: Routing.generate('get-remaining-listening', 
+            url: Routing.generate('get-remaining-listening',
                 {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
             type: 'GET',
             dataType: 'json',
@@ -236,9 +235,9 @@ function updateMediaClicks(mediaId){
     var testId = $("#testId").val();
     var sessionId = $("#sessionId").val();
     var componentId = $("#componentId").val();
-    
+
     $.ajax({
-        url: Routing.generate('increment-media-clicks', 
+        url: Routing.generate('increment-media-clicks',
                 {mediaId:mediaId,testId:testId, sessionId:sessionId, questionnaireId:questionnaireId, componentId:componentId }),
         type: 'GET',
         dataType: 'json',
