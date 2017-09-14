@@ -29,11 +29,15 @@ $(document).ready(function() {
         var mediaId = $(this).data("media-id");
 
         if(!play_in_progress){
-            checkMediaClicks(mediaId, function(isPlayable){
-                if(isPlayable && !play_in_progress) {
-                    playMedia(audio, $(this), mediaId);
-                }
-            });
+            if (sound != "situation") {
+                playMedia(audio, $(this), mediaId, false);
+            } else {
+                checkMediaClicks(mediaId, function(isPlayable){
+                    if(isPlayable && !play_in_progress) {
+                        playMedia(audio, $(this), mediaId, true);
+                    }
+                });
+            }
         }
     });
 
@@ -110,7 +114,7 @@ $(document).ready(function() {
             checkMediaClicks(mediaId, function(isPlayable){
                 if(isPlayable && !play_in_progress) {
                     playButton.attr("disabled", "disabled");
-                    playMedia(video, $(this), mediaId);
+                    playMedia(video, $(this), mediaId, true);
                     $("#video").css("opacity","1");
                 }
             });
@@ -135,9 +139,9 @@ $(document).ready(function() {
 });
 
 
-function playMedia(media, btn, mediaId){
+function playMedia(media, btn, mediaId, increment){
     play_in_progress = true;
-    updateMediaClicks(mediaId);
+    if(increment) updateMediaClicks(mediaId);
     $(".item_audio_button").css("opacity","0.5");
     btn.css("opacity","1");
     media.play();
