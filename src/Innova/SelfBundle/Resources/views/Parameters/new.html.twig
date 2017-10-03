@@ -4,7 +4,16 @@
 
  <h3>{{ 'menu.generalparams' | trans }}</h3>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
+	{% if parameters.logoPath %}
+    	<img height="256px" src="{{ asset('upload/media/'~parameters.logoPath ) }}"/>
+    {% endif %}
+
+    <div class="form-group">
+        {{ form_label(form.logoFile) }}
+        {{ form_widget(form.logoFile) }}
+    </div>
+
     <div class="form-group">
         {{ form_label(form.maintenance) }}
         {{ form_widget(form.maintenance) }}
@@ -15,7 +24,6 @@
         {{ form_widget(form.maintenanceText) }}
     </div>
 
-    
     <div class="form-group">
         {{ form_label(form.selfRegistration) }}
         {{ form_widget(form.selfRegistration) }}

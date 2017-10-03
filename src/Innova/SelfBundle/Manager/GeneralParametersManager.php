@@ -73,6 +73,14 @@ class GeneralParametersManager
 
             if ($form->isValid()) {
                 $em = $this->entityManager;
+
+                $img = $form['logoFile']->getData();
+                if ($img) {
+                    $fileName = "app-logo.jpg";
+                    $img->move(__DIR__.'/../../../../web/upload/media/', $fileName);
+                    $parameters->setLogoPath($fileName);
+                }
+
                 $em->persist($parameters);
                 $em->flush();
 
