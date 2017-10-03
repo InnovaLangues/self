@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Group
@@ -41,6 +42,17 @@ class GeneralParameters
      * @ORM\Column(name="maintenance_text", type="text", nullable=true)
      */
     private $maintenanceText;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $logoPath;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Image()
+     */
+    private $logoFile;
 
     /**
      * Set maintenance
@@ -122,5 +134,53 @@ class GeneralParameters
     public function getMaintenanceText()
     {
         return $this->maintenanceText;
+    }
+
+    /**
+     * Set logoPath
+     *
+     * @param string $logoPath
+     *
+     * @return GeneralParameters
+     */
+    public function setLogoPath($logoPath)
+    {
+        $this->logoPath = $logoPath;
+
+        return $this;
+    }
+
+    /**
+     * Get logoPath
+     *
+     * @return string
+     */
+    public function getLogoPath()
+    {
+        return $this->logoPath;
+    }
+
+    /**
+     * Set logoFile
+     *
+     * @param string $logoFile
+     *
+     * @return GeneralParameters
+     */
+    public function setLogoFile($logoFile)
+    {
+        $this->logoFile = $logoFile;
+
+        return $this;
+    }
+
+    /**
+     * Get logoFile
+     *
+     * @return string
+     */
+    public function getLogoFile()
+    {
+        return $this->logoFile;
     }
 }

@@ -9,6 +9,14 @@ class GeneralParametersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('logoFile', 'file', array(
+            'data_class' => null,
+            'attr' => array('class' => 'form-control'),
+            'label' => 'logo',
+            'required' => false,
+            'translation_domain' => 'messages',
+        ));
+
         $builder->add('maintenance', 'choice', array(
                 'choices'   => array('0' => 'generic.no', '1' => 'generic.yes'),
                 'attr' => array('class' => 'form-control'),
