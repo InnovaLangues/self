@@ -24,4 +24,12 @@ monolog:
 
 parameters:
     router.request_context.base_url: %base_url_prod%
-    
+
+snc_redis:
+    doctrine:
+        metadata_cache:
+            client: default
+            entity_manager: default
+        query_cache:
+            client: default
+            entity_manager: default
