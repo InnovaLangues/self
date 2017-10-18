@@ -28,8 +28,8 @@ parameters:
 snc_redis:
     doctrine:
         metadata_cache:
-            client: default
+            client: cache
             entity_manager: default
         query_cache:
-            client: default
+            client: cache
             entity_manager: default

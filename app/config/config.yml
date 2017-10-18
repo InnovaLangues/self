@@ -140,10 +140,14 @@ lexik_maintenance:
 
 snc_redis:
     clients:
-        default:
+        cache:
             type: predis
-            alias: default
-            dsn: redis://%redis_host%
+            alias: cache
+            dsn: redis://%redis_host%/1
+        session:
+            type: predis
+            alias: session
+            dsn: redis://%redis_host%/2
     session:
-        client: default
+        client: session
         ttl: 21600 #6h
