@@ -25,7 +25,7 @@ security:
                 path:        fos_user_security_logout
                 target:      /
                 invalidate_session: true
-                success_handler: self.logout 
+                success_handler: self.logout
             anonymous:    true
 
     access_control:

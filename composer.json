@@ -28,7 +28,9 @@
         "willdurand/js-translation-bundle": "@stable",
         "lexik/maintenance-bundle": "dev-master#4967701a108aa8262f",
         "twig/twig": "1.*",
-        "sensio/distribution-bundle": "~4"
+        "sensio/distribution-bundle": "~4",
+        "snc/redis-bundle": "^2.0",
+        "predis/predis": "^1.0"
     },
     "scripts": {
         "post-install-cmd": [

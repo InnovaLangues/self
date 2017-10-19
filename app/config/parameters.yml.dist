@@ -19,3 +19,4 @@ parameters:
     locale:                     fr
     secret:                     CeCiNe888VousRegarde124Pas
     base_url_prod:              ""
+    redis_host:                 localhost
