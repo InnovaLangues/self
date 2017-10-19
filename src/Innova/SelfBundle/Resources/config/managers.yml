@@ -84,6 +84,7 @@ services:
             session:            @session
             securityContext:    @security.token_storage
             translator:         @translator
+            redis:              @snc_redis.session
 
     self.comment.manager:
         class: Innova\SelfBundle\Manager\CommentManager

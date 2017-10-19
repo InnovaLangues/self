@@ -34,39 +34,7 @@ class UserController extends Controller
         $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
         switch ($subset) {
             case 'connected':
-                $users = $this->get('self.user.manager')->getConnected();
-
-
-                $redis = $this->container->get('snc_redis.session');
-                $size = count($redis->keys('*'))/2;
-                $users = [];
-                foreach ($redis->keys('*') as $key) {
-                  if (!strpos($key, ".lock")) {
-                    $sessionData = $redis->get($key);
-
-                    $sessionData = str_replace('_sf2_attributes|', '', $sessionData);
-
-                    $sessionData = unserialize($sessionData);
-
-
-
-                    // If this is a session belonging to an anonymous user, do nothing
-                    if (!array_key_exists('_security_main', $sessionData)) {
-                        continue;
-                    }
-
-                    // Grab security data
-                    $sessionData = $sessionData['_security_main'];
-                    $sessionData = unserialize($sessionData);
-                    $user = $sessionData->getUser();
-
-                    if (!in_array($user, $users)) {
-                        $users[] = $user;
-                    }
-                  }
-                }
-
-
+                $users = $this->get('self.user.manager')->getConnected(true);
                 break;
             case 'last':
                 $users = $userRepo->findBy(array(), array('id' => 'DESC'), $limit = 1000, $offset = null);
