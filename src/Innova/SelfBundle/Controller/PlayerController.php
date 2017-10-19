@@ -25,6 +25,7 @@ class PlayerController extends Controller
      * and display it if possible.
      *
      * @Route("test/{testId}/session/{sessionId}", name="test_start", requirements={"sessionId": "\d+"})
+     * @ParamConverter("test", class="InnovaSelfBundle:Test", options={"repository_method" = "findOneWithOrderQuestionnaires", "id" = "testId"})
      * @Method("GET")
      * @Template("InnovaSelfBundle:Player:index.html.twig")
      */

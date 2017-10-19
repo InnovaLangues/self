@@ -84,4 +84,16 @@ class TestRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findOneWithOrderQuestionnaires($testId){
+        $dql = "SELECT t, o FROM Innova\SelfBundle\Entity\Test t
+        LEFT JOIN t.orderQuestionnaireTests o
+        WHERE t.id = :id";
+
+        $query = $this->_em->createQuery($dql)
+            ->setParameter('id', $testId);
+
+        return $query->getOneOrNullResult();
+
+    }
 }
