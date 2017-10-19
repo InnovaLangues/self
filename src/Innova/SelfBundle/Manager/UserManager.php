@@ -15,8 +15,9 @@ class UserManager
     protected $session;
     protected $securityContext;
     protected $translator;
+    protected $redis;
 
-    public function __construct($entityManager, $formFactory, $fosUserManager, $session, $securityContext, $translator)
+    public function __construct($entityManager, $formFactory, $fosUserManager, $session, $securityContext, $translator, $redis)
     {
         $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
@@ -24,6 +25,7 @@ class UserManager
         $this->session = $session;
         $this->securityContext = $securityContext;
         $this->translator = $translator;
+        $this->redis = $redis;
     }
 
     public function setLocale(User $user, $locale)
@@ -98,27 +100,32 @@ class UserManager
         return $form;
     }
 
-    public function getConnected()
+    public function getConnected($full)
     {
-        $connectedUsers = array();
-        $sessions = $this->getLastSessions(300);
+        $connectedUsers = [];
+        foreach ($this->redis->keys('*') as $key) {
+            if (!strpos($key, ".lock")) {
+                $sessionData = $this->redis->get($key);
+                $sessionData = str_replace('_sf2_attributes|', '', $sessionData);
+                $sessionData = unserialize($sessionData);
 
-        foreach ($sessions as $session) {
-            $data = $this->getSessionData($session);
+                // If this is a session belonging to an anonymous user, do nothing
+                if (!array_key_exists('_security_main', $sessionData)) {
+                    continue;
+                }
 
-            // If this is a session belonging to an anonymous user, do nothing
-            if (!array_key_exists('_security_main', $data)) {
-                continue;
-            }
+                // Grab security data
+                $sessionData = $sessionData['_security_main'];
+                $sessionData = unserialize($sessionData);
+                $userName = $sessionData->getUser()->getUsername();
 
-            // Grab security data
-            $data = $data['_security_main'];
-            $data = unserialize($data);
-            $username = $data->getUser()->getUsername();
-            $user = $this->entityManager->getRepository('InnovaSelfBundle:User')->findOneByUsername($username);
+                $user = (!$full)
+                  ? $userName
+                  : $this->entityManager->getRepository('InnovaSelfBundle:User')->findOneByUsername($userName);
 
-            if (!in_array($user, $connectedUsers)) {
-                $connectedUsers[] = $user;
+                if (!in_array($user, $connectedUsers)) {
+                    $connectedUsers[] = $user;
+                }
             }
         }
 
@@ -127,25 +134,7 @@ class UserManager
 
     public function getAuthCount()
     {
-        $connectedUsers = array();
-        $sessions = $this->getLastSessions(300);
-        foreach ($sessions as $session) {
-            $data = $this->getSessionData($session);
-
-            // If this is a session belonging to an anonymous user, do nothing
-            if (!array_key_exists('_security_main', $data)) {
-                continue;
-            }
-
-            // Grab security data
-            $data = $data['_security_main'];
-            $data = unserialize($data);
-            $username = $data->getUser()->getUsername();
-
-            if (!in_array($username, $connectedUsers)) {
-                $connectedUsers[] = $username;
-            }
-        }
+        $connectedUsers = $this->getConnected(false);
 
         return count($connectedUsers);
     }
@@ -158,29 +147,5 @@ class UserManager
         }
 
         return;
-    }
-
-    private function getLastSessions($threshold)
-    {
-        $limit = time() - $threshold;
-
-        $dql = 'select s from InnovaSelfBundle:PDOSession s
-            where s.session_time >= ?1
-            order by s.session_time desc';
-        $query = $this->entityManager->createQuery($dql);
-        $query->setParameter(1, $limit);
-        $sessions = $query->getResult();
-
-        return $sessions;
-    }
-
-    private function getSessionData($session)
-    {
-        $data = stream_get_contents($session->getSessionValue());
-        $data = str_replace('_sf2_attributes|', '', $data);
-
-        $data = unserialize($data);
-
-        return $data;
     }
 }
