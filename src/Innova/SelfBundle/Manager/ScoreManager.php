@@ -31,7 +31,7 @@ class ScoreManager
 
     public function getScoreBySkillByLevelForComponent(Test $test, Session $session, Component $component, User $user)
     {
-        $traces = $this->traceRepo->findByWithJoins($user, $test,$session,$component);
+        $traces = $this->traceRepo->findByWithJoins($user, $test, $session, $component);
         $scores = $this->getScoresFromTraces($traces, true);
 
         return $scores;

@@ -199,21 +199,34 @@ class TraceRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findByWithJoins($user, $test,$session,$component)
+    public function findByWithJoins($user, $test, $session, $component)
     {
-      $dql = "SELECT t, tq, qs, sqs FROM Innova\SelfBundle\Entity\Trace t
+        $dql = "SELECT t, tq, qs, sqs FROM Innova\SelfBundle\Entity\Trace t
         JOIN t.questionnaire tq
         JOIN tq.questions qs
         JOIN qs.subquestions sqs
         WHERE t.user = :user
         AND t.test = :test
         AND t.session = :session
-        AND t.component = :component";
+        AND t.component = :component
+        AND (
+            EXISTS (
+              SELECT oqc FROM Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent oqc
+              LEFT JOIN oqc.component c
+              WHERE c.test = :test
+              AND oqc.questionnaire = tq
+              AND oqc.ignoreInScoring = 0
+            )
+            OR EXISTS (
+              SELECT oqt FROM Innova\SelfBundle\Entity\OrderQuestionnaireTest oqt
+              WHERE oqt.questionnaire = tq
+              AND oqt.test = :test
+            )
+        )";
 
-      $query = $this->_em->createQuery($dql)
+        $query = $this->_em->createQuery($dql)
               ->setParameters(['user' => $user, 'test' => $test, 'session' => $session, 'component' => $component]);
 
-      return $query->getResult();
-
+        return $query->getResult();
     }
 }
