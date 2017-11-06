@@ -1,6 +1,8 @@
 # Requirements
 php >= 5.4
 
+redis server
+
 # Installation
 
 ### clone the project, create needed dir
