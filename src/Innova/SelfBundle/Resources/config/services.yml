@@ -166,10 +166,6 @@ services:
         calls:
             - [setAttribute, [3, 2]] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
 
-    session.handler.pdo:
-        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-        arguments: [@pdo, %pdo.db_options%]
-
     innova_locale_controller:
         class: Innova\SelfBundle\Controller\LocaleController
         arguments:

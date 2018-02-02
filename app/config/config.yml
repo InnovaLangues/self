@@ -31,13 +31,6 @@ framework:
         gc_maxlifetime: 3600
     http_method_override: true
 
-parameters:
-    pdo.db_options:
-        db_table:    session_pdo
-        db_id_col:   session_id
-        db_data_col: session_value
-        db_time_col: session_time
-
 # Twig Configuration
 twig:
     debug:            %kernel.debug%
@@ -150,4 +143,4 @@ snc_redis:
             dsn: redis://%redis_host%/2
     session:
         client: session
-        ttl: 21600 #6h
+        ttl: 3600
