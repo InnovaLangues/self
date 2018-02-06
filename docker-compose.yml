@@ -1,0 +1,21 @@
+version: '2.2'
+services:
+  web:
+    build:
+      context: .
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $HOME/.composer:/root/.composer
+      - $HOME/.composer:/.composer
+      - .:/var/www
+
+  db:
+    image: mariadb:5.5
+    environment:
+      MYSQL_DATABASE: self
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+  redis:
+    image: redis
