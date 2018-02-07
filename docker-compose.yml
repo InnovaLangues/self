@@ -8,7 +8,8 @@ services:
       - $HOME/.composer:/root/.composer
       - $HOME/.composer:/.composer
       - .:/var/www
-      - ./docker/new_prod/php.ini:/etc/php/7.1/fpm/php.ini
+      - ./docker/php.ini:/etc/php/7.1/fpm/php.ini
+      - ./docker/vhost.conf:/etc/nginx/sites-enabled/default
 
   db:
     image: mariadb:5.5
