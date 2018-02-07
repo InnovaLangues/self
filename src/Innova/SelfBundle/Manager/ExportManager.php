@@ -541,7 +541,7 @@ class ExportManager
         $csv .= $this->addColumn('Spécialité');
         $csv .= $this->addColumn('Année');
         $csv .= $this->addColumn('Début');
-        $csv .= $this->addColumn('Durée approx.');
+        $csv .= $this->addColumn('Durée totale');
         $csv .= $this->addColumn('Score agrégé');
         $csv .= $this->addColumn('Score CO');
         $csv .= $this->addColumn('Score CE');
@@ -592,7 +592,7 @@ class ExportManager
             $csv .= $this->addColumn($subcourse);
             $csv .= $this->addColumn($year);
             $csv .= $this->addColumn($firstTrace->format('d-m-Y H:i:s'));
-            $csv .= $this->addColumn($this->diff($firstTrace, $lastTrace));
+            $csv .= $this->addColumn($this->minutesDiff($firstTrace, $lastTrace));
             $csv .= $this->addColumn($scoreGlobal);
             $csv .= $this->addColumn($scoreCO);
             $csv .= $this->addColumn($scoreCE);
@@ -631,26 +631,47 @@ class ExportManager
         return true;
     }
 
-    private function diff(\DateTime $startTime, \DateTime $endTime)
+    private function minutesDiff(\DateTime $startTime, \DateTime $endTime)
     {
         $interval = $startTime->diff($endTime);
 
-        if ($interval->y >= 1) {
-            return $interval->y.'année(s)';
-        }
-        if ($interval->m >= 1) {
-            return $interval->m.'mois';
-        }
-        if ($interval->d >= 1) {
-            return $interval->d.'jour(s)';
-        }
-        if ($interval->h >= 1) {
-            return $interval->h.'h';
-        }
-        if ($interval->i >= 1) {
-            return $interval->i.'mn';
+        $minutes = $interval->days * 24 * 60;
+        $minutes += $interval->h * 60;
+        $minutes += $interval->i;
+
+        return $minutes;
+    }
+
+    private function humanDiff(\DateTime $startTime, \DateTime $endTime)
+    {
+        $interval = $startTime->diff($endTime);
+
+        $humanInterval = '';
+
+        if ($interval->y > 0) {
+            $humanInterval = $interval->y . 'année' . ($interval->y > 1 ? 's' : '')  . ' ';
         }
 
-        return $interval->s.'sec';
+        if ($interval->m > 0) {
+            $humanInterval = $humanInterval .$interval->m . ' mois' . ' ';
+        }
+
+        if ($interval->d > 0) {
+            $humanInterval = $humanInterval .$interval->d . ' jour' . ($interval->d > 1 ? 's' : '') . ' ';
+        }
+
+        if ($interval->h > 0) {
+            $humanInterval = $humanInterval .$interval->h . ' heure' . ($interval->h > 1 ? 's' : '') . ' ';
+        }
+
+        if ($interval->i > 0) {
+            $humanInterval = $humanInterval .$interval->i . ' minute' . ($interval->i > 1 ? 's' : '') . ' ';
+        }
+
+        if ($interval->s > 0) {
+            $humanInterval = $humanInterval . $interval->s . ' seconde' . ($interval->s > 1 ? 's' : '');
+        }
+
+        return $humanInterval;
     }
 }
