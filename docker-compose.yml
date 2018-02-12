@@ -20,4 +20,4 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   redis:
-    image: redis
+    image: redis:3.2
