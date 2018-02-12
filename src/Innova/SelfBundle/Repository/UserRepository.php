@@ -94,20 +94,28 @@ class UserRepository extends EntityRepository
 
     public function findBySessionAndDates($session, $startDate, $endDate)
     {
-        $dql = "SELECT u FROM Innova\SelfBundle\Entity\User u
-        WHERE EXISTS (
-            SELECT t FROM Innova\SelfBundle\Entity\Trace t
-            WHERE t.user = u
-            AND t.session = :session
-            AND (t.date >= :startDate AND t.date <= :endDate)
-        )";
+        $qb = $this->createQueryBuilder('u');
+        $qb
+            ->leftJoin('u.traces', 't')
+            ->where('t.session = :session')
+            ->setParameter('session', $session)
+        ;
 
-        $query = $this->_em->createQuery($dql)
-                ->setParameter('session', $session)
+        if ($startDate !== null) {
+            $qb
+                ->andWhere('t.date >= :startDate')
                 ->setParameter('startDate', $startDate)
-                ->setParameter('endDate', $endDate);
+            ;
+        }
 
-        return $query->getResult();
+        if ($endDate !== null) {
+            $qb
+                ->andWhere('t.date <= :endDate')
+                ->setParameter('endDate', $endDate)
+            ;
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findLightBySessionAndDates($session, $startDate, $endDate)

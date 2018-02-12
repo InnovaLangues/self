@@ -24,6 +24,7 @@ services:
             securityContext:    @security.token_storage
             rightManager:       @self.right.manager
             voter:              @innova_voter
+            session:            @session
 
     innova_editor_upload:
         class: Innova\SelfBundle\Controller\UploadController

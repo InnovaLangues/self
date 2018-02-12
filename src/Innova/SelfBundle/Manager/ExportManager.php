@@ -4,8 +4,10 @@ namespace Innova\SelfBundle\Manager;
 
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Entity\Trace;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Exception\ExportTimeoutException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,6 +20,9 @@ class ExportManager
     protected $knpSnappyPdf;
     protected $templating;
     protected $user;
+
+    protected $execTimeLimit = 240;
+    protected $execStartedAt = 0;
 
     public function __construct($entityManager, $scoreManager, $securityContext, $kernelRoot, $knpSnappyPdf, $templating)
     {
@@ -128,8 +133,6 @@ class ExportManager
             $csvContent = $this->getCsvTiaContent($test, $session, $startDate, $endDate);
         }
 
-
-
         $csvName = 'self_export-test_'.$testId.'-session'.$sessionId.'-'.date('d-m-Y_H:i:s').$tia.'.csv';
         $csvPathExport = $this->kernelRoot.'/data/export/'.$testId.'/';
 
@@ -195,11 +198,17 @@ class ExportManager
      */
     private function getCsvContent(Test $test, Session $session, $startDate, $endDate)
     {
+        $this->startTimer();
+
+        $csv = '';
+
         $em = $this->entityManager;
         $sessionId = $session->getId();
-        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
+        $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test); // 83 questionnaires
 
-        $preprocess = $this->preprocessTest($sessionId, $questionnaires, 'csv');
+        $sessionTraces = $em->getRepository('InnovaSelfBundle:Trace')->findBySession($session); // 35782 traces
+
+        $preprocess = $this->preprocessTest($sessionId, $questionnaires, 'csv', $sessionTraces);
         $propLetters = $preprocess[0];
         $rightProps = $preprocess[1];
         $result = $preprocess[2];
@@ -207,54 +216,98 @@ class ExportManager
         $typology = $preprocess[4];
         $theme = $preprocess[5];
 
-        $users = $em->getRepository('InnovaSelfBundle:User')->findBySessionAndDates($session, $startDate, $endDate);
+        $users = $em->getRepository('InnovaSelfBundle:User')->findBySessionAndDates($session, $startDate, $endDate); // 790 users
+
         foreach ($users as $user) {
+//            try {
+                $this->checkTimer();
+//            } catch (ExportTimeoutException $e) {
+//            }
+
             $userId = $user->getId();
 
-            $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
-            $scores = $this->scoreManager->getScoresFromTraces($traces, false);
-            $score = $this->scoreManager->countCorrectAnswers($scores);
+            $userTraces = [];
 
-            $secondStep = $this->getUserSecondStep($session, $user);
+            foreach ($sessionTraces as $k => $trace) {
+                if ($trace->getUser() !== $user) {
+                    continue;
+                }
 
+                $userTraces[] = $trace;
+                unset($sessionTraces[$k]);
+            }
+
+//            $scores = $this->scoreManager->getScoresFromTraces($traces, false);
+//            $score = $this->scoreManager->countCorrectAnswers($scores);
+
+//            $secondStep = $this->getUserSecondStep($session, $user);
+//
             $csv .= $this->addColumn($user->getLastName());
             $csv .= $this->addColumn($user->getFirstName());
             $csv .= $this->addColumn(strtolower($user->getMotherTongue()));
             $csv .= $this->addColumn(strtolower($user->getMotherTongueOther()));
             $csv .= $this->addColumn($result[$userId]['date']);
             $csv .= $this->addColumn($result[$userId]['time']);
-            $csv .= $this->addColumn($score);
-            $csv .= $this->addColumn($secondStep);
+//            $csv .= $this->addColumn($score);
+//            $csv .= $this->addColumn($secondStep);
 
             foreach ($questionnaires as $questionnaire) {
+                $this->checkTimer();
+
                 $questionnaireId = $questionnaire->getId();
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $typology[$questionnaireId];
-                $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
 
-                if ($traces) {
-                    foreach ($traces as $trace) {
+                $questionnaireTraces = [];
+
+                foreach ($userTraces as $k => $trace) {
+                    if ($trace->getUser() !== $user) {
+                        continue;
+                    }
+
+                    $questionnaireTraces[] = $trace;
+                    unset($userTraces[$k]);
+                }
+
+                if (!empty($questionnaireTraces)) {
+                    foreach ($questionnaireTraces as $trace) {
+                        $this->checkTimer();
+
                         $csv .= $this->addColumn($theme[$questionnaireId]);
                         $csv .= $this->addColumn($typologyName);
                         $csv .= $this->addColumn($trace->getDifficulty());
                         $csv .= $this->addColumn($trace->getTotalTime());
 
-                        // création tableau de correspondance subquestion -> propositions choisies
+//                         création tableau de correspondance subquestion -> propositions choisies
                         $answersArray = array();
                         $answers = $trace->getAnswers();
+
                         foreach ($answers as $answer) {
+                            $this->checkTimer();
+
                             $subquestionId = $answer->getSubquestion()->getId();
                             $answersArray[$subquestionId][] = $answer->getProposition();
+
+                            $this->entityManager->detach($answer);
+                            unset($answer);
                         }
 
-                        // comparaison du tableau créé plus tôt avec le tableau de bonnes propositions
-                        $subquestions = $questions[0]->getSubquestions();
-                        foreach ($subquestions as $subquestion) {
-                            $subquestionId = $subquestion->getId();
+//                        // comparaison du tableau créé plus tôt avec le tableau de bonnes propositions
+//                        $subquestions = $questions[0]->getSubquestions();
+//                        foreach ($subquestions as $subquestion) {
+//                            $this->checkTimer();
+//
+//                            $subquestionId = $subquestion->getId();
+//
+//                            $csv .= $this->checkRightAnswer($subquestion, $session, $user);
+//                            $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
+//
+//                            $this->entityManager->detach($subquestion);
+//                            unset($subquestion);
+//                        }
 
-                            $csv .= $this->checkRightAnswer($subquestion, $session, $user);
-                            $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
-                        }
+                        $this->entityManager->detach($trace);
+                        unset($trace);
                     }
                 } else {
                     if (count($questions) > 0) {
@@ -264,6 +317,7 @@ class ExportManager
                         $csv .= $this->addColumn('');
 
                         $subquestions = $questions[0]->getSubquestions();
+
                         foreach ($subquestions as $subquestion) {
                             $csv .= $this->addColumn('');
                             $csv .= $this->addColumn('');
@@ -271,6 +325,7 @@ class ExportManager
                     }
                 }
             }
+
             $csv .= "\n";
         }
 
@@ -336,6 +391,8 @@ class ExportManager
      */
     private function getCsvTiaContent(Test $test, Session $session, $startDate, $endDate)
     {
+        $this->startTimer();
+
         $em = $this->entityManager;
         $sessionId = $session->getId();
         $questionnaires = $em->getRepository('InnovaSelfBundle:Questionnaire')->getByTest($test);
@@ -347,6 +404,8 @@ class ExportManager
         //  BODY
         $users = $em->getRepository('InnovaSelfBundle:User')->findBySessionAndDates($session, $startDate, $endDate);
         foreach ($users as $user) {
+            $this->checkTimer();
+
             $csv .= $user->getLastName().' '.$user->getFirstName().';';
             $csv .= $this->addColumn(strtolower($user->getMotherTongue()));
             $csv .= $this->addColumn(strtolower($user->getMotherTongueOther()));
@@ -355,6 +414,8 @@ class ExportManager
             $csv .= $this->addColumn($secondStep);
 
             foreach ($questionnaires as $questionnaire) {
+                $this->checkTimer();
+
                 $questionnaireId = $questionnaire->getId();
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
                 $questions = $questionnaire->getQuestions();
@@ -362,6 +423,8 @@ class ExportManager
 
                 if ($traces) {
                     foreach ($traces as $trace) {
+                        $this->checkTimer();
+
                         $answers = $trace->getAnswers();
                         $answersArray = array();
                         // création tableau de correspondance Answer --> Subquestion
@@ -374,6 +437,8 @@ class ExportManager
 
                         $subquestions = $questions[0]->getSubQuestions();
                         foreach ($subquestions as $subquestion) {
+                            $this->checkTimer();
+
                             $subquestionId = $subquestion->getId();
                             $csv .= $this->checkRightAnswer($subquestion, $session, $user);
                             $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
@@ -419,7 +484,7 @@ class ExportManager
      * @param int    $sessionId
      * @param string $mode
      */
-    private function preprocessTest($sessionId, $questionnaires, $mode)
+    private function preprocessTest($sessionId, $questionnaires, $mode, array $sessionTraces)
     {
         $em = $this->entityManager;
         $propLetters = array();
@@ -464,6 +529,7 @@ class ExportManager
             if (count($questions) > 0) {
                 $subquestions = $questions[0]->getSubquestions();
                 $cpt = 0;
+
                 foreach ($subquestions as $subquestion) {
                     ++$cpt;
                     $csv .= $this->addColumn($theme[$questionnaireId].' (item '.$cpt.') SCORE (0/1)');
@@ -471,29 +537,47 @@ class ExportManager
                 }
             }
 
-            $traces = $em->getRepository('InnovaSelfBundle:Trace')->getBySessionAndQuestionnaire($sessionId, $questionnaireId);
+            $traces = [];
+
+            foreach ($sessionTraces as $k => $trace) {
+                if ($trace->getQuestionnaire() !== $questionnaire) {
+                    continue;
+                }
+
+                $traces[] = $trace;
+                unset($sessionTraces[$k]);
+            }
+
             foreach ($traces as $trace) {
                 $userId = $trace->getUser()->getId();
+
                 if (!isset($result[$userId]['time'])) {
                     $result[$userId]['time'] = 0;
                 }
+
                 $result[$userId]['time'] = $result[$userId]['time'] + $trace->getTotalTime();
                 $result[$userId]['name'] = (string) $trace->getUser();
                 $result[$userId]['date'] = date_format($trace->getDate(), 'dm');
+
+                $this->entityManager->detach($trace);
             }
 
             foreach ($questions as $question) {
                 $typologyName = $question->getTypology()->getName();
                 $subquestions = $question->getSubquestions();
+
                 foreach ($subquestions as $subquestion) {
                     $rightProps['sub'.$subquestion->getId()] = array();
                     $cptProposition = 0;
                     $propositions = $subquestion->getPropositions();
+
                     foreach ($propositions as $proposition) {
                         ++$cptProposition;
+
                         if ($typologyName != 'TLQROC') {
                             $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                         }
+
                         if ($proposition->getRightAnswer()) {
                             $rightProps['sub'.$subquestion->getId()][] = $proposition->getId();
                         }
@@ -673,5 +757,21 @@ class ExportManager
         }
 
         return $humanInterval;
+    }
+
+    // Solution temporaire pour bloquer l'export si trop long sans planter l'app
+
+    private function startTimer()
+    {
+        $this->execStartedAt = microtime(true);
+    }
+
+    private function checkTimer()
+    {
+        $elapsedExecTime = microtime(true) - $this->execStartedAt;
+
+        if ($elapsedExecTime > $this->execTimeLimit) {
+            throw new ExportTimeoutException();
+        }
     }
 }
