@@ -210,11 +210,15 @@ class QuestionnaireRepository extends EntityRepository
 
     public function getByTest($test)
     {
-        $dql = "SELECT q FROM Innova\SelfBundle\Entity\Questionnaire q
+        $dql = "SELECT q, qq, sq, p, m FROM Innova\SelfBundle\Entity\Questionnaire q
         LEFT JOIN q.orderQuestionnaireTests qot
         LEFT JOIN q.orderQuestionnaireComponents qoc
         LEFT JOIN qoc.component c
         LEFT JOIN c.componentType ct
+        LEFT JOIN q.questions qq
+        LEFT JOIN qq.subquestions sq
+        LEFT JOIN sq.propositions p
+        LEFT JOIN p.media m
         WHERE qot.test = :test OR c.test = :test
         ORDER BY
         ";

@@ -2,6 +2,11 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Innova\SelfBundle\Exception\ExportTimeoutException;
+use Innova\SelfBundle\Manager\ExportManager;
+use Innova\SelfBundle\Manager\Right\RightManager;
+use Innova\SelfBundle\Voter\Voter;
+use Symfony\Component\Debug\Exception\OutOfMemoryException;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -10,10 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Class ExportController.
- *
  * @Route(service = "innova_export")
  *
  * @ParamConverter("test", isOptional="true", class="InnovaSelfBundle:Test",  options={"id" = "testId"})
@@ -24,19 +28,27 @@ class ExportController
 {
     protected $kernelRoot;
     protected $exportManager;
-    protected $securityContext;
+    protected $tokenStorage;
     protected $rightManager;
     protected $voter;
     protected $user;
+    protected $flashBag;
 
-    public function __construct($kernelRoot, $exportManager, $securityContext, $rightManager, $voter)
-    {
+    public function __construct(
+        string $kernelRoot,
+        ExportManager $exportManager,
+        TokenStorageInterface $tokenStorage,
+        RightManager $rightManager,
+        Voter $voter,
+        \Symfony\Component\HttpFoundation\Session\Session $session
+    ) {
         $this->kernelRoot = $kernelRoot;
         $this->exportManager = $exportManager;
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
         $this->rightManager = $rightManager;
         $this->voter = $voter;
-        $this->user = $this->securityContext->getToken()->getUser();
+        $this->user = $this->tokenStorage->getToken()->getUser();
+        $this->flashBag = $session->getFlashBag();
     }
 
     /**
@@ -45,12 +57,12 @@ class ExportController
      */
     public function getFileAction($testId, $filename, $mode)
     {
-        if ($this->rightManager->checkRight('right.exportPDF', $this->user) || $this->rightManager->checkRight('right.exportCSV', $this->user)) {
-            $dir = ($mode == 'pdf') ? 'exportPdf' : 'export';
+        if ($this->rightManager->checkRight('right.exportPDF', $this->user) ||
+            $this->rightManager->checkRight('right.exportCSV', $this->user)
+        ) {
+            $dir = $mode === 'pdf' ? 'exportPdf' : 'export';
             $file = $this->kernelRoot.'/data/'.$dir.'/'.$testId.'/'.$filename;
-            $response = $this->exportManager->generateResponse($file);
-
-            return $response;
+            return $this->exportManager->generateResponse($file);
         }
 
         return;
@@ -64,14 +76,24 @@ class ExportController
      * @Method("POST")
      * @Template("InnovaSelfBundle:Export:exportCsv.html.twig")
      */
-    public function exportCsvWithDatesAction(Test $test, Session $session, $tia, Request $request)
+    public function exportCsvWithDatesAction(Request $request, Test $test, Session $session, $tia)
     {
         $this->voter->isAllowed('right.exportCSV');
 
         $startDate = $request->get('startDate');
         $endDate = $request->get('endDate');
 
-        $csvName = $this->exportManager->generateCsv($test, $session, $tia, $startDate, $endDate);
+        $csvName = null;
+        $failed = false;
+
+        try {
+            $csvName = $this->exportManager->generateCsv($test, $session, $tia, $startDate, $endDate);
+        } catch (ExportTimeoutException $e) {
+            $this->flashBag->add('danger', "Impossible de réaliser l'export demandé, celui-ci est trop volumineux.");
+        } catch (OutOfMemoryException $e) { // inutile ?
+            $this->flashBag->add('danger', "Impossible de réaliser l'export demandé, celui-ci est trop volumineux.");
+        }
+
         $fileList = $this->exportManager->getFileList($test, 'csv');
 
         return array(

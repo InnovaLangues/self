@@ -9,7 +9,7 @@
 
         <h3> Export  CSV  pour le test <strong>{{ test.name }}</strong></h3>
 
-        {% if csvName is defined %}
+        {% if csvName is defined and csvName is not null %}
             <div class="alert alert-success" role="alert">
                 {{ 'export.file_generated' | trans }} - <a href="{{ path('get-file', {'testId': test.id, 'filename': csvName, 'mode':"csv" } )}}">{{ 'export.file_download' | trans }}</a>
             </div>

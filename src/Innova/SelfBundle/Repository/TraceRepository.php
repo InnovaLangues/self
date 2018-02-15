@@ -3,33 +3,48 @@
 namespace Innova\SelfBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Innova\SelfBundle\Entity\Session;
 
 class TraceRepository extends EntityRepository
 {
+    public function findBySession(Session $session)
+    {
+        return $this->createQueryBuilder('t')
+            ->leftJoin('t.session', 's')
+            ->addSelect('s')
+            ->leftJoin('t.user', 'u')
+            ->addSelect('u')
+            ->where('s = :session')
+            ->setParameter('session', $session)
+            ->getQuery()
+                ->getResult()
+        ;
+    }
+
     public function getByUserAndSession($userId, $sessionId)
     {
-        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
-        WHERE t.user = :userId
-        AND t.session = :sessionId";
+        $qb = $this->createQueryBuilder('t')
+            ->where('t.user = :userId')
+            ->andWhere('t.session = :sessionId')
+            ->setParameter('userId', $userId)
+            ->setParameter('sessionId', $sessionId)
+        ;
 
-        $query = $this->_em->createQuery($dql)
-                ->setParameter('userId', $userId)
-                ->setParameter('sessionId', $sessionId);
-
-        return $query->getResult();
+        return $qb->getQuery()->getResult();
     }
 
     public function getBySessionAndQuestionnaire($sessionId, $questionnaireId)
     {
-        $dql = "SELECT t FROM Innova\SelfBundle\Entity\Trace t
-        WHERE t.questionnaire = :questionnaireId
-        AND t.session = :sessionId";
+        $qb = $this->createQueryBuilder('t')
+            ->leftJoin('t.user', 'u')
+            ->addSelect('u')
+            ->where('t.session = :sessionId')
+            ->andWhere('t.questionnaire = :questionnaireId')
+            ->setParameter('sessionId', $sessionId)
+            ->setParameter('questionnaireId', $questionnaireId)
+        ;
 
-        $query = $this->_em->createQuery($dql)
-                ->setParameter('questionnaireId', $questionnaireId)
-                ->setParameter('sessionId', $sessionId);
-
-        return $query->getResult();
+        return $qb->getQuery()->getResult();
     }
 
     public function getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId)

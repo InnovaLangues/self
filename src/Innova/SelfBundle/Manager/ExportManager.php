@@ -6,6 +6,7 @@ use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Exception\ExportTimeoutException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,6 +19,9 @@ class ExportManager
     protected $knpSnappyPdf;
     protected $templating;
     protected $user;
+
+    protected $execTimeLimit = 240;
+    protected $execStartedAt = 0;
 
     public function __construct($entityManager, $scoreManager, $securityContext, $kernelRoot, $knpSnappyPdf, $templating)
     {
@@ -97,7 +101,7 @@ class ExportManager
                     'user' => $user, 'score' => $score, 'session' => $session, 'date' => $date,
                     'levelFeedback' => $levelFeedback, 'coFeedback' => $coFeedback, 'ceFeedback' => $ceFeedback, 'eecFeedback' => $eecFeedback,
                 )),
-                $fileName
+            $fileName
         );
 
         $response = $this->generateResponse($fileName);
@@ -119,6 +123,8 @@ class ExportManager
         $endDate = (!$endDate)
             ? date($format)
             : date_create_from_format($format, $endDate);
+
+        $this->startTimer();
 
         if ($tia == 0) {
             $tia = '';
@@ -207,8 +213,12 @@ class ExportManager
         $typology = $preprocess[4];
         $theme = $preprocess[5];
 
+        $this->checkTimer();
+
         $users = $em->getRepository('InnovaSelfBundle:User')->findBySessionAndDates($session, $startDate, $endDate);
+
         foreach ($users as $user) {
+            $this->checkTimer();
             $userId = $user->getId();
 
             $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'test' => $test, 'session' => $session));
@@ -227,6 +237,8 @@ class ExportManager
             $csv .= $this->addColumn($secondStep);
 
             foreach ($questionnaires as $questionnaire) {
+                $this->checkTimer();
+
                 $questionnaireId = $questionnaire->getId();
                 $questions = $questionnaire->getQuestions();
                 $typologyName = $typology[$questionnaireId];
@@ -234,6 +246,8 @@ class ExportManager
 
                 if ($traces) {
                     foreach ($traces as $trace) {
+                        $this->checkTimer();
+
                         $csv .= $this->addColumn($theme[$questionnaireId]);
                         $csv .= $this->addColumn($typologyName);
                         $csv .= $this->addColumn($trace->getDifficulty());
@@ -243,6 +257,8 @@ class ExportManager
                         $answersArray = array();
                         $answers = $trace->getAnswers();
                         foreach ($answers as $answer) {
+                            $this->checkTimer();
+
                             $subquestionId = $answer->getSubquestion()->getId();
                             $answersArray[$subquestionId][] = $answer->getProposition();
                         }
@@ -250,6 +266,8 @@ class ExportManager
                         // comparaison du tableau créé plus tôt avec le tableau de bonnes propositions
                         $subquestions = $questions[0]->getSubquestions();
                         foreach ($subquestions as $subquestion) {
+                            $this->checkTimer();
+
                             $subquestionId = $subquestion->getId();
 
                             $csv .= $this->checkRightAnswer($subquestion, $session, $user);
@@ -279,17 +297,13 @@ class ExportManager
 
     public function addColumn($text)
     {
-        $column = '"'.$text.'"'.';';
-
-        return $column;
+        return '"'.$text.'"'.';';
     }
 
     private function checkRightAnswer($subquestion, $session, $user)
     {
         $right = ($this->scoreManager->subquestionCorrect($subquestion, $session, null, $user)) ? 1 : 0;
-        $output = $this->addColumn($right);
-
-        return $output;
+        return $this->addColumn($right);
     }
 
     private function textToDisplay($subquestionId, $answersArray, $propLetters, $typo)
@@ -344,9 +358,14 @@ class ExportManager
         $rightProps = $preprocess[1];
         $csv = $preprocess[3];
 
+        $this->checkTimer();
+
         //  BODY
         $users = $em->getRepository('InnovaSelfBundle:User')->findBySessionAndDates($session, $startDate, $endDate);
+
         foreach ($users as $user) {
+            $this->checkTimer();
+
             $csv .= $user->getLastName().' '.$user->getFirstName().';';
             $csv .= $this->addColumn(strtolower($user->getMotherTongue()));
             $csv .= $this->addColumn(strtolower($user->getMotherTongueOther()));
@@ -355,6 +374,8 @@ class ExportManager
             $csv .= $this->addColumn($secondStep);
 
             foreach ($questionnaires as $questionnaire) {
+                $this->checkTimer();
+
                 $questionnaireId = $questionnaire->getId();
                 $traces = $em->getRepository('InnovaSelfBundle:Trace')->getByUserAndSessionAndQuestionnaire($userId, $sessionId, $questionnaireId);
                 $questions = $questionnaire->getQuestions();
@@ -362,10 +383,14 @@ class ExportManager
 
                 if ($traces) {
                     foreach ($traces as $trace) {
+                        $this->checkTimer();
+
                         $answers = $trace->getAnswers();
                         $answersArray = array();
                         // création tableau de correspondance Answer --> Subquestion
                         foreach ($answers as $answer) {
+                            $this->checkTimer();
+
                             if (!isset($answersArray[$answer->getProposition()->getSubQuestion()->getId()])) {
                                 $answersArray[$answer->getProposition()->getSubQuestion()->getId()] = array();
                             }
@@ -374,6 +399,8 @@ class ExportManager
 
                         $subquestions = $questions[0]->getSubQuestions();
                         foreach ($subquestions as $subquestion) {
+                            $this->checkTimer();
+
                             $subquestionId = $subquestion->getId();
                             $csv .= $this->checkRightAnswer($subquestion, $session, $user);
                             $csv .= $this->textToDisplay($subquestionId, $answersArray, $propLetters, $typologyName);
@@ -408,7 +435,7 @@ class ExportManager
     public function intToLetter($int)
     {
         $arr = array(1 => 'A', 2 => 'B', 3 => 'C', 4 => 'D', 5 => 'E', 6 => 'F',
-        7 => 'G', 8 => 'H', 9 => 'I', 10 => 'J', 11 => 'K', 12 => 'L', );
+            7 => 'G', 8 => 'H', 9 => 'I', 10 => 'J', 11 => 'K', 12 => 'L', );
 
         return $arr[$int];
     }
@@ -447,6 +474,8 @@ class ExportManager
         }
 
         foreach ($questionnaires as $questionnaire) {
+            $this->checkTimer();
+
             ++$cpt_questionnaire;
             $questionnaireId = $questionnaire->getId();
 
@@ -473,6 +502,8 @@ class ExportManager
 
             $traces = $em->getRepository('InnovaSelfBundle:Trace')->getBySessionAndQuestionnaire($sessionId, $questionnaireId);
             foreach ($traces as $trace) {
+                $this->checkTimer();
+
                 $userId = $trace->getUser()->getId();
                 if (!isset($result[$userId]['time'])) {
                     $result[$userId]['time'] = 0;
@@ -483,17 +514,26 @@ class ExportManager
             }
 
             foreach ($questions as $question) {
+                $this->checkTimer();
+
                 $typologyName = $question->getTypology()->getName();
                 $subquestions = $question->getSubquestions();
+
                 foreach ($subquestions as $subquestion) {
+                    $this->checkTimer();
                     $rightProps['sub'.$subquestion->getId()] = array();
                     $cptProposition = 0;
                     $propositions = $subquestion->getPropositions();
+
                     foreach ($propositions as $proposition) {
+                        $this->checkTimer();
+
                         ++$cptProposition;
+
                         if ($typologyName != 'TLQROC') {
                             $propLetters[$proposition->getId()] = $this->intToLetter($cptProposition);
                         }
+
                         if ($proposition->getRightAnswer()) {
                             $rightProps['sub'.$subquestion->getId()][] = $proposition->getId();
                         }
@@ -541,7 +581,7 @@ class ExportManager
         $csv .= $this->addColumn('Spécialité');
         $csv .= $this->addColumn('Année');
         $csv .= $this->addColumn('Début');
-        $csv .= $this->addColumn('Durée approx.');
+        $csv .= $this->addColumn('Durée totale');
         $csv .= $this->addColumn('Score agrégé');
         $csv .= $this->addColumn('Score CO');
         $csv .= $this->addColumn('Score CE');
@@ -592,7 +632,7 @@ class ExportManager
             $csv .= $this->addColumn($subcourse);
             $csv .= $this->addColumn($year);
             $csv .= $this->addColumn($firstTrace->format('d-m-Y H:i:s'));
-            $csv .= $this->addColumn($this->diff($firstTrace, $lastTrace));
+            $csv .= $this->addColumn($this->minutesDiff($firstTrace, $lastTrace));
             $csv .= $this->addColumn($scoreGlobal);
             $csv .= $this->addColumn($scoreCO);
             $csv .= $this->addColumn($scoreCE);
@@ -631,26 +671,68 @@ class ExportManager
         return true;
     }
 
-    private function diff(\DateTime $startTime, \DateTime $endTime)
+    private function minutesDiff(\DateTime $startTime, \DateTime $endTime)
     {
         $interval = $startTime->diff($endTime);
 
-        if ($interval->y >= 1) {
-            return $interval->y.'année(s)';
-        }
-        if ($interval->m >= 1) {
-            return $interval->m.'mois';
-        }
-        if ($interval->d >= 1) {
-            return $interval->d.'jour(s)';
-        }
-        if ($interval->h >= 1) {
-            return $interval->h.'h';
-        }
-        if ($interval->i >= 1) {
-            return $interval->i.'mn';
+        $minutes = $interval->days * 24 * 60;
+        $minutes += $interval->h * 60;
+        $minutes += $interval->i;
+
+        return $minutes;
+    }
+
+    private function humanDiff(\DateTime $startTime, \DateTime $endTime)
+    {
+        $interval = $startTime->diff($endTime);
+
+        $humanInterval = '';
+
+        if ($interval->y > 0) {
+            $humanInterval = $interval->y . 'année' . ($interval->y > 1 ? 's' : '')  . ' ';
         }
 
-        return $interval->s.'sec';
+        if ($interval->m > 0) {
+            $humanInterval = $humanInterval .$interval->m . ' mois' . ' ';
+        }
+
+        if ($interval->d > 0) {
+            $humanInterval = $humanInterval .$interval->d . ' jour' . ($interval->d > 1 ? 's' : '') . ' ';
+        }
+
+        if ($interval->h > 0) {
+            $humanInterval = $humanInterval .$interval->h . ' heure' . ($interval->h > 1 ? 's' : '') . ' ';
+        }
+
+        if ($interval->i > 0) {
+            $humanInterval = $humanInterval .$interval->i . ' minute' . ($interval->i > 1 ? 's' : '') . ' ';
+        }
+
+        if ($interval->s > 0) {
+            $humanInterval = $humanInterval . $interval->s . ' seconde' . ($interval->s > 1 ? 's' : '');
+        }
+
+        return $humanInterval;
+    }
+
+    // Solution temporaire pour bloquer l'export si trop long sans planter l'app
+
+    private function startTimer()
+    {
+        $this->execStartedAt = microtime(true);
+    }
+
+    private function checkTimer()
+    {
+        $elapsedExecTime = microtime(true) - $this->execStartedAt;
+
+        $usedMemory = (memory_get_usage(true) / 1024 / 1000);
+        $memoryLimit = (int) ini_get('memory_limit') - 25;
+
+        if ($elapsedExecTime > $this->execTimeLimit ||
+            $usedMemory > $memoryLimit) {
+//            var_dump($usedMemory, $memoryLimit);exit;
+            throw new ExportTimeoutException();
+        }
     }
 }

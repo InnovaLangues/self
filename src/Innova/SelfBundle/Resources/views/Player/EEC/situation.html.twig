@@ -43,17 +43,18 @@
 
                         {% for j, proposition in subquestion.propositions %}
                             {% if proposition.rightAnswer and proposition.media.mediaPurpose.name == "proposition" %}
+                                {% set description = proposition.media.description|striptags|convert_encoding('UTF-8', 'HTML-ENTITIES') %}
 
                                 {# Recherche/Calcul de la taille d'affichage de la zone Input #}
                                 {% for inputSize in tabInputSize %}
-                                    {% if inputSize > proposition.media.description|length and maxValueSize == 0 %}
+                                    {% if inputSize > description|length and maxValueSize == 0 %}
                                         {%  set maxValueSize = inputSize %}
                                     {% endif %}
                                 {% endfor %}
 
                                 {# Dans ce cas, la taille de la zone Input est la taille de la solution + 5 caractères #}
                                 {% if ( maxValueSize == 0 ) %}
-                                    {% set maxValueSize = proposition.media.description|length + 5 %}
+                                    {% set maxValueSize = description|length + 5 %}
                                 {% else %}
                                     {% set maxValueSize = maxValueSize + 1 %}
                                 {% endif %}
