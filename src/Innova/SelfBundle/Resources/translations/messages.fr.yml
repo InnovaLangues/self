@@ -275,7 +275,6 @@ editor:
         variety: Variété
         lisibility: Indice de lisibilité
         speechType: Genre de discours
-
     log:
         editor_create: Création de
         editor_edit: Edition de
@@ -318,7 +317,7 @@ editor:
         name: Nom de la session
         passwd: Code de session
         active: Actif
-        actives: actives
+        actives: active
         inactives: inactives
         all: toutes
         list: Liste des sessions
@@ -346,8 +345,6 @@ editor:
         createdate: Date de création
         usercount: Nombre de passations
 
-
-
 player:
     listening_remaining: "{0} Reste 0 écoute |{1} Reste 1 écoute|]1,Inf] Reste %count% écoutes"
     listen_context: Il vous faut d'abord écouter le contexte.
@@ -360,7 +357,6 @@ player:
         context: Contexte
         question: Question
         intruction: Consigne
-
 trace:
     answer_saved: Votre réponse a bien été enregistrée.
     test_continue: Continuer le test
@@ -512,7 +508,6 @@ variety:
         taiwan: Mandarin - De Taiwan
         otherVariant: Mandarin - Autres variantes
         secondLang: Mandarin - Langue seconde
-
 phased:
     removeThreshold: Supprimer
     thresholdByStep: Seuils, par étape de sortie

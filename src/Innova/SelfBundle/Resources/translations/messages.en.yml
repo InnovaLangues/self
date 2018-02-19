@@ -1,497 +1,637 @@
-anonymous:
-    first: First visit ?
-    register: Register to get access to tests
-    registration: Registration
-    already_registered: Already Registered ?
-    connect: Click on "Login"
-    connection: Login
-
+﻿anonymous:
+  first: 'First visit ?'
+  register: 'Register to get access to tests'
+  registration: Registration
+  already_registered: 'Already Registered ?'
+  connect: 'Click on "Login"'
+  connection: Login
 menu:
-    users: Users
-    csv_export: Exports
-    tests: Tests
-    editor: Editor
-    help: Help
-    credit : Credits
-    logout: Logout
-    language_change: Change language
-    groups: Groups
-
+  users: Users
+  csv_export: Exports
+  tests: Tests
+  editor: Editor
+  help: Help
+  credit: Credits
+  logout: Logout
+  language_change: 'Change language'
+  groups: Groups
+  generalparams: Parameters
+  message: Message
+  institutions: Institutions
+  stats: Stats
+message:
+  content: 'Message content'
+  channel: To
+  send: 'Send a message'
+institution:
+  name: 'Name of institution'
+  create: 'Create an institution'
+  addcourse: 'Add a program'
+  courses: 'Programs at institution'
+  edit: 'Edit institution'
+  manage: 'Manage institutions'
+  file: 'Associated image file'
+year:
+  name: 'Name of year'
+  edit: 'Edit year'
+  create: 'Create year'
+  delete: 'Delete year'
+  manage: 'Manage year'
+params:
+  maintenance: 'Maintenance mode'
+  selfRegistration: 'Authorize self-registration'
+  maintenanceEnabled: 'Maintenance in progress'
+  maintenanceText: 'Message of maintenance'
 export:
-    file_generated: The file has been generated
-    file_generate: Generate a new file
-    file_download: Download the file in CSV format
-    file_download_pdf: Download the file in PDF format
-    files_list: List of generated files
-    files_count: %nbFile% of files in the folder
-    tests_list: Exported tests
-
+  file_generated: 'The file has been generated'
+  file_generate: 'Generate a new file'
+  file_download: 'Download the file in CSV format'
+  file_download_pdf: 'Download the file in PDF format'
+  files_list: 'List of generated files'
+  files_count: '%nbFile% of files in the folder'
+  tests_list: 'Exported tests'
 user:
-    edit: Edit a user
-    back_to_list: Return to list of users
-    list: List of users
-    create: Create user
-    creation: Creation of a user
-    single: User
-    plural: Users
-    firstname: First name
-    name: Name
-    email: Email address
-    admin_users: Administrators
-    session_managers: Session managers
-
+  edit: 'Edit a user'
+  back_to_list: 'Return to list of users'
+  list: 'List of users'
+  create: 'Create user'
+  creation: 'Creation of a user'
+  single: User
+  plural: Users
+  firstname: 'First name'
+  name: Name
+  login: Username
+  email: 'Email address'
+  admin_users: Administrators
+  session_managers: 'Session managers'
+  rights: 'User permissions'
+  preferedLanguage: Language
+  all: All
+  connected: 'Online users'
+  last: 'latest 1000 new users'
+  admins: Administrators
+  motherTongue: 'Native language'
+  motherTongueOther: 'Other L1'
+  hasAnyGlobalRight: 'Has global rights'
+  testsWithRights: 'Tests with rights'
+  sessionsWithRights: 'Sessions with rights'
 registration:
-    warning_required: Zones with red asterisk are required
-    username: Login
-    password: Password
-    password_confirmation: Password confirmation
-    pathway: Major
-    pathway_question: In the language being tested, are you a student  at... ( LANSAD / LLCE / LEA / UJF / Other)
-    dialang: Dialang
-    last_lansad:  What is the level of the last LANSAD course you successfully completed ?
-    CO_level: Level obtained in oral comprehension
-    CE_level: Level obtained in written comprehension
-    EE_level: Level obtained in written expression
-    next_step: Next step
-    test_dialang: Have you already taken a Dialang test ?
-
+  warning_required: 'Zones with red asterisk are required'
+  username: Login
+  password: Password
+  password_confirmation: 'Password confirmation'
+  pathway: Major
+  pathway_question: 'In the language being tested, are you a student  at... ( LANSAD / LLCE / LEA / UJF / Other)'
+  dialang: Dialang
+  last_lansad: 'What is the level of the last LANSAD course you successfully completed ?'
+  CO_level: 'Level obtained in oral comprehension'
+  CE_level: 'Level obtained in written comprehension'
+  EE_level: 'Level obtained in written expression'
+  next_step: 'Next step'
+  test_dialang: 'Have you already taken a Dialang test ?'
+  forgotten_paswd: 'Forgotten password'
+  institution: University
+  course: 'Degree prepared'
+  year: 'Year you are in'
+  subcourse: Major
+  confirm: 'Confirm registration'
 test:
-    available: Tests available
-    start: Start the test
-    list: List of tests
-    no_registered:  You are not signed up for any test.
-    all: All
-    archived: Archived
-    favorites: Favorites
-
+  available: 'Tests available'
+  start: 'Start the test'
+  list: 'List of tests'
+  no_registered: 'You are not signed up for any test.'
+  all: All
+  archived: Archived
+  favorites: Favorites
 generic:
-    index: List
-    create: Create
-    show: Show
-    ok: OK
-    edit: Edit
-    delete: Delete
-    register: Register
-    login: Login
-    validate: Validate
-    boolTrue: "True"
-    boolFalse: "False"
-    chooseCorrectAnswer: Choose the correct answer
-    remove: Remove
-    add: Add
-    close: Close
-    save: Save
-    yes: Yes
-    no: No
-    filter: Filter
-    player: See in player
-
+  index: List
+  create: Create
+  show: Show
+  ok: OK
+  edit: Edit
+  delete: Delete
+  register: Register
+  login: Login
+  validate: Validate
+  boolTrue: 'True'
+  boolFalse: 'False'
+  boolND: 'Can''t say'
+  chooseCorrectAnswer: 'Choose the correct answer'
+  remove: Remove
+  add: Add
+  close: Close
+  save: Save
+  yes: Yes
+  no: No
+  filter: Filter
+  player: 'See in player'
+  options: Options
 editor:
-    test:
-        create: Create a test
-        create_the: Create the test
-        delete: Delete the test
-        duplicate: Duplicate the test
-        list: List of tests
-        name: Name of test
-        language: Language
-        is_active: Active
-        edition: Edit a test
-        edit: Edit
-        back_to_list: Return to the list of tests
-        new: New test
-        all_tests: All tests
-        remove_from_favorites: Remove from favorites
-        add_to_favorites: Add to favorites
-        archive: Archive
-        unarchive: Unarchive
-        archived: Archived tests
-        difficulty: Display the difficulty perception form
-
-    task:
-        task: Task
-        tasks: Tasks
-        all_tasks: All tasks
-        back_to_list: Return to the list of tests
-        list:  List of tasks for the test <strong>%testName%</strong>
-        manage: Tasks
-        count: Number of tasks
-        create: Create a task
-        save_order: Save order of tasks
-        delete:  Delete a task
-        delete_confirm: Are you sure you want to delete this task from this test ?
-        delete_confirm_yes: Yes, delete the task
-        delete_confirm_no: No, do not delete the task.
-        unnamed: Unnamed task
-        comments: Comments
-        add_comment: Add a comment
-        no_comment: No comment
-        identity: Identity card
-        history: History
-        no_potential: No potential task to add
-        no_task:  No task created
-        no_task_yet: No task for this test. You can create, or select an existing on through the corresponding buttons.
-        duplicate_and_add: Duplicate and add
-        orphan: Orphan tasks
-
-    questionnaire:
-        general_infos: General information
-        title: Title
-        typology: Typology
-        fixed_order:  Set order
-        context: Context
-        question_object: Text
-        skill: Skill
-
-    subquestion:
-        identity: Identity card
-        subquestions: Items
-        add: Add an item
-        remove: Delete an item
-        add_instruction: Add instructions/question/question stem
-        remove_instruction: Delete the instructions/question/question stem
-        answers: Answers
-
-
-    proposition:
-        add: Add an option
-        remove: Delete the option
-        right: Correct answer
-        wrong: Incorrect answer
-        make_it_right: Make correct
-        make_it_wrong: Make incorrect
-
-    media:
-        choose: Choose a type of media
-        audio: Audio
-        picture: Image
-        video: Video
-        text: Text
-        listening_limit: Define number of listenings (0=unlimited)
-        name: Name
-        description: Description/Transcription
-        file: File
-
-    app:
-        add_pair: Add a pair
-        remove_pair: Delete a pair
-        add_distractor: Add a distractor
-        remove_distractor: Delete distractor
-        add_media: Add media
-        distractors: Distractors
-        proposition: Option
-        associated_answer: Related answer
-        add_answer: Add an answer
-
-    eec:
-        distractor_delete: Delete a distractor
-        distractor_delete_confirm: Are you sure you want to delete this distractor ?
-        blank_delete: Delete a blank text
-        blank_delete_confirm: Are you sure you want to delete this blank text ?
-
-    identity:
-        level.proof: Proof of level
-        author.right_status: Copyright status
-        author.right: Copyright
-        author.right.more: Extra information regarding copyright
-        source: Source
-        source.operation: Source operation
-        source.more: Extra information regarding source operation
-        domain: Domain
-        register: Register
-        reception: Reception type
-        length: Length
-        textLength: Length of text (word count)
-        productionType: Production type
-        flow: Flow
-        status: Status
-        language: Language
-        level: Level
-        createdby: Task created by
-        revisedby: Reviewed by
-        skill: Skill
-        theme: Theme
-        fixedOrder: Fixed Order
-        authorMore: Task Author(s)
-        focuses: Focus
-        cognitive_main: Main cognitive operation
-        cognitive_secondary: Secondary cognitive operation
-        channel: Channel
-        socialLocation: Location of production
-        sourceType: Format
-        genre: Genre
-        variety: Variety
-        lisibility: Legibility Index
-
-    log:
-        editor_create: Create
-        editor_edit: Edit
-        editor_delete: Delete
-        contexte: Context
-        texte: Text 
-        objet de la question: Text 
-        question: Question
-        proposition: option
-        reponse: Response
-        syllable: Syllable
-        clue: clue
-        instruction: Didactic instruction
-        functional-instruction: Functional instruction
-        comment: comment
-        feedback: feedback
-        distractor: distractor
-        app-paire: pair
-        app-media: media
-        app-answer: answer
-        app-distractor: distractor
-        listening-limit: Listening limit
-        clue-type: clue type
-        task: task
-        words-list: word list
-        blanks: blanks
-        theme: Name
-        fixed-order: Set order
-        skill: Skill
-        level: Level
-        typology: Typology
-        status: Status
-        test: Test
-        text-type: Question type
-        identity: Identity card
-
-    session:
-        name: Session name
-        passwd: Password
-        active: Active
-        list: Sessions list
-        create: Create a session
-        manage: Sessions
-        list_test: Sessions list for test
-        edit: Edit session
-        results: Session results
-        results_user: Session results for user
-        export: Export results
-        available: Available sessions
-        no-available: No session available
-        test: View in player
-        globalScoreShow: Show global score
-        globalScoreWording: Name of global score
-
+  test:
+    create: 'Create a test'
+    create_the: 'Create the test'
+    delete: 'Delete the test'
+    duplicate: 'Duplicate the test'
+    list: 'List of tests'
+    name: 'Name of test'
+    language: Language
+    is_active: Active
+    edition: 'Edit a test'
+    edit: Edit
+    back_to_list: 'Return to the list of tests'
+    new: 'New test'
+    all_tests: 'All tests'
+    remove_from_favorites: 'Remove from favorites'
+    add_to_favorites: 'Add to favorites'
+    archive: Archive
+    unarchive: Unarchive
+    archived: 'Archived tests'
+    phased: 'Multistage test'
+    difficulty: 'Display the difficulty perception form'
+    exportpdf: 'Export PDF'
+    exportcsv: 'Export list of tasks'
+    exportscsv: 'Export Stats (tia+, etc.)'
+  task:
+    task: Task
+    tasks: Tasks
+    all_tasks: 'All tasks'
+    back_to_list: 'Return to the list of tests'
+    list: 'List of tasks for the test <strong>%testName%</strong>'
+    list_global: 'List of tasks'
+    manage: Tasks
+    count: 'Number of tasks'
+    create: 'Create a task'
+    create_test: 'Create a task for this test'
+    add_existing: 'Add an existing task'
+    save_order: 'Save order of tasks'
+    delete: 'Delete a task'
+    delete_confirm: 'Are you sure you want to delete this task from this test ?'
+    delete_confirm_yes: 'Yes, delete the task'
+    delete_confirm_no: 'No, do not delete the task.'
+    unnamed: 'Unnamed task'
+    comments: Comments
+    add_comment: 'Add a comment'
+    no_comment: 'No comment'
+    identity: 'Identity card'
+    history: History
+    no_potential: 'No potential task to add'
+    no_task: 'No task created'
+    no_task_yet: 'No task for this test. You can create, or select an existing on through the corresponding buttons.'
+    duplicate_and_add: 'Duplicate and add'
+    orphan: 'Orphan tasks'
+  questionnaire:
+    general_infos: 'General information'
+    title: Title
+    typology: Typology
+    fixed_order: 'Set order'
+    context: Context
+    question_object: Text
+    skill: Skill
+    didactic_instruction: 'Didactic instructions'
+    functional_instruction: 'Functional instructions'
+    feedback: Feedback
+  subquestion:
+    identity: 'Identity card'
+    subquestions: Items
+    add: 'Add an item'
+    remove: 'Delete an item'
+    add_instruction: 'Add instructions/question/question stem'
+    remove_instruction: 'Delete the instructions/question/question stem'
+    answers: Answers
+  proposition:
+    add: 'Add an option'
+    remove: 'Delete the option'
+    right: 'Correct answer'
+    wrong: 'Incorrect answer'
+    make_it_right: 'Make correct'
+    make_it_wrong: 'Make incorrect'
+  media:
+    choose: 'Choose a type of media'
+    audio: Audio
+    picture: Image
+    video: Video
+    text: Text
+    listening_limit: 'Define number of listenings (0=unlimited)'
+    name: Name
+    description: Description/Transcription
+    file: File
+  app:
+    add_pair: 'Add a pair'
+    remove_pair: 'Delete a pair'
+    add_distractor: 'Add a distractor'
+    remove_distractor: 'Delete distractor'
+    add_media: 'Add media'
+    distractors: Distractors
+    proposition: Option
+    associated_answer: 'Related answer'
+    add_answer: 'Add an answer'
+  eec:
+    distractor_delete: 'Delete a distractor'
+    distractor_delete_confirm: 'Are you sure you want to delete this distractor ?'
+    blank_delete: 'Delete a blank text'
+    blank_delete_confirm: 'Are you sure you want to delete this blank text ?'
+  identity:
+    level.proof: 'Proof of level'
+    author.right_status: 'Copyright status'
+    author.right: Copyright
+    author.right.more: 'Extra information regarding copyright'
+    source: Source
+    source.operation: 'Operation on source'
+    source.more: 'Extra information regarding source operation'
+    domain: Domain
+    register: Register
+    reception: 'Reception type'
+    length: Length
+    textLength: 'Length of text (word count)'
+    productionType: 'Production type'
+    flow: Flow
+    status: Status
+    language: Language
+    level: Level
+    createdby: 'Task created by'
+    revisedby: 'Reviewed by'
+    skill: Skill
+    theme: Theme
+    fixedOrder: 'Fixed Order'
+    authorMore: 'Task Author(s)'
+    focuses: Focus
+    cognitive_main: 'Main cognitive operation'
+    cognitive_secondary: 'Secondary cognitive operation'
+    channel: Channel
+    socialLocation: 'Location of production'
+    sourceType: Format
+    genre: Genre
+    variety: Variety
+    lisibility: 'Legibility Index'
+    speechType: 'Genre de discours'
+  log:
+    editor_create: Create
+    editor_edit: Edit
+    editor_delete: Delete
+    contexte: Context
+    texte: Text
+    'objet de la question': Text
+    question: Question
+    proposition: option
+    reponse: Response
+    syllable: Syllable
+    clue: clue
+    instruction: 'Didactic instruction'
+    functional-instruction: 'Functional instruction'
+    comment: comment
+    feedback: feedback
+    distractor: distractor
+    app-paire: pair
+    app-media: media
+    app-answer: answer
+    app-distractor: distractor
+    listening-limit: 'Listening limit'
+    clue-type: 'clue type'
+    task: task
+    words-list: 'word list'
+    blanks: blanks
+    theme: Name
+    fixed-order: 'Set order'
+    skill: Skill
+    level: Level
+    typology: Typology
+    status: Status
+    test: Test
+    text-type: 'Question type'
+    identity: 'Identity card'
+  session:
+    test: Test
+    export: 'Export results'
+    name: 'Session name'
+    passwd: Password
+    active: Active
+    actives: active
+    inactives: inactives
+    all: toutes
+    list: 'Sessions list'
+    create: 'Create a session'
+    manage: Sessions
+    list_test: 'Sessions list for test'
+    edit: 'Edit session'
+    results: 'Session results'
+    results_user: 'Session results for user'
+    export_date: 'Export by dates'
+    available: 'Available sessions'
+    no-available: 'No session available'
+    globalScoreShow: 'Show global score'
+    globalScoreWording: 'Name of global score'
+    connect: 'Choose a session'
+    connexion: 'Connection to session'
+    helptext: 'Click below to choose a session. You will be asked to enter a session code.'
+    availableForCode: '1 session corresponds to this code:|Several sessions correspond to this code:'
+    invalidate_results: 'Invalidate results'
+    delete_results: 'Delete results and traces'
+    infos: 'Session information'
+    lasttracedate: 'Date of last trace trace'
+    createdate: 'Created on (date)'
+    usercount: 'Number of test takers'
 player:
-    listening_remaining: "{0} No remaining listening |{1} Only 1 listening remaining|]1,Inf] %count% listenings remaining"
-    listen_context: First listen to the context
-    fullscreen: Fullscreen
-    count_task: on
-    tooltip:
-        question_object: text
-        proposition: option
-        enlarge: Click to enlarge
-        context: Context
-        question: Question
-        intruction: Instruction
+  listening_remaining: '{0} No remaining listening |{1} Only 1 listening remaining|]1,Inf] %count% listenings remaining'
+  listen_context: 'First listen to the context'
+  fullscreen: Fullscreen
+  count_task: on
+  tooltip:
+    question_object: text
+    proposition: option
+    enlarge: 'Click to enlarge'
+    context: Context
+    question: Question
+    intruction: Instruction
 trace:
-    answer_saved: Your answer has been saved.
-    test_continue: Continue the test
-    action:
-        evaluate: Rate the difficulty of the task you just completed.  Tick the corresponding box.
-    field:
-        difficulty:
-            veryEasy: Very easy
-            easy: Easy
-            normal: Normal
-            difficult: Difficult
-            veryDifficult: Very difficult
-
+  answer_saved: 'Your answer has been saved.'
+  test_continue: 'Continue the test'
+  action:
+    evaluate: 'Rate the difficulty of the task you just completed.  Tick the corresponding box.'
+  field:
+    difficulty:
+      veryEasy: 'Very easy'
+      easy: Easy
+      normal: Normal
+      difficult: Difficult
+      veryDifficult: 'Very difficult'
 English: English
 Italian: Italian
 Chinese: Chinese
 Spanish: Spanish
 Japanese: Japanese
-
-help_video: Tutorial
-
+FLE: FLE
+CO: 'Listening comprehension'
+CE: 'Reading comprehension'
+EEC: 'Short writing'
 author_right:
-    not_needed: No needed
-    authorized: Authorized
-    pending: Pending
-    to_ask: Awaiting request
-
+  not_needed: 'Not needed'
+  authorized: Authorized
+  pending: Pending
+  to_ask: 'Awaiting request'
 domain:
-    personal: Personal
-    public: Public
-    profesional: Professional
-    educational: Educational
-
+  personal: Personal
+  public: Public
+  profesional: Professional
+  educational: Educational
 register:
-    formal_elevated: Formal elevated
-    formal_neutral: Formal neutre
-    informal: Informal
-    mixte: Mixed
-
+  formal_elevated: 'Formal elevated'
+  formal_neutral: 'Formal neutral'
+  informal: Informal
+  mixte: Mixed
 reception:
-    listener: As listener
-    listener_interact: As listener-interactor
-
+  listener: 'As listener'
+  listener_interact: 'As listener-interactor'
 length:
-    short: Short 5"-20"
-    medium: Medium 21"-40"
-    long: Long 41"-60"
-    very_long: Very long >61"
-
+  short: 'Short 5"-20"'
+  medium: 'Medium 21"-40"'
+  long: 'Long 41"-60"'
+  very_long: 'Very long >61"'
 text_length:
-    very_short: Very short (1-10)
-    short : Short (11-30)
-    medium: Medium (31-80)
-    long: Long (81-200)
-    very_long: Very long (>200)
-
+  very_short: 'Very short (1-10)'
+  short: 'Short (11-30)'
+  medium: 'Medium (31-80)'
+  long: 'Long (81-200)'
+  very_long: 'Very long (>200)'
 flow:
-    slow: Slow
-    medium: Medium
-    fast: Fast
-
+  slow: Slow
+  medium: Medium
+  fast: Fast
 source:
-    certification: Certification
-    textbook: Textbook
-    intern: Internal
-    other: Other
-
+  certification: Certification
+  textbook: Textbook
+  intern: Internal
+  other: Other
 source_operation:
-    original: Original source
-    original_modified: Modified original source
-    constructed: Constructed source
-    constructed_modified: Constructed, modified source
-
+  original: 'Original source'
+  original_modified: 'Modified original source'
+  constructed: 'Constructed source'
+  constructed_modified: 'Constructed, modified source'
 focus:
-    lexical: Lexical
-    communicative: Communicative
-    morphosyntaxic: Morphosyntaxic
-    textualCohesion: Textual Cohesion
-
+  lexical: Lexical
+  communicative: Communicative
+  morphosyntaxic: Morphosyntaxic
+  textualCohesion: 'Textual Cohesion'
 cognitive:
-    global_comprehension: Global comprehension
-    detailed_comprehension: Detailed comprehension
-    infer_context: Infer context
-    infer_intention: Infer intention
-    infer_state: Infer state of mind
-    infer_register: Infer register
-    interaction: Interaction
-    infer_information: Infer implicit information
-    completeMessage: Complete message
-    reformulateMessage: Reformulate message / sentence
-    interact: Interact
-    readBack: Re-read and correct (Review and edit)
-    other: Other
-
+  global_comprehension: 'Global comprehension'
+  detailed_comprehension: 'Detailed comprehension'
+  infer_context: 'Infer context'
+  infer_intention: 'Infer intention'
+  infer_state: 'Infer state of mind'
+  infer_register: 'Infer register'
+  interaction: Interaction
+  infer_information: 'Infer implicit information'
+  completeMessage: 'Complete message'
+  reformulateMessage: 'Reformulate message / sentence'
+  interact: Interact
+  readBack: 'Re-read and correct (Review and edit)'
+  other: Other
 socialLocation:
-    radio: Radio
-    tv: Television
-    web: Web
-    institution: Institution (political, educational, administrative, etc)
-    press: Press (magazine, newspaper, etc)
-    edition: Publication (book, encyclopedia, etc)
-    other: Other
-
+  radio: Radio
+  tv: Television
+  web: Web
+  institution: 'Institution (political, educational, administrative, etc)'
+  press: 'Press (magazine, newspaper, etc)'
+  edition: 'Publication (book, encyclopedia, etc)'
+  other: Other
 productionType:
-    monologal:
-        self: monologal (self-managed)
-        hetero: monologal (hétérogéré)
-    dialogal:
-        bi: Dialogue (between 2 people)
-        poly: Dialogue (among several people)
-
+  monologal:
+    self: 'monologue (self-managed)'
+    hetero: 'monologue (other-managed)'
+  dialogal:
+    bi: 'Dialogue (between 2 people)'
+    poly: 'Dialogue (among several people)'
 sourceType:
-    audio: Audio
-    video: Video
-    text: Text
-    image: Image
-
+  audio: Audio
+  video: Video
+  text: Text
+  image: Image
 genre:
-    informative: Informative
-    argumentative: Argumentative
-    narrative: Narrative
-    descriptive: Descriptive
-    literary: Literary
-    conversational: Conversational
-    explicatif: Explicative
-    injonctif: Imperative
-    expressif: Expressive
-    poetique: Poetic
-
-
-
+  informative: Informative
+  argumentative: Argumentative
+  narrative: Narrative
+  descriptive: Descriptive
+  literary: Literary
+  conversational: Conversational
+  explicatif: Explicative
+  injonctif: Imperative
+  expressif: Expressive
+  poetique: Poetic
 variety:
-    italian:
-        standard: Italien - Standard
-        nonstandard_diatopie: Italien - Nonstandard, marked regional dialect
-        nonstandard_diastratie: Italien - Nonstandard, diastratic
-        nonstandard_diaphasie: Italien - Nonstandard, diaphasic
-    english:
-        us_standard: Anglais - US standard
-        uk_standard: Anglais - British standard
-        other_standard: Anglais - Other standard
-        regional: Anglais - Regional variety
-        secondLang: Anglais - Second language
-    chinese:
-        standard: Mandarin - Standard
-        taiwan: Mandarin - From Taiwan
-        otherVariant: Mandarin - Other variants
-        secondLang: Mandarin - Second language
+  italian:
+    standard: 'Italian - Standard'
+    nonstandard: 'Italian - Non standard'
+    nonstandard_diatopie: 'Italian - Nonstandard, marked regional dialect'
+    nonstandard_diastratie: 'Italian - Nonstandard, diastratic'
+    nonstandard_diaphasie: 'Italian - Nonstandard, diaphasic'
+  english:
+    us_standard: 'English - US standard'
+    uk_standard: 'English - British standard'
+    other_standard: 'English - Other standard'
+    regional: 'English - Regional variety'
+    secondLang: 'English - Second language'
+  chinese:
+    standard: 'Mandarin - Standard'
+    taiwan: 'Mandarin - From Taiwan'
+    otherVariant: 'Mandarin - Other variants'
+    secondLang: 'Mandarin - Second language'
 phased:
-    checklevel: Check missing levels
-    minitest: Minitest
-    step1: Step 1
-    step2: Step 2
-    step3: Step 3
-    create_alternative: Create an alternative
-    delete_alternative: Remove the alternative
-    parameters: Parameters
-    step2Threshold: Number of required correct answers
-    step3Threshold: Number of required correct answers
-    step2ThresholdLeveled: Number of required correct answers per level
-    step3ThresholdLeveled: Number of required correct answers per level
-    thresholdToStep3Level: Level
-    thresholdToStep2Level: Level
-    threshold:
-        componentType: Step (test part)
-        componentTypeIncludingMinitest:  Step (+ minitest -> test, part 1)
-        skill: Skill
-        rightAnswers: Number of required correct answers
-        description: Feedback for student
-        level: Level
-    ignoredLevels: Ignored levels
-    componentTypeOut: Test, part 2
+  removeThreshold: Remove
+  thresholdByStep: 'Thresholds, by step'
+  thresholdBySkill: 'Thresholds, by skill'
+  addThreshold: 'Add threshold'
+  addLevels: 'Add levels to ignore'
+  minitestEndingConditions: 'Minitest output conditions'
+  step2conditions: 'to step 2'
+  step3conditions: 'to step 3'
+  globalScore: 'Summary score'
+  skillScore: 'Score by skill'
+  ignore: 'Ignored/Used for scoring'
+  considerMinitest: 'Use minitest answers'
+  checklevel: 'Check missing levels'
+  minitest: Minitest
+  step1: 'Step 1'
+  step2: 'Step 2'
+  step3: 'Step 3'
+  create_alternative: 'Create an alternative'
+  delete_alternative: 'Remove the alternative'
+  parameters: Parameters
+  step2Threshold: 'Number of required correct answers'
+  step3Threshold: 'Number of required correct answers'
+  step2ThresholdLeveled: 'Number of required correct answers per level'
+  step3ThresholdLeveled: 'Number of required correct answers per level'
+  thresholdToStep3Level: Level
+  thresholdToStep2Level: Level
+  threshold:
+    componentType: 'Step (test part)'
+    componentTypeIncludingMinitest: 'Step (+ minitest -> test, part 1)'
+    skill: Skill
+    rightAnswers: 'Number of required correct answers'
+    description: 'Feedback for student'
+    level: Level
+  ignoredLevels: 'Ignored levels'
+  componentTypeOut: 'Test, part 2'
 minitest: Minitest
-step1: Step 1
-step2: Step 2
-step3: Step 3
-
+step1: 'Step 1'
+step2: 'Step 2'
+step3: 'Step 3'
 channel:
-    phone: Téléphone
-    videoconf: Videoconference
-    speaker: Speaker type
-    tutorial: Interactive tutorial
-    GPS: GPS
-    other: Other
-    visual: Visual
-    chat_sms_oral: Chat/SMS oral
-    chat_sms_written: Chat/SMS by telephone
-    tools: Tool
-    postit: Post it / short message
-    brochure: Brochure
-    ticket: Tickets (train, theater, receipt, etc)
-    notice: Sign / poster
-
+  phone: Téléphone
+  videoconf: Videoconference
+  speaker: 'Speaker type'
+  tutorial: 'Interactive tutorial'
+  GPS: GPS
+  other: Other
+  visual: Visual
+  chat_sms_oral: 'Chat/SMS oral'
+  chat_sms_written: 'Chat/SMS by telephone'
+  tools: Tool
+  postit: 'Post it / short message'
+  brochure: Brochure
+  ticket: 'Tickets (train, theater, receipt, etc)'
+  notice: 'Sign / poster'
 group:
-    create: Create a group
-    list: List groups
-    name: Group name
-    edit: Edit group
-    delete: Delete group
-    sessions: Group sessions
-    no_session: No session for this group
-    users: Group members
-    no_user: No member for this group
-    import: Import users
-    back: Back to group
-    display: Group detail
+  create: 'Create a group'
+  list: 'List groups'
+  name: 'Group name'
+  edit: 'Edit group'
+  delete: 'Delete group'
+  sessions: 'Group sessions'
+  no_session: 'No session for this group'
+  users: 'Group members'
+  no_user: 'No member for this group'
+  import: 'Import users'
+  back: 'Back to group'
+  display: 'Group detail'
+right:
+  rights: Permissions
+  createtask: 'Create tasks'
+  deletetask: 'Delete tasks'
+  edittask: 'Edit tasks'
+  listtask: 'List tasks'
+  createtest: 'Create tests'
+  deletetest: 'Delete tests'
+  edittest: 'Edit tests'
+  listtest: 'List tests'
+  duplicatetest: 'Duplicate tests'
+  managesessiontest: 'Manage session'
+  managetaskstest: 'Manage tasks'
+  addtasktest: 'Add tasks'
+  reordertasktest: 'Reorder tasks'
+  deletetasktest: 'Delete tasks from tests'
+  edittasktest: 'Edit test tasks'
+  editrightstest: 'Edit test permissions'
+  listuser: 'List users'
+  createuser: 'Add users'
+  deleteuser: 'Delete users'
+  edituser: 'Edit users'
+  deletetraceuser: 'Delete user traces'
+  editpassworduser: 'Change user passwords'
+  editrightsuser: 'Edit user permissions'
+  listgroup: 'List groups'
+  editgroup: 'Edit groups'
+  creategroup: 'Create groups'
+  deletegroup: 'Delete groups'
+  csvimportgroup: 'Import users with CSV files'
+  editrightsgroup: 'Edit group permissions'
+  deletesession: 'Delete sessions'
+  listsession: 'List sessions'
+  editsession: 'Edit sessions'
+  createsession: 'Create sessions'
+  individualresultssession: 'Export PDF by users'
+  exportresultssession: 'Export group results CSV'
+  editrightssession: 'Edit session permissions'
+  exportPDF: 'Export PDF booklet'
+  exportCSV: 'Export CSV (regular and Tia+)'
+  generalParameters: 'Modify general parameters'
+  message: 'Send messages'
+  deletetracesession: 'Delete all user traces by session'
+  editorreadonlytest: 'Read-only tasks (no editing)'
+rightgroup:
+  tasks: 'Permissions on tasks'
+  tests: 'Permissions on tests'
+  sessions: 'Permissions on sessions'
+  groups: 'Permissions on groups'
+  users: 'Permissions on users'
+  exports: 'Permissions on export functions'
+  generalParameters: 'Permissions on general parameters'
+canDelete: 'Can delete'
+canEdit: 'Can edit'
+canDuplicate: 'Can duplicate'
+canManageSession: 'Can manage sessions'
+canManageTask: 'Can manage tasks'
+canAddTask: 'Can add tasks'
+canReorderTasks: 'Can reorder tasks'
+canDeleteTask: 'Can delete tasks'
+canEditTask: 'Can edit tasks'
+canDeleteTrace: 'Can delete traces'
+canEditPassword: 'Can edit passwords'
+canImportCsv: 'Peut importer via CSV*'
+canExportIndividual: 'Can export by individual'
+canExportCollective: 'Can export by group'
+canEditorReadOnlyTasks: 'Read-only tasks (no editing)'
+help_video: Tutorial
+input:
+  title: 'Saisie*'
+  help_text: 'Une aide est disponible concernant la saisie dans cette langue (voir la partie "<a data-toggle="modal" href="#helpModal">aide</a>" dans le menu)*'
+  japanese: 'Pour le japonais, merci de vous reporter à ces documents :*'
+  chinese: 'Pour le mandarin, merci de vous reporter à ces documents :*'
+warning_message_course: 'Attention, votre profil est incomplet, veuillez cliquer sur votre nom en haut à droite et éditer vos informations. Merci.*'
+stats:
+  usercount: 'Nombre d''utilisateurs*'
+  filter: 'Filtrer*'
+  define_interval: 'Définissez un intervalle de temps.*'
+  date_format: 'Format de la date:*'
+test_results: 'Résultats pour le test*'
+pdf_export: 'Exporter au format PDF*'
+comprehension_oral: 'Compréhension de l''oral*'
+comprehension_ecrite: 'Compréhension de l''écrit*'
+expression_ecrite_courte: 'Expression écrite courte*'
+attestation: 'Attestation de positionnement en*'
+delivre_a: 'Délivrée à*'
+le: 'le*'
+course:
+  edit: 'Editer la filière*'
+  name: 'Nom de la filière*'
+  subcourses: 'Sous-filières*'
+  addsubcourse: 'Ajouter une sous-filière*'
+logo: Logo
