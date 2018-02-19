@@ -731,7 +731,6 @@ class ExportManager
 
         if ($elapsedExecTime > $this->execTimeLimit ||
             $usedMemory > $memoryLimit) {
-//            var_dump($usedMemory, $memoryLimit);exit;
             throw new ExportTimeoutException();
         }
     }
