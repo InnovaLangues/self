@@ -1,10 +1,11 @@
-﻿anonymous:
-  first: 'First visit ?'
-  register: 'Register to get access to tests'
+anonymous:
+  first: First visit ?
+  register: Register to get access to tests
   registration: Registration
-  already_registered: 'Already Registered ?'
-  connect: 'Click on "Login"'
+  already_registered: Already Registered ?
+  connect: Click on "Login"
   connection: Login
+
 menu:
   users: Users
   csv_export: Exports
