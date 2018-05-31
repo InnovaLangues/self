@@ -2,19 +2,26 @@
 <html>
     <head>
     	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<title>{% block title %}Self - Impossible d'afficher la page{% endblock %}</title>
  	</head>
-    <body>
-    	<div id="body" class="container">
-            <div class="row">
-            	<br/>
-		    	<div class="well">
-				<h1>
-				    <img src="{{ asset('bundles/innovaself/images/oignon.png') }}"/> 404
-				</h1>
-				<h2>
-				    <p>Désolé, cette page n'existe pas.</p>
-				    <p>Pour revenir à l'accueil du site, cliquez <a href="{{ path('show_tests') }}">ici</a>.</p>
-				</h2>
+    <body class="container">
+		<div class="row">
+			<br/>
+			<div class="well">
+				<div class="row">
+					<div class="col-md-1">
+						<img src="{{ asset('bundles/innovaself/images/oignon.png') }}">
+					</div>
+					<div class="col-md-11">
+						<h2>{% block info %}Nous ne sommes pas en mesure d'afficher la page demandée.{% endblock %}</h2>
+						<h3>Veuillez nous excuser pour la gène occasionnée.</h3>
+						<p><i>Information technique : CODE {{ block('code') }}</i></p>
+
+						<a href="{{ path('show_tests') }}" class="btn btn-primary btn-lg pull-right">
+							<span class="glyphicon glyphicon-home"></span>
+							&nbsp;Revenir à l'accueil du site
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
