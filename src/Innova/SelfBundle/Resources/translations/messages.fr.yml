@@ -316,7 +316,8 @@ editor:
         test: Test
         export: Exporter
         name: Nom de la session
-        passwd: Code de session
+        code: Code de session
+        invalid_code: Code de session invalide
         active: Actif
         actives: active
         inactives: inactives

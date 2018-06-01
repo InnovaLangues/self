@@ -150,7 +150,7 @@ class PlayerController extends Controller
 
             return $this->render('InnovaSelfBundle:Player:common/log.html.twig', array('sessions' => $sessions));
         }
-        $this->get('session')->getFlashBag()->add('warning', 'wrong passwd');
+        $this->get('session')->getFlashBag()->add('warning', 'editor.session.invalid_code');
 
         return $this->redirect($this->generateUrl('session_connect', array()));
     }

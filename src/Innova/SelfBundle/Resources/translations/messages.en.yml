@@ -304,7 +304,8 @@ editor:
     test: Test
     export: 'Export results'
     name: 'Session name'
-    passwd: Password
+    code: Session code
+    invalid_code: Invalid session code
     active: Active
     actives: active
     inactives: inactives
