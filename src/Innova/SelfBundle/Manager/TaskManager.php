@@ -12,7 +12,7 @@ class TaskManager
     protected $securityContext;
     protected $templating;
     protected $currentUser;
-    protected $taskRepo;
+    protected $questionnaireRepository;
 
     public function __construct($entityManager, $securityContext, $templating)
     {
@@ -20,21 +20,21 @@ class TaskManager
         $this->securityContext = $securityContext;
         $this->templating = $templating;
         $this->currentUser = $this->securityContext->getToken()->getUser();
-        $this->taskRepo = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
+        $this->questionnaireRepository = $this->entityManager->getRepository('InnovaSelfBundle:Questionnaire');
     }
 
     public function listQuestionnaires()
     {
         $questionnaires = ($language = $this->currentUser->getPreferedLanguage())
-            ? $this->taskRepo->findByLanguage($language)
-            : $this->taskRepo->findAll();
+            ? $this->questionnaireRepository->findByLanguage($language)
+            : $this->questionnaireRepository->findAll();
 
         return $questionnaires;
     }
 
     public function listQuestionnairesByLanguage(Language $language)
     {
-        $questionnaires = $this->taskRepo->findByLanguage($language);
+        $questionnaires = $this->questionnaireRepository->findByLanguage($language);
 
         return $questionnaires;
     }
@@ -45,7 +45,7 @@ class TaskManager
             $template = $this->templating->render('InnovaSelfBundle:Editor/phased:test.html.twig', array('test' => $test));
         } else {
             $orders = $test->getOrderQuestionnaireTests();
-            $potentials = $this->taskRepo->getPotentialByTest($test);
+            $potentials = $this->questionnaireRepository->getPotentialByTest($test);
             $template = $this->templating->render('InnovaSelfBundle:Editor:listTestQuestionnaires.html.twig', array('test' => $test, 'orders' => $orders, 'potentialQuestionnaires' => $potentials));
         }
 
@@ -54,14 +54,14 @@ class TaskManager
 
     public function listOrphans()
     {
-        $questionnaires = $this->taskRepo->findOrphans();
+        $questionnaires = $this->questionnaireRepository->findOrphans();
 
         return $questionnaires;
     }
 
     public function getPotentialQuestionnaires(Test $test)
     {
-        $potentials = $this->taskRepo->getPotentialByTest($test);
+        $potentials = $this->questionnaireRepository->getPotentialByTest($test);
         $template = $this->templating->render('InnovaSelfBundle:Editor/partials:potentialQuestionnaires.html.twig', array('test' => $test, 'potentialQuestionnaires' => $potentials));
 
         return $template;

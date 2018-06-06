@@ -1,28 +1,58 @@
-{% if questionnaires|length <1  %}
-    {{ 'editor.task.no_potential' | trans }}
-{% else %}
-    <div class="input-group">
-        <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
-        <input type="text" id="search" class="form-control" value="">
-    </div>
-    <hr/>
-    <ul id="tasks" class="list-group">
-    {% for questionnaire in questionnaires %}
-        <li class="list-group-item">
-            <span class="btn btn-default add-questionnaire" data-questionnaire-id="{{ questionnaire.id }}">
-                <span class="glyphicon glyphicon-plus"></span> {{ 'generic.add' | trans }}
-            </span>
+{% extends '::base.html.twig' %}
 
-            <span class="btn btn-default duplicate-questionnaire" data-questionnaire-id="{{ questionnaire.id }}">
-                <span class="glyphicon glyphicon-asterisk"></span> {{ 'editor.task.duplicate_and_add' | trans }}
-            </span>
+{% block stylesheets %}
+    <link href="{{ asset("bundles/innovaself/css/editor-task-list.css") }}" rel="stylesheet" />
+{% endblock %}
 
-            {% if questionnaire.theme != "" %}
-                {{ questionnaire.theme }}
-            {% else %}
-                {{ 'editor.task.unnamed' | trans }}
-            {% endif %}
-        </li>
-    {% endfor %}
-    </ul>
-{% endif %}
+{% block body -%}
+    <a href="{{ path('editor_test_questionnaires_show', {'testId': component.test.id}) }}" class="btn btn-success">
+        <span class="glyphicon glyphicon-arrow-left"></span> Retour à <b>"{{ component.test }}"</b>
+    </a>
+
+    <h1>Tâches ajoutables {{ component.componentType.id > 1 ? 'à' : 'au' }} <b>{{ component.componentType.name }}</b> du test <b>{{ component.test }}</b></h1>
+
+    {% if questionnaires|length < 1  %}
+        {{ 'editor.task.no_potential' | trans }}
+    {% else %}
+        <div class="input-group">
+            <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
+            <input type="text" id="search" class="form-control" value="">
+            <div class="loader">Filtrage en cours...</div>
+        </div>
+        <hr/>
+        <ul id="tasks" class="list-group">
+        {% for questionnaire in questionnaires %}
+            <li class="list-group-item">
+                <span class="btn btn-default add-questionnaire" data-questionnaire-id="{{ questionnaire.id }}" data-component-id="{{ component.id }}">
+                    <span class="glyphicon glyphicon-log-in"></span>
+                    Affecter
+                </span>
+
+                <span class="btn btn-default duplicate-questionnaire" data-questionnaire-id="{{ questionnaire.id }}" data-component-id="{{ component.id }}">
+                    <span class="glyphicon glyphicon-duplicate"></span>
+                    Dupliquer
+                </span>
+
+                <span class="label label-primary">
+                    {% if questionnaire.theme != "" %}
+                        {{ questionnaire.theme }}
+                    {% else %}
+                        {{ 'editor.task.unnamed' | trans }}
+                    {% endif %}
+                </span>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-task-list.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-phased.js") }}"></script>
+{% endblock %}
+

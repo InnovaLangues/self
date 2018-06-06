@@ -7,21 +7,25 @@
     </div>
     <hr/>
     <ul id="tasks" class="list-group">
-        {% for potentialQuestionnaire in potentialQuestionnaires %}
+        {% for questionnaire in potentialQuestionnaires %}
             <li class="list-group-item">
-                <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}">
-                    <span class="glyphicon glyphicon-plus"></span> {{ 'generic.add' | trans }}
+                <span class="btn btn-default add-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ questionnaire.id }}">
+                    <span class="glyphicon glyphicon-log-in"></span>
+                    Affecter
                 </span>
 
-                <span class="btn btn-default duplicate-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ potentialQuestionnaire.id }}">
-                    <span class="glyphicon glyphicon-asterisk"></span> {{ 'editor.task.duplicate_and_add' | trans }}
+                <span class="btn btn-default duplicate-task" data-test-id="{{ test.id }}" data-questionnaire-id="{{ questionnaire.id }}">
+                    <span class="glyphicon glyphicon-duplicate"></span>
+                    Dupliquer
                 </span>
 
-                {% if potentialQuestionnaire.theme != "" %}
-                    {{ potentialQuestionnaire.theme }}
-                {% else %}
-                    {{ 'editor.task.unnamed' | trans }}
-                {% endif %}
+                <span class="label label-primary">
+                    {% if questionnaire.theme != "" %}
+                        {{ questionnaire.theme }}
+                    {% else %}
+                        {{ 'editor.task.unnamed' | trans }}
+                    {% endif %}
+                </span>
             </li>
         {% endfor %}
     </ul>

@@ -3,6 +3,8 @@
 namespace Innova\SelfBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 class QuestionnaireRepository extends EntityRepository
 {
@@ -247,7 +249,7 @@ class QuestionnaireRepository extends EntityRepository
                 ->setParameter('component', $component)
                 ->setParameter('type', $component->getComponentType());
 
-        return $query->getResult();
+        return $query->getResult(Query::HYDRATE_ARRAY);
     }
 
     public function findAllLight($languageId = null)

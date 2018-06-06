@@ -158,7 +158,11 @@ class PhasedTestController extends Controller
         $this->get('innova_voter')->isAllowed('right.addtasktest', $component->getTest());
 
         $questionnaires = $this->get('self.phasedtest.manager')->getPotentialQuestionnaires($component);
-        $template = $this->renderView('InnovaSelfBundle:Editor/phased:potentials.html.twig', array('questionnaires' => $questionnaires));
+
+        $template = $this->renderView('InnovaSelfBundle:Editor/phased:potentials.html.twig', [
+            'component' => $component,
+            'questionnaires' => $questionnaires
+        ]);
 
         return new Response($template);
     }
