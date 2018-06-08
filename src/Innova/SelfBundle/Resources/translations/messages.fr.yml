@@ -243,7 +243,7 @@ editor:
         blank_delete: Suppression d'un texte lacunaire
         blank_delete_confirm: Êtes-vous sûr de vouloir supprimer le texte lacunaire ?
     identity:
-        level.proof: Justificatif du niveau
+        level.proof: Lien avec le référentiel
         author.right_status: Status du droit d'auteur
         author.right: Droit d'auteur
         author.right.more: Informations complémentaires sur le droit d'auteur
@@ -251,7 +251,7 @@ editor:
         source.operation: Opération sur la source
         source.more: Informations complémentaires sur la source
         domain: Domaine
-        register: Registre
+        register: Registre de langue
         reception: Type de réception
         length: Durée
         textLength: Longueur du texte (nombre de mots)
@@ -271,7 +271,7 @@ editor:
         cognitive_secondary: Opérations cognitives secondaires
         channel: Mode de production
         socialLocation: Lieu social de production
-        sourceType: Format
+        sourceType: Type de support
         genre: Mode de discours
         variety: Variété
         lisibility: Indice de lisibilité

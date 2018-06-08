@@ -7,6 +7,7 @@ use Innova\SelfBundle\Form\Type\TaskInfosType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Innova\SelfBundle\Form\Type\QuestionnaireType;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class QuestionnaireManager
 {
@@ -81,14 +82,21 @@ class QuestionnaireManager
     {
         $form = $this->formFactory->createBuilder(new QuestionnaireType(), $questionnaire)->getForm();
         $form->bind($request);
-        if ($form->isValid()) {
-            $this->entityManager->persist($questionnaire);
-            $this->entityManager->flush();
 
-            $this->questionnaireRevisorsManager->addRevisor($questionnaire);
+        if (!$form->isValid()) {
+            $errors = [];
+
+            foreach ($form->getErrors(true) as $error) {
+                $errors[$error->getOrigin()->getName()] = $error->getMessage();
+            }
+
+            throw new BadRequestHttpException(json_encode($errors));
         }
 
-        return;
+        $this->entityManager->persist($questionnaire);
+        $this->entityManager->flush();
+
+        $this->questionnaireRevisorsManager->addRevisor($questionnaire);
     }
 
     public function editQuestionnaireField(Questionnaire $questionnaire, $field, $value)
@@ -254,14 +262,14 @@ class QuestionnaireManager
         $newTask->setLanguage($task->getLanguage());
         $newTask->setSkill($task->getSkill());
         $newTask->setLevelProof($task->getLevelProof());
-        $newTask->setAuthorRight($task->getAuthorRight());
-        $newTask->setAuthorRightMore($task->getAuthorRightMore());
-        $newTask->setSource($task->getSource());
-        $newTask->setSourceMore($task->getSourceMore());
-        $newTask->setSourceOperation($task->getSourceOperation());
-        $newTask->setDomain($task->getDomain());
-        $newTask->setRegister($task->getRegister());
-        $newTask->setReception($task->getReception());
+//        $newTask->setAuthorRight($task->getAuthorRight());
+//        $newTask->setAuthorRightMore($task->getAuthorRightMore());
+//        $newTask->setSource($task->getSource());
+//        $newTask->setSourceMore($task->getSourceMore());
+//        $newTask->setSourceOperation($task->getSourceOperation());
+//        $newTask->setDomain($task->getDomain());
+//        $newTask->setRegister($task->getRegister());
+//        $newTask->setReception($task->getReception());
         $newTask->setLength($task->getLength());
         $newTask->setFlow($task->getFlow());
         $newTask->setMediaInstruction($this->mediaManager->duplicate($task->getMediaInstruction(), $newTask));
@@ -271,14 +279,14 @@ class QuestionnaireManager
         $newTask->setMediaFeedback($this->mediaManager->duplicate($task->getMediaFeedback(), $newTask));
         $newTask->setMediaBlankText($this->mediaManager->duplicate($task->getMediaBlankText(), $newTask));
         $newTask->addSourceTypes($task->getSourceTypes());
-        $newTask->addChannels($task->getChannels());
+//        $newTask->addChannels($task->getChannels());
         $newTask->addGenres($task->getGenres());
-        $newTask->addVarieties($task->getVarieties());
-        $newTask->addSocialLocations($task->getSocialLocations());
+//        $newTask->addVarieties($task->getVarieties());
+//        $newTask->addSocialLocations($task->getSocialLocations());
         $newTask->setLisibility($task->getLisibility());
         $newTask->setSpeechType($task->getSpeechType());
         $newTask->setTextLength($task->getTextLength());
-        $newTask->setProductionType($task->getProductionType());
+//        $newTask->setProductionType($task->getProductionType());
 
         $questions = $task->getQuestions();
         foreach ($questions as $question) {

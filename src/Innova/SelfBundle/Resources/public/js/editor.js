@@ -973,6 +973,7 @@ function fillMediaName(theme){
 function beforeAjax(){
     $("#loader-img").show();
     $(".btn, input, textarea, select:not(.to-check)").attr("disabled", "disabled");
+    $('#errors').html('');
 }
 
 function afterAjax(){
@@ -1080,7 +1081,15 @@ function setIdentityField(form){
             $('#modal-subquestion-identity').modal('hide');
             afterAjax();
         },
+        error: function(xhr) {
+            var errors = xhr.responseJSON;
 
+            for (var fieldName in errors) {
+                var error = errors[fieldName];
+
+                $('<div class="alert alert-danger">' + fieldName + ': ' + error + '</div>').appendTo('#errors');
+            }
+        }
     });
 }
 

@@ -117,8 +117,8 @@ class FixtureCommand extends ContainerAwareCommand
         ));
 
         $genreManager = $this->getContainer()->get('self.genre.manager');
-        $genreManager->create(array('genre.informative', 'genre.argumentative', 'genre.narrative', 'genre.explicatif', 'genre.descriptive',
-            'genre.injonctif', 'genre.expressif', 'genre.poetique', ));
+        $genreManager->create(array('genre.informative', 'genre.argumentative', 'genre.narrative', 'genre.explicatif',
+            'genre.injonctif', 'genre.poetique', ));
         $genreManager->delete(array('genre.literary', 'genre.conversational', 'genre.cmd_synchrone', 'genre.cmd_asynchrone'));
 
         $varietyManager = $this->getContainer()->get('self.variety.manager');
