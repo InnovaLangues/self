@@ -293,6 +293,14 @@ class Questionnaire
      */
     protected $flow;
 
+    /**
+     * @var string
+     *
+     * ORM\Column(type="text", nullable=true)
+     */
+    protected $readability;
+
+
     public function __toString()
     {
         return $this->theme;
@@ -1519,6 +1527,22 @@ class Questionnaire
         return $this->speechType;
     }
 
+    /**
+     * @return string
+     */
+    public function getReadability()
+    {
+        return $this->readability;
+    }
+
+    /**
+     * @param string $readability
+     */
+    public function setReadability($readability)
+    {
+        $this->readability = $readability;
+    }
+
 //    /**
 //     * Set productionType.
 //     *
@@ -1566,4 +1590,6 @@ class Questionnaire
 //    {
 //        $this->varieties->removeElement($varieties);
 //    }
+
+
 }

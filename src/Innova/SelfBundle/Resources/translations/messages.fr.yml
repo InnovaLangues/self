@@ -253,7 +253,7 @@ editor:
         domain: Domaine
         register: Registre de langue
         reception: Type de réception
-        length: Durée
+        length: Durée / Longueur
         textLength: Longueur du texte (nombre de mots)
         productionType: Type de production
         flow: Débit
@@ -276,6 +276,7 @@ editor:
         variety: Variété
         lisibility: Indice de lisibilité
         speechType: Genre de discours
+        readability: Indice de lisibilité
     log:
         editor_create: Création de
         editor_edit: Edition de

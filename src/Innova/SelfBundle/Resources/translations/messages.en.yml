@@ -265,6 +265,7 @@ editor:
     variety: Variety
     lisibility: 'Legibility Index'
     speechType: 'Genre de discours'
+    readability: Readability
   log:
     editor_create: Create
     editor_edit: Edit
