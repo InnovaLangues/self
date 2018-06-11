@@ -1087,7 +1087,7 @@ function setIdentityField(form){
             for (var fieldName in errors) {
                 var error = errors[fieldName];
 
-                $('<div class="alert alert-danger">' + fieldName + ': ' + error + '</div>').appendTo('#errors');
+                $('<div class="alert alert-danger"><b>' + fieldName + ':</b> ' + error + '</div>').appendTo('#errors');
             }
         }
     });

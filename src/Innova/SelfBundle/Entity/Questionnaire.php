@@ -212,7 +212,7 @@ class Questionnaire
     /**
      * @Assert\Count(
      *      min = 1,
-     *      minMessage = "You must specify at least one source support",
+     *      minMessage = "Vous devez faire au moins un choix.",
      * )
      *
      * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType", inversedBy="questionnaires")

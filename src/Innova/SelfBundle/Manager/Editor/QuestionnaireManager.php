@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Innova\SelfBundle\Form\Type\QuestionnaireType;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class QuestionnaireManager
 {
@@ -20,6 +21,7 @@ class QuestionnaireManager
     protected $mediaManager;
     protected $questionManager;
     protected $propositionManager;
+    protected $translator;
 
     public function __construct(
         $entityManager,
@@ -29,7 +31,8 @@ class QuestionnaireManager
         $formFactory,
         $mediaManager,
         $questionManager,
-        $propositionManager
+        $propositionManager,
+        TranslatorInterface $translator
     ) {
         $this->entityManager = $entityManager;
         $this->securityContext = $securityContext;
@@ -40,6 +43,7 @@ class QuestionnaireManager
         $this->mediaManager = $mediaManager;
         $this->questionManager = $questionManager;
         $this->propositionManager = $propositionManager;
+        $this->translator = $translator;
     }
 
     public function createQuestionnaire()
@@ -87,7 +91,11 @@ class QuestionnaireManager
             $errors = [];
 
             foreach ($form->getErrors(true) as $error) {
-                $errors[$error->getOrigin()->getName()] = $error->getMessage();
+                $label = $this->translator->trans(
+                    $error->getOrigin()->getConfig()->getOption("label")
+                );
+
+                $errors[$label] = $error->getMessage();
             }
 
             throw new BadRequestHttpException(json_encode($errors));

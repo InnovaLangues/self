@@ -10,6 +10,7 @@ services:
             mediaManager:       @self.media.manager
             questionManager:    @self.question.manager
             propositionManager: @self.proposition.manager
+            translator: @translator
 
     self.question.manager:
         class: Innova\SelfBundle\Manager\Editor\QuestionManager
