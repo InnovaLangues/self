@@ -166,46 +166,28 @@ class Questionnaire
     /**
      * @var string
      *
-     * @ORM\Column(name="levelProof", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $levelProof;
-
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="authorRightMore", type="text", nullable=true)
-//     */
-//    private $authorRightMore;
-//
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight", inversedBy="questionnaires")
-//     * @ORM\JoinColumn(onDelete="SET NULL")
-//     */
-//    protected $authorRight;
-
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Source", inversedBy="questionnaires")
-//     * @ORM\JoinColumn(onDelete="SET NULL")
-//     */
-//    protected $source;
-
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation", inversedBy="questionnaires")
-//     * @ORM\JoinColumn(onDelete="SET NULL")
-//     */
-//    protected $sourceOperation;
-
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="sourceMore", type="text", nullable=true)
-//     */
-//    private $sourceMore;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="questionnaires_speechType", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $context;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
      */
     private $speechType;
 
@@ -220,29 +202,11 @@ class Questionnaire
      */
     protected $sourceTypes;
 
-//    /**
-//     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel", inversedBy="questionnaires")
-//     * @ORM\JoinTable(name="questionnaires_channel")
-//     */
-//    protected $channels;
-
-//    /**
-//     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation", inversedBy="questionnaires")
-//     * @ORM\JoinTable(name="questionnaires_socialLocation")
-//     */
-//    protected $socialLocations;
-
     /**
      * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre", inversedBy="questionnaires")
      * @ORM\JoinTable(name="questionnaires_genre")
      */
     protected $genres;
-
-//    /**
-//     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety", inversedBy="questionnaires")
-//     * @ORM\JoinTable(name="questionnaires_variety")
-//     */
-//    protected $varieties;
 
     /**
      * @var string
@@ -251,29 +215,11 @@ class Questionnaire
      */
     protected $variety;
 
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
-//     * @ORM\JoinColumn(onDelete="SET NULL")
-//     */
-//    protected $domain;
-
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType", inversedBy="questionnaires")
-//     * @ORM\JoinColumn(onDelete="SET NULL")
-//     */
-//    protected $productionType;
-
     /**
      * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Register", inversedBy="questionnaires")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $register;
-
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception", inversedBy="questionnaires")
-//     * @ORM\JoinColumn(onDelete="SET NULL")
-//     */
-//    protected $reception;
 
     /**
      * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Length", inversedBy="questionnaires")
@@ -288,7 +234,7 @@ class Questionnaire
     protected $textLength;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
+     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $flow;
@@ -878,54 +824,6 @@ class Questionnaire
         return $this->levelProof;
     }
 
-//    /**
-//     * Set authorRightMore.
-//     *
-//     * @param string $authorRightMore
-//     *
-//     * @return Questionnaire
-//     */
-//    public function setAuthorRightMore($authorRightMore)
-//    {
-//        $this->authorRightMore = $authorRightMore;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get authorRightMore.
-//     *
-//     * @return string
-//     */
-//    public function getAuthorRightMore()
-//    {
-//        return $this->authorRightMore;
-//    }
-
-//    /**
-//     * Set sourceMore.
-//     *
-//     * @param string $sourceMore
-//     *
-//     * @return Questionnaire
-//     */
-//    public function setSourceMore($sourceMore)
-//    {
-//        $this->sourceMore = $sourceMore;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get sourceMore.
-//     *
-//     * @return string
-//     */
-//    public function getSourceMore()
-//    {
-//        return $this->sourceMore;
-//    }
-
     /**
      * Add revisors.
      *
@@ -980,54 +878,6 @@ class Questionnaire
         return $this->status;
     }
 
-//    /**
-//     * Set authorRight.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight $authorRight
-//     *
-//     * @return Questionnaire
-//     */
-//    public function setAuthorRight(\Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight $authorRight = null)
-//    {
-//        $this->authorRight = $authorRight;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get authorRight.
-//     *
-//     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight
-//     */
-//    public function getAuthorRight()
-//    {
-//        return $this->authorRight;
-//    }
-
-//    /**
-//     * Set domain.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain $domain
-//     *
-//     * @return Questionnaire
-//     */
-//    public function setDomain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain $domain = null)
-//    {
-//        $this->domain = $domain;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get domain.
-//     *
-//     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain
-//     */
-//    public function getDomain()
-//    {
-//        return $this->domain;
-//    }
-
     /**
      * Set register.
      *
@@ -1051,30 +901,6 @@ class Questionnaire
     {
         return $this->register;
     }
-
-//    /**
-//     * Set reception.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception $reception
-//     *
-//     * @return Questionnaire
-//     */
-//    public function setReception(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception $reception = null)
-//    {
-//        $this->reception = $reception;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get reception.
-//     *
-//     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception
-//     */
-//    public function getReception()
-//    {
-//        return $this->reception;
-//    }
 
     /**
      * Set length.
@@ -1194,52 +1020,6 @@ class Questionnaire
         return $this->sourceTypes;
     }
 
-//    /**
-//     * Add channels.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
-//     *
-//     * @return Questionnaire
-//     */
-//    public function addChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
-//    {
-//        $this->channels[] = $channels;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Add channels collection.
-//     */
-//    public function addChannels($channels)
-//    {
-//        foreach ($channels as $channel) {
-//            $this->channels[] = $channel;
-//        }
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove channels.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
-//     */
-//    public function removeChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
-//    {
-//        $this->channels->removeElement($channels);
-//    }
-//
-//    /**
-//     * Get channels.
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getChannels()
-//    {
-//        return $this->channels;
-//    }
-
     /**
      * Add genres.
      *
@@ -1304,52 +1084,6 @@ class Questionnaire
 
         return $this;
     }
-
-//    /**
-//     * Add varieties.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
-//     *
-//     * @return Questionnaire
-//     */
-//    public function addVarietie(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
-//    {
-//        $this->varieties[] = $varieties;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Add varieties collection.
-//     */
-//    public function addVarieties($varieties)
-//    {
-//        foreach ($varieties as $variety) {
-//            $this->varieties[] = $variety;
-//        }
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove varieties.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
-//     */
-//    public function removeVarietie(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
-//    {
-//        $this->varieties->removeElement($varieties);
-//    }
-//
-//    /**
-//     * Get varieties.
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getVarieties()
-//    {
-//        return $this->varieties;
-//    }
 
     /**
      * Constructor.
@@ -1429,56 +1163,6 @@ class Questionnaire
         return $this->lisibility;
     }
 
-//    /**
-//     * Add socialLocations.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
-//     *
-//     * @return Questionnaire
-//     */
-//    public function addSocialLocations($socialLocations)
-//    {
-//        foreach ($socialLocations as $socialLocation) {
-//            $this->socialLocations[] = $socialLocation;
-//        }
-//
-//        return $this;
-//    }
-
-//    /**
-//     * Add socialLocation.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
-//     *
-//     * @return Questionnaire
-//     */
-//    public function addSocialLocation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations)
-//    {
-//        $this->socialLocations[] = $socialLocations;
-//
-//        return $this;
-//    }
-
-//    /**
-//     * Remove socialLocations.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
-//     */
-//    public function removeSocialLocation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations)
-//    {
-//        $this->socialLocations->removeElement($socialLocations);
-//    }
-
-//    /**
-//     * Get socialLocations.
-//     *
-//     * @return QuestionnaireIdentity\SocialLocation[]
-//     */
-//    public function getSocialLocations()
-//    {
-//        return $this->socialLocations;
-//    }
-
     /**
      * Set textLength.
      *
@@ -1543,53 +1227,35 @@ class Questionnaire
         $this->readability = $readability;
     }
 
-//    /**
-//     * Set productionType.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType
-//     *
-//     * @return Questionnaire
-//     */
-//    public function setProductionType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType = null)
-//    {
-//        $this->productionType = $productionType;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get productionType.
-//     *
-//     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType
-//     */
-//    public function getProductionType()
-//    {
-//        return $this->productionType;
-//    }
-//
-//    /**
-//     * Add varieties.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
-//     *
-//     * @return Questionnaire
-//     */
-//    public function addVariety(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
-//    {
-//        $this->varieties[] = $varieties;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove varieties.
-//     *
-//     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
-//     */
-//    public function removeVariety(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
-//    {
-//        $this->varieties->removeElement($varieties);
-//    }
+    /**
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
 
+    /**
+     * @param string $comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    }
 
+    /**
+     * @return string
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * @param string $context
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+    }
 }

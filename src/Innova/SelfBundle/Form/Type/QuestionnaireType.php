@@ -224,7 +224,6 @@ class QuestionnaireType extends AbstractType
                 'class' => 'form-control identity-select',
                 'data-field' => 'readability'
             ],
-//            'translation_domain' => 'messages',
         ]);
 
         $builder->add('textLength', 'entity', array(
@@ -236,14 +235,34 @@ class QuestionnaireType extends AbstractType
                 'choice_translation_domain' => true
             ));
 
-        $builder->add('flow', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Flow',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'flow'),
-                'label' => 'editor.identity.flow',
-                'choice_translation_domain' => true
-            ));
+        $builder->add('flow', 'entity', [
+            'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Flow',
+            'multiple' => true,
+            'property' => 'name',
+            'empty_value' => '-',
+            'attr' => [
+                'class' => 'form-control identity-select',
+                'data-field' => 'flow'
+            ],
+            'label' => 'editor.identity.flow',
+            'choice_translation_domain' => true
+        ]);
+
+        $builder->add('comment', 'textarea', [
+            'label' => 'editor.identity.readability',
+            'attr' => [
+                'class' => 'form-control identity-select',
+                'data-field' => 'readability'
+            ],
+        ]);
+
+        $builder->add('context', 'textarea', [
+            'label' => 'editor.identity.readability',
+            'attr' => [
+                'class' => 'form-control identity-select',
+                'data-field' => 'readability'
+            ],
+        ]);
 
         $builder->add('lisibility', 'text', array(
             'attr' => array('class' => 'form-control identity-select', 'data-field' => 'lisibility'),

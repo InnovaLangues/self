@@ -256,7 +256,7 @@ editor:
         length: Durée / Longueur
         textLength: Longueur du texte (nombre de mots)
         productionType: Type de production
-        flow: Débit
+        flow: Débit(s)
         status: Statut
         language: Langue
         level: Niveau
