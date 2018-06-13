@@ -1158,5 +1158,48 @@ function postForm(form){
     });
 }
 
+$(function(){
+    function syncAuthorRightChoice (choice) {
+        var $fieldCreatedBySelf = $("input[name='questionnaire[createdBySelf]']").closest('div').hide();
+        var $fieldFreeLicence = $("input[name='questionnaire[freeLicence]']").closest('div').hide();
+        var $fieldAuthorizationReq = $("input[name='questionnaire[authorizationRequestedAt]']").closest('div').hide();
+        var $fieldAuthorizationGra = $("input[name='questionnaire[authorizationGrantedAt]']").closest('div').hide();
+        var $fieldUrl = $("textarea[name='questionnaire[sourceUrl]']").closest('div').hide();
+        var $fieldStorage = $("textarea[name='questionnaire[sourceStorage]']").closest('div').hide();
+        var $fieldContacts = $("textarea[name='questionnaire[sourceContacts]']").closest('div').hide();
 
+        if (choice === 'not_needed') {
+            $fieldCreatedBySelf.show();
+            $fieldFreeLicence.show();
+            $fieldStorage.show();
+        }
 
+        if (choice === 'to_ask') {
+            $fieldUrl.show();
+            $fieldContacts.show();
+        }
+
+        if (choice === 'pending') {
+            $fieldUrl.show();
+            $fieldContacts.show();
+            $fieldAuthorizationReq.show();
+        }
+
+        if (choice === 'authorized') {
+            $fieldUrl.show();
+            $fieldContacts.show();
+            $fieldAuthorizationReq.show();
+            $fieldAuthorizationGra.show();
+            $fieldStorage.show();
+        }
+    }
+
+    var $authorRight = $("input[name='questionnaire[authorRight]']");
+
+    $authorRight.change(function () {
+        console.log('authorRight changed : ' + $(this).val());
+        syncAuthorRightChoice($(this).val());
+    });
+
+    syncAuthorRightChoice($authorRight.val());
+});

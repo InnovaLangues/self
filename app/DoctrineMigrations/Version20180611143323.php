@@ -32,7 +32,6 @@ class Version20180611143323 extends AbstractMigration
         $this->addSql('ALTER TABLE questionnaire_flow ADD CONSTRAINT FK_65899D97EB60D1B FOREIGN KEY (flow_id) REFERENCES questionnaireFlow (id) ON DELETE CASCADE');
         $this->addSql('DROP TABLE Channel');
         $this->addSql('DROP TABLE SocialLocation');
-        $this->addSql('DROP TABLE questionnaireAuthorRight');
         $this->addSql('DROP TABLE questionnaireDomain');
         $this->addSql('DROP TABLE questionnaireProductionType');
         $this->addSql('DROP TABLE questionnaireReception');
@@ -49,7 +48,7 @@ class Version20180611143323 extends AbstractMigration
         $this->addSql('DROP INDEX IDX_7A64DAF3E5F0C25 ON questionnaire');
         $this->addSql('DROP INDEX IDX_7A64DAF7C14DF52 ON questionnaire');
         $this->addSql('DROP INDEX IDX_7A64DAF3C62C6D1 ON questionnaire');
-        $this->addSql('ALTER TABLE questionnaire DROP domain_id, DROP reception_id, DROP flow_id, DROP source_id, DROP authorRightMore, DROP sourceMore, DROP authorRight_id, DROP sourceOperation_id, DROP productionType_id');
+        $this->addSql('ALTER TABLE questionnaire DROP domain_id, DROP reception_id, DROP flow_id, DROP source_id, DROP authorRightMore, DROP sourceMore, DROP sourceOperation_id, DROP productionType_id');
     }
 
     /**
@@ -62,7 +61,6 @@ class Version20180611143323 extends AbstractMigration
 
         $this->addSql('CREATE TABLE Channel (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, description LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE SocialLocation (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, description LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE questionnaireAuthorRight (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, description LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE questionnaireDomain (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, description LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE questionnaireProductionType (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, description LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE questionnaireReception (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, description LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
@@ -79,18 +77,16 @@ class Version20180611143323 extends AbstractMigration
         $this->addSql('ALTER TABLE questionnaires_variety ADD CONSTRAINT FK_B660085078C2BC47 FOREIGN KEY (variety_id) REFERENCES questionnaireVariety (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE questionnaires_variety ADD CONSTRAINT FK_B6600850CE07E8FF FOREIGN KEY (questionnaire_id) REFERENCES questionnaire (id) ON DELETE CASCADE');
         $this->addSql('DROP TABLE questionnaire_flow');
-        $this->addSql('ALTER TABLE questionnaire ADD domain_id INT DEFAULT NULL, ADD reception_id INT DEFAULT NULL, ADD flow_id INT DEFAULT NULL, ADD source_id INT DEFAULT NULL, ADD authorRightMore LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, ADD sourceMore LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, ADD authorRight_id INT DEFAULT NULL, ADD sourceOperation_id INT DEFAULT NULL, ADD productionType_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE questionnaire ADD domain_id INT DEFAULT NULL, ADD reception_id INT DEFAULT NULL, ADD flow_id INT DEFAULT NULL, ADD source_id INT DEFAULT NULL, ADD authorRightMore LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, ADD sourceMore LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci, ADD sourceOperation_id INT DEFAULT NULL, ADD productionType_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE questionnaire ADD CONSTRAINT FK_7A64DAF115F0EE5 FOREIGN KEY (domain_id) REFERENCES questionnaireDomain (id) ON DELETE SET NULL');
         $this->addSql('ALTER TABLE questionnaire ADD CONSTRAINT FK_7A64DAF3C62C6D1 FOREIGN KEY (productionType_id) REFERENCES questionnaireProductionType (id) ON DELETE SET NULL');
         $this->addSql('ALTER TABLE questionnaire ADD CONSTRAINT FK_7A64DAF3E5F0C25 FOREIGN KEY (sourceOperation_id) REFERENCES questionnaireSourceOperation (id) ON DELETE SET NULL');
         $this->addSql('ALTER TABLE questionnaire ADD CONSTRAINT FK_7A64DAF7C14DF52 FOREIGN KEY (reception_id) REFERENCES questionnaireReception (id) ON DELETE SET NULL');
         $this->addSql('ALTER TABLE questionnaire ADD CONSTRAINT FK_7A64DAF7EB60D1B FOREIGN KEY (flow_id) REFERENCES questionnaireFlow (id) ON DELETE SET NULL');
         $this->addSql('ALTER TABLE questionnaire ADD CONSTRAINT FK_7A64DAF953C1C61 FOREIGN KEY (source_id) REFERENCES questionnaireSource (id) ON DELETE SET NULL');
-        $this->addSql('ALTER TABLE questionnaire ADD CONSTRAINT FK_7A64DAF9C93745D FOREIGN KEY (authorRight_id) REFERENCES questionnaireAuthorRight (id) ON DELETE SET NULL');
         $this->addSql('CREATE INDEX IDX_7A64DAF953C1C61 ON questionnaire (source_id)');
         $this->addSql('CREATE INDEX IDX_7A64DAF115F0EE5 ON questionnaire (domain_id)');
         $this->addSql('CREATE INDEX IDX_7A64DAF7EB60D1B ON questionnaire (flow_id)');
-        $this->addSql('CREATE INDEX IDX_7A64DAF9C93745D ON questionnaire (authorRight_id)');
         $this->addSql('CREATE INDEX IDX_7A64DAF3E5F0C25 ON questionnaire (sourceOperation_id)');
         $this->addSql('CREATE INDEX IDX_7A64DAF7C14DF52 ON questionnaire (reception_id)');
         $this->addSql('CREATE INDEX IDX_7A64DAF3C62C6D1 ON questionnaire (productionType_id)');

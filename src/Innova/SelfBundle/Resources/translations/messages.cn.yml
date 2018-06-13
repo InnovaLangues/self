@@ -205,7 +205,6 @@ editor:
         sourceType: Format
         genre: Mode de discours
         variety: Variété
-        lisibility: Indice de lisibilité
 
     log:
         editor_create: Création de

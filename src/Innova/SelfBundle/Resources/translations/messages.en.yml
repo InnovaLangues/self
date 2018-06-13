@@ -232,13 +232,14 @@ editor:
     blank_delete: 'Delete a blank text'
     blank_delete_confirm: 'Are you sure you want to delete this blank text ?'
   identity:
-    level.proof: 'Proof of level'
-    author.right_status: 'Copyright status'
-    author.right: Copyright
-    author.right.more: 'Extra information regarding copyright'
+    levelProof: 'Proof of level'
+    authorRight:
+        label: Status du droit d'auteur
+        authorized: Autorisés
+        to_ask: A demander
+        not_needed: Non requis
+        pending: En attente
     source: Source
-    source.operation: 'Operation on source'
-    source.more: 'Extra information regarding source operation'
     domain: Domain
     register: Register
     reception: 'Reception type'
@@ -260,12 +261,26 @@ editor:
     cognitive_secondary: 'Secondary cognitive operation'
     channel: Channel
     socialLocation: 'Location of production'
-    sourceType: Format
-    genre: Genre
+    sourceTypes: Source types
     variety: Variety
-    lisibility: 'Legibility Index'
-    speechType: 'Genre de discours'
+    textType: 'Text type'
+    speechType: 'Type de discours'
     readability: Readability
+    comment: Comments
+    context: Context
+    createdBySelf: Création SELF
+    freeLicence: Licence libre
+    authorizationRequestedAt: Date de la demande d'autorisation
+    authorizationGrantedAt: Date de l'obtention des droits
+    sourceUrl: Lien vers la ressource
+    sourceStorage: Lieu de stockage
+    sourceContacts: Contact(s)
+    speakers:
+        label: Locuteurs
+        1: 'Discours monogéré : 1'
+        2: 'Discours polygéré : 2'
+        3: 'Discours polygéré : 3'
+        4: 'Discours polygéré : 4 ou plus'
   log:
     editor_create: Create
     editor_edit: Edit

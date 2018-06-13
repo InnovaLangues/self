@@ -243,13 +243,14 @@ editor:
         blank_delete: Suppression d'un texte lacunaire
         blank_delete_confirm: Êtes-vous sûr de vouloir supprimer le texte lacunaire ?
     identity:
-        level.proof: Lien avec le référentiel
-        author.right_status: Status du droit d'auteur
-        author.right: Droit d'auteur
-        author.right.more: Informations complémentaires sur le droit d'auteur
+        levelProof: Lien avec le référentiel
+        authorRight:
+            label: Status du droit d'auteur
+            authorized: Autorisés
+            to_ask: A demander
+            not_needed: Non requis
+            pending: En attente
         source: Source
-        source.operation: Opération sur la source
-        source.more: Informations complémentaires sur la source
         domain: Domaine
         register: Registre de langue
         reception: Type de réception
@@ -261,7 +262,7 @@ editor:
         language: Langue
         level: Niveau
         createdby: Tâche créée par
-        revisedby: et révisée par
+        revisedby: et modifiée par
         skill: Compétence
         theme: Titre
         fixedOrder: Ordre fixe
@@ -271,12 +272,25 @@ editor:
         cognitive_secondary: Opérations cognitives secondaires
         channel: Mode de production
         socialLocation: Lieu social de production
-        sourceType: Type de support
-        genre: Mode de discours
-        variety: Variété
-        lisibility: Indice de lisibilité
-        speechType: Genre de discours
+        sourceTypes: Types de support
+        textType: Genre de texte
+        speechType: Type de discours
         readability: Indice de lisibilité
+        comment: Commentaire
+        context: Contexte
+        createdBySelf: Création SELF
+        freeLicence: Licence libre
+        authorizationRequestedAt: Date de la demande d'autorisation
+        authorizationGrantedAt: Date de l'obtention des droits
+        sourceUrl: Lien vers la ressource
+        sourceStorage: Lieu de stockage
+        sourceContacts: Contact(s)
+        speakers:
+            label: Locuteurs
+            1: 'Discours monogéré : 1'
+            2: 'Discours polygéré : 2'
+            3: 'Discours polygéré : 3'
+            4: 'Discours polygéré : 4 ou plus'
     log:
         editor_create: Création de
         editor_edit: Edition de

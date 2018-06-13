@@ -270,14 +270,8 @@ class QuestionnaireManager
         $newTask->setLanguage($task->getLanguage());
         $newTask->setSkill($task->getSkill());
         $newTask->setLevelProof($task->getLevelProof());
-//        $newTask->setAuthorRight($task->getAuthorRight());
-//        $newTask->setAuthorRightMore($task->getAuthorRightMore());
-//        $newTask->setSource($task->getSource());
-//        $newTask->setSourceMore($task->getSourceMore());
-//        $newTask->setSourceOperation($task->getSourceOperation());
-//        $newTask->setDomain($task->getDomain());
-//        $newTask->setRegister($task->getRegister());
-//        $newTask->setReception($task->getReception());
+        $newTask->setAuthorRight($task->getAuthorRight());
+        $newTask->setRegister($task->getRegister());
         $newTask->setLength($task->getLength());
         $newTask->setFlow($task->getFlow());
         $newTask->setMediaInstruction($this->mediaManager->duplicate($task->getMediaInstruction(), $newTask));
@@ -287,16 +281,23 @@ class QuestionnaireManager
         $newTask->setMediaFeedback($this->mediaManager->duplicate($task->getMediaFeedback(), $newTask));
         $newTask->setMediaBlankText($this->mediaManager->duplicate($task->getMediaBlankText(), $newTask));
         $newTask->addSourceTypes($task->getSourceTypes());
-//        $newTask->addChannels($task->getChannels());
         $newTask->addGenres($task->getGenres());
-//        $newTask->addVarieties($task->getVarieties());
-//        $newTask->addSocialLocations($task->getSocialLocations());
-        $newTask->setLisibility($task->getLisibility());
-        $newTask->setSpeechType($task->getSpeechType());
+        $newTask->setVariety($task->getVariety());
+        $newTask->setReadability($task->getReadability());
+        $newTask->setTextType($task->getTextType());
+        $newTask->setComment($task->getComment());
+        $newTask->setContext($task->getContext());
         $newTask->setTextLength($task->getTextLength());
-//        $newTask->setProductionType($task->getProductionType());
+        $newTask->setCreatedBySelf($task->isCreatedBySelf());
+        $newTask->setFreeLicence($task->isFreeLicence());
+        $newTask->setAuthorizationRequestedAt($task->getAuthorizationRequestedAt());
+        $newTask->setAuthorizationGrantedAt($task->getAuthorizationGrantedAt());
+        $newTask->setSourceContacts($task->getSourceContacts());
+        $newTask->setSourceUrl($task->getSourceUrl());
+        $newTask->setSourceStorage($task->getSourceStorage());
 
         $questions = $task->getQuestions();
+
         foreach ($questions as $question) {
             $this->questionManager->duplicate($question, $newTask);
         }

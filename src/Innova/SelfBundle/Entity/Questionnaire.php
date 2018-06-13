@@ -2,7 +2,9 @@
 
 namespace Innova\SelfBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -148,20 +150,13 @@ class Questionnaire
      */
     protected $language;
 
-    // FICHE D'IDENTITE
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lisibility", type="string", length=255, nullable=true)
-     */
-    private $lisibility;
-
     /**
      * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires", fetch = "EAGER")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $skill;
+
+    // FICHE D'IDENTITE
 
     /**
      * @var string
@@ -189,7 +184,7 @@ class Questionnaire
      *
      * @ORM\Column(type="text", nullable=true)
      */
-    private $speechType;
+    private $textType;
 
     /**
      * @Assert\Count(
@@ -203,17 +198,11 @@ class Questionnaire
     protected $sourceTypes;
 
     /**
+     * @Assert\Count(min=1, minMessage="Vous devez faire au moins un choix.")
      * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre", inversedBy="questionnaires")
      * @ORM\JoinTable(name="questionnaires_genre")
      */
     protected $genres;
-
-    /**
-     * @var string
-     *
-     * ORM\Column(name="variety", type="text", nullable=true)
-     */
-    protected $variety;
 
     /**
      * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Register", inversedBy="questionnaires")
@@ -228,12 +217,6 @@ class Questionnaire
     protected $length;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    protected $textLength;
-
-    /**
      * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
@@ -242,9 +225,82 @@ class Questionnaire
     /**
      * @var string
      *
-     * ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $readability;
+
+    /**
+     * @var int
+     *
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 4
+     * )
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $speakers;
+
+    const AUTHOR_RIGHT_NOT_NEEDED = 'not_needed';
+    const AUTHOR_RIGHT_TO_ASK = 'to_ask';
+    const AUTHOR_RIGHT_PENDING = 'pending';
+    const AUTHOR_RIGHT_AUTHORIZED = 'authorized';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     * @Assert\Choice(callback="getAuthorRightValues")
+     */
+    protected $authorRight = self::AUTHOR_RIGHT_TO_ASK;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $createdBySelf = false;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $freeLicence = false;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $authorizationRequestedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $authorizationGrantedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $sourceContacts;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $sourceUrl;
+
+    /**
+     * @var string
+     *
+     * ORM\Column(type="text", nullable=true)
+     */
+    protected $sourceStorage;
 
 
     public function __toString()
@@ -1067,25 +1123,6 @@ class Questionnaire
     }
 
     /**
-     * @return string
-     */
-    public function getVariety()
-    {
-        return $this->variety;
-    }
-
-    /**
-     * @param string $variety
-     * @return Questionnaire
-     */
-    public function setVariety($variety)
-    {
-        $this->variety = $variety;
-
-        return $this;
-    }
-
-    /**
      * Constructor.
      */
     public function __construct()
@@ -1098,11 +1135,9 @@ class Questionnaire
         $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderQuestionnaireTests = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sourceTypes = new \Doctrine\Common\Collections\ArrayCollection();
-//        $this->channels = new \Doctrine\Common\Collections\ArrayCollection();
         $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
-//        $this->varieties = new \Doctrine\Common\Collections\ArrayCollection();
-//        $this->socialLocations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderQuestionnaireComponents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     /**
@@ -1140,30 +1175,6 @@ class Questionnaire
     }
 
     /**
-     * Set lisibility.
-     *
-     * @param string $lisibility
-     *
-     * @return Questionnaire
-     */
-    public function setLisibility($lisibility)
-    {
-        $this->lisibility = $lisibility;
-
-        return $this;
-    }
-
-    /**
-     * Get lisibility.
-     *
-     * @return string
-     */
-    public function getLisibility()
-    {
-        return $this->lisibility;
-    }
-
-    /**
      * Set textLength.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength
@@ -1185,30 +1196,6 @@ class Questionnaire
     public function getTextLength()
     {
         return $this->textLength;
-    }
-
-    /**
-     * Set speechType.
-     *
-     * @param string $speechType
-     *
-     * @return Questionnaire
-     */
-    public function setSpeechType($speechType)
-    {
-        $this->speechType = $speechType;
-
-        return $this;
-    }
-
-    /**
-     * Get speechType.
-     *
-     * @return string
-     */
-    public function getSpeechType()
-    {
-        return $this->speechType;
     }
 
     /**
@@ -1257,5 +1244,177 @@ class Questionnaire
     public function setContext($context)
     {
         $this->context = $context;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTextType()
+    {
+        return $this->textType;
+    }
+
+    /**
+     * @param string $textType
+     */
+    public function setTextType($textType)
+    {
+        $this->textType = $textType;
+    }
+
+    /**
+     * @param AuthorRight $authorRightMore
+     *
+     * @return Questionnaire
+     */
+    public function setAuthorRight($authorRight)
+    {
+        $this->authorRight = $authorRight;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getAuthorRight()
+    {
+        return $this->authorRight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCreatedBySelf()
+    {
+        return $this->createdBySelf;
+    }
+
+    /**
+     * @param bool $createdBySelf
+     */
+    public function setCreatedBySelf($createdBySelf)
+    {
+        $this->createdBySelf = $createdBySelf;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFreeLicence()
+    {
+        return $this->freeLicence;
+    }
+
+    /**
+     * @param bool $freeLicence
+     */
+    public function setFreeLicence($freeLicence)
+    {
+        $this->freeLicence = $freeLicence;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAuthorizationRequestedAt()
+    {
+        return $this->authorizationRequestedAt;
+    }
+
+    /**
+     * @param \DateTime $authorizationRequestedAt
+     */
+    public function setAuthorizationRequestedAt($authorizationRequestedAt)
+    {
+        $this->authorizationRequestedAt = $authorizationRequestedAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAuthorizationGrantedAt()
+    {
+        return $this->authorizationGrantedAt;
+    }
+
+    /**
+     * @param \DateTime $authorizationGrantedAt
+     */
+    public function setAuthorizationGrantedAt($authorizationGrantedAt)
+    {
+        $this->authorizationGrantedAt = $authorizationGrantedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceContacts()
+    {
+        return $this->sourceContacts;
+    }
+
+    /**
+     * @param string $sourceContacts
+     */
+    public function setSourceContacts($sourceContacts)
+    {
+        $this->sourceContacts = $sourceContacts;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceUrl()
+    {
+        return $this->sourceUrl;
+    }
+
+    /**
+     * @param string $sourceUrl
+     */
+    public function setSourceUrl($sourceUrl)
+    {
+        $this->sourceUrl = $sourceUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceStorage()
+    {
+        return $this->sourceStorage;
+    }
+
+    /**
+     * @param string $sourceStorage
+     */
+    public function setSourceStorage($sourceStorage)
+    {
+        $this->sourceStorage = $sourceStorage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSpeakers()
+    {
+        return $this->speakers;
+    }
+
+    /**
+     * @param int $speakers
+     */
+    public function setSpeakers($speakers)
+    {
+        $this->speakers = $speakers;
+    }
+
+    public static function getAuthorRightValues ()
+    {
+        return [
+            self::AUTHOR_RIGHT_NOT_NEEDED,
+            self::AUTHOR_RIGHT_TO_ASK,
+            self::AUTHOR_RIGHT_PENDING,
+            self::AUTHOR_RIGHT_AUTHORIZED,
+        ];
     }
 }
