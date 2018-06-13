@@ -251,7 +251,7 @@ editor:
     identity:
         levelProof: Lien avec le référentiel
         authorRight:
-            label: Status du droit d'auteur
+            label: Droits d'auteur
             authorized: Autorisés
             to_ask: A demander
             not_needed: Non requis
