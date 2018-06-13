@@ -30,7 +30,8 @@
         "twig/twig": "1.*",
         "sensio/distribution-bundle": "~4",
         "snc/redis-bundle": "^2.0",
-        "predis/predis": "^1.0"
+        "predis/predis": "^1.0",
+        "sentry/sentry-symfony": "1.0.3"
     },
     "scripts": {
         "post-install-cmd": [
