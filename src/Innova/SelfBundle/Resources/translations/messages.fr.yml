@@ -198,18 +198,24 @@ editor:
         fixed_order: Ordre fixe
         context: Contexte
         question_object: Objet de la question
-        skill: Compétence
+        skill: Habileté
         didactic_instruction: Consigne didactique
         functional_instruction: Consigne fonctionnelle
         feedback: Feedback
     subquestion:
-        identity: Fiche d'identité
+        identity: Fiche d'identité - Item
         subquestions: Items
         add: Ajouter un item
         remove: Supprimer l'item
         add_instruction: Ajouter une consigne / question / amorce
         remove_instruction: Supprimer la consigne / question / amorce
         answers: Réponses
+        level: Niveau d'item suite au standard setting
+        focuses: Focus langagier(s)
+        cognitive_main: Opération(s) / action(s) induites par l'item
+        difficultyIndex: Indice de difficulté (measure)
+        discriminationIndex: Indice de discriminiation (PTMA)
+        redundancy: Redondance de l'information
     proposition:
         add: Ajouter une proposition
         remove: Supprimer la proposition
@@ -267,9 +273,6 @@ editor:
         theme: Titre
         fixedOrder: Ordre fixe
         authorMore: Auteur(s) de la tâche
-        focuses: Focus
-        cognitive_main: Opérations cognitives principales
-        cognitive_secondary: Opérations cognitives secondaires
         channel: Mode de production
         socialLocation: Lieu social de production
         sourceTypes: Types de support

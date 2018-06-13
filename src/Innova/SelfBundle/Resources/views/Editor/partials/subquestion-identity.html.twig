@@ -1,4 +1,8 @@
 <form id="subquestion-identity">
+    <div class="clearfix">
+        {{ form_row(form.save, {'attr': {'class': 'pull-right btn btn-success'}}) }}
+    </div>
+
     {{ form_label(form.level) }}
     {{ form_widget(form.level) }}
 
@@ -12,11 +16,5 @@
     {{ form_label(form.cognitiveOpsMain) }}
     {{ form_widget(form.cognitiveOpsMain) }}
 
-    <hr/>
-
-    {{ form_label(form.cognitiveOpsSecondary) }}
-    {{ form_widget(form.cognitiveOpsSecondary) }}
-
-    <br/>
     {{ form_rest(form) }}
 </form>

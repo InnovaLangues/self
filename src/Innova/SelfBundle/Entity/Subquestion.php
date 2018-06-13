@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Subquestion.
@@ -86,12 +87,6 @@ class Subquestion
     protected $cognitiveOpsMain;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation", inversedBy="subquestionsSecondary")
-     * @ORM\JoinTable(name="subquestion_cognitiveOpsSecondary")
-     */
-    protected $cognitiveOpsSecondary;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="difficultyIndex", type="string", length=255, nullable=true)
@@ -109,6 +104,14 @@ class Subquestion
      * @ORM\Column(name="displayAnswer", type="boolean")
      */
     private $displayAnswer;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string")
+     */
+    private $redundancy;
 
     /**
      * Constructor.
@@ -485,54 +488,6 @@ class Subquestion
     }
 
     /**
-     * Add cognitiveOpsSecondary.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary
-     *
-     * @return Subquestion
-     */
-    public function addCognitiveOpsSecondary(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary)
-    {
-        $this->cognitiveOpsSecondary[] = $cognitiveOpsSecondary;
-
-        return $this;
-    }
-
-    /**
-     * Add cognitiveOpsSecondary collection.
-     *
-     * @param QuestionnaireIdentity\CognitiveOperation[] $cognitiveOpsSecondary
-     */
-    public function addCognitiveOpsSecondarys($cognitiveOpsSecondary)
-    {
-        foreach ($cognitiveOpsSecondary as $cognitiveOpSecondary) {
-            $this->cognitiveOpsSecondary[] = $cognitiveOpSecondary;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove cognitiveOpsSecondary.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary
-     */
-    public function removeCognitiveOpsSecondary(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsSecondary)
-    {
-        $this->cognitiveOpsSecondary->removeElement($cognitiveOpsSecondary);
-    }
-
-    /**
-     * Get cognitiveOpsSecondary.
-     *
-     * @return QuestionnaireIdentity\CognitiveOperation[]
-     */
-    public function getCognitiveOpsSecondary()
-    {
-        return $this->cognitiveOpsSecondary;
-    }
-
-    /**
      * Set level.
      *
      * @param \Innova\SelfBundle\Entity\Level $level
@@ -626,5 +581,21 @@ class Subquestion
     public function getDiscriminationIndex()
     {
         return $this->discriminationIndex;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedundancy()
+    {
+        return $this->redundancy;
+    }
+
+    /**
+     * @param string $redundancy
+     */
+    public function setRedundancy($redundancy)
+    {
+        $this->redundancy = $redundancy;
     }
 }

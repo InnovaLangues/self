@@ -120,7 +120,7 @@ class SubquestionManager
         $newSubquestion->setDisplayAnswer($subquestion->getDisplayAnswer());
         $newSubquestion->addFocuses($subquestion->getFocuses());
         $newSubquestion->addCognitiveOpsMains($subquestion->getCognitiveOpsMain());
-        $newSubquestion->addCognitiveOpsSecondarys($subquestion->getCognitiveOpsSecondary());
+        $newSubquestion->setRedundancy($subquestion->getRedundancy());
 
         if ($clue = $subquestion->getClue()) {
             $newClue = new Clue();

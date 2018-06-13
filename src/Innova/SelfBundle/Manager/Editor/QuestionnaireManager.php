@@ -282,12 +282,12 @@ class QuestionnaireManager
         $newTask->setMediaBlankText($this->mediaManager->duplicate($task->getMediaBlankText(), $newTask));
         $newTask->addSourceTypes($task->getSourceTypes());
         $newTask->addGenres($task->getGenres());
-        $newTask->setVariety($task->getVariety());
         $newTask->setReadability($task->getReadability());
         $newTask->setTextType($task->getTextType());
         $newTask->setComment($task->getComment());
         $newTask->setContext($task->getContext());
         $newTask->setTextLength($task->getTextLength());
+        $newTask->setSpeakers($task->getSpeakers());
         $newTask->setCreatedBySelf($task->isCreatedBySelf());
         $newTask->setFreeLicence($task->isFreeLicence());
         $newTask->setAuthorizationRequestedAt($task->getAuthorizationRequestedAt());
