@@ -4,10 +4,10 @@
         <a class="btn btn-default btn-sm" href="{{ path('editor_tests_show') }}">
         <span class="glyphicon glyphicon-chevron-left"></span> {{ 'editor.test.back_to_list' | trans }}
         </a>
-        <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#export-session-modal">Selection d'une session à exporter</a>
+        <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#export-session-modal">{{ 'editor.session.select_session_to_export'|trans }}</a>
         <hr/>
 
-        <h3> Export  CSV  pour le test <strong>{{ test.name }}</strong></h3>
+        <h3>{{ 'editor.test.csv_exports'|trans }} <strong>{{ test.name }}</strong></h3>
 
         {% if csvName is defined and csvName is not null %}
             <div class="alert alert-success" role="alert">
@@ -27,7 +27,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Selection d'une session à exporter</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ 'editor.session.select_session_to_export'|trans }}</h4>
                     </div>
                     <div class="modal-body">
                         {% if test.sessions is not empty %}

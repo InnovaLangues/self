@@ -4,8 +4,8 @@
     <h3>{{ 'menu.stats' | trans }}</h3>
 
     <div class="list-group">
-        <a href="{{ path('stats_sessions', { 'isActive': 1 }) }}" class="list-group-item">Sessions actives</a>
-        <a href="{{ path('stats_sessions', { 'isActive': 0 }) }}" class="list-group-item">Sessions inactives</a>
+        <a href="{{ path('stats_sessions', { 'isActive': 1 }) }}" class="list-group-item">{{ 'editor.session.actives_full'|trans }}</a>
+        <a href="{{ path('stats_sessions', { 'isActive': 0 }) }}" class="list-group-item">{{ 'editor.session.inactives_full'|trans }}</a>
         <a href="{{ path('stats_institutions') }}" class="list-group-item">Institutions</a>
     </div>
 {% endblock %}

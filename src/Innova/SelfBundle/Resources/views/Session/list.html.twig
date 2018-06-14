@@ -119,7 +119,7 @@
                         {% if checkRight("right.deletesession", session) %}
                         <li>
         					<a href="#" class="delete-session" data-session-id="{{ session.id }}">
-        						<span class="glyphicon glyphicon-trash"></span> Supprimer la session
+        						<span class="glyphicon glyphicon-trash"></span> {{ 'editor.session.delete'|trans }}
         					</a>
                         </li>
                         {% endif %}

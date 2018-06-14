@@ -6,9 +6,9 @@
 	<div class="row">
 		<div class="col-md-12">
 		    <div class="alert alert-success">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</div>
-			<a href="{{ path('show_tests') }}" class="btn btn-primary">Accéder à la liste des tests</a>
+			<a href="{{ path('show_tests') }}" class="btn btn-primary">{{ 'test.access_list'|trans({}, 'messages') }}</a>
 		</div>
 	</div>
 {% endblock fos_user_content %}
 
-{% block page_title %}Confirmation de l'inscription{% endblock %}
+{% block page_title %}{{ 'registration.confirm'|trans({}, 'messages') }}{% endblock %}

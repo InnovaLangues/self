@@ -58,10 +58,10 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">Sessions actives</a>
+                                <a href="{{ path('editor_sessions_active', { 'isActive': 1 }) }}">{{ 'editor.session.actives_full'|trans }}</a>
                             </li>
                             <li>
-                                <a href="{{ path('editor_sessions_active', { 'isActive': 0 }) }}"> Sessions inactives</a>
+                                <a href="{{ path('editor_sessions_active', { 'isActive': 0 }) }}">{{ 'editor.session.inactives_full'|trans }}</a>
                             </li>
                         </ul>
                     </li>

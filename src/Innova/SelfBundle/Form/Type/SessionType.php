@@ -22,14 +22,14 @@ class SessionType extends AbstractType
         ));
 
         $builder->add('actif', 'choice', array(
-            'choices'   => array(false => 'Non', true => 'Oui'),
+            'choices'   => array(false => 'generic.no', true => 'generic.yes'),
             'label'  => 'editor.session.active',
             'attr' => array('class' => 'form-control'),
             'translation_domain' => 'messages',
         ));
 
         $builder->add('globalScoreShow', 'choice', array(
-            'choices'   => array(false => 'Non', true => 'Oui'),
+            'choices'   => array(false => 'generic.no', true => 'generic.yes'),
             'label'  => 'editor.session.globalScoreShow',
             'attr' => array('class' => 'form-control'),
             'translation_domain' => 'messages',

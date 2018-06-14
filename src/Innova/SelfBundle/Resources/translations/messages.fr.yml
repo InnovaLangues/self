@@ -6,6 +6,7 @@ anonymous:
     already_registered: Déjà inscrit ?
     connect: Cliquer sur "Connexion"
     connection: Connexion
+    forgotten_pwd: Mot de passe oublié ?
 
 menu:
     users: Utilisateurs
@@ -106,6 +107,7 @@ registration:
     confirm: Confirmation de l'inscription
 
 test:
+    access_list: Accéder à la liste des tests
     available: Tests disponibles
     start: Démarrer le test
     list: Liste des tests
@@ -163,6 +165,7 @@ editor:
         exportpdf: Export livret PDF
         exportcsv: Export liste de tâches
         exportscsv: Export Stats (tia+, etc.)
+        csv_exports: Exports CSV pour le test
     task:
         task: Tâche
         tasks: Tâches
@@ -320,10 +323,13 @@ editor:
         invalid_code: Code de session invalide
         active: Actif
         actives: active
+        actives_full: Sessions actives
         inactives: inactives
+        inactives_full: Sessions inactives
         all: toutes
         list: Liste des sessions
         create: Créer une nouvelle session
+        delete: Supprimer la session
         manage: Sessions
         list_test: Liste des session pour le test
         edit: Editer la session
@@ -346,6 +352,14 @@ editor:
         lasttracedate: Date de la dernière trace
         createdate: Date de création
         usercount: Nombre de passations
+        select_session_to_export: Selection d'une session à exporter
+        export_modal:
+          title: Export de la session - Sélection d'un intervalle
+          info: Définissez un intervalle de temps pour votre export CSV. Les dates sont au format <strong>AAAA-MM-JJ HH:MM:SS</strong>.
+
+    export:
+      start_date: Date de début
+      end_date: Date de fin
 
 player:
     listening_remaining: "{0} Reste 0 écoute |{1} Reste 1 écoute|]1,Inf] Reste %count% écoutes"
