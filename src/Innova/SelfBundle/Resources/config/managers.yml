@@ -231,11 +231,6 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
-    self.source.manager:
-        class: Innova\SelfBundle\Manager\Identity\SourceManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
     self.status.manager:
         class: Innova\SelfBundle\Manager\Identity\StatusManager
         arguments:
