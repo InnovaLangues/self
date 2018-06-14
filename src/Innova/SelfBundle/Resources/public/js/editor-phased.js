@@ -13,25 +13,16 @@ $( "body" ).on( "click", '.check-level', function() {
     checkLevel(testId);
 });
 
-$( "body" ).on( "click", '.get-potentials', function() {
-	var componentId = $(this).attr("data-component-id");
-    $("#potential-tasks").html("");
-	$('#potential-tasks-modal').data("component-id", componentId);
-    $('#potential-tasks-modal').modal('show');
-    getPotentials(componentId);
-});
-
 $( "body" ).on( "click", '.add-questionnaire', function() {
 	$(this).attr("disabled", true);
-	var componentId = $('#potential-tasks-modal').data('component-id');
+	var componentId = $(this).data('component-id');
 	var questionnaireId = $(this).attr("data-questionnaire-id");
 	addQuestionnaire(componentId, questionnaireId);
-	
 });
 
 $( "body" ).on( "click", '.duplicate-questionnaire', function() {
     $(this).attr("disabled", true);
-    var componentId = $('#potential-tasks-modal').data('component-id');
+    var componentId = $(this).data("component-id");
     var questionnaireId = $(this).attr("data-questionnaire-id");
     duplicateQuestionnaire(componentId, questionnaireId);
     
@@ -66,7 +57,10 @@ function getPotentials(componentId)
     })
     .done(function(data) {
         $("#potential-tasks").html(data);
-        $('input#search').quicksearch('#tasks li');
+        // $('input#search').quicksearch('#tasks li', {
+        //     delay: 500,
+        //     loader: '.loader-img'
+        // });
         $(".loader-img").hide();
     });
 }

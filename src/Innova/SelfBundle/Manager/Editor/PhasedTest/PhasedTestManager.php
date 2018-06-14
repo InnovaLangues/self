@@ -8,6 +8,7 @@ use Innova\SelfBundle\Entity\PhasedTest\Component;
 use Innova\SelfBundle\Entity\PhasedTest\ComponentType;
 use Innova\SelfBundle\Entity\PhasedTest\OrderQuestionnaireComponent;
 use Innova\SelfBundle\Entity\PhasedTest\PhasedParams;
+use Innova\SelfBundle\Repository\QuestionnaireRepository;
 
 class PhasedTestManager
 {
@@ -17,6 +18,9 @@ class PhasedTestManager
     protected $componentRepo;
     protected $componentTypeRepo;
     protected $ordertaskCompoRepo;
+    /**
+     * @var QuestionnaireRepository
+     */
     protected $questionnaireRepo;
 
     public function __construct($entityManager, $questionnaireManager, $questionManager)
