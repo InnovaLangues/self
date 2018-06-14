@@ -19,30 +19,12 @@ class FixtureCommand extends ContainerAwareCommand
     {
         $start = time();
 
-        $typologyManager = $this->getContainer()->get('self.typology.manager');
-        $typologyManager->create(array(
-            array('TVF', 'Vrai-Faux'),
-            array('TQRU', 'Question à Réponse Unique'),
-            array('TQRM', 'Question à Réponses Multiples'),
-            array('TLCMLDM', 'Liste de mots'),
-            array('APP', 'Appariemment'),
-            array('TVFNM', 'Vrai-Faux-Non Mentionné'),
-            array('TLCMLMULT', 'Listes de choix multiple'),
-            array('TLQROC', 'Question Réponse Ouverte Courte'),
-        ));
-
         $skillManager = $this->getContainer()->get('self.skill.manager');
         $skillManager->create(array(
             array('CO', array('APP', 'TQRM', 'TQRU', 'TVF', 'TVFNM')),
             array('CE', array('APP', 'TQRM', 'TQRU', 'TVF', 'TVFNM')),
             array('EEC', array('TLCMLMULT', 'TLQROC', 'TLCMLDM', 'TQRU')),
         ));
-
-        $levelManager = $this->getContainer()->get('self.level.manager');
-        $levelManager->create(array('A1', 'A1+', 'A2', 'A2+', 'B1', 'B1+', 'B2', 'B2+', 'C1', 'C1+'));
-
-        $languageManager = $this->getContainer()->get('self.language.manager');
-        $languageManager->create(array('English', 'Italian', 'Chinese', 'Spanish', 'Japanese', 'FLE'));
 
         $componentTypeManager = $this->getContainer()->get('self.componentType.manager');
         $componentTypeManager->create(array('minitest', 'step1', 'step2', 'step3'));
@@ -79,10 +61,6 @@ class FixtureCommand extends ContainerAwareCommand
         $statusManager = $this->getContainer()->get('self.status.manager');
         $statusManager->create(array('Ecriture', 'Révision', 'Validation', 'Modification post-pilotage'));
 
-        $lengthManager = $this->getContainer()->get('self.audioLength.manager');
-        $lengthManager->create(array('length.short', 'length.medium', 'length.long', 'length.very_long'));
-        $lengthManager->delete(array('short', 'medium', 'long'));
-
         $textlengthManager = $this->getContainer()->get('self.textLength.manager');
         $textlengthManager->create(array(
             'text_length.very_short',
@@ -92,27 +70,8 @@ class FixtureCommand extends ContainerAwareCommand
             'text_length.very_long'
         ));
 
-        $authorRightManager = $this->getContainer()->get('self.authorRight.manager');
-        $authorRightManager->create(array(
-            'author_right.authorized',
-            'author_right.not_needed',
-            'author_right.pending',
-            'author_right.to_ask'
-        ));
-
-        $domainManager = $this->getContainer()->get('self.domain.manager');
-        $domainManager->create(array('domain.personal', 'domain.public', 'domain.profesional', 'domain.educational'));
-
         $flowManager = $this->getContainer()->get('self.flow.manager');
         $flowManager->create(array('flow.slow', 'flow.medium', 'flow.fast'));
-
-        $receptionManager = $this->getContainer()->get('self.reception.manager');
-        $receptionManager->create(array('reception.listener', 'reception.listener_interact'));
-        $receptionManager->delete(array(
-            'reception.performer',
-            'reception.listener_pluridirectional',
-            'reception.listener_monodirectional'
-        ));
 
         $registerManager = $this->getContainer()->get('self.register.manager');
         $registerManager->create(array(
@@ -155,36 +114,6 @@ class FixtureCommand extends ContainerAwareCommand
             'sourceType.image'
         ));
 
-        $channelManager = $this->getContainer()->get('self.channel.manager');
-        $channelManager->delete(array('channel.radio', 'channel.tv', 'channel.web', 'channel.localRecord'));
-        $channelManager->create(array(
-            'channel.phone',
-            'channel.visual',
-            'channel.chat_sms_oral',
-            'channel.chat_sms_written',
-            'channel.tools',
-            'channel.videoconf',
-            'channel.speaker',
-            'channel.tutorial',
-            'channel.GPS',
-            'channel.other',
-            'channel.postit',
-            'channel.brochure',
-            'channel.ticket',
-            'channel.notice',
-        ));
-
-        $socialLocationManager = $this->getContainer()->get('self.socialLocation.manager');
-        $socialLocationManager->create(array(
-            'socialLocation.radio',
-            'socialLocation.tv',
-            'socialLocation.web',
-            'socialLocation.institution',
-            'socialLocation.press',
-            'socialLocation.edition',
-            'socialLocation.other',
-        ));
-
         $genreManager = $this->getContainer()->get('self.genre.manager');
         $genreManager->create(array(
             'genre.informative',
@@ -199,32 +128,6 @@ class FixtureCommand extends ContainerAwareCommand
             'genre.conversational',
             'genre.cmd_synchrone',
             'genre.cmd_asynchrone'
-        ));
-
-        $varietyManager = $this->getContainer()->get('self.variety.manager');
-        $varietyManager->delete(array('variety.standard', 'variety.non_standard'));
-        $varietyManager->create(array(
-            'variety.italian.standard',
-            'variety.italian.nonstandard_diatopie',
-            'variety.italian.nonstandard_diastratie',
-            'variety.italian.nonstandard_diaphasie',
-            'variety.english.us_standard',
-            'variety.english.uk_standard',
-            'variety.english.other_standard',
-            'variety.english.regional',
-            'variety.english.secondLang',
-            'variety.chinese.standard',
-            'variety.chinese.taiwan',
-            'variety.chinese.otherVariant',
-            'variety.chinese.secondLang',
-        ));
-
-        $productionTypeManager = $this->getContainer()->get('self.productionType.manager');
-        $productionTypeManager->create(array(
-            'productionType.monologal.self',
-            'productionType.monologal.hetero',
-            'productionType.dialogal.bi',
-            'productionType.dialogal.poly',
         ));
 
         $rightGroupManager = $this->getContainer()->get('self.rightgroup.manager');
