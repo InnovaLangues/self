@@ -19,6 +19,14 @@ class FixtureCommand extends ContainerAwareCommand
     {
         $start = time();
 
+        $typologyManager = $this->getContainer()->get('self.typology.manager');
+        $typologyManager->create(array(
+            array('TVF', 'Vrai-Faux'), array('TQRU', 'Question à Réponse Unique'),
+            array('TQRM', 'Question à Réponses Multiples'), array('TLCMLDM', 'Liste de mots'),
+            array('APP', 'Appariemment'), array('TVFNM', 'Vrai-Faux-Non Mentionné'),
+            array('TLCMLMULT', 'Listes de choix multiple'), array('TLQROC', 'Question Réponse Ouverte Courte'),
+        ));
+
         $skillManager = $this->getContainer()->get('self.skill.manager');
         $skillManager->create(array(
             array('CO', array('APP', 'TQRM', 'TQRU', 'TVF', 'TVFNM')),
