@@ -92,14 +92,6 @@ class FixtureCommand extends ContainerAwareCommand
             'text_length.very_long'
         ));
 
-        $sourceOperationManager = $this->getContainer()->get('self.sourceOperation.manager');
-        $sourceOperationManager->create(array(
-            'source_operation.original',
-            'source_operation.original_modified',
-            'source_operation.constructed',
-            'source_operation.constructed_modified'
-        ));
-
         $authorRightManager = $this->getContainer()->get('self.authorRight.manager');
         $authorRightManager->create(array(
             'author_right.authorized',
