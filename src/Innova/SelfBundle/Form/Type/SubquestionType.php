@@ -21,7 +21,11 @@ class SubquestionType extends AbstractType
         $builder->add('focuses', 'entity', array(
             'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Focus',
             'property' => 'name',
-            'attr' => array('class' => 'form-control subquestion-identity-field', 'data-field' => 'focuses', 'size' => 3),
+            'attr' => [
+                'class' => 'form-control subquestion-identity-field',
+                'data-field' => 'focuses',
+                'size' => 4
+            ],
             'multiple' => true,
             'label' => 'editor.subquestion.focuses',
             'translation_domain' => 'messages',
@@ -32,7 +36,11 @@ class SubquestionType extends AbstractType
         $builder->add('cognitiveOpsMain', 'entity', array(
             'class' => 'InnovaSelfBundle:QuestionnaireIdentity\CognitiveOperation',
             'property' => 'name',
-            'attr' => array('class' => 'form-control subquestion-identity-field', 'data-field' => 'cognitiveOpsMain', 'size' => 7),
+            'attr' => [
+                'class' => 'form-control subquestion-identity-field',
+                'data-field' => 'cognitiveOpsMain',
+                'size' => 7
+            ],
             'multiple' => true,
             'label' => 'editor.subquestion.cognitive_main',
             'translation_domain' => 'messages',
@@ -40,19 +48,19 @@ class SubquestionType extends AbstractType
             'choice_translation_domain' => 'messages',
         ));
 
-        $builder->add('difficultyIndex', 'text', array(
-            'attr' => array('class' => 'form-control subquestion-identity-field'),
-            'label' => 'editor.subquestion.difficultyIndex',
+        $builder->add('redundancy', 'text', array(
+            'attr' => ['class' => 'form-control'],
+            'label' => 'editor.subquestion.redundancy',
         ));
 
         $builder->add('difficultyIndex', 'text', array(
-            'attr' => array('class' => 'form-control subquestion-identity-field'),
-            'label' => 'editor.subquestion.redundancy',
+            'attr' => ['class' => 'form-control'],
+            'label' => 'editor.subquestion.difficultyIndex',
             'required' => false,
         ));
 
         $builder->add('discriminationIndex', 'text', array(
-            'attr' => array('class' => 'form-control subquestion-identity-field'),
+            'attr' => ['class' => 'form-control'],
             'label' => 'editor.subquestion.discriminationIndex',
             'required' => false,
         ));
@@ -63,7 +71,7 @@ class SubquestionType extends AbstractType
 
         $builder->add('save', 'submit', array(
             'label' => 'generic.save',
-            'attr' => array('class' => 'btn btn-default btn-primary'),
+            'attr' => ['class' => 'btn btn-default btn-primary'],
         ));
     }
 

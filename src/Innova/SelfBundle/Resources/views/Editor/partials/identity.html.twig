@@ -51,17 +51,6 @@
                         </div>
                     </div> <!-- col-md-6-->
 
-                        {#<div class="panel panel-default ">#}
-                            {#<div class="panel-heading collapsed" data-toggle="collapse" href="#identity-language">{{ 'editor.identity.language' | trans }}</div>#}
-                            {#<div id="identity-language" class="panel-collapse collapse">#}
-                                {#<div class="panel-body">#}
-                                    {#<div class="form-group">#}
-                                    {#{{ form_widget(form.language) }}#}
-                                    {#</div>#}
-                                {#</div>#}
-                            {#</div>#}
-                        {#</div>#}
-
                     <div class="col-md-6">
                             <div class="panel panel-default ">
                                 <div class="panel-heading" data-toggle="collapse" href="#identity-misc">{{ 'editor.questionnaire.question_object'|trans }}</div>
@@ -72,22 +61,20 @@
                                             {{ form_widget(form.sourceTypes) }}
                                         </div>
 
-                                        {% if questionnaire.skill is not null and questionnaire.skill.name == "CO" %}
-                                            <div class="form-group">
-                                                {{ form_label(form.length) }}
-                                                {{ form_widget(form.length) }}
-                                            </div>
+                                        <div class="form-group">
+                                            {{ form_label(form.length) }}
+                                            {{ form_widget(form.length) }}
+                                        </div>
 
-                                            <div class="form-group">
-                                                {{ form_label(form.readability) }}
-                                                {{ form_widget(form.readability) }}
-                                            </div>
+                                        <div class="form-group">
+                                            {{ form_label(form.readability) }}
+                                            {{ form_widget(form.readability) }}
+                                        </div>
 
-                                            <div class="form-group">
-                                                {{ form_label(form.flow) }}
-                                                {{ form_widget(form.flow) }}
-                                            </div>
-                                        {% endif %}
+                                        <div class="form-group">
+                                            {{ form_label(form.flow) }}
+                                            {{ form_widget(form.flow) }}
+                                        </div>
 
                                         <div class="form-group">
                                             {{ form_label(form.context) }}

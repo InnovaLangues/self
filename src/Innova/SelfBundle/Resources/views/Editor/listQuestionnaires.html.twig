@@ -6,7 +6,7 @@
 
 {% block body -%}
 {% if checkRight("right.createtask") %}
-    <a id="create-task" class="btn btn-default btn-sm" data-test-id="0">
+    <a id="create-task" class="btn btn-default btn-sm" data-test-id="0" {% if language is defined %}data-language="{{ language.id }}"{% endif %}>
         <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
     </a>
 {% endif %}

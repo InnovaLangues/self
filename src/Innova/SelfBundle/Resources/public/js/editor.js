@@ -1110,7 +1110,18 @@ function setGeneralInfoFields(questionnaireId, field, value){
         .done(function(data) {
             if (field == "skill") {
                 $("#general-infos").html(data.template);
-                $("#questionnaire_skill").attr("disabled", true);
+                var $skillField = $("#task_infos_skill");
+                $skillField.attr("disabled", true);
+
+                var $lengthField = $('#questionnaire_length').closest('div').hide();
+                var $readabilityField = $('#questionnaire_readability').closest('div').hide();
+                var $flowField = $('#questionnaire_flow').closest('div').hide();
+
+                if ($skillField.val() == 1) {
+                    $lengthField.show();
+                    $readabilityField.show();
+                    $flowField.show();
+                }
             } else if(field == "typology") {
                 $("#subquestion-container").replaceWith(data.subquestions);
                 $(".task-content").show();
@@ -1133,9 +1144,34 @@ function subquestionIdentityModal(subquestionId){
         type: 'GET',
     })
     .done(function(data) {
-        $('#modal-subquestion-identity').find(".modal-body").html(data);
+        var $modal = $('#modal-subquestion-identity');
+
+        $modal.find(".modal-body").html(data);
         $("#subquestion_id").val(subquestionId);
-        $('#modal-subquestion-identity').modal('show');
+        $modal.modal('show');
+
+        var skill = $('#task_infos_skill').val();
+
+        var $cognitiveOpsMainField = $('#subquestion_cognitiveOpsMain');
+
+        $cognitiveOpsMainField.find('option').each(function () {
+            if (skill === 3) {
+                if ($(this).val() < 5) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            } else {
+                if ($(this).val() < 5) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            }
+        });
+
+        $cognitiveOpsMainField.attr('size', $cognitiveOpsMainField.find('option:visible').length);
+
         afterAjax();
     });
 }
@@ -1197,7 +1233,6 @@ $(function(){
     var $authorRight = $("input[name='questionnaire[authorRight]']");
 
     $authorRight.change(function () {
-        console.log('authorRight changed : ' + $(this).val());
         syncAuthorRightChoice($(this).val());
     });
 

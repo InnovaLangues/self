@@ -47,7 +47,7 @@ $( "body" ).on( "click", '#refresh-potentials', function() {
 
 $( "body" ).on( "click", '#create-task', function() {
     var testId = $(this).data("testId");
-    createTask(testId);
+    createTask(testId, $(this).data("language"));
 });
 
 function refreshPotentials(testId){
@@ -165,16 +165,18 @@ function deleteTaskList(){
     });
 }
 
-function createTask(testId){
+function createTask(testId, language){
     $.ajax({
         url: Routing.generate('editor_questionnaire_create',
             {
-                'testId': testId
+                'testId': testId,
+                'language': language
             }),
         type: 'POST',
-        dataType: 'json',
+        dataType: 'json'
     })
     .done(function(data) {
         window.location = Routing.generate('editor_questionnaire_show', {'questionnaireId': data.questionnaireId, 'testId' : data.testId });
-    });
+    })
+    ;
 }

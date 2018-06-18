@@ -4,6 +4,10 @@
     <div class="panel-body">
         <div class="row">
 
+            <div class="form-group">
+                {{ form_widget(form.language) }}
+            </div>
+
             <div class="col-md-3">
                 <div class="form-group">
                     {{ macros.help("Titre de la tâche. Ne sera pas visible lors de la passation.") }} 
