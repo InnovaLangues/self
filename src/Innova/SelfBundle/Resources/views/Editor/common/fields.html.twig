@@ -1,12 +1,10 @@
 {% block checkbox_widget %}
 {% spaceless %}
-
 <div class="checkbox">
   <label>
     <input {{ block('widget_attributes') }} type="checkbox" {% if value is defined %} value="{{ value }}"{% endif %} {% if checked %} checked="checked"{% endif %}> {{ label|trans }}
   </label>
 </div>
-
 {% endspaceless %}
 {% endblock checkbox_widget %}
 

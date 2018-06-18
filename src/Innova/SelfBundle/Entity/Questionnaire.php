@@ -4,7 +4,6 @@ namespace Innova\SelfBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -170,13 +169,6 @@ class Questionnaire
      *
      * @ORM\Column(type="text", nullable=true)
      */
-    private $comment;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="text", nullable=true)
-     */
     private $context;
 
     /**
@@ -205,22 +197,40 @@ class Questionnaire
     protected $genres;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Register", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $register;
 
+    const REGISTER_FAMILIAR = 'familiar';
+    const REGISTER_NEUTRAL = 'neutral';
+    const REGISTER_SUSTAINED = 'sustained';
+    const REGISTER_MIXED = 'mixed';
+    const REGISTER_JP_FORMAL = 'jp_formal';
+    const REGISTER_JP_IMPERSONAL = 'jp_impersonal';
+    const REGISTER_JP_PERSO_POLITE = 'jp_perso_polite';
+    const REGISTER_JP_PERSO_FAMILIAR = 'jp_perso_familiar';
+
+
     /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Length", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $length;
 
+    const LENGTH_AUDIO_SHORT = 'audio_short';
+    const LENGTH_AUDIO_MEDIUM = 'audio_medium';
+    const LENGTH_AUDIO_LONG = 'audio_long';
+    const LENGTH_TEXT_SHORT = 'text_short';
+    const LENGTH_TEXT_MEDIUM = 'text_medium';
+    const LENGTH_TEXT_LONG = 'text_long';
+
     /**
-     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="json_array", nullable=true)
      */
     protected $flow;
+
+    const FLOW_SLOW = 'slow';
+    const FLOW_MEDIUM = 'medium';
+    const FLOW_FAST = 'fast';
 
     /**
      * @var string
@@ -230,20 +240,22 @@ class Questionnaire
     protected $readability;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $variety;
+
+    /**
      * @var int
      *
      * @Assert\Range(
-     *      min = 1,
+     *      min = 0,
      *      max = 4
      * )
      * @ORM\Column(type="smallint", nullable=true)
      */
     protected $speakers;
-
-    const AUTHOR_RIGHT_NOT_NEEDED = 'not_needed';
-    const AUTHOR_RIGHT_TO_ASK = 'to_ask';
-    const AUTHOR_RIGHT_PENDING = 'pending';
-    const AUTHOR_RIGHT_AUTHORIZED = 'authorized';
 
     /**
      * @var string
@@ -252,6 +264,11 @@ class Questionnaire
      * @Assert\Choice(callback="getAuthorRightValues")
      */
     protected $authorRight = self::AUTHOR_RIGHT_TO_ASK;
+
+    const AUTHOR_RIGHT_NOT_NEEDED = 'not_needed';
+    const AUTHOR_RIGHT_TO_ASK = 'to_ask';
+    const AUTHOR_RIGHT_PENDING = 'pending';
+    const AUTHOR_RIGHT_AUTHORIZED = 'authorized';
 
     /**
      * @var bool
@@ -935,13 +952,11 @@ class Questionnaire
     }
 
     /**
-     * Set register.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Register $register
+     * @param string $register
      *
      * @return Questionnaire
      */
-    public function setRegister(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Register $register = null)
+    public function setRegister($register = null)
     {
         $this->register = $register;
 
@@ -949,9 +964,7 @@ class Questionnaire
     }
 
     /**
-     * Get register.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Register
+     * @return string
      */
     public function getRegister()
     {
@@ -959,13 +972,11 @@ class Questionnaire
     }
 
     /**
-     * Set length.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Length $length
+     * @param string $length
      *
      * @return Questionnaire
      */
-    public function setLength(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Length $length = null)
+    public function setLength($length = null)
     {
         $this->length = $length;
 
@@ -973,9 +984,7 @@ class Questionnaire
     }
 
     /**
-     * Get length.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Length
+     * @return string|null
      */
     public function getLength()
     {
@@ -983,13 +992,11 @@ class Questionnaire
     }
 
     /**
-     * Set flow.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow $flow
+     * @param array|null $flow
      *
      * @return Questionnaire
      */
-    public function setFlow(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow $flow = null)
+    public function setFlow($flow = null)
     {
         $this->flow = $flow;
 
@@ -997,9 +1004,7 @@ class Questionnaire
     }
 
     /**
-     * Get flow.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow
+     * @return array|null
      */
     public function getFlow()
     {
@@ -1217,17 +1222,17 @@ class Questionnaire
     /**
      * @return string
      */
-    public function getComment()
+    public function getVariety()
     {
-        return $this->comment;
+        return $this->variety;
     }
 
     /**
-     * @param string $comment
+     * @param string $variety
      */
-    public function setComment($comment)
+    public function setVariety($variety)
     {
-        $this->comment = $comment;
+        $this->variety = $variety;
     }
 
     /**
@@ -1415,6 +1420,41 @@ class Questionnaire
             self::AUTHOR_RIGHT_TO_ASK,
             self::AUTHOR_RIGHT_PENDING,
             self::AUTHOR_RIGHT_AUTHORIZED,
+        ];
+    }
+
+    public static function getLengthValues ()
+    {
+        return [
+            self::LENGTH_AUDIO_SHORT,
+            self::LENGTH_AUDIO_MEDIUM,
+            self::LENGTH_AUDIO_LONG,
+            self::LENGTH_TEXT_SHORT,
+            self::LENGTH_TEXT_MEDIUM,
+            self::LENGTH_TEXT_LONG
+        ];
+    }
+
+    public static function getFlowValues ()
+    {
+        return [
+            self::FLOW_SLOW,
+            self::FLOW_MEDIUM,
+            self::FLOW_FAST
+        ];
+    }
+
+    public static function getRegisterValues ()
+    {
+        return [
+            self::REGISTER_FAMILIAR,
+            self::REGISTER_NEUTRAL,
+            self::REGISTER_SUSTAINED,
+            self::REGISTER_MIXED,
+            self::REGISTER_JP_FORMAL,
+            self::REGISTER_JP_IMPERSONAL,
+            self::REGISTER_JP_PERSO_POLITE,
+            self::REGISTER_JP_PERSO_FAMILIAR,
         ];
     }
 }

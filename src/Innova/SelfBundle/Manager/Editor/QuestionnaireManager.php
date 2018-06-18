@@ -284,7 +284,6 @@ class QuestionnaireManager
         $newTask->addGenres($task->getGenres());
         $newTask->setReadability($task->getReadability());
         $newTask->setTextType($task->getTextType());
-        $newTask->setComment($task->getComment());
         $newTask->setContext($task->getContext());
         $newTask->setTextLength($task->getTextLength());
         $newTask->setSpeakers($task->getSpeakers());
@@ -295,6 +294,7 @@ class QuestionnaireManager
         $newTask->setSourceContacts($task->getSourceContacts());
         $newTask->setSourceUrl($task->getSourceUrl());
         $newTask->setSourceStorage($task->getSourceStorage());
+        $newTask->setVariety($task->getVariety());
 
         $questions = $task->getQuestions();
 

@@ -249,7 +249,9 @@ editor:
         blank_delete: Suppression d'un texte lacunaire
         blank_delete_confirm: Êtes-vous sûr de vouloir supprimer le texte lacunaire ?
     identity:
-        levelProof: Lien avec le référentiel
+        levelProof:
+            label: Lien avec le référentiel
+            placeholder: Noter les éléments en langue cible permettant de caractériser le niveau de la tâche selon le référentiel choisi. Préciser en français le thème et ajouter si nécessaire une phrase de synthèse.
         authorRight:
             label: Droits d'auteur
             authorized: Autorisés
@@ -259,6 +261,9 @@ editor:
         source: Source
         domain: Domaine
         register: Registre de langue
+        variety:
+            label: Variété de la langue
+            placeholder: À préciser selon la langue.
         reception: Type de réception
         length: Durée / Longueur
         textLength: Longueur du texte (nombre de mots)
@@ -276,11 +281,17 @@ editor:
         channel: Mode de production
         socialLocation: Lieu social de production
         sourceTypes: Types de support
-        textType: Genre de texte
+        textType:
+            label: Genre de texte
+            placeholder: Compléter selon le référentiel choisi dans chaque langue.
         speechType: Type de discours
-        readability: Indice de lisibilité
+        readability:
+            label: Indice de lisibilité
+            placeholder: Indice calculé par le logiciel défini par chaque langue.
         comment: Commentaire
-        context: Contexte
+        context:
+            label: Contexte
+            placeholder: Reporter ici l’intitulé du contexte qui apparaît dans l’éditeur en français.
         createdBySelf: Création SELF
         freeLicence: Licence libre
         authorizationRequestedAt: Date de la demande d'autorisation
@@ -290,6 +301,7 @@ editor:
         sourceContacts: Contact(s)
         speakers:
             label: Locuteurs
+            0: Aucun
             1: 'Discours monogéré : 1'
             2: 'Discours polygéré : 2'
             3: 'Discours polygéré : 3'
@@ -414,27 +426,26 @@ domain:
     educational: Educationnel
 
 register:
-    formal_elevated: Formel soutenu
-    formal_neutral: Formel neutre
-    informal: Informel
-    mixte: Mixte
+    familiar: Familier
+    neutral: Neutre
+    sustained: Soutenu
+    mixed: Mixte
+    jp_formal: Japonais formal (soutenu)
+    jp_impersonal: Japonais impersonnel (écrit/neutre)
+    jp_perso_polite: Japonais personnel (poli)
+    jp_perso_familiar: Japonais personnel (familier)
 
 reception:
     listener: En tant que récepteur
     listener_interact: En tant que récepteur - interactant
 
 length:
-    short: Ecoute brève: 5"- 20"
-    medium: Ecoute moyenne: 21” - 40"
-    long: Ecoute longue: 41"- 60"
-    very_long: Ecoute très longue: > 60"
-
-text_length:
-    very_short: Très bref (1-10)
-    short : Bref (11-30)
-    medium: Moyen (31 - 80)
-    long: Long: (81 - 200)
-    very_long: Très long (>200)
+  audio_short: 'CO : écoute brève (<20 sec)'
+  audio_medium: 'CO : écoute moyenne'
+  audio_long: 'CO : écoute longue (<41 sec)'
+  text_short: 'CE/EEC : text bref (<40 mots)'
+  text_medium: 'CE/EEC : text moyen'
+  text_long: 'CE/EEC : text long (<90 mots)'
 
 flow:
     slow: Lent

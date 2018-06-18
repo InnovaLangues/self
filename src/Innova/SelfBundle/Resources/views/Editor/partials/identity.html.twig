@@ -49,11 +49,6 @@
                                 {% endfor %}
                             </div>
                         </div>
-
-                        {#<div class="form-group">#}
-                            {#{{ form_label(form.authorRight) }}#}
-                            {#{{ form_widget(form.authorRight) }}#}
-                        {#</div>#}
                     </div> <!-- col-md-6-->
 
                         {#<div class="panel panel-default ">#}
@@ -95,11 +90,6 @@
                                         {% endif %}
 
                                         <div class="form-group">
-                                            {{ form_label(form.comment) }}
-                                            {{ form_widget(form.comment) }}
-                                        </div>
-
-                                        <div class="form-group">
                                             {{ form_label(form.context) }}
                                             {{ form_widget(form.context) }}
                                         </div>
@@ -112,6 +102,12 @@
                                         <div class="form-group">
                                             {{ form_label(form.register) }}
                                             {{ form_widget(form.register) }}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            {{ form_label(form.variety) }}
+                                            {{ form_widget(form.variety) }}
                                         </div>
 
                                         <div class="form-group">

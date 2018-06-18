@@ -25,10 +25,12 @@ class QuestionnaireType extends AbstractType
         $builder->add('levelProof', 'textarea', [
             'attr' => [
                 'class' => 'form-control',
+                'placeholder' => 'editor.identity.levelProof.placeholder',
+                'rows' => 4
             ],
-            'label' => 'editor.identity.levelProof',
+            'label' => 'editor.identity.levelProof.label',
             'translation_domain' => 'messages',
-            'required' => false
+            'required' => false,
         ]);
 
         $builder->add('authorMore', 'textarea', [
@@ -69,8 +71,10 @@ class QuestionnaireType extends AbstractType
             'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SourceType',
             'property' => 'name',
             'attr' => [
-                'class' => '',
                 'data-field' => 'sourceTypes'
+            ],
+            'choice_attr' => [
+                'class' => 'checkbox-inline'
             ],
             'label' => 'editor.identity.sourceTypes',
             'translation_domain' => 'messages',
@@ -79,9 +83,14 @@ class QuestionnaireType extends AbstractType
             'expanded' => true,
         ]);
 
-        $builder->add('length', 'entity', [
-            'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Length',
-            'property' => 'name',
+        $builder->add('length', 'choice', [
+            'choices' => array_flip(Questionnaire::getLengthValues()),
+            'choice_label' => function ($choiceValue, $key, $value) {
+                return 'length.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
             'empty_value' => '-',
             'attr' => [
                 'class' => 'form-control identity-select',
@@ -93,65 +102,78 @@ class QuestionnaireType extends AbstractType
         ]);
 
         $builder->add('readability', 'textarea', [
-            'label' => 'editor.identity.readability',
+            'label' => 'editor.identity.readability.label',
             'attr' => [
-                'class' => 'form-control identity-select',
-                'data-field' => 'readability'
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.readability.placeholder'
             ],
             'required' => false
         ]);
 
-        $builder->add('flow', 'entity', [
-            'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Flow',
+        $builder->add('flow', 'choice', [
+            'choices' => array_flip(Questionnaire::getFlowValues()),
+            'choice_label' => function ($choiceValue, $key, $value) {
+                return 'flow.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
             'multiple' => true,
-            'property' => 'name',
             'empty_value' => '-',
             'attr' => [
-                'class' => 'form-control identity-select',
-                'data-field' => 'flow'
+                'class' => 'form-control',
+                'data-field' => 'flow',
+                'size' => count(Questionnaire::getFlowValues())
             ],
             'label' => 'editor.identity.flow',
             'choice_translation_domain' => true,
             'required' => false
         ]);
 
-        $builder->add('comment', 'textarea', [
-            'label' => 'editor.identity.comment',
-            'attr' => [
-                'class' => 'form-control identity-select',
-                'data-field' => 'comment'
-            ],
-            'required' => false
-        ]);
-
         $builder->add('context', 'textarea', [
-            'label' => 'editor.identity.context',
+            'label' => 'editor.identity.context.label',
             'attr' => [
                 'class' => 'form-control identity-select',
-                'data-field' => 'context'
+                'data-field' => 'context',
+                'placeholder' => 'editor.identity.context.placeholder'
             ],
             'required' => false
         ]);
 
         $builder->add('textType', 'textarea', [
             'attr' => [
-                'class' => 'form-control identity-select',
-                'data-field' => 'speechType'
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.textType.placeholder'
             ],
-            'label' => 'editor.identity.textType',
+            'label' => 'editor.identity.textType.label',
             'required' => false
         ]);
 
-        $builder->add('register', 'entity', [
-            'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Register',
-            'property' => 'name',
+        $builder->add('register', 'choice', [
+            'choices' => array_flip(Questionnaire::getRegisterValues()),
+            'choice_label' => function ($choiceValue, $key, $value) {
+                return 'register.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
             'empty_value' => '-',
             'attr' => [
-                'class' => 'form-control identity-select',
-                'data-field' => 'register'
+                'class' => 'form-control',
+                'size' => count(Questionnaire::getRegisterValues())
             ],
             'label' => 'editor.identity.register',
             'choice_translation_domain' => true,
+            'required' => false,
+            'multiple' => true,
+        ]);
+
+        $builder->add('variety', 'textarea', [
+            'label' => 'editor.identity.variety.label',
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.variety.placeholder'
+            ],
             'required' => false
         ]);
 
@@ -175,13 +197,13 @@ class QuestionnaireType extends AbstractType
                 'class' => 'form-control',
             ],
             'choices' => [
+                0 => 'editor.identity.speakers.0',
                 1 => 'editor.identity.speakers.1',
                 2 => 'editor.identity.speakers.2',
                 3 => 'editor.identity.speakers.3',
                 4 => 'editor.identity.speakers.4',
             ],
             'label' => 'editor.identity.speakers.label',
-            'required' => false
         ]);
 
         $builder->add('createdBySelf', null, [
