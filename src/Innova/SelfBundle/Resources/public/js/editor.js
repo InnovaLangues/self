@@ -1225,6 +1225,8 @@ $(function(){
         var $fieldStorage = $("textarea[name='questionnaire[sourceStorage]']").closest('div').hide();
         var $fieldContacts = $("textarea[name='questionnaire[sourceContacts]']").closest('div').hide();
 
+        console.log(choice);
+
         if (choice === 'not_needed') {
             $fieldCreatedBySelf.show();
             $fieldFreeLicence.show();
@@ -1257,5 +1259,5 @@ $(function(){
         syncAuthorRightChoice($(this).val());
     });
 
-    syncAuthorRightChoice($authorRight.val());
+    syncAuthorRightChoice($("input[name='questionnaire[authorRight]']:checked").val());
 });

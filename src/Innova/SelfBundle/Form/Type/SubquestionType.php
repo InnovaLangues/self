@@ -50,6 +50,7 @@ class SubquestionType extends AbstractType
             ],
             'multiple' => true,
             'label' => 'editor.subquestion.goals.label',
+            'required' => false,
         ]);
 
         $builder->add('redundancy', 'choice', [

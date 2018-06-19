@@ -78,9 +78,9 @@ class Subquestion
     /**
      * @var array
      *
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json_array", nullable=true)
      */
-    protected $focuses;
+    protected $focuses = [];
 
     const FOCUS_SOCIO_PRAGMA = 'socio_pragma';
     const FOCUS_MORPH = 'morph';
@@ -94,7 +94,7 @@ class Subquestion
     /**
      * @var array
      *
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json_array", nullable=true))
      */
     protected $goals;
 
