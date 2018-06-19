@@ -2,9 +2,9 @@
 
 namespace Innova\SelfBundle\Manager\Identity;
 
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation;
+use Innova\SelfBundle\Entity\Level;
 
-class CognitiveOpManager
+class LevelManager
 {
     protected $entityManager;
 
@@ -19,7 +19,7 @@ class CognitiveOpManager
 
         foreach ($array as $el) {
             if (!$this->findByName($el)) {
-                $r = new CognitiveOperation();
+                $r = new Level();
                 $r->setName($el);
                 $em->persist($r);
             }
@@ -49,6 +49,6 @@ class CognitiveOpManager
     {
         $em = $this->entityManager;
 
-        return $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\CognitiveOperation')->findOneByName($name);
+        return $em->getRepository('InnovaSelfBundle:Level')->findOneByName($name);
     }
 }

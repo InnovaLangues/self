@@ -2,9 +2,9 @@
 
 namespace Innova\SelfBundle\Manager\Identity;
 
-use Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow;
+use Innova\SelfBundle\Entity\Language;
 
-class FlowManager
+class LanguageManager
 {
     protected $entityManager;
 
@@ -19,7 +19,7 @@ class FlowManager
 
         foreach ($array as $el) {
             if (!$this->findByName($el)) {
-                $r = new Flow();
+                $r = new Language();
                 $r->setName($el);
                 $em->persist($r);
             }
@@ -49,6 +49,6 @@ class FlowManager
     {
         $em = $this->entityManager;
 
-        return $em->getRepository('InnovaSelfBundle:QuestionnaireIdentity\Flow')->findOneByName($name);
+        return $em->getRepository('InnovaSelfBundle:Language')->findOneByName($name);
     }
 }

@@ -191,63 +191,13 @@ services:
             entityManager:          @doctrine.orm.entity_manager
             questionnaireManager:   @self.questionnaire.manager
 
-    self.reception.manager:
-        class: Innova\SelfBundle\Manager\Identity\ReceptionManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.register.manager:
-        class: Innova\SelfBundle\Manager\Identity\RegisterManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.focus.manager:
-        class: Innova\SelfBundle\Manager\Identity\FocusManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.cognitiveOp.manager:
-        class: Innova\SelfBundle\Manager\Identity\CognitiveOpManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.flow.manager:
-        class: Innova\SelfBundle\Manager\Identity\FlowManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.domain.manager:
-        class: Innova\SelfBundle\Manager\Identity\DomainManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.authorRight.manager:
-        class: Innova\SelfBundle\Manager\Identity\AuthorRightManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
     self.status.manager:
         class: Innova\SelfBundle\Manager\Identity\StatusManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
-    self.typology.manager:
-        class: Innova\SelfBundle\Manager\Identity\TypologyManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
     self.skill.manager:
         class: Innova\SelfBundle\Manager\Identity\SkillManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.audioLength.manager:
-        class: Innova\SelfBundle\Manager\Identity\AudioLengthManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.textLength.manager:
-        class: Innova\SelfBundle\Manager\Identity\TextLengthManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
@@ -266,28 +216,8 @@ services:
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 
-    self.channel.manager:
-        class: Innova\SelfBundle\Manager\Identity\ChannelManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
     self.genre.manager:
         class: Innova\SelfBundle\Manager\Identity\GenreManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.variety.manager:
-        class: Innova\SelfBundle\Manager\Identity\VarietyManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.socialLocation.manager:
-        class: Innova\SelfBundle\Manager\Identity\SocialLocationManager
-        arguments:
-            entityManager:      @doctrine.orm.entity_manager
-
-    self.productionType.manager:
-        class: Innova\SelfBundle\Manager\Identity\ProductionTypeManager
         arguments:
             entityManager:      @doctrine.orm.entity_manager
 

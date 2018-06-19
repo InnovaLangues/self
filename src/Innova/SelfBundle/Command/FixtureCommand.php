@@ -97,23 +97,6 @@ class FixtureCommand extends ContainerAwareCommand
             'focus.textualCohesion'
         ));
 
-        $cognitiveOpManager = $this->getContainer()->get('self.cognitiveOp.manager');
-        $cognitiveOpManager->create(array(
-            'cognitive.global_comprehension',
-            'cognitive.detailed_comprehension',
-            'cognitive.infer_context',
-            'cognitive.infer_intention',
-            'cognitive.infer_state',
-            'cognitive.infer_register',
-            'cognitive.infer_information',
-            'cognitive.interaction',
-            'cognitive.completeMessage',
-            'cognitive.reformulateMessage',
-            'cognitive.interact',
-            'cognitive.readBack',
-            'cognitive.other',
-        ));
-
         $sourceTypeManager = $this->getContainer()->get('self.sourceType.manager');
         $sourceTypeManager->create(array(
             'sourceType.audio',

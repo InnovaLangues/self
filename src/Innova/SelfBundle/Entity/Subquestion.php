@@ -2,6 +2,7 @@
 
 namespace Innova\SelfBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -75,16 +76,36 @@ class Subquestion
     protected $answers;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus", inversedBy="subquestions")
-     * @ORM\JoinTable(name="subquestion_focuses")
+     * @var array
+     *
+     * @ORM\Column(type="json_array")
      */
     protected $focuses;
 
+    const FOCUS_SOCIO_PRAGMA = 'socio_pragma';
+    const FOCUS_MORPH = 'morph';
+    const FOCUS_LEXIC_GENERAL = 'lexic_general';
+    const FOCUS_LEXIC_SPEC = 'lexic_spec';
+    const FOCUS_LEXIC_EXPR = 'lexic_expr';
+    const FOCUS_PHONOLOGIC = 'lexic_phono';
+    const FOCUS_DISCURSIVE = 'discursive';
+    const FOCUS_METALINGUISTIC = 'metalinguistic';
+
     /**
-     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation", inversedBy="subquestionsMain")
-     * @ORM\JoinTable(name="subquestion_cognitiveOpsMain")
+     * @var array
+     *
+     * @ORM\Column(type="json_array")
      */
-    protected $cognitiveOpsMain;
+    protected $goals;
+
+    const GOAL_UNDERSTAND_GEN = 'understand_gen';
+    const GOAL_UNDERSTAND_SPEC = 'understand_spec';
+    const GOAL_INFER_SPEC = 'infer_spec';
+    const GOAL_ORAL_INTER = 'oral_inter';
+    const GOAL_PROD_STATMNT = 'prod_statmnt';
+    const GOAL_REPHRASE_MSG = 'rephrase_msg';
+    const GOAL_WRITE_INTER = 'write_inter';
+    const GOAL_FIX_STATMNT = 'fix_statmnt';
 
     /**
      * @var string
@@ -111,19 +132,21 @@ class Subquestion
      * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
-    private $redundancy;
+    private $redundancy = self::REDUNDANCY_ABSENT;
+
+    const REDUNDANCY_PRESENT = 'present';
+    const REDUNDANCY_ABSENT = 'absent';
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->propositions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->propositions = new ArrayCollection();
+        $this->focuses = new ArrayCollection();
     }
 
     /**
-     * Get id.
-     *
      * @return int
      */
     public function getId()
@@ -132,8 +155,6 @@ class Subquestion
     }
 
     /**
-     * Set title.
-     *
      * @param string $title
      *
      * @return Subquestion
@@ -146,8 +167,6 @@ class Subquestion
     }
 
     /**
-     * Get title.
-     *
      * @return string
      */
     public function getTitle()
@@ -156,8 +175,6 @@ class Subquestion
     }
 
     /**
-     * Set typology.
-     *
      * @param \Innova\SelfBundle\Entity\Typology $typology
      *
      * @return Subquestion
@@ -170,8 +187,6 @@ class Subquestion
     }
 
     /**
-     * Get typology.
-     *
      * @return \Innova\SelfBundle\Entity\Typology
      */
     public function getTypology()
@@ -180,8 +195,6 @@ class Subquestion
     }
 
     /**
-     * Set media.
-     *
      * @param \Innova\SelfBundle\Entity\Media\Media $media
      *
      * @return Subquestion
@@ -194,8 +207,6 @@ class Subquestion
     }
 
     /**
-     * Get media.
-     *
      * @return \Innova\SelfBundle\Entity\Media\Media
      */
     public function getMedia()
@@ -392,99 +403,19 @@ class Subquestion
     }
 
     /**
-     * Add focuses.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
-     *
-     * @return Subquestion
+     * @param array $focuses
      */
-    public function addFocuse(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses)
+    public function setFocuses($focuses)
     {
-        $this->focuses[] = $focuses;
-
-        return $this;
+        $this->focuses = $focuses;
     }
 
     /**
-     * Add focuses collection.
-     *
-     * @param QuestionnaireIdentity\Focus[] $focuses
-     */
-    public function addFocuses($focuses)
-    {
-        foreach ($focuses as $focus) {
-            $this->focuses[] = $focus;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove focuses.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses
-     */
-    public function removeFocuse(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focuses)
-    {
-        $this->focuses->removeElement($focuses);
-    }
-
-    /**
-     * Get focuses.
-     *
-     * @return QuestionnaireIdentity\Focus[]
+     * @return array
      */
     public function getFocuses()
     {
         return $this->focuses;
-    }
-
-    /**
-     * Add cognitiveOpsMain.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
-     *
-     * @return Subquestion
-     */
-    public function addCognitiveOpsMain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain)
-    {
-        $this->cognitiveOpsMain[] = $cognitiveOpsMain;
-
-        return $this;
-    }
-
-    /**
-     * Add cognitiveOpsMain collection.
-     *
-     * @param QuestionnaireIdentity\CognitiveOperation[] $cognitiveOpsMain
-     */
-    public function addCognitiveOpsMains($cognitiveOpsMain)
-    {
-        foreach ($cognitiveOpsMain as $cognitiveOpMain) {
-            $this->cognitiveOpsMain[] = $cognitiveOpMain;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove cognitiveOpsMain.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain
-     */
-    public function removeCognitiveOpsMain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\CognitiveOperation $cognitiveOpsMain)
-    {
-        $this->cognitiveOpsMain->removeElement($cognitiveOpsMain);
-    }
-
-    /**
-     * Get cognitiveOpsMain.
-     *
-     * @return QuestionnaireIdentity\CognitiveOperation[]
-     */
-    public function getCognitiveOpsMain()
-    {
-        return $this->cognitiveOpsMain;
     }
 
     /**
@@ -509,30 +440,6 @@ class Subquestion
     public function getLevel()
     {
         return $this->level;
-    }
-
-    /**
-     * Add focus.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus
-     *
-     * @return Subquestion
-     */
-    public function addFocus(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus)
-    {
-        $this->focuses[] = $focus;
-
-        return $this;
-    }
-
-    /**
-     * Remove focus.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus
-     */
-    public function removeFocus(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Focus $focus)
-    {
-        $this->focuses->removeElement($focus);
     }
 
     /**
@@ -597,5 +504,57 @@ class Subquestion
     public function setRedundancy($redundancy)
     {
         $this->redundancy = $redundancy;
+    }
+
+    public static function getRedundancyValues()
+    {
+        return [
+            self::REDUNDANCY_ABSENT,
+            self::REDUNDANCY_PRESENT
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getGoals()
+    {
+        return $this->goals;
+    }
+
+    /**
+     * @param array $goals
+     */
+    public function setGoals(array $goals = [])
+    {
+        $this->goals = $goals;
+    }
+
+    public static function getGoalsValues()
+    {
+        return [
+            self::GOAL_UNDERSTAND_GEN,
+            self::GOAL_UNDERSTAND_SPEC,
+            self::GOAL_INFER_SPEC,
+            self::GOAL_ORAL_INTER,
+            self::GOAL_PROD_STATMNT,
+            self::GOAL_REPHRASE_MSG,
+            self::GOAL_WRITE_INTER,
+            self::GOAL_FIX_STATMNT
+        ];
+    }
+
+    public static function getFocusesValues()
+    {
+        return [
+            self::FOCUS_SOCIO_PRAGMA,
+            self::FOCUS_MORPH,
+            self::FOCUS_LEXIC_GENERAL,
+            self::FOCUS_LEXIC_SPEC,
+            self::FOCUS_LEXIC_EXPR,
+            self::FOCUS_PHONOLOGIC,
+            self::FOCUS_DISCURSIVE,
+            self::FOCUS_METALINGUISTIC,
+        ];
     }
 }

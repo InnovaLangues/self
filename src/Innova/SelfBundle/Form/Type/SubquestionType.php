@@ -2,6 +2,7 @@
 
 namespace Innova\SelfBundle\Form\Type;
 
+use Innova\SelfBundle\Entity\Subquestion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -18,40 +19,51 @@ class SubquestionType extends AbstractType
             'translation_domain' => 'messages',
         ));
 
-        $builder->add('focuses', 'entity', array(
-            'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Focus',
-            'property' => 'name',
+        $builder->add('focuses', 'choice', array(
+            'choices' => array_flip(Subquestion::getFocusesValues()),
+            'choice_label' => function ($choiceValue) {
+                return 'editor.subquestion.focuses.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
             'attr' => [
-                'class' => 'form-control subquestion-identity-field',
-                'data-field' => 'focuses',
-                'size' => 4
+                'class' => 'form-control',
+                'size' => count(Subquestion::getFocusesValues())
             ],
             'multiple' => true,
-            'label' => 'editor.subquestion.focuses',
-            'translation_domain' => 'messages',
+            'label' => 'editor.subquestion.focuses.label',
             'required' => false,
-            'choice_translation_domain' => 'messages',
         ));
 
-        $builder->add('cognitiveOpsMain', 'entity', array(
-            'class' => 'InnovaSelfBundle:QuestionnaireIdentity\CognitiveOperation',
-            'property' => 'name',
+        $builder->add('goals', 'choice', [
+            'choices' => array_flip(Subquestion::getGoalsValues()),
+            'choice_label' => function ($choiceValue) {
+                return 'editor.subquestion.goals.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
             'attr' => [
-                'class' => 'form-control subquestion-identity-field',
-                'data-field' => 'cognitiveOpsMain',
-                'size' => 7
+                'class' => 'form-control',
+                'size' => count(Subquestion::getGoalsValues())
             ],
             'multiple' => true,
-            'label' => 'editor.subquestion.cognitive_main',
-            'translation_domain' => 'messages',
-            'required' => false,
-            'choice_translation_domain' => 'messages',
-        ));
+            'label' => 'editor.subquestion.goals.label',
+        ]);
 
-        $builder->add('redundancy', 'text', array(
+        $builder->add('redundancy', 'choice', [
+            'choices' => array_flip(Subquestion::getRedundancyValues()),
+            'choice_label' => function ($choiceValue) {
+                return 'editor.subquestion.redundancy.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
             'attr' => ['class' => 'form-control'],
-            'label' => 'editor.subquestion.redundancy',
-        ));
+            'label' => 'editor.subquestion.redundancy.label',
+            'required' => true
+        ]);
 
         $builder->add('difficultyIndex', 'text', array(
             'attr' => ['class' => 'form-control'],

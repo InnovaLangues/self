@@ -211,11 +211,32 @@ editor:
         remove_instruction: Supprimer la consigne / question / amorce
         answers: Réponses
         level: Niveau d'item suite au standard setting
-        focuses: Focus langagier(s)
-        cognitive_main: Opération(s) / action(s) induites par l'item
+        focuses:
+          label: Focus langagier(s)
+          socio_pragma: Socio-pragmatique
+          morph: Morphosyntaxique
+          lexic_general: "Lexical : lexique général"
+          lexic_spec: "Lexical : lexique spécifique"
+          lexic_expr: "Lexical : expressions figées"
+          lexic_phono: "CO : phonologique"
+          discursive: "EEC : discursif"
+          metalinguistic: "EEC : métalinguistique"
+        goals:
+          label: Opération(s) / action(s) induites par l'item
+          understand_gen: "CO/CE : comprendre le sens général"
+          understand_spec: "CO/CE : comprendre un ou plusieurs détails(s) explicite(s)"
+          infer_spec: "CO/CE : inférer une ou plusieurs information(s)"
+          oral_inter: "CO/CE : interagir à l'oral"
+          prod_statmnt: "EEC : produire un énoncé cohérent"
+          rephrase_msg: "EEC : reformuler un message"
+          write_inter: "EEC : interagir à l'écrit"
+          fix_statmnt: "EEC : corriger un énoncé"
         difficultyIndex: Indice de difficulté (measure)
         discriminationIndex: Indice de discriminiation (PTMA)
-        redundancy: Redondance de l'information
+        redundancy:
+          label: Redondance de l'information
+          present: Présente
+          absent: Absente
     proposition:
         add: Ajouter une proposition
         remove: Supprimer la proposition
@@ -253,7 +274,7 @@ editor:
             label: Lien avec le référentiel
             placeholder: Noter les éléments en langue cible permettant de caractériser le niveau de la tâche selon le référentiel choisi. Préciser en français le thème et ajouter si nécessaire une phrase de synthèse.
         authorRight:
-            label: Droits d'auteur
+            label: Status du droit d'auteur
             authorized: Autorisés
             to_ask: A demander
             not_needed: Non requis
@@ -266,8 +287,6 @@ editor:
             placeholder: À préciser selon la langue.
         reception: Type de réception
         length: Durée / Longueur
-        textLength: Longueur du texte (nombre de mots)
-        productionType: Type de production
         flow: Débit(s)
         status: Statut
         language: Langue
@@ -278,7 +297,6 @@ editor:
         theme: Titre
         fixedOrder: Ordre fixe
         authorMore: Auteur(s) de la tâche
-        channel: Mode de production
         socialLocation: Lieu social de production
         sourceTypes: Types de support
         textType:

@@ -210,7 +210,6 @@ class Questionnaire
     const REGISTER_JP_PERSO_POLITE = 'jp_perso_polite';
     const REGISTER_JP_PERSO_FAMILIAR = 'jp_perso_familiar';
 
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */
@@ -1180,30 +1179,6 @@ class Questionnaire
     }
 
     /**
-     * Set textLength.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength
-     *
-     * @return Questionnaire
-     */
-    public function setTextLength(\Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength = null)
-    {
-        $this->textLength = $textLength;
-
-        return $this;
-    }
-
-    /**
-     * Get textLength.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength
-     */
-    public function getTextLength()
-    {
-        return $this->textLength;
-    }
-
-    /**
      * @return string
      */
     public function getReadability()
@@ -1413,7 +1388,7 @@ class Questionnaire
         $this->speakers = $speakers;
     }
 
-    public static function getAuthorRightValues ()
+    public static function getAuthorRightValues()
     {
         return [
             self::AUTHOR_RIGHT_NOT_NEEDED,
@@ -1423,7 +1398,7 @@ class Questionnaire
         ];
     }
 
-    public static function getLengthValues ()
+    public static function getLengthValues()
     {
         return [
             self::LENGTH_AUDIO_SHORT,
@@ -1435,7 +1410,7 @@ class Questionnaire
         ];
     }
 
-    public static function getFlowValues ()
+    public static function getFlowValues()
     {
         return [
             self::FLOW_SLOW,
@@ -1444,7 +1419,7 @@ class Questionnaire
         ];
     }
 
-    public static function getRegisterValues ()
+    public static function getRegisterValues()
     {
         return [
             self::REGISTER_FAMILIAR,

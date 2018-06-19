@@ -56,15 +56,6 @@ class QuestionnaireType extends AbstractType
             ],
             'label' => 'editor.identity.authorRight.label',
             'expanded' => true,
-
-//            'required' => false,
-        ));
-
-        $builder->add('language', 'entity', array(
-            'class' => 'InnovaSelfBundle:Language',
-            'property' => 'name',
-            'attr' => array('class' => 'form-control identity-select', 'data-field' => 'language'),
-            'label' => 'editor.identity.language',
         ));
 
         $builder->add('sourceTypes', 'entity', [

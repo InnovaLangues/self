@@ -1152,25 +1152,46 @@ function subquestionIdentityModal(subquestionId){
 
         var skill = $('#task_infos_skill').val();
 
-        var $cognitiveOpsMainField = $('#subquestion_cognitiveOpsMain');
+        var $goalsField = $('#subquestion_goals');
 
-        $cognitiveOpsMainField.find('option').each(function () {
-            if (skill === 3) {
-                if ($(this).val() < 5) {
-                    $(this).hide();
+        var valueGroupCOCE = [
+            'understand_gen',
+            'understand_spec',
+            'infer_spec',
+            'oral_inter'
+        ];
+
+        var valueGroupEEC = [
+            'prod_statmnt',
+            'rephrase_msg',
+            'write_inter',
+            'fix_statmnt'
+        ];
+
+        var valueGroupCOCEVisibility = !(skill == 3);
+        var valueGroupEECVisibility = !valueGroupCOCEVisibility;
+
+        console.log(skill, valueGroupCOCEVisibility, valueGroupEECVisibility);
+
+        $goalsField.find('option').each(function () {
+            if ($.inArray($(this).val(), valueGroupCOCE) !== -1) {
+                if (valueGroupCOCEVisibility) {
+                    $(this).show();
                 } else {
-                    $(this).show();
+                    $(this).hide();
                 }
-            } else {
-                if ($(this).val() < 5) {
+            }
+
+            if ($.inArray($(this).val(), valueGroupEEC) !== -1) {
+                if (valueGroupEECVisibility) {
                     $(this).show();
-                } else {
+                } else {
                     $(this).hide();
                 }
             }
         });
 
-        $cognitiveOpsMainField.attr('size', $cognitiveOpsMainField.find('option:visible').length);
+        $goalsField.attr('size', $goalsField.find('option:visible').length);
 
         afterAjax();
     });

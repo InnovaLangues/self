@@ -105,24 +105,6 @@
                             </div>
                         {% endif %}
 
-                        {% if item.cognitiveOpsMain is not empty %}
-                            <div>
-                                <strong>Opérations cognitives principales:</strong>
-                                {% for cognitiveOpMain in item.cognitiveOpsMain %}
-                                    {{ cognitiveOpMain.name  | trans  }} -
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-
-                        {% if item.cognitiveOpsSecondary is not empty %}
-                            <div>
-                                <strong>Opérations cognitives secondaires:</strong>
-                                {% for cognitiveOpSecondary in item.cognitiveOpsSecondary %}
-                                    {{ cognitiveOpSecondary.name | trans }} -
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-
                     -->
 
                         {% if item.mediaAmorce is not null %}

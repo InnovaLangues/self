@@ -199,6 +199,33 @@ editor:
     add_instruction: 'Add instructions/question/question stem'
     remove_instruction: 'Delete the instructions/question/question stem'
     answers: Answers
+    level: Niveau d'item suite au standard setting
+    focuses:
+      label: Focus langagier(s)
+      socio_pragma: Socio-pragmatique
+      morph: Morphosyntaxique
+      lexic_general: "Lexical : lexique général"
+      lexic_spec: "Lexical : lexique spécifique"
+      lexic_expr: "Lexical : expressions figées"
+      lexic_phono: "CO : phonologique"
+      discursive: "EEC : discursif"
+      metalinguistic: "EEC : métalinguistique"
+    goals:
+      label: Opération(s) / action(s) induites par l'item
+      understand_gen: "CO/CE : comprendre le sens général"
+      understand_spec: "CO/CE : comprendre un ou plusieurs détails(s) explicite(s)"
+      infer_spec: "CO/CE : inférer une ou plusieurs information(s)"
+      oral_inter: "CO/CE : interagir à l'oral"
+      prod_statmnt: "EEC : produire un énoncé cohérent"
+      rephrase_msg: "EEC : reformuler un message"
+      write_inter: "EEC : interagir à l'écrit"
+      fix_statmnt: "EEC : corriger un énoncé"
+    difficultyIndex: Indice de difficulté (measure)
+    discriminationIndex: Indice de discriminiation (PTMA)
+    redundancy:
+      label: Redondance de l'information
+      present: Présente
+      absent: Absente
   proposition:
     add: 'Add an option'
     remove: 'Delete the option'
@@ -245,9 +272,7 @@ editor:
     domain: Domain
     register: Register
     reception: 'Reception type'
-    length: Length
-    textLength: 'Length of text (word count)'
-    productionType: 'Production type'
+    length: Length / Duration
     flow: Flow
     status: Status
     language: Language
@@ -258,10 +283,6 @@ editor:
     theme: Theme
     fixedOrder: 'Fixed Order'
     authorMore: 'Task Author(s)'
-    focuses: Focus
-    cognitive_main: 'Main cognitive operation'
-    cognitive_secondary: 'Secondary cognitive operation'
-    channel: Channel
     socialLocation: 'Location of production'
     sourceTypes: Source types
     variety:
