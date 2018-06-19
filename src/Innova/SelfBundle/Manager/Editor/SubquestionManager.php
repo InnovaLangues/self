@@ -120,7 +120,6 @@ class SubquestionManager
             $this->mediaManager->duplicate($subquestion->getMediaSyllable(), $questionnaire)
         );
         $newSubquestion->setDisplayAnswer($subquestion->getDisplayAnswer());
-        $newSubquestion->addFocuses($subquestion->getFocuses());
         $newSubquestion->setRedundancy($subquestion->getRedundancy());
 
         if ($clue = $subquestion->getClue()) {

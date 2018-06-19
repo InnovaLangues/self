@@ -69,34 +69,6 @@ class FixtureCommand extends ContainerAwareCommand
         $statusManager = $this->getContainer()->get('self.status.manager');
         $statusManager->create(array('Ecriture', 'Révision', 'Validation', 'Modification post-pilotage'));
 
-        $textlengthManager = $this->getContainer()->get('self.textLength.manager');
-        $textlengthManager->create(array(
-            'text_length.very_short',
-            'text_length.short',
-            'text_length.medium',
-            'text_length.long',
-            'text_length.very_long'
-        ));
-
-        $flowManager = $this->getContainer()->get('self.flow.manager');
-        $flowManager->create(array('flow.slow', 'flow.medium', 'flow.fast'));
-
-        $registerManager = $this->getContainer()->get('self.register.manager');
-        $registerManager->create(array(
-            'register.formal_elevated',
-            'register.formal_neutral',
-            'register.informal',
-            'register.mixte'
-        ));
-
-        $focusManager = $this->getContainer()->get('self.focus.manager');
-        $focusManager->create(array(
-            'focus.lexical',
-            'focus.communicative',
-            'focus.morphosyntaxic',
-            'focus.textualCohesion'
-        ));
-
         $sourceTypeManager = $this->getContainer()->get('self.sourceType.manager');
         $sourceTypeManager->create(array(
             'sourceType.audio',

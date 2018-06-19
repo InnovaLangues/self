@@ -278,3 +278,8 @@ services:
         arguments:
             securityContext:    @security.context
             userManager:        @self.user.manager
+
+    self.typology.manager:
+        class: Innova\SelfBundle\Manager\Identity\TypologyManager
+        arguments:
+            entityManager:      @doctrine.orm.entity_manager
