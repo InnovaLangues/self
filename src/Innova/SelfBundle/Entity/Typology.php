@@ -5,8 +5,6 @@ namespace Innova\SelfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Typology
- *
  * @ORM\Table("typology")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\TypologyRepository")
  */

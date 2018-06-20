@@ -190,7 +190,7 @@ editor:
     fixed_order: 'Set order'
     context: Context
     question_object: Text
-    skill: Skill
+    skill: Habileté
     didactic_instruction: 'Didactic instructions'
     functional_instruction: 'Functional instructions'
     feedback: Feedback
@@ -202,6 +202,33 @@ editor:
     add_instruction: 'Add instructions/question/question stem'
     remove_instruction: 'Delete the instructions/question/question stem'
     answers: Answers
+    level: Niveau d'item suite au standard setting
+    focuses:
+      label: Focus langagier(s)
+      socio_pragma: Socio-pragmatique
+      morph: Morphosyntaxique
+      lexic_general: "Lexical : lexique général"
+      lexic_spec: "Lexical : lexique spécifique"
+      lexic_expr: "Lexical : expressions figées"
+      lexic_phono: "CO : phonologique"
+      discursive: "EEC : discursif"
+      metalinguistic: "EEC : métalinguistique"
+    goals:
+      label: Opération(s) / action(s) induites par l'item
+      understand_gen: "CO/CE : comprendre le sens général"
+      understand_spec: "CO/CE : comprendre un ou plusieurs détails(s) explicite(s)"
+      infer_spec: "CO/CE : inférer une ou plusieurs information(s)"
+      oral_inter: "CO/CE : interagir à l'oral"
+      prod_statmnt: "EEC : produire un énoncé cohérent"
+      rephrase_msg: "EEC : reformuler un message"
+      write_inter: "EEC : interagir à l'écrit"
+      fix_statmnt: "EEC : corriger un énoncé"
+    difficultyIndex: Indice de difficulté (measure)
+    discriminationIndex: Indice de discriminiation (PTMA)
+    redundancy:
+      label: Redondance de l'information
+      present: Présente
+      absent: Absente
   proposition:
     add: 'Add an option'
     remove: 'Delete the option'
@@ -235,19 +262,20 @@ editor:
     blank_delete: 'Delete a blank text'
     blank_delete_confirm: 'Are you sure you want to delete this blank text ?'
   identity:
-    level.proof: 'Proof of level'
-    author.right_status: 'Copyright status'
-    author.right: Copyright
-    author.right.more: 'Extra information regarding copyright'
+    levelProof:
+        label: Proof of level
+        placeholder: Noter les éléments en langue cible permettant de caractériser le niveau de la tâche selon le référentiel choisi. Préciser en français le thème et ajouter si nécessaire une phrase de synthèse.
+    authorRight:
+        label: Status du droit d'auteur
+        authorized: Autorisés
+        to_ask: A demander
+        not_needed: Non requis
+        pending: En attente
     source: Source
-    source.operation: 'Operation on source'
-    source.more: 'Extra information regarding source operation'
     domain: Domain
     register: Register
     reception: 'Reception type'
-    length: Length
-    textLength: 'Length of text (word count)'
-    productionType: 'Production type'
+    length: Length / Duration
     flow: Flow
     status: Status
     language: Language
@@ -258,16 +286,36 @@ editor:
     theme: Theme
     fixedOrder: 'Fixed Order'
     authorMore: 'Task Author(s)'
-    focuses: Focus
-    cognitive_main: 'Main cognitive operation'
-    cognitive_secondary: 'Secondary cognitive operation'
-    channel: Channel
     socialLocation: 'Location of production'
-    sourceType: Format
-    genre: Genre
-    variety: Variety
-    lisibility: 'Legibility Index'
-    speechType: 'Genre de discours'
+    sourceTypes: Source types
+    variety:
+        label: Variété de la langue
+        placeholder: À préciser selon la langue.
+    textType:
+        label: Genre de texte
+        placeholder: Compléter selon le référentiel choisi dans chaque langue.
+    speechType: 'Type de discours'
+    readability:
+        label: Readability
+        placeholder: Indice calculé par le logiciel défini par chaque langue.
+    comment: Comments
+    context:
+        label: Contexte
+        placeholder: Reporter ici l’intitulé du contexte qui apparaît dans l’éditeur en français.
+    createdBySelf: Création SELF
+    freeLicence: Licence libre
+    authorizationRequestedAt: Date de la demande d'autorisation
+    authorizationGrantedAt: Date de l'obtention des droits
+    sourceUrl: Lien vers la ressource
+    sourceStorage: Lieu de stockage
+    sourceContacts: Contact(s)
+    speakers:
+        label: Locuteurs
+        0: Aucun
+        1: 'Discours monogéré : 1'
+        2: 'Discours polygéré : 2'
+        3: 'Discours polygéré : 3'
+        4: 'Discours polygéré : 4 ou plus'
   log:
     editor_create: Create
     editor_edit: Edit
@@ -391,24 +439,24 @@ domain:
   profesional: Professional
   educational: Educational
 register:
-  formal_elevated: 'Formal elevated'
-  formal_neutral: 'Formal neutral'
-  informal: Informal
-  mixte: Mixed
+    familiar: Familier
+    neutral: Neutre
+    sustained: Soutenu
+    mixed: Mixte
+    jp_formal: Japonais formal (soutenu)
+    jp_impersonal: Japonais impersonnel (écrit/neutre)
+    jp_perso_polite: Japonais personnel (poli)
+    jp_perso_familiar: Japonais personnel (familier)
 reception:
   listener: 'As listener'
   listener_interact: 'As listener-interactor'
 length:
-  short: 'Short 5"-20"'
-  medium: 'Medium 21"-40"'
-  long: 'Long 41"-60"'
-  very_long: 'Very long >61"'
-text_length:
-  very_short: 'Very short (1-10)'
-  short: 'Short (11-30)'
-  medium: 'Medium (31-80)'
-  long: 'Long (81-200)'
-  very_long: 'Very long (>200)'
+  audio_short: 'CO : écoute brève (<20 sec)'
+  audio_medium: 'CO : écoute moyenne'
+  audio_long: 'CO : écoute longue (<41 sec)'
+  text_short: 'CE/EEC : text bref (<40 mots)'
+  text_medium: 'CE/EEC : text moyen'
+  text_long: 'CE/EEC : text long (<90 mots)'
 flow:
   slow: Slow
   medium: Medium

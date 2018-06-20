@@ -116,11 +116,11 @@ class SubquestionManager
         $newSubquestion->setDiscriminationIndex($subquestion->getDiscriminationIndex());
         $newSubquestion->setMedia($this->mediaManager->duplicate($subquestion->getMedia(), $questionnaire));
         $newSubquestion->setMediaAmorce($this->mediaManager->duplicate($subquestion->getMediaAmorce(), $questionnaire));
-        $newSubquestion->setMediaSyllable($this->mediaManager->duplicate($subquestion->getMediaSyllable(), $questionnaire));
+        $newSubquestion->setMediaSyllable(
+            $this->mediaManager->duplicate($subquestion->getMediaSyllable(), $questionnaire)
+        );
         $newSubquestion->setDisplayAnswer($subquestion->getDisplayAnswer());
-        $newSubquestion->addFocuses($subquestion->getFocuses());
-        $newSubquestion->addCognitiveOpsMains($subquestion->getCognitiveOpsMain());
-        $newSubquestion->addCognitiveOpsSecondarys($subquestion->getCognitiveOpsSecondary());
+        $newSubquestion->setRedundancy($subquestion->getRedundancy());
 
         if ($clue = $subquestion->getClue()) {
             $newClue = new Clue();

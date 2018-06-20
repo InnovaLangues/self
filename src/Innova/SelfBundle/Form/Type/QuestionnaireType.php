@@ -2,9 +2,9 @@
 
 namespace Innova\SelfBundle\Form\Type;
 
+use Innova\SelfBundle\Entity\Questionnaire;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\ORM\EntityRepository;
 
 class QuestionnaireType extends AbstractType
 {
@@ -12,223 +12,249 @@ class QuestionnaireType extends AbstractType
     {
         $builder->add('id', 'hidden', array('mapped' => false));
 
-        $builder->add('authorMore', 'textarea', array(
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'authorMore'),
-                'label' => 'editor.identity.authorMore',
-                'translation_domain' => 'messages',
-            ));
-
-        $builder->add('speechType', 'textarea', array(
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'speechType'),
-                'label' => 'editor.identity.speechType',
-                'translation_domain' => 'messages',
-            ));
-
-        $builder->add('level', 'entity', array(
-                'class' => 'InnovaSelfBundle:Level',
-                'query_builder' => function (EntityRepository $er) {return $er->createQueryBuilder('l')->orderBy('l.name', 'ASC');},
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'level'),
-                'label' => 'editor.identity.level',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
-
-        $builder->add('productionType', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\ProductionType',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'productionType'),
-                'label' => 'editor.identity.productionType',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
-
-        $builder->add('language', 'entity', array(
-                'class' => 'InnovaSelfBundle:Language',
-                'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'language'),
-                'label' => 'editor.identity.language',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
-
         $builder->add('status', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Status',
-                'property' => 'name',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'status'),
-                'label' => 'editor.identity.status',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
+            'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Status',
+            'property' => 'name',
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'label' => 'editor.identity.status',
+        ));
 
-        $builder->add('levelProof', 'textarea', array(
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'levelProof'),
-                'label' => 'editor.identity.level.proof',
-                'translation_domain' => 'messages',
-            ));
 
-        $builder->add('authorRight', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\AuthorRight',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'authorRight'),
-                'label' => 'editor.identity.author.right_status',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('levelProof', 'textarea', [
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.levelProof.placeholder',
+                'rows' => 4
+            ],
+            'label' => 'editor.identity.levelProof.label',
+            'translation_domain' => 'messages',
+            'required' => false,
+        ]);
 
-        $builder->add('authorRightMore', 'textarea', array(
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'authorRightMore'),
-                'label' => 'editor.identity.author.right.more',
-                'translation_domain' => 'messages',
-            ));
+        $builder->add('authorMore', 'textarea', [
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'label' => 'editor.identity.authorMore',
+            'required' => false
+        ]);
 
-        $builder->add('source', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Source',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'source'),
-                'label' => 'editor.identity.source',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('authorRight', 'choice', array(
+            'choices' => array_flip(Questionnaire::getAuthorRightValues()),
+            'choice_label' => function ($choiceValue, $key, $value) {
+                return 'editor.identity.authorRight.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
+            'attr' => [
+            ],
+            'choice_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'label' => 'editor.identity.authorRight.label',
+            'expanded' => true,
+        ));
 
-        $builder->add('sourceTypes', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SourceType',
-                'property' => 'name',
-                'attr' => array('class' => '', 'data-field' => 'sourceTypes'),
-                'label' => 'editor.identity.sourceType',
-                'translation_domain' => 'messages',
-                'multiple' => true,
-                'required' => false,
-                'expanded' => true,
-            ));
+        $builder->add('sourceTypes', 'entity', [
+            'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SourceType',
+            'property' => 'name',
+            'attr' => [
+                'data-field' => 'sourceTypes'
+            ],
+            'choice_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'label' => 'editor.identity.sourceTypes',
+            'translation_domain' => 'messages',
+            'multiple' => true,
+            'required' => true,
+            'expanded' => true,
+        ]);
 
-        $builder->add('channels', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Channel',
-                'property' => 'name',
-                'attr' => array('class' => '', 'data-field' => 'channels',  'size' => 4),
-                'label' => 'editor.identity.channel',
-                'translation_domain' => 'messages',
-                'multiple' => true,
-                'required' => false,
-                'expanded' => true,
-            ));
+        $builder->add('length', 'choice', [
+            'choices' => array_flip(Questionnaire::getLengthValues()),
+            'choice_label' => function ($choiceValue, $key, $value) {
+                return 'length.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
+            'empty_value' => '-',
+            'attr' => [
+                'class' => 'form-control identity-select',
+                'data-field' => 'length'
+            ],
+            'label' => 'editor.identity.length',
+            'choice_translation_domain' => true,
+            'required' => false
+        ]);
 
-        $builder->add('genres', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Genre',
-                'property' => 'name',
-                'attr' => array('class' => '', 'data-field' => 'genres',  'size' => 4),
-                'label' => 'editor.identity.genre',
-                'translation_domain' => 'messages',
-                'multiple' => true,
-                'required' => false,
-                'expanded' => true,
-            ));
+        $builder->add('readability', 'textarea', [
+            'label' => 'editor.identity.readability.label',
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.readability.placeholder'
+            ],
+            'required' => false
+        ]);
 
-        $builder->add('socialLocations', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SocialLocation',
-                'property' => 'name',
-                'attr' => array('class' => '', 'data-field' => 'socialLocations',  'size' => 4),
-                'label' => 'editor.identity.socialLocation',
-                'translation_domain' => 'messages',
-                'multiple' => true,
-                'required' => false,
-                'expanded' => true,
-            ));
+        $builder->add('flow', 'choice', [
+            'choices' => array_flip(Questionnaire::getFlowValues()),
+            'choice_label' => function ($choiceValue, $key, $value) {
+                return 'flow.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
+            'multiple' => true,
+            'empty_value' => '-',
+            'attr' => [
+                'class' => 'form-control',
+                'data-field' => 'flow',
+                'size' => count(Questionnaire::getFlowValues())
+            ],
+            'label' => 'editor.identity.flow',
+            'choice_translation_domain' => true,
+            'required' => false
+        ]);
 
-        $builder->add('varieties', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Variety',
-                'property' => 'name',
-                'attr' => array('class' => '', 'data-field' => 'varieties',  'size' => 4),
-                'label' => 'editor.identity.variety',
-                'translation_domain' => 'messages',
-                'multiple' => true,
-                'required' => false,
-                'expanded' => true,
-            ));
+        $builder->add('context', 'textarea', [
+            'label' => 'editor.identity.context.label',
+            'attr' => [
+                'class' => 'form-control identity-select',
+                'data-field' => 'context',
+                'placeholder' => 'editor.identity.context.placeholder'
+            ],
+            'required' => false
+        ]);
 
-        $builder->add('sourceMore', 'textarea', array(
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'sourceMore'),
-                'label' => 'editor.identity.source.more',
-                'translation_domain' => 'messages',
-            ));
+        $builder->add('textType', 'textarea', [
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.textType.placeholder'
+            ],
+            'label' => 'editor.identity.textType.label',
+            'required' => false
+        ]);
 
-        $builder->add('sourceOperation', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\SourceOperation',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'sourceOperation'),
-                'label' => 'editor.identity.source.operation',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('register', 'choice', [
+            'choices' => array_flip(Questionnaire::getRegisterValues()),
+            'choice_label' => function ($choiceValue, $key, $value) {
+                return 'register.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
+            'empty_value' => '-',
+            'attr' => [
+                'class' => 'form-control',
+                'size' => count(Questionnaire::getRegisterValues())
+            ],
+            'label' => 'editor.identity.register',
+            'choice_translation_domain' => true,
+            'required' => false,
+            'multiple' => true,
+        ]);
 
-        $builder->add('domain', 'entity',  array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Domain',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'domain'),
-                'label' => 'editor.identity.domain',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('variety', 'textarea', [
+            'label' => 'editor.identity.variety.label',
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.variety.placeholder'
+            ],
+            'required' => false
+        ]);
 
-        $builder->add('register', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Register',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'register'),
-                'label' => 'editor.identity.register',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('genres', 'entity', [
+            'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Genre',
+            'property' => 'name',
+            'attr' => [
+                'class' => '',
+                'data-field' => 'genres',
+                'size' => 4
+            ],
+            'label' => 'editor.identity.speechType',
+            'translation_domain' => 'messages',
+            'multiple' => true,
+            'expanded' => true,
+            'required' => true
+        ]);
 
-        $builder->add('reception', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Reception',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'reception'),
-                'label' => 'editor.identity.reception',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('speakers', 'choice', [
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'choices' => [
+                0 => 'editor.identity.speakers.0',
+                1 => 'editor.identity.speakers.1',
+                2 => 'editor.identity.speakers.2',
+                3 => 'editor.identity.speakers.3',
+                4 => 'editor.identity.speakers.4',
+            ],
+            'label' => 'editor.identity.speakers.label',
+        ]);
 
-        $builder->add('length', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Length',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'length'),
-                'label' => 'editor.identity.length',
-                'translation_domain' => 'messages',
-            ));
+        $builder->add('createdBySelf', null, [
+            'required' => false,
+            'attr' => [
+                'class' => 'identity-select',
+            ],
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'label' => 'editor.identity.createdBySelf',
+        ]);
 
-        $builder->add('textLength', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\TextLength',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'length'),
-                'label' => 'editor.identity.textLength',
-                'translation_domain' => 'messages',
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('freeLicence', null, [
+            'required' => false,
+            'label_attr' => [
+                'class' => 'checkbox-inline'
+            ],
+            'label' => 'editor.identity.freeLicence',
+        ]);
 
-        $builder->add('flow', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Flow',
-                'property' => 'name',
-                'empty_value' => '-',
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'flow'),
-                'label' => 'editor.identity.flow',
-                'translation_domain' => 'messages',
-            ));
+        $builder->add('authorizationRequestedAt', 'date', [
+            'label' => 'editor.identity.authorizationRequestedAt',
+            'widget' => 'single_text',
+            'attr' => [
+                'class' => 'form-control',
+            ],
+        ]);
 
-        $builder->add('lisibility', 'text', array(
-                'attr' => array('class' => 'form-control identity-select', 'data-field' => 'lisibility'),
-                'label' => 'editor.identity.lisibility',
-                'translation_domain' => 'messages',
-            ));
+        $builder->add('authorizationGrantedAt', 'date', [
+            'label' => 'editor.identity.authorizationGrantedAt',
+            'widget' => 'single_text',
+            'attr' => [
+                'class' => 'form-control',
+            ],
+        ]);
+
+        $builder->add('sourceUrl', 'textarea', [
+            'required' => false,
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'label' => 'editor.identity.sourceUrl',
+        ]);
+
+        $builder->add('sourceStorage', 'textarea', [
+            'required' => false,
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'label' => 'editor.identity.sourceStorage',
+        ]);
+
+        $builder->add('sourceContacts', 'textarea', [
+            'required' => false,
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'label' => 'editor.identity.sourceContacts',
+        ]);
     }
 
     public function getName()

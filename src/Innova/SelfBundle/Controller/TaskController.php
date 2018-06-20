@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -88,7 +89,10 @@ class TaskController
 
         $questionnaires = $this->taskManager->listQuestionnairesByLanguage($language);
 
-        return array('questionnaires' => $questionnaires);
+        return [
+            'questionnaires' => $questionnaires,
+            'language' => $language
+        ];
     }
 
     /**
@@ -198,11 +202,19 @@ class TaskController
      * @Route("/questionnaire/create/{testId}", name="editor_questionnaire_create", options={"expose"=true})
      * @Method("POST")
      */
-    public function createQuestionnaireAction(Test $test = null)
+    public function createQuestionnaireAction(Request $request, Test $test = null)
     {
         $this->voter->isAllowed('right.createtask');
 
         $questionnaire = $this->questionnaireManager->createQuestionnaire();
+
+        $languageId = $request->get('language');
+
+        if ($languageId !== null) {
+            $language = $this->entityManager->getRepository(Language::class)->findOneById($languageId);
+            $questionnaire->setLanguage($language);
+        }
+
         $this->questionManager->createQuestion($questionnaire);
 
         if ($test) {

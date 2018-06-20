@@ -201,18 +201,45 @@ editor:
         fixed_order: Ordre fixe
         context: Contexte
         question_object: Objet de la question
-        skill: Compétence
+        skill: Habileté
         didactic_instruction: Consigne didactique
         functional_instruction: Consigne fonctionnelle
         feedback: Feedback
     subquestion:
-        identity: Fiche d'identité
+        identity: Fiche d'identité - Item
         subquestions: Items
         add: Ajouter un item
         remove: Supprimer l'item
         add_instruction: Ajouter une consigne / question / amorce
         remove_instruction: Supprimer la consigne / question / amorce
         answers: Réponses
+        level: Niveau d'item suite au standard setting
+        focuses:
+          label: Focus langagier(s)
+          socio_pragma: Socio-pragmatique
+          morph: Morphosyntaxique
+          lexic_general: "Lexical : lexique général"
+          lexic_spec: "Lexical : lexique spécifique"
+          lexic_expr: "Lexical : expressions figées"
+          lexic_phono: "CO : phonologique"
+          discursive: "EEC : discursif"
+          metalinguistic: "EEC : métalinguistique"
+        goals:
+          label: Opération(s) / action(s) induites par l'item
+          understand_gen: "CO/CE : comprendre le sens général"
+          understand_spec: "CO/CE : comprendre un ou plusieurs détails(s) explicite(s)"
+          infer_spec: "CO/CE : inférer une ou plusieurs information(s)"
+          oral_inter: "CO/CE : interagir à l'oral"
+          prod_statmnt: "EEC : produire un énoncé cohérent"
+          rephrase_msg: "EEC : reformuler un message"
+          write_inter: "EEC : interagir à l'écrit"
+          fix_statmnt: "EEC : corriger un énoncé"
+        difficultyIndex: Indice de difficulté (measure)
+        discriminationIndex: Indice de discriminiation (PTMA)
+        redundancy:
+          label: Redondance de l'information
+          present: Présente
+          absent: Absente
     proposition:
         add: Ajouter une proposition
         remove: Supprimer la proposition
@@ -246,39 +273,60 @@ editor:
         blank_delete: Suppression d'un texte lacunaire
         blank_delete_confirm: Êtes-vous sûr de vouloir supprimer le texte lacunaire ?
     identity:
-        level.proof: Justificatif du niveau
-        author.right_status: Status du droit d'auteur
-        author.right: Droit d'auteur
-        author.right.more: Informations complémentaires sur le droit d'auteur
+        levelProof:
+            label: Lien avec le référentiel
+            placeholder: Noter les éléments en langue cible permettant de caractériser le niveau de la tâche selon le référentiel choisi. Préciser en français le thème et ajouter si nécessaire une phrase de synthèse.
+        authorRight:
+            label: Status du droit d'auteur
+            authorized: Autorisés
+            to_ask: A demander
+            not_needed: Non requis
+            pending: En attente
         source: Source
-        source.operation: Opération sur la source
-        source.more: Informations complémentaires sur la source
         domain: Domaine
-        register: Registre
+        register: Registre de langue
+        variety:
+            label: Variété de la langue
+            placeholder: À préciser selon la langue.
         reception: Type de réception
-        length: Durée
-        textLength: Longueur du texte (nombre de mots)
-        productionType: Type de production
-        flow: Débit
+        length: Durée / Longueur
+        flow: Débit(s)
         status: Statut
         language: Langue
         level: Niveau
         createdby: Tâche créée par
-        revisedby: et révisée par
+        revisedby: et modifiée par
         skill: Compétence
         theme: Titre
         fixedOrder: Ordre fixe
         authorMore: Auteur(s) de la tâche
-        focuses: Focus
-        cognitive_main: Opérations cognitives principales
-        cognitive_secondary: Opérations cognitives secondaires
-        channel: Mode de production
         socialLocation: Lieu social de production
-        sourceType: Format
-        genre: Mode de discours
-        variety: Variété
-        lisibility: Indice de lisibilité
-        speechType: Genre de discours
+        sourceTypes: Types de support
+        textType:
+            label: Genre de texte
+            placeholder: Compléter selon le référentiel choisi dans chaque langue.
+        speechType: Type de discours
+        readability:
+            label: Indice de lisibilité
+            placeholder: Indice calculé par le logiciel défini par chaque langue.
+        comment: Commentaire
+        context:
+            label: Contexte
+            placeholder: Reporter ici l’intitulé du contexte qui apparaît dans l’éditeur en français.
+        createdBySelf: Création SELF
+        freeLicence: Licence libre
+        authorizationRequestedAt: Date de la demande d'autorisation
+        authorizationGrantedAt: Date de l'obtention des droits
+        sourceUrl: Lien vers la ressource
+        sourceStorage: Lieu de stockage
+        sourceContacts: Contact(s)
+        speakers:
+            label: Locuteurs
+            0: Aucun
+            1: 'Discours monogéré : 1'
+            2: 'Discours polygéré : 2'
+            3: 'Discours polygéré : 3'
+            4: 'Discours polygéré : 4 ou plus'
     log:
         editor_create: Création de
         editor_edit: Edition de
@@ -410,27 +458,26 @@ domain:
     educational: Educationnel
 
 register:
-    formal_elevated: Formel soutenu
-    formal_neutral: Formel neutre
-    informal: Informel
-    mixte: Mixte
+    familiar: Familier
+    neutral: Neutre
+    sustained: Soutenu
+    mixed: Mixte
+    jp_formal: Japonais formal (soutenu)
+    jp_impersonal: Japonais impersonnel (écrit/neutre)
+    jp_perso_polite: Japonais personnel (poli)
+    jp_perso_familiar: Japonais personnel (familier)
 
 reception:
     listener: En tant que récepteur
     listener_interact: En tant que récepteur - interactant
 
 length:
-    short: Ecoute brève: 5"- 20"
-    medium: Ecoute moyenne: 21” - 40"
-    long: Ecoute longue: 41"- 60"
-    very_long: Ecoute très longue: > 60"
-
-text_length:
-    very_short: Très bref (1-10)
-    short : Bref (11-30)
-    medium: Moyen (31 - 80)
-    long: Long: (81 - 200)
-    very_long: Très long (>200)
+  audio_short: 'CO : écoute brève (<20 sec)'
+  audio_medium: 'CO : écoute moyenne'
+  audio_long: 'CO : écoute longue (<41 sec)'
+  text_short: 'CE/EEC : text bref (<40 mots)'
+  text_medium: 'CE/EEC : text moyen'
+  text_long: 'CE/EEC : text long (<90 mots)'
 
 flow:
     slow: Lent

@@ -12,8 +12,7 @@ class FixtureCommand extends ContainerAwareCommand
     {
         $this
             ->setName('self:fixtures:load')
-            ->setDescription('Load needed datas')
-        ;
+            ->setDescription('Load needed datas');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -35,19 +34,14 @@ class FixtureCommand extends ContainerAwareCommand
             array('EEC', array('TLCMLMULT', 'TLQROC', 'TLCMLDM', 'TQRU')),
         ));
 
-        $levelManager = $this->getContainer()->get('self.level.manager');
-        $levelManager->create(array('A1', 'A1+', 'A2', 'A2+', 'B1', 'B1+', 'B2', 'B2+', 'C1', 'C1+'));
-
-        $languageManager = $this->getContainer()->get('self.language.manager');
-        $languageManager->create(array('English', 'Italian', 'Chinese', 'Spanish', 'Japanese', 'FLE'));
-
         $componentTypeManager = $this->getContainer()->get('self.componentType.manager');
         $componentTypeManager->create(array('minitest', 'step1', 'step2', 'step3'));
 
         $clueTypeManager = $this->getContainer()->get('self.clueType.manager');
         $clueTypeManager->create(array(
-            array('fonctionnel', 'clue-fonctionnel'),
-            array('didactique', 'clue-didactique'), )
+                array('fonctionnel', 'clue-fonctionnel'),
+                array('didactique', 'clue-didactique'),
+            )
         );
 
         /* MEDIA */
@@ -55,88 +49,60 @@ class FixtureCommand extends ContainerAwareCommand
         $mediaTypeManager->create(array('audio', 'video', 'texte', 'image'));
 
         $mediaPurposeManager = $this->getContainer()->get('self.mediaPurpose.manager');
-        $mediaPurposeManager->create(array('blank-text', 'contexte', 'objet de la question', 'question', 'proposition', 'reponse', 'syllable', 'clue', 'instruction', 'functional-instruction', 'comment', 'feedback', 'distractor'));
+        $mediaPurposeManager->create(array(
+            'blank-text',
+            'contexte',
+            'objet de la question',
+            'question',
+            'proposition',
+            'reponse',
+            'syllable',
+            'clue',
+            'instruction',
+            'functional-instruction',
+            'comment',
+            'feedback',
+            'distractor'
+        ));
 
         /* IDENTITY */
         $statusManager = $this->getContainer()->get('self.status.manager');
         $statusManager->create(array('Ecriture', 'Révision', 'Validation', 'Modification post-pilotage'));
 
-        $lengthManager = $this->getContainer()->get('self.audioLength.manager');
-        $lengthManager->create(array('length.short', 'length.medium', 'length.long', 'length.very_long'));
-        $lengthManager->delete(array('short', 'medium', 'long'));
-
-        $textlengthManager = $this->getContainer()->get('self.textLength.manager');
-        $textlengthManager->create(array('text_length.very_short', 'text_length.short', 'text_length.medium', 'text_length.long', 'text_length.very_long'));
-
-        $sourceManager = $this->getContainer()->get('self.source.manager');
-        $sourceManager->create(array('source.certification', 'source.textbook', 'source.intern', 'source.other'));
-
-        $sourceOperationManager = $this->getContainer()->get('self.sourceOperation.manager');
-        $sourceOperationManager->create(array('source_operation.original', 'source_operation.original_modified', 'source_operation.constructed', 'source_operation.constructed_modified'));
-
-        $authorRightManager = $this->getContainer()->get('self.authorRight.manager');
-        $authorRightManager->create(array('author_right.authorized', 'author_right.not_needed', 'author_right.pending', 'author_right.to_ask'));
-
-        $domainManager = $this->getContainer()->get('self.domain.manager');
-        $domainManager->create(array('domain.personal', 'domain.public', 'domain.profesional', 'domain.educational'));
-
-        $flowManager = $this->getContainer()->get('self.flow.manager');
-        $flowManager->create(array('flow.slow', 'flow.medium', 'flow.fast'));
-
-        $receptionManager = $this->getContainer()->get('self.reception.manager');
-        $receptionManager->create(array('reception.listener', 'reception.listener_interact'));
-        $receptionManager->delete(array('reception.performer', 'reception.listener_pluridirectional', 'reception.listener_monodirectional'));
-
-        $registerManager = $this->getContainer()->get('self.register.manager');
-        $registerManager->create(array('register.formal_elevated', 'register.formal_neutral', 'register.informal', 'register.mixte'));
-
-        $focusManager = $this->getContainer()->get('self.focus.manager');
-        $focusManager->create(array('focus.lexical', 'focus.communicative', 'focus.morphosyntaxic', 'focus.textualCohesion'));
-
-        $cognitiveOpManager = $this->getContainer()->get('self.cognitiveOp.manager');
-        $cognitiveOpManager->create(array(
-            'cognitive.global_comprehension', 'cognitive.detailed_comprehension', 'cognitive.infer_context', 'cognitive.infer_intention',
-            'cognitive.infer_state', 'cognitive.infer_register', 'cognitive.infer_information', 'cognitive.interaction',
-            'cognitive.completeMessage', 'cognitive.reformulateMessage', 'cognitive.interact', 'cognitive.readBack', 'cognitive.other',
-        ));
-
         $sourceTypeManager = $this->getContainer()->get('self.sourceType.manager');
-        $sourceTypeManager->create(array('sourceType.audio', 'sourceType.video', 'sourceType.text', 'sourceType.image'));
-
-        $channelManager = $this->getContainer()->get('self.channel.manager');
-        $channelManager->delete(array('channel.radio', 'channel.tv', 'channel.web', 'channel.localRecord'));
-        $channelManager->create(array(
-            'channel.phone', 'channel.visual', 'channel.chat_sms_oral', 'channel.chat_sms_written', 'channel.tools', 'channel.videoconf',
-            'channel.speaker', 'channel.tutorial', 'channel.GPS', 'channel.other', 'channel.postit', 'channel.brochure', 'channel.ticket', 'channel.notice',
-        ));
-
-        $socialLocationManager = $this->getContainer()->get('self.socialLocation.manager');
-        $socialLocationManager->create(array(
-            'socialLocation.radio', 'socialLocation.tv', 'socialLocation.web', 'socialLocation.institution', 'socialLocation.press',
-            'socialLocation.edition', 'socialLocation.other',
+        $sourceTypeManager->create(array(
+            'sourceType.audio',
+            'sourceType.video',
+            'sourceType.text',
+            'sourceType.image'
         ));
 
         $genreManager = $this->getContainer()->get('self.genre.manager');
-        $genreManager->create(array('genre.informative', 'genre.argumentative', 'genre.narrative', 'genre.explicatif', 'genre.descriptive',
-            'genre.injonctif', 'genre.expressif', 'genre.poetique', ));
-        $genreManager->delete(array('genre.literary', 'genre.conversational', 'genre.cmd_synchrone', 'genre.cmd_asynchrone'));
-
-        $varietyManager = $this->getContainer()->get('self.variety.manager');
-        $varietyManager->delete(array('variety.standard', 'variety.non_standard'));
-        $varietyManager->create(array(
-            'variety.italian.standard', 'variety.italian.nonstandard_diatopie', 'variety.italian.nonstandard_diastratie', 'variety.italian.nonstandard_diaphasie',
-            'variety.english.us_standard', 'variety.english.uk_standard', 'variety.english.other_standard', 'variety.english.regional', 'variety.english.secondLang',
-            'variety.chinese.standard', 'variety.chinese.taiwan', 'variety.chinese.otherVariant', 'variety.chinese.secondLang',
+        $genreManager->create(array(
+            'genre.informative',
+            'genre.argumentative',
+            'genre.narrative',
+            'genre.explicatif',
+            'genre.injonctif',
+            'genre.poetique',
         ));
-
-        $productionTypeManager = $this->getContainer()->get('self.productionType.manager');
-        $productionTypeManager->create(array(
-            'productionType.monologal.self', 'productionType.monologal.hetero',
-            'productionType.dialogal.bi', 'productionType.dialogal.poly',
+        $genreManager->delete(array(
+            'genre.literary',
+            'genre.conversational',
+            'genre.cmd_synchrone',
+            'genre.cmd_asynchrone'
         ));
 
         $rightGroupManager = $this->getContainer()->get('self.rightgroup.manager');
-        $rightGroupManager->createGroups(array('rightgroup.tasks', 'rightgroup.tests', 'rightgroup.sessions', 'rightgroup.groups', 'rightgroup.users', 'rightgroup.exports', 'rightgroup.generalParameters'));
+        $rightGroupManager->createGroups(array(
+            'rightgroup.tasks',
+            'rightgroup.tests',
+            'rightgroup.sessions',
+            'rightgroup.groups',
+            'rightgroup.users',
+            'rightgroup.exports',
+            'rightgroup.generalParameters'
+        ));
 
         $rightManager = $this->getContainer()->get('self.right.manager');
         $rightManager->createRights(array(
@@ -196,6 +162,6 @@ class FixtureCommand extends ContainerAwareCommand
         $now = time();
         $duration = $now - $start;
 
-        $output->writeln('Fixtures exécutées en '.$duration.' sec.');
+        $output->writeln('Fixtures exécutées en ' . $duration . ' sec.');
     }
 }

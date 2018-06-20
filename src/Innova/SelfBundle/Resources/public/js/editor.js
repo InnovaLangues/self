@@ -973,6 +973,7 @@ function fillMediaName(theme){
 function beforeAjax(){
     $("#loader-img").show();
     $(".btn, input, textarea, select:not(.to-check)").attr("disabled", "disabled");
+    $('#errors').html('');
 }
 
 function afterAjax(){
@@ -1080,7 +1081,15 @@ function setIdentityField(form){
             $('#modal-subquestion-identity').modal('hide');
             afterAjax();
         },
+        error: function(xhr) {
+            var errors = xhr.responseJSON;
 
+            for (var fieldName in errors) {
+                var error = errors[fieldName];
+
+                $('<div class="alert alert-danger"><b>' + fieldName + ':</b> ' + error + '</div>').appendTo('#errors');
+            }
+        }
     });
 }
 
@@ -1101,7 +1110,18 @@ function setGeneralInfoFields(questionnaireId, field, value){
         .done(function(data) {
             if (field == "skill") {
                 $("#general-infos").html(data.template);
-                $("#questionnaire_skill").attr("disabled", true);
+                var $skillField = $("#task_infos_skill");
+                $skillField.attr("disabled", true);
+
+                var $lengthField = $('#questionnaire_length').closest('div').hide();
+                var $readabilityField = $('#questionnaire_readability').closest('div').hide();
+                var $flowField = $('#questionnaire_flow').closest('div').hide();
+
+                if ($skillField.val() == 1) {
+                    $lengthField.show();
+                    $readabilityField.show();
+                    $flowField.show();
+                }
             } else if(field == "typology") {
                 $("#subquestion-container").replaceWith(data.subquestions);
                 $(".task-content").show();
@@ -1124,9 +1144,55 @@ function subquestionIdentityModal(subquestionId){
         type: 'GET',
     })
     .done(function(data) {
-        $('#modal-subquestion-identity').find(".modal-body").html(data);
+        var $modal = $('#modal-subquestion-identity');
+
+        $modal.find(".modal-body").html(data);
         $("#subquestion_id").val(subquestionId);
-        $('#modal-subquestion-identity').modal('show');
+        $modal.modal('show');
+
+        var skill = $('#task_infos_skill').val();
+
+        var $goalsField = $('#subquestion_goals');
+
+        var valueGroupCOCE = [
+            'understand_gen',
+            'understand_spec',
+            'infer_spec',
+            'oral_inter'
+        ];
+
+        var valueGroupEEC = [
+            'prod_statmnt',
+            'rephrase_msg',
+            'write_inter',
+            'fix_statmnt'
+        ];
+
+        var valueGroupCOCEVisibility = !(skill == 3);
+        var valueGroupEECVisibility = !valueGroupCOCEVisibility;
+
+        console.log(skill, valueGroupCOCEVisibility, valueGroupEECVisibility);
+
+        $goalsField.find('option').each(function () {
+            if ($.inArray($(this).val(), valueGroupCOCE) !== -1) {
+                if (valueGroupCOCEVisibility) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            }
+
+            if ($.inArray($(this).val(), valueGroupEEC) !== -1) {
+                if (valueGroupEECVisibility) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            }
+        });
+
+        $goalsField.attr('size', $goalsField.find('option:visible').length);
+
         afterAjax();
     });
 }
@@ -1149,5 +1215,49 @@ function postForm(form){
     });
 }
 
+$(function(){
+    function syncAuthorRightChoice (choice) {
+        var $fieldCreatedBySelf = $("input[name='questionnaire[createdBySelf]']").closest('div').hide();
+        var $fieldFreeLicence = $("input[name='questionnaire[freeLicence]']").closest('div').hide();
+        var $fieldAuthorizationReq = $("input[name='questionnaire[authorizationRequestedAt]']").closest('div').hide();
+        var $fieldAuthorizationGra = $("input[name='questionnaire[authorizationGrantedAt]']").closest('div').hide();
+        var $fieldUrl = $("textarea[name='questionnaire[sourceUrl]']").closest('div').hide();
+        var $fieldStorage = $("textarea[name='questionnaire[sourceStorage]']").closest('div').hide();
+        var $fieldContacts = $("textarea[name='questionnaire[sourceContacts]']").closest('div').hide();
 
+        console.log(choice);
 
+        if (choice === 'not_needed') {
+            $fieldCreatedBySelf.show();
+            $fieldFreeLicence.show();
+            $fieldStorage.show();
+        }
+
+        if (choice === 'to_ask') {
+            $fieldUrl.show();
+            $fieldContacts.show();
+        }
+
+        if (choice === 'pending') {
+            $fieldUrl.show();
+            $fieldContacts.show();
+            $fieldAuthorizationReq.show();
+        }
+
+        if (choice === 'authorized') {
+            $fieldUrl.show();
+            $fieldContacts.show();
+            $fieldAuthorizationReq.show();
+            $fieldAuthorizationGra.show();
+            $fieldStorage.show();
+        }
+    }
+
+    var $authorRight = $("input[name='questionnaire[authorRight]']");
+
+    $authorRight.change(function () {
+        syncAuthorRightChoice($(this).val());
+    });
+
+    syncAuthorRightChoice($("input[name='questionnaire[authorRight]']:checked").val());
+});

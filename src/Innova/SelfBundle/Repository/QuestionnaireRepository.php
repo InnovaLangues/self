@@ -5,6 +5,7 @@ namespace Innova\SelfBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Innova\SelfBundle\Entity\Language;
 
 class QuestionnaireRepository extends EntityRepository
 {
@@ -288,5 +289,43 @@ class QuestionnaireRepository extends EntityRepository
                 ->setParameter('test', $test);
 
         return $query->getResult();
+    }
+
+    public function findAll()
+    {
+        $qb = $this->createQueryBuilder('q')
+            ->leftJoin('q.questions', 'qq')
+            ->addSelect('qq')
+
+            ->leftJoin('q.orderQuestionnaireComponents', 'oqc')
+            ->addSelect('oqc')
+
+            ->leftJoin('q.orderQuestionnaireTests', 'oqt')
+            ->addSelect('oqt')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByLanguage(Language $language)
+    {
+        $qb = $this->createQueryBuilder('q')
+            ->where('q.language = :language')
+            ->setParameter('language', $language)
+
+            ->leftJoin('q.questions', 'qq')
+            ->addSelect('qq')
+
+            ->leftJoin('q.orderQuestionnaireComponents', 'oqc')
+            ->addSelect('oqc')
+
+            ->leftJoin('q.orderQuestionnaireTests', 'oqt')
+            ->addSelect('oqt')
+
+            ->leftJoin('oqt.test', 't')
+            ->addSelect('t')
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Innova\SelfBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Questionnaire.
@@ -147,138 +149,175 @@ class Questionnaire
      */
     protected $language;
 
-    // FICHE D'IDENTITE
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lisibility", type="string", length=255, nullable=true)
-     */
-    private $lisibility;
-
     /**
      * @ORM\ManyToOne(targetEntity="Skill", inversedBy="questionnaires", fetch = "EAGER")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     protected $skill;
 
+    // FICHE D'IDENTITE
+
     /**
-     * @var text
+     * @var string
      *
-     * @ORM\Column(name="levelProof", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $levelProof;
 
     /**
-     * @var text
+     * @var string
      *
-     * @ORM\Column(name="authorRightMore", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $authorRightMore;
+    private $context;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    protected $authorRight;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Source", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    protected $source;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    protected $sourceOperation;
-
-    /**
-     * @var text
+     * @var string
      *
-     * @ORM\Column(name="sourceMore", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $sourceMore;
+    private $textType;
 
     /**
-     * @var text
+     * @Assert\Count(
+     *      min = 1,
+     *      minMessage = "Vous devez faire au moins un choix.",
+     * )
      *
-     * @ORM\Column(name="questionnaires_speechType", type="text", nullable=true)
-     */
-    private $speechType;
-
-    /**
      * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceType", inversedBy="questionnaires")
      * @ORM\JoinTable(name="questionnaires_sourceType")
      */
     protected $sourceTypes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel", inversedBy="questionnaires")
-     * @ORM\JoinTable(name="questionnaires_channel")
-     */
-    protected $channels;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation", inversedBy="questionnaires")
-     * @ORM\JoinTable(name="questionnaires_socialLocation")
-     */
-    protected $socialLocations;
-
-    /**
+     * @Assert\Count(min=1, minMessage="Vous devez faire au moins un choix.")
      * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre", inversedBy="questionnaires")
      * @ORM\JoinTable(name="questionnaires_genre")
      */
     protected $genres;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety", inversedBy="questionnaires")
-     * @ORM\JoinTable(name="questionnaires_variety")
-     */
-    protected $varieties;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    protected $domain;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    protected $productionType;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Register", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $register;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    protected $reception;
+    const REGISTER_FAMILIAR = 'familiar';
+    const REGISTER_NEUTRAL = 'neutral';
+    const REGISTER_SUSTAINED = 'sustained';
+    const REGISTER_MIXED = 'mixed';
+    const REGISTER_JP_FORMAL = 'jp_formal';
+    const REGISTER_JP_IMPERSONAL = 'jp_impersonal';
+    const REGISTER_JP_PERSO_POLITE = 'jp_perso_polite';
+    const REGISTER_JP_PERSO_FAMILIAR = 'jp_perso_familiar';
 
     /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Length", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $length;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    protected $textLength;
+    const LENGTH_AUDIO_SHORT = 'audio_short';
+    const LENGTH_AUDIO_MEDIUM = 'audio_medium';
+    const LENGTH_AUDIO_LONG = 'audio_long';
+    const LENGTH_TEXT_SHORT = 'text_short';
+    const LENGTH_TEXT_MEDIUM = 'text_medium';
+    const LENGTH_TEXT_LONG = 'text_long';
 
     /**
-     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow", inversedBy="questionnaires")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="json_array", nullable=true)
      */
     protected $flow;
+
+    const FLOW_SLOW = 'slow';
+    const FLOW_MEDIUM = 'medium';
+    const FLOW_FAST = 'fast';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $readability;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $variety;
+
+    /**
+     * @var int
+     *
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 4
+     * )
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $speakers;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     * @Assert\Choice(callback="getAuthorRightValues")
+     */
+    protected $authorRight = self::AUTHOR_RIGHT_TO_ASK;
+
+    const AUTHOR_RIGHT_NOT_NEEDED = 'not_needed';
+    const AUTHOR_RIGHT_TO_ASK = 'to_ask';
+    const AUTHOR_RIGHT_PENDING = 'pending';
+    const AUTHOR_RIGHT_AUTHORIZED = 'authorized';
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $createdBySelf = false;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $freeLicence = false;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $authorizationRequestedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $authorizationGrantedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $sourceContacts;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $sourceUrl;
+
+    /**
+     * @var string
+     *
+     * ORM\Column(type="text", nullable=true)
+     */
+    protected $sourceStorage;
+
 
     public function __toString()
     {
@@ -344,8 +383,6 @@ class Questionnaire
     }
 
     /**
-     * Add questions.
-     *
      * @param \Innova\SelfBundle\Entity\Question $questions
      *
      * @return Questionnaire
@@ -838,7 +875,7 @@ class Questionnaire
     /**
      * Set levelProof.
      *
-     * @param text $levelProof
+     * @param string $levelProof
      *
      * @return Questionnaire
      */
@@ -857,54 +894,6 @@ class Questionnaire
     public function getLevelProof()
     {
         return $this->levelProof;
-    }
-
-    /**
-     * Set authorRightMore.
-     *
-     * @param text $authorRightMore
-     *
-     * @return Questionnaire
-     */
-    public function setAuthorRightMore($authorRightMore)
-    {
-        $this->authorRightMore = $authorRightMore;
-
-        return $this;
-    }
-
-    /**
-     * Get authorRightMore.
-     *
-     * @return string
-     */
-    public function getAuthorRightMore()
-    {
-        return $this->authorRightMore;
-    }
-
-    /**
-     * Set sourceMore.
-     *
-     * @param text $sourceMore
-     *
-     * @return Questionnaire
-     */
-    public function setSourceMore($sourceMore)
-    {
-        $this->sourceMore = $sourceMore;
-
-        return $this;
-    }
-
-    /**
-     * Get sourceMore.
-     *
-     * @return string
-     */
-    public function getSourceMore()
-    {
-        return $this->sourceMore;
     }
 
     /**
@@ -942,8 +931,6 @@ class Questionnaire
     }
 
     /**
-     * Set status.
-     *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Status $status
      *
      * @return Questionnaire
@@ -956,8 +943,6 @@ class Questionnaire
     }
 
     /**
-     * Get status.
-     *
      * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Status
      */
     public function getStatus()
@@ -966,109 +951,11 @@ class Questionnaire
     }
 
     /**
-     * Set authorRight.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight $authorRight
+     * @param string $register
      *
      * @return Questionnaire
      */
-    public function setAuthorRight(\Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight $authorRight = null)
-    {
-        $this->authorRight = $authorRight;
-
-        return $this;
-    }
-
-    /**
-     * Get authorRight.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\AuthorRight
-     */
-    public function getAuthorRight()
-    {
-        return $this->authorRight;
-    }
-
-    /**
-     * Set source.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Source $source
-     *
-     * @return Questionnaire
-     */
-    public function setSource(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Source $source = null)
-    {
-        $this->source = $source;
-
-        return $this;
-    }
-
-    /**
-     * Get source.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Source
-     */
-    public function getSource()
-    {
-        return $this->source;
-    }
-
-    /**
-     * Set sourceOperation.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation $sourceOperation
-     *
-     * @return Questionnaire
-     */
-    public function setSourceOperation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation $sourceOperation = null)
-    {
-        $this->sourceOperation = $sourceOperation;
-
-        return $this;
-    }
-
-    /**
-     * Get sourceOperation.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\SourceOperation
-     */
-    public function getSourceOperation()
-    {
-        return $this->sourceOperation;
-    }
-
-    /**
-     * Set domain.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain $domain
-     *
-     * @return Questionnaire
-     */
-    public function setDomain(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain $domain = null)
-    {
-        $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * Get domain.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Domain
-     */
-    public function getDomain()
-    {
-        return $this->domain;
-    }
-
-    /**
-     * Set register.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Register $register
-     *
-     * @return Questionnaire
-     */
-    public function setRegister(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Register $register = null)
+    public function setRegister($register = null)
     {
         $this->register = $register;
 
@@ -1076,9 +963,7 @@ class Questionnaire
     }
 
     /**
-     * Get register.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Register
+     * @return string
      */
     public function getRegister()
     {
@@ -1086,37 +971,11 @@ class Questionnaire
     }
 
     /**
-     * Set reception.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception $reception
+     * @param string $length
      *
      * @return Questionnaire
      */
-    public function setReception(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception $reception = null)
-    {
-        $this->reception = $reception;
-
-        return $this;
-    }
-
-    /**
-     * Get reception.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Reception
-     */
-    public function getReception()
-    {
-        return $this->reception;
-    }
-
-    /**
-     * Set length.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Length $length
-     *
-     * @return Questionnaire
-     */
-    public function setLength(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Length $length = null)
+    public function setLength($length = null)
     {
         $this->length = $length;
 
@@ -1124,9 +983,7 @@ class Questionnaire
     }
 
     /**
-     * Get length.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Length
+     * @return string|null
      */
     public function getLength()
     {
@@ -1134,13 +991,11 @@ class Questionnaire
     }
 
     /**
-     * Set flow.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow $flow
+     * @param array|null $flow
      *
      * @return Questionnaire
      */
-    public function setFlow(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow $flow = null)
+    public function setFlow($flow = null)
     {
         $this->flow = $flow;
 
@@ -1148,9 +1003,7 @@ class Questionnaire
     }
 
     /**
-     * Get flow.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\Flow
+     * @return array|null
      */
     public function getFlow()
     {
@@ -1228,52 +1081,6 @@ class Questionnaire
     }
 
     /**
-     * Add channels.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
-     *
-     * @return Questionnaire
-     */
-    public function addChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
-    {
-        $this->channels[] = $channels;
-
-        return $this;
-    }
-
-    /**
-     * Add channels collection.
-     */
-    public function addChannels($channels)
-    {
-        foreach ($channels as $channel) {
-            $this->channels[] = $channel;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove channels.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels
-     */
-    public function removeChannel(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Channel $channels)
-    {
-        $this->channels->removeElement($channels);
-    }
-
-    /**
-     * Get channels.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChannels()
-    {
-        return $this->channels;
-    }
-
-    /**
      * Add genres.
      *
      * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Genre $genres
@@ -1320,51 +1127,6 @@ class Questionnaire
     }
 
     /**
-     * Add varieties.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
-     *
-     * @return Questionnaire
-     */
-    public function addVarietie(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
-    {
-        $this->varieties[] = $varieties;
-
-        return $this;
-    }
-
-    /**
-     * Add varieties collection.
-     */
-    public function addVarieties($varieties)
-    {
-        foreach ($varieties as $variety) {
-            $this->varieties[] = $variety;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove varieties.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
-     */
-    public function removeVarietie(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
-    {
-        $this->varieties->removeElement($varieties);
-    }
-
-    /**
-     * Get varieties.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVarieties()
-    {
-        return $this->varieties;
-    }
-    /**
      * Constructor.
      */
     public function __construct()
@@ -1377,11 +1139,9 @@ class Questionnaire
         $this->traces = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderQuestionnaireTests = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sourceTypes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->channels = new \Doctrine\Common\Collections\ArrayCollection();
         $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->varieties = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->socialLocations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderQuestionnaireComponents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     /**
@@ -1419,172 +1179,257 @@ class Questionnaire
     }
 
     /**
-     * Set lisibility.
-     *
-     * @param string $lisibility
-     *
-     * @return Questionnaire
-     */
-    public function setLisibility($lisibility)
-    {
-        $this->lisibility = $lisibility;
-
-        return $this;
-    }
-
-    /**
-     * Get lisibility.
-     *
      * @return string
      */
-    public function getLisibility()
+    public function getReadability()
     {
-        return $this->lisibility;
+        return $this->readability;
     }
 
     /**
-     * Add socialLocations.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
-     *
-     * @return Questionnaire
+     * @param string $readability
      */
-    public function addSocialLocations($socialLocations)
+    public function setReadability($readability)
     {
-        foreach ($socialLocations as $socialLocation) {
-            $this->socialLocations[] = $socialLocation;
-        }
-
-        return $this;
+        $this->readability = $readability;
     }
 
     /**
-     * Add socialLocation.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
-     *
-     * @return Questionnaire
-     */
-    public function addSocialLocation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations)
-    {
-        $this->socialLocations[] = $socialLocations;
-
-        return $this;
-    }
-
-    /**
-     * Remove socialLocations.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations
-     */
-    public function removeSocialLocation(\Innova\SelfBundle\Entity\QuestionnaireIdentity\SocialLocation $socialLocations)
-    {
-        $this->socialLocations->removeElement($socialLocations);
-    }
-
-    /**
-     * Get socialLocations.
-     *
-     * @return QuestionnaireIdentity\SocialLocation[]
-     */
-    public function getSocialLocations()
-    {
-        return $this->socialLocations;
-    }
-
-    /**
-     * Set textLength.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength
-     *
-     * @return Questionnaire
-     */
-    public function setTextLength(\Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength $textLength = null)
-    {
-        $this->textLength = $textLength;
-
-        return $this;
-    }
-
-    /**
-     * Get textLength.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\TextLength
-     */
-    public function getTextLength()
-    {
-        return $this->textLength;
-    }
-
-    /**
-     * Set speechType.
-     *
-     * @param text $speechType
-     *
-     * @return Questionnaire
-     */
-    public function setSpeechType($speechType)
-    {
-        $this->speechType = $speechType;
-
-        return $this;
-    }
-
-    /**
-     * Get speechType.
-     *
      * @return string
      */
-    public function getSpeechType()
+    public function getVariety()
     {
-        return $this->speechType;
+        return $this->variety;
     }
 
     /**
-     * Set productionType.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType
+     * @param string $variety
+     */
+    public function setVariety($variety)
+    {
+        $this->variety = $variety;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * @param string $context
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTextType()
+    {
+        return $this->textType;
+    }
+
+    /**
+     * @param string $textType
+     */
+    public function setTextType($textType)
+    {
+        $this->textType = $textType;
+    }
+
+    /**
+     * @param AuthorRight $authorRightMore
      *
      * @return Questionnaire
      */
-    public function setProductionType(\Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType $productionType = null)
+    public function setAuthorRight($authorRight)
     {
-        $this->productionType = $productionType;
-
+        $this->authorRight = $authorRight;
         return $this;
     }
-
     /**
-     * Get productionType.
-     *
-     * @return \Innova\SelfBundle\Entity\QuestionnaireIdentity\ProductionType
+     * @return string
      */
-    public function getProductionType()
+    public function getAuthorRight()
     {
-        return $this->productionType;
+        return $this->authorRight;
     }
 
     /**
-     * Add varieties.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
-     *
-     * @return Questionnaire
+     * @return bool
      */
-    public function addVariety(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
+    public function isCreatedBySelf()
     {
-        $this->varieties[] = $varieties;
-
-        return $this;
+        return $this->createdBySelf;
     }
 
     /**
-     * Remove varieties.
-     *
-     * @param \Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties
+     * @param bool $createdBySelf
      */
-    public function removeVariety(\Innova\SelfBundle\Entity\QuestionnaireIdentity\Variety $varieties)
+    public function setCreatedBySelf($createdBySelf)
     {
-        $this->varieties->removeElement($varieties);
+        $this->createdBySelf = $createdBySelf;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFreeLicence()
+    {
+        return $this->freeLicence;
+    }
+
+    /**
+     * @param bool $freeLicence
+     */
+    public function setFreeLicence($freeLicence)
+    {
+        $this->freeLicence = $freeLicence;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAuthorizationRequestedAt()
+    {
+        return $this->authorizationRequestedAt;
+    }
+
+    /**
+     * @param \DateTime $authorizationRequestedAt
+     */
+    public function setAuthorizationRequestedAt($authorizationRequestedAt)
+    {
+        $this->authorizationRequestedAt = $authorizationRequestedAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAuthorizationGrantedAt()
+    {
+        return $this->authorizationGrantedAt;
+    }
+
+    /**
+     * @param \DateTime $authorizationGrantedAt
+     */
+    public function setAuthorizationGrantedAt($authorizationGrantedAt)
+    {
+        $this->authorizationGrantedAt = $authorizationGrantedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceContacts()
+    {
+        return $this->sourceContacts;
+    }
+
+    /**
+     * @param string $sourceContacts
+     */
+    public function setSourceContacts($sourceContacts)
+    {
+        $this->sourceContacts = $sourceContacts;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceUrl()
+    {
+        return $this->sourceUrl;
+    }
+
+    /**
+     * @param string $sourceUrl
+     */
+    public function setSourceUrl($sourceUrl)
+    {
+        $this->sourceUrl = $sourceUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceStorage()
+    {
+        return $this->sourceStorage;
+    }
+
+    /**
+     * @param string $sourceStorage
+     */
+    public function setSourceStorage($sourceStorage)
+    {
+        $this->sourceStorage = $sourceStorage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSpeakers()
+    {
+        return $this->speakers;
+    }
+
+    /**
+     * @param int $speakers
+     */
+    public function setSpeakers($speakers)
+    {
+        $this->speakers = $speakers;
+    }
+
+    public static function getAuthorRightValues()
+    {
+        return [
+            self::AUTHOR_RIGHT_NOT_NEEDED,
+            self::AUTHOR_RIGHT_TO_ASK,
+            self::AUTHOR_RIGHT_PENDING,
+            self::AUTHOR_RIGHT_AUTHORIZED,
+        ];
+    }
+
+    public static function getLengthValues()
+    {
+        return [
+            self::LENGTH_AUDIO_SHORT,
+            self::LENGTH_AUDIO_MEDIUM,
+            self::LENGTH_AUDIO_LONG,
+            self::LENGTH_TEXT_SHORT,
+            self::LENGTH_TEXT_MEDIUM,
+            self::LENGTH_TEXT_LONG
+        ];
+    }
+
+    public static function getFlowValues()
+    {
+        return [
+            self::FLOW_SLOW,
+            self::FLOW_MEDIUM,
+            self::FLOW_FAST
+        ];
+    }
+
+    public static function getRegisterValues()
+    {
+        return [
+            self::REGISTER_FAMILIAR,
+            self::REGISTER_NEUTRAL,
+            self::REGISTER_SUSTAINED,
+            self::REGISTER_MIXED,
+            self::REGISTER_JP_FORMAL,
+            self::REGISTER_JP_IMPERSONAL,
+            self::REGISTER_JP_PERSO_POLITE,
+            self::REGISTER_JP_PERSO_FAMILIAR,
+        ];
     }
 }

@@ -1,22 +1,39 @@
 <form id="subquestion-identity">
-    {{ form_label(form.level) }}
-    {{ form_widget(form.level) }}
+    <div class="clearfix">
+        {{ form_row(form.save, {'attr': {'class': 'pull-right btn btn-success'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.level) }}
+        {{ form_widget(form.level) }}
+    </div>
 
     <hr/>
 
-    {{ form_label(form.focuses) }}
-    {{ form_widget(form.focuses) }}
+    <div class="form-group">
+        {{ form_label(form.focuses) }}
+        {{ form_widget(form.focuses) }}
+    </div>
 
-    <hr/>
+    <div class="form-group">
+        {{ form_label(form.goals) }}
+        {{ form_widget(form.goals) }}
+    </div>
 
-    {{ form_label(form.cognitiveOpsMain) }}
-    {{ form_widget(form.cognitiveOpsMain) }}
+    <div class="form-group">
+        {{ form_label(form.redundancy) }}
+        {{ form_widget(form.redundancy) }}
+    </div>
 
-    <hr/>
+    <div class="form-group">
+        {{ form_label(form.discriminationIndex) }}
+        {{ form_widget(form.discriminationIndex) }}
+    </div>
 
-    {{ form_label(form.cognitiveOpsSecondary) }}
-    {{ form_widget(form.cognitiveOpsSecondary) }}
+    <div class="form-group">
+        {{ form_label(form.difficultyIndex) }}
+        {{ form_widget(form.difficultyIndex) }}
+    </div>
 
-    <br/>
     {{ form_rest(form) }}
 </form>

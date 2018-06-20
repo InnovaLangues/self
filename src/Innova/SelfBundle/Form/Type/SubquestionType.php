@@ -2,6 +2,7 @@
 
 namespace Innova\SelfBundle\Form\Type;
 
+use Innova\SelfBundle\Entity\Subquestion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -14,65 +15,77 @@ class SubquestionType extends AbstractType
             'property' => 'name',
             'empty_value' => '-',
             'attr' => array('class' => 'form-control identity-select'),
-            'label' => 'level',
+            'label' => 'editor.subquestion.level',
             'translation_domain' => 'messages',
         ));
 
-        $builder->add('focuses', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\Focus',
-                'property' => 'name',
-                'attr' => array('class' => 'form-control subquestion-identity-field', 'data-field' => 'focuses', 'size' => 3),
-                'multiple' => true,
-                'label' => 'editor.identity.focuses',
-                'translation_domain' => 'messages',
-                'required' => false,
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('focuses', 'choice', array(
+            'choices' => array_flip(Subquestion::getFocusesValues()),
+            'choice_label' => function ($choiceValue) {
+                return 'editor.subquestion.focuses.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
+            'attr' => [
+                'class' => 'form-control',
+                'size' => count(Subquestion::getFocusesValues())
+            ],
+            'multiple' => true,
+            'label' => 'editor.subquestion.focuses.label',
+            'required' => false,
+        ));
 
-        $builder->add('cognitiveOpsMain', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\CognitiveOperation',
-                'property' => 'name',
-                'attr' => array('class' => 'form-control subquestion-identity-field', 'data-field' => 'cognitiveOpsMain', 'size' => 7),
-                'multiple' => true,
-                'label' => 'editor.identity.cognitive_main',
-                'translation_domain' => 'messages',
-                'required' => false,
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('goals', 'choice', [
+            'choices' => array_flip(Subquestion::getGoalsValues()),
+            'choice_label' => function ($choiceValue) {
+                return 'editor.subquestion.goals.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
+            'attr' => [
+                'class' => 'form-control',
+                'size' => count(Subquestion::getGoalsValues())
+            ],
+            'multiple' => true,
+            'label' => 'editor.subquestion.goals.label',
+            'required' => false,
+        ]);
 
-        $builder->add('cognitiveOpsSecondary', 'entity', array(
-                'class' => 'InnovaSelfBundle:QuestionnaireIdentity\CognitiveOperation',
-                'property' => 'name',
-                'attr' => array('class' => 'form-control subquestion-identity-field', 'data-field' => 'cognitiveOpsSecondary', 'size' => 7),
-                'multiple' => true,
-                'label' => 'editor.identity.cognitive_secondary',
-                'translation_domain' => 'messages',
-                'required' => false,
-                'choice_translation_domain' => 'messages',
-            ));
+        $builder->add('redundancy', 'choice', [
+            'choices' => array_flip(Subquestion::getRedundancyValues()),
+            'choice_label' => function ($choiceValue) {
+                return 'editor.subquestion.redundancy.' . $choiceValue;
+            },
+            'choice_value' => function ($choice = null) {
+                return $choice;
+            },
+            'attr' => ['class' => 'form-control'],
+            'label' => 'editor.subquestion.redundancy.label',
+            'required' => true
+        ]);
 
         $builder->add('difficultyIndex', 'text', array(
-                'attr' => array('class' => 'form-control subquestion-identity-field'),
-                'label' => 'difficultyIndex',
-                'translation_domain' => 'messages',
-                'required' => false,
-            ));
+            'attr' => ['class' => 'form-control'],
+            'label' => 'editor.subquestion.difficultyIndex',
+            'required' => false,
+        ));
 
         $builder->add('discriminationIndex', 'text', array(
-                'attr' => array('class' => 'form-control subquestion-identity-field'),
-                'label' => 'discriminationIndex',
-                'translation_domain' => 'messages',
-                'required' => false,
-            ));
+            'attr' => ['class' => 'form-control'],
+            'label' => 'editor.subquestion.discriminationIndex',
+            'required' => false,
+        ));
 
         $builder->add('id', 'hidden', array(
-                'mapped' => false,
-            ));
+            'mapped' => false,
+        ));
 
         $builder->add('save', 'submit', array(
-                'label' => 'generic.save',
-                'attr' => array('class' => 'btn btn-default btn-primary'),
-            ));
+            'label' => 'generic.save',
+            'attr' => ['class' => 'btn btn-default btn-primary'],
+        ));
     }
 
     public function getName()

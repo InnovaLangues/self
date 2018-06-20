@@ -21,3 +21,4 @@ parameters:
     secret:                     CeCiNe888VousRegarde124Pas
     base_url_prod:              ""
     redis_host:                 localhost
+    sentry_dsn:                 https://public:secret@sentry.example.com/1

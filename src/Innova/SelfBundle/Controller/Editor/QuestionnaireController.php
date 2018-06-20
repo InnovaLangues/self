@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class QuestionnaireController.
@@ -81,7 +82,11 @@ class QuestionnaireController
     {
         $this->voter->canEditTask($questionnaire);
 
-        $this->questionnaireManager->setField($request, $questionnaire);
+        try {
+            $this->questionnaireManager->setField($request, $questionnaire);
+        } catch (BadRequestHttpException $e) {
+            return new Response($e->getMessage(), 400, ['Content-Type' => 'text/json']);
+        }
 
         return new JsonResponse();
     }
