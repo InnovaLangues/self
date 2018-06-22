@@ -26,6 +26,7 @@ class Version20180611143323 extends AbstractMigration
         $this->addSql('ALTER TABLE questionnaire DROP FOREIGN KEY FK_7A64DAF7C14DF52');
         $this->addSql('ALTER TABLE questionnaire DROP FOREIGN KEY FK_7A64DAF953C1C61');
         $this->addSql('ALTER TABLE questionnaire DROP FOREIGN KEY FK_7A64DAF3E5F0C25');
+        $this->addSql('ALTER TABLE questionnaire DROP FOREIGN KEY FK_7A64DAF7EB60D1B');
         $this->addSql('ALTER TABLE questionnaires_variety DROP FOREIGN KEY FK_B660085078C2BC47');
         $this->addSql('CREATE TABLE questionnaire_flow (questionnaire_id INT NOT NULL, flow_id INT NOT NULL, INDEX IDX_65899D9CE07E8FF (questionnaire_id), INDEX IDX_65899D97EB60D1B (flow_id), PRIMARY KEY(questionnaire_id, flow_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE questionnaire_flow ADD CONSTRAINT FK_65899D9CE07E8FF FOREIGN KEY (questionnaire_id) REFERENCES questionnaire (id) ON DELETE CASCADE');

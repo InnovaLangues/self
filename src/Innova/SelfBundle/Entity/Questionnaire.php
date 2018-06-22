@@ -197,7 +197,9 @@ class Questionnaire
     protected $genres;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @var array
+     *
+     * @ORM\Column(type="json_array", nullable=true)
      */
     protected $register;
 
@@ -211,6 +213,8 @@ class Questionnaire
     const REGISTER_JP_PERSO_FAMILIAR = 'jp_perso_familiar';
 
     /**
+     * @var array
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $length;
@@ -223,6 +227,8 @@ class Questionnaire
     const LENGTH_TEXT_LONG = 'text_long';
 
     /**
+     * @var array
+     *
      * @ORM\Column(type="json_array", nullable=true)
      */
     protected $flow;
