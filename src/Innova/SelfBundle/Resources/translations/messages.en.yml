@@ -83,14 +83,14 @@ registration:
   password: Password
   password_confirmation: 'Password confirmation'
   pathway: Major
-  pathway_question: 'In the language being tested, are you a student  at... ( LANSAD / LLCE / LEA / UJF / Other)'
+  pathway_question: 'In the language being tested, are you a student  at... ( LANSAD / LLCE / LEA / UJF / Other)'
   dialang: Dialang
-  last_lansad: 'What is the level of the last LANSAD course you successfully completed ?'
+  last_lansad: 'What is the level of the last LANSAD course you successfully completed ?'
   CO_level: 'Level obtained in oral comprehension'
   CE_level: 'Level obtained in written comprehension'
   EE_level: 'Level obtained in written expression'
   next_step: 'Next step'
-  test_dialang: 'Have you already taken a Dialang test ?'
+  test_dialang: 'Have you already taken a Dialang test ?'
   forgotten_paswd: 'Forgotten password'
   institution: University
   course: 'Degree prepared'
@@ -169,7 +169,7 @@ editor:
     add_existing: 'Add an existing task'
     save_order: 'Save order of tasks'
     delete: 'Delete a task'
-    delete_confirm: 'Are you sure you want to delete this task from this test ?'
+    delete_confirm: 'Are you sure you want to delete this task from this test ?'
     delete_confirm_yes: 'Yes, delete the task'
     delete_confirm_no: 'No, do not delete the task.'
     unnamed: 'Unnamed task'
