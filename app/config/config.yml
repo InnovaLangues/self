@@ -138,11 +138,11 @@ snc_redis:
         cache:
             type: predis
             alias: cache
-            dsn: redis://%redis_host%/1
+            dsn: redis://%redis_host%/%redis_database_cache%
         session:
             type: predis
             alias: session
-            dsn: redis://%redis_host%/2
+            dsn: redis://%redis_host%/%redis_database_session%
     session:
         client: session
         ttl: 3600
