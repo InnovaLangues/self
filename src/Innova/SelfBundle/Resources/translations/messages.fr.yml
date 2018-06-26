@@ -277,7 +277,7 @@ editor:
             label: Lien avec le référentiel
             placeholder: Noter les éléments en langue cible permettant de caractériser le niveau de la tâche selon le référentiel choisi. Préciser en français le thème et ajouter si nécessaire une phrase de synthèse.
         authorRight:
-            label: Status du droit d'auteur
+            label: Droits d'auteur
             authorized: Autorisés
             to_ask: A demander
             not_needed: Non requis
@@ -287,7 +287,7 @@ editor:
         register: Registre de langue
         variety:
             label: Variété de la langue
-            placeholder: À préciser selon la langue.
+            placeholder: "À préciser selon la langue (ex: anglais britannique standard)."
         reception: Type de réception
         length: Durée / Longueur
         flow: Débit(s)
@@ -296,7 +296,7 @@ editor:
         level: Niveau
         createdby: Tâche créée par
         revisedby: et modifiée par
-        skill: Compétence
+        skill: Habileté
         theme: Titre
         fixedOrder: Ordre fixe
         authorMore: Auteur(s) de la tâche
@@ -316,7 +316,7 @@ editor:
         createdBySelf: Création SELF
         freeLicence: Licence libre
         authorizationRequestedAt: Date de la demande d'autorisation
-        authorizationGrantedAt: Date de l'obtention des droits
+        authorizationGrantedAt: Date d'obtention des droits
         sourceUrl: Lien vers la ressource
         sourceStorage: Lieu de stockage
         sourceContacts: Contact(s)
@@ -400,7 +400,7 @@ editor:
         lasttracedate: Date de la dernière trace
         createdate: Date de création
         usercount: Nombre de passations
-        select_session_to_export: Selection d'une session à exporter
+        select_session_to_export: Sélection d'une session à exporter
         export_modal:
           title: Export de la session - Sélection d'un intervalle
           info: Définissez un intervalle de temps pour votre export CSV. Les dates sont au format <strong>AAAA-MM-JJ HH:MM:SS</strong>.
@@ -474,10 +474,10 @@ reception:
 length:
   audio_short: 'CO : écoute brève (<20 sec)'
   audio_medium: 'CO : écoute moyenne'
-  audio_long: 'CO : écoute longue (<41 sec)'
+  audio_long: 'CO : écoute longue (>41 sec)'
   text_short: 'CE/EEC : text bref (<40 mots)'
   text_medium: 'CE/EEC : text moyen'
-  text_long: 'CE/EEC : text long (<90 mots)'
+  text_long: 'CE/EEC : text long (>90 mots)'
 
 flow:
     slow: Lent

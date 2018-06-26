@@ -386,7 +386,7 @@ editor:
     lasttracedate: 'Date of last trace trace'
     createdate: 'Created on (date)'
     usercount: 'Number of test takers'
-    select_session_to_export: Select a ession to export
+    select_session_to_export: Select a session to export
     export_modal:
       title: Session export - Interval selection
       info: Define a time interval for your CSV export. Those dates are formated as <strong>AAAA-MM-JJ HH:MM:SS</strong>.

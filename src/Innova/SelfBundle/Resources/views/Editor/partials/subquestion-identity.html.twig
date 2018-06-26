@@ -22,17 +22,18 @@
 
     <div class="form-group">
         {{ form_label(form.redundancy) }}
+        <p><i>(linguistique, langagière, et/ou visuelle)</i></p>
         {{ form_widget(form.redundancy) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.discriminationIndex) }}
-        {{ form_widget(form.discriminationIndex) }}
     </div>
 
     <div class="form-group">
         {{ form_label(form.difficultyIndex) }}
         {{ form_widget(form.difficultyIndex) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.discriminationIndex) }}
+        {{ form_widget(form.discriminationIndex) }}
     </div>
 
     {{ form_rest(form) }}

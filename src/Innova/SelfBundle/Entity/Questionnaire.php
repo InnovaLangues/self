@@ -1249,7 +1249,7 @@ class Questionnaire
     }
 
     /**
-     * @param AuthorRight $authorRightMore
+     * @param string $authorRightMore
      *
      * @return Questionnaire
      */
@@ -1263,7 +1263,7 @@ class Questionnaire
      */
     public function getAuthorRight()
     {
-        return $this->authorRight;
+        return empty($this->authorRight) ? self::AUTHOR_RIGHT_TO_ASK : $this->authorRight;
     }
 
     /**
