@@ -1171,8 +1171,6 @@ function subquestionIdentityModal(subquestionId){
         var valueGroupCOCEVisibility = !(skill == 3);
         var valueGroupEECVisibility = !valueGroupCOCEVisibility;
 
-        console.log(skill, valueGroupCOCEVisibility, valueGroupEECVisibility);
-
         $goalsField.find('option').each(function () {
             if ($.inArray($(this).val(), valueGroupCOCE) !== -1) {
                 if (valueGroupCOCEVisibility) {
@@ -1219,8 +1217,10 @@ $(function(){
     function syncAuthorRightChoice (choice) {
         var $fieldCreatedBySelf = $("input[name='questionnaire[createdBySelf]']").closest('div').hide();
         var $fieldFreeLicence = $("input[name='questionnaire[freeLicence]']").closest('div').hide();
-        var $fieldAuthorizationReq = $("input[name='questionnaire[authorizationRequestedAt]']").closest('div').hide();
-        var $fieldAuthorizationGra = $("input[name='questionnaire[authorizationGrantedAt]']").closest('div').hide();
+        // var $fieldAuthorizationReq = $("input[name='questionnaire[authorizationRequestedAt]']").closest('div').hide();
+        // var $fieldAuthorizationGra = $("input[name='questionnaire[authorizationGrantedAt]']").closest('div').hide();
+        var $fieldAuthorizationReq = $("#questionnaire_authorizationRequestedAt").parent('div').hide();
+        var $fieldAuthorizationGra = $("#questionnaire_authorizationGrantedAt").parent('div').hide();
         var $fieldUrl = $("textarea[name='questionnaire[sourceUrl]']").closest('div').hide();
         var $fieldStorage = $("textarea[name='questionnaire[sourceStorage]']").closest('div').hide();
         var $fieldContacts = $("textarea[name='questionnaire[sourceContacts]']").closest('div').hide();

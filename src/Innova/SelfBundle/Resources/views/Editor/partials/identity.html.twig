@@ -23,38 +23,92 @@
             <div class="row">
                 <form id="questionnaire-identity">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            {{ form_label(form.status) }}
-                            {{ form_widget(form.status) }}
-                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.status) }}
+                                    {{ form_widget(form.status) }}
+                                </div>
 
-                        <div class="form-group">
-                            {{ form_label(form.levelProof) }}
-                            {{ form_widget(form.levelProof) }}
-                        </div>
+                                <div class="form-group">
+                                    {{ form_label(form.levelProof) }}
+                                    {{ form_widget(form.levelProof) }}
+                                </div>
 
-                        <div class="form-group">
-                            {{ form_label(form.authorMore) }}
-                            {{ form_widget(form.authorMore) }}
-                        </div>
+                                <div class="form-group">
+                                    {{ form_label(form.authorMore) }}
+                                    {{ form_widget(form.authorMore) }}
+                                </div>
 
-                        <div class="form-group">
-                            {{ form_label(form.authorRight) }}
+                                <div class="form-group">
+                                    {{ form_label(form.authorRight) }}
 
-                            <div>
-                                {% for field in form.authorRight %}
-                                    <label class="radio-inline">
-                                        {{ form_widget(field) }} {{ field.vars.label|trans }}
-                                    </label>
-                                {% endfor %}
+                                    <div>
+                                        {% for field in form.authorRight %}
+                                            <label class="radio-inline">
+                                                {{ form_widget(field) }} {{ field.vars.label|trans }}
+                                            </label>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="panel panel-default ">
+                                    <div class="panel-heading" data-toggle="collapse" href="#identity-source">
+                                        {{ 'editor.identity.source'|trans }}
+                                        <span class="glyphicon glyphicon-chevron-up pull-right"></span>
+                                        <span class="glyphicon glyphicon-chevron-down pull-right"></span>
+                                    </div>
+                                    <div id="identity-source" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.createdBySelf) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(form.authorizationRequestedAt) }}
+                                                        {{ form_widget(form.authorizationRequestedAt) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(form.sourceUrl) }}
+                                                        {{ form_widget(form.sourceUrl) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(form.sourceStorage) }}
+                                                        {{ form_widget(form.sourceStorage) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        {{ form_widget(form.freeLicence) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(form.authorizationGrantedAt) }}
+                                                        {{ form_widget(form.authorizationGrantedAt) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(form.sourceContacts) }}
+                                                        {{ form_widget(form.sourceContacts) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div> <!-- col-md-6-->
+                    </div>
 
                     <div class="col-md-6">
                             <div class="panel panel-default ">
-                                <div class="panel-heading" data-toggle="collapse" href="#identity-misc">{{ 'editor.questionnaire.question_object'|trans }}</div>
-                                <div id="identity-misc" class="panel-collapse">
+                                <div class="panel-heading" data-toggle="collapse" href="#identity-misc">
+                                    {{ 'editor.questionnaire.question_object'|trans }}
+                                    <span class="glyphicon glyphicon-chevron-up pull-right"></span>
+                                    <span class="glyphicon glyphicon-chevron-down pull-right"></span>
+                                </div>
+                                <div id="identity-misc" class="panel-collapse collapse in">
                                     <div class="panel-body">
                                         <div class="form-group">
                                             {{ form_label(form.sourceTypes) }}
@@ -109,48 +163,6 @@
                                     </div>
                                 </div>
                             </div>
-                    </div><!-- col md 6 -->
-
-                    <div class="col-md-12">
-                        <div class="panel panel-default ">
-                            <div class="panel-heading" data-toggle="collapse" href="#identity-source">{{ 'editor.identity.source'|trans }}</div>
-                            <div id="identity-source" class="panel-collapse">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                {{ form_widget(form.createdBySelf) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ form_label(form.authorizationRequestedAt) }}
-                                                {{ form_widget(form.authorizationRequestedAt) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ form_label(form.sourceUrl) }}
-                                                {{ form_widget(form.sourceUrl) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ form_label(form.sourceStorage) }}
-                                                {{ form_widget(form.sourceStorage) }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                {{ form_widget(form.freeLicence) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ form_label(form.authorizationGrantedAt) }}
-                                                {{ form_widget(form.authorizationGrantedAt) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ form_label(form.sourceContacts) }}
-                                                {{ form_widget(form.sourceContacts) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col-md-12">

@@ -218,17 +218,19 @@ class QuestionnaireType extends AbstractType
 
         $builder->add('authorizationRequestedAt', 'date', [
             'label' => 'editor.identity.authorizationRequestedAt',
-            'widget' => 'single_text',
+//            'widget' => 'single_text',
+            'widget' => 'choice',
             'attr' => [
-                'class' => 'form-control',
+//                'class' => 'form-control',
             ],
         ]);
 
         $builder->add('authorizationGrantedAt', 'date', [
             'label' => 'editor.identity.authorizationGrantedAt',
-            'widget' => 'single_text',
+//            'widget' => 'single_text',
+            'widget' => 'choice',
             'attr' => [
-                'class' => 'form-control',
+//                'class' => 'form-control',
             ],
         ]);
 

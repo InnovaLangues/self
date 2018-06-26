@@ -55,3 +55,27 @@ input[type=text] {
 .media-listening-limit{
 	max-width: 50px;
 }
+
+/**********************************
+	panel
+***********************************/
+
+.panel-heading {
+	cursor: pointer;
+}
+
+.panel .glyphicon-chevron-up {
+	display: none;
+}
+
+.panel .collapsed .glyphicon-chevron-up {
+	display: inline;
+}
+
+.panel .glyphicon-chevron-down {
+	display: inline;
+}
+
+.panel .collapsed .glyphicon-chevron-down {
+	display: none;
+}

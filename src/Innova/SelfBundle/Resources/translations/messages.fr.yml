@@ -315,7 +315,7 @@ editor:
             placeholder: Reporter ici l’intitulé du contexte qui apparaît dans l’éditeur en français.
         createdBySelf: Création SELF
         freeLicence: Licence libre
-        authorizationRequestedAt: Date de la demande d'autorisation
+        authorizationRequestedAt: Date de demande d'autorisation
         authorizationGrantedAt: Date d'obtention des droits
         sourceUrl: Lien vers la ressource
         sourceStorage: Lieu de stockage
