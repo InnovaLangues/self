@@ -80,14 +80,22 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findLightBySession($session)
+    public function findLightBySession($session, \DateTime $createdAfter = null)
     {
         $dql = "SELECT DISTINCT u.id FROM Innova\SelfBundle\Entity\User u
         LEFT JOIN u.traces ut
+        LEFT JOIN ut.session s
         WHERE ut.session = :session";
 
+        $parameters = ['session' => $session];
+
+        if ($createdAfter !== null) {
+            $dql .= ' AND s.createDate > :createdAfter';
+            $parameters['createdAfter'] = $createdAfter;
+        }
+
         $query = $this->_em->createQuery($dql)
-                ->setParameter('session', $session);
+                ->setParameters($parameters);
 
         return $query->getResult();
     }

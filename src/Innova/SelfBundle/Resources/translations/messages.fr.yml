@@ -400,6 +400,7 @@ editor:
         lasttracedate: Date de la dernière trace
         createdate: Date de création
         usercount: Nombre de passations
+        usercount_today: Nombre de passations aujourd'hui
         select_session_to_export: Sélection d'une session à exporter
         export_modal:
           title: Export de la session - Sélection d'un intervalle

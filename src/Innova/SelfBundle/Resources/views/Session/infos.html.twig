@@ -36,13 +36,19 @@
         </td>
     </tr>
     <tr>
+        <td>{{ 'editor.session.usercount_today' | trans }}</td>
+        <td>
+            {{ todayUsers|length }}
+        </td>
+    </tr>
+    <tr>
         <td>{{ 'editor.session.lasttracedate' | trans }}</td>
         <td>
             {{ lastTrace ? lastTrace.date|date('d-m-Y H:i:s') : "-" }}
         </td>
     </tr>
     <tr>
-        <td>{{ 'editor.session.passwd' | trans }}</td>
+        <td>{{ 'editor.session.code' | trans }}</td>
         <td>
             {{ session.passwd }}
         </td>

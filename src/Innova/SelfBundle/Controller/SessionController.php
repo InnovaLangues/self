@@ -251,9 +251,15 @@ class SessionController extends Controller
     public function displayInfos(Session $session)
     {
         $users = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findLightBySession($session);
+        $todayUsers = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findLightBySession($session, new \DateTime('midnight'));
         $lastTrace = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Trace')->getLastBySession($session);
 
-        return array('session' => $session, 'users' => $users, 'lastTrace' => $lastTrace);
+        return [
+            'session' => $session,
+            'users' => $users,
+            'todayUsers' => $todayUsers,
+            'lastTrace' => $lastTrace
+        ];
     }
 
     /**
