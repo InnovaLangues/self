@@ -90,7 +90,7 @@ class UserRepository extends EntityRepository
         $parameters = ['session' => $session];
 
         if ($createdAfter !== null) {
-            $dql .= ' AND s.createDate > :createdAfter';
+            $dql .= ' AND ut.date > :createdAfter';
             $parameters['createdAfter'] = $createdAfter;
         }
 
