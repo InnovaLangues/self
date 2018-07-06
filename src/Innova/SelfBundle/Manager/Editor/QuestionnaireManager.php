@@ -285,7 +285,6 @@ class QuestionnaireManager
         $newTask->setReadability($task->getReadability());
         $newTask->setTextType($task->getTextType());
         $newTask->setContext($task->getContext());
-        $newTask->setTextLength($task->getTextLength());
         $newTask->setSpeakers($task->getSpeakers());
         $newTask->setCreatedBySelf($task->isCreatedBySelf());
         $newTask->setFreeLicence($task->isFreeLicence());
