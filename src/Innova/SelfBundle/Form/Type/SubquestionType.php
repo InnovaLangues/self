@@ -28,10 +28,11 @@ class SubquestionType extends AbstractType
                 return $choice;
             },
             'attr' => [
-                'class' => 'form-control',
-                'size' => count(Subquestion::getFocusesValues())
+//                'class' => 'form-control',
+//                'size' => count(Subquestion::getFocusesValues())
             ],
             'multiple' => true,
+            'expanded' => true,
             'label' => 'editor.subquestion.focuses.label',
             'required' => false,
         ));
@@ -45,10 +46,11 @@ class SubquestionType extends AbstractType
                 return $choice;
             },
             'attr' => [
-                'class' => 'form-control',
-                'size' => count(Subquestion::getGoalsValues())
+//                'class' => 'form-control',
+//                'size' => count(Subquestion::getGoalsValues())
             ],
             'multiple' => true,
+            'expanded' => true,
             'label' => 'editor.subquestion.goals.label',
             'required' => false,
         ]);
@@ -64,6 +66,15 @@ class SubquestionType extends AbstractType
             'attr' => ['class' => 'form-control'],
             'label' => 'editor.subquestion.redundancy.label',
             'required' => true
+        ]);
+
+        $builder->add('redundancyComment', 'textarea', [
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.comment'
+            ],
+            'label' => false,
+            'required' => false
         ]);
 
         $builder->add('difficultyIndex', 'text', array(

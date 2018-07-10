@@ -101,10 +101,9 @@ class Subquestion
     const GOAL_UNDERSTAND_GEN = 'understand_gen';
     const GOAL_UNDERSTAND_SPEC = 'understand_spec';
     const GOAL_INFER_SPEC = 'infer_spec';
-    const GOAL_ORAL_INTER = 'oral_inter';
+    const GOAL_INTERACT = 'interact';
     const GOAL_PROD_STATMNT = 'prod_statmnt';
     const GOAL_REPHRASE_MSG = 'rephrase_msg';
-    const GOAL_WRITE_INTER = 'write_inter';
     const GOAL_FIX_STATMNT = 'fix_statmnt';
 
     /**
@@ -136,6 +135,13 @@ class Subquestion
 
     const REDUNDANCY_PRESENT = 'present';
     const REDUNDANCY_ABSENT = 'absent';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $redundancyComment;
 
     /**
      * Constructor.
@@ -515,6 +521,22 @@ class Subquestion
     }
 
     /**
+     * @return string
+     */
+    public function getRedundancyComment()
+    {
+        return $this->redundancyComment;
+    }
+
+    /**
+     * @param string $redundancyComment
+     */
+    public function setRedundancyComment($redundancyComment)
+    {
+        $this->redundancyComment = $redundancyComment;
+    }
+
+    /**
      * @return array
      */
     public function getGoals()
@@ -536,10 +558,9 @@ class Subquestion
             self::GOAL_UNDERSTAND_GEN,
             self::GOAL_UNDERSTAND_SPEC,
             self::GOAL_INFER_SPEC,
-            self::GOAL_ORAL_INTER,
+            self::GOAL_INTERACT,
             self::GOAL_PROD_STATMNT,
             self::GOAL_REPHRASE_MSG,
-            self::GOAL_WRITE_INTER,
             self::GOAL_FIX_STATMNT
         ];
     }

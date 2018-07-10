@@ -1216,20 +1216,17 @@ function postForm(form){
 $(function(){
     function syncAuthorRightChoice (choice) {
         var $fieldCreatedBySelf = $("input[name='questionnaire[createdBySelf]']").closest('div').hide();
-        var $fieldFreeLicence = $("input[name='questionnaire[freeLicence]']").closest('div').hide();
-        // var $fieldAuthorizationReq = $("input[name='questionnaire[authorizationRequestedAt]']").closest('div').hide();
-        // var $fieldAuthorizationGra = $("input[name='questionnaire[authorizationGrantedAt]']").closest('div').hide();
+        var $fieldFreeLicence = $("input[name='questionnaire[freeLicence]']").closest('.form-group').hide();
         var $fieldAuthorizationReq = $("#questionnaire_authorizationRequestedAt").parent('div').hide();
         var $fieldAuthorizationGra = $("#questionnaire_authorizationGrantedAt").parent('div').hide();
         var $fieldUrl = $("textarea[name='questionnaire[sourceUrl]']").closest('div').hide();
         var $fieldStorage = $("textarea[name='questionnaire[sourceStorage]']").closest('div').hide();
         var $fieldContacts = $("textarea[name='questionnaire[sourceContacts]']").closest('div').hide();
 
-        console.log(choice);
-
         if (choice === 'not_needed') {
             $fieldCreatedBySelf.show();
             $fieldFreeLicence.show();
+            $fieldFreeLicenceComment.show();
             $fieldStorage.show();
         }
 

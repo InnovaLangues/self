@@ -242,6 +242,13 @@ class Questionnaire
      *
      * @ORM\Column(type="text", nullable=true)
      */
+    protected $flowComment;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
     protected $readability;
 
     /**
@@ -288,6 +295,13 @@ class Questionnaire
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $freeLicence = false;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $freeLicenceComment;
 
     /**
      * @var \DateTime
@@ -1017,6 +1031,22 @@ class Questionnaire
     }
 
     /**
+     * @return string
+     */
+    public function getFlowComment()
+    {
+        return $this->flowComment;
+    }
+
+    /**
+     * @param string $flowComment
+     */
+    public function setFlowComment($flowComment)
+    {
+        $this->flowComment = $flowComment;
+    }
+
+    /**
      * Set authorMore.
      *
      * @param string $authorMore
@@ -1296,6 +1326,22 @@ class Questionnaire
     public function setFreeLicence($freeLicence)
     {
         $this->freeLicence = $freeLicence;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFreeLicenceComment()
+    {
+        return $this->freeLicenceComment;
+    }
+
+    /**
+     * @param string $freeLicenceComment
+     */
+    public function setFreeLicenceComment($freeLicenceComment)
+    {
+        $this->freeLicenceComment = $freeLicenceComment;
     }
 
     /**

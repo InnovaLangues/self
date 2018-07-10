@@ -1,7 +1,7 @@
-
 anonymous:
+    connexion: Connexion
     first: Première visite ?
-    register: Inscrivez-vous pour accéder aux tests
+    register: Créer un compte
     registration: Inscription
     already_registered: Déjà inscrit ?
     connect: Cliquer sur "Connexion"
@@ -139,6 +139,7 @@ generic:
     filter: Filtre
     player: Voir dans le player
     options: Options
+    choose_option: Choisissez une option
 
 editor:
     test:
@@ -227,12 +228,11 @@ editor:
         goals:
           label: Opération(s) / action(s) induites par l'item
           understand_gen: "CO/CE : comprendre le sens général"
-          understand_spec: "CO/CE : comprendre un ou plusieurs détails(s) explicite(s)"
+          understand_spec: "CO/CE : comprendre un ou plusieurs détail(s) explicite(s)"
           infer_spec: "CO/CE : inférer une ou plusieurs information(s)"
-          oral_inter: "CO/CE : interagir à l'oral"
+          interact: "CO/CE : interagir"
           prod_statmnt: "EEC : produire un énoncé cohérent"
           rephrase_msg: "EEC : reformuler un message"
-          write_inter: "EEC : interagir à l'écrit"
           fix_statmnt: "EEC : corriger un énoncé"
         difficultyIndex: Indice de difficulté (measure)
         discriminationIndex: Indice de discriminiation (PTMA)
@@ -315,9 +315,10 @@ editor:
             placeholder: Reporter ici l’intitulé du contexte qui apparaît dans l’éditeur en français.
         createdBySelf: Création SELF
         freeLicence: Licence libre
+        freeLicenceComment: Préciser le type de licence libre
         authorizationRequestedAt: Date de demande d'autorisation
         authorizationGrantedAt: Date d'obtention des droits
-        sourceUrl: Lien vers la ressource
+        sourceUrl: Source (titre, auteur, lieu de publication)
         sourceStorage: Lieu de stockage
         sourceContacts: Contact(s)
         speakers:
@@ -327,6 +328,7 @@ editor:
             2: 'Discours polygéré : 2'
             3: 'Discours polygéré : 3'
             4: 'Discours polygéré : 4 ou plus'
+        comment: Commentaire
     log:
         editor_create: Création de
         editor_edit: Edition de
@@ -463,7 +465,7 @@ register:
     neutral: Neutre
     sustained: Soutenu
     mixed: Mixte
-    jp_formal: Japonais formal (soutenu)
+    jp_formal: Japonais formel (soutenu)
     jp_impersonal: Japonais impersonnel (écrit/neutre)
     jp_perso_polite: Japonais personnel (poli)
     jp_perso_familiar: Japonais personnel (familier)

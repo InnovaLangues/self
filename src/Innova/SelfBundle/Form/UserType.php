@@ -38,12 +38,12 @@ class UserType extends BaseType
                         return $this->om->getRepository('InnovaSelfBundle:Institution\Institution')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
                     },
                     'required' => true,
-                    'empty_value' => 'Choisissez une option',
+                    'empty_value' => 'generic.choose_option',
                 ))
             ->add('course', 'entity', array(
                     'class' => 'InnovaSelfBundle:Institution\Course',
                     'required' => true,
-                    'empty_value' => 'Choisissez une option',
+                    'empty_value' => 'generic.choose_option',
                     'query_builder' => function () {
                         return $this->om->getRepository('InnovaSelfBundle:Institution\Course')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
                     },
@@ -53,7 +53,7 @@ class UserType extends BaseType
                     'label' => 'registration.subcourse',
                     'class' => 'InnovaSelfBundle:Institution\Subcourse',
                     'required' => true,
-                    'empty_value' => 'Choisissez une option',
+                    'empty_value' => 'generic.choose_option',
                     'query_builder' => function () {
                         return $this->om->getRepository('InnovaSelfBundle:Institution\Subcourse')->createQueryBuilder('i')->orderBy('i.name', 'ASC');
                     },
@@ -65,7 +65,7 @@ class UserType extends BaseType
                     },
                     'property' => 'name',
                     'required' => true,
-                    'empty_value' => 'Choisissez une option',
+                    'empty_value' => 'generic.choose_option',
                 ))
             ->add('motherTongue', 'text', array(
                     'attr' => array('class' => 'form-control'),

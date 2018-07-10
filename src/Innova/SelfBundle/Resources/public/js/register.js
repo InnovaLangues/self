@@ -121,7 +121,8 @@ var userForm = {
          if (userForm.subcourses.val() == "") {
              userForm.resetSubCourse();
          }
-         userForm.courses.html('<option value="">Choisissez une option</option>');
+
+         userForm.courses.html('<option value="">' + Translator.trans('generic.choose_option') + '</option>');
          $.ajax({
              type: 'POST',
              url: Routing.generate('findCoursesByInstitution',{'institutionId': institution}),
@@ -140,7 +141,7 @@ var userForm = {
 
      populateSubcourse: function(course, selectedCourse){
          userForm.subcourses.closest(".form-group").hide();
-         userForm.subcourses.html('<option value="">Choisissez une option</option>');
+         userForm.subcourses.html('<option value="">' + Translator.trans('generic.choose_option') + '</option>');
          $.ajax({
              type: 'POST',
              url: Routing.generate('findSubcoursesByCourse',{'courseId': course}),

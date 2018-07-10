@@ -121,6 +121,15 @@ class QuestionnaireType extends AbstractType
             'required' => false
         ]);
 
+        $builder->add('flowComment', 'textarea', [
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.comment'
+            ],
+            'label' => false,
+            'required' => false
+        ]);
+
         $builder->add('context', 'textarea', [
             'label' => 'editor.identity.context.label',
             'attr' => [
@@ -194,6 +203,7 @@ class QuestionnaireType extends AbstractType
                 3 => 'editor.identity.speakers.3',
                 4 => 'editor.identity.speakers.4',
             ],
+            'preferred_choices' => [1],
             'label' => 'editor.identity.speakers.label',
         ]);
 
@@ -214,6 +224,15 @@ class QuestionnaireType extends AbstractType
                 'class' => 'checkbox-inline'
             ],
             'label' => 'editor.identity.freeLicence',
+        ]);
+
+        $builder->add('freeLicenceComment', 'textarea', [
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'editor.identity.freeLicenceComment'
+            ],
+            'label' => false,
+            'required' => false
         ]);
 
         $builder->add('authorizationRequestedAt', 'date', [

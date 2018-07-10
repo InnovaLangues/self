@@ -1,10 +1,12 @@
 anonymous:
+    connexion: Connessione
     first: Sei un nuovo utente?
-    register: Iscriviti per accedere ai test
+    register: Registrati
     registration: Iscrizione
     already_registered: Sei già iscritto?
     connect: Clicca su Accedi
     connection: Accedi
+    forgotten_pwd: Hai dimenticato la password ?
 
 menu:
     users: Utenti
@@ -63,6 +65,7 @@ registration:
     confirm: Iscrizione avvenuta con successo
 
 test:
+    access_list: Accedi ai test
     available: Test disponibili
     start: Inizia il test
     list: Lista dei test
@@ -94,6 +97,7 @@ generic:
     filter: Filtro
     player: Player
     options: Opzioni
+    choose_option: Scegli un’opzione
 
 editor:
     test:
@@ -564,7 +568,7 @@ help_video: Tutorial
 
 input:
     title: Adattamento della tastiera
-    help_text: Une aide est disponible concernant la saisie dans cette langue (voir la partie "<a data-toggle="modal" href="#helpModal">aide</a>" dans le menu)
+    help_text: Per suggerimenti sulla scrittura in cinese e giapponese, consultare la sezione "<a data-toggle="modal" href="#helpModal">HELP</a>" nel menù.
     japanese: Per il giapponese, leggere questi documenti:
     chinese: Per il cinese, leggere questi documenti:
 

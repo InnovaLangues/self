@@ -1,6 +1,7 @@
 anonymous:
+  connexion: Login
   first: First visit ?
-  register: Register to get access to tests
+  register: Create an account
   registration: Registration
   already_registered: Already Registered ?
   connect: Click on "Login"
@@ -129,6 +130,7 @@ generic:
   filter: Filter
   player: 'See in player'
   options: Options
+  choose_option: Choose an option
 editor:
   test:
     create: 'Create a test'
@@ -677,7 +679,7 @@ canEditorReadOnlyTasks: 'Read-only tasks (no editing)'
 help_video: Tutorial
 input:
   title: Typing
-  help_text: 'Help is available to use a keyboard (see "<a data-toggle="modal" href="#helpModal">aide</a>" in the menu)'
+  help_text: 'Help is available to use a keyboard (see "<a data-toggle="modal" href="#helpModal">help</a>" in the menu)'
   japanese: 'For Japanese, please read the following documents :'
   chinese: 'For Mandarin Chinese, please read the following documents :'
 warning_message_course: 'Your profile is incomplete. Please click on your name in the toolbar to edit your information.'
