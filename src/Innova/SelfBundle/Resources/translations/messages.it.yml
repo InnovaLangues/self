@@ -270,8 +270,8 @@ editor:
 
     session:
         name: Nome della sessione
-        passwd: Codice della sessione
-        invalid_code: Code de session invalide.
+        code: Codice della sessione
+        invalid_code: Codice della sessione non valido.
         active: Attivo
         list: Lista delle sessioni
         create: Creare una nuova sessione
