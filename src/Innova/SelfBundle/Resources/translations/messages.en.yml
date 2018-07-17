@@ -358,7 +358,7 @@ editor:
     export: 'Export results'
     name: 'Session name'
     code: Session code
-    invalid_code: Invalid session code
+    invalid_code: Invalid session code.
     active: Active
     actives: active
     actives_full: Active sessions

@@ -370,7 +370,7 @@ editor:
         export: Exporter
         name: Nom de la session
         code: Code de session
-        invalid_code: Code de session invalide
+        invalid_code: Code de session invalide.
         active: Actif
         actives: active
         actives_full: Sessions actives
