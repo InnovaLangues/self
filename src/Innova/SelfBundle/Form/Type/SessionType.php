@@ -17,7 +17,7 @@ class SessionType extends AbstractType
 
         $builder->add('passwd', 'text', array(
             'attr' => array('class' => 'form-control'),
-            'label'  => 'editor.session.passwd',
+            'label'  => 'editor.session.code',
             'translation_domain' => 'messages',
         ));
 
