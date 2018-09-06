@@ -86,6 +86,11 @@ class ExportManager
         $fs->mkdir($pdfPathExport, 0777);
 
         $traces = $em->getRepository('InnovaSelfBundle:Trace')->findBy(array('user' => $user, 'session' => $session));
+
+        if (empty($traces)) {
+            throw new \Exception("No traces found for session #" . $session->getId() . " and user #" . $user->getId());
+        }
+
         $date = end($traces)->getDate();
 
         $score = $this->scoreManager->calculateScoreByTest($session->getTest(), $session, $user);
