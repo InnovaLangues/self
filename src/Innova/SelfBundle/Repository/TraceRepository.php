@@ -181,13 +181,9 @@ class TraceRepository extends EntityRepository
     }
 
     /**
-     * countTraceByUserByTestByQuestionnaire Count Trace By user/test/questionnaire.
-     *
      * @param id $test
      * @param id $questionnaire
      * @param id $user
-     *
-     * @return int number of traces for the test and the questionnaire and the user
      */
     public function findByUserByTestByQuestionnaire($test, $questionnaire, $user, $component, $session)
     {
