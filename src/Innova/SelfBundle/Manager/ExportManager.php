@@ -99,15 +99,19 @@ class ExportManager
         $ceFeedback = $this->scoreManager->getSkillScore($session, $user, 'CE');
         $eecFeedback = $this->scoreManager->getSkillScore($session, $user, 'EEC');
 
-        $this->knpSnappyPdf->generateFromHtml(
-            $this->templating->render(
-                'InnovaSelfBundle:Export:exportUserPdf.html.twig',
-                array(
-                    'user' => $user, 'score' => $score, 'session' => $session, 'date' => $date,
-                    'levelFeedback' => $levelFeedback, 'coFeedback' => $coFeedback, 'ceFeedback' => $ceFeedback, 'eecFeedback' => $eecFeedback,
-                )),
-            $fileName
+        $html = $this->templating->render(
+            'InnovaSelfBundle:Export:exportUserPdf.html.twig',
+            array(
+                'user' => $user, 'score' => $score, 'session' => $session, 'date' => $date,
+                'levelFeedback' => $levelFeedback, 'coFeedback' => $coFeedback, 'ceFeedback' => $ceFeedback, 'eecFeedback' => $eecFeedback,
+            )
         );
+
+        try {
+            $this->knpSnappyPdf->generateFromHtml($html, $fileName);
+        } catch (\Exception $e) {
+            throw (new \Exception("wkhtml2pdf: $html ### {$e->getMessage()}"));
+        }
 
         $response = $this->generateResponse($fileName);
 
