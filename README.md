@@ -1,50 +1,56 @@
-# Requirements
-php >= 5.4
-
-redis server
-
 # Installation
 
-### clone the project, create needed dir
+The following documentation is for a Linux host.
+
+### Clone the project
 ``` bash
 git clone https://github.com/InnovaLangues/self.git
 cd self
 ```
 
-### create a database & user and fill in the app/config/parameters.yml
+## Step 1 [With docker]
+
+```
+docker-compose up -d
+cp app/config/parameters.yml.dist app/config/parameters.yml
+docker-compose exec web make init
+make permissions
+```
+
+## Step 1 [Without docker]
+
+### Requirements
+
+- http server
+- php >= 7.1
+- mysql/mariadb
+- redis
+
+### Configure the application
+
+In parameters.yml, specify your database name and credentials.
+
 ``` bash
 cp app/config/parameters.yml.dist app/config/parameters.yml
 vi app/config/parameters.yml
 ```
 
-### Download vendors, update schema and assets install
-``` bash
-composer install
-php app/console doctrine:schema:drop --force
-php app/console doctrine:schema:update --force (or php app/console doctrine:migrations:migrate)
-php app/console self:fixtures:load
-php app/console assets:install --symlink -env=prod
-php app/console fos:js-routing:dump
-php app/console bazinga:js-translation:dump
-php app/console assetic:dump --env=prod
-php app/console cache:clear --no-debug --env=prod
-```
+### Initialize the project and set permissions (requires setfacl)
 
-### Create needed dirs and Set up rights
-``` bash
-sudo mkdir -p web/upload/ app/data/export app/data/exportPdf app/data/session app/data/importCsv app/data/user
-sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/data/
-sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx web/upload/ app/cache app/logs app/data/
+```bash
+make init
+make permissions
 ```
 
 ### Download and install wkhtmltox tool  :
+
 Need at least the 0.12.1 release...
 [download from official site](http://wkhtmltopdf.org/downloads.html)
 ``` bash
 sudo dpkg -i wkhtmltox-*_linux-wheezy-amd64.deb
 ```
 
-### Users :
+## Step 2 : Initial data
 Create an user
 ``` bash
 php app/console fos:user:create username
@@ -58,22 +64,18 @@ See online users
 php app/console self:sessions:check
 ```
 
-# Basic update
+# Update
+
+Commands to run before an update on a production environment :
+
 ``` bash
-php app/console lexik:maintenance:lock -n
-git fetch
-git checkout ...
-php app/console doctrine:schema:update --force (or php app/console doctrine:migrations:migrate)
+php app/console doctrine:migrations:migrate
 php app/console self:fixtures:load
 php app/console assets:install --symlink -env=prod
 php app/console fos:js-routing:dump --env=prod
 php app/console bazinga:js-translation:dump
 php app/console assetic:dump --env=prod
 php app/console cache:clear --env=prod --no-debug
-php app/console lexik:maintenance:unlock -n
 ```
 
-### Quality code services
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/InnovaLangues/self/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/InnovaLangues/self/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/128adf45-d4c4-4397-be56-4e1a279f2a38/mini.png)](https://insight.sensiolabs.com/projects/128adf45-d4c4-4397-be56-4e1a279f2a38)
-[![Code Climate](https://codeclimate.com/github/InnovaLangues/self/badges/gpa.svg)](https://codeclimate.com/github/InnovaLangues/self)
+Note : the official self instances of use Ansible for this : https://github.com/InnovaLangues/self-deploy

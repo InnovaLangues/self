@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+    <entity repository-class="Kibatic\CmsBundle\Repository\BlockRepository" name="Kibatic\CmsBundle\Entity\Block" table="cms_block">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="slug" type="string" length="255" unique="true" />
+        <field name="content" type="array" nullable="true" />
+        <field name="type" type="string" length="255" nullable="false" />
+        <field name="createdAt" type="datetime">
+            <gedmo:timestampable on="create"/>
+        </field>
+        <field name="updatedAt" type="datetime">
+            <gedmo:timestampable on="update"/>
+        </field>
+    </entity>
+</doctrine-mapping>

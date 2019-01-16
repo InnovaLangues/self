@@ -1,0 +1,26 @@
+{{ form_start(form) }}
+
+    {#<div class="form-group">#}
+        {#<div class="col-md-12">#}
+            {#{{ form_widget(form.slug) }}#}
+        {#</div>#}
+    {#</div>#}
+
+    {#<div class="form-group">#}
+        {#<div class="col-md-12">#}
+            {#{{ form_widget(form.content) }}#}
+        {#</div>#}
+    {#</div>#}
+
+    {% for field in form %}
+        <div class="form-group">
+            <div class="col-md-12">
+                {{ form_widget(field) }}
+            </div>
+        </div>
+    {% endfor %}
+
+    {#{{ form_rest(form) }}#}
+
+    <input type="submit" id="{{ form.vars.id }}_submit" value="Save" class="btn btn-primary hidden" />
+{{ form_end(form) }}

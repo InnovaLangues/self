@@ -1,0 +1,9 @@
+<form action="{{ url }}" method="POST" class="{% block form_class %}{% endblock %}">
+    <input type="hidden" name="_method" value="{{ method }}" />
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token(intention|default('plop')) }}" />
+    {% block button %}
+        <button type="submit" {% block button_attr %}class="btn btn-default"{% endblock %}>
+            {% block button_content %}ok{% endblock %}
+        </button>
+    {% endblock %}
+</form>

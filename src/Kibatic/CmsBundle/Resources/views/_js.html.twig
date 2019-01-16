@@ -1,0 +1,11 @@
+{% javascripts output='js/cms.js'
+    'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js'
+%}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<script>
+    $(document).ready(function() {
+        $('.wysiwyg').summernote();
+    });
+</script>
