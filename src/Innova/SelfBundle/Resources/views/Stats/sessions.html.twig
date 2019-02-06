@@ -3,8 +3,10 @@
 {% block body -%}
     <h3>
         {{ 'menu.stats' | trans }} - Sessions
-        <a href="#" data-toggle="modal" data-target="#date-modal" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span></a>
-        <a href="#myChart" class="btn btn-default"><span class="glyphicon glyphicon-signal"></span></a>
+
+        <a href="#" data-toggle="modal" data-target="#date-modal" class="btn btn-default">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </a>
     </h3>
 
     <div class="input-group">
@@ -19,36 +21,37 @@
                 <th>{{ 'editor.session.name' | trans }}</th>
                 <th>{{ 'editor.test.name' | trans }}</th>
                 <th>{{ 'editor.test.language' | trans }}</th>
+                <th>{{ 'stats.today_user_count' | trans }}</th>
                 <th>
-                    {{ 'stats.usercount' | trans }}
-                    <a id="toggle_empty_lines" href="#" class="btn btn-default btn-xs" data-click-state=1>
+                    {{ 'stats.user_count' | trans }}
+                    <a id="toggle_empty_lines" href="#" class="btn btn-default btn-xs" data-click-state=1 title="Show empties">
                         <span class="glyphicon glyphicon-eye-open"></span>
                     </a>
                 </th>
             </tr>
         </thead>
         <tbody>
-    		{% for data_session in data_sessions %}
-    			<tr class="chart-data" data-language="{{ data_session.language |trans }}" data-usercount="{{ data_session.usercount }}">
+    		{% for item in stats %}
+    			<tr class="chart-data" data-language="{{ item.language |trans }}" data-usercount="{{ item.userCount }}">
     				<td>
-    					{{ data_session.name }}
+    					{{ item.name }}
     				</td>
                     <td>
-                         <span class="text-muted">{{ data_session.test }}</span>
+                         <span class="text-muted">{{ item.test }}</span>
                     </td>
                     <td>
-                         <span class="text-muted">{{ data_session.language |trans }}</span>
+                         <span class="text-muted">{{ item.language |trans }}</span>
+                    </td>
+                    <td>
+                        {{ item.todayUserCount }}
                     </td>
     				<td>
-                        {{ data_session.usercount }}
+                        {{ item.userCount }}
     				</td>
     			</tr>
     		{% endfor %}
         </tbody>
     </table>
-
-    <hr/>
-    <canvas max-height="300px" width="100%" id="myChart"></canvas>
 
     <div class="modal fade" id="date-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">

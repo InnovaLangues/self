@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Innova\SelfBundle\Entity\Session;
 
 class UserRepository extends EntityRepository
 {
@@ -80,12 +81,14 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findLightBySession($session, \DateTime $createdAfter = null)
+    public function countBySession(Session $session, \DateTime $createdAfter = null): int
     {
-        $dql = "SELECT DISTINCT u.id FROM Innova\SelfBundle\Entity\User u
-        LEFT JOIN u.traces ut
-        LEFT JOIN ut.session s
-        WHERE ut.session = :session";
+        $dql = "
+            SELECT COUNT(DISTINCT u.id) as total FROM Innova\SelfBundle\Entity\User u
+            JOIN u.traces ut
+            JOIN ut.session s
+            WHERE ut.session = :session
+        ";
 
         $parameters = ['session' => $session];
 
@@ -95,9 +98,9 @@ class UserRepository extends EntityRepository
         }
 
         $query = $this->_em->createQuery($dql)
-                ->setParameters($parameters);
+            ->setParameters($parameters);
 
-        return $query->getResult();
+        return (int) $query->getSingleResult()['total'];
     }
 
     public function findBySessionAndDates($session, $startDate, $endDate)

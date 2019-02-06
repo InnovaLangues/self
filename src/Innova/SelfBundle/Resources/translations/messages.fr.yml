@@ -727,7 +727,8 @@ input:
 warning_message_course: Attention, votre profil est incomplet, veuillez cliquer sur votre nom en haut à droite et éditer vos informations. Merci.
 
 stats:
-    usercount: Nombre d'utilisateurs
+    user_count: Passations total
+    today_user_count: Passassions ajd
     filter: Filtrer
     define_interval: Définissez un intervalle de temps.
     date_format: Format de la date:

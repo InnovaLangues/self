@@ -2,6 +2,8 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,23 +37,31 @@ class StatsController extends Controller
      * @Method("GET")
      * @Template("InnovaSelfBundle:Stats:sessions.html.twig")
      */
-    public function sessionsAction($isActive)
+    public function sessionsAction($isActive): array
     {
         $this->get('innova_voter')->isAllowed('right.generalParameters');
 
+        /**
+         * @var Session[] $sessions
+         */
         $sessions = $this->get('self.session.manager')->listSessionByActivity($isActive);
-        $data_sessions = [];
+
+        $em = $this->getDoctrine()->getManager();
+        $userRepository = $em->getRepository(User::class);
+
+        $stats = [];
 
         foreach ($sessions as $session) {
-            $data_sessions[] = [
+            $stats[] = [
                 'name' => $session->getName(),
                 'test' => $session->getTest()->getName(),
                 'language' => $session->getTest()->getLanguage()->getName(),
-                'usercount' => count($this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findLightBySession($session)),
+                'userCount' => $userRepository->countBySession($session),
+                'todayUserCount' => $userRepository->countBySession($session, new \DateTime('midnight'))
             ];
         }
 
-        return array('data_sessions' => $data_sessions);
+        return ['stats' => $stats];
     }
 
     /**

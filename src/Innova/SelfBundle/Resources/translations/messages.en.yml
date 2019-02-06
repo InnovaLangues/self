@@ -684,7 +684,8 @@ input:
   chinese: 'For Mandarin Chinese, please read the following documents :'
 warning_message_course: 'Your profile is incomplete. Please click on your name in the toolbar to edit your information.'
 stats:
-  usercount: 'Number of users'
+  user_count: Total users
+  today_user_count: Users today
   filter: Filter
   define_interval: 'Define a time interval'
   date_format: 'Date format:'
