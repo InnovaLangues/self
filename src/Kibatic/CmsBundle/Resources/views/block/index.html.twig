@@ -1,0 +1,48 @@
+{% extends 'KibaticCmsBundle::layout.html.twig' %}
+
+{% block content %}
+    <div id="cms_blocks">
+        <h1>Blocks</h1>
+
+        <div class="row">
+            <div class="col-md-4">
+                <b>Create a block :</b>
+                {% for blockTypeName in blockTypeNames %}
+                    <a href="{{ path('cms_block_new', {'typeName': blockTypeName}) }}" class="btn btn-default">{{ blockTypeName|capitalize }}</a>
+                {% endfor %}
+            </div>
+            <div class="col-md-2 col-md-offset-6 text-right">
+                <a href="{{ path('cms_block_editModeToggle') }}" class="btn btn-{{ app.session.get('cms_edit_mode') ? 'primary' : 'default' }}">
+                    {% if app.session.get('cms_edit_mode') %}Disable{% else %}Enable{% endif %} live edit mode</a>
+                </a>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Slug</th>
+                    <th>Type</th>
+                    <th>Created at</th>
+                    <th>Updated at</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for block in blocks %}
+                <tr>
+                    <td><a href="{{ path('cms_block_edit', { 'id': block.id }) }}">{{ block.slug }}</a></td>
+                    <td>{{ block.type }}</td>
+                    <td>{{ block.createdAt|date('Y-m-d') }}</td>
+                    <td>{{ block.updatedAt|date('Y-m-d') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% include 'KibaticCmsBundle::_css.html.twig' %}
+{% endblock %}

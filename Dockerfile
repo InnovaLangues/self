@@ -5,6 +5,7 @@ RUN apt-get -qqq update && DEBIAN_FRONTEND=noninteractive apt-get install -qqq -
         wget \
         curl \
         gdebi \
+        git \
         php7.1-curl \
         php7.1-mysql \
         php7.1-apcu \

@@ -1,0 +1,15 @@
+{% if is_granted('ROLE_CMS_ADMIN') %}
+    {% if block is null %}
+        <div style="border:1px solid rgba(255,0,3,0.8);color:#000;padding:5px;background-color: rgba(255,0,3,0.2);">
+            CMS Block <b>"{{ slug }}"</b> does not exist, <a href="{{ path('cms_block_index', {'slug': slug}) }}" target="_blank">create it.</a>
+        </div>
+    {% elseif app.session.get('cms_edit_mode') %}
+        <span style="border:1px solid rgba(0,0,0,.4);padding:5px;position:absolute;background-color: rgba(255,255,255,.8);">
+            <a href="{{ path('cms_block_edit', {'id': block.id}) }}" target="_blank">edit</a>
+        </span>
+    {% endif %}
+{% endif %}
+
+{% if block is not null %}
+    {% include template %}
+{% endif %}

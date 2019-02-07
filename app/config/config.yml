@@ -42,7 +42,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        ["InnovaSelfBundle"]
+    bundles:        ["InnovaSelfBundle", "KibaticCmsBundle"]
     java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -149,3 +149,8 @@ snc_redis:
 
 sentry:
     dsn: %sentry_dsn%
+
+stof_doctrine_extensions:
+  orm:
+    default:
+      timestampable: true

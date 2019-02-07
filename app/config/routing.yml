@@ -30,3 +30,7 @@ _bazinga_jstranslation:
 
 user_context_hash:
     path: /user-context-hash
+
+kibatic_cms:
+    resource: "@KibaticCmsBundle/Resources/config/routing.yml"
+    prefix:   /

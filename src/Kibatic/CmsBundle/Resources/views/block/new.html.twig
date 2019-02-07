@@ -1,0 +1,24 @@
+{% extends 'KibaticCmsBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1>Block creation</h1>
+
+    {% include 'KibaticCmsBundle:block:_form.html.twig' %}
+
+    <div class="btn-group pull-right" role="group">
+        <a href="{{ path('cms_block_index') }}" class="btn btn-default">Back to the list</a>
+        <label class="btn btn-success" for="{{ form.vars.id }}_submit">Add</label>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% include 'KibaticCmsBundle::_css.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'KibaticCmsBundle::_js.html.twig' %}
+{% endblock %}
