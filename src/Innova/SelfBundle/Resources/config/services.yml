@@ -171,3 +171,8 @@ services:
         class: Innova\SelfBundle\Controller\LocaleController
         arguments:
             localeManager:          @self.locale.manager
+
+    key_value_manager:
+        class: Innova\SelfBundle\Manager\KeyValueManager
+        arguments:
+            - @doctrine.orm.entity_manager

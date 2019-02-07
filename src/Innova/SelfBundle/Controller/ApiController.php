@@ -2,6 +2,7 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Innova\SelfBundle\GlobalStats;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -25,12 +26,18 @@ class ApiController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $keyValueManager = $this->get('key_value_manager');
+
+        $highestCcu = $keyValueManager->get(GlobalStats::HIGHEST_CCU);
+        $highestCcuDate = $keyValueManager->get(GlobalStats::HIGHEST_CCU_DATE);
         $authCount = $this->get('self.user.manager')->getAuthCount();
         $registeredCount = $em->getRepository('InnovaSelfBundle:User')->getRegisteredCount();
         $openCount = $em->getRepository('InnovaSelfBundle:Session')->getOpenCount();
 
         $data = array(
             'auth_users' => $authCount,
+            'highest_ccu' => (int) $highestCcu,
+            'highest_ccu_date' => $highestCcuDate,
             'registered_users' => $registeredCount,
             'open_session' => $openCount,
         );
