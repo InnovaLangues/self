@@ -5,13 +5,13 @@
         <h1>Blocks</h1>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <b>Create a block :</b>
                 {% for blockTypeName in blockTypeNames %}
                     <a href="{{ path('cms_block_new', {'typeName': blockTypeName}) }}" class="btn btn-default">{{ blockTypeName|capitalize }}</a>
                 {% endfor %}
             </div>
-            <div class="col-md-2 col-md-offset-6 text-right">
+            <div class="col-md-3 col-md-offset-3 text-right text-right">
                 <a href="{{ path('cms_block_editModeToggle') }}" class="btn btn-{{ app.session.get('cms_edit_mode') ? 'primary' : 'default' }}">
                     {% if app.session.get('cms_edit_mode') %}Disable{% else %}Enable{% endif %} live edit mode</a>
                 </a>

@@ -5,8 +5,15 @@
     <div class="navbar-header">
         <a class="navbar-brand" href="{{ path('show_tests') }}">{{ app_name }}</a>
     </div>
+
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
+            {% if page_title is not empty %}
+                <li class="page-title">
+                    <a href="">{{ page_title }}</a>
+                </li>
+            {% endif %}
+
             {% if logged and admin %}
                 {# USERS #}
                 {% if checkRight("right.listuser") %}

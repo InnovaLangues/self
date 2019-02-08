@@ -34,3 +34,9 @@ user_context_hash:
 kibatic_cms:
     resource: "@KibaticCmsBundle/Resources/config/routing.yml"
     prefix:   /
+
+page_mentions_legales:
+    path: /mentions-legales
+    defaults:
+        _controller: KibaticCmsBundle:Block:show
+        slug: mentions-legales
