@@ -84,8 +84,13 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        /**
+         * @var User $user
+         */
         $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
         $sessionsWithTraces = $em->getRepository('InnovaSelfBundle:Session')->findWithTraces($user);
+
+
 
         return array(
             'sessions' => $sessionsWithTraces,

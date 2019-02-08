@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Innova\SelfBundle\Entity\Language;
+use Innova\SelfBundle\Entity\User;
 
 class QuestionnaireRepository extends EntityRepository
 {
@@ -325,6 +326,17 @@ class QuestionnaireRepository extends EntityRepository
             ->leftJoin('oqt.test', 't')
             ->addSelect('t')
         ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByRevisor(User $revisor): array
+    {
+        $qb = $this->createQueryBuilder('q');
+        $qb
+            ->leftJoin('q.revisors', 'r')
+            ->where('r = :revisor')
+            ->setParameter('revisor', $revisor);
 
         return $qb->getQuery()->getResult();
     }

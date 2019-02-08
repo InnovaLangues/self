@@ -2,6 +2,11 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Manager\Editor\TestManager;
+use Innova\SelfBundle\Repository\TestRepository;
+use Innova\SelfBundle\Voter\Voter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;

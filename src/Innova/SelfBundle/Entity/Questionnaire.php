@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Questionnaire.
+ * Questionnaire
+ *
+ * Aussi appelée Task (tâche)
  *
  * @ORM\Table("questionnaire")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\QuestionnaireRepository")

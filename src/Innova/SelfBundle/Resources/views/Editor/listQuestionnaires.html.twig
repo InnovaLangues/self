@@ -5,17 +5,17 @@
 {% endblock %}
 
 {% block body -%}
-{% if checkRight("right.createtask") %}
-    <a id="create-task" class="btn btn-default btn-sm" data-test-id="0" {% if language is defined %}data-language="{{ language.id }}"{% endif %}>
-        <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
-    </a>
-{% endif %}
-<hr/>
+    {% if checkRight("right.createtask") %}
+        <a id="create-task" class="btn btn-default btn-sm" data-test-id="0" {% if language is defined %}data-language="{{ language.id }}"{% endif %}>
+            <span class="glyphicon glyphicon-plus"></span> {{ 'editor.task.create' | trans }}
+        </a>
+    {% endif %}
 
+    <hr/>
 
-{% if questionnaires|length <1  %}
-    {{ 'editor.task.no_task' | trans }}
-{% else %}
+    {% if questionnaires|length < 1  %}
+        {{ 'editor.task.no_task' | trans }}
+    {% else %}
 
     {% set canEdit = false %}
     {% set canDelete = false %}
@@ -28,9 +28,11 @@
         {% set canDelete = true %}
     {% endif %}
 
-
-    <h3>{{ 'editor.task.list_global' | trans }}
-    {{ app.user.preferedLanguage ? "- "~app.user.preferedLanguage.name|trans }}
+    <h3>
+        {% block page_title_full %}
+            {{ 'editor.task.list_global' | trans }}
+            {{ app.user.preferedLanguage ? "- " ~ app.user.preferedLanguage.name|trans }}
+        {% endblock %}
     </h3>
 
     <div class="input-group">

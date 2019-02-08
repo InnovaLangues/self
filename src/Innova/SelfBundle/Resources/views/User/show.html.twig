@@ -121,7 +121,29 @@
             </tbody>
         </table>
 
+        <h2>Editeur</h2>
+
+        <table class="table">
+            <tr>
+                <th>Tâches créées</th>
+                <td>
+                    <a href="{{ path('editor_questionnaires_by_author', {'id': user.id}) }}">
+                        <b>{{ user.questionnaires|length }}</b>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>Tâches révisées</th>
+                <td>
+                    <a href="{{ path('editor_questionnaires_by_author', {'id': user.id, 'revised': true}) }}">
+                        <b>{{ user.revisedQuestionnaires|length }}</b>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
         <h2>Traces</h2>
+
         <ul class="list-group">
             {% if sessions|length > 0 %}
                 {% for session in sessions %}
