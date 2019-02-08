@@ -1531,37 +1531,6 @@
             "time": "2015-10-10T08:49:21+00:00"
         },
         {
-            "name": "kibatic/cms-bundle",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kibatic/KibaticCmsBundle.git",
-                "reference": "cbb77a796e658dfd46c0bf9c03de346a3343f274"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kibatic/KibaticCmsBundle/zipball/cbb77a796e658dfd46c0bf9c03de346a3343f274",
-                "reference": "cbb77a796e658dfd46c0bf9c03de346a3343f274",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1",
-                "stof/doctrine-extensions-bundle": "^1.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Kibatic\\CmsBundle\\": ""
-                }
-            },
-            "description": "simple block based cms bundle",
-            "support": {
-                "source": "https://github.com/kibatic/KibaticCmsBundle/tree/master",
-                "issues": "https://github.com/kibatic/KibaticCmsBundle/issues"
-            },
-            "time": "2018-11-05T15:43:28+00:00"
-        },
-        {
             "name": "knplabs/knp-snappy",
             "version": "dev-master",
             "source": {
