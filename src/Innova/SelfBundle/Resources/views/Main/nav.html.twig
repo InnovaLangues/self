@@ -3,9 +3,7 @@
 
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="navbar-header">
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="{{ path('show_tests') }}">{{ app_name }}</a></li>
-        </ul>
+        <a class="navbar-brand" href="{{ path('show_tests') }}">{{ app_name }}</a>
     </div>
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
@@ -143,11 +141,12 @@
                     </a>
                 </li>
             {% endif %}
-            <span class="navbar-brand">
-                {% if page_title is not empty %}
-                    {{ page_title }}
-                {% endif %}
-            </span>
+
+            {#<span class="navbar-brand">#}
+                {#{% if page_title is not empty %}#}
+                    {#{{ page_title }}#}
+                {#{% endif %}#}
+            {#</span>#}
         </ul>
 
         {% if logged %}

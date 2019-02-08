@@ -2,16 +2,24 @@
 
 {% block body -%}
 <div class="row">
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">{{ 'editor.session.connexion' | trans }}</div>
-            <div class="panel-body">
-                <p>{{ 'editor.session.helptext' | trans }}</p>
-                <a href="{{ path('session_connect') }}" class="btn btn-default btn-primary">{{ 'editor.session.connect' | trans }}</a>
-            </div>
+    <div class="col-md-12">
+        {#<div class="panel panel-default">#}
+            {#<div class="panel-heading">{{ 'editor.session.connexion' | trans }}</div>#}
+            {#<div class="panel-body">#}
+                {#<p>{{ 'editor.session.helptext' | trans }}</p>#}
+                {#<a href="{{ path('session_connect') }}" class="btn btn-primary">{{ 'editor.session.connect' | trans }}</a>#}
+            {#</div>#}
+        {#</div>#}
+
+        <div class="well text-center">
+            <p>{{ 'editor.session.helptext' | trans }}</p>
+            <a href="{{ path('session_connect') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-th"></span>
+                {{ 'editor.session.connect' | trans }}
+            </a>
         </div>
     </div>
-    <div id="video-help"  class="col-md-8">
+    <div id="video-help"  class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">{{ "help_video" | trans }}</div>
             <div class="panel-body text-center">

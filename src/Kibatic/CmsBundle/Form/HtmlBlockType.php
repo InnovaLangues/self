@@ -2,7 +2,6 @@
 
 namespace Kibatic\CmsBundle\Form;
 
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class HtmlBlockType extends AbstractBlockType implements BlockTypeInterface
@@ -11,8 +10,8 @@ class HtmlBlockType extends AbstractBlockType implements BlockTypeInterface
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('content', TextareaType::class, [
-            'label_render' => false,
+        $builder->add('content', 'textarea', [
+//            'label_render' => false,
             'attr' => [
                 'class' => 'wysiwyg'
             ]

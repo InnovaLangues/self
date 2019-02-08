@@ -11,7 +11,7 @@ class TextBlockType extends AbstractBlockType implements BlockTypeInterface
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('content', new TextareaType(), [
+        $builder->add('content', 'textarea', [
 //            'label_render' => false,
         ]);
     }
