@@ -1,6 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+    <div class="pull-right">
+        <i>Total : {{ grid.paginator.totalItemCount }} utilisateurs</i>
+    </div>
+
     {% include 'InnovaSelfBundle:User:_index_actions.html.twig' %}
 
     {% embed kitpages_data_grid.grid.default_twig with {'grid': grid} %}
