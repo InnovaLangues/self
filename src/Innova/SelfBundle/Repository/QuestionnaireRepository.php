@@ -340,4 +340,28 @@ class QuestionnaireRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function countByRevisor(int $revisorId): int
+    {
+        $qb = $this->createQueryBuilder('q');
+        $qb
+            ->select('COUNT(q.id)')
+            ->leftJoin('q.revisors', 'r')
+            ->where('r = :revisor')
+            ->setParameter('revisor', $revisorId);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countByAuthor(int $authorId): int
+    {
+        $qb = $this->createQueryBuilder('q');
+        $qb
+            ->select('COUNT(q.id)')
+            ->leftJoin('q.author', 'a')
+            ->where('a = :author')
+            ->setParameter('author', $authorId);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

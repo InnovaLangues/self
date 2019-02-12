@@ -17,40 +17,11 @@
             {% if logged and admin %}
                 {# USERS #}
                 {% if checkRight("right.listuser") %}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <li>
+                        <a href="{{ path('admin_user_index') }}">
                             <span class="glyphicon glyphicon-user"></span>
-                            {{ 'menu.users' | trans }} <b class="caret"></b>
+                            {{ 'menu.users' | trans }}
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ path('admin_user', { 'subset': 'last' }) }}">
-                                    {{ 'user.last' | trans }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('admin_user', { 'subset': 'connected' }) }}">
-                                    {{ 'user.connected' | trans }}
-                                </a>
-                            </li>
-                            {% if checkRight("right.generalParameters") %}
-                            <li>
-                                <a href="{{ path('admin_user', { 'subset': 'admins' }) }}">
-                                    {{ 'user.admins' | trans }}
-                                </a>
-                            </li>
-                            {% endif %}
-                            <li>
-                                <form id="user-search" method="POST" action="{{ path('admin_user_search') }}">
-                                    <div style="margin:0 12px;" class="input-group">
-                                        <input type="text" name="search" class="form-control"/>
-                                        <span type="submit" id="user-search-btn" class="input-group-addon" id="basic-addon1">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                        </span>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
                     </li>
                 {% endif %}
 

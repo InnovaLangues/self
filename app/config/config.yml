@@ -154,3 +154,9 @@ stof_doctrine_extensions:
   orm:
     default:
       timestampable: true
+
+kitpages_data_grid:
+    grid:
+        default_twig: KitpagesDataGridBundle:Grid:bootstrap3-grid.html.twig
+    paginator:
+        default_twig: KitpagesDataGridBundle:Paginator:bootstrap3-paginator.html.twig

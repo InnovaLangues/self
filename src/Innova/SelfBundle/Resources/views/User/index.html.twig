@@ -1,69 +1,82 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    {% if checkRight("right.createuser") %}
-        <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
-            <span class="glyphicon glyphicon-plus"></span>
-            {{ 'user.create' | trans }}
-        </a>
-    {% endif %}
+    {% include 'InnovaSelfBundle:User:_index_actions.html.twig' %}
 
-    {% if checkRight("right.listuser") %}
-            <a href="{{ path('admin_user', { 'subset': 'connected' }) }}" class="btn btn-sm btn-default">
-                Voir les utilisateurs connectés
-            </a>
+    {% embed kitpages_data_grid.grid.default_twig with {'grid': grid} %}
+        {% block kit_grid_filter %}
 
-            <a href="{{ path('admin_user', { 'subset': 'last' }) }}" class="btn btn-sm btn-default">
-                Voir les 1000 derniers inscrits
-            </a>
-    {% endif %}
+            <div class="panel panel-default">
+                <div class="panel-body filters">
+                    <div class="kit-grid-filter" id="user-filter">
+                        {% if app.request.get(grid.filterFormName) or app.request.get(filterForm.vars.name) %}
+                            <a href="{{ path( grid.requestCurrentRoute, grid.requestCurrentRouteParams ) }}"
+                               id="{{grid.filterFormName}}_reset_button"
+                               class="btn btn-primary pull-right">
+                                <span class="glyphicon glyphicon-ban-circle"></span> Annuler filtres & recherche
+                            </a>
+                        {% endif %}
 
-    <hr/>
+                        <form class="form-inline" action="{{ grid.requestUri }}" id="{{grid.filterFormName}}_form" method="GET">
+                            <div class="form-group">
+                                <input type="text"
+                                       class="form-control"
+                                       id="{{grid.filterFormName}}"
+                                       value="{{ grid.filterValue }}"
+                                       name="{{grid.filterFormName}}"
+                                />
+                            </div>
 
-    <h3>{{ 'user.list' | trans }} ({{ subset|trans }}) - {{ entities |length }} résultat(s)</h3>
+                            <button type="submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span> Rechercher
+                            </button>
+                        </form>
 
-    {% if entities is not empty %}
-    <div class="input-group">
-        <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
-        <input type="text" id="search" class="form-control" value="">
-    </div>
-    <br/>
-    <table class="users-table table table-striped">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Login</th>
-                <th>Email</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ "ROLE_SUPER_ADMIN" in entity.roles ? '<span class="label label-default">Admin</span>'}}</td>
-                <td>{{ entity.username }}</td>
-                <td>{{ entity.email }}</td>
-                <td>{{ entity.firstName ? entity.firstName }} </td>
-                <td>{{ entity.lastName ? entity.lastName }}</td>
-                <td>
-                    <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">
-                        <span class="btn btn-default">
-                            <span class="glyphicon glyphicon-zoom-in"></span>
-                        </span>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
-{% endblock %}
+                        {{ form_start(filterForm, {'attr': {'class': 'kit-grid-filter form-inline'}}) }}
+                            <div class="form-group">
+                                {{ form_label(filterForm.minLastLogin) }} {{ form_widget(filterForm.minLastLogin) }}
+                            </div>
 
+                            <div class="form-group">
+                                <label>
+                                    {{ form_widget(filterForm.onlyAdmin) }} {{ filterForm.onlyAdmin.vars.label }}
+                                </label>
+                            </div>
 
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-user-list.js") }}"></script>
+                            <button type="submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-filter"></span> Filtrer
+                            </button>
+                        {{ form_end(filterForm) }}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block kit_grid_thead_column %}
+            <th></th>
+        {% endblock %}
+        {% block kit_grid_tbody_column %}
+            <td>
+                <a href="{{ path('admin_user_show', { 'id': item['user.id'] }) }}">
+                    <span class="btn btn-default">
+                        <span class="glyphicon glyphicon-zoom-in"></span>
+                    </span>
+                </a>
+            </td>
+        {% endblock %}
+
+        {% block kit_grid_items %}
+            {% if grid.itemList|length > 0 %}
+                {{ parent() }}
+            {% else %}
+                <p class="alert alert-info">
+                    <b>Aucun utilisateurs.</b>
+                    {% if currentRouteParams|length > 0 %}
+                        <br />Essayez de <a href="{{ path('admin_user_index') }}">supprimer vos filtres</a> ?
+                    {% endif %}
+                </p>
+            {% endif %}
+        {% endblock %}
+
+    {% endembed %}
 {% endblock %}

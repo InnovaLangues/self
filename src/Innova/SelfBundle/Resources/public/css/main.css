@@ -50,3 +50,29 @@ label.required:after {
 ul li.page-title {
     font-size: 1.5em;
 }
+
+/* --- User list --- */
+
+/*#user-filter {*/
+    /*margin-bottom: 20px;*/
+/*}*/
+
+#user-filter #kitdg_grid_grid_filter_form {
+    margin-bottom: 10px;
+}
+
+#user-filter #kitdg_grid_grid_filter_form .form-group {
+    width: 50%;
+}
+
+#user-filter #kitdg_grid_grid_filter_form .form-group input {
+    width: 100%;
+}
+
+#user-filter .kit-grid-filter .form-group {
+    margin-right: 10px;
+}
+
+.kit-grid-paginator {
+    float: right;
+}

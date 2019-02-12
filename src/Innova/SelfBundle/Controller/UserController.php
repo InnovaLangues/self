@@ -2,7 +2,13 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Doctrine\ORM\QueryBuilder;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Form\Type\UserFilterType;
+use Kitpages\DataGridBundle\Grid\Field;
+use Kitpages\DataGridBundle\Grid\GridConfig;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -13,40 +19,141 @@ use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
 
 /**
- * User controller.
- *
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  */
 class UserController extends Controller
 {
     /**
-     * Lists users.
-     *
-     * @Route("/admin/users/{subset}", name="admin_user")
+     * @Route("/admin/users", name="admin_user_index")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction($subset)
+    public function indexAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('InnovaSelfBundle:User');
+        $queryBuilder = $repository->createQueryBuilder('user');
+
+        $filterForm = $this->createForm(new UserFilterType(), null, ['method' => 'GET']);
+        $filterForm->handleRequest($request);
+
+        if ($filterForm->isSubmitted()) {
+            $this->addFilters($queryBuilder, $filterForm, [
+                'onlyAdmin' => function (QueryBuilder $qb, bool $onlyAdmin) {
+                    if (!$onlyAdmin) {
+                        return;
+                    }
+
+                    $qb
+                        ->andWhere('user.roles LIKE :role')
+                        ->setParameter('role', '%ADMIN%');
+                },
+                'minLastLogin' => function (QueryBuilder $qb, \DateTime $minLastLogin = null) {
+                    if ($minLastLogin === null) {
+                        return;
+                    }
+
+                    $qb
+                        ->andWhere('user.lastLogin > :minLastLogin')
+                        ->setParameter('minLastLogin', $minLastLogin);
+                }
+            ]);
+        }
+
+        $gridConfig = new GridConfig();
+        $gridConfig
+            ->setQueryBuilder($queryBuilder)
+            ->setCountFieldName('user.id')
+            ->addField(new Field('user.id', [
+                'label' => '#',
+                'sortable' => true
+            ]))
+            ->addField(new Field('user.usernameCanonical', [
+                'label' => 'Login',
+                'filterable' => true
+            ]))
+            ->addField(new Field('user.emailCanonical', [
+                'label' => 'E-mail',
+                'filterable' => true
+            ]))
+            ->addField(new Field('user.firstName', [
+                'label' => 'Prénom',
+                'filterable' => true
+            ]))
+            ->addField(new Field('user.lastName', [
+                'label' => 'Nom',
+                'filterable' => true
+            ]))
+            ->addField(new Field('user.roles', [
+                'label' => 'Admin',
+                'autoEscape' => false,
+                'formatValueCallback' => function ($roles) {
+                    foreach ($roles as $role) {
+                        if (strpos($role, 'SUPER_ADMIN') !== false) {
+                            return '<span class="label label-default">Super Admin</span>';
+                        }
+
+                        if (strpos($role, 'ADMIN') !== false) {
+                            return '<span class="label label-default">Admin</span>';
+                        }
+                    }
+
+                    return '-';
+                }
+            ]))
+            ->addField(new Field('hasCreations', [
+                'label' => 'Concepteur',
+                'formatValueCallback' => function ($value, $row) {
+                    return $this->hasCreations($row['user.id']) ? 'oui' : '-';
+                }
+            ]))
+        ;
+
+        $gridManager = $this->get('kitpages_data_grid.grid_manager');
+        $grid = $gridManager->getGrid($gridConfig, $request);
+
+        return [
+            'grid' => $grid,
+            'filterForm' => $filterForm->createView()
+        ];
+    }
+
+    private function addFilters(QueryBuilder $queryBuilder, Form $form, array $mapping): void
+    {
+        if (!$form->isSubmitted()) {
+            return;
+        }
+
+        foreach ($mapping as $fieldName => $modifier) {
+            $fieldValue = $form->get($fieldName)->getData();
+            $modifier($queryBuilder, $fieldValue);
+        }
+    }
+
+    private function hasCreations(int $userId): bool
+    {
+        $questionnaireRepository = $this->getDoctrine()->getRepository(Questionnaire::class);
+        $created = $questionnaireRepository->countByAuthor($userId);
+        $revised = $questionnaireRepository->countByRevisor($userId);
+
+        return ($created + $revised) > 0;
+    }
+
+    /**
+     * Lists online users
+     *
+     * @Route("/admin/users/online", name="admin_user_index_online")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexOnlineAction(Request $request)
     {
         $this->get('innova_voter')->isAllowed('right.listuser');
 
-        $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
-        switch ($subset) {
-            case 'connected':
-                $users = $this->get('self.user.manager')->getConnected(true);
-                break;
-            case 'last':
-                $users = $userRepo->findBy(array(), array('id' => 'DESC'), $limit = 1000, $offset = null);
-                break;
-            case 'admins':
-                $users = $userRepo->findByRole('ROLE_SUPER_ADMIN');
-                break;
-        }
+        $users = $this->get('self.user.manager')->getConnected(true);
 
         return array(
-            'entities' => $users,
-            'subset' => 'user.'.$subset,
+            'entities' => $users
         );
     }
 
@@ -89,8 +196,6 @@ class UserController extends Controller
          */
         $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
         $sessionsWithTraces = $em->getRepository('InnovaSelfBundle:Session')->findWithTraces($user);
-
-
 
         return array(
             'sessions' => $sessionsWithTraces,
