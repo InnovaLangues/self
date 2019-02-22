@@ -40,10 +40,12 @@ class UserManager
 
     public function deleteUser(User $user)
     {
+        $username = $user->getUsername();
+
         $this->entityManager->remove($user);
         $this->entityManager->flush();
 
-        $this->session->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
+        $this->session->getFlashBag()->set('success', "L'utilisateur <b>$username</b> a bien été supprimé.");
 
         return $this;
     }

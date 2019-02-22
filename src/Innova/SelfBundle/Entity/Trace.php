@@ -49,6 +49,7 @@ class Trace
 
     /**
     * @ORM\ManyToOne(targetEntity="User", inversedBy="traces")
+    * @ORM\JoinColumn(onDelete="CASCADE")
     */
     protected $user;
 

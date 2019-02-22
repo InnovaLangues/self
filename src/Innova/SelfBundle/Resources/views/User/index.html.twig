@@ -1,19 +1,38 @@
 {% extends '::base.html.twig' %}
 
+{% set resultsFiltred = app.request.get(grid.filterFormName) or app.request.get(filterForm.vars.name) %}
+{% set totalUsers = grid.paginator.totalItemCount %}
+
 {% block body -%}
-    <div class="pull-right">
-        <i>Total : {{ grid.paginator.totalItemCount }} utilisateurs</i>
-    </div>
+    <ul id="batch-actions" class="actions pull-right">
+        <li>
+            <div class="btn btn-sm btn-default unselect-all">
+                <span class="glyphicon glyphicon-unchecked"></span>
+                Déselectionner tout
+            </div>
+        </li>
+        <li>
+            <div class="btn btn-sm btn-default select-all hidden">
+                <span class="glyphicon glyphicon-check"></span>
+                Selectionner tout
+            </div>
+        </li>
+        <li>
+            <button class="btn btn-sm btn-default" type="submit" form="{{ userBatchForm.vars.attr.id }}">
+                <span class="glyphicon glyphicon-trash"></span>
+                Supprimer les utilisateurs selectionnés
+            </button>
+        </li>
+    </ul>
 
     {% include 'InnovaSelfBundle:User:_index_actions.html.twig' %}
 
     {% embed kitpages_data_grid.grid.default_twig with {'grid': grid} %}
         {% block kit_grid_filter %}
-
             <div class="panel panel-default">
                 <div class="panel-body filters">
                     <div class="kit-grid-filter" id="user-filter">
-                        {% if app.request.get(grid.filterFormName) or app.request.get(filterForm.vars.name) %}
+                        {% if resultsFiltred %}
                             <a href="{{ path( grid.requestCurrentRoute, grid.requestCurrentRouteParams ) }}"
                                id="{{grid.filterFormName}}_reset_button"
                                class="btn btn-primary pull-right">
@@ -36,15 +55,24 @@
                             </button>
                         </form>
 
+                        <div class="pull-right">
+                            {{ totalUsers }} utilisateurs {% if resultsFiltred %}correspondent{% else %}total{% endif %}.
+                        </div>
+
                         {{ form_start(filterForm, {'attr': {'class': 'kit-grid-filter form-inline'}}) }}
                             <div class="form-group">
-                                {{ form_label(filterForm.minLastLogin) }} {{ form_widget(filterForm.minLastLogin) }}
+                                {{ form_label(filterForm.lastLoginOlderThan) }}
+
+                                <div class='input-group date'>
+                                    {{ form_widget(filterForm.lastLoginOlderThan) }}
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label>
-                                    {{ form_widget(filterForm.onlyAdmin) }} {{ filterForm.onlyAdmin.vars.label }}
-                                </label>
+                                {{ form_widget(filterForm.role) }}
                             </div>
 
                             <button type="submit" class="btn btn-default">
@@ -57,21 +85,73 @@
         {% endblock %}
 
         {% block kit_grid_thead_column %}
-            <th></th>
+            <th>
+                <ul id="batch-actions" class="actions pull-right">
+                    <li>
+                        <div class="btn btn-sm btn-default unselect-all">
+                            <span class="glyphicon glyphicon-unchecked"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn btn-sm btn-default select-all hidden">
+                            <span class="glyphicon glyphicon-check"></span>
+                        </div>
+                    </li>
+                </ul>
+            </th>
         {% endblock %}
         {% block kit_grid_tbody_column %}
             <td>
-                <a href="{{ path('admin_user_show', { 'id': item['user.id'] }) }}">
-                    <span class="btn btn-default">
-                        <span class="glyphicon glyphicon-zoom-in"></span>
-                    </span>
+                <a href="{{ path('admin_user_show', { 'id': item['user.id'] }) }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-eye-open"></span>
                 </a>
+
+                {% set deleteField = userBatchForm.users[item['user.id']] is defined ?
+                    userBatchForm.users[item['user.id']] :
+                    null
+                %}
+
+                <div class="user-selector" {% if deleteField is null %}title="Cet utilisateur ne peut pas être supprimé"{% endif %}>
+
+                    <label>
+                        <span class="glyphicon glyphicon-trash {% if deleteField is null %}disabled{% endif %}"></span>
+
+                        {% if deleteField is not null %}
+                            {{ form_widget(deleteField) }}
+                        {% else %}
+                            <input type="checkbox" disabled />
+                        {% endif %}
+                    </label>
+                </div>
             </td>
+        {% endblock %}
+
+        {% block kit_grid_before_table %}
+            {% embed kitpages_data_grid.paginator.default_twig with {'paginator':grid.paginator} %}
+            {% endembed %}
+
+            {% if totalUsers == 0 %}
+                <p class="alert alert-info">
+                    <b>Aucun utilisateurs.</b>
+                    {% if resultsFiltred %}
+                        <br />Essayez de <a href="{{ path('admin_user_index') }}">supprimer vos filtres</a> ?
+                    {% endif %}
+                </p>
+            {% endif %}
+
+            <div class="users {% if totalUsers == 0 %}hidden{% endif %}">
+                {{ form_start(userBatchForm) }}
+        {% endblock %}
+
+        {% block kit_grid_after_table %}
+                {{ form_end(userBatchForm) }}
+            </div>
         {% endblock %}
 
         {% block kit_grid_items %}
             {% if grid.itemList|length > 0 %}
-                {{ parent() }}
+                    {{ parent() }}
+                </form>
             {% else %}
                 <p class="alert alert-info">
                     <b>Aucun utilisateurs.</b>
@@ -82,5 +162,12 @@
             {% endif %}
         {% endblock %}
 
+        {% block kit_grid_javascript %}{% endblock %}
     {% endembed %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-user-list.js") }}"></script>
 {% endblock %}

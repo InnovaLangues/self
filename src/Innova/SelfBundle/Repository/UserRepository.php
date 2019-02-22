@@ -258,4 +258,12 @@ class UserRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function remove(array $ids)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('DELETE FROM Innova\SelfBundle\Entity\User u WHERE u.id IN (:ids)');
+
+        $query->execute(['ids' => $ids]);
+    }
 }

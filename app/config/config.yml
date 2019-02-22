@@ -160,3 +160,4 @@ kitpages_data_grid:
         default_twig: KitpagesDataGridBundle:Grid:bootstrap3-grid.html.twig
     paginator:
         default_twig: KitpagesDataGridBundle:Paginator:bootstrap3-paginator.html.twig
+        item_count_in_page: 500

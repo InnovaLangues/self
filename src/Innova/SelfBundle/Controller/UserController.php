@@ -2,13 +2,16 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\QueryBuilder;
 use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Form\Type\UserBatchType;
 use Innova\SelfBundle\Form\Type\UserFilterType;
 use Kitpages\DataGridBundle\Grid\Field;
 use Kitpages\DataGridBundle\Grid\GridConfig;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -31,6 +34,8 @@ class UserController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $this->get('session')->set('uri.user_list', $request->getUri());
+
         $repository = $this->getDoctrine()->getRepository('InnovaSelfBundle:User');
         $queryBuilder = $repository->createQueryBuilder('user');
 
@@ -39,23 +44,28 @@ class UserController extends Controller
 
         if ($filterForm->isSubmitted()) {
             $this->addFilters($queryBuilder, $filterForm, [
-                'onlyAdmin' => function (QueryBuilder $qb, bool $onlyAdmin) {
-                    if (!$onlyAdmin) {
-                        return;
+                'role' => function (QueryBuilder $qb, string $role = null) {
+                    switch ($role) {
+                        case UserFilterType::FILTER_ROLE_ADMIN:
+                            $qb
+                                ->andWhere('user.roles LIKE :role')
+                                ->setParameter('role', '%ADMIN%');
+                            break;
+                        case UserFilterType::FILTER_ROLE_NOT_ADMIN:
+                            $qb
+                                ->andWhere('user.roles NOT LIKE :role')
+                                ->setParameter('role', '%ADMIN%');
+                            break;
                     }
-
-                    $qb
-                        ->andWhere('user.roles LIKE :role')
-                        ->setParameter('role', '%ADMIN%');
                 },
-                'minLastLogin' => function (QueryBuilder $qb, \DateTime $minLastLogin = null) {
-                    if ($minLastLogin === null) {
+                'lastLoginOlderThan' => function (QueryBuilder $qb, \DateTime $lastLoginOlderThan = null) {
+                    if ($lastLoginOlderThan === null) {
                         return;
                     }
 
                     $qb
-                        ->andWhere('user.lastLogin > :minLastLogin')
-                        ->setParameter('minLastLogin', $minLastLogin);
+                        ->andWhere('user.lastLogin < :lastLoginOlderThan')
+                        ->setParameter('lastLoginOlderThan', $lastLoginOlderThan);
                 }
             ]);
         }
@@ -63,6 +73,7 @@ class UserController extends Controller
         $gridConfig = new GridConfig();
         $gridConfig
             ->setQueryBuilder($queryBuilder)
+//            ->setPaginatorConfig((new PaginatorConfig())->setItemCountInPage((int) $request->get('itemPerPage', 100)))
             ->setCountFieldName('user.id')
             ->addField(new Field('user.id', [
                 'label' => '#',
@@ -70,7 +81,11 @@ class UserController extends Controller
             ]))
             ->addField(new Field('user.usernameCanonical', [
                 'label' => 'Login',
-                'filterable' => true
+                'filterable' => true,
+                'autoEscape' => false,
+                'formatValueCallback' => function ($usernameCanonical) {
+                    return '<span class="strip">' . $usernameCanonical . '</span>';
+                }
             ]))
             ->addField(new Field('user.emailCanonical', [
                 'label' => 'E-mail',
@@ -112,9 +127,24 @@ class UserController extends Controller
         $gridManager = $this->get('kitpages_data_grid.grid_manager');
         $grid = $gridManager->getGrid($gridConfig, $request);
 
+        $batchUsers = [];
+
+        foreach ($grid->getItemList() as $item) {
+            $canBeDeleted = !$this->hasCreations($item['user.id']) && !$this->isAdmin($item['user.roles']);
+
+            if (!$canBeDeleted) {
+                continue;
+            }
+
+            $batchUsers[$item['user.id']] = true;
+        }
+
+        $userBatchForm = $this->createUserBatchForm($batchUsers);
+
         return [
             'grid' => $grid,
-            'filterForm' => $filterForm->createView()
+            'filterForm' => $filterForm->createView(),
+            'userBatchForm' => $userBatchForm->createView()
         ];
     }
 
@@ -130,13 +160,74 @@ class UserController extends Controller
         }
     }
 
+    private $hasCreationsCache = [];
     private function hasCreations(int $userId): bool
     {
-        $questionnaireRepository = $this->getDoctrine()->getRepository(Questionnaire::class);
-        $created = $questionnaireRepository->countByAuthor($userId);
-        $revised = $questionnaireRepository->countByRevisor($userId);
+        if (!isset($this->hasCreationsCache[$userId])) {
+            $questionnaireRepository = $this->getDoctrine()->getRepository(Questionnaire::class);
+            $created = $questionnaireRepository->countByAuthor($userId);
+            $revised = $questionnaireRepository->countByRevisor($userId);
 
-        return ($created + $revised) > 0;
+            $this->hasCreationsCache[$userId] = ($created + $revised) > 0;
+        }
+
+        return $this->hasCreationsCache[$userId];
+    }
+
+    private function createUserBatchForm(array $users): FormInterface
+    {
+        return $this->createForm(
+            new UserBatchType(),
+            ['users' => $users],
+            ['action' => $this->generateUrl('admin_user_delete_batch')]
+        );
+    }
+
+    private function isAdmin(array $roles): bool
+    {
+        return count(preg_grep('/ADMIN/', $roles)) > 0;
+    }
+
+    /**
+     * @Route("/admin/users/delete-batch", name="admin_user_delete_batch")
+     * @Method("POST")
+     */
+    public function batchDeleteAction(Request $request)
+    {
+        $redirection = $this->get('session')->get('uri.user_list', $this->generateUrl('admin_user_index'));
+        $form = $this->createForm(new UserBatchType());
+        $form->handleRequest($request);
+
+        $userIds = [];
+
+        foreach ($form->get('users') as $userField) {
+            $userIds[] = $userField->getName();
+        }
+
+        $totalUser = count($userIds);
+
+        if ($totalUser === 0) {
+            $this->addFlash('info', "Vous n'avez selectionné aucun utilisateur.");
+            return $this->redirect($redirection);
+        }
+
+        if (!$request->get('confirm', false)) {
+            return $this->render('@InnovaSelf/User/delete_confirm.html.twig', [
+                'totalUser' => $totalUser,
+                'form' => $form->createView()
+            ]);
+        }
+
+        try {
+            $this->getDoctrine()->getRepository('InnovaSelfBundle:User')->remove($userIds);
+            $this->addFlash('success', "Les $totalUser utilisateurs que vous avez selectionné ont été supprimés.");
+        } catch (ForeignKeyConstraintViolationException $e) {
+            throw $e;
+            $this->get('logger')->error($e->getMessage());
+            $this->addFlash('danger', "Un problème technique empêche un ou plusieurs des utilisateurs selectionnés d'être supprimée.");
+        }
+
+        return $this->redirect($redirection);
     }
 
     /**
@@ -251,7 +342,7 @@ class UserController extends Controller
 
         $this->get('self.user.manager')->deleteUser($user);
 
-        return $this->redirect($this->generateUrl('admin_user', array('subset' => 'last')));
+        return $this->redirect($this->generateUrl('admin_user_index', array('subset' => 'last')));
     }
 
     /**

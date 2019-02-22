@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <div class="alert alert-danger">
+        <h1>Attention !</h1>
+        <p>Vous êtes sur le point de supprimer <b>{{ totalUser }} utilisateurs</b>.</p>
+        <p>Êtes vous vraiment certains de vouloir procéder à cette suppression ?</p>
+
+        <div class="text-right">
+            <button type="submit" form="{{ form.vars.attr.id }}" class="btn btn-lg btn-danger">
+                Oui, supprimer {{ totalUser }} utilisateurs
+            </button>
+            <a href="{{ path('admin_user_index') }}" class="btn btn-lg btn-default">
+                Non, on annule tout !
+            </a>
+        </div>
+
+        {{ form(form, {
+            'action': form.vars.action ~ '?confirm=1',
+            'attr': {'class': 'hidden'}
+        }) }}
+    </div>
+{% endblock %}

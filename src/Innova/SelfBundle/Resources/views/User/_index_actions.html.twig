@@ -6,11 +6,13 @@
 {% endif %}
 
 {% if checkRight("right.listuser") %}
-    <a href="{{ path('admin_user_index', { 'subset': 'last' }) }}" class="btn btn-sm btn-default">
+    <a href="{{ path('admin_user_index') }}" class="btn btn-sm btn-default">
+        <span class="glyphicon glyphicon-list-alt"></span>
         Voir tous les utilisateurs
     </a>
 
     <a href="{{ path('admin_user_index_online', { 'subset': 'connected' }) }}" class="btn btn-sm btn-default">
+        <span class="glyphicon glyphicon-fire"></span>
         Voir les utilisateurs connectés
     </a>
 {% endif %}
