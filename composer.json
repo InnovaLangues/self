@@ -33,7 +33,7 @@
         "predis/predis": "^1.0",
         "sentry/sentry-symfony": "1.0.3",
         "stof/doctrine-extensions-bundle": "^1.2",
-        "kitpages/data-grid-bundle": "2.5"
+        "kitpages/data-grid-bundle": "2.7.1"
     },
     "scripts": {
         "post-install-cmd": [

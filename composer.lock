@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6ed15c8188924cb1fbc25baa310550a",
+    "content-hash": "10e9971cc35112808ff64e8a76e59f1e",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1532,17 +1532,17 @@
         },
         {
             "name": "kitpages/data-grid-bundle",
-            "version": "v2.5.0",
+            "version": "v2.7.1",
             "target-dir": "Kitpages/DataGridBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kitpages/KitpagesDataGridBundle.git",
-                "reference": "af9d0c77853f461d1f60be5a863e84f685cd7dfc"
+                "reference": "8b87f472f8df74b9c50f519ab2ba431ea927c015"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kitpages/KitpagesDataGridBundle/zipball/af9d0c77853f461d1f60be5a863e84f685cd7dfc",
-                "reference": "af9d0c77853f461d1f60be5a863e84f685cd7dfc",
+                "url": "https://api.github.com/repos/kitpages/KitpagesDataGridBundle/zipball/8b87f472f8df74b9c50f519ab2ba431ea927c015",
+                "reference": "8b87f472f8df74b9c50f519ab2ba431ea927c015",
                 "shasum": ""
             },
             "require": {
@@ -1551,7 +1551,7 @@
                 "php": ">=5.3.2",
                 "symfony/framework-bundle": "~2.3",
                 "symfony/twig-bundle": "~2.3",
-                "twig/twig": "~1.8"
+                "twig/twig": "~1.23"
             },
             "require-dev": {
                 "beberlei/doctrineextensions": "0.3.0",
@@ -1587,7 +1587,7 @@
                 "paginator",
                 "sort"
             ],
-            "time": "2015-04-03T13:52:14+00:00"
+            "time": "2019-02-25T15:58:18+00:00"
         },
         {
             "name": "knplabs/knp-snappy",
