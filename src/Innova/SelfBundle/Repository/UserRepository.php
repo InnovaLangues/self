@@ -259,6 +259,16 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findByIds(array $ids): array
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.id IN (:ids)')
+            ->setParameter('ids', $ids)
+        ;
+
+        return $qb->getQuery()->getScalarResult();
+    }
+
     public function remove(array $ids)
     {
         $query = $this->getEntityManager()

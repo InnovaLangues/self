@@ -3,8 +3,21 @@
 {% block body -%}
     <div class="alert alert-danger">
         <h1>Attention !</h1>
-        <p>Vous êtes sur le point de supprimer <b>{{ totalUser }} utilisateurs</b>.</p>
+        <p>
+            Vous êtes sur le point de supprimer <b>{{ totalUser }} utilisateurs</b>
+            (<a data-toggle="collapse" href="#users" aria-expanded="false">lister les utilisateurs concerner</a>).
+        </p>
         <p>Êtes vous vraiment certains de vouloir procéder à cette suppression ?</p>
+
+        <div class="collapse" id="users">
+            <div class="well">
+                <ul>
+                    {% for user in users %}
+                        <li>{{ user.u_firstName }} {{ user.u_lastName }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
         <div class="text-right">
             <button type="submit" form="{{ form.vars.attr.id }}" class="btn btn-lg btn-danger">

@@ -212,8 +212,11 @@ class UserController extends Controller
         }
 
         if (!$request->get('confirm', false)) {
+            $users = $this->getDoctrine()->getRepository(User::class)->findByIds($userIds);
+
             return $this->render('@InnovaSelf/User/delete_confirm.html.twig', [
                 'totalUser' => $totalUser,
+                'users' => $users,
                 'form' => $form->createView()
             ]);
         }
