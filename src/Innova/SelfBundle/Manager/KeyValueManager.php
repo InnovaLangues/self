@@ -21,7 +21,7 @@ class KeyValueManager
         $keyValue = $this->repository->findOneByKey($key);
 
         if ($keyValue === null) {
-            return $defaultValue;
+            return new KeyValue($key, $defaultValue);
         }
 
         return $keyValue;
