@@ -36,8 +36,8 @@ class ApiController extends Controller
 
         $data = array(
             'auth_users' => $authCount,
-            'highest_ccu' => (int) $highestCcu,
-            'highest_ccu_date' => $highestCcuDate,
+            'highest_ccu' => (int) $highestCcu->getValue(),
+            'highest_ccu_date' => $highestCcuDate->getValue(),
             'registered_users' => $registeredCount,
             'open_session' => $openCount,
         );
