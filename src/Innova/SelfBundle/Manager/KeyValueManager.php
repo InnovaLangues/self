@@ -16,7 +16,7 @@ class KeyValueManager
         $this->repository = $entityManager->getRepository(KeyValue::class);
     }
 
-    public function get(string $key, $defaultValue = null): ?string
+    public function get(string $key, $defaultValue = null)
     {
         $keyValue = $this->repository->findOneByKey($key);
 
