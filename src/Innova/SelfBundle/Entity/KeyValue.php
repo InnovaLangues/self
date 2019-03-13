@@ -40,12 +40,12 @@ class KeyValue
         $this->value = $value;
     }
 
-    public function getKey(): string
+    public function getKey()
     {
         return $this->key;
     }
 
-    public function getValue(): string
+    public function getValue()
     {
         return $this->value;
     }
