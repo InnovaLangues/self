@@ -34,7 +34,7 @@ class KeyValue
     private $value;
 
 
-    public function __construct(string $key, string $value)
+    public function __construct(string $key, string $value = null)
     {
         $this->key = $key;
         $this->value = $value;
