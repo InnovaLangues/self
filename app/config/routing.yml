@@ -33,7 +33,7 @@ user_context_hash:
 
 kibatic_cms:
     resource: "@KibaticCmsBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /admin
 
 page_mentions_legales:
     path: /mentions-legales
