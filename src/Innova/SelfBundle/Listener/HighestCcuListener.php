@@ -36,7 +36,7 @@ class HighestCcuListener
 
         $highestCcu = $this->keyValueManager->get(GlobalStats::HIGHEST_CCU, 0);
 
-        if ($ccu < (int) $highestCcu) {
+        if ($ccu < (int) $highestCcu->getValue()) {
             return;
         }
 
