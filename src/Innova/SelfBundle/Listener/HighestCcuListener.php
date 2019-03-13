@@ -21,12 +21,12 @@ class HighestCcuListener
         $this->userManager = $userManager;
     }
 
-    public function onInteractiveLogin(InteractiveLoginEvent $event): void
+    public function onInteractiveLogin(InteractiveLoginEvent $event)
     {
         $this->interactiveLogin = true;
     }
 
-    public function onKernelTerminate(): void
+    public function onKernelTerminate()
     {
         if (!$this->interactiveLogin) {
             return;

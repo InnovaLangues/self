@@ -148,7 +148,7 @@ class UserController extends Controller
         ];
     }
 
-    private function addFilters(QueryBuilder $queryBuilder, Form $form, array $mapping): void
+    private function addFilters(QueryBuilder $queryBuilder, Form $form, array $mapping)
     {
         if (!$form->isSubmitted()) {
             return;

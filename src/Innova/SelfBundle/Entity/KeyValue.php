@@ -50,7 +50,7 @@ class KeyValue
         return $this->value;
     }
 
-    public function setValue(string $value): void
+    public function setValue(string $value)
     {
         $this->value = $value;
     }
