@@ -123,6 +123,23 @@ class SessionRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function countActiveWithUserTrace(int $userId): int
+    {
+        $dql = "
+            SELECT COUNT(s) FROM Innova\SelfBundle\Entity\Session s
+            WHERE EXISTS (
+                SELECT t FROM Innova\SelfBundle\Entity\Trace t
+                WHERE t.user = :user
+                AND t.session = s
+            )
+            ORDER BY s.name ASC
+        ";
+
+        $query = $this->_em->createQuery($dql)->setParameter('user', $userId);
+
+        return $query->getSingleScalarResult();
+    }
+
     public function getOpenCount()
     {
         $dql = 'SELECT COUNT(s.id)from Innova\SelfBundle\Entity\Session s

@@ -4,26 +4,28 @@
 {% set totalUsers = grid.paginator.totalItemCount %}
 
 {% block body -%}
-    <ul id="batch-actions" class="actions pull-right">
-        <li>
-            <div class="btn btn-sm btn-default unselect-all">
-                <span class="glyphicon glyphicon-unchecked"></span>
-                Déselectionner tout
-            </div>
-        </li>
-        <li>
-            <div class="btn btn-sm btn-default select-all hidden">
-                <span class="glyphicon glyphicon-check"></span>
-                Selectionner tout
-            </div>
-        </li>
-        <li>
-            <button class="btn btn-sm btn-default" type="submit" form="{{ userBatchForm.vars.attr.id }}">
-                <span class="glyphicon glyphicon-trash"></span>
-                Supprimer les utilisateurs selectionnés
-            </button>
-        </li>
-    </ul>
+    {% if allowedToDelete %}
+        <ul id="batch-actions" class="actions pull-right">
+            <li>
+                <div class="btn btn-sm btn-default unselect-all">
+                    <span class="glyphicon glyphicon-unchecked"></span>
+                    Déselectionner tout
+                </div>
+            </li>
+            <li>
+                <div class="btn btn-sm btn-default select-all hidden">
+                    <span class="glyphicon glyphicon-check"></span>
+                    Selectionner tout
+                </div>
+            </li>
+            <li>
+                <button class="btn btn-sm btn-default" type="submit" form="{{ userBatchForm.vars.attr.id }}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    Supprimer les utilisateurs selectionnés
+                </button>
+            </li>
+        </ul>
+    {% endif %}
 
     {% include 'InnovaSelfBundle:User:_index_actions.html.twig' %}
 
@@ -86,18 +88,20 @@
 
         {% block kit_grid_thead_column %}
             <th>
-                <ul id="batch-actions" class="actions pull-right">
-                    <li>
-                        <div class="btn btn-sm btn-default unselect-all">
-                            <span class="glyphicon glyphicon-unchecked"></span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="btn btn-sm btn-default select-all hidden">
-                            <span class="glyphicon glyphicon-check"></span>
-                        </div>
-                    </li>
-                </ul>
+                {% if allowedToDelete %}
+                    <ul id="batch-actions" class="actions pull-right">
+                        <li>
+                            <div class="btn btn-sm btn-default unselect-all">
+                                <span class="glyphicon glyphicon-unchecked"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="btn btn-sm btn-default select-all hidden">
+                                <span class="glyphicon glyphicon-check"></span>
+                            </div>
+                        </li>
+                    </ul>
+                {% endif %}
             </th>
         {% endblock %}
         {% block kit_grid_tbody_column %}
@@ -106,23 +110,25 @@
                     <span class="glyphicon glyphicon-eye-open"></span>
                 </a>
 
-                {% set deleteField = userBatchForm.users[item['user.id']] is defined ?
-                    userBatchForm.users[item['user.id']] :
-                    null
-                %}
+                {% if allowedToDelete %}
+                    {% set deleteField = userBatchForm.users[item['user.id']] is defined ?
+                        userBatchForm.users[item['user.id']] :
+                        null
+                    %}
 
-                <div class="user-selector" {% if deleteField is null %}title="Cet utilisateur ne peut pas être supprimé"{% endif %}>
+                    <div class="user-selector" {% if deleteField is null %}title="Cet utilisateur ne peut pas être supprimé"{% endif %}>
 
-                    <label>
-                        <span class="glyphicon glyphicon-trash {% if deleteField is null %}disabled{% endif %}"></span>
+                        <label>
+                            <span class="glyphicon glyphicon-trash {% if deleteField is null %}disabled{% endif %}"></span>
 
-                        {% if deleteField is not null %}
-                            {{ form_widget(deleteField) }}
-                        {% else %}
-                            <input type="checkbox" disabled />
-                        {% endif %}
-                    </label>
-                </div>
+                            {% if deleteField is not null %}
+                                {{ form_widget(deleteField) }}
+                            {% else %}
+                                <input type="checkbox" disabled />
+                            {% endif %}
+                        </label>
+                    </div>
+                {% endif %}
             </td>
         {% endblock %}
 

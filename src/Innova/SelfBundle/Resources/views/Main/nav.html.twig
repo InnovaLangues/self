@@ -142,6 +142,8 @@
                             <span class="glyphicon glyphicon-cog"></span> {{ 'menu.generalparams' | trans }}
                         </a>
                     </li>
+                {% endif %}
+                {% if checkRight("right.stats") %}
                     <li>
                         <a href="{{ path('stats') }}">
                             <span class="glyphicon glyphicon-dashboard"></span> {{ 'menu.stats' | trans }}

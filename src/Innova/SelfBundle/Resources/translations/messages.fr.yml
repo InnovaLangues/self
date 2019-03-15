@@ -691,6 +691,8 @@ right:
     message: Envoyer des messages
     deletetracesession: Supprimer les traces des utilisateurs d'une session
     editorreadonlytest: Voir les tâches sans pouvoir les éditer (lecture seule)
+    institution: Institution
+    stats: Consulter les statistiques
 
 rightgroup:
     tasks: Permissions sur les tâches
@@ -730,7 +732,7 @@ warning_message_course: Attention, votre profil est incomplet, veuillez cliquer 
 
 stats:
     user_count: Passations total
-    today_user_count: Passassions ajd
+    today_user_count: Passations auj
     filter: Filtrer
     define_interval: Définissez un intervalle de temps.
     date_format: Format de la date:

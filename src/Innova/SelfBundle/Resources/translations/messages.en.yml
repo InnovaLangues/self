@@ -655,6 +655,8 @@ right:
   message: 'Send messages'
   deletetracesession: 'Delete all user traces by session'
   editorreadonlytest: 'Read-only tasks (no editing)'
+  institution: Institution
+  stats: Can see statistics
 rightgroup:
   tasks: 'Permissions on tasks'
   tests: 'Permissions on tests'

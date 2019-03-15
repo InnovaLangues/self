@@ -10,6 +10,7 @@ use Innova\SelfBundle\Form\Type\UserFilterType;
 use Kitpages\DataGridBundle\Grid\Field;
 use Kitpages\DataGridBundle\Grid\GridConfig;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -38,6 +39,7 @@ class UserController extends Controller
 
         $repository = $this->getDoctrine()->getRepository('InnovaSelfBundle:User');
         $queryBuilder = $repository->createQueryBuilder('user');
+        $queryBuilder->orderBy('user.id', 'DESC');
 
         $filterForm = $this->createForm(new UserFilterType(), null, ['method' => 'GET']);
         $filterForm->handleRequest($request);
@@ -116,10 +118,10 @@ class UserController extends Controller
                     return '-';
                 }
             ]))
-            ->addField(new Field('hasCreations', [
+            ->addField(new Field('isDesigner', [
                 'label' => 'Concepteur',
                 'formatValueCallback' => function ($value, $row) {
-                    return $this->hasCreations($row['user.id']) ? 'oui' : '-';
+                    return $this->isDesigner($row['user.id']) ? 'oui' : '-';
                 }
             ]))
         ;
@@ -130,7 +132,13 @@ class UserController extends Controller
         $batchUsers = [];
 
         foreach ($grid->getItemList() as $item) {
-            $canBeDeleted = !$this->hasCreations($item['user.id']) && !$this->isAdmin($item['user.roles']);
+            $userId = $item['user.id'];
+
+            $canBeDeleted =
+                !$this->isDesigner($userId) && !$this->isAdmin($item['user.roles'])
+                &&
+                !$this->hasTraceOnActiveSession($userId)
+            ;
 
             if (!$canBeDeleted) {
                 continue;
@@ -141,10 +149,18 @@ class UserController extends Controller
 
         $userBatchForm = $this->createUserBatchForm($batchUsers);
 
+        try {
+            $this->get('innova_voter')->isAllowed('right.deleteuser');
+            $allowedToDelete = true;
+        } catch (AccessDeniedException $e) {
+            $allowedToDelete = false;
+        }
+
         return [
             'grid' => $grid,
             'filterForm' => $filterForm->createView(),
-            'userBatchForm' => $userBatchForm->createView()
+            'userBatchForm' => $userBatchForm->createView(),
+            'allowedToDelete' => $allowedToDelete
         ];
     }
 
@@ -160,18 +176,23 @@ class UserController extends Controller
         }
     }
 
-    private $hasCreationsCache = [];
-    private function hasCreations(int $userId): bool
+    private $isDesignerCache = [];
+    private function isDesigner(int $userId): bool
     {
-        if (!isset($this->hasCreationsCache[$userId])) {
+        if (!isset($this->isDesignerCache[$userId])) {
             $questionnaireRepository = $this->getDoctrine()->getRepository(Questionnaire::class);
             $created = $questionnaireRepository->countByAuthor($userId);
             $revised = $questionnaireRepository->countByRevisor($userId);
 
-            $this->hasCreationsCache[$userId] = ($created + $revised) > 0;
+            $this->isDesignerCache[$userId] = ($created + $revised) > 0;
         }
 
-        return $this->hasCreationsCache[$userId];
+        return $this->isDesignerCache[$userId];
+    }
+
+    private function hasTraceOnActiveSession(int $userId): bool
+    {
+        return $this->getDoctrine()->getRepository('InnovaSelfBundle:Session')->countActiveWithUserTrace($userId) > 0;
     }
 
     private function createUserBatchForm(array $users): FormInterface
@@ -194,6 +215,8 @@ class UserController extends Controller
      */
     public function batchDeleteAction(Request $request)
     {
+        $this->get('innova_voter')->isAllowed('right.deleteuser');
+
         $redirection = $this->get('session')->get('uri.user_list', $this->generateUrl('admin_user_index'));
         $form = $this->createForm(new UserBatchType());
         $form->handleRequest($request);

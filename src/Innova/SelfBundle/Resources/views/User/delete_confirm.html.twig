@@ -5,7 +5,7 @@
         <h1>Attention !</h1>
         <p>
             Vous êtes sur le point de supprimer <b>{{ totalUser }} utilisateurs</b>
-            (<a data-toggle="collapse" href="#users" aria-expanded="false">lister les utilisateurs concerner</a>).
+            (<a data-toggle="collapse" href="#users" aria-expanded="false">lister les utilisateurs concernés</a>).
         </p>
         <p>Êtes vous vraiment certains de vouloir procéder à cette suppression ?</p>
 
@@ -23,7 +23,7 @@
             <button type="submit" form="{{ form.vars.attr.id }}" class="btn btn-lg btn-danger">
                 Oui, supprimer {{ totalUser }} utilisateurs
             </button>
-            <a href="{{ path('admin_user_index') }}" class="btn btn-lg btn-default">
+            <a href="javascript: window.history.back();" class="btn btn-lg btn-default">
                 Non, on annule tout !
             </a>
         </div>
