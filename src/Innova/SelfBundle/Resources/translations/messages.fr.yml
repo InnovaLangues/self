@@ -84,6 +84,7 @@ user:
     hasAnyGlobalRight: A des droits globaux
     testsWithRights: Tests avec des droits
     sessionsWithRights: Sessions avec des droits
+    lastLogin: Dernière connexion
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires
@@ -105,6 +106,7 @@ registration:
     year: Année d'étude
     subcourse: Spécialité / Mention
     confirm: Confirmation de l'inscription
+    legal_mentions_link: Consultez les <a href="%url%">mentions légales</a>.
 
 test:
     access_list: Accéder à la liste des tests

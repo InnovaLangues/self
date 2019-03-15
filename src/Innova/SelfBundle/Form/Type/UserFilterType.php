@@ -2,7 +2,6 @@
 
 namespace Innova\SelfBundle\Form\Type;
 
-use http\Env\Response;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;

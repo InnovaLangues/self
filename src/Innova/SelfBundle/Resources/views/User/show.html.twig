@@ -77,6 +77,10 @@
                 <th>{{ 'user.motherTongueOther' | trans }}</th>
                 <td>{{ user.motherTongueOther ? user.motherTongueOther }}</td>
             </tr>
+            <tr>
+                <th>{{ 'user.lastLogin'|trans }}</th>
+                <td>{{ user.lastLogin|date }}</td>
+            </tr>
         </tbody>
     </table>
 
@@ -148,30 +152,35 @@
             {% if sessions|length > 0 %}
                 {% for session in sessions %}
                     <li class="list-group-item">
-                    {% if checkRight("right.individualresultssession", session) %}
-                        <a href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
+                        <span
+                            class="glyphicon glyphicon-record"
+                            style="color: {{ session.actif ? 'green' : 'grey' }}"
+                            title="Session {{ session.actif ? 'active' : 'inactive' }}"></span>
+
+                        {% if checkRight("right.individualresultssession", session) %}
+                            <a href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
+                                {{ session.name }}
+                            </a>
+                        {% else %}
                             {{ session.name }}
-                        </a>
-                    {% else %}
-                        {{ session.name }}
-                    {% endif %}
-                    <span class="text-muted">{{session.test.name}}</span>
-                    <span class="buttons pull-right">
-                        <a class="btn btn-default btn-xs" href="{{ path('get-session-traces', {'sessionId': session.id, 'userId': user.id } )}}">
-                            <span class="glyphicon glyphicon-search"></span>
-                            Détails
-                        </a>
-                        <a class="btn btn-default btn-xs" href="{{ path('editor_session_user_results', {'sessionId': session.id, 'userId': user.id } )}}">
-                            <span class="glyphicon glyphicon-signal"></span>
-                            Afficher les résultats
-                        </a>
-                        {% if checkRight("right.deletetraceuser") %}
-                        <span data-method="DELETE" class="btn btn-danger btn-xs rest" href="{{ path('delete-session-trace', {'sessionId': session.id, 'userId': user.id } )}}">
-                            <span class="glyphicon glyphicon-trash"></span>
-                            Supprimer les traces pour la session
-                        </span>
                         {% endif %}
-                    </span>
+                        <span class="text-muted">{{session.test.name}}</span>
+                        <span class="buttons pull-right">
+                            <a class="btn btn-default btn-xs" href="{{ path('get-session-traces', {'sessionId': session.id, 'userId': user.id } )}}">
+                                <span class="glyphicon glyphicon-search"></span>
+                                Détails
+                            </a>
+                            <a class="btn btn-default btn-xs" href="{{ path('editor_session_user_results', {'sessionId': session.id, 'userId': user.id } )}}">
+                                <span class="glyphicon glyphicon-signal"></span>
+                                Afficher les résultats
+                            </a>
+                            {% if checkRight("right.deletetraceuser") %}
+                            <span data-method="DELETE" class="btn btn-danger btn-xs rest" href="{{ path('delete-session-trace', {'sessionId': session.id, 'userId': user.id } )}}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                Supprimer les traces pour la session
+                            </span>
+                            {% endif %}
+                        </span>
                     </li>
                 {% endfor %}
             {% else %}

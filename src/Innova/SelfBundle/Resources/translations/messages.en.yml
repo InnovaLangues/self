@@ -78,6 +78,7 @@ user:
   hasAnyGlobalRight: 'Has global rights'
   testsWithRights: 'Tests with rights'
   sessionsWithRights: 'Sessions with rights'
+  lastLogin: Last login
 registration:
   warning_required: 'Zones with red asterisk are required'
   username: Login
@@ -98,6 +99,7 @@ registration:
   year: 'Year you are in'
   subcourse: Major
   confirm: 'Confirm registration'
+  legal_mentions_link: Read the <a href="%url%">legal mentions</a>.
 test:
   access_list: Access available tests list
   available: 'Tests available'
