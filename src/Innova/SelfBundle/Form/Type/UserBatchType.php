@@ -13,6 +13,7 @@ class UserBatchType extends AbstractType
     {
         $builder
             ->add('users', 'collection', [
+                'label' => false,
                 'type' => 'checkbox',
                 'allow_add' => true,
                 'allow_delete' => true,

@@ -99,7 +99,7 @@ registration:
   year: 'Year you are in'
   subcourse: Major
   confirm: 'Confirm registration'
-  legal_mentions_link: Read the <a href="%url%">legal mentions</a>.
+  legal_mentions_link: Read the <a href="%url%" target="_blank">legal mentions</a>.
 test:
   access_list: Access available tests list
   available: 'Tests available'

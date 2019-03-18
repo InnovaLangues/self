@@ -106,7 +106,7 @@ registration:
     year: Année d'étude
     subcourse: Spécialité / Mention
     confirm: Confirmation de l'inscription
-    legal_mentions_link: Consultez les <a href="%url%">mentions légales</a>.
+    legal_mentions_link: Consultez les <a href="%url%" target="_blank">mentions légales</a>.
 
 test:
     access_list: Accéder à la liste des tests

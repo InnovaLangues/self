@@ -127,7 +127,8 @@ class SessionRepository extends EntityRepository
     {
         $dql = "
             SELECT COUNT(s) FROM Innova\SelfBundle\Entity\Session s
-            WHERE EXISTS (
+            WHERE s.actif = 1
+            AND EXISTS (
                 SELECT t FROM Innova\SelfBundle\Entity\Trace t
                 WHERE t.user = :user
                 AND t.session = s

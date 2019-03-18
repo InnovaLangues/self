@@ -35,6 +35,7 @@ class UserController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $this->get('innova_voter')->isAllowed('right.listuser');
         $this->get('session')->set('uri.user_list', $request->getUri());
 
         $repository = $this->getDoctrine()->getRepository('InnovaSelfBundle:User');
@@ -129,32 +130,34 @@ class UserController extends Controller
         $gridManager = $this->get('kitpages_data_grid.grid_manager');
         $grid = $gridManager->getGrid($gridConfig, $request);
 
-        $batchUsers = [];
-
-        foreach ($grid->getItemList() as $item) {
-            $userId = $item['user.id'];
-
-            $canBeDeleted =
-                !$this->isDesigner($userId) && !$this->isAdmin($item['user.roles'])
-                &&
-                !$this->hasTraceOnActiveSession($userId)
-            ;
-
-            if (!$canBeDeleted) {
-                continue;
-            }
-
-            $batchUsers[$item['user.id']] = true;
-        }
-
-        $userBatchForm = $this->createUserBatchForm($batchUsers);
-
         try {
             $this->get('innova_voter')->isAllowed('right.deleteuser');
             $allowedToDelete = true;
         } catch (AccessDeniedException $e) {
             $allowedToDelete = false;
         }
+
+        $batchUsers = [];
+
+        if ($allowedToDelete) {
+            foreach ($grid->getItemList() as $item) {
+                $userId = $item['user.id'];
+
+                $canBeDeleted =
+                    !$this->isDesigner($userId) &&
+                    !$this->isAdmin($item['user.roles']) &&
+                    !$this->hasTraceOnActiveSession($userId)
+                ;
+
+                if (!$canBeDeleted) {
+                    continue;
+                }
+
+                $batchUsers[$item['user.id']] = true;
+            }
+        }
+
+        $userBatchForm = $this->createUserBatchForm($batchUsers);
 
         return [
             'grid' => $grid,
