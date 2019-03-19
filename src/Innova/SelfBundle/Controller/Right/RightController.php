@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Right\Right;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * RightController controller.
@@ -31,7 +32,11 @@ class RightController extends Controller
 
         $groups = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Right\RightGroup')->findAll();
 
-        return array('groups' => $groups, 'user' => $user);
+        return [
+            'groups' => $groups,
+            'user' => $user,
+            'canEditRight' => $this->canEditRight($user)
+        ];
     }
 
     /**
@@ -43,11 +48,29 @@ class RightController extends Controller
      */
     public function toggleRightAction(User $user, Right $right)
     {
-        $this->get("innova_voter")->isAllowed("right.editrightsuser");
+        if (!$this->canEditRight($user)) {
+            throw new AccessDeniedHttpException("You are not allowed to edit right for this user.");
+        }
 
         $this->get("self.right.manager")->toggleRight($right, $user);
         $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
 
         return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
+    }
+
+    // TODO : move to a voter
+    private function canEditRight(User $user)
+    {
+        $requiredRole = 'ROLE_SUPER_ADMIN';
+
+        foreach (['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] as $role) {
+            if ($user->hasRole($role) &&
+                !$this->isGranted($requiredRole)
+            ) {
+                return false;
+            }
+        }
+
+        return $this->get("innova_voter")->checkRight("right.editrightsuser");
     }
 }

@@ -8,9 +8,12 @@
 			<div class="panel-heading">
 			<h3 class="panel-title" title="{{ group.name }}">
 				{{ group.name | trans }}
-				<span class="pull-right">
-					<a class="btn btn-default btn-xs" href="{{ path('editor_group_rights_toggle', { 'userId': user.id, 'rightGroupId': group.id }) }}">Cocher/Décocher tout</a>
-				</span>
+
+				{% if canEditRight %}
+					<span class="pull-right">
+						<a class="btn btn-default btn-xs" href="{{ path('editor_group_rights_toggle', { 'userId': user.id, 'rightGroupId': group.id }) }}">Cocher/Décocher tout</a>
+					</span>
+				{% endif %}
 			</h3>
 			</div>
 			<div class="panel-body">
@@ -19,13 +22,17 @@
 				   		<li class="list-group-item" title="{{ right.name }}">
 				   			{{ right.name | trans }}
 				   			<span class="pull-right">
-				   				<a href="{{ path('admin_user_toggle_right', { 'userId': user.id, 'rightId': right.id }) }}">
+								{% if canEditRight %}
+				   					<a href="{{ path('admin_user_toggle_right', { 'userId': user.id, 'rightId': right.id }) }}">
+								{% endif %}
 					   				{% if checkUserRight(user, right.name) %}
 					   					<span class="text-success glyphicon glyphicon-ok"></span>
 					   				{% else %}
 					   				    <span class="text-danger glyphicon glyphicon-remove"></span>
 					   				{% endif %}
-				   				</a>
+								{% if canEditRight %}
+									</a>
+								{% endif %}
 				   			</span>
 				   		</li>
 				{% endfor %}
