@@ -3,10 +3,10 @@
 {% block body -%}
 	<h3>{{ 'user.rights' | trans }} {{ user.username }}</h3>
 
-	{% for group in groups %}
+	{% for group in groups if group.name != 'rightgroup.groups' %} {# As it seems not used, we hide the "rightgroup.groups" group for now #}
 		<div class="panel panel-default">
 			<div class="panel-heading">
-			<h3 class="panel-title">
+			<h3 class="panel-title" title="{{ group.name }}">
 				{{ group.name | trans }}
 				<span class="pull-right">
 					<a class="btn btn-default btn-xs" href="{{ path('editor_group_rights_toggle', { 'userId': user.id, 'rightGroupId': group.id }) }}">Cocher/Décocher tout</a>
@@ -16,7 +16,7 @@
 			<div class="panel-body">
 				<ul class="list-group">
 				{% for right in group.rights %}
-				   		<li class="list-group-item">
+				   		<li class="list-group-item" title="{{ right.name }}">
 				   			{{ right.name | trans }}
 				   			<span class="pull-right">
 				   				<a href="{{ path('admin_user_toggle_right', { 'userId': user.id, 'rightId': right.id }) }}">
