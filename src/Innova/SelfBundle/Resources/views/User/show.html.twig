@@ -19,31 +19,6 @@
         </a>
     {% endif %}
 
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
-        {% if not user.hasRole('ROLE_ADMIN') and not user.hasRole('ROLE_SUPER_ADMIN') %}
-            <a href="{{ path('self_user_grant_role', {'userId': user.id, 'role': 'ROLE_ADMIN', 'token': token}) }}" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-knight"></span>
-                Promouvoir en <b>Admin</b>
-            </a>
-        {% elseif not user.hasRole('ROLE_SUPER_ADMIN') %}
-            <a href="{{ path('self_user_ungrant_role', {'userId': user.id, 'role': 'ROLE_ADMIN', 'token': token}) }}" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-knight"></span>
-                Retirer de <b>Admin</b>
-            </a>
-            <a href="{{ path('self_user_grant_role', {'userId': user.id, 'role': 'ROLE_SUPER_ADMIN', 'token': token}) }}" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-king"></span>
-                Promouvoir en <b>SuperAdmin</b>
-            </a>
-        {% endif %}
-
-        {% if user.hasRole('ROLE_SUPER_ADMIN') %}
-            <a href="{{ path('self_user_ungrant_role', {'userId': user.id, 'role': 'ROLE_SUPER_ADMIN', 'token': token}) }}" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-king"></span>
-                Retirer de <b>SuperAdmin</b>
-            </a>
-        {% endif %}
-    {% endif %}
-
     {% if user != app.user %}
         {% if checkRight("right.deleteuser", user) %}
             <a class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#delete-modal">

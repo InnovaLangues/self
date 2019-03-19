@@ -9,7 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Right\Right;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 /**
  * RightController controller.
@@ -35,7 +38,8 @@ class RightController extends Controller
         return [
             'groups' => $groups,
             'user' => $user,
-            'canEditRight' => $this->canEditRight($user)
+            'canEditRight' => $this->canEditRight($user),
+            'token' => (string) $this->createCsrfToken()
         ];
     }
 
@@ -72,5 +76,65 @@ class RightController extends Controller
         }
 
         return $this->get("innova_voter")->checkRight("right.editrightsuser");
+    }
+
+    /**
+     * @Route("/user/{userId}/grant-role/{role}", name="self_user_grant_role")
+     * @Method("GET")
+     */
+    public function grantRoleAction(Request $request, User $user, $role)
+    {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
+        $this->assertValidCsrfToken($request->get('token'));
+
+        $roles = ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
+
+        if (!\in_array($role, $roles, true)) {
+            throw new BadRequestHttpException();
+        }
+
+        foreach ($roles as $r) {
+            $this->get('fos_user.util.user_manipulator')->removeRole($user->getUsername(), $r);
+        }
+
+        $this->get('fos_user.util.user_manipulator')->addRole($user->getUsername(), $role);
+
+        $this->addFlash('success', 'Opération effectuée.');
+
+        return $this->redirect($request->headers->get('Referer'));
+    }
+
+    /**
+     * @Route("/user/{userId}/ungrant-role/{role}", name="self_user_ungrant_role")
+     * @Method("GET")
+     */
+    public function ungrantRoleAction(Request $request, User $user, $role)
+    {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
+        $this->assertValidCsrfToken($request->get('token'));
+
+        if (!in_array($role, ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->get('fos_user.util.user_manipulator')->removeRole($user->getUsername(), $role);
+
+        $this->addFlash('success', 'Opération effectuée.');
+
+        return $this->redirect($request->headers->get('Referer'));
+    }
+
+    private function createCsrfToken()
+    {
+        return $this->get('security.csrf.token_manager')->getToken('self_user');
+    }
+
+    private function assertValidCsrfToken($token)
+    {
+        if (!$this->isCsrfTokenValid('self_user', $token)) {
+            throw new UnauthorizedHttpException('Invalid CSRF Token');
+        }
     }
 }

@@ -3,6 +3,47 @@
 {% block body -%}
 	<h3>{{ 'user.rights' | trans }} {{ user.username }}</h3>
 
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				Spécial
+			</h3>
+		</div>
+		<div class="panel-body">
+			<ul class="list-group">
+				<li class="list-group-item">
+					<span class="label label-default">Super Admin</span> Administrer la plateforme + Editer les permissions d'un utilisateur
+					<span class="pull-right">
+						{% if user.isSuperAdmin %}
+							<a href="{{ path('self_user_ungrant_role', { 'userId': user.id, 'role': 'ROLE_SUPER_ADMIN', 'token': token }) }}">
+								<span class="text-success glyphicon glyphicon-ok"></span>
+							</a>
+						{% else %}
+							<a href="{{ path('self_user_grant_role', { 'userId': user.id, 'role': 'ROLE_SUPER_ADMIN', 'token': token }) }}">
+								<span class="text-danger glyphicon glyphicon-remove"></span>
+							</a>
+						{% endif %}
+					</span>
+				</li>
+
+				<li class="list-group-item">
+					<span class="label label-default">Admin</span> Administrer la plateforme
+					<span class="pull-right">
+						{% if user.isAdmin %}
+							<a href="{{ path('self_user_ungrant_role', { 'userId': user.id, 'role': 'ROLE_ADMIN', 'token': token }) }}">
+								<span class="text-success glyphicon glyphicon-ok"></span>
+							</a>
+						{% else %}
+							<a href="{{ path('self_user_grant_role', { 'userId': user.id, 'role': 'ROLE_ADMIN', 'token': token }) }}">
+								<span class="text-danger glyphicon glyphicon-remove"></span>
+							</a>
+						{% endif %}
+					</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
 	{% for group in groups if group.name != 'rightgroup.groups' %} {# As it seems not used, we hide the "rightgroup.groups" group for now #}
 		<div class="panel panel-default">
 			<div class="panel-heading">

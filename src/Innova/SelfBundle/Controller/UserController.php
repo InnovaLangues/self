@@ -10,8 +10,6 @@ use Innova\SelfBundle\Form\Type\UserFilterType;
 use Kitpages\DataGridBundle\Grid\Field;
 use Kitpages\DataGridBundle\Grid\GridConfig;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
@@ -321,8 +319,7 @@ class UserController extends Controller
 
         return array(
             'sessions' => $sessionsWithTraces,
-            'user' => $user,
-            'token' => (string) $this->createCsrfToken()
+            'user' => $user
         );
     }
 
@@ -483,65 +480,5 @@ class UserController extends Controller
         $users = $em->getRepository('InnovaSelfBundle:User')->getBySomethingLike($query);
 
         return new JsonResponse(array('users' => $users));
-    }
-
-    /**
-     * @Route("/user/{userId}/grant-role/{role}", name="self_user_grant_role")
-     * @Method("GET")
-     */
-    public function grantRoleAction(Request $request, User $user, $role)
-    {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
-
-        $this->assertValidCsrfToken($request->get('token'));
-
-        $roles = ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
-
-        if (!\in_array($role, $roles, true)) {
-            throw new BadRequestHttpException();
-        }
-
-        foreach ($roles as $r) {
-            $this->get('fos_user.util.user_manipulator')->removeRole($user->getUsername(), $r);
-        }
-
-        $this->get('fos_user.util.user_manipulator')->addRole($user->getUsername(), $role);
-
-        $this->addFlash('success', 'Opération effectuée.');
-
-        return $this->redirect($request->headers->get('Referer'));
-    }
-
-    /**
-     * @Route("/user/{userId}/ungrant-role/{role}", name="self_user_ungrant_role")
-     * @Method("GET")
-     */
-    public function ungrantRoleAction(Request $request, User $user, $role)
-    {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
-
-        $this->assertValidCsrfToken($request->get('token'));
-
-        if (!in_array($role, ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])) {
-            throw new BadRequestHttpException();
-        }
-
-        $this->get('fos_user.util.user_manipulator')->removeRole($user->getUsername(), $role);
-
-        $this->addFlash('success', 'Opération effectuée.');
-
-        return $this->redirect($request->headers->get('Referer'));
-    }
-
-    private function createCsrfToken()
-    {
-        return $this->get('security.csrf.token_manager')->getToken('self_user');
-    }
-
-    private function assertValidCsrfToken($token)
-    {
-        if (!$this->isCsrfTokenValid('self_user', $token)) {
-            throw new UnauthorizedHttpException('Invalid CSRF Token');
-        }
     }
 }

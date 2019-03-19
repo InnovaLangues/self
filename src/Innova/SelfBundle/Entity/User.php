@@ -684,4 +684,9 @@ class User extends BaseUser implements JsonSerializable
     {
         return $this->subcourse;
     }
+
+    public function isAdmin($strict = false): bool
+    {
+        return $this->hasRole('ROLE_ADMIN') || ($strict || $this->isSuperAdmin());
+    }
 }
