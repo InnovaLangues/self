@@ -495,8 +495,14 @@ class UserController extends Controller
 
         $this->assertValidCsrfToken($request->get('token'));
 
-        if (!in_array($role, ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])) {
+        $roles = ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
+
+        if (!\in_array($role, $roles, true)) {
             throw new BadRequestHttpException();
+        }
+
+        foreach ($roles as $r) {
+            $this->get('fos_user.util.user_manipulator')->removeRole($user->getUsername(), $r);
         }
 
         $this->get('fos_user.util.user_manipulator')->addRole($user->getUsername(), $role);

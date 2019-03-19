@@ -19,7 +19,6 @@
         </a>
     {% endif %}
 
-
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         {% if not user.hasRole('ROLE_ADMIN') and not user.hasRole('ROLE_SUPER_ADMIN') %}
             <a href="{{ path('self_user_grant_role', {'userId': user.id, 'role': 'ROLE_ADMIN', 'token': token}) }}" class="btn btn-default btn-sm">
@@ -107,6 +106,12 @@
                 <th>{{ 'user.lastLogin'|trans }}</th>
                 <td>{{ user.lastLogin|date }}</td>
             </tr>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <tr>
+                    <th>Roles</th>
+                    <th>{{ user.roles|json_encode }}</th>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 
