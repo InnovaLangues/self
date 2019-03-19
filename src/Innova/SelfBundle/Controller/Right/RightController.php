@@ -31,14 +31,13 @@ class RightController extends Controller
      */
     public function displayRightsAction(User $user)
     {
-        $this->get("innova_voter")->isAllowed("right.editrightsuser");
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $groups = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Right\RightGroup')->findAll();
 
         return [
             'groups' => $groups,
             'user' => $user,
-            'canEditRight' => $this->canEditRight($user),
             'token' => (string) $this->createCsrfToken()
         ];
     }
@@ -52,30 +51,12 @@ class RightController extends Controller
      */
     public function toggleRightAction(User $user, Right $right)
     {
-        if (!$this->canEditRight($user)) {
-            throw new AccessDeniedHttpException("You are not allowed to edit right for this user.");
-        }
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $this->get("self.right.manager")->toggleRight($right, $user);
         $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
 
         return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
-    }
-
-    // TODO : move to a voter
-    private function canEditRight(User $user)
-    {
-        $requiredRole = 'ROLE_SUPER_ADMIN';
-
-        foreach (['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] as $role) {
-            if ($user->hasRole($role) &&
-                !$this->isGranted($requiredRole)
-            ) {
-                return false;
-            }
-        }
-
-        return $this->get("innova_voter")->checkRight("right.editrightsuser");
     }
 
     /**
@@ -92,10 +73,6 @@ class RightController extends Controller
 
         if (!\in_array($role, $roles, true)) {
             throw new BadRequestHttpException();
-        }
-
-        foreach ($roles as $r) {
-            $this->get('fos_user.util.user_manipulator')->removeRole($user->getUsername(), $r);
         }
 
         $this->get('fos_user.util.user_manipulator')->addRole($user->getUsername(), $role);
@@ -115,11 +92,21 @@ class RightController extends Controller
 
         $this->assertValidCsrfToken($request->get('token'));
 
-        if (!in_array($role, ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])) {
+        $roles = ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
+
+        if (!\in_array($role, $roles, true)) {
             throw new BadRequestHttpException();
         }
 
-        $this->get('fos_user.util.user_manipulator')->removeRole($user->getUsername(), $role);
+        $userManipulator = $this->get('fos_user.util.user_manipulator');
+
+        if ($role === 'ROLE_ADMIN') {
+            foreach ($roles as $roleName) {
+                $userManipulator->removeRole($user->getUsername(), $roleName);
+            }
+        } else {
+            $userManipulator->removeRole($user->getUsername(), $role);
+        }
 
         $this->addFlash('success', 'Opération effectuée.');
 
@@ -128,12 +115,12 @@ class RightController extends Controller
 
     private function createCsrfToken()
     {
-        return $this->get('security.csrf.token_manager')->getToken('self_user');
+        return $this->get('security.csrf.token_manager')->getToken(self::class);
     }
 
     private function assertValidCsrfToken($token)
     {
-        if (!$this->isCsrfTokenValid('self_user', $token)) {
+        if (!$this->isCsrfTokenValid(self::class, $token)) {
             throw new UnauthorizedHttpException('Invalid CSRF Token');
         }
     }

@@ -73,7 +73,7 @@ user:
     email: Adresse mail
     admin_users: Administrateurs
     session_managers: Gestionnaires de sessions
-    rights: Permissions de l'utilisateur
+    rights: Permissions de l'administrateur
     preferedLanguage: Langue
     all: Tous
     connected: Connectés
@@ -648,7 +648,7 @@ group:
     display: Détails du groupe
 
 right:
-    rights: Permissions
+    rights: Permissions administrateur
     createtask: Créer une tâche
     deletetask: Supprimer une tâche
     edittask: Editer une tâche
@@ -670,7 +670,7 @@ right:
     deleteuser: Supprimer un utilisateur
     edituser: Editer un utilisateur
     deletetraceuser: Supprimer les traces d'un utilisateur
-    editpassworduser: Changer le mot de passe d'un utiliszteur
+    editpassworduser: Changer le mot de passe d'un utilisateur
     editrightsuser: Editer les permissions des utilisateurs
     listgroup: Lister les groupes
     editgroup: Editer un groupe

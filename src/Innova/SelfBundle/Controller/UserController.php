@@ -4,6 +4,7 @@ namespace Innova\SelfBundle\Controller;
 
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\QueryBuilder;
+use Innova\SelfBundle\Controller\Right\RightController;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Form\Type\UserBatchType;
 use Innova\SelfBundle\Form\Type\UserFilterType;
@@ -319,7 +320,8 @@ class UserController extends Controller
 
         return array(
             'sessions' => $sessionsWithTraces,
-            'user' => $user
+            'user' => $user,
+            'token' => (string) $this->get('security.csrf.token_manager')->getToken(RightController::class)
         );
     }
 

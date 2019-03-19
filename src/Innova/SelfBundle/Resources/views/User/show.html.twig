@@ -13,8 +13,30 @@
         </a>
     {% endif %}
 
-    {% if checkRight("right.editrightsuser", user) %}
-        <a class="btn btn-default btn-sm" href="{{ path('admin_user_rights', { 'userId': user.id }) }}">
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {% if not user.hasRole('ROLE_ADMIN') and not user.hasRole('ROLE_SUPER_ADMIN') %}
+            <a href="{{ path('self_user_grant_role', {'userId': user.id, 'role': 'ROLE_ADMIN', 'token': token}) }}" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-king"></span>
+                Promouvoir en <b>Admin</b>
+            </a>
+        {% else %}
+            <a href="{{ path('self_user_ungrant_role', {'userId': user.id, 'role': 'ROLE_ADMIN', 'token': token}) }}" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-king"></span>
+                Retirer de <b>Admin</b>
+            </a>
+        {% endif %}
+    {% endif %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a
+            class="btn btn-default btn-sm"
+            {% if user.isAdmin %}
+                href="{{ path('admin_user_rights', { 'userId': user.id }) }}"
+            {% else %}
+                disabled="disabled"
+                title="Vous devez d'abord promouvoir cet utilisateur en tant qu'Admin avant de pouvoir lui donner des permissions"
+            {% endif %}
+        >
             <span class="glyphicon glyphicon-lock"></span> {{ 'right.rights' | trans }}
         </a>
     {% endif %}
@@ -84,7 +106,7 @@
             {% if is_granted('ROLE_SUPER_ADMIN') %}
                 <tr>
                     <th>Roles</th>
-                    <th>{{ user.roles|json_encode }}</th>
+                    <td>{{ user.roles|json_encode }}</td>
                 </tr>
             {% endif %}
         </tbody>
