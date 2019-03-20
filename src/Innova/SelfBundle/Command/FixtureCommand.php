@@ -134,7 +134,6 @@ class FixtureCommand extends ContainerAwareCommand
             array('right.edituser', 'rightgroup.users', 'canEdit', 'RightUserSomeone'),
             array('right.deletetraceuser', 'rightgroup.users', 'canDeleteTrace', 'RightUserSomeone'),
             array('right.editpassworduser', 'rightgroup.users', 'canEditPassword', 'RightUserSomeone'),
-            array('right.editrightsuser', 'rightgroup.users', 'canEditRights', 'RightUserSomeone'),
 
             // session
             array('right.deletesession', 'rightgroup.sessions', 'canDelete', 'RightUserSession'),
