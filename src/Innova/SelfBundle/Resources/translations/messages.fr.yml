@@ -374,7 +374,7 @@ editor:
         code: Code de session
         invalid_code: Code de session invalide.
         active: Actif
-        actives: active
+        actives: actives
         actives_full: Sessions actives
         inactives: inactives
         inactives_full: Sessions inactives
