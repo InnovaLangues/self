@@ -447,10 +447,11 @@ register:
     neutral: Neutre
     sustained: Soutenu
     mixed: Mixte
-    jp_formal: Japonais formal (soutenu)
-    jp_impersonal: Japonais impersonnel (écrit/neutre)
-    jp_perso_polite: Japonais personnel (poli)
-    jp_perso_familiar: Japonais personnel (familier)
+    jp_formal: Japonais honorifique
+    jp_impersonal: Japonais impersonnel écrit
+    jp_perso_polite: Japonais poli
+    jp_perso_familiar: Japonais familier
+    jp_mixed: Japonais mixte
 reception:
   listener: 'As listener'
   listener_interact: 'As listener-interactor'
@@ -462,6 +463,7 @@ length:
   text_medium: 'CE/EEC : text moyen'
   text_long: 'CE/EEC : text long (<90 mots)'
 flow:
+  very_slow: Very slow
   slow: Slow
   medium: Medium
   fast: Fast
