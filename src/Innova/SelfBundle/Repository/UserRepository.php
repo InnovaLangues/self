@@ -199,16 +199,22 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function hasAnyGlobalRight($user)
+    // TODO: Should be in a RightRepository
+    public function getRights($user)
     {
         $dql = "SELECT r FROM Innova\SelfBundle\Entity\Right\Right r
         LEFT JOIN r.users u
         WHERE u = :user";
 
         $query = $this->_em->createQuery($dql)
-                ->setParameter('user', $user);
+            ->setParameter('user', $user);
 
-        $count = count($query->getResult());
+        return $query->getResult();
+    }
+
+    public function hasAnyGlobalRight($user)
+    {
+        $count = count($this->getRights($user));
 
         if ($count > 0) {
             return true;

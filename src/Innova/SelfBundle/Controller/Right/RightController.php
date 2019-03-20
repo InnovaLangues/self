@@ -104,6 +104,8 @@ class RightController extends Controller
             foreach ($roles as $roleName) {
                 $userManipulator->removeRole($user->getUsername(), $roleName);
             }
+
+            $this->get("self.right.manager")->removeAllRights($user);
         } else {
             $userManipulator->removeRole($user->getUsername(), $role);
         }

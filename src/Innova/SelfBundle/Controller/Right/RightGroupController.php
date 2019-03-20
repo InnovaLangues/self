@@ -29,29 +29,11 @@ class RightGroupController extends Controller
      */
     public function toggleAllForGroupAction(User $user, RightGroup $rightGroup)
     {
-        if (!$this->canEditRight($user)) {
-            throw new AccessDeniedHttpException("You are not allowed to edit right for this user.");
-        }
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $this->get("self.rightgroup.manager")->toggleAll($user, $rightGroup);
         $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");
 
         return $this->redirect($this->generateUrl('admin_user_rights', array('userId' => $user->getId())));
-    }
-
-    // TODO : move to a voter
-    private function canEditRight(User $user)
-    {
-        $requiredRole = 'ROLE_SUPER_ADMIN';
-
-        foreach (['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] as $role) {
-            if ($user->hasRole($role) &&
-                !$this->isGranted($requiredRole)
-            ) {
-                return false;
-            }
-        }
-
-        return $this->get("innova_voter")->checkRight("right.editrightsuser");
     }
 }
