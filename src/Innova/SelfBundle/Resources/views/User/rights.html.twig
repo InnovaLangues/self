@@ -12,7 +12,7 @@
 		<div class="panel-body">
 			<ul class="list-group">
 				<li class="list-group-item">
-					Editer les permissions des administrateurs (devenir <span class="label label-default">Super Admin</span>)
+					Editer les permissions des administrateurs (accorder rôle <span class="label label-default">Super Admin</span>)
 					<span class="pull-right">
 						{% if user.isSuperAdmin %}
 							<a href="{{ path('self_user_ungrant_role', { 'userId': user.id, 'role': 'ROLE_SUPER_ADMIN', 'token': token }) }}">
