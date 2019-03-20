@@ -469,7 +469,10 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('self_user_display'));
         }
 
-        return array('form' => $form->createView(), 'user' => $user);
+        return [
+            'form' => $form->createView(),
+            'user' => $user
+        ];
     }
 
     /**

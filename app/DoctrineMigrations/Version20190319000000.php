@@ -18,7 +18,7 @@ class Version20190319000000 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql("DELETE FROM `rights` WHERE name = 'right.editrightsuser'");
+        $this->addSql("DELETE FROM `rights` WHERE `name` = 'right.editrightsuser'");
     }
 
     /**
