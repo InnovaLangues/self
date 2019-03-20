@@ -8,7 +8,7 @@
             <div class="col-md-6">
                 <b>Create a block :</b>
                 {% for blockTypeName in blockTypeNames %}
-                    <a href="{{ path('cms_block_new', {'typeName': blockTypeName}) }}" class="btn btn-default">{{ blockTypeName|capitalize }}</a>
+                    <a href="{{ path('cms_block_new', {'typeName': blockTypeName, 'slug': app.request.get('slug')}) }}" class="btn btn-default">{{ blockTypeName|capitalize }}</a>
                 {% endfor %}
             </div>
             <div class="col-md-3 col-md-offset-3 text-right text-right">

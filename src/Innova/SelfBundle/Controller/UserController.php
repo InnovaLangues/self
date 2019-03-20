@@ -111,7 +111,9 @@ class UserController extends Controller
                         if (strpos($role, 'SUPER_ADMIN') !== false) {
                             return '<span class="label label-default">Super Admin</span>';
                         }
+                    }
 
+                    foreach ($roles as $role) {
                         if (strpos($role, 'ADMIN') !== false) {
                             return '<span class="label label-default">Admin</span>';
                         }
