@@ -36,11 +36,11 @@ class PlayerController extends Controller
             return $this->redirect($this->generateUrl('session_connect', array('sessionId' => $session->getId())));
         }
 
-        // cas où il n'y a plus de tâche candidate. L'utilisateur est redirigé vers la page de fin de test.
+        // cas où il n'y a plus de tâche candidate. L'utilisateur est redirigé vers la page de crédits.
         if (!$orderQuestionnaire = $this->get('self.player.manager')->pickQuestionnaire($test, $session)) {
             $this->get('self.mediaclick.manager')->deleteMediaClick($test, $session);
 
-            return $this->redirect($this->generateUrl('test_end', array('testId' => $test->getId(), 'sessionId' => $session->getId())));
+            return $this->redirect($this->generateUrl('test_credits', array('testId' => $test->getId(), 'sessionId' => $session->getId())));
         }
 
         $questionnaire = $orderQuestionnaire->getQuestionnaire();
@@ -59,6 +59,21 @@ class PlayerController extends Controller
             'questionnaires' => $questionnaires,
             'percent' => $percent,
         );
+    }
+
+    /**
+     * Affiche les crédits/remerciement aux auteurs du tests (via une page de CMS par langue)
+     *
+     * @Route("/test/{testId}/session/{sessionId}/credits", name="test_credits")
+     * @Template("InnovaSelfBundle:Player:common/credits.html.twig")
+     * @Method("GET")
+     */
+    public function creditsAction(Test $test, Session $session)
+    {
+        return [
+            'test' => $test,
+            'session' => $session
+        ];
     }
 
     /**
