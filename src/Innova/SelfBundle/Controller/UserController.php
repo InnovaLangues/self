@@ -449,7 +449,8 @@ class UserController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         return array(
-            'user' => $user
+            'user' => $user,
+            'token' => (string) $this->get('security.csrf.token_manager')->getToken(RightController::class)
         );
     }
 
@@ -471,7 +472,8 @@ class UserController extends Controller
 
         return [
             'form' => $form->createView(),
-            'user' => $user
+            'user' => $user,
+            'token' => (string) $this->get('security.csrf.token_manager')->getToken(RightController::class)
         ];
     }
 

@@ -27,7 +27,7 @@ class StatsController extends Controller
      */
     public function indexAction()
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
         return array();
     }
@@ -39,7 +39,7 @@ class StatsController extends Controller
      */
     public function sessionsAction($isActive): array
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
         /**
          * @var Session[] $sessions
@@ -71,7 +71,7 @@ class StatsController extends Controller
      */
     public function sessionsByDateAction(Request $request)
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
         $sessionType = $request->get('session_type');
         if ($sessionType == 'all') {
@@ -115,7 +115,7 @@ class StatsController extends Controller
      */
     public function institutionsAction()
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
         $institutions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Institution\Institution')->findAll();
 
@@ -139,7 +139,7 @@ class StatsController extends Controller
      */
     public function coursesAction(Institution $institution)
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
         $courses = $institution->getCourses();
 
