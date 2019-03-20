@@ -158,7 +158,9 @@
                         </a>
                     </li>
                 {% endif %}
+            {% endif %}
 
+            {% if is_granted('ROLE_CMS_ADMIN') %}
                 <li>
                     <a href="{{ path('cms_block_index') }}">CMS</a>
                 </li>
