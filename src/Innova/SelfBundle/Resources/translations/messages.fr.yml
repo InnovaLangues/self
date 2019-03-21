@@ -660,7 +660,7 @@ right:
     edittest: Editer un test
     listtest: Lister les tests
     duplicatetest: Dupliquer un test
-    managesessiontest: Gérer les session
+    managesessiontest: Gérer les sessions
     managetaskstest: Gérer les tâches
     addtasktest: Ajouter une tâche
     reordertasktest: Réordonner les tâches
@@ -709,7 +709,7 @@ rightgroup:
 canDelete: Peut supprimer
 canEdit: Peut éditer
 canDuplicate: Peut dupliquer
-canManageSession: Peut gérer les session
+canManageSession: Peut gérer les sessions
 canManageTask: Peut gérer les tâches
 canAddTask: Peut ajouter des tâches
 canReorderTasks: Peut réordonner les tâches

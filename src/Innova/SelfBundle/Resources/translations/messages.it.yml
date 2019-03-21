@@ -520,7 +520,7 @@ right:
     edittest: Editer un test
     listtest: Lister les tests
     duplicatetest: Dupliquer un test
-    managesessiontest: Gérer les session
+    managesessiontest: Gérer les sessions
     managetaskstest: Gérer les tâches
     addtasktest: Ajouter une tâche
     reordertasktest: Réordonner les tâches
