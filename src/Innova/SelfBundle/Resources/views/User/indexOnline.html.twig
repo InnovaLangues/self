@@ -25,7 +25,13 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td>{{ "ROLE_SUPER_ADMIN" in entity.roles ? '<span class="label label-default">Admin</span>'}}</td>
+                <td>
+                    {% if entity.isSuperAdmin %}
+                        <span class="label label-default">SuperAdmin</span>
+                    {% elseif 'ROLE_ADMIN' in entity.roles %}
+                        <span class="label label-default">Admin</span>
+                    {% endif %}
+                </td>
                 <td>{{ entity.username }}</td>
                 <td>{{ entity.email }}</td>
                 <td>{{ entity.firstName ? entity.firstName }} </td>
