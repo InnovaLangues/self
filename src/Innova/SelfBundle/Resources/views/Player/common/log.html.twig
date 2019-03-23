@@ -1,45 +1,46 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-<div class="row">
-	<div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">{{ 'editor.session.code'|trans }}</div>
-            <div class="panel-body">
-				{% if sessions is defined %}
-					<p>{{ 'editor.session.availableForCode'|transchoice(sessions|length) }}</p>
-					<ul class="list-group">
-					{% for session in sessions %}
-						{% set language =  session.test.language.name %}
-						{% set needHelpLanguages = ["Japanese", "Chinese"] %}
-						<li class="list-group-item">
-							<a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id } )}}">{{ session.test.name }} - {{ session.name }}</a>
-							{% if language in needHelpLanguages %}
-							<div class="alert alert-danger" role="alert">
-								{{ "input.help_text" | trans | raw }}
+	<div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ 'editor.session.connexion' | trans }}</div>
+				<div class="panel-body">
+					{% if sessions is defined %}
+						<p>{{ 'editor.session.availableForCode'|transchoice(sessions|length) }}</p>
+						<ul class="list-group">
+							{% for session in sessions %}
+								{% set language =  session.test.language.name %}
+								{% set needHelpLanguages = ["Japanese", "Chinese"] %}
+								<li class="list-group-item">
+									<a href="{{ path('test_start', { 'testId': session.test.id, 'sessionId': session.id } )}}">{{ session.test.name }} - {{ session.name }}</a>
+									{% if language in needHelpLanguages %}
+										<div class="alert alert-danger" role="alert">
+											{{ "input.help_text" | trans | raw }}
+										</div>
+									{% endif %}
+								</li>
+							{% endfor %}
+						</ul>
+					{% else %}
+						<form class="form-inline" action="{{ path('session_log') }}" method="post" autocomplete="off">
+							<p>{{ "editor.session.passwd" | trans }}</p>
+							<div class="form-group">
+								<input id="passwd" class="form-control" type="password" name="passwd">
 							</div>
-							{% endif %}
-						</li>
-					{% endfor %}
-					</ul>
-				{% else %}
-					<form class="form-inline" action="{{ path('session_log') }}" method="post" autocomplete="off">
-						<div class="form-group">
-							<input id="passwd" class="form-control" type="password" name="passwd">
-						</div>
-						<button type="submit" class="btn btn-default btn-primary">OK</button>
-					</form>
-				{% endif %}
-           	</div>
-        </div>
-    </div>
-    <div id="video-help"  class="col-md-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">{{ "help_video" | trans }}</div>
-            <div class="panel-body text-center">
-                {% include 'InnovaSelfBundle::Main/help.html.twig' %}
-            </div>
-        </div>
-    </div>
-</div>
+							<button type="submit" class="btn btn-default btn-primary">OK</button>
+						</form>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div id="video-help"  class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ "help_video" | trans }}</div>
+				<div class="panel-body text-center">
+					{% include 'InnovaSelfBundle::Main/help.html.twig' %}
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

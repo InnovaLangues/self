@@ -28,9 +28,9 @@
 
         {% stylesheets filter='cssrewrite, ?yui_css' output='css/compiled/style.css'
             'bundles/innovaself/css/jquery-ui.css'
-            'bundles/innovaself/css/main.css'
             'bundles/innovaself/css/registration.css'
             'bundles/innovaself/css/bootstrap.min.css'
+            'bundles/innovaself/css/main.css'
          %}
          <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
@@ -44,7 +44,7 @@
         <div id="body" class="container">
             <div class="row">
                 <div class="col-md-12">
-                    {% for label, flashes in app.session.flashbag.all %}
+                    {% for label, flashes in app.session.flashbag.all if label in ['success', 'info', 'warning', 'danger'] %}
                         {% for flash in flashes %}
                             <div class="alert alert-{{ label }}">
                                 {{ flash|trans }}
@@ -67,7 +67,9 @@
                 'js/fos_js_routes.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-1.11.2.min.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery-ui-1.11.2.min.js'
-                '@InnovaSelfBundle/Resources/public/js/lib/bootstrap-3.1.1.min.js'
+                '@InnovaSelfBundle/Resources/public/js/lib/bootstrap.min.js'
+                '@InnovaSelfBundle/Resources/public/js/lib/moment-with-locales.min.js'
+                '@InnovaSelfBundle/Resources/public/js/lib/bootstrap-datetimepicker.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery.restfulizer.js'
                 '@InnovaSelfBundle/Resources/public/js/lib/jquery.cookie.min.js'
                 '@InnovaSelfBundle/Resources/public/js/main.js'

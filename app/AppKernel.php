@@ -27,6 +27,9 @@ class AppKernel extends Kernel
             new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Sentry\SentryBundle\SentryBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Kibatic\CmsBundle\KibaticCmsBundle(),
+            new Kitpages\DataGridBundle\KitpagesDataGridBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

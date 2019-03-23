@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="Kibatic\CmsBundle\Repository\BlockRepository" class="Kibatic\CmsBundle\Repository\BlockRepository">
+            <factory method="getRepository" service="doctrine" />
+            <argument>KibaticCmsBundle:Block</argument>
+        </service>
+        
+        <service id="Kibatic\CmsBundle\BlockTypeChain" class="Kibatic\CmsBundle\BlockTypeChain" />
+
+        <!-- Block Form -->
+
+        <service id="Kibatic\CmsBundle\Form\TextBlockType" class="Kibatic\CmsBundle\Form\TextBlockType">
+            <tag name="cms.block_type" />
+            <tag name="form.type" alias="text_block" />
+        </service>
+
+        <service id="Kibatic\CmsBundle\Form\ImageBlockType" class="Kibatic\CmsBundle\Form\ImageBlockType">
+            <tag name="cms.block_type" />
+        </service>
+
+        <service id="Kibatic\CmsBundle\Form\HtmlBlockType" class="Kibatic\CmsBundle\Form\HtmlBlockType">
+            <tag name="cms.block_type" />
+        </service>
+
+        <service id="Kibatic\CmsBundle\Form\AlertBlockType" class="Kibatic\CmsBundle\Form\AlertBlockType">
+            <tag name="cms.block_type" />
+        </service>
+    </services>
+</container>

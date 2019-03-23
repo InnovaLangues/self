@@ -10,6 +10,8 @@ services:
       - .:/var/www
       - ./docker/php.ini:/etc/php/7.1/fpm/php.ini
       - ./docker/vhost.conf:/etc/nginx/sites-enabled/default
+    environment:
+      APP_ENVIRONMENT: dev
 
   db:
     image: mariadb:5.5

@@ -13,8 +13,30 @@
         </a>
     {% endif %}
 
-    {% if checkRight("right.editrightsuser", user) %}
-        <a class="btn btn-default btn-sm" href="{{ path('admin_user_rights', { 'userId': user.id }) }}">
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {% if not user.hasRole('ROLE_ADMIN') and not user.hasRole('ROLE_SUPER_ADMIN') %}
+            <a href="{{ path('self_user_grant_role', {'userId': user.id, 'role': 'ROLE_ADMIN', 'token': token}) }}" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-king"></span>
+                Accorder rôle <b>Admin</b>
+            </a>
+        {% else %}
+            <a href="{{ path('self_user_ungrant_role', {'userId': user.id, 'role': 'ROLE_ADMIN', 'token': token}) }}" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-king"></span>
+                Retirer rôle <b>Admin</b>
+            </a>
+        {% endif %}
+    {% endif %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a
+            class="btn btn-default btn-sm"
+            {% if user.isAdmin %}
+                href="{{ path('admin_user_rights', { 'userId': user.id }) }}"
+            {% else %}
+                disabled="disabled"
+                title="Vous devez d'abord promouvoir cet utilisateur en tant qu'Admin avant de pouvoir lui donner des permissions"
+            {% endif %}
+        >
             <span class="glyphicon glyphicon-lock"></span> {{ 'right.rights' | trans }}
         </a>
     {% endif %}
@@ -77,6 +99,16 @@
                 <th>{{ 'user.motherTongueOther' | trans }}</th>
                 <td>{{ user.motherTongueOther ? user.motherTongueOther }}</td>
             </tr>
+            <tr>
+                <th>{{ 'user.lastLogin'|trans }}</th>
+                <td>{{ user.lastLogin|date }}</td>
+            </tr>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <tr>
+                    <th>Roles</th>
+                    <td>{{ user.roles|json_encode }}</td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 
@@ -121,35 +153,62 @@
             </tbody>
         </table>
 
-        <h2>Traces</h2>
+        <h2>Concepteur</h2>
+
+        <table class="table">
+            <tr>
+                <th>Tâches créées</th>
+                <td>
+                    <a href="{{ path('editor_questionnaires_by_author', {'id': user.id}) }}">
+                        <b>{{ user.questionnaires|length }}</b>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>Tâches révisées</th>
+                <td>
+                    <a href="{{ path('editor_questionnaires_by_author', {'id': user.id, 'revised': true}) }}">
+                        <b>{{ user.revisedQuestionnaires|length }}</b>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+        <h2>Traces de passation</h2>
+
         <ul class="list-group">
             {% if sessions|length > 0 %}
                 {% for session in sessions %}
                     <li class="list-group-item">
-                    {% if checkRight("right.individualresultssession", session) %}
-                        <a href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
+                        <span
+                            class="glyphicon glyphicon-record"
+                            style="color: {{ session.actif ? 'green' : 'grey' }}"
+                            title="Session {{ session.actif ? 'active' : 'inactive' }}"></span>
+
+                        {% if checkRight("right.individualresultssession", session) %}
+                            <a href="{{ path('editor_test_session_results', {'sessionId': session.id }) }}">
+                                {{ session.name }}
+                            </a>
+                        {% else %}
                             {{ session.name }}
-                        </a>
-                    {% else %}
-                        {{ session.name }}
-                    {% endif %}
-                    <span class="text-muted">{{session.test.name}}</span>
-                    <span class="buttons pull-right">
-                        <a class="btn btn-default btn-xs" href="{{ path('get-session-traces', {'sessionId': session.id, 'userId': user.id } )}}">
-                            <span class="glyphicon glyphicon-search"></span>
-                            Détails
-                        </a>
-                        <a class="btn btn-default btn-xs" href="{{ path('editor_session_user_results', {'sessionId': session.id, 'userId': user.id } )}}">
-                            <span class="glyphicon glyphicon-signal"></span>
-                            Afficher les résultats
-                        </a>
-                        {% if checkRight("right.deletetraceuser") %}
-                        <span data-method="DELETE" class="btn btn-danger btn-xs rest" href="{{ path('delete-session-trace', {'sessionId': session.id, 'userId': user.id } )}}">
-                            <span class="glyphicon glyphicon-trash"></span>
-                            Supprimer les traces pour la session
-                        </span>
                         {% endif %}
-                    </span>
+                        <span class="text-muted">{{session.test.name}}</span>
+                        <span class="buttons pull-right">
+                            <a class="btn btn-default btn-xs" href="{{ path('get-session-traces', {'sessionId': session.id, 'userId': user.id } )}}">
+                                <span class="glyphicon glyphicon-search"></span>
+                                Détails
+                            </a>
+                            <a class="btn btn-default btn-xs" href="{{ path('editor_session_user_results', {'sessionId': session.id, 'userId': user.id } )}}">
+                                <span class="glyphicon glyphicon-signal"></span>
+                                Afficher les résultats
+                            </a>
+                            {% if checkRight("right.deletetraceuser") %}
+                            <span data-method="DELETE" class="btn btn-danger btn-xs rest" href="{{ path('delete-session-trace', {'sessionId': session.id, 'userId': user.id } )}}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                Supprimer les traces pour la session
+                            </span>
+                            {% endif %}
+                        </span>
                     </li>
                 {% endfor %}
             {% else %}

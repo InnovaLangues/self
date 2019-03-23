@@ -40,10 +40,12 @@ class UserManager
 
     public function deleteUser(User $user)
     {
+        $username = $user->getUsername();
+
         $this->entityManager->remove($user);
         $this->entityManager->flush();
 
-        $this->session->getFlashBag()->set('success', "L'utilisateur a bien été supprimé.");
+        $this->session->getFlashBag()->set('success', "L'utilisateur <b>$username</b> a bien été supprimé.");
 
         return $this;
     }
@@ -100,33 +102,38 @@ class UserManager
         return $form;
     }
 
-    public function getConnected($full)
+    public function getConnected(bool $full = false)
     {
         $connectedUsers = [];
+
         foreach ($this->redis->keys('*') as $key) {
-            if (!strpos($key, ".lock")) {
-                $sessionData = $this->redis->get($key);
-                $sessionData = str_replace('_sf2_attributes|', '', $sessionData);
-                $sessionData = unserialize($sessionData);
-
-                // If this is a session belonging to an anonymous user, do nothing
-                if (!array_key_exists('_security_main', $sessionData)) {
-                    continue;
-                }
-
-                // Grab security data
-                $sessionData = $sessionData['_security_main'];
-                $sessionData = unserialize($sessionData);
-                $userName = $sessionData->getUser()->getUsername();
-
-                $user = (!$full)
-                  ? $userName
-                  : $this->entityManager->getRepository('InnovaSelfBundle:User')->findOneByUsername($userName);
-
-                if (!in_array($user, $connectedUsers)) {
-                    $connectedUsers[] = $user;
-                }
+            if (strpos($key, ".lock")) {
+                continue;
             }
+
+            $sessionData = $this->redis->get($key);
+            $sessionData = str_replace('_sf2_attributes|', '', $sessionData);
+            $sessionData = unserialize($sessionData);
+
+            // If this is a session belonging to an anonymous user, do nothing
+            if (!array_key_exists('_security_main', $sessionData)) {
+                continue;
+            }
+
+            // Grab security data
+            $sessionData = $sessionData['_security_main'];
+            $sessionData = unserialize($sessionData);
+            $username = $sessionData->getUser()->getUsername();
+
+            $user = (!$full)
+              ? $username
+              : $this->entityManager->getRepository('InnovaSelfBundle:User')->findOneByUsername($username);
+
+            if (\in_array($user, $connectedUsers, true)) {
+                continue;
+            }
+
+            $connectedUsers[] = $user;
         }
 
         return $connectedUsers;
@@ -134,7 +141,7 @@ class UserManager
 
     public function getAuthCount()
     {
-        $connectedUsers = $this->getConnected(false);
+        $connectedUsers = $this->getConnected();
 
         return count($connectedUsers);
     }
@@ -142,10 +149,9 @@ class UserManager
     public function checkCourse()
     {
         $user = $this->securityContext->getToken()->getUser();
+
         if (!$user->getCourse()) {
             $this->session->getFlashBag()->set('warning', $this->translator->trans('warning_message_course'));
         }
-
-        return;
     }
 }

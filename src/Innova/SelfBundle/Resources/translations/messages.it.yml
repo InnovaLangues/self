@@ -520,7 +520,7 @@ right:
     edittest: Editer un test
     listtest: Lister les tests
     duplicatetest: Dupliquer un test
-    managesessiontest: Gérer les session
+    managesessiontest: Gérer les sessions
     managetaskstest: Gérer les tâches
     addtasktest: Ajouter une tâche
     reordertasktest: Réordonner les tâches
@@ -532,7 +532,7 @@ right:
     deleteuser: Supprimer un utilisateur
     edituser: Editer un utilisateur
     deletetraceuser: Supprimer les traces d'un utilisateur
-    editpassworduser: Changer le mot de passe d'un utiliszteur
+    editpassworduser: Changer le mot de passe d'un utilisateur
     editrightsuser: Editer les permissions des utilisateurs
     listgroup: Lister les groupes
     editgroup: Editer un groupe

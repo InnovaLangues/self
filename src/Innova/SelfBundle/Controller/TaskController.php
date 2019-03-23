@@ -2,6 +2,8 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Innova\SelfBundle\Entity\User;
+use Innova\SelfBundle\Manager\TaskManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +41,7 @@ class TaskController
     protected $rightManager;
 
     public function __construct(
-        $taskManager,
+        TaskManager $taskManager,
         $questionnaireManager,
         $questionManager,
         $orderQuestionnaireTestManager,
@@ -92,6 +94,44 @@ class TaskController
         return [
             'questionnaires' => $questionnaires,
             'language' => $language
+        ];
+    }
+
+    /**
+     * Lists all Questionnaire entities for a given author.
+     *
+     * @Route("/tasks/author/{id}", name="editor_questionnaires_by_author")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listQuestionnaires_byAuthor.html.twig")
+     */
+    public function listQuestionnairesByAuthorAction(User $author)
+    {
+        $this->voter->isAllowed('right.listtask');
+
+        $questionnaires = $this->taskManager->listQuestionnairesByAuthor($author);
+
+        return [
+            'questionnaires' => $questionnaires,
+            'author' => $author
+        ];
+    }
+
+    /**
+     * Lists all Questionnaire entities for a given author.
+     *
+     * @Route("/tasks/revisor/{id}", name="editor_questionnaires_by_revisor")
+     * @Method("GET")
+     * @Template("InnovaSelfBundle:Editor:listQuestionnaires_byRevisor.html.twig")
+     */
+    public function listQuestionnairesByRevisorAction(Request $request, User $revisor)
+    {
+        $this->voter->isAllowed('right.listtask');
+
+        $questionnaires = $this->taskManager->listQuestionnairesByRevisor($revisor);
+
+        return [
+            'questionnaires' => $questionnaires,
+            'revisor' => $revisor
         ];
     }
 

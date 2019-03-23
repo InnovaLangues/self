@@ -21,4 +21,6 @@ $(document).ready(function() {
     $(document).on('click', '#user-search-btn', function (e) {
         $("#user-search").submit();
     });
+
+    $('.datepicker').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss'});
 });

@@ -78,6 +78,7 @@ user:
   hasAnyGlobalRight: 'Has global rights'
   testsWithRights: 'Tests with rights'
   sessionsWithRights: 'Sessions with rights'
+  lastLogin: Last login
 registration:
   warning_required: 'Zones with red asterisk are required'
   username: Login
@@ -98,6 +99,7 @@ registration:
   year: 'Year you are in'
   subcourse: Major
   confirm: 'Confirm registration'
+  legal_mentions_link: Read the <a href="%url%" target="_blank">legal mentions</a>.
 test:
   access_list: Access available tests list
   available: 'Tests available'
@@ -445,10 +447,11 @@ register:
     neutral: Neutre
     sustained: Soutenu
     mixed: Mixte
-    jp_formal: Japonais formal (soutenu)
-    jp_impersonal: Japonais impersonnel (écrit/neutre)
-    jp_perso_polite: Japonais personnel (poli)
-    jp_perso_familiar: Japonais personnel (familier)
+    jp_formal: Japonais honorifique
+    jp_impersonal: Japonais impersonnel écrit
+    jp_perso_polite: Japonais poli
+    jp_perso_familiar: Japonais familier
+    jp_mixed: Japonais mixte
 reception:
   listener: 'As listener'
   listener_interact: 'As listener-interactor'
@@ -460,6 +463,7 @@ length:
   text_medium: 'CE/EEC : text moyen'
   text_long: 'CE/EEC : text long (<90 mots)'
 flow:
+  very_slow: Very slow
   slow: Slow
   medium: Medium
   fast: Fast
@@ -653,6 +657,8 @@ right:
   message: 'Send messages'
   deletetracesession: 'Delete all user traces by session'
   editorreadonlytest: 'Read-only tasks (no editing)'
+  institution: Institution
+  stats: Can see statistics
 rightgroup:
   tasks: 'Permissions on tasks'
   tests: 'Permissions on tests'
@@ -684,7 +690,8 @@ input:
   chinese: 'For Mandarin Chinese, please read the following documents :'
 warning_message_course: 'Your profile is incomplete. Please click on your name in the toolbar to edit your information.'
 stats:
-  usercount: 'Number of users'
+  user_count: Total users
+  today_user_count: Users today
   filter: Filter
   define_interval: 'Define a time interval'
   date_format: 'Date format:'

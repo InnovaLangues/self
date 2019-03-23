@@ -5,6 +5,7 @@ namespace Innova\SelfBundle\Manager;
 use Innova\SelfBundle\Entity\Test;
 use Innova\SelfBundle\Entity\Questionnaire;
 use Innova\SelfBundle\Entity\Language;
+use Innova\SelfBundle\Entity\User;
 
 class TaskManager
 {
@@ -34,9 +35,17 @@ class TaskManager
 
     public function listQuestionnairesByLanguage(Language $language)
     {
-        $questionnaires = $this->questionnaireRepository->findByLanguage($language);
+        return $this->questionnaireRepository->findByLanguage($language);
+    }
 
-        return $questionnaires;
+    public function listQuestionnairesByAuthor(User $author)
+    {
+        return $this->questionnaireRepository->findByAuthor($author);
+    }
+
+    public function listQuestionnairesByRevisor(User $revisor)
+    {
+        return $this->questionnaireRepository->findByRevisor($revisor);
     }
 
     public function listTestQuestionnaires(Test $test)

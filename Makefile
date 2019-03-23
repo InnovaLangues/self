@@ -1,4 +1,4 @@
-init: permissions deps assets database
+init: deps assets database
 init-ci: deps assets permissions
 
 permissions:

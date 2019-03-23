@@ -48,6 +48,7 @@ class MediaClick
 
     /**
     * @ORM\ManyToOne(targetEntity="Innova\SelfBundle\Entity\User", inversedBy="mediaClicks")
+    * @ORM\JoinColumn(onDelete="CASCADE")
     */
     protected $user;
 

@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Innova\SelfBundle\Entity\Session;
 
 class UserRepository extends EntityRepository
 {
@@ -80,12 +81,14 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findLightBySession($session, \DateTime $createdAfter = null)
+    public function countBySession(Session $session, \DateTime $createdAfter = null): int
     {
-        $dql = "SELECT DISTINCT u.id FROM Innova\SelfBundle\Entity\User u
-        LEFT JOIN u.traces ut
-        LEFT JOIN ut.session s
-        WHERE ut.session = :session";
+        $dql = "
+            SELECT COUNT(DISTINCT u.id) as total FROM Innova\SelfBundle\Entity\User u
+            JOIN u.traces ut
+            JOIN ut.session s
+            WHERE ut.session = :session
+        ";
 
         $parameters = ['session' => $session];
 
@@ -95,9 +98,9 @@ class UserRepository extends EntityRepository
         }
 
         $query = $this->_em->createQuery($dql)
-                ->setParameters($parameters);
+            ->setParameters($parameters);
 
-        return $query->getResult();
+        return (int) $query->getSingleResult()['total'];
     }
 
     public function findBySessionAndDates($session, $startDate, $endDate)
@@ -196,16 +199,22 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function hasAnyGlobalRight($user)
+    // TODO: Should be in a RightRepository
+    public function getRights($user)
     {
         $dql = "SELECT r FROM Innova\SelfBundle\Entity\Right\Right r
         LEFT JOIN r.users u
         WHERE u = :user";
 
         $query = $this->_em->createQuery($dql)
-                ->setParameter('user', $user);
+            ->setParameter('user', $user);
 
-        $count = count($query->getResult());
+        return $query->getResult();
+    }
+
+    public function hasAnyGlobalRight($user)
+    {
+        $count = count($this->getRights($user));
 
         if ($count > 0) {
             return true;
@@ -254,5 +263,23 @@ class UserRepository extends EntityRepository
                 ->setParameter('role', '%'.$role.'%');
 
         return $query->getResult();
+    }
+
+    public function findByIds(array $ids): array
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.id IN (:ids)')
+            ->setParameter('ids', $ids)
+        ;
+
+        return $qb->getQuery()->getScalarResult();
+    }
+
+    public function remove(array $ids)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('DELETE FROM Innova\SelfBundle\Entity\User u WHERE u.id IN (:ids)');
+
+        $query->execute(['ids' => $ids]);
     }
 }

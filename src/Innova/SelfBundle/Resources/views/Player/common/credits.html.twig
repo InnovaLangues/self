@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="session-goto-end pull-right">
+				<a href="{{ path('test_end', {'sessionId': session.id, 'testId': test.id}) }}" class="btn btn-success">
+					Consulter vos résultats pour ce test <span class="glyphicon glyphicon-hand-right"></span>
+				</a>
+			</div>
+
+			<h3>Crédits et remerciements</h3>
+
+			{% render(controller('KibaticCmsBundle:Block:show', {slug: 'credits-' ~ (session.test.language|lower)})) %}
+		</div>
+	</div>
+{% endblock %}

@@ -2,7 +2,18 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
+use Doctrine\ORM\QueryBuilder;
+use Innova\SelfBundle\Controller\Right\RightController;
+use Innova\SelfBundle\Entity\Questionnaire;
+use Innova\SelfBundle\Form\Type\UserBatchType;
+use Innova\SelfBundle\Form\Type\UserFilterType;
+use Kitpages\DataGridBundle\Grid\Field;
+use Kitpages\DataGridBundle\Grid\GridConfig;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -13,40 +24,259 @@ use Innova\SelfBundle\Entity\User;
 use Innova\SelfBundle\Entity\Session;
 
 /**
- * User controller.
- *
  * @ParamConverter("user", isOptional="true", class="InnovaSelfBundle:User", options={"id" = "userId"})
  * @ParamConverter("session", isOptional="true", class="InnovaSelfBundle:Session", options={"id" = "sessionId"})
  */
 class UserController extends Controller
 {
     /**
-     * Lists users.
-     *
-     * @Route("/admin/users/{subset}", name="admin_user")
+     * @Route("/admin/users", name="admin_user_index")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction($subset)
+    public function indexAction(Request $request)
+    {
+        $this->get('innova_voter')->isAllowed('right.listuser');
+        $this->get('session')->set('uri.user_list', $request->getUri());
+
+        $repository = $this->getDoctrine()->getRepository('InnovaSelfBundle:User');
+        $queryBuilder = $repository->createQueryBuilder('user');
+        $queryBuilder->orderBy('user.id', 'DESC');
+
+        $filterForm = $this->createForm(new UserFilterType(), null, ['method' => 'GET']);
+        $filterForm->handleRequest($request);
+
+        if ($filterForm->isSubmitted()) {
+            $this->addFilters($queryBuilder, $filterForm, [
+                'role' => function (QueryBuilder $qb, string $role = null) {
+                    switch ($role) {
+                        case UserFilterType::FILTER_ROLE_ADMIN:
+                            $qb
+                                ->andWhere('user.roles LIKE :role')
+                                ->setParameter('role', '%ADMIN%');
+                            break;
+                        case UserFilterType::FILTER_ROLE_NOT_ADMIN:
+                            $qb
+                                ->andWhere('user.roles NOT LIKE :role')
+                                ->setParameter('role', '%ADMIN%');
+                            break;
+                    }
+                },
+                'lastLoginOlderThan' => function (QueryBuilder $qb, \DateTime $lastLoginOlderThan = null) {
+                    if ($lastLoginOlderThan === null) {
+                        return;
+                    }
+
+                    $qb
+                        ->andWhere('user.lastLogin < :lastLoginOlderThan')
+                        ->setParameter('lastLoginOlderThan', $lastLoginOlderThan);
+                }
+            ]);
+        }
+
+        $gridConfig = new GridConfig();
+        $gridConfig
+            ->setQueryBuilder($queryBuilder)
+//            ->setPaginatorConfig((new PaginatorConfig())->setItemCountInPage((int) $request->get('itemPerPage', 100)))
+            ->setCountFieldName('user.id')
+            ->addField(new Field('user.id', [
+                'label' => '#',
+                'sortable' => true
+            ]))
+            ->addField(new Field('user.usernameCanonical', [
+                'label' => 'Login',
+                'filterable' => true,
+                'autoEscape' => false,
+                'formatValueCallback' => function ($usernameCanonical) {
+                    return '<span class="strip">' . $usernameCanonical . '</span>';
+                }
+            ]))
+            ->addField(new Field('user.emailCanonical', [
+                'label' => 'E-mail',
+                'filterable' => true
+            ]))
+            ->addField(new Field('user.firstName', [
+                'label' => 'Prénom',
+                'filterable' => true
+            ]))
+            ->addField(new Field('user.lastName', [
+                'label' => 'Nom',
+                'filterable' => true
+            ]))
+            ->addField(new Field('user.roles', [
+                'label' => 'Admin',
+                'autoEscape' => false,
+                'formatValueCallback' => function ($roles) {
+                    foreach ($roles as $role) {
+                        if (strpos($role, 'SUPER_ADMIN') !== false) {
+                            return '<span class="label label-default">Super Admin</span>';
+                        }
+                    }
+
+                    foreach ($roles as $role) {
+                        if (strpos($role, 'ADMIN') !== false) {
+                            return '<span class="label label-default">Admin</span>';
+                        }
+                    }
+
+                    return '-';
+                }
+            ]))
+            ->addField(new Field('isDesigner', [
+                'label' => 'Concepteur',
+                'formatValueCallback' => function ($value, $row) {
+                    return $this->isDesigner($row['user.id']) ? 'oui' : '-';
+                }
+            ]))
+        ;
+
+        $gridManager = $this->get('kitpages_data_grid.grid_manager');
+        $grid = $gridManager->getGrid($gridConfig, $request);
+
+        try {
+            $this->get('innova_voter')->isAllowed('right.deleteuser');
+            $allowedToDelete = true;
+        } catch (AccessDeniedException $e) {
+            $allowedToDelete = false;
+        }
+
+        $batchUsers = [];
+
+        if ($allowedToDelete) {
+            foreach ($grid->getItemList() as $item) {
+                $userId = $item['user.id'];
+
+                $canBeDeleted =
+                    !$this->isDesigner($userId) &&
+                    !$this->isAdmin($item['user.roles']) &&
+                    !$this->hasTraceOnActiveSession($userId)
+                ;
+
+                if (!$canBeDeleted) {
+                    continue;
+                }
+
+                $batchUsers[$item['user.id']] = true;
+            }
+        }
+
+        $userBatchForm = $this->createUserBatchForm($batchUsers);
+
+        return [
+            'grid' => $grid,
+            'filterForm' => $filterForm->createView(),
+            'userBatchForm' => $userBatchForm->createView(),
+            'allowedToDelete' => $allowedToDelete
+        ];
+    }
+
+    private function addFilters(QueryBuilder $queryBuilder, Form $form, array $mapping)
+    {
+        if (!$form->isSubmitted()) {
+            return;
+        }
+
+        foreach ($mapping as $fieldName => $modifier) {
+            $fieldValue = $form->get($fieldName)->getData();
+            $modifier($queryBuilder, $fieldValue);
+        }
+    }
+
+    private $isDesignerCache = [];
+    private function isDesigner(int $userId): bool
+    {
+        if (!isset($this->isDesignerCache[$userId])) {
+            $questionnaireRepository = $this->getDoctrine()->getRepository(Questionnaire::class);
+            $created = $questionnaireRepository->countByAuthor($userId);
+            $revised = $questionnaireRepository->countByRevisor($userId);
+
+            $this->isDesignerCache[$userId] = ($created + $revised) > 0;
+        }
+
+        return $this->isDesignerCache[$userId];
+    }
+
+    private function hasTraceOnActiveSession(int $userId): bool
+    {
+        return $this->getDoctrine()->getRepository('InnovaSelfBundle:Session')->countActiveWithUserTrace($userId) > 0;
+    }
+
+    private function createUserBatchForm(array $users): FormInterface
+    {
+        return $this->createForm(
+            new UserBatchType(),
+            ['users' => $users],
+            ['action' => $this->generateUrl('admin_user_delete_batch')]
+        );
+    }
+
+    private function isAdmin(array $roles): bool
+    {
+        return count(preg_grep('/ADMIN/', $roles)) > 0;
+    }
+
+    /**
+     * @Route("/admin/users/delete-batch", name="admin_user_delete_batch")
+     * @Method("POST")
+     */
+    public function batchDeleteAction(Request $request)
+    {
+        $this->get('innova_voter')->isAllowed('right.deleteuser');
+
+        $redirection = $this->get('session')->get('uri.user_list', $this->generateUrl('admin_user_index'));
+        $form = $this->createForm(new UserBatchType());
+        $form->handleRequest($request);
+
+        $userIds = [];
+
+        foreach ($form->get('users') as $userField) {
+            $userIds[] = $userField->getName();
+        }
+
+        $totalUser = count($userIds);
+
+        if ($totalUser === 0) {
+            $this->addFlash('info', "Vous n'avez selectionné aucun utilisateur.");
+            return $this->redirect($redirection);
+        }
+
+        if (!$request->get('confirm', false)) {
+            $users = $this->getDoctrine()->getRepository(User::class)->findByIds($userIds);
+
+            return $this->render('@InnovaSelf/User/delete_confirm.html.twig', [
+                'totalUser' => $totalUser,
+                'users' => $users,
+                'form' => $form->createView()
+            ]);
+        }
+
+        try {
+            $this->getDoctrine()->getRepository('InnovaSelfBundle:User')->remove($userIds);
+            $this->addFlash('success', "Les $totalUser utilisateurs que vous avez selectionné ont été supprimés.");
+        } catch (ForeignKeyConstraintViolationException $e) {
+            throw $e;
+            $this->get('logger')->error($e->getMessage());
+            $this->addFlash('danger', "Un problème technique empêche un ou plusieurs des utilisateurs selectionnés d'être supprimée.");
+        }
+
+        return $this->redirect($redirection);
+    }
+
+    /**
+     * Lists online users
+     *
+     * @Route("/admin/users/online", name="admin_user_index_online")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexOnlineAction(Request $request)
     {
         $this->get('innova_voter')->isAllowed('right.listuser');
 
-        $userRepo = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User');
-        switch ($subset) {
-            case 'connected':
-                $users = $this->get('self.user.manager')->getConnected(true);
-                break;
-            case 'last':
-                $users = $userRepo->findBy(array(), array('id' => 'DESC'), $limit = 1000, $offset = null);
-                break;
-            case 'admins':
-                $users = $userRepo->findByRole('ROLE_SUPER_ADMIN');
-                break;
-        }
+        $users = $this->get('self.user.manager')->getConnected(true);
 
         return array(
-            'entities' => $users,
-            'subset' => 'user.'.$subset,
+            'entities' => $users
         );
     }
 
@@ -84,12 +314,16 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        /**
+         * @var User $user
+         */
         $user = $em->getRepository('InnovaSelfBundle:User')->find($id);
         $sessionsWithTraces = $em->getRepository('InnovaSelfBundle:Session')->findWithTraces($user);
 
         return array(
             'sessions' => $sessionsWithTraces,
             'user' => $user,
+            'token' => (string) $this->get('security.csrf.token_manager')->getToken(RightController::class)
         );
     }
 
@@ -141,7 +375,7 @@ class UserController extends Controller
 
         $this->get('self.user.manager')->deleteUser($user);
 
-        return $this->redirect($this->generateUrl('admin_user', array('subset' => 'last')));
+        return $this->redirect($this->generateUrl('admin_user_index', array('subset' => 'last')));
     }
 
     /**
@@ -216,6 +450,7 @@ class UserController extends Controller
 
         return array(
             'user' => $user,
+            'token' => (string) $this->get('security.csrf.token_manager')->getToken(RightController::class)
         );
     }
 
@@ -235,7 +470,11 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('self_user_display'));
         }
 
-        return array('form' => $form->createView(), 'user' => $user);
+        return [
+            'form' => $form->createView(),
+            'user' => $user,
+            'token' => (string) $this->get('security.csrf.token_manager')->getToken(RightController::class)
+        ];
     }
 
     /**

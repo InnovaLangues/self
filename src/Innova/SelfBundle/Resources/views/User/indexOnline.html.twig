@@ -1,0 +1,58 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    {% include 'InnovaSelfBundle:User:_index_actions.html.twig' %}
+
+    <h3>{{ 'user.list' | trans }} ({{ 'online'|trans }}) - {{ entities |length }} résultat(s)</h3>
+
+    {% if entities is not empty %}
+    <div class="input-group">
+        <span class="input-group-addon">{{ 'generic.filter' | trans }} </span>
+        <input type="text" id="search" class="form-control" value="">
+    </div>
+    <br/>
+    <table class="users-table table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Login</th>
+                <th>Email</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>
+                    {% if entity.isSuperAdmin %}
+                        <span class="label label-default">SuperAdmin</span>
+                    {% elseif 'ROLE_ADMIN' in entity.roles %}
+                        <span class="label label-default">Admin</span>
+                    {% endif %}
+                </td>
+                <td>{{ entity.username }}</td>
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.firstName ? entity.firstName }} </td>
+                <td>{{ entity.lastName ? entity.lastName }}</td>
+                <td>
+                    <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">
+                        <span class="btn btn-default">
+                            <span class="glyphicon glyphicon-zoom-in"></span>
+                        </span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/lib/jquery.quicksearch.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/innovaself/js/editor-user-list.js") }}"></script>
+{% endblock %}

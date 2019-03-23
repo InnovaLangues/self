@@ -40,9 +40,10 @@ class TraceManager
             ? $em->getRepository('InnovaSelfBundle:PhasedTest\Component')->find($post['componentId'])
             : null;
 
-        $trace = $em->getRepository('InnovaSelfBundle:Trace')->findByUserByTestByQuestionnaire($test, $questionnaire, $this->user, $component, $session);
+        $traces = $em->getRepository('InnovaSelfBundle:Trace')->findByUserByTestByQuestionnaire($test, $questionnaire, $this->user, $component, $session);
 
-        if (count($trace) > 0) {
+        if (count($traces) > 0) {
+            $trace = $traces[0];
             $this->session->getFlashBag()->set('danger', 'Vous avez déjà répondu à cette question.');
         } else {
             $agent = $request->headers->get('User-Agent');

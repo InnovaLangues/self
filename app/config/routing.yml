@@ -30,3 +30,13 @@ _bazinga_jstranslation:
 
 user_context_hash:
     path: /user-context-hash
+
+kibatic_cms:
+    resource: "@KibaticCmsBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+page_mentions_legales:
+    path: /mentions-legales
+    defaults:
+        _controller: KibaticCmsBundle:Block:show
+        slug: mentions-legales

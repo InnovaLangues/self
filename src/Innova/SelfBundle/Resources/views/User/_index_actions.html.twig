@@ -1,0 +1,20 @@
+{% if checkRight("right.createuser") %}
+    <a href="{{ path('user_create') }}" class="btn btn-sm btn-default">
+        <span class="glyphicon glyphicon-plus"></span>
+        {{ 'user.create' | trans }}
+    </a>
+{% endif %}
+
+{% if checkRight("right.listuser") %}
+    <a href="{{ path('admin_user_index') }}" class="btn btn-sm btn-default">
+        <span class="glyphicon glyphicon-list-alt"></span>
+        Voir tous les utilisateurs
+    </a>
+
+    <a href="{{ path('admin_user_index_online', { 'subset': 'connected' }) }}" class="btn btn-sm btn-default">
+        <span class="glyphicon glyphicon-fire"></span>
+        Voir les utilisateurs connectés
+    </a>
+{% endif %}
+
+<hr/>

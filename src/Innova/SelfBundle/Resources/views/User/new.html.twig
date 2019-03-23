@@ -8,11 +8,11 @@
 	        Revenir à la fiche
 	    </a>
 
-    	{% if checkRight("right.editrightsuser", user) %}
-    		<a class="btn btn-default btn-sm" href="{{ path('admin_user_show', { 'id': user.id }) }}">
-		        Editer les permissions
-	    	</a>
-    	{% endif %}
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+			<a class="btn btn-default btn-sm" href="{{ path('admin_user_rights', { 'userId': user.id }) }}">
+				<span class="glyphicon glyphicon-lock"></span> {{ 'right.rights' | trans }}
+			</a>
+		{% endif %}
 
     	<hr/>
     {% endif %}

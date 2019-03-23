@@ -73,7 +73,7 @@ user:
     email: Adresse mail
     admin_users: Administrateurs
     session_managers: Gestionnaires de sessions
-    rights: Permissions de l'utilisateur
+    rights: Permissions de l'administrateur
     preferedLanguage: Langue
     all: Tous
     connected: Connectés
@@ -84,6 +84,7 @@ user:
     hasAnyGlobalRight: A des droits globaux
     testsWithRights: Tests avec des droits
     sessionsWithRights: Sessions avec des droits
+    lastLogin: Dernière connexion
 
 registration:
     warning_required: Les zones avec un astérisque rouge sont obligatoires
@@ -105,6 +106,7 @@ registration:
     year: Année d'étude
     subcourse: Spécialité / Mention
     confirm: Confirmation de l'inscription
+    legal_mentions_link: Consultez les <a href="%url%" target="_blank">mentions légales</a>.
 
 test:
     access_list: Accéder à la liste des tests
@@ -372,7 +374,7 @@ editor:
         code: Code de session
         invalid_code: Code de session invalide.
         active: Actif
-        actives: active
+        actives: actives
         actives_full: Sessions actives
         inactives: inactives
         inactives_full: Sessions inactives
@@ -465,10 +467,11 @@ register:
     neutral: Neutre
     sustained: Soutenu
     mixed: Mixte
-    jp_formal: Japonais formel (soutenu)
-    jp_impersonal: Japonais impersonnel (écrit/neutre)
-    jp_perso_polite: Japonais personnel (poli)
-    jp_perso_familiar: Japonais personnel (familier)
+    jp_formal: Japonais honorifique
+    jp_impersonal: Japonais impersonnel écrit
+    jp_perso_polite: Japonais poli
+    jp_perso_familiar: Japonais familier
+    jp_mixed: Japonais mixte
 
 reception:
     listener: En tant que récepteur
@@ -483,6 +486,7 @@ length:
   text_long: 'CE/EEC : text long (>90 mots)'
 
 flow:
+    very_slow: Très lent
     slow: Lent
     medium: Moyen
     fast: Rapide
@@ -646,7 +650,7 @@ group:
     display: Détails du groupe
 
 right:
-    rights: Permissions
+    rights: Permissions administrateur
     createtask: Créer une tâche
     deletetask: Supprimer une tâche
     edittask: Editer une tâche
@@ -656,7 +660,7 @@ right:
     edittest: Editer un test
     listtest: Lister les tests
     duplicatetest: Dupliquer un test
-    managesessiontest: Gérer les session
+    managesessiontest: Gérer les sessions
     managetaskstest: Gérer les tâches
     addtasktest: Ajouter une tâche
     reordertasktest: Réordonner les tâches
@@ -668,7 +672,7 @@ right:
     deleteuser: Supprimer un utilisateur
     edituser: Editer un utilisateur
     deletetraceuser: Supprimer les traces d'un utilisateur
-    editpassworduser: Changer le mot de passe d'un utiliszteur
+    editpassworduser: Changer le mot de passe d'un utilisateur
     editrightsuser: Editer les permissions des utilisateurs
     listgroup: Lister les groupes
     editgroup: Editer un groupe
@@ -689,6 +693,8 @@ right:
     message: Envoyer des messages
     deletetracesession: Supprimer les traces des utilisateurs d'une session
     editorreadonlytest: Voir les tâches sans pouvoir les éditer (lecture seule)
+    institution: Institution
+    stats: Consulter les statistiques
 
 rightgroup:
     tasks: Permissions sur les tâches
@@ -703,7 +709,7 @@ rightgroup:
 canDelete: Peut supprimer
 canEdit: Peut éditer
 canDuplicate: Peut dupliquer
-canManageSession: Peut gérer les session
+canManageSession: Peut gérer les sessions
 canManageTask: Peut gérer les tâches
 canAddTask: Peut ajouter des tâches
 canReorderTasks: Peut réordonner les tâches
@@ -727,7 +733,8 @@ input:
 warning_message_course: Attention, votre profil est incomplet, veuillez cliquer sur votre nom en haut à droite et éditer vos informations. Merci.
 
 stats:
-    usercount: Nombre d'utilisateurs
+    user_count: Passations total
+    today_user_count: Passations auj
     filter: Filtrer
     define_interval: Définissez un intervalle de temps.
     date_format: Format de la date:

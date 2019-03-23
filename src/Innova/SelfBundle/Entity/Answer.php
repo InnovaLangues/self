@@ -23,6 +23,7 @@ class Answer
 
     /**
     * @ORM\ManyToOne(targetEntity="Trace", inversedBy="answers", cascade={"remove"})
+    * @ORM\JoinColumn(onDelete="CASCADE")
     */
     protected $trace;
 

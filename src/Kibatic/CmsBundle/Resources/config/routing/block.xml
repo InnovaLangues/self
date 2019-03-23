@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="cms_block_index" path="/block/" methods="GET">
+        <default key="_controller">KibaticCmsBundle:Block:index</default>
+    </route>
+
+    <route id="cms_block_show" path="/block/{slug}/show" methods="GET">
+        <default key="_controller">KibaticCmsBundle:Block:show</default>
+    </route>
+
+    <route id="cms_block_new" path="/block/{typeName}/new" methods="GET|POST">
+        <default key="_controller">KibaticCmsBundle:Block:new</default>
+    </route>
+
+    <route id="cms_block_edit" path="/block/{id}/edit" methods="GET|POST">
+        <default key="_controller">KibaticCmsBundle:Block:edit</default>
+    </route>
+
+    <route id="cms_block_delete" path="/block/{id}/delete" methods="DELETE">
+        <default key="_controller">KibaticCmsBundle:Block:delete</default>
+    </route>
+
+    <route id="cms_block_editModeToggle" path="/edit-mode-toggle" methods="GET">
+        <default key="_controller">KibaticCmsBundle:Block:editModeToggle</default>
+    </route>
+</routes>

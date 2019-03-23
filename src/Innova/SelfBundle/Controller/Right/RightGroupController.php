@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Innova\SelfBundle\Entity\Right\RightGroup;
 use Innova\SelfBundle\Entity\User;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * RightGroup controller.
@@ -28,7 +29,7 @@ class RightGroupController extends Controller
      */
     public function toggleAllForGroupAction(User $user, RightGroup $rightGroup)
     {
-        $this->get("innova_voter")->isAllowed("right.editrightsuser");
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $this->get("self.rightgroup.manager")->toggleAll($user, $rightGroup);
         $this->get("session")->getFlashBag()->set('info', "Les permissions ont bien été modifiées");

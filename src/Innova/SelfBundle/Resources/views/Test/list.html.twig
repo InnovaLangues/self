@@ -35,8 +35,10 @@
 <br/>
 
 <h3>
-    {{ 'editor.test.list' | trans }} 
-    ({{ subset | trans}}{{ app.user.preferedLanguage and subset != "test.favorites" ? " - "~app.user.preferedLanguage.name|trans }})
+    {% block page_title %}
+        {{ 'editor.test.list' | trans }}
+        ({{ subset | trans}}{{ app.user.preferedLanguage and subset != "test.favorites" ? " - "~app.user.preferedLanguage.name|trans }})
+    {% endblock %}
 </h3>
 <table id="tests-table" class="table table-striped">
     <thead>

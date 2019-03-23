@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Questionnaire.
+ * Questionnaire
+ *
+ * Aussi appelée Task (tâche)
  *
  * @ORM\Table("questionnaire")
  * @ORM\Entity(repositoryClass="Innova\SelfBundle\Repository\QuestionnaireRepository")
@@ -211,6 +213,7 @@ class Questionnaire
     const REGISTER_JP_IMPERSONAL = 'jp_impersonal';
     const REGISTER_JP_PERSO_POLITE = 'jp_perso_polite';
     const REGISTER_JP_PERSO_FAMILIAR = 'jp_perso_familiar';
+    const REGISTER_JP_MIXED = 'jp_mixed';
 
     /**
      * @var array
@@ -233,6 +236,7 @@ class Questionnaire
      */
     protected $flow;
 
+    const FLOW_VERY_SLOW = 'very_slow';
     const FLOW_SLOW = 'slow';
     const FLOW_MEDIUM = 'medium';
     const FLOW_FAST = 'fast';
@@ -1465,6 +1469,7 @@ class Questionnaire
     public static function getFlowValues()
     {
         return [
+            self::FLOW_VERY_SLOW,
             self::FLOW_SLOW,
             self::FLOW_MEDIUM,
             self::FLOW_FAST
@@ -1478,10 +1483,11 @@ class Questionnaire
             self::REGISTER_NEUTRAL,
             self::REGISTER_SUSTAINED,
             self::REGISTER_MIXED,
+            self::REGISTER_JP_PERSO_FAMILIAR,
+            self::REGISTER_JP_PERSO_POLITE,
             self::REGISTER_JP_FORMAL,
             self::REGISTER_JP_IMPERSONAL,
-            self::REGISTER_JP_PERSO_POLITE,
-            self::REGISTER_JP_PERSO_FAMILIAR,
+            self::REGISTER_JP_MIXED
         ];
     }
 }

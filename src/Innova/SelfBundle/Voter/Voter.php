@@ -20,30 +20,29 @@ class Voter
     protected $rightManager;
     protected $currentUser;
 
-    public function __construct($securityContext, $rightManager) 
+    public function __construct($securityContext, $rightManager)
     {
-        $this->securityContext  = $securityContext;
-        $this->rightManager     = $rightManager;
-        $this->currentUser      = $this->securityContext->getToken()->getUser();
-
+        $this->securityContext = $securityContext;
+        $this->rightManager = $rightManager;
+        $this->currentUser = $this->securityContext->getToken()->getUser();
     }
 
     public function isAllowed($rightName, $entity = null)
     {
-       if (true !== $this->rightManager->checkRight($rightName, $this->currentUser, $entity)) {
+        if (true !== $this->rightManager->checkRight($rightName, $this->currentUser, $entity)) {
             throw new AccessDeniedException();
-       }
+        }
+    }
 
-       return;
+    public function checkRight($rightName, $entity = null)
+    {
+        return $this->rightManager->checkRight($rightName, $this->currentUser, $entity);
     }
 
     public function canEditTask(Questionnaire $task)
     {
-       if (true !== $this->rightManager->canEditTask($this->currentUser, $task)) {
+        if (true !== $this->rightManager->canEditTask($this->currentUser, $task)) {
             throw new AccessDeniedException();
-       }
-
-       return;
+        }
     }
-
 }

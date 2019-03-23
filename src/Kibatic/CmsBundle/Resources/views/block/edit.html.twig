@@ -1,0 +1,30 @@
+{% extends 'KibaticCmsBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1>Block edit</h1>
+
+    {% include 'KibaticCmsBundle:block:_form.html.twig' with {'form': edit_form} %}
+
+    {{ form_start(delete_form, {'attr': {'data-confirm': 'Delete this block ?'}}) }}
+        <input type="submit" id="{{ delete_form.vars.id }}_submit" class="hidden" />
+    {{ form_end(delete_form) }}
+
+    <div class="btn-group pull-right" role="group">
+        <a href="{{ path('cms_block_index') }}" class="btn btn-default">Back to the list</a>
+        <label class="btn btn-danger" for="{{ delete_form.vars.id }}_submit">Delete</label>
+        <a href="{{ path('cms_block_show', {'slug': block.slug}) }}" target="_blank" class="btn btn-default">Preview</a>
+        <label class="btn btn-success" for="{{ edit_form.vars.id }}_submit">Save</label>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% include 'KibaticCmsBundle::_css.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'KibaticCmsBundle::_js.html.twig' %}
+{% endblock %}

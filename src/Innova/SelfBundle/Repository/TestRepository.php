@@ -3,6 +3,7 @@
 namespace Innova\SelfBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Innova\SelfBundle\Entity\User;
 
 class TestRepository extends EntityRepository
 {
@@ -85,7 +86,8 @@ class TestRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findOneWithOrderQuestionnaires($testId){
+    public function findOneWithOrderQuestionnaires($testId)
+    {
         $dql = "SELECT t, o FROM Innova\SelfBundle\Entity\Test t
         LEFT JOIN t.orderQuestionnaireTests o
         WHERE t.id = :id";

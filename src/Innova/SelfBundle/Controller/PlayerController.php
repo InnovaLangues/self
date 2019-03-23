@@ -62,6 +62,21 @@ class PlayerController extends Controller
     }
 
     /**
+     * Affiche les crédits/remerciement aux auteurs du tests (via une page de CMS par langue)
+     *
+     * @Route("/test/{testId}/session/{sessionId}/credits", name="test_credits")
+     * @Template("InnovaSelfBundle:Player:common/credits.html.twig")
+     * @Method("GET")
+     */
+    public function creditsAction(Test $test, Session $session)
+    {
+        return [
+            'test' => $test,
+            'session' => $session
+        ];
+    }
+
+    /**
      * Gère la vue de fin de test.
      *
      * @Route("/test/{testId}/session/{sessionId}/end", name="test_end")

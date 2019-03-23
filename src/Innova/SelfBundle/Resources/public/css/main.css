@@ -40,3 +40,97 @@ label.required:after {
     content: "\e224";
 }
 
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-brand:hover {
+    background-color: #000;
+    font-weight: bold;
+    color: #fff;
+}
+
+ul li.page-title {
+    font-size: 1.5em;
+}
+
+ul.actions {
+    list-style: none;
+}
+
+ul.actions li {
+    display: inline;
+}
+
+.table ul.actions {
+    margin: 0;
+    padding: 0;
+}
+
+.table > thead > tr > th {
+    vertical-align: middle;
+}
+
+.strip {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* --- User list --- */
+
+.users .table tr td {
+    font-size: 12px;
+    vertical-align: middle;
+    padding: 2px 5px;
+}
+
+.users .table td:first-child {
+    font-size: 8px;
+    opacity: .8;
+}
+
+.users .table td:last-child {
+    width: 120px;
+    text-align: center;
+}
+
+.users .table #batch-actions {
+    margin-right: 14px;
+}
+
+#user-filter #kitdg_grid_grid_filter_form {
+    margin-bottom: 10px;
+}
+
+#user-filter #kitdg_grid_grid_filter_form .form-group {
+    width: 50%;
+}
+
+#user-filter #kitdg_grid_grid_filter_form .form-group input {
+    width: 100%;
+}
+
+#user-filter .kit-grid-filter .form-group {
+    margin-right: 10px;
+}
+
+.kit-grid-paginator {
+    float: right;
+}
+
+.user-selector {
+    border: 1px solid #cbcbcb;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 8px;
+    display: inline;
+}
+
+.user-selector .disabled {
+    opacity: .35;
+}
+
+.kit-grid-cell-user-usernameCanonical .strip,
+.kit-grid-cell-user-emailCanonical .strip,
+.kit-grid-cell-user-firstName .strip,
+.kit-grid-cell-user-lastName .strip {
+    width: 50px;
+}

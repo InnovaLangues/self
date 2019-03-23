@@ -101,9 +101,9 @@ class RightManager
     public function adminToggle(User $user)
     {
         if ($this->hasAnyRight($user)) {
-            $this->manipulator->addRole($user->getUsername(), 'ROLE_SUPER_ADMIN');
+            $this->manipulator->addRole($user->getUsername(), 'ROLE_ADMIN');
         } else {
-            $this->manipulator->removeRole($user->getUsername(), 'ROLE_SUPER_ADMIN');
+            $this->manipulator->removeRole($user->getUsername(), 'ROLE_ADMIN');
         }
     }
 
@@ -178,5 +178,16 @@ class RightManager
         }
 
         return false;
+    }
+
+    public function removeAllRights(User $user)
+    {
+        $rights = $this->entityManager->getRepository(User::class)->getRights($user);
+
+        foreach ($rights as $right) {
+            $right->removeUser($user);
+        }
+
+        $this->entityManager->flush();
     }
 }

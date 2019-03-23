@@ -2,6 +2,8 @@
 
 namespace Innova\SelfBundle\Controller;
 
+use Innova\SelfBundle\Entity\Session;
+use Innova\SelfBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -25,7 +27,7 @@ class StatsController extends Controller
      */
     public function indexAction()
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
         return array();
     }
@@ -35,23 +37,31 @@ class StatsController extends Controller
      * @Method("GET")
      * @Template("InnovaSelfBundle:Stats:sessions.html.twig")
      */
-    public function sessionsAction($isActive)
+    public function sessionsAction($isActive): array
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
+        /**
+         * @var Session[] $sessions
+         */
         $sessions = $this->get('self.session.manager')->listSessionByActivity($isActive);
-        $data_sessions = [];
+
+        $em = $this->getDoctrine()->getManager();
+        $userRepository = $em->getRepository(User::class);
+
+        $stats = [];
 
         foreach ($sessions as $session) {
-            $data_sessions[] = [
+            $stats[] = [
                 'name' => $session->getName(),
                 'test' => $session->getTest()->getName(),
                 'language' => $session->getTest()->getLanguage()->getName(),
-                'usercount' => count($this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:User')->findLightBySession($session)),
+                'userCount' => $userRepository->countBySession($session),
+                'todayUserCount' => $userRepository->countBySession($session, new \DateTime('midnight'))
             ];
         }
 
-        return array('data_sessions' => $data_sessions);
+        return ['stats' => $stats];
     }
 
     /**
@@ -61,7 +71,7 @@ class StatsController extends Controller
      */
     public function sessionsByDateAction(Request $request)
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
         $sessionType = $request->get('session_type');
         if ($sessionType == 'all') {
@@ -105,7 +115,7 @@ class StatsController extends Controller
      */
     public function institutionsAction()
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
         $institutions = $this->getDoctrine()->getManager()->getRepository('InnovaSelfBundle:Institution\Institution')->findAll();
 
@@ -129,7 +139,7 @@ class StatsController extends Controller
      */
     public function coursesAction(Institution $institution)
     {
-        $this->get('innova_voter')->isAllowed('right.generalParameters');
+        $this->get('innova_voter')->isAllowed('right.stats');
 
         $courses = $institution->getCourses();
 

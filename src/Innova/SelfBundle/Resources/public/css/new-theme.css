@@ -1,0 +1,71 @@
+/* Footer */
+
+#footer {
+    background-color: #80a3af;
+    border-color: #406f80;
+    color: #2b3e49;
+}
+
+/* Navbar */
+
+.navbar-inverse {
+    border-color: #406f80;
+}
+
+.navbar-inverse,
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+    background-color: #80a3af;
+    color: #fff;
+}
+
+.navbar-inverse .navbar-brand {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li >a {
+    color: #2b3e49;
+}
+
+/* Buttons */
+
+.btn {
+    font-size: 1.5em;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+
+.btn-default {
+    color: #5fc9bc;
+    border-color: #5fc9bc;
+}
+
+.btn-default:hover {
+    border-color: #376e63;
+    /*border-color: #449c91;*/
+    /*background-color: rgba(99, 235, 222, 0.11);*/
+}
+
+.btn-primary {
+    background-color: #5fc9bc;
+    border-color: #449c91;
+}
+
+.btn-primary:hover {
+    background-color: #449c91;
+    border-color: #376e63;
+}
+
+/* Forms */
+
+.form-control {
+    font-size: 1.5em;
+    border: 2px solid #5fc9bc;
+    border-radius: 10px;
+    padding: 20px 15px;
+    background-color: #effaf7;
+}
