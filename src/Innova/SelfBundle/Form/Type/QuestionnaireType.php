@@ -237,6 +237,7 @@ class QuestionnaireType extends AbstractType
 
         $builder->add('authorizationRequestedAt', 'date', [
             'label' => 'editor.identity.authorizationRequestedAt',
+            'years' => range(date('Y') - 10, date('Y') + 10),
 //            'widget' => 'single_text',
             'widget' => 'choice',
             'attr' => [
