@@ -34,7 +34,7 @@ class UserFilterType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'attr' => [
-                    'class' => 'datepicker form-control',
+                    'class' => 'form-control datepicker_date',
                     'autocomplete' => 'off'
                 ]
             ])

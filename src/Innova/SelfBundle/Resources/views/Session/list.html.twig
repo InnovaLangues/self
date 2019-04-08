@@ -1,9 +1,5 @@
 {% extends '::base.html.twig' %}
 
-{% block stylesheets %}
-    <link href="{{ asset('bundles/innovaself/css/bootstrap-datetimepicker.css') }}" rel="stylesheet"/>
-{% endblock %}
-
 {% block body -%}
 
 {% if test is defined and checkRight("right.createsession") %}

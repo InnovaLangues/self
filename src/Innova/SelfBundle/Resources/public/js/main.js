@@ -23,4 +23,7 @@ $(document).ready(function() {
     });
 
     $('.datepicker').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss'});
+    $('.datepicker_date').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
 });
