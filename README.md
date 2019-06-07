@@ -1,3 +1,7 @@
+# ! This repository is depcrecated and won't be updated any more ! #
+
+
+
 # Installation
 
 The following documentation is for a Linux host.
