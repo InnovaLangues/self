@@ -8,7 +8,7 @@
     },
     "require": {
         "php": "^7.0",
-        "symfony/symfony": "2.7.9",
+        "symfony/symfony": "2.8.x-dev",
         "symfony/assetic-bundle": "2.3.*",
         "symfony/swiftmailer-bundle": "2.3.*",
         "symfony/monolog-bundle": "2.3.*",
